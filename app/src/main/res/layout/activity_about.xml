@@ -22,6 +22,7 @@
     >
     <TextView
         android:layout_marginTop="20dp"
+        android:textSize="20sp"
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
         android:text="@string/app_name"
@@ -36,8 +37,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <TextView
-        android:autoLink="web"
         android:id="@+id/about_developer"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/about_license"
         android:layout_marginTop="10dp"
         android:textSize="16sp"
         android:layout_gravity="center_horizontal"
@@ -45,8 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <TextView
-        android:autoLink="web"
-        android:id="@+id/about_license"
+        android:id="@+id/about_code"
         android:layout_marginTop="10dp"
         android:textSize="16sp"
         android:layout_gravity="center_horizontal"
