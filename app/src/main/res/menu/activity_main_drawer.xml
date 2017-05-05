@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:title="@string/communication_menu_title">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:checked="true"
+                        android:id="@+id/nav_home"
+                        android:icon="@drawable/ic_action_home"
+                        android:title="@string/home_menu" />
+                    <item
+                        android:id="@+id/nav_local"
+                        android:icon="@drawable/ic_action_users"
+                        android:title="@string/local_menu" />
+                    <item
+                        android:id="@+id/nav_global"
+                        android:icon="@drawable/ic_action_globe"
+                        android:title="@string/global_menu" />
+                    <item
+                        android:id="@+id/nav_notification"
+                        android:icon="@drawable/ic_notifications"
+                        android:title="@string/notifications" />
+                </group>
+            </menu>
+        </item>
+        <item android:title="@string/neutral_menu_title">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_settings"
+                        android:icon="@drawable/ic_action_gear"
+                        android:title="@string/parameters_menu" />
+                    <item
+                        android:id="@+id/nav_favorites"
+                        android:icon="@drawable/ic_favorite_menu"
+                        android:title="@string/favorites_menu" />
+                    <item
+                        android:id="@+id/nav_blocked"
+                        android:icon="@drawable/ic_block"
+                        android:title="@string/blocked_menu" />
+                    <item
+                        android:id="@+id/nav_muted"
+                        android:icon="@drawable/ic_action_volume_mute"
+                        android:title="@string/muted_menu" />
+                </group>
+            </menu>
+        </item>
+    </group>
+</menu>

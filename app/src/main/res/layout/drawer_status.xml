@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2017 Thomas Schneider
+
+    This file is a part of Mastodon Etalab for mastodon.etalab.gouv.fr
+
+    This program is free software; you can redistribute it and/or modify it under the terms of the
+    GNU General Public License as published by the Free Software Foundation; either version 3 of the
+    License, or (at your option) any later version.
+
+    Mastodon Etalab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+    the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+    Public License for more details.
+
+    You should have received a copy of the GNU General Public License along with Thomas Schneider; if not,
+    see <http://www.gnu.org/licenses>.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/drawer_padding"
+    android:paddingRight="@dimen/drawer_padding"
+    android:layout_marginTop="5dp"
+    android:id="@+id/main_container"
+    android:orientation="horizontal">
+    <ImageView
+        android:id="@+id/status_account_profile"
+        android:layout_height="50dp"
+        android:layout_width="50dp"
+        android:layout_gravity="center_horizontal|top"
+        android:gravity="center_horizontal|top"
+        tools:ignore="ContentDescription" />
+    <LinearLayout
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/status_account_displayname"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:drawablePadding="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:id="@+id/status_account_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <TextView
+            android:visibility="gone"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:textSize="14sp"
+            android:id="@+id/status_reblog_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/status_toot_date"
+            android:layout_width="match_parent"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:layout_gravity="end"
+            android:gravity="end"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/status_content"
+            android:layout_marginTop="10dp"
+            android:autoLink="web"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:id="@+id/status_document_container"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+            <ImageView
+                android:id="@+id/status_prev1"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                android:src="@drawable/mastodon_logo"
+                android:layout_height="match_parent"
+                tools:ignore="ContentDescription" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginStart="2dp"
+                android:id="@+id/status_container2"
+                android:layout_weight="1"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/status_prev2"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:layout_height="0dp"
+                    android:src="@drawable/mastodon_logo"
+                    tools:ignore="ContentDescription" />
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/status_container3"
+                    android:layout_height="0dp">
+                    <ImageView
+                        android:id="@+id/status_prev3"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/mastodon_logo"
+                        android:layout_height="wrap_content"
+                        tools:ignore="ContentDescription" />
+                    <ImageView
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginStart="2dp"
+                        android:id="@+id/status_prev4"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/mastodon_logo"
+                        android:layout_height="wrap_content"
+                        tools:ignore="ContentDescription" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+        <Button
+            android:id="@+id/status_show_more"
+            android:visibility="gone"
+            android:textAllCaps="false"
+            android:drawableLeft="@drawable/ic_photo"
+            android:drawableStart="@drawable/ic_photo"
+            android:gravity="center"
+            android:drawablePadding="5dp"
+            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
+            android:paddingRight="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:maxLines="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/load_attachment" />
+        <LinearLayout
+            android:id="@+id/status_action_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:orientation="horizontal">
+            <TextView
+                android:drawableStart="@drawable/dr_favorites"
+                android:drawableLeft="@drawable/dr_favorites"
+                android:drawablePadding="2dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:id="@+id/status_favorite_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
+                android:drawableStart="@drawable/dr_reblogs"
+                android:drawableLeft="@drawable/dr_reblogs"
+                android:drawablePadding="2dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:id="@+id/status_reblog_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
+                android:id="@+id/status_reply"
+                android:layout_gravity="center_vertical"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_reply"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="end"
+                android:gravity="end"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_marginRight="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:id="@+id/status_privacy"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@color/light_grey"
+                    />
+                <ImageView
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:id="@+id/status_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_action_more"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
