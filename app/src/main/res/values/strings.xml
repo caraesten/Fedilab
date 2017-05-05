@@ -121,6 +121,7 @@
     <string name="about_vesrion">Version %1$s</string>
     <string name="about_developer">Développeur : <a href="https://mastodon.etalab.gouv.fr/@tschneider">@tschneider@mastodon.etalab.gouv.fr</a></string>
     <string name="about_license">Licence : <a href="https://www.gnu.org/licenses/quick-guide-gplv3.fr.html">GNU GPL V3</a></string>
+    <string name="about_code">Code source : <a href="https://bitbucket.org/tom79/mastodon_etalab">bitbucket</a></string>
     <!-- Conversation -->
     <string name="conversation">Conversation</string>
 

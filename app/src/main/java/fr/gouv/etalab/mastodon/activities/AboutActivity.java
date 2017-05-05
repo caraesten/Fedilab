@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.activities;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -45,19 +46,25 @@ public class AboutActivity extends AppCompatActivity {
             PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
             String version = pInfo.versionName;
             about_version.setText(getResources().getString(R.string.about_vesrion, version));
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+        } catch (PackageManager.NameNotFoundException ignored) {}
 
         TextView about_developer = (TextView) findViewById(R.id.about_developer);
         TextView about_license = (TextView) findViewById(R.id.about_license);
+        TextView about_code = (TextView) findViewById(R.id.about_code);
+        about_developer.setMovementMethod(LinkMovementMethod.getInstance());
+        about_license.setMovementMethod(LinkMovementMethod.getInstance());
+        about_code.setMovementMethod(LinkMovementMethod.getInstance());
+        about_developer.setLinkTextColor(Color.BLUE);
+        about_license.setLinkTextColor(Color.BLUE);
+        about_code.setLinkTextColor(Color.BLUE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             about_developer.setText(Html.fromHtml(getString(R.string.about_developer), Html.FROM_HTML_MODE_COMPACT));
             about_license.setText(Html.fromHtml(getString(R.string.about_license), Html.FROM_HTML_MODE_COMPACT));
-
+            about_code.setText(Html.fromHtml(getString(R.string.about_code), Html.FROM_HTML_MODE_COMPACT));
         }else {
             about_developer.setText(Html.fromHtml(getString(R.string.about_developer)));
             about_license.setText(Html.fromHtml(getString(R.string.about_license)));
+            about_code.setText(Html.fromHtml(getString(R.string.about_code)));
         }
     }
 
