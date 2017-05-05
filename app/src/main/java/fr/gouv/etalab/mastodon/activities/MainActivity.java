@@ -145,10 +145,19 @@ public class MainActivity extends AppCompatActivity
         username.setText(String.format("@%s",account.getUsername()));
         displayedName.setText(account.getDisplay_name());
         imageLoader.displayImage(account.getAvatar(), profilePicture, options);
-        if (savedInstanceState == null) {
+
+        boolean menuWasSelected = false;
+        if( getIntent() != null && getIntent().getExtras() != null ){
+            Bundle extras = getIntent().getExtras();
+            if (extras.getInt(INTENT_ACTION) == INTENT_NOTIFICATION){
+                navigationView.setCheckedItem(R.id.nav_notification);
+                navigationView.getMenu().performIdentifierAction(R.id.nav_notification, 0);
+                menuWasSelected = true;
+            }
+        }
+        if (savedInstanceState == null && !menuWasSelected) {
             navigationView.setCheckedItem(R.id.nav_home);
             navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
-
         }
         //Title and menu selection when back pressed
         getSupportFragmentManager().addOnBackStackChangedListener(
@@ -211,6 +220,17 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            //Hide search bar on back pressed
+            if( toolbar.getChildCount() > 0) {
+                for (int i = 0; i < toolbar.getChildCount(); i++) {
+                    if (toolbar.getChildAt(i) instanceof EditText) {
+                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow((toolbar.getChildAt(i)).getWindowToken(), 0);
+                        toolbar.removeViewAt(i);
+                        break;
+                    }
+                }
+            }
         }
 
     }
@@ -247,6 +267,8 @@ public class MainActivity extends AppCompatActivity
                     if(toolbar.getChildAt(i) instanceof EditText){
                         //Nothing in the search bar
                         if( ((EditText) toolbar.getChildAt(i)).getText().toString().trim().equals("")){
+                            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow((toolbar.getChildAt(i)).getWindowToken(), 0);
                             toolbar.removeViewAt(i);
                             return true;
                         }else{
@@ -308,6 +330,8 @@ public class MainActivity extends AppCompatActivity
         if( toolbar.getChildCount() > 0) {
             for (int i = 0; i < toolbar.getChildCount(); i++) {
                 if (toolbar.getChildAt(i) instanceof EditText) {
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow((toolbar.getChildAt(i)).getWindowToken(), 0);
                     toolbar.removeViewAt(i);
                     break;
                 }
