@@ -38,6 +38,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -131,7 +132,7 @@ public class MainActivity extends AppCompatActivity
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-        Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(prefKeyOauthTokenT);
+
         ImageView profilePicture = (ImageView) headerLayout.findViewById(R.id.profilePicture);
         TextView username = (TextView) headerLayout.findViewById(R.id.username);
         TextView displayedName = (TextView) headerLayout.findViewById(R.id.displayedName);
@@ -139,13 +140,22 @@ public class MainActivity extends AppCompatActivity
         TextView ownerFollowing = (TextView) headerLayout.findViewById(R.id.owner_following);
         TextView ownerFollowers = (TextView) headerLayout.findViewById(R.id.owner_followers);
 
-        ownerStatus.setText(String.valueOf(account.getStatuses_count()));
-        ownerFollowers.setText(String.valueOf(account.getFollowers_count()));
-        ownerFollowing.setText(String.valueOf(account.getFollowing_count()));
-        username.setText(String.format("@%s",account.getUsername()));
-        displayedName.setText(account.getDisplay_name());
-        imageLoader.displayImage(account.getAvatar(), profilePicture, options);
-
+        Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(prefKeyOauthTokenT);
+        //Something wrong happened with the account recorded in db (ie: bad token)
+        if( account == null ) {
+            Helper.logout(getApplicationContext());
+            Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);
+            Toast.makeText(getApplicationContext(),R.string.toast_error, Toast.LENGTH_LONG).show();
+            startActivity(myIntent);
+            finish(); //User is logged out to get a new token
+        }else {
+            ownerStatus.setText(String.valueOf(account.getStatuses_count()));
+            ownerFollowers.setText(String.valueOf(account.getFollowers_count()));
+            ownerFollowing.setText(String.valueOf(account.getFollowing_count()));
+            username.setText(String.format("@%s",account.getUsername()));
+            displayedName.setText(account.getDisplay_name());
+            imageLoader.displayImage(account.getAvatar(), profilePicture, options);
+        }
         boolean menuWasSelected = false;
         if( getIntent() != null && getIntent().getExtras() != null ){
             Bundle extras = getIntent().getExtras();
