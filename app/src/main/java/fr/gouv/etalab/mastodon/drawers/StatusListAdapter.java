@@ -493,16 +493,21 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 break;
             }
         }
+        String urlDownload = attachment.getRemote_url();
+        if( urlDownload == null || urlDownload.trim().equals(""))
+            urlDownload = attachment.getUrl();
+        final String finalUrlDownload = urlDownload;
         alertadd.setPositiveButton(R.string.download, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dlg, int sumthin) {
                 if(Build.VERSION.SDK_INT >= 23 ){
                     if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
                         ActivityCompat.requestPermissions((MainActivity)context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST_CODE);
                     } else {
-                        Helper.manageDownloads(context, attachment.getRemote_url());
+
+                        Helper.manageDownloads(context, finalUrlDownload);
                     }
                 }else{
-                    Helper.manageDownloads(context, attachment.getRemote_url());
+                    Helper.manageDownloads(context, finalUrlDownload);
                 }
                 dlg.dismiss();
             }
