@@ -19,16 +19,15 @@ package fr.gouv.etalab.mastodon.helper;
 
 import android.app.AlertDialog;
 import android.app.DownloadManager;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -324,11 +323,21 @@ public class Helper {
     }
 
 
+    /**
+     * Manage downloads with URLs
+     * @param context Context
+     * @param url String download url
+     */
     public static void manageDownloads(final Context context, final String url){
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-        final DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+        final DownloadManager.Request request;
+        try {
+            request = new DownloadManager.Request(Uri.parse(url.trim()));
+        }catch (Exception e){
+            Toast.makeText(context,R.string.toast_error,Toast.LENGTH_LONG).show();
+            return;
+        }
         Uri uri =  Uri.parse(url);
         File f = new File("" + uri);
         final String fileName = f.getName();
