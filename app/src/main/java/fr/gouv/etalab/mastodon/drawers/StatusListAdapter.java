@@ -173,20 +173,16 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }
         //Click on a conversation
         if( type != RetrieveFeedsAsyncTask.Type.CONTEXT ){
-            if( !status.getIn_reply_to_account_id().equals("null") || !status.getIn_reply_to_id().equals("null") ) {
-                holder.status_content.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(context, ShowConversationActivity.class);
-                        Bundle b = new Bundle();
-                        b.putString("statusId", status.getId()); //Your id
-                        intent.putExtras(b); //Put your id to your next Intent
-                        context.startActivity(intent);
-                    }
-                });
-            }else{
-                holder.status_content.setOnClickListener(null);
-            }
+            holder.status_content.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ShowConversationActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("statusId", status.getId()); //Your id
+                    intent.putExtras(b); //Put your id to your next Intent
+                    context.startActivity(intent);
+                }
+            });
         }else {
             if( position == ShowConversationActivity.position){
                 holder.main_container.setBackgroundResource(R.color.blue_light);
@@ -410,6 +406,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 String url = attachment.getPreview_url();
                 if( url == null || url.trim().equals(""))
                     url = attachment.getUrl();
+                if( url.trim().equals("https://mastodon.etalab.gouv.fr/files/small/missing.png"))
+                    continue;
                 imageLoader.displayImage(url, imageView, options);
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override

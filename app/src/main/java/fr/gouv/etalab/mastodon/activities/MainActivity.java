@@ -23,7 +23,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -49,6 +48,7 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import java.io.File;
 import java.util.HashMap;
 
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
@@ -57,7 +57,6 @@ import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.fragments.TabLayoutSettingsFragment;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -74,6 +73,9 @@ public class MainActivity extends AppCompatActivity
     private HashMap<String, String> tagTile = new HashMap<>();
     private HashMap<String, Integer> tagItem = new HashMap<>();
     private Toolbar toolbar;
+    private ImageLoader imageLoader;
+    private DisplayImageOptions options;
+    private View headerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +115,6 @@ public class MainActivity extends AppCompatActivity
 
 
         //Image loader configuration
-        ImageLoader imageLoader;
         imageLoader = ImageLoader.getInstance();
         File cacheDir = new File(getCacheDir(), getString(R.string.app_name));
         ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(this)
@@ -124,38 +125,16 @@ public class MainActivity extends AppCompatActivity
                 .build();
         imageLoader.init(configImg);
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(90)).cacheInMemory(false)
+        options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(90)).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 
 
-        View headerLayout = navigationView.getHeaderView(0);
+        headerLayout = navigationView.getHeaderView(0);
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-
-        ImageView profilePicture = (ImageView) headerLayout.findViewById(R.id.profilePicture);
-        TextView username = (TextView) headerLayout.findViewById(R.id.username);
-        TextView displayedName = (TextView) headerLayout.findViewById(R.id.displayedName);
-        TextView ownerStatus = (TextView) headerLayout.findViewById(R.id.owner_status);
-        TextView ownerFollowing = (TextView) headerLayout.findViewById(R.id.owner_following);
-        TextView ownerFollowers = (TextView) headerLayout.findViewById(R.id.owner_followers);
-
         Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(prefKeyOauthTokenT);
-        //Something wrong happened with the account recorded in db (ie: bad token)
-        if( account == null ) {
-            Helper.logout(getApplicationContext());
-            Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);
-            Toast.makeText(getApplicationContext(),R.string.toast_error, Toast.LENGTH_LONG).show();
-            startActivity(myIntent);
-            finish(); //User is logged out to get a new token
-        }else {
-            ownerStatus.setText(String.valueOf(account.getStatuses_count()));
-            ownerFollowers.setText(String.valueOf(account.getFollowers_count()));
-            ownerFollowing.setText(String.valueOf(account.getFollowing_count()));
-            username.setText(String.format("@%s",account.getUsername()));
-            displayedName.setText(account.getDisplay_name());
-            imageLoader.displayImage(account.getAvatar(), profilePicture, options);
-        }
+        updateHeaderAccountInfo(account);
         boolean menuWasSelected = false;
         if( getIntent() != null && getIntent().getExtras() != null ){
             Bundle extras = getIntent().getExtras();
@@ -325,7 +304,7 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
         //Proceeds to update of the authenticated account
         if(Helper.isLoggedIn(getApplicationContext()))
-            new UpdateAccountInfoAsyncTask(getApplicationContext(), null, MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 
@@ -430,6 +409,30 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    private void updateHeaderAccountInfo(Account account){
+        ImageView profilePicture = (ImageView) headerLayout.findViewById(R.id.profilePicture);
+        TextView username = (TextView) headerLayout.findViewById(R.id.username);
+        TextView displayedName = (TextView) headerLayout.findViewById(R.id.displayedName);
+        TextView ownerStatus = (TextView) headerLayout.findViewById(R.id.owner_status);
+        TextView ownerFollowing = (TextView) headerLayout.findViewById(R.id.owner_following);
+        TextView ownerFollowers = (TextView) headerLayout.findViewById(R.id.owner_followers);
+        //Something wrong happened with the account recorded in db (ie: bad token)
+        if( account == null ) {
+            Helper.logout(getApplicationContext());
+            Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);
+            Toast.makeText(getApplicationContext(),R.string.toast_error, Toast.LENGTH_LONG).show();
+            startActivity(myIntent);
+            finish(); //User is logged out to get a new token
+        }else {
+            ownerStatus.setText(String.valueOf(account.getStatuses_count()));
+            ownerFollowers.setText(String.valueOf(account.getFollowers_count()));
+            ownerFollowing.setText(String.valueOf(account.getFollowing_count()));
+            username.setText(String.format("@%s",account.getUsername()));
+            displayedName.setText(account.getDisplay_name());
+            imageLoader.displayImage(account.getAvatar(), profilePicture, options);
+        }
+    }
+
     private void populateTitleWithTag(String tag, String title, int index){
         if( tag == null)
             return;
@@ -448,11 +451,17 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onUpdateAccountInfo(boolean error) {
         if( error){
-            //It is not, the user is redirected to the login page
+            //An error occurred,  the user is redirected to the login page
             Helper.logout(getApplicationContext());
             Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(myIntent);
             finish();
+        }else {
+            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            SQLiteDatabase db = Sqlite.getInstance(MainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
+            updateHeaderAccountInfo(account);
         }
     }
 }
