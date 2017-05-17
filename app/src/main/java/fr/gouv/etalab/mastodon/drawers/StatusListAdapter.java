@@ -410,6 +410,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 String url = attachment.getPreview_url();
                 if( url == null || url.trim().equals(""))
                     url = attachment.getUrl();
+                if( url.trim().equals("https://mastodon.etalab.gouv.fr/files/small/missing.png"))
+                    continue;
                 imageLoader.displayImage(url, imageView, options);
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override

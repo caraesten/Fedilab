@@ -27,7 +27,6 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -123,7 +122,7 @@ public class Helper {
      *  Check if the user is connected to Internet
      * @return boolean
      */
-    public static boolean isConnectingToInternet(Context context) {
+    public static boolean isConnectedToInternet(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();
         if ( ni != null && ni.isConnected()) {
