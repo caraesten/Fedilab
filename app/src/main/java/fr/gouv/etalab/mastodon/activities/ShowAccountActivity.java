@@ -14,7 +14,10 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.activities;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -23,6 +26,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +35,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,8 +84,9 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     private ViewPager mPager;
     private String accountId;
     private TabLayout tabLayout;
-
-
+    private BroadcastReceiver hide_header;
+    private TextView account_note;
+    private String userId;
 
     public enum action{
         FOLLOW,
@@ -95,6 +101,9 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_account);
+
+
+
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         imageLoader = ImageLoader.getInstance();
@@ -111,7 +120,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
             accountId = b.getString("accountId");
             new RetrieveRelationshipAsyncTask(getApplicationContext(), accountId,ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new RetrieveAccountAsyncTask(getApplicationContext(),accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             if( accountId != null && accountId.equals(userId)){
                 account_follow.setVisibility(View.GONE);
             }
@@ -166,6 +175,30 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
             }
         });
+
+
+        account_note = (TextView) findViewById(R.id.account_note);
+        //Register LocalBroadcast to receive selected accounts after search
+        hide_header = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                boolean hide = intent.getBooleanExtra("hide", false);
+                if( hide){
+                    account_follow.setVisibility(View.GONE);
+                    account_note.setVisibility(View.GONE);
+                    tabLayout.setVisibility(View.GONE);
+                }else {
+                    account_follow.setVisibility(View.VISIBLE);
+                    if( accountId != null && accountId.equals(userId)){
+                        account_follow.setVisibility(View.GONE);
+                    }
+                    tabLayout.setVisibility(View.VISIBLE);
+                    account_note.setVisibility(View.VISIBLE);
+                }
+            }
+        };
+        LocalBroadcastManager.getInstance(this).registerReceiver(hide_header, new IntentFilter(Helper.HEADER_ACCOUNT));
+
         //Follow button
         account_follow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,7 +241,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         TextView account_dn = (TextView) findViewById(R.id.account_dn);
         TextView account_un = (TextView) findViewById(R.id.account_un);
         TextView account_ac = (TextView) findViewById(R.id.account_ac);
-        TextView account_note = (TextView) findViewById(R.id.account_note);
+
         if( account != null){
             setTitle(account.getAcct());
             account_dn.setText(account.getDisplay_name());
@@ -237,6 +270,12 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
             }
             statusListAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(hide_header);
     }
 
     @Override
@@ -287,18 +326,21 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                     DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
                     bundle.putString("targetedId", accountId);
+                    bundle.putBoolean("hideHeader",true);
                     displayStatusFragment.setArguments(bundle);
                     return displayStatusFragment;
                 case 1:
                     DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
                     bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWING);
                     bundle.putString("targetedId", accountId);
+                    bundle.putBoolean("hideHeader",true);
                     displayAccountsFragment.setArguments(bundle);
                     return displayAccountsFragment;
                 case 2:
                     displayAccountsFragment = new DisplayAccountsFragment();
                     bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWERS);
                     bundle.putString("targetedId", accountId);
+                    bundle.putBoolean("hideHeader",true);
                     displayAccountsFragment.setArguments(bundle);
                     return displayAccountsFragment;
             }

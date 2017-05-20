@@ -49,12 +49,22 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final Button connectionButton = (Button) findViewById(R.id.login_button);
-        final Intent webviewIntent = new Intent(this, WebviewActivity.class);
-
-
+        Button connectionButton = (Button) findViewById(R.id.login_button);
         connectionButton.setEnabled(false);
 
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Button connectionButton = (Button) findViewById(R.id.login_button);
+        if( !connectionButton.isEnabled())
+            retrievesClientId();
+    }
+
+    private void retrievesClientId(){
+        final Button connectionButton = (Button) findViewById(R.id.login_button);
+        final Intent webviewIntent = new Intent(this, WebviewActivity.class);
         String action = "/api/v1/apps";
         HashMap<String,String> parameters = new HashMap<>();
         parameters.put(Helper.CLIENT_NAME, Helper.OAUTH_REDIRECT_HOST);
@@ -99,9 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
-
 
 
 

@@ -16,7 +16,6 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -29,6 +28,10 @@ import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.lang.*;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +44,8 @@ import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+
+import static fr.gouv.etalab.mastodon.helper.Helper.USER_AGENT;
 
 
 /**
@@ -66,7 +71,6 @@ public class API {
     private List<Notification> notifications;
     private int tootPerPage, accountPerPage, notificationPerPage;
     private int actionCode;
-    private String userId;
 
     public enum StatusAction{
         FAVOURITE,
@@ -90,7 +94,6 @@ public class API {
         tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
         accountPerPage = sharedpreferences.getInt(Helper.SET_ACCOUNTS_PER_PAGE, 40);
         notificationPerPage = sharedpreferences.getInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 40);
-        userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
     }
 
     /***
@@ -308,7 +311,7 @@ public class API {
     }
 
     /**
-     * Retrieves home timeline for the account since an id  *synchronously*
+     * Retrieves home timeline for the account since an Id value *synchronously*
      * @return List<Status>
      */
     public List<Status> getHomeTimelineSinceId(String since_id) {
@@ -352,14 +355,6 @@ public class API {
         return statuses;
     }
 
-    /**
-     * Retrieves public timeline for the account *synchronously*
-     * @param local boolean only local timeline
-     * @return List<Status>
-     */
-    public List<Status> getPublicTimeline(boolean local){
-        return getPublicTimeline(local, null, null, tootPerPage);
-    }
 
     /**
      * Retrieves public timeline for the account *synchronously*
@@ -670,10 +665,8 @@ public class API {
                 if( status.getIn_reply_to_id() != null)
                     params.put("in_reply_to_id", status.getIn_reply_to_id());
                 if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0 ) {
-                    int i = 0;
                     for(Attachment attachment: status.getMedia_attachments()) {
                         params.add("media_ids[]", attachment.getId());
-                        i++;
                     }
                 }
                 if( status.isSensitive())
@@ -704,7 +697,7 @@ public class API {
                 }
             });
         }else{
-            delete(action, params, new JsonHttpResponseHandler() {
+            delete(action, null, new JsonHttpResponseHandler() {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -1167,21 +1160,39 @@ public class API {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         client.addHeader("Authorization", "Bearer "+prefKeyOauthTokenT);
-        client.get(getAbsoluteUrl(action), params, responseHandler);
+        try {
+            client.setUserAgent(USER_AGENT);
+            client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
+            client.get(getAbsoluteUrl(action), params, responseHandler);
+        } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
+            e.printStackTrace();
+        }
     }
 
     private void post(String action, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         client.addHeader("Authorization", "Bearer "+prefKeyOauthTokenT);
-        client.post(getAbsoluteUrl(action), params, responseHandler);
+        try {
+            client.setUserAgent(USER_AGENT);
+            client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
+            client.post(getAbsoluteUrl(action), params, responseHandler);
+        } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
+            e.printStackTrace();
+        }
     }
 
     private void delete(String action, RequestParams params, AsyncHttpResponseHandler responseHandler){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         client.addHeader("Authorization", "Bearer "+prefKeyOauthTokenT);
-        client.delete(getAbsoluteUrl(action), params, responseHandler);
+        try {
+            client.setUserAgent(USER_AGENT);
+            client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
+            client.delete(getAbsoluteUrl(action), params, responseHandler);
+        } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
+            e.printStackTrace();
+        }
     }
 
     private String getAbsoluteUrl(String action) {

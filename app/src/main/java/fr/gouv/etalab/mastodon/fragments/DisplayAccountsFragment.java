@@ -14,10 +14,12 @@ package fr.gouv.etalab.mastodon.fragments;
  * You should have received a copy of the GNU General Public License along with Thomas Schneider; if not,
  * see <http://www.gnu.org/licenses>. */
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,6 +60,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
     private SwipeRefreshLayout swipeRefreshLayout;
     private int accountPerPage;
     private String targetedId;
+    private boolean hideHeader = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,6 +72,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         if (bundle != null) {
             type = (RetrieveAccountsAsyncTask.Type) bundle.get("type");
             targetedId = bundle.getString("targetedId", null);
+            hideHeader = bundle.getBoolean("hideHeader", false);
         }
         max_id = null;
         firstLoad = true;
@@ -78,7 +82,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         accountPerPage = sharedpreferences.getInt(Helper.SET_ACCOUNTS_PER_PAGE, 40);
-        ListView lv_accounts = (ListView) rootView.findViewById(R.id.lv_accounts);
+        final ListView lv_accounts = (ListView) rootView.findViewById(R.id.lv_accounts);
 
         mainLoader = (RelativeLayout) rootView.findViewById(R.id.loader);
         nextElementLoader = (RelativeLayout) rootView.findViewById(R.id.loading_next_accounts);
@@ -108,6 +112,35 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
                 }
             }
         });
+
+        //Hide account header when scrolling for ShowAccountActivity
+        if( hideHeader ) {
+            lv_accounts.setOnScrollListener(new AbsListView.OnScrollListener() {
+                int lastFirstVisibleItem = 0;
+
+                @Override
+                public void onScrollStateChanged(AbsListView view, int scrollState) {
+                }
+
+                @Override
+                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                    if (view.getId() == lv_accounts.getId() && totalItemCount > visibleItemCount) {
+                        final int currentFirstVisibleItem = lv_accounts.getFirstVisiblePosition();
+
+                        if (currentFirstVisibleItem > lastFirstVisibleItem) {
+                            Intent intent = new Intent(Helper.HEADER_ACCOUNT);
+                            intent.putExtra("hide", true);
+                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                        } else if (currentFirstVisibleItem < lastFirstVisibleItem) {
+                            Intent intent = new Intent(Helper.HEADER_ACCOUNT);
+                            intent.putExtra("hide", false);
+                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                        }
+                        lastFirstVisibleItem = currentFirstVisibleItem;
+                    }
+                }
+            });
+        }
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -155,7 +188,6 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
     }
-
 
 
     @Override

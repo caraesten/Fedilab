@@ -36,6 +36,8 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.loopj.android.http.BuildConfig;
+
 import java.io.File;
 import java.net.InetAddress;
 import java.text.ParseException;
@@ -124,9 +126,10 @@ public class Helper {
 
     //Receiver
     public static final String SEARCH_VALIDATE_ACCOUNT = "search_validate_account";
+    public static final String HEADER_ACCOUNT = "header_account";
 
-
-
+    //User agent
+    public static final String USER_AGENT = "Mastalab/"+ BuildConfig.VERSION_NAME + " Android/"+ Build.VERSION.RELEASE;
 
     /***
      *  Check if the user is connected to Internet

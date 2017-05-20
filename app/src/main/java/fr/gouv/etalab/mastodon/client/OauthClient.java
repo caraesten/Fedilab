@@ -14,15 +14,23 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.client;
 
+import android.os.Build;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 import fr.gouv.etalab.mastodon.helper.Helper;
+
+import static fr.gouv.etalab.mastodon.helper.Helper.USER_AGENT;
 
 /**
  * Created by Thomas on 23/04/2017.
@@ -37,13 +45,26 @@ public class OauthClient {
 
     public void get(String action, HashMap<String, String> paramaters, AsyncHttpResponseHandler responseHandler) {
         client.setTimeout(5000);
+        client.setUserAgent(USER_AGENT);
         RequestParams params = hashToRequestParams(paramaters);
+        try {
+            client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
+            client.post(getAbsoluteUrl(action), params, responseHandler);
+        } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
+            e.printStackTrace();
+        }
         client.get(getAbsoluteUrl(action), params, responseHandler);
     }
 
     public void post(String action, HashMap<String, String> paramaters, AsyncHttpResponseHandler responseHandler) {
         RequestParams params = hashToRequestParams(paramaters);
-        client.post(getAbsoluteUrl(action), params, responseHandler);
+        try {
+            client.setUserAgent(USER_AGENT);
+            client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
+            client.post(getAbsoluteUrl(action), params, responseHandler);
+        } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
+            e.printStackTrace();
+        }
     }
 
     private String getAbsoluteUrl(String action) {
