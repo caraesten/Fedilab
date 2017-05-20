@@ -99,6 +99,7 @@ public class Helper {
     public static final String SET_NOTIF_SHARE = "set_notif_follow_share";
     public static final String SET_NOTIF_VALIDATION = "set_share_validation";
     public static final String SET_WIFI_ONLY = "set_wifi_only";
+    public static final String SET_NOTIF_HOMETIMELINE = "set_notif_hometimeline";
     public static final String SET_NOTIF_SILENT = "set_notif_silent";
 
     //End points

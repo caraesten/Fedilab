@@ -51,6 +51,8 @@ public class SettingsNotificationsFragment extends Fragment {
         boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
         boolean notif_validation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
         boolean notif_wifi = sharedpreferences.getBoolean(Helper.SET_WIFI_ONLY, false);
+        boolean notif_silent = sharedpreferences.getBoolean(Helper.SET_NOTIF_SILENT, false);
+        boolean notif_hometimeline = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, true);
 
         final CheckBox set_notif_follow = (CheckBox) rootView.findViewById(R.id.set_notif_follow);
         final CheckBox set_notif_follow_add = (CheckBox) rootView.findViewById(R.id.set_notif_follow_add);
@@ -58,7 +60,9 @@ public class SettingsNotificationsFragment extends Fragment {
         final CheckBox set_notif_follow_mention = (CheckBox) rootView.findViewById(R.id.set_notif_follow_mention);
         final CheckBox set_notif_follow_share = (CheckBox) rootView.findViewById(R.id.set_notif_follow_share);
         final CheckBox set_share_validation = (CheckBox) rootView.findViewById(R.id.set_share_validation);
+        final CheckBox set_notif_hometimeline = (CheckBox) rootView.findViewById(R.id.set_notif_hometimeline);
         final SwitchCompat switchCompatWIFI = (SwitchCompat) rootView.findViewById(R.id.set_wifi_only);
+        final SwitchCompat switchCompatSilent = (SwitchCompat) rootView.findViewById(R.id.set_silence);
 
         set_notif_follow.setChecked(notif_follow);
         set_notif_follow_add.setChecked(notif_add);
@@ -66,9 +70,18 @@ public class SettingsNotificationsFragment extends Fragment {
         set_notif_follow_mention.setChecked(notif_mention);
         set_notif_follow_share.setChecked(notif_share);
         set_share_validation.setChecked(notif_validation);
+        set_notif_hometimeline.setChecked(notif_hometimeline);
         switchCompatWIFI.setChecked(notif_wifi);
+        switchCompatSilent.setChecked(notif_silent);
 
-
+        set_notif_hometimeline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_NOTIF_HOMETIMELINE, set_notif_hometimeline.isChecked());
+                editor.apply();
+            }
+        });
         set_notif_follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,7 +141,15 @@ public class SettingsNotificationsFragment extends Fragment {
 
             }
         });
-
+        switchCompatSilent.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // Save the state here
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_NOTIF_SILENT, isChecked);
+                editor.apply();
+            }
+        });
         return rootView;
     }
 

@@ -331,8 +331,7 @@ public class API {
             limit = 40;
         params.put("limit",String.valueOf(limit));
         statuses = new ArrayList<>();
-
-        get(String.format("/accounts/%s/statuses",userId), params, new JsonHttpResponseHandler() {
+        get("/timelines/home", params, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -1162,7 +1161,7 @@ public class API {
 
     
     private void get(String action, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-        client.setTimeout(5000);
+        client.setTimeout(10000);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         client.addHeader("Authorization", "Bearer "+prefKeyOauthTokenT);

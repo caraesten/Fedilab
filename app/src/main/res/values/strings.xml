@@ -183,6 +183,8 @@
     <string name="set_wifi_only">Notifier en WIFI seulement</string>
     <string name="set_notif_silent">Utiliser le vibreur</string>
 
+    <string name="set_title_news">Actualités</string>
+    <string name="set_notification_news">Notifier lors de nouveaux pouets sur le fil local</string>
 
     <string name="action_follow">Suivre</string>
     <string name="action_unfollow">Se désabonner</string>
