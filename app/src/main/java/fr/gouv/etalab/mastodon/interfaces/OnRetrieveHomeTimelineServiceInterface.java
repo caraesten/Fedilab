@@ -1,4 +1,3 @@
-package fr.gouv.etalab.mastodon.jobs;
 /* Copyright 2017 Thomas Schneider
  *
  * This file is a part of Mastodon Etalab for mastodon.etalab.gouv.fr
@@ -13,29 +12,16 @@ package fr.gouv.etalab.mastodon.jobs;
  *
  * You should have received a copy of the GNU General Public License along with Thomas Schneider; if not,
  * see <http://www.gnu.org/licenses>. */
-import com.evernote.android.job.Job;
-import com.evernote.android.job.JobCreator;
-import com.evernote.android.job.JobManager;
+package fr.gouv.etalab.mastodon.interfaces;
+
+
+import java.util.List;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
 
 /**
- * Created by Thomas on 29/04/2017.
- * Notification job
+ * Created by Thomas on 20/05/2017.
+ * Interface when home timeline toots have been retrieved
  */
-
-public class ApplicationJob implements JobCreator {
-    @Override
-    public Job create(String tag) {
-        switch (tag) {
-            case NotificationsSyncJob.NOTIFICATION_REFRESH:
-                return new NotificationsSyncJob();
-            case HomeTimelineSyncJob.HOME_TIMELINE:
-                return new HomeTimelineSyncJob();
-            default:
-                return null;
-        }
-    }
-
-    public static void cancelAllJob(String TAG){
-        JobManager.instance().cancelAllForTag(TAG);
-    }
+public interface OnRetrieveHomeTimelineServiceInterface {
+    void onRetrieveHomeTimelineService(List<Status> statuses, String acct);
 }

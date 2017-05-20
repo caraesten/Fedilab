@@ -14,15 +14,19 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.activities;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -48,24 +52,34 @@ public class AboutActivity extends AppCompatActivity {
             about_version.setText(getResources().getString(R.string.about_vesrion, version));
         } catch (PackageManager.NameNotFoundException ignored) {}
 
-        TextView about_developer = (TextView) findViewById(R.id.about_developer);
-        TextView about_license = (TextView) findViewById(R.id.about_license);
-        TextView about_code = (TextView) findViewById(R.id.about_code);
-        about_developer.setMovementMethod(LinkMovementMethod.getInstance());
-        about_license.setMovementMethod(LinkMovementMethod.getInstance());
-        about_code.setMovementMethod(LinkMovementMethod.getInstance());
-        about_developer.setLinkTextColor(Color.BLUE);
-        about_license.setLinkTextColor(Color.BLUE);
-        about_code.setLinkTextColor(Color.BLUE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            about_developer.setText(Html.fromHtml(getString(R.string.about_developer), Html.FROM_HTML_MODE_COMPACT));
-            about_license.setText(Html.fromHtml(getString(R.string.about_license), Html.FROM_HTML_MODE_COMPACT));
-            about_code.setText(Html.fromHtml(getString(R.string.about_code), Html.FROM_HTML_MODE_COMPACT));
-        }else {
-            about_developer.setText(Html.fromHtml(getString(R.string.about_developer)));
-            about_license.setText(Html.fromHtml(getString(R.string.about_license)));
-            about_code.setText(Html.fromHtml(getString(R.string.about_code)));
-        }
+        Button about_developer = (Button) findViewById(R.id.about_developer);
+        Button about_code = (Button) findViewById(R.id.about_code);
+        Button about_license = (Button) findViewById(R.id.about_license);
+
+        about_code.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://bitbucket.org/tom79/mastodon_etalab"));
+               startActivity(browserIntent);
+           }
+        });
+        about_developer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AboutActivity.this, ShowAccountActivity.class);
+                Bundle b = new Bundle();
+                b.putString("accountId", "2416");
+                intent.putExtras(b);
+                startActivity(intent);
+            }
+        });
+        about_license.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.gnu.org/licenses/quick-guide-gplv3.fr.html"));
+                startActivity(browserIntent);
+            }
+        });
     }
 
 

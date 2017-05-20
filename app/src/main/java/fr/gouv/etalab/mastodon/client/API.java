@@ -296,13 +296,7 @@ public class API {
         return statusContext;
     }
 
-    /**
-     * Retrieves home timeline for the account *synchronously*
-     * @return List<Status>
-     */
-    public List<Status> getHomeTimeline() {
-        return getHomeTimeline(null, null, tootPerPage);
-    }
+
 
     /**
      * Retrieves home timeline for the account *synchronously*
@@ -311,6 +305,14 @@ public class API {
      */
     public List<Status> getHomeTimeline( String max_id) {
         return getHomeTimeline(max_id, null, tootPerPage);
+    }
+
+    /**
+     * Retrieves home timeline for the account since an id  *synchronously*
+     * @return List<Status>
+     */
+    public List<Status> getHomeTimelineSinceId(String since_id) {
+        return getHomeTimeline(null, since_id, tootPerPage);
     }
 
     /**

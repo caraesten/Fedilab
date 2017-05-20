@@ -119,15 +119,20 @@
 
     <!-- About -->
     <string name="about_vesrion">Version %1$s</string>
-    <string name="about_developer">Développeur : <a href="https://mastodon.etalab.gouv.fr/@tschneider">@tschneider@mastodon.etalab.gouv.fr</a></string>
-    <string name="about_license">Licence : <a href="https://www.gnu.org/licenses/quick-guide-gplv3.fr.html">GNU GPL V3</a></string>
-    <string name="about_code">Code source : <a href="https://bitbucket.org/tom79/mastodon_etalab">bitbucket</a></string>
+    <string name="about_developer">Développeur :</string>
+    <string name="about_developer_action">\@tschneider</string>
+    <string name="about_license">Licence : </string>
+    <string name="about_license_action">GNU GPL V3</string>
+    <string name="about_code">Code source : </string>
+    <string name="about_code_action">bitbucket</string>
     <!-- Conversation -->
     <string name="conversation">Conversation</string>
 
     <!-- Accounts -->
     <string name="no_accounts">Aucun compte à afficher</string>
-
+    <string name="status_cnt">Pouets \n %d</string>
+    <string name="following_cnt">Abonnements \n %d</string>
+    <string name="followers_cnt">Abonnés \n %d</string>
 
     <!-- Notifications -->
     <string name="no_notifications">Aucune notification à afficher</string>
@@ -135,9 +140,14 @@
     <string name="notif_reblog">a partagé votre pouet</string>
     <string name="notif_favourite">a ajouté votre pouet à ses favoris</string>
     <string name="notif_follow">vous a suivi</string>
+    <string name="notif_pouet">Nouveau pouet de %1$s</string>
     <plurals name="other_notifications">
         <item quantity="one">et %d autre notification</item>
         <item quantity="other">et %d autres notifications</item>
+    </plurals>
+    <plurals name="other_notif_hometimeline">
+        <item quantity="one">et un autre pouet à découvrir</item>
+        <item quantity="other">et %d autres pouets à découvrir</item>
     </plurals>
     <!-- HEADER -->
     <string name="status">Pouets</string>
@@ -184,7 +194,7 @@
     <string name="set_notif_silent">Utiliser le vibreur</string>
 
     <string name="set_title_news">Actualités</string>
-    <string name="set_notification_news">Notifier lors de nouveaux pouets sur le fil local</string>
+    <string name="set_notification_news">Notifier lors de nouveaux pouets sur la page d\'accueil</string>
 
     <string name="action_follow">Suivre</string>
     <string name="action_unfollow">Se désabonner</string>

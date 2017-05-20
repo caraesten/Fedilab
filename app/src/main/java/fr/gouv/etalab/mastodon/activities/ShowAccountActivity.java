@@ -17,6 +17,7 @@ package fr.gouv.etalab.mastodon.activities;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -25,6 +26,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -206,7 +208,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         TextView account_dn = (TextView) findViewById(R.id.account_dn);
         TextView account_un = (TextView) findViewById(R.id.account_un);
         TextView account_ac = (TextView) findViewById(R.id.account_ac);
-
+        TextView account_note = (TextView) findViewById(R.id.account_note);
         if( account != null){
             setTitle(account.getAcct());
             account_dn.setText(account.getDisplay_name());
@@ -215,9 +217,14 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 account_ac.setVisibility(View.GONE);
             else
                 account_ac.setText(account.getAcct());
-            tabLayout.getTabAt(0).setText(getString(R.string.status) + "\n" + String.valueOf(account.getStatuses_count()));
-            tabLayout.getTabAt(1).setText(getString(R.string.following) + "\n" + String.valueOf(account.getFollowing_count()));
-            tabLayout.getTabAt(2).setText(getString(R.string.followers) + "\n" + String.valueOf(account.getFollowers_count()));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                account_note.setText(Html.fromHtml(account.getNote(), Html.FROM_HTML_MODE_COMPACT));
+            else
+                //noinspection deprecation
+                account_note.setText(Html.fromHtml(account.getNote()));
+            tabLayout.getTabAt(0).setText(getString(R.string.status_cnt, account.getStatuses_count()));
+            tabLayout.getTabAt(1).setText(getString(R.string.following_cnt, account.getFollowing_count()));
+            tabLayout.getTabAt(2).setText(getString(R.string.followers_cnt, account.getFollowers_count()));
             imageLoader.displayImage(account.getAvatar(), account_pp, options);
         }
     }

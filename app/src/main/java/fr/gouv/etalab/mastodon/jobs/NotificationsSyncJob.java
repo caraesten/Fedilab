@@ -13,18 +13,15 @@ package fr.gouv.etalab.mastodon.jobs;
  *
  * You should have received a copy of the GNU General Public License along with Thomas Schneider; if not,
  * see <http://www.gnu.org/licenses>. */
-import android.app.PendingIntent;
+
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.RingtoneManager;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
+
 
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobManager;
@@ -39,7 +36,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveNotificationsAsyncTask;
@@ -49,8 +45,8 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveNotificationsInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
-import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
-import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_NOTIFICATION;
+import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
+import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
 
 
 /**
@@ -60,8 +56,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_NOTIFICATION;
 
 public class NotificationsSyncJob extends Job implements OnRetrieveNotificationsInterface{
 
-    public static final String NOTIFICATION_REFRESH = "job_notification";
-    private int jobId;
+    static final String NOTIFICATION_REFRESH = "job_notification";
     private int notificationId;
 
     @NonNull
@@ -73,7 +68,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
     }
 
 
-    public static int schedule(Context context, boolean updateCurrent){
+    public static int schedule(boolean updateCurrent){
 
         Set<JobRequest> jobRequests = JobManager.instance().getAllJobRequestsForTag(NOTIFICATION_REFRESH);
         if (!jobRequests.isEmpty() && !updateCurrent) {
@@ -99,6 +94,15 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
         SQLiteDatabase db = Sqlite.getInstance(getContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         //If an Internet connection and user agrees with notification refresh
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        //Check which notifications the user wants to see
+        boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
+        boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
+        boolean notif_ask = sharedpreferences.getBoolean(Helper.SET_NOTIF_ASK, true);
+        boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
+        boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
+        //User disagree with all notifications
+        if( !notif_follow && !notif_add && !notif_ask && !notif_mention && !notif_share)
+            return; //Nothing is done
         //If WIFI only and on WIFI OR user defined any connections to use the service.
         if(!sharedpreferences.getBoolean(Helper.SET_WIFI_ONLY, false) || Helper.isOnWIFI(getContext())) {
             List<Account> accounts = new AccountDAO(getContext(),db).getAllAccount();
@@ -124,7 +128,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
         boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
-        boolean notif_ask = sharedpreferences.getBoolean(Helper.SET_NOTIF_ASK, true);
+        //boolean notif_ask = sharedpreferences.getBoolean(Helper.SET_NOTIF_ASK, true);
         boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
         boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
         String max_id = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + acct, null);
@@ -137,7 +141,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
             int newShare = 0;
             String notificationUrl = null;
             String title = null;
-            String message = null;
+            String message;
             for(Notification notification: notifications){
                 //The notification associated to max_id is discarded as it is supposed to have already been sent
                 if( notification.getId().equals(max_id))
@@ -207,7 +211,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                     message = getContext().getResources().getQuantityString(R.plurals.other_notifications, other, other);
                 else
                     message = "";
-                notify_user(icon_notification,title,message);
+                notify_user(getContext(), NOTIFICATION_INTENT, notificationId, icon_notification,title,message);
             }
         }
         SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -216,36 +220,4 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
 
     }
 
-    /**
-     * Sends notification with intent
-     * @param icon Bitmap profile picture
-     * @param title String title of the notification
-     * @param message String message for the notification
-     */
-    private void notify_user(Bitmap icon, String title, String message ) {
-        final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        // prepare intent which is triggered if the user click on the notification
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
-        final Intent intent = new Intent(getContext(), MainActivity.class);
-        intent.putExtra(Helper.NOTIFICATION_TYPE, Helper.NOTIFICATION_INTENT);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
-        intent.putExtra(INTENT_ACTION, INTENT_NOTIFICATION);
-        PendingIntent pIntent = PendingIntent.getActivity(getContext(), notificationId, intent, PendingIntent.FLAG_ONE_SHOT);
-
-        RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        // build notification
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getContext())
-                .setSmallIcon(R.drawable.notification_icon)
-                .setTicker(message)
-                .setWhen(System.currentTimeMillis())
-                .setAutoCancel(true)
-                .setContentIntent(pIntent)
-                .setContentText(message);
-        if( !sharedpreferences.getBoolean(Helper.SET_NOTIF_SILENT,false) ) {
-            notificationBuilder.setDefaults(-1);
-        }
-        notificationBuilder.setContentTitle(title);
-        notificationBuilder.setLargeIcon(icon);
-        notificationManager.notify(notificationId, notificationBuilder.build());
-    }
 }

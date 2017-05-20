@@ -62,8 +62,9 @@ import fr.gouv.etalab.mastodon.fragments.TabLayoutSettingsFragment;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
-import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_NOTIFICATION;
+import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface {
@@ -138,9 +139,13 @@ public class MainActivity extends AppCompatActivity
         boolean menuWasSelected = false;
         if( getIntent() != null && getIntent().getExtras() != null ){
             Bundle extras = getIntent().getExtras();
-            if (extras.getInt(INTENT_ACTION) == INTENT_NOTIFICATION){
+            if (extras.getInt(INTENT_ACTION) == NOTIFICATION_INTENT){
                 navigationView.setCheckedItem(R.id.nav_notification);
                 navigationView.getMenu().performIdentifierAction(R.id.nav_notification, 0);
+                menuWasSelected = true;
+            }else if( extras.getInt(INTENT_ACTION) == HOME_TIMELINE_INTENT){
+                navigationView.setCheckedItem(R.id.nav_home);
+                navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
                 menuWasSelected = true;
             }
         }
@@ -190,10 +195,13 @@ public class MainActivity extends AppCompatActivity
             return;
         Bundle extras = intent.getExtras();
         if( extras.containsKey(INTENT_ACTION) ){
-            if (extras.getInt(INTENT_ACTION) == INTENT_NOTIFICATION){
-                final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            if (extras.getInt(INTENT_ACTION) == NOTIFICATION_INTENT){
                 navigationView.setCheckedItem(R.id.nav_notification);
                 navigationView.getMenu().performIdentifierAction(R.id.nav_notification, 0);
+            }else if( extras.getInt(INTENT_ACTION) == HOME_TIMELINE_INTENT){
+                navigationView.setCheckedItem(R.id.nav_home);
+                navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
             }
         }
         intent.replaceExtras(new Bundle());
