@@ -50,6 +50,7 @@ import java.util.HashMap;
 
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -115,12 +116,12 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-
         //Image loader configuration
         imageLoader = ImageLoader.getInstance();
         File cacheDir = new File(getCacheDir(), getString(R.string.app_name));
         ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(this)
                 .threadPoolSize(5)
+                .imageDownloader(new PatchBaseImageDownloader(getApplicationContext()))
                 .threadPriority(Thread.MIN_PRIORITY + 3)
                 .denyCacheImageMultipleSizesInMemory()
                 .diskCache(new UnlimitedDiskCache(cacheDir))
