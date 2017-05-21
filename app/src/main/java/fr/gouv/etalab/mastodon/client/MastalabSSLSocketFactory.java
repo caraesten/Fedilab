@@ -27,7 +27,7 @@ import javax.net.ssl.X509TrustManager;
  * https://code.google.com/p/android/issues/detail?id=13117#c14 <p>&nbsp;</p> Warning! This omits SSL
  * certificate validation on every device, use with caution
  */
-class MastalabSSLSocketFactory extends com.loopj.android.http.MySSLSocketFactory {
+public class MastalabSSLSocketFactory extends com.loopj.android.http.MySSLSocketFactory {
 
     private final SSLContext sslContext = SSLContext.getInstance("TLS");
     /**
@@ -39,7 +39,7 @@ class MastalabSSLSocketFactory extends com.loopj.android.http.MySSLSocketFactory
      * @throws KeyStoreException         KeyStoreException
      * @throws UnrecoverableKeyException UnrecoverableKeyException
      */
-    MastalabSSLSocketFactory(KeyStore truststore) throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException, UnrecoverableKeyException {
+    public MastalabSSLSocketFactory(KeyStore truststore) throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException, UnrecoverableKeyException {
         super(truststore);
         X509TrustManager tm = new X509TrustManager() {
             public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {

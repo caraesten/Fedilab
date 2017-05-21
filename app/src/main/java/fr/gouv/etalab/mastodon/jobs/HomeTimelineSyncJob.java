@@ -142,7 +142,7 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
                         title = getContext().getResources().getString(R.string.notif_pouet, status.getAccount().getDisplay_name());
                     }catch (Exception e){
                         icon_notification = BitmapFactory.decodeResource(getContext().getResources(),
-                                R.drawable.mastodon_logo);
+                                R.drawable.mastodonlogo);
                     }
                 }
             }

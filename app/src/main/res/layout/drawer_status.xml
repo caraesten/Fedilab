@@ -92,7 +92,6 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/mastodon_logo"
                 android:layout_height="match_parent"
                 tools:ignore="ContentDescription" />
             <LinearLayout
@@ -109,7 +108,6 @@
                     android:layout_weight="1"
                     android:scaleType="centerCrop"
                     android:layout_height="0dp"
-                    android:src="@drawable/mastodon_logo"
                     tools:ignore="ContentDescription" />
                 <LinearLayout
                     android:layout_weight="1"
@@ -123,7 +121,6 @@
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/mastodon_logo"
                         android:layout_height="wrap_content"
                         tools:ignore="ContentDescription" />
                     <ImageView
@@ -133,7 +130,6 @@
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/mastodon_logo"
                         android:layout_height="wrap_content"
                         tools:ignore="ContentDescription" />
                 </LinearLayout>

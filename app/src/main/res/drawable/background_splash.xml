@@ -23,6 +23,6 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/mastodon_logo"/>
+            android:src="@drawable/mastodonlogo"/>
     </item>
 </layer-list>

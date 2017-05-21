@@ -17,6 +17,8 @@
     <string name="cancel">Annuler</string>
     <string name="download">Télécharger</string>
     <string name="download_file">Télécharger %1$s</string>
+    <string name="password">Mot de passe</string>
+    <string name="email">Email</string>
     <!--- Menu -->
     <string name="home_menu">Accueil</string>
     <string name="home_timeline">Accueil</string>
@@ -170,6 +172,7 @@
     <string name="toast_unstatus">Le pouet a été supprimé !</string>
     <string name="toast_error">Oups ! Une erreur s\'est produite !</string>
     <string name="toast_error_loading_account">Une erreur s\'est produite en chargeant le compte !</string>
+    <string name="toast_error_login">Impossible de vous connecter !</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimisation du chargement</string>
     <string name="set_toots_page">Nombre de pouets par chargement</string>

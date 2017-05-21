@@ -199,7 +199,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                         icon_notification = imageLoaderNoty.loadImageSync(notificationUrl);
                     }catch (Exception e){
                         icon_notification = BitmapFactory.decodeResource(getContext().getResources(),
-                                R.drawable.mastodon_logo);
+                                R.drawable.mastodonlogo);
                     }
                 }
             }

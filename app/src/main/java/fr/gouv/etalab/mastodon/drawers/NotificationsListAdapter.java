@@ -171,19 +171,16 @@ public class NotificationsListAdapter extends BaseAdapter  {
             //Adds attachment -> disabled, to enable them uncomment the line below
             //loadAttachments(status, holder);
             holder.notification_status_container.setVisibility(View.VISIBLE);
-
-            if( !status.getIn_reply_to_account_id().equals("null") || !status.getIn_reply_to_id().equals("null") ) {
-                holder.notification_status_content.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(context, ShowConversationActivity.class);
-                        Bundle b = new Bundle();
-                        b.putString("statusId", status.getId()); //Your id
-                        intent.putExtras(b); //Put your id to your next Intent
-                        context.startActivity(intent);
-                    }
-                });
-            }
+            holder.notification_status_content.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ShowConversationActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("statusId", status.getId());
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+            });
             switch (status.getVisibility()){
                 case "public":
                     holder.status_privacy.setImageResource(R.drawable.ic_action_globe);
@@ -216,8 +213,8 @@ public class NotificationsListAdapter extends BaseAdapter  {
             public void onClick(View v) {
                 Intent intent = new Intent(context, TootActivity.class);
                 Bundle b = new Bundle();
-                b.putString("inReplyTo", notification.getStatus().getId()); //Your id
-                intent.putExtras(b); //Put your id to your next Intent
+                b.putString("inReplyTo", notification.getStatus().getId());
+                intent.putExtras(b);
                 context.startActivity(intent);
             }
         });

@@ -24,25 +24,41 @@
     android:orientation="vertical"
     >
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_width="100dp"
         android:layout_gravity="center_horizontal"
-        android:padding="20dp"
-        android:layout_weight="2"
-        android:src="@drawable/mastodon_logo"
-        android:layout_height="0dp"
+        android:src="@drawable/mastodonlogo"
+        android:layout_height="100dp"
         tools:ignore="ContentDescription" />
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_margin="50dp"
         android:layout_gravity="center"
         android:gravity="center"
+        android:orientation="vertical"
         android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/login_uid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="@string/email"
+            />
+
+        <EditText
+            android:id = "@+id/login_passwd"
+            android:inputType="textPassword"
+            android:hint="@string/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
         <Button
             android:id="@+id/login_button"
             android:textAllCaps="false"
             android:drawableLeft="@drawable/mastodon_icon"
             android:drawableStart="@drawable/mastodon_icon"
             android:gravity="center"
+            android:layout_marginTop="20dp"
             android:drawablePadding="10dp"
             android:paddingLeft="15dp"
             android:paddingStart="15dp"

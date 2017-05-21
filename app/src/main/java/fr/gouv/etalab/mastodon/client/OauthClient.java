@@ -59,6 +59,7 @@ public class OauthClient {
     public void post(String action, HashMap<String, String> paramaters, AsyncHttpResponseHandler responseHandler) {
         RequestParams params = hashToRequestParams(paramaters);
         try {
+            client.setConnectTimeout(30000); //30s timeout
             client.setUserAgent(USER_AGENT);
             client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
             client.post(getAbsoluteUrl(action), params, responseHandler);
