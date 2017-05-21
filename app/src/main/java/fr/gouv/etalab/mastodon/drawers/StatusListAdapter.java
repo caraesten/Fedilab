@@ -332,7 +332,10 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             public void onClick(View v) {
                 Intent intent = new Intent(context, ShowAccountActivity.class);
                 Bundle b = new Bundle();
-                b.putString("accountId", status.getAccount().getId());
+                if( status.getReblog() == null)
+                    b.putString("accountId", status.getAccount().getId());
+                else
+                    b.putString("accountId", status.getReblog().getAccount().getId());
                 intent.putExtras(b);
                 context.startActivity(intent);
             }
@@ -406,7 +409,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 String url = attachment.getPreview_url();
                 if( url == null || url.trim().equals(""))
                     url = attachment.getUrl();
-                if( url.trim().equals("https://mastodon.etalab.gouv.fr/files/small/missing.png"))
+                if( url.trim().contains("missing.png"))
                     continue;
                 imageLoader.displayImage(url, imageView, options);
                 imageView.setOnClickListener(new View.OnClickListener() {

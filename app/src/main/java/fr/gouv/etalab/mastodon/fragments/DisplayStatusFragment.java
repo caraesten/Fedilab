@@ -14,10 +14,12 @@ package fr.gouv.etalab.mastodon.fragments;
  * You should have received a copy of the GNU General Public License along with Thomas Schneider; if not,
  * see <http://www.gnu.org/licenses>. */
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +27,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +48,6 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsInterface {
 
 
-    private TextView noAction;
     private boolean flag_loading;
     private Context context;
     private AsyncTask<Void, Void, Void> asyncTask;
@@ -57,9 +58,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private RelativeLayout mainLoader, nextElementLoader, textviewNoAction;
     private boolean firstLoad;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private int tootPerPage;
     private String targetedId;
     private String tag;
+    private boolean hideHeader = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,6 +73,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             type = (RetrieveFeedsAsyncTask.Type) bundle.get("type");
             targetedId = bundle.getString("targetedId", null);
             tag = bundle.getString("tag", null);
+            hideHeader = bundle.getBoolean("hideHeader", false);
         }
         max_id = null;
         flag_loading = true;
@@ -80,10 +82,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         boolean isOnWifi = Helper.isOnWIFI(context);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
         int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
 
-        ListView lv_status = (ListView) rootView.findViewById(R.id.lv_status);
+        final ListView lv_status = (ListView) rootView.findViewById(R.id.lv_status);
 
         mainLoader = (RelativeLayout) rootView.findViewById(R.id.loader);
         nextElementLoader = (RelativeLayout) rootView.findViewById(R.id.loading_next_status);
@@ -116,6 +117,35 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 }
             }
         });
+
+        //Hide account header when scrolling for ShowAccountActivity
+        if( hideHeader ) {
+            lv_status.setOnScrollListener(new AbsListView.OnScrollListener() {
+                int lastFirstVisibleItem = 0;
+
+                @Override
+                public void onScrollStateChanged(AbsListView view, int scrollState) {
+                }
+
+                @Override
+                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                    if (view.getId() == lv_status.getId() && totalItemCount > visibleItemCount) {
+                        final int currentFirstVisibleItem = lv_status.getFirstVisiblePosition();
+
+                        if (currentFirstVisibleItem > lastFirstVisibleItem) {
+                            Intent intent = new Intent(Helper.HEADER_ACCOUNT);
+                            intent.putExtra("hide", true);
+                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                        } else if (currentFirstVisibleItem < lastFirstVisibleItem) {
+                            Intent intent = new Intent(Helper.HEADER_ACCOUNT);
+                            intent.putExtra("hide", false);
+                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                        }
+                        lastFirstVisibleItem = currentFirstVisibleItem;
+                    }
+                }
+            });
+        }
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -193,9 +223,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
-        if( statuses != null && statuses.size() < tootPerPage )
-            flag_loading = true;
-        else
-            flag_loading = false;
+        flag_loading = false;
+
     }
 }

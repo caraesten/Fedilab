@@ -69,7 +69,20 @@
             android:layout_height="wrap_content" />
         <!-- END NOTIFICATIONS SETTINGS -->
 
-
+        <!-- NOTIFICATION CONTENT NEW -->
+        <TextView
+            android:text="@string/set_title_news"
+            android:background="@drawable/shape_border_bottom_settings"
+            android:paddingBottom="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <!-- New hometimeline content -->
+        <CheckBox
+            android:id="@+id/set_notif_hometimeline"
+            android:layout_width="wrap_content"
+            android:text="@string/set_notification_news"
+            android:layout_height="wrap_content" />
         <!-- MORE OPTIONS SETTINGS -->
         <TextView
             android:text="@string/settings_title_more_options"
@@ -105,7 +118,25 @@
                 android:layout_height="wrap_content"
                 />
         </LinearLayout>
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_notif_silent"/>
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/set_silence"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
 

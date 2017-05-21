@@ -15,25 +15,36 @@
 package fr.gouv.etalab.mastodon.activities;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
 import java.util.HashMap;
 
 import cz.msebera.android.httpclient.Header;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
+import fr.gouv.etalab.mastodon.client.MastalabSSLSocketFactory;
 import fr.gouv.etalab.mastodon.client.OauthClient;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import mastodon.etalab.gouv.fr.mastodon.R;
+
+import static fr.gouv.etalab.mastodon.helper.Helper.USER_AGENT;
 
 
 /**
@@ -49,14 +60,23 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final Button connectionButton = (Button) findViewById(R.id.login_button);
-        final Intent webviewIntent = new Intent(this, WebviewActivity.class);
-
-
+        Button connectionButton = (Button) findViewById(R.id.login_button);
         connectionButton.setEnabled(false);
 
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Button connectionButton = (Button) findViewById(R.id.login_button);
+        if( !connectionButton.isEnabled())
+            retrievesClientId();
+    }
+
+    private void retrievesClientId(){
+        final Button connectionButton = (Button) findViewById(R.id.login_button);
         String action = "/api/v1/apps";
-        HashMap<String,String> parameters = new HashMap<>();
+        final HashMap<String,String> parameters = new HashMap<>();
         parameters.put(Helper.CLIENT_NAME, Helper.OAUTH_REDIRECT_HOST);
         parameters.put(Helper.REDIRECT_URIS,"https://" + Helper.INSTANCE + Helper.REDIRECT_CONTENT);
         parameters.put(Helper.SCOPES, Helper.OAUTH_SCOPES);
@@ -95,13 +115,53 @@ public class LoginActivity extends AppCompatActivity {
         connectionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(webviewIntent);
-                finish();
+                connectionButton.setEnabled(false);
+                AsyncHttpClient client = new AsyncHttpClient();
+                RequestParams requestParams = new RequestParams();
+                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                requestParams.add(Helper.CLIENT_ID, sharedpreferences.getString(Helper.CLIENT_ID, null));
+                requestParams.add(Helper.CLIENT_SECRET, sharedpreferences.getString(Helper.CLIENT_SECRET, null));
+                requestParams.add("grant_type", "password");
+                EditText login_uid = (EditText) findViewById(R.id.login_uid);
+                EditText login_passwd = (EditText) findViewById(R.id.login_passwd);
+                requestParams.add("username",login_uid.getText().toString().trim());
+                requestParams.add("password",login_passwd.getText().toString().trim());
+                client.setUserAgent(USER_AGENT);
+                try {
+                    client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
+                    client.post("https://" + Helper.INSTANCE + "/oauth/token", requestParams, new AsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                            String response = new String(responseBody);
+                            JSONObject resobj;
+                            try {
+                                resobj = new JSONObject(response);
+                                String token = resobj.get("access_token").toString();
+                                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedpreferences.edit();
+                                editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);
+                                editor.apply();
+                                //Update the account with the token;
+                                new UpdateAccountInfoAsyncTask(LoginActivity.this, token).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                            connectionButton.setEnabled(true);
+                            Toast.makeText(getApplicationContext(),R.string.toast_error_login,Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+                } catch (NoSuchAlgorithmException | KeyManagementException | UnrecoverableKeyException | KeyStoreException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
-
     }
-
 
 
 

@@ -19,16 +19,24 @@ package fr.gouv.etalab.mastodon.helper;
 
 import android.app.AlertDialog;
 import android.app.DownloadManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.view.WindowManager;
 import android.widget.Toast;
+
+import com.loopj.android.http.BuildConfig;
 
 import java.io.File;
 import java.net.InetAddress;
@@ -38,9 +46,12 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.client.API;
 
+import static android.app.Notification.DEFAULT_SOUND;
+import static android.app.Notification.DEFAULT_VIBRATE;
 import static android.content.Context.DOWNLOAD_SERVICE;
 
 
@@ -77,10 +88,10 @@ public class Helper {
     public static final String SCOPES = "scopes";
     public static final String WEBSITE = "website";
     public static final String LAST_NOTIFICATION_MAX_ID = "last_notification_max_id";
-
+    public static final String LAST_HOMETIMELINE_MAX_ID = "last_hometimeline_max_id";
     //Notifications
-    public static final String NOTIFICATION_TYPE = "notification_type";
     public static final int NOTIFICATION_INTENT = 1;
+    public static final int HOME_TIMELINE_INTENT = 2;
 
     //Settings
     public static final String SET_TOOTS_PER_PAGE = "set_toots_per_page";
@@ -99,6 +110,7 @@ public class Helper {
     public static final String SET_NOTIF_SHARE = "set_notif_follow_share";
     public static final String SET_NOTIF_VALIDATION = "set_share_validation";
     public static final String SET_WIFI_ONLY = "set_wifi_only";
+    public static final String SET_NOTIF_HOMETIMELINE = "set_notif_hometimeline";
     public static final String SET_NOTIF_SILENT = "set_notif_silent";
 
     //End points
@@ -107,16 +119,17 @@ public class Helper {
 
     //Refresh job
     public static final int MINUTES_BETWEEN_NOTIFICATIONS_REFRESH = 15;
+    public static final int MINUTES_BETWEEN_HOME_TIMELINE = 30;
 
     //Intent
     public static final String INTENT_ACTION = "intent_action";
-    public static final int INTENT_NOTIFICATION = 1;
 
     //Receiver
     public static final String SEARCH_VALIDATE_ACCOUNT = "search_validate_account";
+    public static final String HEADER_ACCOUNT = "header_account";
 
-
-
+    //User agent
+    public static final String USER_AGENT = "Mastalab/"+ BuildConfig.VERSION_NAME + " Android/"+ Build.VERSION.RELEASE;
 
     /***
      *  Check if the user is connected to Internet
@@ -364,4 +377,40 @@ public class Helper {
         alert.show();
     }
 
+
+    /**
+     * Sends notification with intent
+     * @param context Context
+     * @param intentAction int intent action
+     * @param notificationId int id of the notification
+     * @param icon Bitmap profile picture
+     * @param title String title of the notification
+     * @param message String message for the notification
+     */
+    public static void notify_user(Context context, int intentAction, int notificationId, Bitmap icon, String title, String message ) {
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        // prepare intent which is triggered if the user click on the notification
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        final Intent intent = new Intent(context, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
+        intent.putExtra(INTENT_ACTION, intentAction);
+        PendingIntent pIntent = PendingIntent.getActivity(context, notificationId, intent, PendingIntent.FLAG_ONE_SHOT);
+        RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        // build notification
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
+                .setSmallIcon(R.drawable.notification_icon)
+                .setTicker(message)
+                .setWhen(System.currentTimeMillis())
+                .setAutoCancel(true)
+                .setContentIntent(pIntent)
+                .setContentText(message);
+        if( sharedpreferences.getBoolean(Helper.SET_NOTIF_SILENT,false) ) {
+            notificationBuilder.setDefaults(DEFAULT_VIBRATE);
+        }else {
+            notificationBuilder.setDefaults(DEFAULT_SOUND);
+        }
+        notificationBuilder.setContentTitle(title);
+        notificationBuilder.setLargeIcon(icon);
+        notificationManager.notify(notificationId, notificationBuilder.build());
+    }
 }

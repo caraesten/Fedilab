@@ -18,10 +18,12 @@ import android.app.Application;
 import com.evernote.android.job.JobManager;
 
 import fr.gouv.etalab.mastodon.jobs.ApplicationJob;
+import fr.gouv.etalab.mastodon.jobs.HomeTimelineSyncJob;
 import fr.gouv.etalab.mastodon.jobs.NotificationsSyncJob;
 
 /**
  * Created by Thomas on 29/04/2017.
+ * Main application, jobs are launched here.
  */
 
 public class MainApplication extends Application{
@@ -32,6 +34,7 @@ public class MainApplication extends Application{
         super.onCreate();
         JobManager.create(this).addJobCreator(new ApplicationJob());
         JobManager.instance().getConfig().setVerbose(false);
-        NotificationsSyncJob.schedule(getApplicationContext(), false);
+        NotificationsSyncJob.schedule(false);
+        HomeTimelineSyncJob.schedule(false);
     }
 }
