@@ -14,16 +14,10 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.client;
 
-import android.os.Build;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -43,48 +37,22 @@ public class OauthClient {
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 
-    public void get(String action, HashMap<String, String> paramaters, AsyncHttpResponseHandler responseHandler) {
+    public void get(String action, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         client.setTimeout(5000);
         client.setUserAgent(USER_AGENT);
-        RequestParams params = hashToRequestParams(paramaters);
-        try {
-            client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
-            client.post(getAbsoluteUrl(action), params, responseHandler);
-        } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
-            e.printStackTrace();
-        }
+        client.post(getAbsoluteUrl(action), params, responseHandler);
         client.get(getAbsoluteUrl(action), params, responseHandler);
     }
 
-    public void post(String action, HashMap<String, String> paramaters, AsyncHttpResponseHandler responseHandler) {
-        RequestParams params = hashToRequestParams(paramaters);
-        try {
-            client.setConnectTimeout(30000); //30s timeout
-            client.setUserAgent(USER_AGENT);
-            client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
-            client.post(getAbsoluteUrl(action), params, responseHandler);
-        } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
-            e.printStackTrace();
-        }
+    public void post(String action, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        client.setConnectTimeout(30000); //30s timeout
+        client.setUserAgent(USER_AGENT);
+        client.post(getAbsoluteUrl(action), params, responseHandler);
     }
 
     private String getAbsoluteUrl(String action) {
         return BASE_URL + action;
     }
 
-    /**
-     * Convert HashMap<String,String> to RequestParams
-     * @param params HashMap
-     * @return RequestParams
-     */
-    private RequestParams hashToRequestParams(HashMap<String,String> params){
-        RequestParams requestParams = new RequestParams();
-        Iterator it = params.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            requestParams.add(pair.getKey().toString(), pair.getValue().toString());
-            it.remove();
-        }
-        return requestParams;
-    }
+
 }

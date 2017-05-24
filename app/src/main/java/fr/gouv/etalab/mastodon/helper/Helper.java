@@ -112,7 +112,7 @@ public class Helper {
     public static final String SET_WIFI_ONLY = "set_wifi_only";
     public static final String SET_NOTIF_HOMETIMELINE = "set_notif_hometimeline";
     public static final String SET_NOTIF_SILENT = "set_notif_silent";
-
+    public static final String SET_SHOW_REPLY = "set_show_reply";
     //End points
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 

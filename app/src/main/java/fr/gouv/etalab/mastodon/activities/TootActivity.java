@@ -178,7 +178,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearchI
         Account account = new AccountDAO(getApplicationContext(),db).getAccountByID(userId);
         boolean isAccountPrivate = account.isLocked();
 
-
         FloatingActionButton ic_close = (FloatingActionButton) findViewById(R.id.toot_close_reply);
 
         toot_close_accounts.setOnClickListener(new View.OnClickListener() {
@@ -486,7 +485,13 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearchI
     @Override
     public void onRetrieveFeeds(List<Status> statuses) {
         if( statuses != null && statuses.size() > 0 ){
-            toot_reply_content_container.setVisibility(View.VISIBLE);
+            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean show_reply = sharedpreferences.getBoolean(Helper.SET_SHOW_REPLY, false);
+            if( show_reply ){
+                toot_reply_content_container.setVisibility(View.VISIBLE);
+            }else {
+                toot_reply_content_container.setVisibility(View.GONE);
+            }
             String content = statuses.get(0).getContent();
             if(statuses.get(0).isReblogged())
                 content = statuses.get(0).getReblog().getContent();

@@ -37,7 +37,6 @@ import java.util.concurrent.TimeUnit;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveHomeTimelineServiceAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
-import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveHomeTimelineServiceInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -133,7 +132,6 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
                         ImageLoader imageLoaderNoty = ImageLoader.getInstance();
                         File cacheDir = new File(getContext().getCacheDir(), getContext().getString(R.string.app_name));
                         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getContext())
-                                .imageDownloader(new PatchBaseImageDownloader(getContext()))
                                 .threadPoolSize(5)
                                 .threadPriority(Thread.MIN_PRIORITY + 3)
                                 .denyCacheImageMultipleSizesInMemory()

@@ -150,6 +150,14 @@
                 android:text="@string/set_attachment_ask"
                 />
         </RadioGroup>
+        <!-- MORE OPTIONS SETTINGS -->
+
+        <CheckBox
+            android:layout_marginTop="10dp"
+            android:id="@+id/set_show_reply"
+            android:layout_width="wrap_content"
+            android:text="@string/set_display_reply"
+            android:layout_height="wrap_content" />
         <!-- END OPTIMIZATION SETTINGS -->
     </LinearLayout>
 </ScrollView>
