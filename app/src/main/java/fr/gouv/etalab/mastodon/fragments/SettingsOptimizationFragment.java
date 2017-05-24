@@ -20,6 +20,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -44,6 +45,19 @@ public class SettingsOptimizationFragment extends Fragment {
         context = getContext();
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
+
+        boolean show_reply = sharedpreferences.getBoolean(Helper.SET_SHOW_REPLY, false);
+        final CheckBox set_show_reply = (CheckBox) rootView.findViewById(R.id.set_show_reply);
+        set_show_reply.setChecked(show_reply);
+
+        set_show_reply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_SHOW_REPLY, set_show_reply.isChecked());
+                editor.apply();
+            }
+        });
 
         //Status per page
         SeekBar statusSeekBar = (SeekBar) rootView.findViewById(R.id.set_toots_per_page);

@@ -1160,39 +1160,24 @@ public class API {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         client.addHeader("Authorization", "Bearer "+prefKeyOauthTokenT);
-        try {
-            client.setUserAgent(USER_AGENT);
-            client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
-            client.get(getAbsoluteUrl(action), params, responseHandler);
-        } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
-            e.printStackTrace();
-        }
+        client.setUserAgent(USER_AGENT);
+        client.get(getAbsoluteUrl(action), params, responseHandler);
     }
 
     private void post(String action, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         client.addHeader("Authorization", "Bearer "+prefKeyOauthTokenT);
-        try {
-            client.setUserAgent(USER_AGENT);
-            client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
-            client.post(getAbsoluteUrl(action), params, responseHandler);
-        } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
-            e.printStackTrace();
-        }
+        client.setUserAgent(USER_AGENT);
+        client.post(getAbsoluteUrl(action), params, responseHandler);
     }
 
     private void delete(String action, RequestParams params, AsyncHttpResponseHandler responseHandler){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         client.addHeader("Authorization", "Bearer "+prefKeyOauthTokenT);
-        try {
-            client.setUserAgent(USER_AGENT);
-            client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
-            client.delete(getAbsoluteUrl(action), params, responseHandler);
-        } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
-            e.printStackTrace();
-        }
+        client.setUserAgent(USER_AGENT);
+        client.delete(getAbsoluteUrl(action), params, responseHandler);
     }
 
     private String getAbsoluteUrl(String action) {

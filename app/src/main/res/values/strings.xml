@@ -183,7 +183,7 @@
     <string name="set_attachment_ask">Demander</string>
     <string name="set_attachment_action">Charger les médias</string>
     <string name="load_attachment">Charger les images</string>
-
+    <string name="set_display_reply">Afficher le message précédent lors d\'une réponse</string>
 
     <string name="settings_title_notifications">Gestion des notifications</string>
     <string name="set_notif_follow">Notifier lorsque quelqu’un me suit</string>

@@ -20,11 +20,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 
@@ -37,11 +39,22 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
 
     private Context context;
     private String token;
+    private boolean fromWebview;
+    private boolean error;
+    private OnUpdateAccountInfoInterface listener;
 
-
-    public UpdateAccountInfoAsyncTask(Context context, String token){
+    public UpdateAccountInfoAsyncTask(Context context, String token, OnUpdateAccountInfoInterface onUpdateAccountInfoInterface){
         this.context = context;
         this.token = token;
+        this.fromWebview = false;
+        this.error = false;
+        this.listener = onUpdateAccountInfoInterface;
+    }
+
+    public UpdateAccountInfoAsyncTask(Context context, boolean fromWebview, String token){
+        this.context = context;
+        this.token = token;
+        this.fromWebview = fromWebview;
 
     }
 
@@ -65,6 +78,8 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
         else {
             if( account.getUsername() != null && account.getCreated_at() != null)
                 new AccountDAO(context, db).insertAccount(account);
+            else //Here the user credential in db doesn't match the remote one (it will be disconnected)
+                error = true;
         }
         return null;
     }
@@ -72,10 +87,14 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void result) {
 
-        Intent mainActivity = new Intent(context, MainActivity.class);
-        mainActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(mainActivity);
-        ((Activity) context).finish();
+        if( fromWebview){
+            Intent mainActivity = new Intent(context, MainActivity.class);
+            mainActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(mainActivity);
+            ((Activity) context).finish();
+        }else{
+            listener.onUpdateAccountInfo(error);
+        }
 
     }
 
