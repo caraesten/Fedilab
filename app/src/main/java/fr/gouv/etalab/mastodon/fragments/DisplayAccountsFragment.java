@@ -212,9 +212,6 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         }
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
-        if( accounts != null && accounts.size() < accountPerPage )
-            flag_loading = true;
-        else
-            flag_loading = false;
+        flag_loading = accounts != null && accounts.size() < accountPerPage;
     }
 }

@@ -72,7 +72,7 @@ public class Helper {
     public static final String OAUTH_SCOPES = "read write follow";
     public static final String PREF_KEY_OAUTH_TOKEN = "oauth_token";
     public static final String PREF_KEY_ID = "userID";
-    public static final String REDIRECT_CONTENT = "/redirect_mastodon_api";
+    public static final String REDIRECT_CONTENT = "urn:ietf:wg:oauth:2.0:oob";
     public static final int EXTERNAL_STORAGE_REQUEST_CODE = 84;
 
     //Some definitions

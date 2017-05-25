@@ -15,6 +15,7 @@ package fr.gouv.etalab.mastodon.fragments;
  * see <http://www.gnu.org/licenses>. */
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -29,8 +30,11 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveNotificationsAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
@@ -162,9 +166,19 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         }
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
-        if( notifications != null && notifications.size() < notificationPerPage )
-            flag_loading = true;
-        else
-            flag_loading = false;
+        flag_loading = notifications != null && notifications.size() < notificationPerPage;
+        //Store last notification id to avoid to notify for those that have been already seen
+        if( notifications != null && notifications.size()  > 0) {
+            final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            //acct is null when used in Fragment, data need to be retrieved via shared preferences and db
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
+            if( currentAccount != null){
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + currentAccount.getAcct(), notifications.get(0).getId());
+                editor.apply();
+            }
+        }
     }
 }

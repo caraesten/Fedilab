@@ -18,9 +18,11 @@ package fr.gouv.etalab.mastodon.client;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
 
 import fr.gouv.etalab.mastodon.helper.Helper;
 
@@ -38,16 +40,26 @@ public class OauthClient {
     private static AsyncHttpClient client = new AsyncHttpClient();
 
     public void get(String action, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-        client.setTimeout(5000);
-        client.setUserAgent(USER_AGENT);
-        client.post(getAbsoluteUrl(action), params, responseHandler);
-        client.get(getAbsoluteUrl(action), params, responseHandler);
+        try {
+            client.setConnectTimeout(10000); //10s timeout
+            client.setUserAgent(USER_AGENT);
+            client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
+            client.get(getAbsoluteUrl(action), params, responseHandler);
+        } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
+            e.printStackTrace();
+        }
     }
 
     public void post(String action, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-        client.setConnectTimeout(30000); //30s timeout
-        client.setUserAgent(USER_AGENT);
-        client.post(getAbsoluteUrl(action), params, responseHandler);
+        try {
+            client.setConnectTimeout(10000); //10s timeout
+            client.setUserAgent(USER_AGENT);
+            client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
+            client.post(getAbsoluteUrl(action), params, responseHandler);
+        } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private String getAbsoluteUrl(String action) {

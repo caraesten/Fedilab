@@ -39,9 +39,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.security.ProviderInstaller;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -53,6 +50,7 @@ import java.util.HashMap;
 
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -86,9 +84,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        try {
-            ProviderInstaller.installIfNeeded(this);
-        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException ignored) {}
         //Test if user is still log in
         if( ! Helper.isLoggedIn(getApplicationContext())) {
             //It is not, the user is redirected to the login page
@@ -124,6 +119,7 @@ public class MainActivity extends AppCompatActivity
         imageLoader = ImageLoader.getInstance();
         File cacheDir = new File(getCacheDir(), getString(R.string.app_name));
         ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(this)
+                .imageDownloader(new PatchBaseImageDownloader(getApplicationContext()))
                 .threadPoolSize(5)
                 .threadPriority(Thread.MIN_PRIORITY + 3)
                 .denyCacheImageMultipleSizesInMemory()

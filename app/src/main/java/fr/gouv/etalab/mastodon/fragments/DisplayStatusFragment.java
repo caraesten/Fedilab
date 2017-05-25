@@ -16,11 +16,13 @@ package fr.gouv.etalab.mastodon.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,8 +35,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
@@ -61,6 +66,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private String targetedId;
     private String tag;
     private boolean hideHeader = false;
+    private int tootsPerPage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -85,7 +91,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
 
         final ListView lv_status = (ListView) rootView.findViewById(R.id.lv_status);
-
+        tootsPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
         mainLoader = (RelativeLayout) rootView.findViewById(R.id.loader);
         nextElementLoader = (RelativeLayout) rootView.findViewById(R.id.loading_next_status);
         textviewNoAction = (RelativeLayout) rootView.findViewById(R.id.no_action);
@@ -99,13 +105,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
             }
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
                 if(firstVisibleItem + visibleItemCount == totalItemCount ) {
                     if(!flag_loading ) {
                         flag_loading = true;
                         if( type == RetrieveFeedsAsyncTask.Type.USER)
                             asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        if( type == RetrieveFeedsAsyncTask.Type.TAG)
+                        else if( type == RetrieveFeedsAsyncTask.Type.TAG)
                             asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         else
                             asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -156,7 +161,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 flag_loading = true;
                 if( type == RetrieveFeedsAsyncTask.Type.USER)
                     asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                if( type == RetrieveFeedsAsyncTask.Type.TAG)
+                else if( type == RetrieveFeedsAsyncTask.Type.TAG)
                     asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 else
                     asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -169,7 +174,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
         if( type == RetrieveFeedsAsyncTask.Type.USER)
             asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        if( type == RetrieveFeedsAsyncTask.Type.TAG)
+        else if( type == RetrieveFeedsAsyncTask.Type.TAG)
             asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         else
             asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -203,7 +208,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
     @Override
     public void onRetrieveFeeds(List<Status> statuses) {
-
         if( firstLoad && (statuses == null || statuses.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
@@ -223,7 +227,20 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
-        flag_loading = false;
+        flag_loading = statuses != null && statuses.size() < tootsPerPage;
+        //Store last toot id for home timeline to avoid to notify for those that have been already seen
+        if(statuses != null && statuses.size()  > 0 && type == RetrieveFeedsAsyncTask.Type.HOME ){
+            final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            //acct is null when used in Fragment, data need to be retrieved via shared preferences and db
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
+            if( currentAccount != null){
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + currentAccount.getAcct(), statuses.get(0).getId());
+                editor.apply();
+            }
+        }
 
     }
 }

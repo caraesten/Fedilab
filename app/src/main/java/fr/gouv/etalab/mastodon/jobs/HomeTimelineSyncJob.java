@@ -37,6 +37,7 @@ import java.util.concurrent.TimeUnit;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveHomeTimelineServiceAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveHomeTimelineServiceInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -124,7 +125,8 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
             String title = null;
             for(Status status: statuses){
                 //The notification associated to max_id is discarded as it is supposed to have already been sent
-                if( status.getId().equals(max_id))
+                //Also, if the toot comes from the owner, we will avoid to warn him/her...
+                if( status.getId().equals(max_id) || status.getAccount().getAcct().trim().equals(acct.trim()))
                     continue;
                 String notificationUrl = status.getAccount().getAvatar();
                 if( notificationUrl != null && icon_notification == null){
@@ -132,6 +134,7 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
                         ImageLoader imageLoaderNoty = ImageLoader.getInstance();
                         File cacheDir = new File(getContext().getCacheDir(), getContext().getString(R.string.app_name));
                         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getContext())
+                                .imageDownloader(new PatchBaseImageDownloader(getContext()))
                                 .threadPoolSize(5)
                                 .threadPriority(Thread.MIN_PRIORITY + 3)
                                 .denyCacheImageMultipleSizesInMemory()
