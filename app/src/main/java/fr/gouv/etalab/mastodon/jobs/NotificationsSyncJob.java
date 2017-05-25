@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveNotificationsAsyncTask;
@@ -190,6 +191,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                         ImageLoader imageLoaderNoty = ImageLoader.getInstance();
                         File cacheDir = new File(getContext().getCacheDir(), getContext().getString(R.string.app_name));
                         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getContext())
+                                .imageDownloader(new PatchBaseImageDownloader(getContext()))
                                 .threadPoolSize(5)
                                 .threadPriority(Thread.MIN_PRIORITY + 3)
                                 .denyCacheImageMultipleSizesInMemory()
