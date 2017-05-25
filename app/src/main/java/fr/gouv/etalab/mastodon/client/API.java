@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -44,6 +45,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.USER_AGENT;
 
@@ -1157,7 +1159,7 @@ public class API {
     
     private void get(String action, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         try {
-            client.setConnectTimeout(30000); //30s timeout
+            client.setConnectTimeout(10000); //10s timeout
             client.setUserAgent(USER_AGENT);
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
@@ -1165,6 +1167,7 @@ public class API {
             client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
             client.get(getAbsoluteUrl(action), params, responseHandler);
         } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
+            Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
     }
@@ -1172,7 +1175,7 @@ public class API {
     private void post(String action, RequestParams params, AsyncHttpResponseHandler responseHandler) {
 
         try {
-            client.setConnectTimeout(30000); //30s timeout
+            client.setConnectTimeout(10000); //10s timeout
             client.setUserAgent(USER_AGENT);
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
@@ -1180,13 +1183,14 @@ public class API {
             client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
             client.post(getAbsoluteUrl(action), params, responseHandler);
         } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
+            Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
     }
 
     private void delete(String action, RequestParams params, AsyncHttpResponseHandler responseHandler){
         try {
-            client.setConnectTimeout(30000); //30s timeout
+            client.setConnectTimeout(10000); //10s timeout
             client.setUserAgent(USER_AGENT);
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
@@ -1194,6 +1198,7 @@ public class API {
             client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
             client.delete(getAbsoluteUrl(action), params, responseHandler);
         } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
+            Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
     }

@@ -55,7 +55,7 @@ public class AboutActivity extends AppCompatActivity {
         about_code.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://bitbucket.org/tom79/mastodon_etalab"));
+               Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://bitbucket.org/tom79/mastodon_etalab/src"));
                startActivity(browserIntent);
            }
         });

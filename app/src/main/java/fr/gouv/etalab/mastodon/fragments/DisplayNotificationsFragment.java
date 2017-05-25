@@ -166,10 +166,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         }
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
-        if( notifications != null && notifications.size() < notificationPerPage )
-            flag_loading = true;
-        else
-            flag_loading = false;
+        flag_loading = notifications != null && notifications.size() < notificationPerPage;
         //Store last notification id to avoid to notify for those that have been already seen
         if( notifications != null && notifications.size()  > 0) {
             final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);

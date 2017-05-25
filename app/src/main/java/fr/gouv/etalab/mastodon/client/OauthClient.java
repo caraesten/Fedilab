@@ -15,8 +15,6 @@
 package fr.gouv.etalab.mastodon.client;
 
 
-import android.util.Log;
-
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -43,7 +41,7 @@ public class OauthClient {
 
     public void get(String action, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         try {
-            client.setConnectTimeout(30000); //30s timeout
+            client.setConnectTimeout(10000); //10s timeout
             client.setUserAgent(USER_AGENT);
             client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
             client.get(getAbsoluteUrl(action), params, responseHandler);
@@ -54,7 +52,7 @@ public class OauthClient {
 
     public void post(String action, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         try {
-            client.setConnectTimeout(30000); //30s timeout
+            client.setConnectTimeout(10000); //10s timeout
             client.setUserAgent(USER_AGENT);
             client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
             client.post(getAbsoluteUrl(action), params, responseHandler);

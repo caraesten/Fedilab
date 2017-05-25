@@ -246,7 +246,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
             setTitle(account.getAcct());
             account_dn.setText(account.getDisplay_name());
             account_un.setText(account.getUsername());
-            if( account.getAcct().equals(account.getUsername()))
+            if( account.getAcct() != null && account.getAcct().equals(account.getUsername()))
                 account_ac.setVisibility(View.GONE);
             else
                 account_ac.setText(account.getAcct());
