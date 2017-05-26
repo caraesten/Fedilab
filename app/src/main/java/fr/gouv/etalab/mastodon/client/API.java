@@ -872,10 +872,26 @@ public class API {
         try {
             results.setAccounts(parseAccountResponse(resobj.getJSONArray("accounts")));
             results.setStatuses(parseStatuses(resobj.getJSONArray("statuses")));
+            results.setHashtags(parseTags(resobj.getJSONArray("hashtags")));
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return results;
+    }
+
+    /**
+     * Parse Tags
+     * @param jsonArray JSONArray
+     * @return List<String> of tags
+     */
+    private List<String> parseTags(JSONArray jsonArray){
+        List<String> list_tmp = new ArrayList<>();
+        for(int i = 0; i < jsonArray.length(); i++){
+            try {
+                list_tmp.add(jsonArray.getString(i));
+            } catch (JSONException ignored) {}
+        }
+        return  list_tmp;
     }
     /**
      * Parse json response for several status

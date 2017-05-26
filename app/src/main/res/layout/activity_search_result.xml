@@ -19,31 +19,34 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     >
-    <android.support.design.widget.AppBarLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <ListView
+        android:id="@+id/lv_search"
         android:layout_width="match_parent"
-        android:background="@android:color/white"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        >
+    </ListView>
+    <RelativeLayout
+        android:id="@+id/no_result"
+        android:visibility="gone"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <android.support.design.widget.TabLayout
-            android:id="@+id/search_tabLayout"
+        <TextView
+            android:padding="10dp"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:layout_gravity="center"
+            android:textStyle="italic|bold"
+            android:typeface="serif"
+            android:text="@string/no_result"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-            app:tabMode="fixed"
-            app:tabGravity="fill"
-            />
-        <android.support.v4.view.ViewPager
-            android:id="@+id/search_viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            />
-    </android.support.design.widget.AppBarLayout>
+            android:layout_height="match_parent" />
+    </RelativeLayout>
     <!-- Main Loader -->
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/loader"

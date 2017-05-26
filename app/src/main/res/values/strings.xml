@@ -23,6 +23,7 @@
     <string name="toots">Pouets</string>
     <string name="token">Jeton</string>
     <string name="two_factor_authentification">Authentification en deux étapes ?</string>
+    <string name="no_result">Aucun résultat !</string>
     <!--- Menu -->
     <string name="home_menu">Accueil</string>
     <string name="home_timeline">Accueil</string>

@@ -14,29 +14,24 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.activities;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
-import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
-import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
+import fr.gouv.etalab.mastodon.drawers.SearchListAdapter;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
@@ -49,13 +44,8 @@ import mastodon.etalab.gouv.fr.mastodon.R;
 public class SearchResultActivity extends AppCompatActivity implements OnRetrieveSearchInterface {
 
 
-    private static final int NUM_PAGES = 2;
-    private ViewPager mPager;
-    private TabLayout tabLayout;
-    private boolean searchDone = false;
-    private List<Account> accounts;
-    private List<Status> statuses;
     private String search;
+    private ListView lv_search;
     private RelativeLayout loader;
 
     @Override
@@ -63,14 +53,9 @@ public class SearchResultActivity extends AppCompatActivity implements OnRetriev
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result);
 
-
-        statuses = new ArrayList<>();
-        accounts = new ArrayList<>();
-
         loader = (RelativeLayout) findViewById(R.id.loader);
-        tabLayout = (TabLayout) findViewById(R.id.search_tabLayout);
-        loader.setVisibility(View.VISIBLE);
-        tabLayout.setVisibility(View.GONE);
+        lv_search = (ListView) findViewById(R.id.lv_search);
+
         Bundle b = getIntent().getExtras();
         if(b != null){
             search = b.getString("search");
@@ -85,8 +70,8 @@ public class SearchResultActivity extends AppCompatActivity implements OnRetriev
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setTitle(search);
-
-
+        loader.setVisibility(View.VISIBLE);
+        lv_search.setVisibility(View.GONE);
 
     }
 
@@ -105,86 +90,24 @@ public class SearchResultActivity extends AppCompatActivity implements OnRetriev
 
     @Override
     public void onRetrieveSearch(Results results) {
-        if(  results == null ){
-            Toast.makeText(getApplicationContext(),R.string.toast_error,Toast.LENGTH_LONG).show();
-            loader.setVisibility(View.GONE);
-            tabLayout.setVisibility(View.VISIBLE);
+
+        loader.setVisibility(View.GONE);
+        if( results == null){
+            RelativeLayout no_result = (RelativeLayout) findViewById(R.id.no_result);
+            no_result.setVisibility(View.VISIBLE);
             return;
         }
-        accounts = results.getAccounts();
-        statuses = results.getStatuses();
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots)));
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.accounts)));
-        loader.setVisibility(View.GONE);
-        tabLayout.setVisibility(View.VISIBLE);
-        mPager = (ViewPager) findViewById(R.id.search_viewpager);
-        PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
+        lv_search.setVisibility(View.VISIBLE);
+        List<String> tags = results.getHashtags();
+        List<Account> accounts = results.getAccounts();
+        List<Status> statuses = results.getStatuses();
 
-        mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-            @Override
-            public void onPageSelected(int position) {
-                TabLayout.Tab tab = tabLayout.getTabAt(position);
-                if( tab != null)
-                    tab.select();
-            }
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                mPager.setCurrentItem(tab.getPosition());
-            }
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+        SearchListAdapter searchListAdapter = new SearchListAdapter(SearchResultActivity.this, statuses, accounts, tags);
+        lv_search.setAdapter(searchListAdapter);
+        searchListAdapter.notifyDataSetChanged();
 
     }
 
 
-    /*
-     * Pager adapter for the 2 fragments (status and accounts) coming from search results
-     */
-    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-        ScreenSlidePagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-        @Override
-        public Fragment getItem(int position) {
-            Bundle bundle = new Bundle();
-            switch (position){
-                case 0:
-                    DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
-                    bundle.putParcelableArrayList("statuses", new ArrayList<>(statuses));
-                    displayStatusFragment.setArguments(bundle);
-                    return displayStatusFragment;
-                case 1:
-                    DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
-                    bundle.putParcelableArrayList("accounts", new ArrayList<>(accounts));
-                    displayAccountsFragment.setArguments(bundle);
-                    return displayAccountsFragment;
-            }
-            return null;
-        }
-
-        @Override
-        public int getCount() {
-            return NUM_PAGES;
-        }
-    }
 
 }
