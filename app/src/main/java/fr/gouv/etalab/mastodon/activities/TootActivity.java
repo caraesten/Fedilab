@@ -23,7 +23,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,11 +32,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,7 +45,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -62,22 +58,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UploadActionAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
-import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.AccountsSearchAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -88,7 +81,7 @@ import mastodon.etalab.gouv.fr.mastodon.R;
  * Toot activity class
  */
 
-public class TootActivity extends AppCompatActivity implements OnRetrieveSearchInterface, OnRetrieveAttachmentInterface, OnPostActionInterface, OnRetrieveFeedsInterface {
+public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostActionInterface, OnRetrieveFeedsInterface {
 
 
     private String inReplyTo = null;
@@ -279,7 +272,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearchI
                 Matcher m = sPattern.matcher(s.toString());
                 if(m.matches()) {
                     String search = m.group(2);
-                    new RetrieveSearchAsyncTask(getApplicationContext(),search,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new RetrieveSearchAccountsAsyncTask(getApplicationContext(),search,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }else{
                     toot_show_accounts.setVisibility(View.GONE);
                 }
@@ -522,10 +515,11 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearchI
     }
 
 
+
     @Override
-    public void onRetrieveSearch(Results results) {
-        if( results != null && results.getAccounts() != null && results.getAccounts().size() > 0){
-            AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, results.getAccounts());
+    public void onRetrieveSearchAccounts(List<Account> accounts) {
+        if( accounts != null && accounts.size() > 0){
+            AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, accounts);
             toot_lv_accounts.setAdapter(accountsListAdapter);
             accountsListAdapter.notifyDataSetChanged();
             toot_show_accounts.setVisibility(View.VISIBLE);

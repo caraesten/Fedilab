@@ -15,13 +15,18 @@
 package fr.gouv.etalab.mastodon.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -53,6 +58,10 @@ import static fr.gouv.etalab.mastodon.helper.Helper.USER_AGENT;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private String client_id;
+    private String client_secret;
+    private TextView login_two_step;
+    private static boolean client_id_for_webview = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,15 +70,27 @@ public class LoginActivity extends AppCompatActivity {
 
         Button connectionButton = (Button) findViewById(R.id.login_button);
         connectionButton.setEnabled(false);
-
+        login_two_step = (TextView) findViewById(R.id.login_two_step);
+        login_two_step.setVisibility(View.GONE);
+        login_two_step.setPaintFlags(login_two_step.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        login_two_step.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                client_id_for_webview = true;
+                retrievesClientId();
+            }
+        });
     }
 
     @Override
     protected void onResume(){
         super.onResume();
         Button connectionButton = (Button) findViewById(R.id.login_button);
-        if( !connectionButton.isEnabled())
+        if( client_id_for_webview || !connectionButton.isEnabled()) {
+            connectionButton.setEnabled(false);
+            client_id_for_webview = false;
             retrievesClientId();
+        }
     }
 
     private void retrievesClientId(){
@@ -77,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
         String action = "/api/v1/apps";
         RequestParams parameters = new RequestParams();
         parameters.add(Helper.CLIENT_NAME, Helper.OAUTH_REDIRECT_HOST);
-        parameters.add(Helper.REDIRECT_URIS, Helper.REDIRECT_CONTENT);
+        parameters.add(Helper.REDIRECT_URIS, client_id_for_webview?Helper.REDIRECT_CONTENT_WEB:Helper.REDIRECT_CONTENT);
         parameters.add(Helper.SCOPES, Helper.OAUTH_SCOPES);
         parameters.add(Helper.WEBSITE,"https://" + Helper.INSTANCE);
         new OauthClient().post(action, parameters, new AsyncHttpResponseHandler() {
@@ -87,8 +108,8 @@ public class LoginActivity extends AppCompatActivity {
                 JSONObject resobj;
                 try {
                     resobj = new JSONObject(response);
-                    String client_id = resobj.get(Helper.CLIENT_ID).toString();
-                    String client_secret = resobj.get(Helper.CLIENT_SECRET).toString();
+                    client_id = resobj.get(Helper.CLIENT_ID).toString();
+                    client_secret = resobj.get(Helper.CLIENT_SECRET).toString();
 
                     String id = resobj.get(Helper.ID).toString();
                     SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -98,6 +119,11 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString(Helper.ID, id);
                     editor.apply();
                     connectionButton.setEnabled(true);
+                    login_two_step.setVisibility(View.VISIBLE);
+                    if( client_id_for_webview){
+                        Intent i = new Intent(LoginActivity.this, WebviewActivity.class);
+                        startActivity(i);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -115,6 +141,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 connectionButton.setEnabled(false);
+                if( client_id_for_webview ){
+                    client_id_for_webview = false;
+                    retrievesClientId();
+                    return;
+                }
                 AsyncHttpClient client = new AsyncHttpClient();
                 RequestParams requestParams = new RequestParams();
                 SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);

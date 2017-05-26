@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -804,7 +805,7 @@ public class API {
 
 
     /**
-     * Retrieves Accounts when searching (ie: via @...) *synchronously*
+     * Retrieves Accounts and feeds when searching *synchronously*
      *
      * @param query  String search
      * @return List<Account>
@@ -812,9 +813,8 @@ public class API {
     public Results search(String query) {
 
         RequestParams params = new RequestParams();
-        params.put("q", query);
+        params.add("q", query);
         //params.put("resolve","false");
-        params.put("limit","4");
         get("/search", params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -828,6 +828,38 @@ public class API {
         return results;
     }
 
+    /**
+     * Retrieves Accounts when searching (ie: via @...) *synchronously*
+     *
+     * @param query  String search
+     * @return List<Account>
+     */
+    public List<Account> searchAccounts(String query) {
+
+        RequestParams params = new RequestParams();
+        params.add("q", query);
+        //params.put("resolve","false");
+        params.add("limit", "4");
+        get("/accounts/search", params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                accounts = new ArrayList<>();
+                account = parseAccountResponse(response);
+                accounts.add(account);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                accounts = parseAccountResponse(response);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
+
+            }
+        });
+        return accounts;
+    }
 
     /**
      * Parse json response an unique account

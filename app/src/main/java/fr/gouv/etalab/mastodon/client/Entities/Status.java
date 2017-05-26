@@ -15,15 +15,18 @@
 package fr.gouv.etalab.mastodon.client.Entities;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 import java.util.List;
 
 /**
  * Created by Thomas on 23/04/2017.
- *
+ * Manage Status (ie: toots)
  */
 
-public class Status {
+public class Status implements Parcelable {
 
     private String id;
     private String uri;
@@ -42,6 +45,38 @@ public class Status {
     private String spoiler_text;
     private String visibility;
     private boolean attachmentShown = false;
+
+    protected Status(Parcel in) {
+        id = in.readString();
+        uri = in.readString();
+        url = in.readString();
+        in_reply_to_id = in.readString();
+        in_reply_to_account_id = in.readString();
+        reblog = in.readParcelable(Status.class.getClassLoader());
+        content = in.readString();
+        reblogs_count = in.readInt();
+        favourites_count = in.readInt();
+        reblogged = in.readByte() != 0;
+        favourited = in.readByte() != 0;
+        sensitive = in.readByte() != 0;
+        spoiler_text = in.readString();
+        visibility = in.readString();
+        attachmentShown = in.readByte() != 0;
+    }
+
+    public Status(){}
+
+    public static final Creator<Status> CREATOR = new Creator<Status>() {
+        @Override
+        public Status createFromParcel(Parcel in) {
+            return new Status(in);
+        }
+
+        @Override
+        public Status[] newArray(int size) {
+            return new Status[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -216,5 +251,29 @@ public class Status {
 
     public void setAttachmentShown(boolean attachmentShown) {
         this.attachmentShown = attachmentShown;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(uri);
+        dest.writeString(url);
+        dest.writeString(in_reply_to_id);
+        dest.writeString(in_reply_to_account_id);
+        dest.writeParcelable(reblog, flags);
+        dest.writeString(content);
+        dest.writeInt(reblogs_count);
+        dest.writeInt(favourites_count);
+        dest.writeByte((byte) (reblogged ? 1 : 0));
+        dest.writeByte((byte) (favourited ? 1 : 0));
+        dest.writeByte((byte) (sensitive ? 1 : 0));
+        dest.writeString(spoiler_text);
+        dest.writeString(visibility);
+        dest.writeByte((byte) (attachmentShown ? 1 : 0));
     }
 }

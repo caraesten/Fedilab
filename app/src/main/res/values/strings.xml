@@ -19,6 +19,10 @@
     <string name="download_file">Télécharger %1$s</string>
     <string name="password">Mot de passe</string>
     <string name="email">Email</string>
+    <string name="accounts">Comptes</string>
+    <string name="toots">Pouets</string>
+    <string name="token">Jeton</string>
+    <string name="two_factor_authentification">Authentification en deux étapes ?</string>
     <!--- Menu -->
     <string name="home_menu">Accueil</string>
     <string name="home_timeline">Accueil</string>

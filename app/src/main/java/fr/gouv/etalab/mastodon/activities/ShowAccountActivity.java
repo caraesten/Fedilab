@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -87,6 +88,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     private BroadcastReceiver hide_header;
     private TextView account_note;
     private String userId;
+    private static boolean isHiddingShowing = false;
 
     public enum action{
         FOLLOW,
@@ -182,19 +184,39 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         hide_header = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                boolean hide = intent.getBooleanExtra("hide", false);
-                if( hide){
-                    account_follow.setVisibility(View.GONE);
-                    account_note.setVisibility(View.GONE);
-                    tabLayout.setVisibility(View.GONE);
-                }else {
-                    account_follow.setVisibility(View.VISIBLE);
-                    if( accountId != null && accountId.equals(userId)){
+                if( !isHiddingShowing ){
+                    isHiddingShowing = true;
+                    ImageView account_pp = (ImageView) findViewById(R.id.account_pp);
+                    TextView account_ac = (TextView) findViewById(R.id.account_ac);
+                    boolean hide = intent.getBooleanExtra("hide", false);
+                    if( hide){
                         account_follow.setVisibility(View.GONE);
+                        account_note.setVisibility(View.GONE);
+                        tabLayout.setVisibility(View.GONE);
+                        account_ac.setVisibility(View.GONE);
+                        account_pp.getLayoutParams().width = (int) Helper.convertDpToPixel(50, context);
+                        account_pp.getLayoutParams().height = (int) Helper.convertDpToPixel(50, context);
+                    }else {
+                        account_follow.setVisibility(View.VISIBLE);
+                        if( accountId != null && accountId.equals(userId)){
+                            account_follow.setVisibility(View.GONE);
+                        }
+                        account_ac.setVisibility(View.VISIBLE);
+                        account_pp.getLayoutParams().width = (int) Helper.convertDpToPixel(80, context);
+                        account_pp.getLayoutParams().height = (int) Helper.convertDpToPixel(80, context);
+                        tabLayout.setVisibility(View.VISIBLE);
+                        account_note.setVisibility(View.VISIBLE);
                     }
-                    tabLayout.setVisibility(View.VISIBLE);
-                    account_note.setVisibility(View.VISIBLE);
+                    account_pp.requestLayout();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            isHiddingShowing = false;
+                        }
+                    }, 1000);
                 }
+
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(hide_header, new IntentFilter(Helper.HEADER_ACCOUNT));

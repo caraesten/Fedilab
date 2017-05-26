@@ -272,20 +272,15 @@ public class MainActivity extends AppCompatActivity
                         }else{
                             String searchTag = ((EditText) toolbar.getChildAt(i)).getText().toString();
                             toot.setVisibility(View.VISIBLE);
-                            DisplayStatusFragment statusFragment = new DisplayStatusFragment();
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.TAG);
-                            bundle.putString("tag", searchTag);
-                            statusFragment.setArguments(bundle);
-                            FragmentManager fragmentManager = getSupportFragmentManager();
-                            fragmentManager.beginTransaction()
-                                    .replace(R.id.main_app_container, statusFragment).commit();
                             View view = this.getCurrentFocus();
                             //Hide keyboard
                             if (view != null) {
                                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                             }
+                            Intent intent = new Intent(MainActivity.this, SearchResultActivity.class);
+                            intent.putExtra("search", searchTag);
+                            startActivity(intent);
                             return true;
                         }
 

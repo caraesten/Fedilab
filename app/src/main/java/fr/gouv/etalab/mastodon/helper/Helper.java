@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
@@ -33,6 +34,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.util.DisplayMetrics;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -73,6 +75,7 @@ public class Helper {
     public static final String PREF_KEY_OAUTH_TOKEN = "oauth_token";
     public static final String PREF_KEY_ID = "userID";
     public static final String REDIRECT_CONTENT = "urn:ietf:wg:oauth:2.0:oob";
+    public static final String REDIRECT_CONTENT_WEB = "mastalab://backtomastalab";
     public static final int EXTERNAL_STORAGE_REQUEST_CODE = 84;
 
     //Some definitions
@@ -412,5 +415,12 @@ public class Helper {
         notificationBuilder.setContentTitle(title);
         notificationBuilder.setLargeIcon(icon);
         notificationManager.notify(notificationId, notificationBuilder.build());
+    }
+
+
+    public static float convertDpToPixel(float dp, Context context){
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        return dp * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 }
