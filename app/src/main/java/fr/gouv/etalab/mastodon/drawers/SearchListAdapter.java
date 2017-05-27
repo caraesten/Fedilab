@@ -16,13 +16,13 @@ package fr.gouv.etalab.mastodon.drawers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.text.util.Linkify;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +38,7 @@ import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -264,10 +265,15 @@ public class SearchListAdapter extends BaseAdapter {
                 holder = (ViewHolderTag) v.getTag();
             }
             holder.tag_name.setText(String.format("#%s",tag));
+            holder.tag_name.setPaintFlags(holder.tag_name.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             holder.tag_name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent intent = new Intent(context, HashTagActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("tag", tag.trim());
+                    intent.putExtras(b);
+                    context.startActivity(intent);
                 }
             });
             return v;

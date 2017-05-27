@@ -31,6 +31,7 @@
     <TextView
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
+        android:maxLines="1"
         android:id="@+id/account_un"
         android:layout_gravity="center_vertical"
         android:layout_width="wrap_content"
@@ -39,6 +40,7 @@
         android:id="@+id/account_dn"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
+        android:maxLines="1"
         android:layout_gravity="center_vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

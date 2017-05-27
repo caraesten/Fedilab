@@ -440,7 +440,8 @@ public class API {
             limit = 40;
         params.put("limit",String.valueOf(limit));
         statuses = new ArrayList<>();
-        get(String.format("/timelines/tag/%s",tag), params, new JsonHttpResponseHandler() {
+
+        get(String.format("/timelines/tag/%s",tag.trim()), params, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

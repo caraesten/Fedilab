@@ -32,7 +32,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.text.util.Linkify;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -199,7 +198,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_reblog_user.setText(displayName + " " +String.format("@%s",username));
             ppurl = status.getReblog().getAccount().getAvatar();
             holder.status_reblog_user.setVisibility(View.VISIBLE);
-            holder.status_account_displayname.setText(context.getResources().getString(R.string.reblog_by, status.getAccount().getAcct()));
+            holder.status_account_displayname.setText(context.getResources().getString(R.string.reblog_by, status.getAccount().getUsername()));
             holder.status_account_username.setText( "");
         }else {
             ppurl = status.getAccount().getAvatar();
