@@ -17,41 +17,43 @@ package fr.gouv.etalab.mastodon.asynctasks;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import java.util.List;
+
 import fr.gouv.etalab.mastodon.client.API;
-import fr.gouv.etalab.mastodon.client.Entities.Results;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchInterface;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
 
 
 /**
  * Created by Thomas on 25/05/2017.
- * Retrieves accounts and toots from search
+ * Retrieves accounts from search (ie: starting with @ when writing a toot)
  */
 
-public class RetrieveSearchAsyncTask extends AsyncTask<Void, Void, Void> {
+public class RetrieveSearchAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     private Context context;
     private String query;
-    private Results results;
-    private OnRetrieveSearchInterface listener;
+    private List<Account> accounts;
+    private OnRetrieveSearcAccountshInterface listener;
 
 
-    public RetrieveSearchAsyncTask(Context context, String query, OnRetrieveSearchInterface onRetrieveSearchInterface){
+    public RetrieveSearchAccountsAsyncTask(Context context, String query, OnRetrieveSearcAccountshInterface onRetrieveSearcAccountshInterface){
         this.context = context;
         this.query = query;
-        this.listener = onRetrieveSearchInterface;
+        this.listener = onRetrieveSearcAccountshInterface;
     }
 
 
     @Override
     protected Void doInBackground(Void... params) {
 
-        results = new API(context).search(query);
+        accounts = new API(context).searchAccounts(query);
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveSearch(results);
+        listener.onRetrieveSearchAccounts(accounts);
     }
 
 }

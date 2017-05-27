@@ -14,13 +14,17 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.client.Entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
 /**
  * Created by Thomas on 23/04/2017.
+ * Manage accounts
  */
 
-public class Account {
+public class Account implements Parcelable {
 
     private String id;
     private String username;
@@ -39,6 +43,39 @@ public class Account {
     private String header_static;
     private String token;
     private String instance;
+
+    protected Account(Parcel in) {
+        id = in.readString();
+        username = in.readString();
+        acct = in.readString();
+        display_name = in.readString();
+        locked = in.readByte() != 0;
+        followers_count = in.readInt();
+        following_count = in.readInt();
+        statuses_count = in.readInt();
+        note = in.readString();
+        url = in.readString();
+        avatar = in.readString();
+        avatar_static = in.readString();
+        header = in.readString();
+        header_static = in.readString();
+        token = in.readString();
+        instance = in.readString();
+    }
+
+    public Account(){}
+
+    public static final Creator<Account> CREATOR = new Creator<Account>() {
+        @Override
+        public Account createFromParcel(Parcel in) {
+            return new Account(in);
+        }
+
+        @Override
+        public Account[] newArray(int size) {
+            return new Account[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -174,5 +211,30 @@ public class Account {
 
     public void setInstance(String instance) {
         this.instance = instance;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(username);
+        dest.writeString(acct);
+        dest.writeString(display_name);
+        dest.writeByte((byte) (locked ? 1 : 0));
+        dest.writeInt(followers_count);
+        dest.writeInt(following_count);
+        dest.writeInt(statuses_count);
+        dest.writeString(note);
+        dest.writeString(url);
+        dest.writeString(avatar);
+        dest.writeString(avatar_static);
+        dest.writeString(header);
+        dest.writeString(header_static);
+        dest.writeString(token);
+        dest.writeString(instance);
     }
 }

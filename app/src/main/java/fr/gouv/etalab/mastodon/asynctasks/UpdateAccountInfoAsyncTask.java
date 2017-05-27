@@ -38,7 +38,6 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
     private Context context;
     private String token;
 
-
     public UpdateAccountInfoAsyncTask(Context context, String token){
         this.context = context;
         this.token = token;

@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
+import android.view.KeyEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -272,33 +273,50 @@ public class MainActivity extends AppCompatActivity
                         }else{
                             String searchTag = ((EditText) toolbar.getChildAt(i)).getText().toString();
                             toot.setVisibility(View.VISIBLE);
-                            DisplayStatusFragment statusFragment = new DisplayStatusFragment();
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.TAG);
-                            bundle.putString("tag", searchTag);
-                            statusFragment.setArguments(bundle);
-                            FragmentManager fragmentManager = getSupportFragmentManager();
-                            fragmentManager.beginTransaction()
-                                    .replace(R.id.main_app_container, statusFragment).commit();
                             View view = this.getCurrentFocus();
                             //Hide keyboard
                             if (view != null) {
                                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                             }
+
+                            Intent intent = new Intent(MainActivity.this, SearchResultActivity.class);
+                            intent.putExtra("search", searchTag);
+                            startActivity(intent);
                             return true;
                         }
 
                     }
                 }
                 //Open the search bar
-                EditText search = new EditText(getApplicationContext());
+                final EditText search = new EditText(getApplicationContext());
                 search.setSingleLine(true);
                 search.setLayoutParams( new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT,1.0f));
                 toolbar.addView(search);
                 search.requestFocus();
+                search.setOnKeyListener(new View.OnKeyListener() {
+                    public boolean onKey(View v, int keyCode, KeyEvent event) {
+                        if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                                (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                            String searchTag = search.getText().toString();
+                            toot.setVisibility(View.VISIBLE);
+                            View view = getCurrentFocus();
+                            //Hide keyboard
+                            if (view != null) {
+                                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                            }
+
+                            Intent intent = new Intent(MainActivity.this, SearchResultActivity.class);
+                            intent.putExtra("search", searchTag);
+                            startActivity(intent);
+                            return true;
+                        }
+                        return false;
+                    }
+                });
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
             }

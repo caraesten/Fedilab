@@ -98,7 +98,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 statuses = new  API(context).getStatusbyId(targetedID);
                 break;
             case TAG:
-                statuses = new  API(context).getPublicTimelineTag(tag, true, max_id);
+                statuses = new  API(context).getPublicTimelineTag(tag, false, max_id);
                 break;
             case HASHTAG:
                 break;

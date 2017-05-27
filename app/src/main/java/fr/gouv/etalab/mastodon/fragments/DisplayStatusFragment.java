@@ -19,10 +19,10 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,12 +67,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private String tag;
     private boolean hideHeader = false;
     private int tootsPerPage;
+    private boolean comesFromSearch = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_status, container, false);
-
+        statuses = new ArrayList<>();
         context = getContext();
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -80,11 +81,19 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             targetedId = bundle.getString("targetedId", null);
             tag = bundle.getString("tag", null);
             hideHeader = bundle.getBoolean("hideHeader", false);
+            if( bundle.containsKey("statuses")){
+                ArrayList<Parcelable> statusesReceived = bundle.getParcelableArrayList("statuses");
+                assert statusesReceived != null;
+                for(Parcelable status: statusesReceived){
+                    statuses.add((Status) status);
+                }
+                comesFromSearch = true;
+            }
         }
         max_id = null;
         flag_loading = true;
         firstLoad = true;
-        statuses = new ArrayList<>();
+
         boolean isOnWifi = Helper.isOnWIFI(context);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -99,85 +108,95 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         nextElementLoader.setVisibility(View.GONE);
         statusListAdapter = new StatusListAdapter(context, type, isOnWifi, behaviorWithAttachments, this.statuses);
         lv_status.setAdapter(statusListAdapter);
-        lv_status.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
 
-            }
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if(firstVisibleItem + visibleItemCount == totalItemCount ) {
-                    if(!flag_loading ) {
-                        flag_loading = true;
-                        if( type == RetrieveFeedsAsyncTask.Type.USER)
-                            asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        else if( type == RetrieveFeedsAsyncTask.Type.TAG)
-                            asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        else
-                            asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
-                        nextElementLoader.setVisibility(View.VISIBLE);
-                    }
-                } else {
-                    nextElementLoader.setVisibility(View.GONE);
-                }
-            }
-        });
-
-        //Hide account header when scrolling for ShowAccountActivity
-        if( hideHeader ) {
+        if( !comesFromSearch){
             lv_status.setOnScrollListener(new AbsListView.OnScrollListener() {
-                int lastFirstVisibleItem = 0;
-
                 @Override
                 public void onScrollStateChanged(AbsListView view, int scrollState) {
+
                 }
-
-                @Override
                 public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                    if (view.getId() == lv_status.getId() && totalItemCount > visibleItemCount) {
-                        final int currentFirstVisibleItem = lv_status.getFirstVisiblePosition();
+                    if(firstVisibleItem + visibleItemCount == totalItemCount ) {
+                        if(!flag_loading ) {
+                            flag_loading = true;
+                            if( type == RetrieveFeedsAsyncTask.Type.USER)
+                                asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            else if( type == RetrieveFeedsAsyncTask.Type.TAG)
+                                asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            else
+                                asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
-                        if (currentFirstVisibleItem > lastFirstVisibleItem) {
-                            Intent intent = new Intent(Helper.HEADER_ACCOUNT);
-                            intent.putExtra("hide", true);
-                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-                        } else if (currentFirstVisibleItem < lastFirstVisibleItem) {
-                            Intent intent = new Intent(Helper.HEADER_ACCOUNT);
-                            intent.putExtra("hide", false);
-                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                            nextElementLoader.setVisibility(View.VISIBLE);
                         }
-                        lastFirstVisibleItem = currentFirstVisibleItem;
+                    } else {
+                        nextElementLoader.setVisibility(View.GONE);
                     }
                 }
             });
+
+            //Hide account header when scrolling for ShowAccountActivity
+            if( hideHeader ) {
+                lv_status.setOnScrollListener(new AbsListView.OnScrollListener() {
+                    int lastFirstVisibleItem = 0;
+
+                    @Override
+                    public void onScrollStateChanged(AbsListView view, int scrollState) {
+                    }
+
+                    @Override
+                    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                        if (view.getId() == lv_status.getId() && totalItemCount > visibleItemCount) {
+                            final int currentFirstVisibleItem = lv_status.getFirstVisiblePosition();
+
+                            if (currentFirstVisibleItem > lastFirstVisibleItem) {
+                                Intent intent = new Intent(Helper.HEADER_ACCOUNT);
+                                intent.putExtra("hide", true);
+                                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                            } else if (currentFirstVisibleItem < lastFirstVisibleItem) {
+                                Intent intent = new Intent(Helper.HEADER_ACCOUNT);
+                                intent.putExtra("hide", false);
+                                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                            }
+                            lastFirstVisibleItem = currentFirstVisibleItem;
+                        }
+                    }
+                });
+            }
+
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    max_id = null;
+                    statuses = new ArrayList<>();
+                    firstLoad = true;
+                    flag_loading = true;
+                    if( type == RetrieveFeedsAsyncTask.Type.USER)
+                        asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    else if( type == RetrieveFeedsAsyncTask.Type.TAG)
+                        asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    else
+                        asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
+            });
+            swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,
+                    R.color.colorPrimary,
+                    R.color.colorPrimaryDark);
+
+
+            if( type == RetrieveFeedsAsyncTask.Type.USER)
+                asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            else if( type == RetrieveFeedsAsyncTask.Type.TAG)
+                asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            else
+                asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }else {
+            statusListAdapter.notifyDataSetChanged();
+            mainLoader.setVisibility(View.GONE);
+            nextElementLoader.setVisibility(View.GONE);
+            if( statuses == null || statuses.size() == 0 )
+                textviewNoAction.setVisibility(View.VISIBLE);
         }
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                max_id = null;
-                statuses = new ArrayList<>();
-                firstLoad = true;
-                flag_loading = true;
-                if( type == RetrieveFeedsAsyncTask.Type.USER)
-                    asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                else if( type == RetrieveFeedsAsyncTask.Type.TAG)
-                    asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                else
-                    asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            }
-        });
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,
-                R.color.colorPrimary,
-                R.color.colorPrimaryDark);
-
-
-        if( type == RetrieveFeedsAsyncTask.Type.USER)
-            asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        else if( type == RetrieveFeedsAsyncTask.Type.TAG)
-            asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        else
-            asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         return rootView;
     }
 

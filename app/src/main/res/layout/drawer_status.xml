@@ -167,8 +167,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="5dp"
-        android:paddingLeft="@dimen/drawer_padding"
-        android:paddingRight="@dimen/drawer_padding"
+        android:padding="@dimen/drawer_padding"
+        android:layout_marginStart="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="@dimen/activity_vertical_margin"
+        android:layout_marginRight="@dimen/activity_vertical_margin"
         android:orientation="horizontal">
         <TextView
             android:drawableStart="@drawable/dr_favorites"
@@ -180,8 +183,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
-            android:layout_marginLeft="30dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:drawableStart="@drawable/dr_reblogs"
             android:drawableLeft="@drawable/dr_reblogs"
             android:drawablePadding="2dp"
@@ -191,13 +194,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <ImageView
-            android:layout_marginLeft="30dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:id="@+id/status_reply"
             android:layout_gravity="center_vertical"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_reply"/>
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_reply"
+            tools:ignore="ContentDescription" />
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -211,17 +215,17 @@
                 android:layout_marginEnd="20dp"
                 android:id="@+id/status_privacy"
                 android:layout_gravity="center_vertical"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:background="@color/light_grey"
-                />
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                tools:ignore="ContentDescription" />
             <ImageView
                 android:layout_marginLeft="20dp"
                 android:layout_marginStart="20dp"
                 android:id="@+id/status_more"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_action_more"/>
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_action_more"
+                tools:ignore="ContentDescription" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
