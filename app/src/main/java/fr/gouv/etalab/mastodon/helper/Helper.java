@@ -414,19 +414,16 @@ public class Helper {
     /**
      * Sends notification with intent
      * @param context Context
-     * @param intentAction int intent action
+     * @param intent Intent associated to the notifcation
      * @param notificationId int id of the notification
      * @param icon Bitmap profile picture
      * @param title String title of the notification
      * @param message String message for the notification
      */
-    public static void notify_user(Context context, int intentAction, int notificationId, Bitmap icon, String title, String message ) {
+    public static void notify_user(Context context, Intent intent, int notificationId, Bitmap icon, String title, String message ) {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         // prepare intent which is triggered if the user click on the notification
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        final Intent intent = new Intent(context, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
-        intent.putExtra(INTENT_ACTION, intentAction);
         PendingIntent pIntent = PendingIntent.getActivity(context, notificationId, intent, PendingIntent.FLAG_ONE_SHOT);
         RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         // build notification
@@ -601,7 +598,7 @@ public class Helper {
      * @param activity Activity
      * @param userID String - the new user id
      */
-    private static void changeUser(Activity activity, String userID) {
+    public static void changeUser(Activity activity, String userID) {
 
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(activity,db).getAccountByID(userID);

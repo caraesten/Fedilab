@@ -64,6 +64,8 @@ import mastodon.etalab.gouv.fr.mastodon.R;
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
+import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
+import static fr.gouv.etalab.mastodon.helper.Helper.changeUser;
 import static fr.gouv.etalab.mastodon.helper.Helper.menuAccounts;
 import static fr.gouv.etalab.mastodon.helper.Helper.updateHeaderAccountInfo;
 
@@ -147,18 +149,7 @@ public class MainActivity extends AppCompatActivity
         });
 
         boolean menuWasSelected = false;
-        if( getIntent() != null && getIntent().getExtras() != null ){
-            Bundle extras = getIntent().getExtras();
-            if (extras.getInt(INTENT_ACTION) == NOTIFICATION_INTENT){
-                navigationView.setCheckedItem(R.id.nav_notification);
-                navigationView.getMenu().performIdentifierAction(R.id.nav_notification, 0);
-                menuWasSelected = true;
-            }else if( extras.getInt(INTENT_ACTION) == HOME_TIMELINE_INTENT){
-                navigationView.setCheckedItem(R.id.nav_home);
-                navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
-                menuWasSelected = true;
-            }
-        }
+        mamageNewIntent(getIntent());
         if (savedInstanceState == null && !menuWasSelected) {
             navigationView.setCheckedItem(R.id.nav_home);
             navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
@@ -201,15 +192,32 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        mamageNewIntent(intent);
+
+    }
+
+    /**
+     * Manages new intents
+     * @param intent Intent - intent related to a notification in top bar
+     */
+    private void mamageNewIntent(Intent intent){
         if( intent == null || intent.getExtras() == null )
             return;
         Bundle extras = intent.getExtras();
+        String userIdIntent;
         if( extras.containsKey(INTENT_ACTION) ){
+            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null); //Id of the authenticated account
             final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            userIdIntent = extras.getString(PREF_KEY_ID); //Id of the account in the intent
             if (extras.getInt(INTENT_ACTION) == NOTIFICATION_INTENT){
+                if( userId!= null && !userId.equals(userIdIntent)) //Connected account is different from the id in the intent
+                    changeUser(MainActivity.this, userIdIntent); //Connects the account which is related to the notification
                 navigationView.setCheckedItem(R.id.nav_notification);
                 navigationView.getMenu().performIdentifierAction(R.id.nav_notification, 0);
             }else if( extras.getInt(INTENT_ACTION) == HOME_TIMELINE_INTENT){
+                if( userId!= null && !userId.equals(userIdIntent))  //Connected account is different from the id in the intent
+                    changeUser(MainActivity.this, userIdIntent); //Connects the account which is related to the notification
                 navigationView.setCheckedItem(R.id.nav_home);
                 navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
             }

@@ -24,5 +24,5 @@ import fr.gouv.etalab.mastodon.client.Entities.Notification;
  * Interface when notifications have been retrieved
  */
 public interface OnRetrieveNotificationsInterface {
-    void onRetrieveNotifications(List<Notification> notifications, String acct);
+    void onRetrieveNotifications(List<Notification> notifications, String acct, String userId);
 }

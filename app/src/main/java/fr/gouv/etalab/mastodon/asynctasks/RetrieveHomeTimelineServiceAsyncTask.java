@@ -32,16 +32,17 @@ public class RetrieveHomeTimelineServiceAsyncTask extends AsyncTask<Void, Void, 
     private Context context;
     private List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses;
     private String since_id;
-    private String acct;
+    private String acct, userId;
     private OnRetrieveHomeTimelineServiceInterface listener;
     private String instance;
 
-    public RetrieveHomeTimelineServiceAsyncTask(Context context, String instance, String since_id, String acct, OnRetrieveHomeTimelineServiceInterface onRetrieveHomeTimelineServiceInterface){
+    public RetrieveHomeTimelineServiceAsyncTask(Context context, String instance, String since_id, String acct, String userId, OnRetrieveHomeTimelineServiceInterface onRetrieveHomeTimelineServiceInterface){
         this.context = context;
         this.since_id = since_id;
         this.listener = onRetrieveHomeTimelineServiceInterface;
         this.acct = acct;
         this.instance = instance;
+        this.userId = userId;
     }
 
     @Override
@@ -52,7 +53,7 @@ public class RetrieveHomeTimelineServiceAsyncTask extends AsyncTask<Void, Void, 
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveHomeTimelineService(statuses, acct);
+        listener.onRetrieveHomeTimelineService(statuses, acct, userId);
     }
 
 }
