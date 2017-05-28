@@ -14,16 +14,20 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,13 +64,17 @@ public class LoginActivity extends AppCompatActivity {
     private String client_secret;
     private TextView login_two_step;
     private static boolean client_id_for_webview = false;
+    private String instance;
+    private boolean addAccount = false;
+    private EditText login_instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Button connectionButton = (Button) findViewById(R.id.login_button);
+        final Button connectionButton = (Button) findViewById(R.id.login_button);
+        login_instance = (EditText) findViewById(R.id.login_instance);
         connectionButton.setEnabled(false);
         login_two_step = (TextView) findViewById(R.id.login_two_step);
         login_two_step.setVisibility(View.GONE);
@@ -78,28 +86,61 @@ public class LoginActivity extends AppCompatActivity {
                 retrievesClientId();
             }
         });
+
+        Bundle b = getIntent().getExtras();
+        if(b != null)
+            addAccount = b.getBoolean("addAccount", false);
+
+        if( addAccount )
+            login_instance.setVisibility(View.VISIBLE);
+
+        if( addAccount) {
+            login_instance.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    connectionButton.setEnabled(false);
+                    login_two_step.setVisibility(View.INVISIBLE);
+                    if (!hasFocus) {
+                        retrievesClientId();
+                    }
+                }
+            });
+        }
     }
 
     @Override
     protected void onResume(){
         super.onResume();
         Button connectionButton = (Button) findViewById(R.id.login_button);
-        if( client_id_for_webview || !connectionButton.isEnabled()) {
-            connectionButton.setEnabled(false);
-            client_id_for_webview = false;
-            retrievesClientId();
+        if( !addAccount ) {
+            if (client_id_for_webview || !connectionButton.isEnabled()) {
+                connectionButton.setEnabled(false);
+                client_id_for_webview = false;
+                retrievesClientId();
+            }
+        }else {
+            if (login_instance.getText() != null && login_instance.getText().toString().length() > 0 && client_id_for_webview) {
+                connectionButton.setEnabled(false);
+                client_id_for_webview = false;
+                retrievesClientId();
+            }
         }
     }
 
     private void retrievesClientId(){
         final Button connectionButton = (Button) findViewById(R.id.login_button);
+        if( login_instance.getText() != null && login_instance.getText().length() > 0 )
+            instance = login_instance.getText().toString().trim();
+        else
+            instance = Helper.INSTANCE;
+
         String action = "/api/v1/apps";
         RequestParams parameters = new RequestParams();
         parameters.add(Helper.CLIENT_NAME, Helper.OAUTH_REDIRECT_HOST);
         parameters.add(Helper.REDIRECT_URIS, client_id_for_webview?Helper.REDIRECT_CONTENT_WEB:Helper.REDIRECT_CONTENT);
         parameters.add(Helper.SCOPES, Helper.OAUTH_SCOPES);
-        parameters.add(Helper.WEBSITE,"https://" + Helper.INSTANCE);
-        new OauthClient().post(action, parameters, new AsyncHttpResponseHandler() {
+        parameters.add(Helper.WEBSITE,"https://" + Helper.getLiveInstance(getApplicationContext()));
+        new OauthClient(instance).post(action, parameters, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String response = new String(responseBody);
@@ -120,6 +161,7 @@ public class LoginActivity extends AppCompatActivity {
                     login_two_step.setVisibility(View.VISIBLE);
                     if( client_id_for_webview){
                         Intent i = new Intent(LoginActivity.this, WebviewActivity.class);
+                        i.putExtra("instance", instance);
                         startActivity(i);
                     }
                 } catch (JSONException e) {
@@ -158,7 +200,7 @@ public class LoginActivity extends AppCompatActivity {
                 client.setUserAgent(USER_AGENT);
                 try {
                     client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
-                    client.post("https://" + Helper.INSTANCE + "/oauth/token", requestParams, new AsyncHttpResponseHandler() {
+                    client.post("https://" + instance+ "/oauth/token", requestParams, new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                             String response = new String(responseBody);
@@ -171,7 +213,7 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);
                                 editor.apply();
                                 //Update the account with the token;
-                                new UpdateAccountInfoAsyncTask(LoginActivity.this, token).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                new UpdateAccountInfoAsyncTask(LoginActivity.this, token, instance).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -180,6 +222,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                             connectionButton.setEnabled(true);
+                            error.printStackTrace();
                             Toast.makeText(getApplicationContext(),R.string.toast_error_login,Toast.LENGTH_LONG).show();
                         }
                     });
@@ -191,5 +234,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
 
 }

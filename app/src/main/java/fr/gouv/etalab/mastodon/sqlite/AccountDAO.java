@@ -76,6 +76,7 @@ public class AccountDAO {
             db.insert(Sqlite.TABLE_USER_ACCOUNT, null, values);
 
         }catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
         return true;

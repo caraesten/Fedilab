@@ -53,11 +53,18 @@ public class WebviewActivity extends AppCompatActivity {
     private WebView webView;
     private AlertDialog alert;
     private String clientId, clientSecret;
+    private String instance;
 
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
+        Bundle b = getIntent().getExtras();
+        if(b != null)
+            instance = b.getString("instance");
+        if( instance == null)
+            finish();
+
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         clientId = sharedpreferences.getString(Helper.CLIENT_ID, null);
         clientSecret = sharedpreferences.getString(Helper.CLIENT_SECRET, null);
@@ -95,7 +102,7 @@ public class WebviewActivity extends AppCompatActivity {
                     parameters.add(Helper.REDIRECT_URI,Helper.REDIRECT_CONTENT_WEB);
                     parameters.add("grant_type", "authorization_code");
                     parameters.add("code",code);
-                    new OauthClient().post(action, parameters, new AsyncHttpResponseHandler() {
+                    new OauthClient(instance).post(action, parameters, new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                             String response = new String(responseBody);
@@ -108,7 +115,7 @@ public class WebviewActivity extends AppCompatActivity {
                                 editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);
                                 editor.apply();
                                 //Update the account with the token;
-                                new UpdateAccountInfoAsyncTask(WebviewActivity.this, token).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                new UpdateAccountInfoAsyncTask(WebviewActivity.this, token, instance).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -149,7 +156,7 @@ public class WebviewActivity extends AppCompatActivity {
         queryString += "&" + Helper.REDIRECT_URI + "="+ Uri.encode(Helper.REDIRECT_CONTENT_WEB);
         queryString += "&" + Helper.RESPONSE_TYPE +"=code";
         queryString += "&" + Helper.SCOPE +"=" + Helper.OAUTH_SCOPES;
-        return "https://" + Helper.INSTANCE  + Helper.EP_AUTHORIZE + "?" + queryString;
+        return "https://" + instance  + Helper.EP_AUTHORIZE + "?" + queryString;
     }
 
 

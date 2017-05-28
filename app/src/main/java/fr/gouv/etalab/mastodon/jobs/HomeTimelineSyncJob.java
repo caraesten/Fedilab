@@ -104,7 +104,7 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
             for (Account account: accounts) {
                 String since_id = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + account.getAcct(), null);
                 notificationId = (int) Math.round(Double.parseDouble(account.getId())/1000);
-                new RetrieveHomeTimelineServiceAsyncTask(getContext(), since_id, account.getAcct(), HomeTimelineSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new RetrieveHomeTimelineServiceAsyncTask(getContext(), account.getInstance(), since_id, account.getAcct(), HomeTimelineSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
             }
         }

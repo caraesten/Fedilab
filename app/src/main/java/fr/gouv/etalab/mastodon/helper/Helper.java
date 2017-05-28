@@ -17,6 +17,7 @@
 package fr.gouv.etalab.mastodon.helper;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.PendingIntent;
@@ -25,30 +26,56 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.BuildConfig;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.io.File;
 import java.net.InetAddress;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import fr.gouv.etalab.mastodon.activities.LoginActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
+import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.client.API;
 
@@ -133,6 +160,9 @@ public class Helper {
 
     //User agent
     public static final String USER_AGENT = "Mastalab/"+ BuildConfig.VERSION_NAME + " Android/"+ Build.VERSION.RELEASE;
+
+
+    public static boolean menuAccountsOpened = false;
 
     /***
      *  Check if the user is connected to Internet
@@ -417,10 +447,207 @@ public class Helper {
         notificationManager.notify(notificationId, notificationBuilder.build());
     }
 
+    /**
+     * Returns the instance of the authenticated user
+     * @param context Context
+     * @return String domain instance
+     */
+    public static String getLiveInstance(Context context){
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        if( userId == null) //User not authenticated
+            return Helper.INSTANCE;
+        Account account = new AccountDAO(context, db).getAccountByID(userId);
+        if( account != null){
+            return account.getInstance().trim();
+        } //User not in db
+        else return Helper.INSTANCE;
+    }
 
+
+    /**
+     * Converts dp to pixel
+     * @param dp float - the value in dp to convert
+     * @param context Context
+     * @return float - the converted value in pixel
+     */
     public static float convertDpToPixel(float dp, Context context){
         Resources resources = context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
         return dp * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
+
+
+    /**
+     * Toggle for the menu (ie: main menu or accounts menu)
+     * @param activity Activity
+     */
+    public static void menuAccounts(final Activity activity){
+
+        final NavigationView navigationView = (NavigationView) activity.findViewById(R.id.nav_view);
+        SharedPreferences mSharedPreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String currrentUserId = mSharedPreferences.getString(Helper.PREF_KEY_ID, null);
+        final ImageView arrow  = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.owner_accounts);
+        if( currrentUserId == null)
+            return;
+
+        if( !menuAccountsOpened ){
+
+            arrow.setImageResource(R.drawable.ic_arrow_drop_up);
+
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.menu_accounts);
+
+            SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+
+            final List<Account> accounts = new AccountDAO(activity, db).getAllAccount();
+            navigationView.setItemIconTintList(null);
+            for(final Account account: accounts) {
+                if( !currrentUserId.equals(account.getId()) ) {
+                    final MenuItem item = navigationView.getMenu().add("@" + account.getAcct() + "@" + account.getInstance());
+                    ImageLoader imageLoader;
+                    DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
+                            .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+                    imageLoader = ImageLoader.getInstance();
+                    final ImageView imageView = new ImageView(activity);
+                    item.setIcon(R.drawable.ic_person);
+                    imageLoader.displayImage(account.getAvatar(), imageView, options, new ImageLoadingListener() {
+                        @Override
+                        public void onLoadingStarted(String s, View view) {
+                        }
+
+                        @Override
+                        public void onLoadingFailed(String s, View view, FailReason failReason) {
+                        }
+
+                        @Override
+                        public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                            item.setIcon(new BitmapDrawable(activity.getResources(), bitmap));
+                        }
+
+                        @Override
+                        public void onLoadingCancelled(String s, View view) {
+                        }
+                    });
+
+                    item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            if( ! activity.isFinishing() ) {
+                                menuAccountsOpened = false;
+                                String userId = account.getId();
+                                Toast.makeText(activity, activity.getString(R.string.toast_account_changed, "@" + account.getAcct() + "@" + account.getInstance()), Toast.LENGTH_LONG).show();
+                                changeUser(activity, userId);
+                                arrow.setImageResource(R.drawable.ic_arrow_drop_down);
+                                navigationView.getMenu().clear();
+                                navigationView.inflateMenu(R.menu.activity_main_drawer);
+                                navigationView.setCheckedItem(R.id.nav_home);
+                                navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
+                                return true;
+                            }
+                            return false;
+                        }
+                    });
+                    item.setActionView(R.layout.update_account);
+                    ImageView deleteButton = (ImageView) item.getActionView().findViewById(R.id.account_remove_button);
+                    deleteButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            new AlertDialog.Builder(activity)
+                                    .setTitle(activity.getString(R.string.delete_account_title))
+                                    .setMessage(activity.getString(R.string.delete_account_message, "@" + account.getAcct() + "@" + account.getInstance()))
+                                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            new RemoveAccountAsyncTask(activity, account).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                            item.setVisible(false);
+                                        }
+                                    })
+                                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            // do nothing
+                                        }
+                                    })
+                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                    .show();
+                        }
+                    });
+
+                }
+            }
+            MenuItem addItem = navigationView.getMenu().add(R.string.add_account);
+            addItem.setIcon(R.drawable.ic_person_add);
+            addItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    Intent intent = new Intent(activity, LoginActivity.class);
+                    intent.putExtra("addAccount", true);
+                    activity.startActivity(intent);
+                    return true;
+                }
+            });
+        }else{
+            arrow.setImageResource(R.drawable.ic_arrow_drop_down);
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.activity_main_drawer);
+
+        }
+        menuAccountsOpened = !menuAccountsOpened;
+
+    }
+
+    /**
+     * Changes the user in shared preferences
+     * @param activity Activity
+     * @param userID String - the new user id
+     */
+    private static void changeUser(Activity activity, String userID) {
+
+        SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        Account account = new AccountDAO(activity,db).getAccountByID(userID);
+
+        SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, account.getToken());
+        editor.putString(Helper.PREF_KEY_ID, account.getId());
+        editor.apply();
+        ImageLoader imageLoader;
+        DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
+                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+        imageLoader = ImageLoader.getInstance();
+        NavigationView navigationView = (NavigationView) activity.findViewById(R.id.nav_view);
+        updateHeaderAccountInfo(activity, account, navigationView, imageLoader, options);
+    }
+
+
+    /**
+     * Update the header with the new selected account
+     * @param activity Activity
+     * @param account Account - new account in use
+     * @param headerLayout View - the menu header
+     * @param imageLoader ImageLoader - instance of ImageLoader
+     * @param options DisplayImageOptions - current configuration of ImageLoader
+     */
+    public static void updateHeaderAccountInfo(Activity activity, Account account, View headerLayout, ImageLoader imageLoader, DisplayImageOptions options){
+        ImageView profilePicture = (ImageView) headerLayout.findViewById(R.id.profilePicture);
+        TextView username = (TextView) headerLayout.findViewById(R.id.username);
+        TextView displayedName = (TextView) headerLayout.findViewById(R.id.displayedName);
+        TextView ownerStatus = (TextView) headerLayout.findViewById(R.id.owner_status);
+        TextView ownerFollowing = (TextView) headerLayout.findViewById(R.id.owner_following);
+        TextView ownerFollowers = (TextView) headerLayout.findViewById(R.id.owner_followers);
+        if( account == null ) {
+            Helper.logout(activity);
+            Intent myIntent = new Intent(activity, LoginActivity.class);
+            Toast.makeText(activity,R.string.toast_error, Toast.LENGTH_LONG).show();
+            activity.startActivity(myIntent);
+            activity.finish(); //User is logged out to get a new token
+        }else {
+            ownerStatus.setText(String.valueOf(account.getStatuses_count()));
+            ownerFollowers.setText(String.valueOf(account.getFollowers_count()));
+            ownerFollowing.setText(String.valueOf(account.getFollowing_count()));
+            username.setText(String.format("@%s",account.getUsername()));
+            displayedName.setText(account.getDisplay_name());
+            imageLoader.displayImage(account.getAvatar(), profilePicture, options);
+        }
     }
 }

@@ -36,7 +36,7 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
     private String max_id;
     private String acct;
     private OnRetrieveNotificationsInterface listener;
-
+    private String instance;
 
     public RetrieveNotificationsAsyncTask(Context context, String max_id, String acct, OnRetrieveNotificationsInterface onRetrieveNotificationsInterface){
         this.context = context;
@@ -45,12 +45,21 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
         this.acct = acct;
     }
 
+
+    public RetrieveNotificationsAsyncTask(Context context, String instance, String max_id, String acct, OnRetrieveNotificationsInterface onRetrieveNotificationsInterface){
+        this.context = context;
+        this.max_id = max_id;
+        this.listener = onRetrieveNotificationsInterface;
+        this.acct = acct;
+        this.instance = instance;
+    }
+
     @Override
     protected Void doInBackground(Void... params) {
         if( acct == null)
-            notifications = new API(context).getNotifications(max_id);
+            notifications = new API(context, instance).getNotifications(max_id);
         else
-            notifications = new API(context).getNotificationsSince(max_id);
+            notifications = new API(context, instance).getNotificationsSince(max_id);
         return null;
     }
 

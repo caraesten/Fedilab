@@ -35,9 +35,13 @@ import static fr.gouv.etalab.mastodon.helper.Helper.USER_AGENT;
 
 public class OauthClient {
 
-    private static final String BASE_URL = "https://" + Helper.INSTANCE;
-
     private static AsyncHttpClient client = new AsyncHttpClient();
+    private String instance;
+
+
+    public OauthClient(String instance){
+        this.instance = instance;
+    }
 
     public void get(String action, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         try {
@@ -63,7 +67,7 @@ public class OauthClient {
     }
 
     private String getAbsoluteUrl(String action) {
-        return BASE_URL + action;
+        return "https://" + instance + action;
     }
 
 

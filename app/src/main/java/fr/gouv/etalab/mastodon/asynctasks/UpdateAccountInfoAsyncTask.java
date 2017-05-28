@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
@@ -37,23 +38,24 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
 
     private Context context;
     private String token;
+    private String instance;
 
-    public UpdateAccountInfoAsyncTask(Context context, String token){
+    public UpdateAccountInfoAsyncTask(Context context, String token, String instance){
         this.context = context;
         this.token = token;
-
+        this.instance = instance;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        Account account = new API(context).verifyCredentials();
+        Account account = new API(context, instance).verifyCredentials();
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( token == null) {
             token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         }
         account.setToken(token);
         //TODO: remove this static value to allow other instances
-        account.setInstance(Helper.INSTANCE);
+        account.setInstance(instance);
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         boolean userExists = new AccountDAO(context, db).userExist(account);
         SharedPreferences.Editor editor = sharedpreferences.edit();

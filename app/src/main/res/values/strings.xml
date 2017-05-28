@@ -24,6 +24,9 @@
     <string name="token">Jeton</string>
     <string name="two_factor_authentification">Authentification en deux étapes ?</string>
     <string name="no_result">Aucun résultat !</string>
+    <string name="instance">Instance</string>
+    <string name="toast_account_changed">Utilisation du compte %1$s</string>
+    <string name="add_account">Ajouter un compte</string>
     <!--- Menu -->
     <string name="home_menu">Accueil</string>
     <string name="home_timeline">Accueil</string>
@@ -39,6 +42,8 @@
     <string name="notifications">Notifications</string>
     <string name="optimization">Optimisation</string>
     <string name="make_a_choice">Que souhaitez-vous faire ?</string>
+    <string name="delete_account_title">Supprimer un compte</string>
+    <string name="delete_account_message">Supprimer le compte %1$s de l\'application ?</string>
 
     <!-- Status -->
     <string name="no_status">Aucun pouet à afficher !</string>

@@ -114,7 +114,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
             for (Account account: accounts) {
                 String max_id = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getAcct(), null);
                 notificationId = (int) Math.round(Double.parseDouble(account.getId())/1000);
-                new RetrieveNotificationsAsyncTask(getContext(), max_id, account.getAcct(), NotificationsSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new RetrieveNotificationsAsyncTask(getContext(), account.getInstance(), max_id, account.getAcct(), NotificationsSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
     }
