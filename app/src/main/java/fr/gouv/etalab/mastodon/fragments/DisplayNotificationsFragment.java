@@ -92,7 +92,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 if(firstVisibleItem + visibleItemCount == totalItemCount ) {
                     if(!flag_loading ) {
                         flag_loading = true;
-                        asyncTask = new RetrieveNotificationsAsyncTask(context, max_id, null, null,DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, max_id, null, null,DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         nextElementLoader.setVisibility(View.VISIBLE);
                     }
                 } else {
@@ -108,7 +108,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 notifications = new ArrayList<>();
                 firstLoad = true;
                 flag_loading = true;
-                asyncTask = new RetrieveNotificationsAsyncTask(context, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
         swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,
@@ -116,7 +116,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 R.color.colorPrimaryDark);
 
 
-        asyncTask = new RetrieveNotificationsAsyncTask(context, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         return rootView;
     }
 

@@ -20,6 +20,7 @@ import android.os.AsyncTask;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveNotificationsInterface;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 
@@ -37,31 +38,26 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
     private String acct, userId;
     private OnRetrieveNotificationsInterface listener;
     private String instance;
-
-    public RetrieveNotificationsAsyncTask(Context context, String max_id, String acct, String userId, OnRetrieveNotificationsInterface onRetrieveNotificationsInterface){
-        this.context = context;
-        this.max_id = max_id;
-        this.listener = onRetrieveNotificationsInterface;
-        this.acct = acct;
-        this.userId = userId;
-    }
+    private String token;
 
 
-    public RetrieveNotificationsAsyncTask(Context context, String instance, String max_id, String acct, String userId, OnRetrieveNotificationsInterface onRetrieveNotificationsInterface){
+
+    public RetrieveNotificationsAsyncTask(Context context, String instance, String token, String max_id, String acct, String userId, OnRetrieveNotificationsInterface onRetrieveNotificationsInterface){
         this.context = context;
         this.max_id = max_id;
         this.listener = onRetrieveNotificationsInterface;
         this.acct = acct;
         this.instance = instance;
         this.userId = userId;
+        this.token = token;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
         if( acct == null)
-            notifications = new API(context, instance).getNotifications(max_id);
+            notifications = new API(context, instance, token).getNotifications(max_id);
         else
-            notifications = new API(context, instance).getNotificationsSince(max_id);
+            notifications = new API(context, instance, token).getNotificationsSince(max_id);
         return null;
     }
 

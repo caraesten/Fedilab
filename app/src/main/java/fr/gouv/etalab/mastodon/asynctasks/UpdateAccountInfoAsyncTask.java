@@ -48,7 +48,7 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        Account account = new API(context, instance).verifyCredentials();
+        Account account = new API(context, instance, null).verifyCredentials();
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( token == null) {
             token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
