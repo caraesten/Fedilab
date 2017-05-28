@@ -35,10 +35,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -67,6 +64,10 @@ import mastodon.etalab.gouv.fr.mastodon.R;
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
+import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
+import static fr.gouv.etalab.mastodon.helper.Helper.changeUser;
+import static fr.gouv.etalab.mastodon.helper.Helper.menuAccounts;
+import static fr.gouv.etalab.mastodon.helper.Helper.updateHeaderAccountInfo;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface {
@@ -137,20 +138,18 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(prefKeyOauthTokenT);
-        updateHeaderAccountInfo(account);
-        boolean menuWasSelected = false;
-        if( getIntent() != null && getIntent().getExtras() != null ){
-            Bundle extras = getIntent().getExtras();
-            if (extras.getInt(INTENT_ACTION) == NOTIFICATION_INTENT){
-                navigationView.setCheckedItem(R.id.nav_notification);
-                navigationView.getMenu().performIdentifierAction(R.id.nav_notification, 0);
-                menuWasSelected = true;
-            }else if( extras.getInt(INTENT_ACTION) == HOME_TIMELINE_INTENT){
-                navigationView.setCheckedItem(R.id.nav_home);
-                navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
-                menuWasSelected = true;
+        updateHeaderAccountInfo(MainActivity.this, account, headerLayout, imageLoader, options);
+
+        LinearLayout owner_container = (LinearLayout) headerLayout.findViewById(R.id.owner_container);
+        owner_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menuAccounts(MainActivity.this);
             }
-        }
+        });
+
+        boolean menuWasSelected = false;
+        mamageNewIntent(getIntent());
         if (savedInstanceState == null && !menuWasSelected) {
             navigationView.setCheckedItem(R.id.nav_home);
             navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
@@ -193,15 +192,32 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        mamageNewIntent(intent);
+
+    }
+
+    /**
+     * Manages new intents
+     * @param intent Intent - intent related to a notification in top bar
+     */
+    private void mamageNewIntent(Intent intent){
         if( intent == null || intent.getExtras() == null )
             return;
         Bundle extras = intent.getExtras();
+        String userIdIntent;
         if( extras.containsKey(INTENT_ACTION) ){
+            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null); //Id of the authenticated account
             final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            userIdIntent = extras.getString(PREF_KEY_ID); //Id of the account in the intent
             if (extras.getInt(INTENT_ACTION) == NOTIFICATION_INTENT){
+                if( userId!= null && !userId.equals(userIdIntent)) //Connected account is different from the id in the intent
+                    changeUser(MainActivity.this, userIdIntent); //Connects the account which is related to the notification
                 navigationView.setCheckedItem(R.id.nav_notification);
                 navigationView.getMenu().performIdentifierAction(R.id.nav_notification, 0);
             }else if( extras.getInt(INTENT_ACTION) == HOME_TIMELINE_INTENT){
+                if( userId!= null && !userId.equals(userIdIntent))  //Connected account is different from the id in the intent
+                    changeUser(MainActivity.this, userIdIntent); //Connects the account which is related to the notification
                 navigationView.setCheckedItem(R.id.nav_home);
                 navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
             }
@@ -436,29 +452,6 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private void updateHeaderAccountInfo(Account account){
-        ImageView profilePicture = (ImageView) headerLayout.findViewById(R.id.profilePicture);
-        TextView username = (TextView) headerLayout.findViewById(R.id.username);
-        TextView displayedName = (TextView) headerLayout.findViewById(R.id.displayedName);
-        TextView ownerStatus = (TextView) headerLayout.findViewById(R.id.owner_status);
-        TextView ownerFollowing = (TextView) headerLayout.findViewById(R.id.owner_following);
-        TextView ownerFollowers = (TextView) headerLayout.findViewById(R.id.owner_followers);
-        //Something wrong happened with the account recorded in db (ie: bad token)
-        if( account == null ) {
-            Helper.logout(getApplicationContext());
-            Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);
-            Toast.makeText(getApplicationContext(),R.string.toast_error, Toast.LENGTH_LONG).show();
-            startActivity(myIntent);
-            finish(); //User is logged out to get a new token
-        }else {
-            ownerStatus.setText(String.valueOf(account.getStatuses_count()));
-            ownerFollowers.setText(String.valueOf(account.getFollowers_count()));
-            ownerFollowing.setText(String.valueOf(account.getFollowing_count()));
-            username.setText(String.format("@%s",account.getUsername()));
-            displayedName.setText(account.getDisplay_name());
-            imageLoader.displayImage(account.getAvatar(), profilePicture, options);
-        }
-    }
 
     private void populateTitleWithTag(String tag, String title, int index){
         if( tag == null)
@@ -488,7 +481,7 @@ public class MainActivity extends AppCompatActivity
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             SQLiteDatabase db = Sqlite.getInstance(MainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
-            updateHeaderAccountInfo(account);
+            updateHeaderAccountInfo(MainActivity.this, account, headerLayout, imageLoader, options);
         }
     }
 }

@@ -92,7 +92,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 if(firstVisibleItem + visibleItemCount == totalItemCount ) {
                     if(!flag_loading ) {
                         flag_loading = true;
-                        asyncTask = new RetrieveNotificationsAsyncTask(context, max_id, null,DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, max_id, null, null,DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         nextElementLoader.setVisibility(View.VISIBLE);
                     }
                 } else {
@@ -108,7 +108,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 notifications = new ArrayList<>();
                 firstLoad = true;
                 flag_loading = true;
-                asyncTask = new RetrieveNotificationsAsyncTask(context, max_id, null,DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
         swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,
@@ -116,7 +116,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 R.color.colorPrimaryDark);
 
 
-        asyncTask = new RetrieveNotificationsAsyncTask(context, max_id, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         return rootView;
     }
 
@@ -145,7 +145,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
 
 
     @Override
-    public void onRetrieveNotifications(List<Notification> notifications, String acct) {
+    public void onRetrieveNotifications(List<Notification> notifications, String acct, String userId) {
 
         if( firstLoad && (notifications == null || notifications.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
@@ -170,13 +170,13 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         //Store last notification id to avoid to notify for those that have been already seen
         if( notifications != null && notifications.size()  > 0) {
             final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            //acct is null when used in Fragment, data need to be retrieved via shared preferences and db
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            //acct is null as userId when used in Fragment, data need to be retrieved via shared preferences and db
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
             if( currentAccount != null){
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + currentAccount.getAcct(), notifications.get(0).getId());
+                editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + currentAccount.getId(), notifications.get(0).getId());
                 editor.apply();
             }
         }

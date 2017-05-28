@@ -59,7 +59,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.USER_AGENT;
 public class API {
 
 
-    private static final String BASE_URL = "https://" + Helper.INSTANCE + "/api/v1";
+
 
     private SyncHttpClient client = new SyncHttpClient();
 
@@ -74,6 +74,8 @@ public class API {
     private List<Notification> notifications;
     private int tootPerPage, accountPerPage, notificationPerPage;
     private int actionCode;
+    private String instance;
+    private String prefKeyOauthTokenT;
 
     public enum StatusAction{
         FAVOURITE,
@@ -97,7 +99,28 @@ public class API {
         tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
         accountPerPage = sharedpreferences.getInt(Helper.SET_ACCOUNTS_PER_PAGE, 40);
         notificationPerPage = sharedpreferences.getInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 40);
+        this.instance = Helper.getLiveInstance(context);
+        this.prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
     }
+
+    public API(Context context, String instance, String token) {
+        this.context = context;
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
+        accountPerPage = sharedpreferences.getInt(Helper.SET_ACCOUNTS_PER_PAGE, 40);
+        notificationPerPage = sharedpreferences.getInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 40);
+        if( instance != null)
+            this.instance = instance;
+        else
+            this.instance = Helper.getLiveInstance(context);
+
+        if( token != null)
+            this.prefKeyOauthTokenT = token;
+        else
+            this.prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+
+    }
+
 
     /***
      * Verifiy credential of the authenticated user *synchronously*
@@ -772,7 +795,7 @@ public class API {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-
+                error.printStackTrace();
             }
         });
         return notifications;
@@ -1210,11 +1233,10 @@ public class API {
         try {
             client.setConnectTimeout(10000); //10s timeout
             client.setUserAgent(USER_AGENT);
-            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
             client.addHeader("Authorization", "Bearer "+prefKeyOauthTokenT);
             client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
             client.get(getAbsoluteUrl(action), params, responseHandler);
+
         } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
             Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();
             e.printStackTrace();
@@ -1226,8 +1248,6 @@ public class API {
         try {
             client.setConnectTimeout(10000); //10s timeout
             client.setUserAgent(USER_AGENT);
-            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
             client.addHeader("Authorization", "Bearer "+prefKeyOauthTokenT);
             client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
             client.post(getAbsoluteUrl(action), params, responseHandler);
@@ -1241,8 +1261,6 @@ public class API {
         try {
             client.setConnectTimeout(10000); //10s timeout
             client.setUserAgent(USER_AGENT);
-            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
             client.addHeader("Authorization", "Bearer "+prefKeyOauthTokenT);
             client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
             client.delete(getAbsoluteUrl(action), params, responseHandler);
@@ -1252,10 +1270,10 @@ public class API {
         }
     }
 
-    private String getAbsoluteUrl(String action) {
-        return BASE_URL + action;
-    }
 
+    private String getAbsoluteUrl(String action) {
+        return "https://" + this.instance + "/api/v1" + action;
+    }
 
 
 }

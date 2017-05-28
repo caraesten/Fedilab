@@ -37,6 +37,17 @@
         android:gravity="center"
         android:orientation="vertical"
         android:layout_height="wrap_content">
+
+
+        <EditText
+            android:visibility="gone"
+            android:id="@+id/login_instance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textWebEmailAddress"
+            android:hint="@string/instance"
+            />
+
         <EditText
             android:id="@+id/login_uid"
             android:layout_width="match_parent"
