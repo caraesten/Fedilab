@@ -64,6 +64,7 @@ import fr.gouv.etalab.mastodon.asynctasks.UploadActionAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.AccountsSearchAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -350,9 +351,16 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         LocalBroadcastManager.getInstance(this).unregisterReceiver(search_validate);
     }
     @Override
-    public void onRetrieveAttachment(final Attachment attachment) {
+    public void onRetrieveAttachment(final Attachment attachment, Error error) {
         loading_picture.setVisibility(View.GONE);
         toot_picture_container.setVisibility(View.VISIBLE);
+        if( error != null){
+            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages)
+                Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
         if( attachment != null ){
             String url = attachment.getPreview_url();
             if( url == null || url.trim().equals(""))
@@ -452,7 +460,14 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     }
 
     @Override
-    public void onPostAction(int statusCode, API.StatusAction statusAction, String userId) {
+    public void onPostAction(int statusCode, API.StatusAction statusAction, String userId, Error error) {
+        if( error != null){
+            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages)
+                Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
         if( statusCode == 200){
             //Clear the toot
             toot_content.setText("");
@@ -476,7 +491,14 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     }
 
     @Override
-    public void onRetrieveFeeds(List<Status> statuses) {
+    public void onRetrieveFeeds(List<Status> statuses, Error error) {
+        if( error != null){
+            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages)
+                Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
         if( statuses != null && statuses.size() > 0 ){
             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_reply = sharedpreferences.getBoolean(Helper.SET_SHOW_REPLY, false);
@@ -517,7 +539,14 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
 
     @Override
-    public void onRetrieveSearchAccounts(List<Account> accounts) {
+    public void onRetrieveSearchAccounts(List<Account> accounts, Error error) {
+        if( error != null){
+            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages)
+                Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
         if( accounts != null && accounts.size() > 0){
             AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, accounts);
             toot_lv_accounts.setAdapter(accountsListAdapter);

@@ -16,6 +16,8 @@ package fr.gouv.etalab.mastodon.interfaces;
 
 
 import java.util.List;
+
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 
 /**
@@ -23,5 +25,5 @@ import fr.gouv.etalab.mastodon.client.Entities.Status;
  * Interface when home timeline toots have been retrieved
  */
 public interface OnRetrieveHomeTimelineServiceInterface {
-    void onRetrieveHomeTimelineService(List<Status> statuses, String acct, String userId);
+    void onRetrieveHomeTimelineService(List<Status> statuses, String acct, String userId, Error error);
 }

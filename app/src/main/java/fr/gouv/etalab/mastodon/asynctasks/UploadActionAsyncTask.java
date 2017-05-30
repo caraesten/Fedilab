@@ -36,6 +36,7 @@ public class UploadActionAsyncTask extends AsyncTask<Void, Void, Void> {
     private Attachment attachment;
     private InputStream inputStream;
     private fr.gouv.etalab.mastodon.client.Entities.Status status;
+    private API api;
 
     public UploadActionAsyncTask(Context context, InputStream inputStream, OnRetrieveAttachmentInterface onRetrieveAttachmentInterface){
         this.context = context;
@@ -45,14 +46,14 @@ public class UploadActionAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-
-        attachment = new API(context).uploadMedia(inputStream);
+        api = new API(context);
+        attachment = api.uploadMedia(inputStream);
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveAttachment(attachment);
+        listener.onRetrieveAttachment(attachment, api.getError());
     }
 
 }

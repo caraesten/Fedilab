@@ -39,7 +39,7 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
     private OnRetrieveNotificationsInterface listener;
     private String instance;
     private String token;
-
+    private API api;
 
 
     public RetrieveNotificationsAsyncTask(Context context, String instance, String token, String max_id, String acct, String userId, OnRetrieveNotificationsInterface onRetrieveNotificationsInterface){
@@ -54,16 +54,18 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
 
     @Override
     protected Void doInBackground(Void... params) {
+
+        api = new API(context, instance, token);
         if( acct == null)
-            notifications = new API(context, instance, token).getNotifications(max_id);
+            notifications = api.getNotifications(max_id);
         else
-            notifications = new API(context, instance, token).getNotificationsSince(max_id);
+            notifications = api.getNotificationsSince(max_id);
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveNotifications(notifications, acct, userId);
+        listener.onRetrieveNotifications(notifications, acct, userId, api.getError());
     }
 
 }

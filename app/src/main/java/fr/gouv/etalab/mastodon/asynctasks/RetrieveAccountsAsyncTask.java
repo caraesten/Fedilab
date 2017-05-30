@@ -37,6 +37,7 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
     private String max_id;
     private OnRetrieveAccountsInterface listener;
     private String targetedId;
+    private API api;
 
     public enum Type{
         BLOCKED,
@@ -63,18 +64,19 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
 
+        api = new API(context);
         switch (action){
             case BLOCKED:
-                accounts = new API(context).getBlocks(max_id);
+                accounts = api.getBlocks(max_id);
                 break;
             case MUTED:
-                accounts = new API(context).getMuted(max_id);
+                accounts = api.getMuted(max_id);
                 break;
             case FOLLOWING:
-                accounts = new API(context).getFollowing(targetedId, max_id);
+                accounts = api.getFollowing(targetedId, max_id);
                 break;
             case FOLLOWERS:
-                accounts = new API(context).getFollowers(targetedId, max_id);
+                accounts = api.getFollowers(targetedId, max_id);
                 break;
         }
         return null;
@@ -82,7 +84,7 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveAccounts(accounts);
+        listener.onRetrieveAccounts(accounts, api.getError());
     }
 
 }

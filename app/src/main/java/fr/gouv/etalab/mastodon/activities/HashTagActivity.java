@@ -15,6 +15,7 @@
 package fr.gouv.etalab.mastodon.activities;
 
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,11 +27,13 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -136,8 +139,17 @@ public class HashTagActivity extends AppCompatActivity implements OnRetrieveFeed
     }
 
     @Override
-    public void onRetrieveFeeds(List<Status> statuses) {
+    public void onRetrieveFeeds(List<Status> statuses, Error error) {
 
+        mainLoader.setVisibility(View.GONE);
+        nextElementLoader.setVisibility(View.GONE);
+        if( error != null){
+            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages)
+                Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
         if( firstLoad && (statuses == null || statuses.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
@@ -146,9 +158,6 @@ public class HashTagActivity extends AppCompatActivity implements OnRetrieveFeed
             max_id =statuses.get(statuses.size()-1).getId();
         else
             max_id = null;
-        mainLoader.setVisibility(View.GONE);
-        nextElementLoader.setVisibility(View.GONE);
-
         if( statuses != null) {
             for(Status tmpStatus: statuses){
                 this.statuses.add(tmpStatus);

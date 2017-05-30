@@ -15,11 +15,12 @@
 package fr.gouv.etalab.mastodon.interfaces;
 
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 
 /**
  * Created by Thomas on 01/05/2017.
  * Interface when one account have been retrieved
  */
 public interface OnRetrieveAccountInterface {
-    void onRetrieveAccount(Account account);
+    void onRetrieveAccount(Account account, Error error);
 }

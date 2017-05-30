@@ -15,11 +15,12 @@
 package fr.gouv.etalab.mastodon.interfaces;
 
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 
 /**
  * Created by Thomas on 01/05/2017.
  * Interface when an attachment has been retrieved
  */
 public interface OnRetrieveAttachmentInterface {
-    void onRetrieveAttachment(Attachment attachment);
+    void onRetrieveAttachment(Attachment attachment, Error error);
 }

@@ -17,6 +17,7 @@ package fr.gouv.etalab.mastodon.interfaces;
 
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 
 /**
@@ -24,5 +25,5 @@ import fr.gouv.etalab.mastodon.client.Entities.Status;
  * Interface when status have been retrieved
  */
 public interface OnRetrieveFeedsInterface {
-    void onRetrieveFeeds(List<Status> statuses);
+    void onRetrieveFeeds(List<Status> statuses, Error error);
 }

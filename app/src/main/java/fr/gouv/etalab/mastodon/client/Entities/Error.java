@@ -16,11 +16,12 @@ package fr.gouv.etalab.mastodon.client.Entities;
 
 /**
  * Created by Thomas on 23/04/2017.
+ * Manage errors
  */
 
 public class Error {
 
-    private String error;
+    private String error = null;
 
     public String getError() {
         return error;

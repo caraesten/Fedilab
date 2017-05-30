@@ -35,7 +35,7 @@ public class RetrieveSearchAccountsAsyncTask extends AsyncTask<Void, Void, Void>
     private String query;
     private List<Account> accounts;
     private OnRetrieveSearcAccountshInterface listener;
-
+    private API api;
 
     public RetrieveSearchAccountsAsyncTask(Context context, String query, OnRetrieveSearcAccountshInterface onRetrieveSearcAccountshInterface){
         this.context = context;
@@ -46,14 +46,14 @@ public class RetrieveSearchAccountsAsyncTask extends AsyncTask<Void, Void, Void>
 
     @Override
     protected Void doInBackground(Void... params) {
-
-        accounts = new API(context).searchAccounts(query);
+        api = new API(context);
+        accounts = api.searchAccounts(query);
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveSearchAccounts(accounts);
+        listener.onRetrieveSearchAccounts(accounts, api.getError());
     }
 
 }

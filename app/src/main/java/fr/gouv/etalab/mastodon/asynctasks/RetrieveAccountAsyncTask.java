@@ -33,7 +33,7 @@ public class RetrieveAccountAsyncTask extends AsyncTask<Void, Void, Void> {
     private String targetedId;
     private Account account;
     private OnRetrieveAccountInterface listener;
-
+    private API api;
 
     public RetrieveAccountAsyncTask(Context context, String targetedId, OnRetrieveAccountInterface onRetrieveAccountInterface){
         this.context = context;
@@ -43,14 +43,14 @@ public class RetrieveAccountAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-
-        account = new API(context).getAccount(targetedId);
+        api = new API(context);
+        account = api.getAccount(targetedId);
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveAccount(account);
+        listener.onRetrieveAccount(account, api.getError());
     }
 
 }

@@ -16,7 +16,6 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -38,14 +37,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
-import fr.gouv.etalab.mastodon.client.Entities.Results;
+import fr.gouv.etalab.mastodon.client.Entities.*;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.helper.Helper;
-import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.client.Entities.Application;
-import fr.gouv.etalab.mastodon.client.Entities.Attachment;
-import fr.gouv.etalab.mastodon.client.Entities.Notification;
-import fr.gouv.etalab.mastodon.client.Entities.Relationship;
-import fr.gouv.etalab.mastodon.client.Entities.Status;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.USER_AGENT;
@@ -76,6 +70,7 @@ public class API {
     private int actionCode;
     private String instance;
     private String prefKeyOauthTokenT;
+    private Error errorApi = null;
 
     public enum StatusAction{
         FAVOURITE,
@@ -127,7 +122,6 @@ public class API {
      * @return Account
      */
     public Account verifyCredentials() {
-
         account = new Account();
         get("/accounts/verify_credentials", null, new JsonHttpResponseHandler() {
             @Override
@@ -144,7 +138,7 @@ public class API {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-
+                setError(statusCode, error);
             }
         });
         return account;
@@ -173,7 +167,7 @@ public class API {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-
+                setError(statusCode, error);
             }
         });
         return account;
@@ -205,7 +199,7 @@ public class API {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-
+                setError(statusCode, error);
             }
         });
         return relationship;
@@ -272,6 +266,7 @@ public class API {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
+                setError(statusCode, error);
             }
         });
         return statuses;
@@ -298,7 +293,7 @@ public class API {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-
+                setError(statusCode, error);
             }
         });
         return statuses;
@@ -319,7 +314,7 @@ public class API {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-
+                setError(statusCode, error);
             }
         });
         return statusContext;
@@ -375,7 +370,7 @@ public class API {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-
+                setError(statusCode, error);
             }
         });
         return statuses;
@@ -425,7 +420,7 @@ public class API {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-
+                setError(statusCode, error);
             }
         });
         return statuses;
@@ -477,7 +472,7 @@ public class API {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-
+                setError(statusCode, error);
             }
         });
         return statuses;
@@ -554,7 +549,7 @@ public class API {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-
+                setError(statusCode, error);
             }
         });
         return accounts;
@@ -600,7 +595,7 @@ public class API {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-
+                setError(statusCode, error);
             }
         });
         return statuses;
@@ -721,6 +716,7 @@ public class API {
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response) {
                     actionCode = statusCode;
+                    setError(statusCode, error);
                 }
             });
         }else{
@@ -739,6 +735,7 @@ public class API {
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response) {
                     actionCode = statusCode;
+                    setError(statusCode, error);
                 }
             });
         }
@@ -795,7 +792,7 @@ public class API {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-                error.printStackTrace();
+                setError(statusCode, error);
             }
         });
         return notifications;
@@ -822,6 +819,7 @@ public class API {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
+                setError(statusCode, error);
             }
         });
         return attachment;
@@ -846,7 +844,7 @@ public class API {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-
+                setError(statusCode, error);
             }
         });
         return results;
@@ -879,7 +877,7 @@ public class API {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-
+                setError(statusCode, error);
             }
         });
         return accounts;
@@ -1224,8 +1222,8 @@ public class API {
      * @param error Throwable error
      */
     private void setError(int statusCode, Throwable error){
-        fr.gouv.etalab.mastodon.client.Entities.Error errorResponse = new fr.gouv.etalab.mastodon.client.Entities.Error();
-        errorResponse.setError(statusCode + " - " + error.getMessage());
+        errorApi = new Error();
+        errorApi.setError(statusCode + " - " + error.getMessage());
     }
 
     
@@ -1268,6 +1266,10 @@ public class API {
             Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
+    }
+
+    public Error getError(){
+        return errorApi;
     }
 
 

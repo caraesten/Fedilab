@@ -52,6 +52,7 @@ public class SettingsNotificationsFragment extends Fragment {
         boolean notif_validation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
         boolean notif_wifi = sharedpreferences.getBoolean(Helper.SET_WIFI_ONLY, false);
         boolean notif_silent = sharedpreferences.getBoolean(Helper.SET_NOTIF_SILENT, false);
+        boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
         boolean notif_hometimeline = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, true);
 
         final CheckBox set_notif_follow = (CheckBox) rootView.findViewById(R.id.set_notif_follow);
@@ -61,6 +62,7 @@ public class SettingsNotificationsFragment extends Fragment {
         final CheckBox set_notif_follow_share = (CheckBox) rootView.findViewById(R.id.set_notif_follow_share);
         final CheckBox set_share_validation = (CheckBox) rootView.findViewById(R.id.set_share_validation);
         final CheckBox set_notif_hometimeline = (CheckBox) rootView.findViewById(R.id.set_notif_hometimeline);
+        final CheckBox set_show_error_messages = (CheckBox) rootView.findViewById(R.id.set_show_error_messages);
         final SwitchCompat switchCompatWIFI = (SwitchCompat) rootView.findViewById(R.id.set_wifi_only);
         final SwitchCompat switchCompatSilent = (SwitchCompat) rootView.findViewById(R.id.set_silence);
 
@@ -71,6 +73,7 @@ public class SettingsNotificationsFragment extends Fragment {
         set_notif_follow_share.setChecked(notif_share);
         set_share_validation.setChecked(notif_validation);
         set_notif_hometimeline.setChecked(notif_hometimeline);
+        set_show_error_messages.setChecked(show_error_messages);
         switchCompatWIFI.setChecked(notif_wifi);
         switchCompatSilent.setChecked(notif_silent);
 
@@ -127,6 +130,14 @@ public class SettingsNotificationsFragment extends Fragment {
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_NOTIF_VALIDATION, set_share_validation.isChecked());
+                editor.apply();
+            }
+        });
+        set_show_error_messages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_SHOW_ERROR_MESSAGES, set_show_error_messages.isChecked());
                 editor.apply();
             }
         });

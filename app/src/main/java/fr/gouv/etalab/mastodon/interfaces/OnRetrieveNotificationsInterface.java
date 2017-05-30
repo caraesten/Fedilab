@@ -17,6 +17,7 @@ package fr.gouv.etalab.mastodon.interfaces;
 
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 
 /**
@@ -24,5 +25,5 @@ import fr.gouv.etalab.mastodon.client.Entities.Notification;
  * Interface when notifications have been retrieved
  */
 public interface OnRetrieveNotificationsInterface {
-    void onRetrieveNotifications(List<Notification> notifications, String acct, String userId);
+    void onRetrieveNotifications(List<Notification> notifications, String acct, String userId, Error error);
 }

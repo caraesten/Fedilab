@@ -44,6 +44,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -58,6 +59,7 @@ import java.util.List;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
@@ -522,7 +524,15 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     }
 
     @Override
-    public void onPostAction(int statusCode,API.StatusAction statusAction, String targetedId) {
+    public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
+
+        if( error != null){
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages)
+                Toast.makeText(context, error.getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
         Helper.manageMessageStatusCode(context, statusCode, statusAction);
         //When muting or blocking an account, its status are removed from the list
         List<Status> statusesToRemove = new ArrayList<>();

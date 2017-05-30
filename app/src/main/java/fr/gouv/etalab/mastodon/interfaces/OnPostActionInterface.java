@@ -16,11 +16,12 @@ package fr.gouv.etalab.mastodon.interfaces;
 
 
 import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 
 /**
  * Created by Thomas on 29/04/2017.
  * Interface when post actions has been done with a status
  */
 public interface OnPostActionInterface {
-    void onPostAction(int statusCode, API.StatusAction statusAction, String userId);
+    void onPostAction(int statusCode, API.StatusAction statusAction, String userId, Error error);
 }

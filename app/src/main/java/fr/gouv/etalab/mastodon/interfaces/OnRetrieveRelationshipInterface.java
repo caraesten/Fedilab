@@ -15,6 +15,7 @@
 package fr.gouv.etalab.mastodon.interfaces;
 
 
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
 
 /**
@@ -22,5 +23,5 @@ import fr.gouv.etalab.mastodon.client.Entities.Relationship;
  * Interface when relationship has been retrieved for an account
  */
 public interface OnRetrieveRelationshipInterface {
-    void onRetrieveRelationship(Relationship relationship);
+    void onRetrieveRelationship(Relationship relationship, Error error);
 }

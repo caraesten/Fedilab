@@ -26,11 +26,13 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -145,8 +147,17 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
 
 
     @Override
-    public void onRetrieveNotifications(List<Notification> notifications, String acct, String userId) {
+    public void onRetrieveNotifications(List<Notification> notifications, String acct, String userId, Error error) {
 
+        mainLoader.setVisibility(View.GONE);
+        nextElementLoader.setVisibility(View.GONE);
+        if( error != null){
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages)
+                Toast.makeText(getContext(), error.getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
         if( firstLoad && (notifications == null || notifications.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
@@ -155,8 +166,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             max_id =notifications.get(notifications.size()-1).getId();
         else
             max_id = null;
-        mainLoader.setVisibility(View.GONE);
-        nextElementLoader.setVisibility(View.GONE);
+
 
         if( notifications != null) {
             for(Notification tmpNotification: notifications){

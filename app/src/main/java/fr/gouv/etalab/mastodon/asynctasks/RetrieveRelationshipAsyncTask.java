@@ -32,7 +32,7 @@ public class RetrieveRelationshipAsyncTask extends AsyncTask<Void, Void, Void> {
     private String accountId;
     private Relationship relationship;
     private OnRetrieveRelationshipInterface listener;
-
+    private API api;
 
     public RetrieveRelationshipAsyncTask(Context context, String accountId, OnRetrieveRelationshipInterface onRetrieveRelationshipInterface){
         this.context = context;
@@ -43,13 +43,14 @@ public class RetrieveRelationshipAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
 
-        relationship = new API(context).getRelationship(accountId);
+        api = new API(context);
+        relationship = api.getRelationship(accountId);
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveRelationship(relationship);
+        listener.onRetrieveRelationship(relationship, api.getError());
     }
 
 }

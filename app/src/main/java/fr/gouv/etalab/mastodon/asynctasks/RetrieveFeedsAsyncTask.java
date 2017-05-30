@@ -40,6 +40,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     private String targetedID;
     private fr.gouv.etalab.mastodon.client.Entities.Status status;
     private String tag;
+    private API api;
 
     public enum Type{
         HOME,
@@ -78,27 +79,28 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
 
+        api = new API(context);
         switch (action){
             case HOME:
-                statuses = new API(context).getHomeTimeline(max_id);
+                statuses = api.getHomeTimeline(max_id);
                 break;
             case LOCAL:
-                statuses = new API(context).getPublicTimeline(true, max_id);
+                statuses = api.getPublicTimeline(true, max_id);
                 break;
             case PUBLIC:
-                statuses = new API(context).getPublicTimeline(false, max_id);
+                statuses = api.getPublicTimeline(false, max_id);
                 break;
             case FAVOURITES:
-                statuses = new API(context).getFavourites(max_id);
+                statuses = api.getFavourites(max_id);
                 break;
             case USER:
-                statuses = new API(context).getStatus(targetedID, max_id);
+                statuses = api.getStatus(targetedID, max_id);
                 break;
             case ONESTATUS:
-                statuses = new  API(context).getStatusbyId(targetedID);
+                statuses = api.getStatusbyId(targetedID);
                 break;
             case TAG:
-                statuses = new  API(context).getPublicTimelineTag(tag, false, max_id);
+                statuses = api.getPublicTimelineTag(tag, false, max_id);
                 break;
             case HASHTAG:
                 break;
@@ -108,7 +110,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveFeeds(statuses);
+        listener.onRetrieveFeeds(statuses, api.getError());
     }
 
 }

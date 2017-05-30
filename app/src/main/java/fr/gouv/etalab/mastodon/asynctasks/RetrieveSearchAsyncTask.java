@@ -33,7 +33,7 @@ public class RetrieveSearchAsyncTask extends AsyncTask<Void, Void, Void> {
     private String query;
     private Results results;
     private OnRetrieveSearchInterface listener;
-
+    private API api;
 
     public RetrieveSearchAsyncTask(Context context, String query, OnRetrieveSearchInterface onRetrieveSearchInterface){
         this.context = context;
@@ -44,14 +44,14 @@ public class RetrieveSearchAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-
-        results = new API(context).search(query);
+        api = new API(context);
+        results = api.search(query);
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveSearch(results);
+        listener.onRetrieveSearch(results, api.getError());
     }
 
 }
