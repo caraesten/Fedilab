@@ -45,6 +45,11 @@ public class Status implements Parcelable {
     private String spoiler_text;
     private String visibility;
     private boolean attachmentShown = false;
+    private List<Attachment> media_attachments;
+    private List<Mention> mentions;
+    private List<Tag> tags;
+    private Application application;
+
 
     protected Status(Parcel in) {
         id = in.readString();
@@ -53,6 +58,8 @@ public class Status implements Parcelable {
         in_reply_to_id = in.readString();
         in_reply_to_account_id = in.readString();
         reblog = in.readParcelable(Status.class.getClassLoader());
+        account = in.readParcelable(Account.class.getClassLoader());
+        mentions = in.readArrayList(Mention.class.getClassLoader());
         content = in.readString();
         reblogs_count = in.readInt();
         favourites_count = in.readInt();
@@ -199,11 +206,6 @@ public class Status implements Parcelable {
     }
 
 
-
-    private List<Attachment> media_attachments;
-    private List<Mention> mentions;
-    private List<Tag> tags;
-    private Application application;
     public List<Attachment> getMedia_attachments() {
         return media_attachments;
     }
@@ -266,6 +268,8 @@ public class Status implements Parcelable {
         dest.writeString(in_reply_to_id);
         dest.writeString(in_reply_to_account_id);
         dest.writeParcelable(reblog, flags);
+        dest.writeParcelable(account, flags);
+        dest.writeList(mentions);
         dest.writeString(content);
         dest.writeInt(reblogs_count);
         dest.writeInt(favourites_count);

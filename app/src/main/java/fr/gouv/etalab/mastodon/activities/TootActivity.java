@@ -58,19 +58,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UploadActionAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.AccountsSearchAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -82,10 +81,9 @@ import mastodon.etalab.gouv.fr.mastodon.R;
  * Toot activity class
  */
 
-public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostActionInterface, OnRetrieveFeedsInterface {
+public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostActionInterface {
 
 
-    private String inReplyTo = null;
     private int charsInCw;
     private int charsInToot;
     private int maxChar;
@@ -105,6 +103,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private RelativeLayout toot_show_accounts;
     private ListView toot_lv_accounts;
     private BroadcastReceiver search_validate;
+    private Status tootReply = null;
 
     private String pattern = "^.*(@([a-zA-Z0-9_]{2,}))$";
     @Override
@@ -115,13 +114,66 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        toot_it = (Button) findViewById(R.id.toot_it);
+        Button toot_cw = (Button) findViewById(R.id.toot_cw);
+        final TextView toot_space_left = (TextView) findViewById(R.id.toot_space_left);
+        toot_visibility = (ImageButton) findViewById(R.id.toot_visibility);
+        toot_picture = (ImageButton) findViewById(R.id.toot_picture);
+        loading_picture = (RelativeLayout) findViewById(R.id.loading_picture);
+        toot_picture_container = (LinearLayout) findViewById(R.id.toot_picture_container);
+        toot_content = (EditText) findViewById(R.id.toot_content);
+        toot_cw_content = (EditText) findViewById(R.id.toot_cw_content);
+        toot_reply_content = (TextView) findViewById(R.id.toot_reply_content);
+        toot_reply_content_container = (LinearLayout) findViewById(R.id.toot_reply_content_container);
+        toot_show_accounts = (RelativeLayout) findViewById(R.id.toot_show_accounts);
+        toot_lv_accounts = (ListView) findViewById(R.id.toot_lv_accounts);
+
 
         Bundle b = getIntent().getExtras();
-        if(b != null)
-            inReplyTo = b.getString("inReplyTo", null);
-        if( inReplyTo != null) {
+        if(b != null) {
+            tootReply = b.getParcelable("tootReply");
+        }
+        if( tootReply != null) {
             setTitle(R.string.toot_title_reply);
-            new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, inReplyTo,null, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean show_reply = sharedpreferences.getBoolean(Helper.SET_SHOW_REPLY, false);
+            if( show_reply ){
+                toot_reply_content_container.setVisibility(View.VISIBLE);
+            }else {
+                toot_reply_content_container.setVisibility(View.GONE);
+            }
+            String content = tootReply.getContent();
+            if(tootReply.isReblogged())
+                content = tootReply.getReblog().getContent();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                toot_reply_content.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_COMPACT));
+            else
+                //noinspection deprecation
+                toot_reply_content.setText(Html.fromHtml(content));
+            switch (tootReply.getVisibility()){
+                case "public":
+                    visibility = "public";
+                    toot_visibility.setImageResource(R.drawable.ic_action_globe);
+                    break;
+                case "unlisted":
+                    visibility = "unlisted";
+                    toot_visibility.setImageResource(R.drawable.ic_action_lock_open);
+                    break;
+                case "private":
+                    visibility = "private";
+                    toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
+                    break;
+                case "direct":
+                    visibility = "direct";
+                    toot_visibility.setImageResource(R.drawable.ic_local_post_office);
+                    break;
+            }
+            //Retrieves mentioned accounts + OP and adds them at the beginin of the toot
+            toot_content.setText(String.format("%s ", tootReply.getAccount().getAcct()));
+            for(Mention mention : tootReply.getMentions()){
+                toot_content.setText(String.format("%s ", (toot_content.getText().toString() + " " + mention.getAcct())));
+            }
+            toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
         }else {
             setTitle(R.string.toot_title);
         }
@@ -152,19 +204,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(search_validate, new IntentFilter(Helper.SEARCH_VALIDATE_ACCOUNT));
 
-        toot_it = (Button) findViewById(R.id.toot_it);
-        Button toot_cw = (Button) findViewById(R.id.toot_cw);
-        final TextView toot_space_left = (TextView) findViewById(R.id.toot_space_left);
-        toot_visibility = (ImageButton) findViewById(R.id.toot_visibility);
-        toot_picture = (ImageButton) findViewById(R.id.toot_picture);
-        loading_picture = (RelativeLayout) findViewById(R.id.loading_picture);
-        toot_picture_container = (LinearLayout) findViewById(R.id.toot_picture_container);
-        toot_content = (EditText) findViewById(R.id.toot_content);
-        toot_cw_content = (EditText) findViewById(R.id.toot_cw_content);
-        toot_reply_content = (TextView) findViewById(R.id.toot_reply_content);
-        toot_reply_content_container = (LinearLayout) findViewById(R.id.toot_reply_content_container);
-        toot_show_accounts = (RelativeLayout) findViewById(R.id.toot_show_accounts);
-        toot_lv_accounts = (ListView) findViewById(R.id.toot_lv_accounts);
+
         FloatingActionButton toot_close_accounts = (FloatingActionButton) findViewById(R.id.toot_close_accounts);
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -195,8 +235,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             visibility = "public";
             toot_visibility.setImageResource(R.drawable.ic_action_globe);
         }
-
-
 
 
         toot_space_left.setText(String.valueOf((maxChar - (charsInToot + charsInCw))));
@@ -239,8 +277,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
                 toot.setVisibility(visibility);
                 toot.setContent(toot_content.getText().toString().trim());
-                if( inReplyTo != null)
-                    toot.setIn_reply_to_id(inReplyTo);
+                if( tootReply != null)
+                    toot.setIn_reply_to_id(tootReply.getId());
                 new PostActionAsyncTask(getApplicationContext(), API.StatusAction.CREATESTATUS, null, toot, null, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
             }
@@ -490,51 +528,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         toot_it.setEnabled(true);
     }
 
-    @Override
-    public void onRetrieveFeeds(List<Status> statuses, Error error) {
-        if( error != null){
-            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
-            return;
-        }
-        if( statuses != null && statuses.size() > 0 ){
-            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_reply = sharedpreferences.getBoolean(Helper.SET_SHOW_REPLY, false);
-            if( show_reply ){
-                toot_reply_content_container.setVisibility(View.VISIBLE);
-            }else {
-                toot_reply_content_container.setVisibility(View.GONE);
-            }
-            String content = statuses.get(0).getContent();
-            if(statuses.get(0).isReblogged())
-                content = statuses.get(0).getReblog().getContent();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                toot_reply_content.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_COMPACT));
-            else
-                //noinspection deprecation
-                toot_reply_content.setText(Html.fromHtml(content));
-            switch (statuses.get(0).getVisibility()){
-                case "public":
-                    visibility = "public";
-                    toot_visibility.setImageResource(R.drawable.ic_action_globe);
-                    break;
-                case "unlisted":
-                    visibility = "unlisted";
-                    toot_visibility.setImageResource(R.drawable.ic_action_lock_open);
-                    break;
-                case "private":
-                    visibility = "private";
-                    toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
-                    break;
-                case "direct":
-                    visibility = "direct";
-                    toot_visibility.setImageResource(R.drawable.ic_local_post_office);
-                    break;
-            }
-        }
-    }
 
 
 

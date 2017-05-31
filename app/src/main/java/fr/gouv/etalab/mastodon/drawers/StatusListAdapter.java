@@ -218,7 +218,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             public void onClick(View v) {
                 Intent intent = new Intent(context, TootActivity.class);
                 Bundle b = new Bundle();
-                b.putString("inReplyTo", status.getId()); //Your id
+                b.putParcelable("tootReply", status);
                 intent.putExtras(b); //Put your id to your next Intent
                 context.startActivity(intent);
             }

@@ -954,7 +954,21 @@ public class API {
                         attachments.add(attachment);
                     }
                 }
+                List<Mention> mentions = new ArrayList<>();
+                JSONArray arrayMention = resobj.getJSONArray("mentions");
+                if( arrayMention != null){
+                    for(int j = 0 ; j < arrayMention.length() ; j++){
+                        JSONObject menObj = arrayMention.getJSONObject(j);
+                        Mention mention = new Mention();
+                        mention.setId(menObj.get("id").toString());
+                        mention.setUrl(menObj.get("url").toString());
+                        mention.setAcct(menObj.get("acct").toString());
+                        mention.setUsername(menObj.get("username").toString());
+                        mentions.add(mention);
+                    }
+                }
                 status.setMedia_attachments(attachments);
+                status.setMentions(mentions);
                 status.setAccount(parseAccountResponse(resobj.getJSONObject("account")));
                 status.setContent(resobj.get("content").toString());
                 status.setFavourites_count(Integer.valueOf(resobj.get("favourites_count").toString()));
