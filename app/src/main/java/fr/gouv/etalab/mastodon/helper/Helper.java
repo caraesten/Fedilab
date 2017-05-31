@@ -29,26 +29,21 @@ import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,7 +51,6 @@ import com.loopj.android.http.BuildConfig;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
@@ -64,14 +58,12 @@ import java.io.File;
 import java.net.InetAddress;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
 import fr.gouv.etalab.mastodon.activities.LoginActivity;
-import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -93,9 +85,8 @@ import static android.content.Context.DOWNLOAD_SERVICE;
 public class Helper {
 
 
+    @SuppressWarnings("unused")
     public static  final String TAG = "mastodon_etalab";
-    //Connection with API
-    public static final String OAUTH_SCHEME = "oauth2redirect";
     public static final String OAUTH_REDIRECT_HOST = "fr.gouv.etalab.mastodon";
     public static final String INSTANCE = "mastodon.etalab.gouv.fr";
     public static final String OAUTH_SCOPES = "read write follow";
@@ -163,12 +154,13 @@ public class Helper {
     public static final String USER_AGENT = "Mastalab/"+ BuildConfig.VERSION_NAME + " Android/"+ Build.VERSION.RELEASE;
 
 
-    public static boolean menuAccountsOpened = false;
+    private static boolean menuAccountsOpened = false;
 
     /***
      *  Check if the user is connected to Internet
      * @return boolean
      */
+    @SuppressWarnings("unused")
     public static boolean isConnectedToInternet(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();
@@ -614,9 +606,8 @@ public class Helper {
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
         imageLoader = ImageLoader.getInstance();
         NavigationView navigationView = (NavigationView) activity.findViewById(R.id.nav_view);
-        navigationView.getMenu().clear();
-        navigationView.inflateMenu(R.menu.activity_main_drawer);
-        updateHeaderAccountInfo(activity, account, navigationView, imageLoader, options);
+        View headerLayout = navigationView.getHeaderView(0);
+        updateHeaderAccountInfo(activity, account, headerLayout, imageLoader, options);
     }
 
 
@@ -642,16 +633,11 @@ public class Helper {
             activity.startActivity(myIntent);
             activity.finish(); //User is logged out to get a new token
         }else {
-            if (ownerStatus != null)
-                ownerStatus.setText(String.valueOf(account.getStatuses_count()));
-            if (ownerFollowers != null)
-                ownerFollowers.setText(String.valueOf(account.getFollowers_count()));
-            if (ownerFollowing != null)
-                ownerFollowing.setText(String.valueOf(account.getFollowing_count()));
-            if (username != null)
-                username.setText(String.format("@%s",account.getUsername()));
-            if (displayedName != null)
-                displayedName.setText(account.getDisplay_name());
+            ownerStatus.setText(String.valueOf(account.getStatuses_count()));
+            ownerFollowers.setText(String.valueOf(account.getFollowers_count()));
+            ownerFollowing.setText(String.valueOf(account.getFollowing_count()));
+            username.setText(String.format("@%s",account.getUsername()));
+            displayedName.setText(account.getDisplay_name());
             imageLoader.displayImage(account.getAvatar(), profilePicture, options);
         }
     }
