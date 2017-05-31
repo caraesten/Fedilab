@@ -99,7 +99,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private Button toot_it;
     private EditText toot_content, toot_cw_content;
     private LinearLayout toot_reply_content_container;
-    private TextView toot_reply_content;
     private RelativeLayout toot_show_accounts;
     private ListView toot_lv_accounts;
     private BroadcastReceiver search_validate;
@@ -123,7 +122,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         toot_picture_container = (LinearLayout) findViewById(R.id.toot_picture_container);
         toot_content = (EditText) findViewById(R.id.toot_content);
         toot_cw_content = (EditText) findViewById(R.id.toot_cw_content);
-        toot_reply_content = (TextView) findViewById(R.id.toot_reply_content);
+        TextView toot_reply_content = (TextView) findViewById(R.id.toot_reply_content);
         toot_reply_content_container = (LinearLayout) findViewById(R.id.toot_reply_content_container);
         toot_show_accounts = (RelativeLayout) findViewById(R.id.toot_show_accounts);
         toot_lv_accounts = (ListView) findViewById(R.id.toot_lv_accounts);
@@ -136,6 +135,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         if( tootReply != null) {
             setTitle(R.string.toot_title_reply);
             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             boolean show_reply = sharedpreferences.getBoolean(Helper.SET_SHOW_REPLY, false);
             if( show_reply ){
                 toot_reply_content_container.setVisibility(View.VISIBLE);
@@ -169,9 +169,16 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     break;
             }
             //Retrieves mentioned accounts + OP and adds them at the beginin of the toot
-            toot_content.setText(String.format("%s ", tootReply.getAccount().getAcct()));
-            for(Mention mention : tootReply.getMentions()){
-                toot_content.setText(String.format("%s ", (toot_content.getText().toString() + " " + mention.getAcct())));
+            if( tootReply.getAccount() != null && tootReply.getAccount().getAcct() != null && !tootReply.getAccount().getId().equals(userId)) {
+                toot_content.setText(String.format("@%s ", tootReply.getAccount().getAcct()));
+            }
+            if( tootReply.getMentions() != null ){
+                for(Mention mention : tootReply.getMentions()){
+                    if(  mention.getAcct() != null && !mention.getId().equals(userId)) {
+                        String tootTemp = String.format("@%s ", mention.getAcct());
+                        toot_content.setText(String.format("%s ", (toot_content.getText().toString() + " " + tootTemp)));
+                    }
+                }
             }
             toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
         }else {
