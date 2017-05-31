@@ -148,8 +148,8 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        mamageNewIntent(getIntent());
-        if (savedInstanceState == null) {
+        boolean matchingIntent = mamageNewIntent(getIntent());
+        if (savedInstanceState == null && !matchingIntent) {
             navigationView.setCheckedItem(R.id.nav_home);
             navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
         }
@@ -199,11 +199,12 @@ public class MainActivity extends AppCompatActivity
      * Manages new intents
      * @param intent Intent - intent related to a notification in top bar
      */
-    private void mamageNewIntent(Intent intent){
+    private boolean mamageNewIntent(Intent intent){
         if( intent == null || intent.getExtras() == null )
-            return;
+            return false;
         Bundle extras = intent.getExtras();
         String userIdIntent;
+        boolean matchingIntent = false;
         if( extras.containsKey(INTENT_ACTION) ){
             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null); //Id of the authenticated account
@@ -212,19 +213,26 @@ public class MainActivity extends AppCompatActivity
             if (extras.getInt(INTENT_ACTION) == NOTIFICATION_INTENT){
                 if( userId!= null && !userId.equals(userIdIntent)) //Connected account is different from the id in the intent
                     changeUser(MainActivity.this, userIdIntent); //Connects the account which is related to the notification
-                navigationView.setCheckedItem(R.id.nav_notification);
+                unCheckAllMenuItems(navigationView.getMenu());
                 navigationView.getMenu().performIdentifierAction(R.id.nav_notification, 0);
+                if( navigationView.getMenu().findItem(R.id.nav_notification) != null)
+                    navigationView.getMenu().findItem(R.id.nav_notification).setChecked(true);
+                matchingIntent = true;
             }else if( extras.getInt(INTENT_ACTION) == HOME_TIMELINE_INTENT){
                 if( userId!= null && !userId.equals(userIdIntent))  //Connected account is different from the id in the intent
                     changeUser(MainActivity.this, userIdIntent); //Connects the account which is related to the notification
-                navigationView.setCheckedItem(R.id.nav_home);
+                unCheckAllMenuItems(navigationView.getMenu());
                 navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
+                if( navigationView.getMenu().findItem(R.id.nav_home) != null)
+                    navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
+                matchingIntent = true;
             }
         }
         intent.replaceExtras(new Bundle());
         intent.setAction("");
         intent.setData(null);
         intent.setFlags(0);
+        return matchingIntent;
     }
 
     @Override

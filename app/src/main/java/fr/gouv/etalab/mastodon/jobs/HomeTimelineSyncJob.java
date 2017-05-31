@@ -109,7 +109,7 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
             //Retrieve users in db that owner has.
             for (Account account: accounts) {
                 String since_id = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + account.getId(), null);
-                notificationId = (int) Math.round(Double.parseDouble(account.getId())/100);
+                notificationId = (int) Math.round(Double.parseDouble(account.getId())/100) + 2;
                 new RetrieveHomeTimelineServiceAsyncTask(getContext(), account.getInstance(), account.getToken(), since_id, account.getAcct(), account.getId(), HomeTimelineSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
             }
