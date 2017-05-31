@@ -14,6 +14,8 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,9 +28,11 @@ import java.util.List;
 
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.SearchListAdapter;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
@@ -86,9 +90,15 @@ public class SearchResultActivity extends AppCompatActivity implements OnRetriev
 
 
     @Override
-    public void onRetrieveSearch(Results results) {
-
+    public void onRetrieveSearch(Results results, Error error) {
         loader.setVisibility(View.GONE);
+        if( error != null){
+            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages)
+                Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
         if( results == null){
             RelativeLayout no_result = (RelativeLayout) findViewById(R.id.no_result);
             no_result.setVisibility(View.VISIBLE);

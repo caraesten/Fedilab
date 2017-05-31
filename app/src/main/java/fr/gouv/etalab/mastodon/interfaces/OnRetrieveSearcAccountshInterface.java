@@ -17,6 +17,7 @@ package fr.gouv.etalab.mastodon.interfaces;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 
 
 /**
@@ -24,5 +25,5 @@ import fr.gouv.etalab.mastodon.client.Entities.Account;
  * Interface for search accounts
  */
 public interface OnRetrieveSearcAccountshInterface {
-    void onRetrieveSearchAccounts(List<Account> accounts);
+    void onRetrieveSearchAccounts(List<Account> accounts, Error error);
 }

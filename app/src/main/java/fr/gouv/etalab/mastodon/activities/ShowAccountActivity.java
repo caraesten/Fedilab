@@ -54,6 +54,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRelationshipAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
@@ -241,7 +242,14 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
 
     @Override
-    public void onPostAction(int statusCode,API.StatusAction statusAction, String targetedId) {
+    public void onPostAction(int statusCode,API.StatusAction statusAction, String targetedId, Error error) {
+        if( error != null){
+            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages)
+                Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
         Helper.manageMessageStatusCode(getApplicationContext(), statusCode, statusAction);
         new RetrieveRelationshipAsyncTask(getApplicationContext(), accountId,ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
@@ -258,7 +266,14 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     }
 
     @Override
-    public void onRetrieveAccount(Account account) {
+    public void onRetrieveAccount(Account account, Error error) {
+        if( error != null){
+            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages)
+                Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
         ImageView account_pp = (ImageView) findViewById(R.id.account_pp);
         TextView account_dn = (TextView) findViewById(R.id.account_dn);
         TextView account_un = (TextView) findViewById(R.id.account_un);
@@ -301,7 +316,15 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     }
 
     @Override
-    public void onRetrieveRelationship(Relationship relationship) {
+    public void onRetrieveRelationship(Relationship relationship, Error error) {
+
+        if( error != null){
+            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages)
+                Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
         if( relationship.isBlocking()){
             account_follow.setText(R.string.action_unblock);
             doAction = action.UNBLOCK;

@@ -22,6 +22,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobManager;
@@ -38,6 +39,7 @@ import java.util.concurrent.TimeUnit;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveHomeTimelineServiceAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -116,8 +118,8 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
 
 
     @Override
-    public void onRetrieveHomeTimelineService(List<Status> statuses, String acct, String userId) {
-        if( statuses == null || statuses.size() == 0)
+    public void onRetrieveHomeTimelineService(List<Status> statuses, String acct, String userId, Error error) {
+        if( error != null || statuses == null || statuses.size() == 0)
             return;
         Bitmap icon_notification = null;
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);

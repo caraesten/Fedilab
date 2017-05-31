@@ -36,6 +36,7 @@ public class RetrieveHomeTimelineServiceAsyncTask extends AsyncTask<Void, Void, 
     private OnRetrieveHomeTimelineServiceInterface listener;
     private String instance;
     private String token;
+    private API api;
 
     public RetrieveHomeTimelineServiceAsyncTask(Context context, String instance, String token, String since_id, String acct, String userId, OnRetrieveHomeTimelineServiceInterface onRetrieveHomeTimelineServiceInterface){
         this.context = context;
@@ -49,13 +50,14 @@ public class RetrieveHomeTimelineServiceAsyncTask extends AsyncTask<Void, Void, 
 
     @Override
     protected Void doInBackground(Void... params) {
-        statuses = new API(context, instance, token).getHomeTimelineSinceId(since_id);
+        api = new API(context, instance, token);
+        statuses = api.getHomeTimelineSinceId(since_id);
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveHomeTimelineService(statuses, acct, userId);
+        listener.onRetrieveHomeTimelineService(statuses, acct, userId, api.getError());
     }
 
 }

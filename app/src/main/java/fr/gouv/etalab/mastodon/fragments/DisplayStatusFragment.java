@@ -29,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ import java.util.List;
 
 
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -145,7 +147,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
                     @Override
                     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                        if (view.getId() == lv_status.getId() && totalItemCount > visibleItemCount) {
+                        if( firstVisibleItem == 0) {
+                            Intent intent = new Intent(Helper.HEADER_ACCOUNT);
+                            intent.putExtra("hide", false);
+                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                        }else if (view.getId() == lv_status.getId() && totalItemCount > visibleItemCount) {
                             final int currentFirstVisibleItem = lv_status.getFirstVisiblePosition();
 
                             if (currentFirstVisibleItem > lastFirstVisibleItem) {
@@ -226,7 +232,17 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
 
     @Override
-    public void onRetrieveFeeds(List<Status> statuses) {
+    public void onRetrieveFeeds(List<Status> statuses, Error error) {
+
+        mainLoader.setVisibility(View.GONE);
+        nextElementLoader.setVisibility(View.GONE);
+        if( error != null){
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages)
+                Toast.makeText(getContext(), error.getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
         if( firstLoad && (statuses == null || statuses.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
@@ -235,8 +251,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             max_id =statuses.get(statuses.size()-1).getId();
         else
             max_id = null;
-        mainLoader.setVisibility(View.GONE);
-        nextElementLoader.setVisibility(View.GONE);
 
         if( statuses != null) {
             for(Status tmpStatus: statuses){

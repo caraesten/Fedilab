@@ -39,6 +39,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -127,8 +128,8 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
 
 
     @Override
-    public void onRetrieveNotifications(List<Notification> notifications, String acct, String userId) {
-        if( notifications == null || notifications.size() == 0)
+    public void onRetrieveNotifications(List<Notification> notifications, String acct, String userId, Error error) {
+        if( error != null || notifications == null || notifications.size() == 0)
             return;
         Bitmap icon_notification = null;
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);

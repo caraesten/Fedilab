@@ -18,6 +18,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,6 +32,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
@@ -41,6 +44,7 @@ import java.util.List;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -180,7 +184,14 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
     }
 
     @Override
-    public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId) {
+    public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
+        if( error != null){
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages)
+                Toast.makeText(context, error.getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
         Helper.manageMessageStatusCode(context, statusCode, statusAction);
         //When unmuting or unblocking an account, it is removed from the list
         List<Account> accountsToRemove = new ArrayList<>();

@@ -39,6 +39,7 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
     private String comment;
     private Account account;
     private fr.gouv.etalab.mastodon.client.Entities.Status status;
+    private API api;
 
     public PostActionAsyncTask(Context context, API.StatusAction statusAction, String statusId, OnPostActionInterface onPostActionInterface){
         this.context = context;
@@ -59,18 +60,19 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
 
+        api = new API(context);
         if(statusAction ==  API.StatusAction.REPORT)
-            statusCode = new API(context).reportAction(status, comment);
+            statusCode = api.reportAction(status, comment);
         else if(statusAction == API.StatusAction.CREATESTATUS)
-            statusCode = new API(context).statusAction(status);
+            statusCode = api.statusAction(status);
         else
-            statusCode = new API(context).postAction(statusAction, statusId);
+            statusCode = api.postAction(statusAction, statusId);
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onPostAction(statusCode, statusAction, statusId);
+        listener.onPostAction(statusCode, statusAction, statusId, api.getError());
     }
 
 }

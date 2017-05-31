@@ -32,6 +32,7 @@ public class RetrieveContextAsyncTask extends AsyncTask<Void, Void, Void> {
     private String statusId;
     private fr.gouv.etalab.mastodon.client.Entities.Context statusContext;
     private OnRetrieveContextInterface listener;
+    private API api;
 
     public RetrieveContextAsyncTask(Context context, String statusId, OnRetrieveContextInterface onRetrieveContextInterface){
         this.context = context;
@@ -41,13 +42,14 @@ public class RetrieveContextAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        statusContext = new  API(context).getStatusContext(statusId);
+        api = new API(context);
+        statusContext = api.getStatusContext(statusId);
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveFeeds(statusContext);
+        listener.onRetrieveFeeds(statusContext, api.getError());
     }
 
 }
