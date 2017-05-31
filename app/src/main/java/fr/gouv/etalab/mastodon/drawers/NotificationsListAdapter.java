@@ -213,7 +213,7 @@ public class NotificationsListAdapter extends BaseAdapter  {
             public void onClick(View v) {
                 Intent intent = new Intent(context, TootActivity.class);
                 Bundle b = new Bundle();
-                b.putString("inReplyTo", notification.getStatus().getId());
+                b.putParcelable("tootReply", notification.getStatus());
                 intent.putExtras(b);
                 context.startActivity(intent);
             }

@@ -14,16 +14,41 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.client.Entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Thomas on 23/04/2017.
+ * Manages mentions in toots
  */
 
-public class Mention {
+public class Mention implements Parcelable {
 
     private String url;
     private String username;
     private String acct;
     private String id;
+
+    private Mention(Parcel in) {
+        url = in.readString();
+        username = in.readString();
+        acct = in.readString();
+        id = in.readString();
+    }
+
+    public Mention(){}
+
+    public static final Creator<Mention> CREATOR = new Creator<Mention>() {
+        @Override
+        public Mention createFromParcel(Parcel in) {
+            return new Mention(in);
+        }
+
+        @Override
+        public Mention[] newArray(int size) {
+            return new Mention[size];
+        }
+    };
 
     public String getUrl() {
         return url;
@@ -55,5 +80,18 @@ public class Mention {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(url);
+        dest.writeString(username);
+        dest.writeString(acct);
+        dest.writeString(id);
     }
 }
