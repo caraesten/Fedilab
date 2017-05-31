@@ -614,6 +614,8 @@ public class Helper {
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
         imageLoader = ImageLoader.getInstance();
         NavigationView navigationView = (NavigationView) activity.findViewById(R.id.nav_view);
+        navigationView.getMenu().clear();
+        navigationView.inflateMenu(R.menu.activity_main_drawer);
         updateHeaderAccountInfo(activity, account, navigationView, imageLoader, options);
     }
 
@@ -640,11 +642,16 @@ public class Helper {
             activity.startActivity(myIntent);
             activity.finish(); //User is logged out to get a new token
         }else {
-            ownerStatus.setText(String.valueOf(account.getStatuses_count()));
-            ownerFollowers.setText(String.valueOf(account.getFollowers_count()));
-            ownerFollowing.setText(String.valueOf(account.getFollowing_count()));
-            username.setText(String.format("@%s",account.getUsername()));
-            displayedName.setText(account.getDisplay_name());
+            if (ownerStatus != null)
+                ownerStatus.setText(String.valueOf(account.getStatuses_count()));
+            if (ownerFollowers != null)
+                ownerFollowers.setText(String.valueOf(account.getFollowers_count()));
+            if (ownerFollowing != null)
+                ownerFollowing.setText(String.valueOf(account.getFollowing_count()));
+            if (username != null)
+                username.setText(String.format("@%s",account.getUsername()));
+            if (displayedName != null)
+                displayedName.setText(account.getDisplay_name());
             imageLoader.displayImage(account.getAvatar(), profilePicture, options);
         }
     }

@@ -148,9 +148,8 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        boolean menuWasSelected = false;
         mamageNewIntent(getIntent());
-        if (savedInstanceState == null && !menuWasSelected) {
+        if (savedInstanceState == null) {
             navigationView.setCheckedItem(R.id.nav_home);
             navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
         }
