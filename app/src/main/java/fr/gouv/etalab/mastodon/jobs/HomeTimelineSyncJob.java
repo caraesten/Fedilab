@@ -22,6 +22,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobManager;
@@ -97,7 +98,6 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
 
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean notif_hometimeline = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, true);
-
         //User disagree with home timeline refresh
         if( !notif_hometimeline)
             return; //Nothing is done
@@ -171,7 +171,6 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
         intent.putExtra(INTENT_ACTION, HOME_TIMELINE_INTENT);
         intent.putExtra(PREF_KEY_ID, userId);
-
         if( max_id != null)
             notify_user(getContext(), intent, notificationId, icon_notification,title,message);
         SharedPreferences.Editor editor = sharedpreferences.edit();
