@@ -14,10 +14,7 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.interfaces;
 
-import java.util.List;
-
-import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 
 
 /**
@@ -25,5 +22,5 @@ import fr.gouv.etalab.mastodon.client.Entities.Error;
  * Interface for search accounts
  */
 public interface OnRetrieveSearcAccountshInterface {
-    void onRetrieveSearchAccounts(List<Account> accounts, Error error);
+    void onRetrieveSearchAccounts(APIResponse apiResponse);
 }

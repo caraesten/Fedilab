@@ -35,7 +35,6 @@ public class UploadActionAsyncTask extends AsyncTask<Void, Void, Void> {
     private OnRetrieveAttachmentInterface listener;
     private Attachment attachment;
     private InputStream inputStream;
-    private fr.gouv.etalab.mastodon.client.Entities.Status status;
     private API api;
 
     public UploadActionAsyncTask(Context context, InputStream inputStream, OnRetrieveAttachmentInterface onRetrieveAttachmentInterface){

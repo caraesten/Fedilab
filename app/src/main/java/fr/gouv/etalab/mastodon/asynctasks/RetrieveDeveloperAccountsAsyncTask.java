@@ -16,9 +16,8 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import java.util.List;
 import fr.gouv.etalab.mastodon.client.API;
-import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
 
 
@@ -30,7 +29,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
 public class RetrieveDeveloperAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     private Context context;
-    private List<Account> accounts;
+    private APIResponse apiResponse;
     private OnRetrieveSearcAccountshInterface listener;
     private API api;
 
@@ -42,12 +41,12 @@ public class RetrieveDeveloperAccountsAsyncTask extends AsyncTask<Void, Void, Vo
     @Override
     protected Void doInBackground(Void... params) {
         api = new API(context);
-        accounts = api.searchDeveloper();
+        apiResponse = api.searchDeveloper();
         return null;
     }
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveSearchAccounts(accounts, api.getError());
+        listener.onRetrieveSearchAccounts(apiResponse);
     }
 
 }

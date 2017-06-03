@@ -16,11 +16,8 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
-
-import java.util.List;
-
 import fr.gouv.etalab.mastodon.client.API;
-import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountsInterface;
 
 
@@ -33,11 +30,10 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     private Context context;
     private Type action;
-    private List<Account> accounts;
+    private APIResponse apiResponse;
     private String max_id;
     private OnRetrieveAccountsInterface listener;
     private String targetedId;
-    private API api;
 
     public enum Type{
         BLOCKED,
@@ -64,19 +60,19 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
 
-        api = new API(context);
+        API api = new API(context);
         switch (action){
             case BLOCKED:
-                accounts = api.getBlocks(max_id);
+                apiResponse = api.getBlocks(max_id);
                 break;
             case MUTED:
-                accounts = api.getMuted(max_id);
+                apiResponse = api.getMuted(max_id);
                 break;
             case FOLLOWING:
-                accounts = api.getFollowing(targetedId, max_id);
+                apiResponse = api.getFollowing(targetedId, max_id);
                 break;
             case FOLLOWERS:
-                accounts = api.getFollowers(targetedId, max_id);
+                apiResponse = api.getFollowers(targetedId, max_id);
                 break;
         }
         return null;
@@ -84,7 +80,7 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveAccounts(accounts, api.getError());
+        listener.onRetrieveAccounts(apiResponse);
     }
 
 }

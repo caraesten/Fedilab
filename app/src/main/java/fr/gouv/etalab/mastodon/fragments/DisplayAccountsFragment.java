@@ -35,6 +35,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -107,28 +109,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         lv_accounts.setAdapter(accountsListAdapter);
 
         if( !comesFromSearch) {
-            lv_accounts.setOnScrollListener(new AbsListView.OnScrollListener() {
-                @Override
-                public void onScrollStateChanged(AbsListView view, int scrollState) {
 
-                }
-
-                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-                    if (firstVisibleItem + visibleItemCount == totalItemCount) {
-                        if (!flag_loading) {
-                            flag_loading = true;
-                            if (type != RetrieveAccountsAsyncTask.Type.FOLLOWERS && type != RetrieveAccountsAsyncTask.Type.FOLLOWING)
-                                asyncTask = new RetrieveAccountsAsyncTask(context, type, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            else
-                                asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            nextElementLoader.setVisibility(View.VISIBLE);
-                        }
-                    } else {
-                        nextElementLoader.setVisibility(View.GONE);
-                    }
-                }
-            });
 
             //Hide account header when scrolling for ShowAccountActivity
             if (hideHeader) {
@@ -159,6 +140,41 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
                                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                             }
                             lastFirstVisibleItem = currentFirstVisibleItem;
+                        }
+                        if (firstVisibleItem + visibleItemCount == totalItemCount) {
+                            if (!flag_loading) {
+                                flag_loading = true;
+                                if (type != RetrieveAccountsAsyncTask.Type.FOLLOWERS && type != RetrieveAccountsAsyncTask.Type.FOLLOWING)
+                                    asyncTask = new RetrieveAccountsAsyncTask(context, type, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                else
+                                    asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                nextElementLoader.setVisibility(View.VISIBLE);
+                            }
+                        } else {
+                            nextElementLoader.setVisibility(View.GONE);
+                        }
+                    }
+                });
+            }else{
+                lv_accounts.setOnScrollListener(new AbsListView.OnScrollListener() {
+                    @Override
+                    public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+                    }
+
+                    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+                        if (firstVisibleItem + visibleItemCount == totalItemCount) {
+                            if (!flag_loading) {
+                                flag_loading = true;
+                                if (type != RetrieveAccountsAsyncTask.Type.FOLLOWERS && type != RetrieveAccountsAsyncTask.Type.FOLLOWING)
+                                    asyncTask = new RetrieveAccountsAsyncTask(context, type, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                else
+                                    asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                nextElementLoader.setVisibility(View.VISIBLE);
+                            }
+                        } else {
+                            nextElementLoader.setVisibility(View.GONE);
                         }
                     }
                 });
@@ -220,26 +236,23 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
 
 
     @Override
-    public void onRetrieveAccounts(List<Account> accounts, Error error) {
+    public void onRetrieveAccounts(APIResponse apiResponse) {
 
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
-        if( error != null){
+        if( apiResponse.getError() != null){
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
-                Toast.makeText(getContext(), error.getError(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
+        List<Account> accounts = apiResponse.getAccounts();
         if( firstLoad && (accounts == null || accounts.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
             textviewNoAction.setVisibility(View.GONE);
-        if( accounts != null && accounts.size() > 1)
-            max_id =accounts.get(accounts.size()-1).getId();
-        else
-            max_id = null;
-
+        max_id = apiResponse.getMax_id();
         if( accounts != null) {
             for(Account tmpAccount: accounts){
                 this.accounts.add(tmpAccount);

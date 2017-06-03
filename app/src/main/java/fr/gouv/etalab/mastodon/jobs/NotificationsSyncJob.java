@@ -37,7 +37,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
-import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -130,8 +130,10 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
 
 
     @Override
-    public void onRetrieveNotifications(List<Notification> notifications, String acct, String userId, Error error) {
-        if( error != null || notifications == null || notifications.size() == 0)
+    public void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId) {
+
+        List<Notification> notifications = apiResponse.getNotifications();
+        if( apiResponse.getError() != null || notifications == null || notifications.size() == 0)
             return;
         Bitmap icon_notification = null;
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -228,7 +230,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
         }
 
         SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notifications.get(0).getId());
+        editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, apiResponse.getMax_id());
         editor.apply();
 
     }

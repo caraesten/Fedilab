@@ -16,13 +16,9 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
-
-import java.util.List;
-
 import fr.gouv.etalab.mastodon.client.API;
-import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveNotificationsInterface;
-import fr.gouv.etalab.mastodon.client.Entities.Notification;
 
 
 /**
@@ -33,13 +29,12 @@ import fr.gouv.etalab.mastodon.client.Entities.Notification;
 public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     private Context context;
-    private List<Notification> notifications;
+    private APIResponse apiResponse;
     private String max_id;
     private String acct, userId;
     private OnRetrieveNotificationsInterface listener;
     private String instance;
     private String token;
-    private API api;
 
 
     public RetrieveNotificationsAsyncTask(Context context, String instance, String token, String max_id, String acct, String userId, OnRetrieveNotificationsInterface onRetrieveNotificationsInterface){
@@ -55,17 +50,17 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
     @Override
     protected Void doInBackground(Void... params) {
 
-        api = new API(context, instance, token);
+        API api = new API(context, instance, token);
         if( acct == null)
-            notifications = api.getNotifications(max_id);
+            apiResponse = api.getNotifications(max_id);
         else
-            notifications = api.getNotificationsSince(max_id);
+            apiResponse = api.getNotificationsSince(max_id);
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveNotifications(notifications, acct, userId, api.getError());
+        listener.onRetrieveNotifications(apiResponse, acct, userId);
     }
 
 }

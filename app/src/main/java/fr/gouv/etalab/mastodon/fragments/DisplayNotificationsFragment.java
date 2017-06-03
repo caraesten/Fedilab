@@ -20,7 +20,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,8 +31,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -148,26 +147,23 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
 
 
     @Override
-    public void onRetrieveNotifications(List<Notification> notifications, String acct, String userId, Error error) {
+    public void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId) {
 
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
-        if( error != null){
+        if( apiResponse.getError() != null){
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
-                Toast.makeText(getContext(), error.getError(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
+        List<Notification> notifications = apiResponse.getNotifications();
         if( firstLoad && (notifications == null || notifications.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
             textviewNoAction.setVisibility(View.GONE);
-        if( notifications != null && notifications.size() > 1)
-            max_id =notifications.get(notifications.size()-1).getId();
-        else
-            max_id = null;
-
+        max_id = apiResponse.getMax_id();
 
         if( notifications != null) {
             for(Notification tmpNotification: notifications){

@@ -14,16 +14,12 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.interfaces;
 
-
-import java.util.List;
-
-import fr.gouv.etalab.mastodon.client.Entities.Error;
-import fr.gouv.etalab.mastodon.client.Entities.Notification;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 
 /**
  * Created by Thomas on 28/04/2017.
  * Interface when notifications have been retrieved
  */
 public interface OnRetrieveNotificationsInterface {
-    void onRetrieveNotifications(List<Notification> notifications, String acct, String userId, Error error);
+    void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId);
 }

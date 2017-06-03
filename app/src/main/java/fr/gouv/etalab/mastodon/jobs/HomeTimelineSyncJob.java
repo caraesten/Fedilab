@@ -37,8 +37,8 @@ import java.util.concurrent.TimeUnit;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveHomeTimelineServiceAsyncTask;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -125,8 +125,9 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
 
 
     @Override
-    public void onRetrieveHomeTimelineService(List<Status> statuses, String acct, String userId, Error error) {
-        if( error != null || statuses == null || statuses.size() == 0)
+    public void onRetrieveHomeTimelineService(APIResponse apiResponse, String acct, String userId) {
+        List<Status> statuses = apiResponse.getStatuses();
+        if( apiResponse.getError() != null || statuses == null || statuses.size() == 0)
             return;
         Bitmap icon_notification = null;
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -135,6 +136,7 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
         //No previous notifications in cache, so no notification will be sent
         String message;
         String title = null;
+
         for(Status status: statuses){
             //The notification associated to max_id is discarded as it is supposed to have already been sent
             //Also, if the toot comes from the owner, we will avoid to warn him/her...
@@ -173,7 +175,7 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
         if( max_id != null)
             notify_user(getContext(), intent, notificationId, icon_notification,title,message);
         SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, statuses.get(0).getId());
+        editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, apiResponse.getMax_id());
         editor.apply();
     }
 

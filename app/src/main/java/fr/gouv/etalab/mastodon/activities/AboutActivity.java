@@ -29,8 +29,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveDeveloperAccountsAsyncTask;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -103,8 +103,9 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveSearcA
     }
 
     @Override
-    public void onRetrieveSearchAccounts(final List<Account> accounts, Error error) {
+    public void onRetrieveSearchAccounts(APIResponse apiResponse) {
         about_developer.setEnabled(true);
+        final List<Account> accounts = apiResponse.getAccounts();
         if( accounts != null && accounts.size() > 0 && accounts.get(0) != null) {
             about_developer.setOnClickListener(null);
             about_developer.setOnClickListener(new View.OnClickListener() {

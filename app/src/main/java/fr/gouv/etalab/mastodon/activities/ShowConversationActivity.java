@@ -30,6 +30,7 @@ import java.util.List;
 
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveContextAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Context;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
@@ -80,14 +81,15 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
     }
 
     @Override
-    public void onRetrieveFeeds(List<Status> statuses, Error error) {
-        if( error != null){
+    public void onRetrieveFeeds(APIResponse apiResponse) {
+        if( apiResponse.getError() != null){
             final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
-                Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
+        List<Status> statuses = apiResponse.getStatuses();
         if( statuses != null && statuses.size() > 0 ){
             initialStatus = statuses.get(0);
             new RetrieveContextAsyncTask(getApplicationContext(), initialStatus.getId(), ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);

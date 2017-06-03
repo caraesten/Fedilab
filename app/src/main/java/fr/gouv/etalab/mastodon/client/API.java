@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -35,6 +36,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import cz.msebera.android.httpclient.Header;
 import fr.gouv.etalab.mastodon.client.Entities.*;
@@ -70,7 +73,8 @@ public class API {
     private int actionCode;
     private String instance;
     private String prefKeyOauthTokenT;
-    private Error errorApi = null;
+    private APIResponse apiResponse;
+    private Error APIError;
 
     public enum StatusAction{
         FAVOURITE,
@@ -96,6 +100,8 @@ public class API {
         notificationPerPage = sharedpreferences.getInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 40);
         this.instance = Helper.getLiveInstance(context);
         this.prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+        apiResponse = new APIResponse();
+        APIError = null;
     }
 
     public API(Context context, String instance, String token) {
@@ -113,7 +119,8 @@ public class API {
             this.prefKeyOauthTokenT = token;
         else
             this.prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-
+        apiResponse = new APIResponse();
+        APIError = null;
     }
 
 
@@ -211,7 +218,7 @@ public class API {
      * @param accountId String Id of the account
      * @return List<Status>
      */
-    public List<Status> getStatus(String accountId) {
+    public APIResponse getStatus(String accountId) {
         return getStatus(accountId, false, false, null, null, tootPerPage);
     }
 
@@ -222,7 +229,7 @@ public class API {
      * @param max_id    String id max
      * @return List<Status>
      */
-    public List<Status> getStatus(String accountId, String max_id) {
+    public APIResponse getStatus(String accountId, String max_id) {
         return getStatus(accountId, false, false, max_id, null, tootPerPage);
     }
 
@@ -237,7 +244,7 @@ public class API {
      * @param limit           int limit  - max value 40
      * @return List<Status>
      */
-    private List<Status> getStatus(String accountId, boolean onlyMedia,
+    private APIResponse getStatus(String accountId, boolean onlyMedia,
                                   boolean exclude_replies, String max_id, String since_id, int limit) {
 
         RequestParams params = new RequestParams();
@@ -258,9 +265,13 @@ public class API {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Status status = parseStatuses(response);
                 statuses.add(status);
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
             }
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
                 statuses = parseStatuses(response);
 
             }
@@ -269,7 +280,8 @@ public class API {
                 setError(statusCode, error);
             }
         });
-        return statuses;
+        apiResponse.setStatuses(statuses);
+        return apiResponse;
     }
 
 
@@ -279,16 +291,20 @@ public class API {
      * @param statusId  String Id of the status
      * @return List<Status>
      */
-    public List<Status> getStatusbyId(String statusId) {
+    public APIResponse getStatusbyId(String statusId) {
         statuses = new ArrayList<>();
         get(String.format("/statuses/%s", statusId), null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
                 Status status = parseStatuses(response);
                 statuses.add(status);
             }
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
                 statuses = parseStatuses(response);
             }
             @Override
@@ -296,7 +312,8 @@ public class API {
                 setError(statusCode, error);
             }
         });
-        return statuses;
+        apiResponse.setStatuses(statuses);
+        return apiResponse;
     }
 
     /**
@@ -327,7 +344,7 @@ public class API {
      * @param max_id   String id max
      * @return List<Status>
      */
-    public List<Status> getHomeTimeline( String max_id) {
+    public APIResponse getHomeTimeline( String max_id) {
         return getHomeTimeline(max_id, null, tootPerPage);
     }
 
@@ -335,7 +352,7 @@ public class API {
      * Retrieves home timeline for the account since an Id value *synchronously*
      * @return List<Status>
      */
-    public List<Status> getHomeTimelineSinceId(String since_id) {
+    public APIResponse getHomeTimelineSinceId(String since_id) {
         return getHomeTimeline(null, since_id, tootPerPage);
     }
 
@@ -346,7 +363,7 @@ public class API {
      * @param limit    int limit  - max value 40
      * @return List<Status>
      */
-    private List<Status> getHomeTimeline(String max_id, String since_id, int limit) {
+    private APIResponse getHomeTimeline(String max_id, String since_id, int limit) {
 
         RequestParams params = new RequestParams();
         if (max_id != null)
@@ -363,17 +380,22 @@ public class API {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Status status = parseStatuses(response);
                 statuses.add(status);
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
             }
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 statuses = parseStatuses(response);
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
                 setError(statusCode, error);
             }
         });
-        return statuses;
+        apiResponse.setStatuses(statuses);
+        return apiResponse;
     }
 
 
@@ -383,7 +405,7 @@ public class API {
      * @param max_id String id max
      * @return List<Status>
      */
-    public List<Status> getPublicTimeline(boolean local, String max_id){
+    public APIResponse getPublicTimeline(boolean local, String max_id){
         return getPublicTimeline(local, max_id, null, tootPerPage);
     }
     /**
@@ -394,7 +416,7 @@ public class API {
      * @param limit int limit  - max value 40
      * @return List<Status>
      */
-    private List<Status> getPublicTimeline(boolean local, String max_id, String since_id, int limit){
+    private APIResponse getPublicTimeline(boolean local, String max_id, String since_id, int limit){
 
         RequestParams params = new RequestParams();
         if( local)
@@ -413,17 +435,22 @@ public class API {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Status status = parseStatuses(response);
                 statuses.add(status);
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
             }
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 statuses = parseStatuses(response);
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
                 setError(statusCode, error);
             }
         });
-        return statuses;
+        apiResponse.setStatuses(statuses);
+        return apiResponse;
     }
 
     /**
@@ -433,7 +460,7 @@ public class API {
      * @param max_id String id max
      * @return List<Status>
      */
-    public List<Status> getPublicTimelineTag(String tag, boolean local, String max_id){
+    public APIResponse getPublicTimelineTag(String tag, boolean local, String max_id){
         return getPublicTimelineTag(tag, local, max_id, null, tootPerPage);
     }
     /**
@@ -445,7 +472,7 @@ public class API {
      * @param limit int limit  - max value 40
      * @return List<Status>
      */
-    private List<Status> getPublicTimelineTag(String tag, boolean local, String max_id, String since_id, int limit){
+    private APIResponse getPublicTimelineTag(String tag, boolean local, String max_id, String since_id, int limit){
 
         RequestParams params = new RequestParams();
         if( local)
@@ -465,17 +492,22 @@ public class API {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Status status = parseStatuses(response);
                 statuses.add(status);
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
             }
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 statuses = parseStatuses(response);
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
                 setError(statusCode, error);
             }
         });
-        return statuses;
+        apiResponse.setStatuses(statuses);
+        return apiResponse;
     }
 
 
@@ -484,7 +516,7 @@ public class API {
      * @param max_id String id max
      * @return List<Status>
      */
-    public List<Account> getMuted(String max_id){
+    public APIResponse getMuted(String max_id){
         return getAccounts("/mutes", max_id, null, accountPerPage);
     }
 
@@ -493,7 +525,7 @@ public class API {
      * @param max_id String id max
      * @return List<Status>
      */
-    public List<Account> getBlocks(String max_id){
+    public APIResponse getBlocks(String max_id){
         return getAccounts("/blocks", max_id, null, accountPerPage);
     }
 
@@ -504,7 +536,7 @@ public class API {
      * @param max_id String id max
      * @return List<Status>
      */
-    public List<Account> getFollowing(String targetedId, String max_id){
+    public APIResponse getFollowing(String targetedId, String max_id){
         return getAccounts(String.format("/accounts/%s/following",targetedId),max_id, null, accountPerPage);
     }
 
@@ -514,7 +546,7 @@ public class API {
      * @param max_id String id max
      * @return List<Status>
      */
-    public List<Account> getFollowers(String targetedId, String max_id){
+    public APIResponse getFollowers(String targetedId, String max_id){
         return getAccounts(String.format("/accounts/%s/followers",targetedId),max_id, null, accountPerPage);
     }
 
@@ -525,7 +557,7 @@ public class API {
      * @param limit int limit  - max value 40
      * @return List<Status>
      */
-    private List<Account> getAccounts(String action, String max_id, String since_id, int limit){
+    private APIResponse getAccounts(String action, String max_id, String since_id, int limit){
 
         RequestParams params = new RequestParams();
         if( max_id != null )
@@ -540,11 +572,15 @@ public class API {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
                 Account account = parseAccountResponse(response);
                 accounts.add(account);
             }
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
                 accounts = parseAccountResponse(response);
             }
             @Override
@@ -552,7 +588,8 @@ public class API {
                 setError(statusCode, error);
             }
         });
-        return accounts;
+        apiResponse.setAccounts(accounts);
+        return apiResponse;
     }
 
 
@@ -561,7 +598,7 @@ public class API {
      * @param max_id String id max
      * @return List<Status>
      */
-    public List<Status> getFavourites(String max_id){
+    public APIResponse getFavourites(String max_id){
         return getFavourites(max_id, null, tootPerPage);
     }
     /**
@@ -571,7 +608,7 @@ public class API {
      * @param limit int limit  - max value 40
      * @return List<Status>
      */
-    private List<Status> getFavourites(String max_id, String since_id, int limit){
+    private APIResponse getFavourites(String max_id, String since_id, int limit){
 
         RequestParams params = new RequestParams();
         if( max_id != null )
@@ -588,17 +625,22 @@ public class API {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Status status = parseStatuses(response);
                 statuses.add(status);
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
             }
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 statuses = parseStatuses(response);
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
                 setError(statusCode, error);
             }
         });
-        return statuses;
+        apiResponse.setStatuses(statuses);
+        return apiResponse;
     }
 
 
@@ -749,7 +791,7 @@ public class API {
      * @param since_id String since max
      * @return List<Notification>
      */
-    public List<Notification> getNotificationsSince(String since_id){
+    public APIResponse getNotificationsSince(String since_id){
         return getNotifications(null, since_id, notificationPerPage);
     }
 
@@ -758,7 +800,7 @@ public class API {
      * @param max_id String id max
      * @return List<Notification>
      */
-    public List<Notification> getNotifications(String max_id){
+    public APIResponse getNotifications(String max_id){
         return getNotifications(max_id, null, notificationPerPage);
     }
     /**
@@ -768,7 +810,7 @@ public class API {
      * @param limit int limit  - max value 40
      * @return List<Notification>
      */
-    private List<Notification> getNotifications(String max_id, String since_id, int limit){
+    private APIResponse getNotifications(String max_id, String since_id, int limit){
 
         RequestParams params = new RequestParams();
         if( max_id != null )
@@ -785,17 +827,22 @@ public class API {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Notification notification = parseNotificationResponse(response);
                 notifications.add(notification);
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
             }
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 notifications = parseNotificationResponse(response);
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
                 setError(statusCode, error);
             }
         });
-        return notifications;
+        apiResponse.setNotifications(notifications);
+        return apiResponse;
     }
 
     public Attachment uploadMedia(InputStream inputStream){
@@ -855,7 +902,7 @@ public class API {
      *
      * @return List<Account>
      */
-    public List<Account> searchDeveloper() {
+    public APIResponse searchDeveloper() {
         RequestParams params = new RequestParams();
         params.add("q", "tschneider");
         get("/accounts/search", params, new JsonHttpResponseHandler() {
@@ -864,17 +911,22 @@ public class API {
                 accounts = new ArrayList<>();
                 account = parseAccountResponse(response);
                 accounts.add(account);
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
             }
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 accounts = parseDeveloperResponse(response);
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
                 setError(statusCode, error);
             }
         });
-        return accounts;
+        apiResponse.setAccounts(accounts);
+        return apiResponse;
     }
     /**
      * Retrieves Accounts when searching (ie: via @...) *synchronously*
@@ -882,7 +934,7 @@ public class API {
      * @param query  String search
      * @return List<Account>
      */
-    public List<Account> searchAccounts(String query) {
+    public APIResponse searchAccounts(String query) {
 
         RequestParams params = new RequestParams();
         params.add("q", query);
@@ -895,18 +947,23 @@ public class API {
                 accounts = new ArrayList<>();
                 account = parseAccountResponse(response);
                 accounts.add(account);
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 accounts = parseAccountResponse(response);
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
                 setError(statusCode, error);
             }
         });
-        return accounts;
+        apiResponse.setAccounts(accounts);
+        return apiResponse;
     }
 
     /**
@@ -1231,8 +1288,9 @@ public class API {
      * @param error Throwable error
      */
     private void setError(int statusCode, Throwable error){
-        errorApi = new Error();
-        errorApi.setError(statusCode + " - " + error.getMessage());
+        APIError = new Error();
+        APIError.setError(statusCode + " - " + error.getMessage());
+        apiResponse.setError(APIError);
     }
 
     
@@ -1284,7 +1342,7 @@ public class API {
     }
 
     public Error getError(){
-        return errorApi;
+        return APIError;
     }
 
 
@@ -1292,5 +1350,44 @@ public class API {
         return "https://" + this.instance + "/api/v1" + action;
     }
 
+    /**
+     * Find max_id in header
+     * @param headers Header[]
+     * @return String max_id if presents
+     */
+    private String findMaxId(Header[] headers){
+        if( headers == null)
+            return null;
+        for(Header header: headers){
+            if( header.toString().startsWith("Link: ")){
+                Pattern pattern = Pattern.compile("max_id=([0-9]{1,}).*");
+                Matcher matcher = pattern.matcher(header.toString());
+                if (matcher.find()) {
+                    return matcher.group(1);
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Find since_id in header
+     * @param headers Header[]
+     * @return String since_id if presents
+     */
+    private String findSinceId(Header[] headers){
+        if( headers == null)
+            return null;
+        for(Header header: headers){
+            if( header.toString().startsWith("Link: ")){
+                Pattern pattern = Pattern.compile("since_id=([0-9]{1,}).*");
+                Matcher matcher = pattern.matcher(header.toString());
+                if (matcher.find()) {
+                    return matcher.group(1);
+                }
+            }
+        }
+        return null;
+    }
 
 }
