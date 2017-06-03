@@ -16,12 +16,8 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-
-import java.util.List;
-
 import fr.gouv.etalab.mastodon.client.API;
-import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 
 
@@ -34,13 +30,11 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     private Context context;
     private Type action;
-    private List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses;
+    private APIResponse apiResponse;
     private String max_id;
     private OnRetrieveFeedsInterface listener;
     private String targetedID;
-    private fr.gouv.etalab.mastodon.client.Entities.Status status;
     private String tag;
-    private API api;
 
     public enum Type{
         HOME,
@@ -79,28 +73,28 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
 
-        api = new API(context);
+        API api = new API(context);
         switch (action){
             case HOME:
-                statuses = api.getHomeTimeline(max_id);
+                apiResponse = api.getHomeTimeline(max_id);
                 break;
             case LOCAL:
-                statuses = api.getPublicTimeline(true, max_id);
+                apiResponse = api.getPublicTimeline(true, max_id);
                 break;
             case PUBLIC:
-                statuses = api.getPublicTimeline(false, max_id);
+                apiResponse = api.getPublicTimeline(false, max_id);
                 break;
             case FAVOURITES:
-                statuses = api.getFavourites(max_id);
+                apiResponse = api.getFavourites(max_id);
                 break;
             case USER:
-                statuses = api.getStatus(targetedID, max_id);
+                apiResponse = api.getStatus(targetedID, max_id);
                 break;
             case ONESTATUS:
-                statuses = api.getStatusbyId(targetedID);
+                apiResponse = api.getStatusbyId(targetedID);
                 break;
             case TAG:
-                statuses = api.getPublicTimelineTag(tag, false, max_id);
+                apiResponse = api.getPublicTimelineTag(tag, false, max_id);
                 break;
             case HASHTAG:
                 break;
@@ -110,7 +104,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveFeeds(statuses, api.getError());
+        listener.onRetrieveFeeds(apiResponse);
     }
 
 }

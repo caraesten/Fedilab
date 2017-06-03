@@ -61,6 +61,7 @@ import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UploadActionAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
@@ -539,14 +540,15 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
 
     @Override
-    public void onRetrieveSearchAccounts(List<Account> accounts, Error error) {
-        if( error != null){
+    public void onRetrieveSearchAccounts(APIResponse apiResponse) {
+        if( apiResponse.getError() != null){
             final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
-                Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
+        List<Account> accounts = apiResponse.getAccounts();
         if( accounts != null && accounts.size() > 0){
             AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, accounts);
             toot_lv_accounts.setAdapter(accountsListAdapter);

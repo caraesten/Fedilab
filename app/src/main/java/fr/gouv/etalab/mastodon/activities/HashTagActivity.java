@@ -21,7 +21,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
@@ -33,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
-import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -139,17 +138,18 @@ public class HashTagActivity extends AppCompatActivity implements OnRetrieveFeed
     }
 
     @Override
-    public void onRetrieveFeeds(List<Status> statuses, Error error) {
+    public void onRetrieveFeeds(APIResponse apiResponse) {
 
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
-        if( error != null){
+        if( apiResponse.getError() != null){
             final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
-                Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
+        List<Status> statuses = apiResponse.getStatuses();
         if( firstLoad && (statuses == null || statuses.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else

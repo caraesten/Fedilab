@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -25,6 +26,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.List;
+
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveDeveloperAccountsAsyncTask;
+import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
 
@@ -33,7 +41,10 @@ import mastodon.etalab.gouv.fr.mastodon.R;
  * About activity
  */
 
-public class AboutActivity extends AppCompatActivity {
+public class AboutActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface {
+
+    private Button about_developer;
+
     @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +59,7 @@ public class AboutActivity extends AppCompatActivity {
             about_version.setText(getResources().getString(R.string.about_vesrion, version));
         } catch (PackageManager.NameNotFoundException ignored) {}
 
-        Button about_developer = (Button) findViewById(R.id.about_developer);
+        about_developer = (Button) findViewById(R.id.about_developer);
         Button about_code = (Button) findViewById(R.id.about_code);
         Button about_license = (Button) findViewById(R.id.about_license);
 
@@ -59,14 +70,15 @@ public class AboutActivity extends AppCompatActivity {
                startActivity(browserIntent);
            }
         });
+        if(Helper.isLoggedIn(getApplicationContext())) {
+            about_developer.setEnabled(false);
+            new RetrieveDeveloperAccountsAsyncTask(getApplicationContext(),AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
         about_developer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AboutActivity.this, ShowAccountActivity.class);
-                Bundle b = new Bundle();
-                b.putString("accountId", "2416");
-                intent.putExtras(b);
-                startActivity(intent);
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://mastodon.etalab.gouv.fr/@tschneider"));
+                startActivity(browserIntent);
             }
         });
         about_license.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +99,25 @@ public class AboutActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onRetrieveSearchAccounts(APIResponse apiResponse) {
+        about_developer.setEnabled(true);
+        final List<Account> accounts = apiResponse.getAccounts();
+        if( accounts != null && accounts.size() > 0 && accounts.get(0) != null) {
+            about_developer.setOnClickListener(null);
+            about_developer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(AboutActivity.this, ShowAccountActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("accountId", accounts.get(0).getId());
+                    intent.putExtras(b);
+                    startActivity(intent);
+                }
+            });
         }
     }
 }

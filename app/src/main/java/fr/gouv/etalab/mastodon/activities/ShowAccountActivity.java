@@ -105,9 +105,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_account);
 
-
-
-
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         imageLoader = ImageLoader.getInstance();
         statuses = new ArrayList<>();

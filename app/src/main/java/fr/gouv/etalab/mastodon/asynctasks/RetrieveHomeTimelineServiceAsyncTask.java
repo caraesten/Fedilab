@@ -16,10 +16,8 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
-
-import java.util.List;
-
 import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveHomeTimelineServiceInterface;
 
 /**
@@ -30,13 +28,12 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveHomeTimelineServiceInterface
 public class RetrieveHomeTimelineServiceAsyncTask extends AsyncTask<Void, Void, Void> {
 
     private Context context;
-    private List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses;
+    private APIResponse apiResponse;
     private String since_id;
     private String acct, userId;
     private OnRetrieveHomeTimelineServiceInterface listener;
     private String instance;
     private String token;
-    private API api;
 
     public RetrieveHomeTimelineServiceAsyncTask(Context context, String instance, String token, String since_id, String acct, String userId, OnRetrieveHomeTimelineServiceInterface onRetrieveHomeTimelineServiceInterface){
         this.context = context;
@@ -50,14 +47,14 @@ public class RetrieveHomeTimelineServiceAsyncTask extends AsyncTask<Void, Void, 
 
     @Override
     protected Void doInBackground(Void... params) {
-        api = new API(context, instance, token);
-        statuses = api.getHomeTimelineSinceId(since_id);
+        API api = new API(context, instance, token);
+        apiResponse = api.getHomeTimelineSinceId(since_id);
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveHomeTimelineService(statuses, acct, userId, api.getError());
+        listener.onRetrieveHomeTimelineService(apiResponse, acct, userId);
     }
 
 }

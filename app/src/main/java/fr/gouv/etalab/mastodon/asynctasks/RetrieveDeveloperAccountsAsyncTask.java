@@ -18,49 +18,35 @@ import android.content.Context;
 import android.os.AsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveNotificationsInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
 
 
 /**
- * Created by Thomas on 28/04/2017.
- * Retrieves notifications on the instance
+ * Created by Thomas on 03/06/2017.
+ * Retrieves developer from search (ie: starting with @ when writing a toot)
  */
 
-public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> {
+public class RetrieveDeveloperAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     private Context context;
     private APIResponse apiResponse;
-    private String max_id;
-    private String acct, userId;
-    private OnRetrieveNotificationsInterface listener;
-    private String instance;
-    private String token;
+    private OnRetrieveSearcAccountshInterface listener;
+    private API api;
 
-
-    public RetrieveNotificationsAsyncTask(Context context, String instance, String token, String max_id, String acct, String userId, OnRetrieveNotificationsInterface onRetrieveNotificationsInterface){
+    public RetrieveDeveloperAccountsAsyncTask(Context context, OnRetrieveSearcAccountshInterface onRetrieveSearcAccountshInterface){
         this.context = context;
-        this.max_id = max_id;
-        this.listener = onRetrieveNotificationsInterface;
-        this.acct = acct;
-        this.instance = instance;
-        this.userId = userId;
-        this.token = token;
+        this.listener = onRetrieveSearcAccountshInterface;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-
-        API api = new API(context, instance, token);
-        if( acct == null)
-            apiResponse = api.getNotifications(max_id);
-        else
-            apiResponse = api.getNotificationsSince(max_id);
+        api = new API(context);
+        apiResponse = api.searchDeveloper();
         return null;
     }
-
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveNotifications(apiResponse, acct, userId);
+        listener.onRetrieveSearchAccounts(apiResponse);
     }
 
 }

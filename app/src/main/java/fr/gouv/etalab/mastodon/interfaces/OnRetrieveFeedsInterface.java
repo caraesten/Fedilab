@@ -14,16 +14,12 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.interfaces;
 
-
-import java.util.List;
-
-import fr.gouv.etalab.mastodon.client.Entities.Error;
-import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 
 /**
  * Created by Thomas on 24/04/2017.
  * Interface when status have been retrieved
  */
 public interface OnRetrieveFeedsInterface {
-    void onRetrieveFeeds(List<Status> statuses, Error error);
+    void onRetrieveFeeds(APIResponse apiResponse);
 }

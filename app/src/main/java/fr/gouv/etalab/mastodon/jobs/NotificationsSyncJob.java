@@ -24,7 +24,6 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobManager;
 import com.evernote.android.job.JobRequest;
@@ -39,7 +38,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
-import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -110,6 +109,9 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
         //User disagree with all notifications
         if( !notif_follow && !notif_add && !notif_ask && !notif_mention && !notif_share)
             return; //Nothing is done
+        //No account connected, the service is stopped
+        if(!Helper.isLoggedIn(getContext()))
+            return;
         //If WIFI only and on WIFI OR user defined any connections to use the service.
         if(!sharedpreferences.getBoolean(Helper.SET_WIFI_ONLY, false) || Helper.isOnWIFI(getContext())) {
             List<Account> accounts = new AccountDAO(getContext(),db).getAllAccount();
@@ -119,7 +121,8 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
             //Retrieve users in db that owner has.
             for (Account account: accounts) {
                 String max_id = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId(), null);
-                notificationId = (int) Math.round(Double.parseDouble(account.getId())/100) + 1;
+                long notif_id = Long.parseLong(account.getId());
+                notificationId = ((notif_id + 1) > 2147483647 )?(int)(2147483647 - notif_id - 1):(int)(notif_id + 1);
                 new RetrieveNotificationsAsyncTask(getContext(), account.getInstance(), account.getToken(), max_id, account.getAcct(), account.getId(), NotificationsSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
@@ -128,8 +131,10 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
 
 
     @Override
-    public void onRetrieveNotifications(List<Notification> notifications, String acct, String userId, Error error) {
-        if( error != null || notifications == null || notifications.size() == 0)
+    public void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId) {
+
+        List<Notification> notifications = apiResponse.getNotifications();
+        if( apiResponse.getError() != null || notifications == null || notifications.size() == 0)
             return;
         Bitmap icon_notification = null;
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -221,11 +226,12 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
             intent.putExtra(INTENT_ACTION, NOTIFICATION_INTENT);
             intent.putExtra(PREF_KEY_ID, userId);
-            notify_user(getContext(), intent, notificationId, icon_notification,title,message);
+            if( max_id != null)
+                notify_user(getContext(), intent, notificationId, icon_notification,title,message);
         }
 
         SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notifications.get(0).getId());
+        editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, apiResponse.getMax_id());
         editor.apply();
 
     }

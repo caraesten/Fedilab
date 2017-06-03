@@ -15,15 +15,12 @@
 package fr.gouv.etalab.mastodon.interfaces;
 
 
-import java.util.List;
-
-import fr.gouv.etalab.mastodon.client.Entities.Error;
-import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 
 /**
  * Created by Thomas on 20/05/2017.
  * Interface when home timeline toots have been retrieved
  */
 public interface OnRetrieveHomeTimelineServiceInterface {
-    void onRetrieveHomeTimelineService(List<Status> statuses, String acct, String userId, Error error);
+    void onRetrieveHomeTimelineService(APIResponse apiResponse, String acct, String userId);
 }

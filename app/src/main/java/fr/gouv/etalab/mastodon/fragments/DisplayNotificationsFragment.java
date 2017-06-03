@@ -31,8 +31,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -55,7 +55,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private Context context;
     private AsyncTask<Void, Void, Void> asyncTask;
     private NotificationsListAdapter notificationsListAdapter;
-    private String max_id = null;
+    private String max_id;
     private List<Notification> notifications;
     private RelativeLayout mainLoader, nextElementLoader, textviewNoAction;
     private boolean firstLoad;
@@ -66,7 +66,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
-
+        max_id = null;
         context = getContext();
         firstLoad = true;
         flag_loading = true;
@@ -147,26 +147,23 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
 
 
     @Override
-    public void onRetrieveNotifications(List<Notification> notifications, String acct, String userId, Error error) {
+    public void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId) {
 
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
-        if( error != null){
+        if( apiResponse.getError() != null){
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
-                Toast.makeText(getContext(), error.getError(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
+        List<Notification> notifications = apiResponse.getNotifications();
         if( firstLoad && (notifications == null || notifications.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
             textviewNoAction.setVisibility(View.GONE);
-        if( notifications != null && notifications.size() > 1)
-            max_id =notifications.get(notifications.size()-1).getId();
-        else
-            max_id = null;
-
+        max_id = apiResponse.getMax_id();
 
         if( notifications != null) {
             for(Notification tmpNotification: notifications){

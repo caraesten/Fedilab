@@ -282,6 +282,9 @@ public class MainActivity extends AppCompatActivity
         }else if(id == R.id.action_about){
             Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
             startActivity(intent);
+        }else if(id == R.id.action_privacy){
+            Intent intent = new Intent(getApplicationContext(), PrivacyActivity.class);
+            startActivity(intent);
         }else if(id == R.id.action_search){
 
             if( toolbar.getChildCount() > 0){

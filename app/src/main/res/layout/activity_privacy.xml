@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2017 Thomas Schneider
+
+    This file is a part of Mastodon Etalab for mastodon.etalab.gouv.fr
+
+    This program is free software; you can redistribute it and/or modify it under the terms of the
+    GNU General Public License as published by the Free Software Foundation; either version 3 of the
+    License, or (at your option) any later version.
+
+    Mastodon Etalab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+    the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+    Public License for more details.
+
+    You should have received a copy of the GNU General Public License along with Thomas Schneider; if not,
+    see <http://www.gnu.org/licenses>.
+-->
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical">
+        <!-- App authorizations -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="@dimen/fab_margin"
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
+
+            <!-- APPS AUTHORIZATIONS TITLE -->
+            <TextView
+                android:text="@string/privacy_authorizations_title"
+                android:background="@drawable/shape_border_bottom_settings"
+                android:paddingBottom="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <!-- APPS AUTHORIZATIONS CONTENT -->
+            <TextView
+                android:text="@string/privacy_authorizations"
+                android:autoLink="web"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- API authorizations -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="@dimen/fab_margin"
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
+
+            <!-- API AUTHORIZATIONS TITLE -->
+            <TextView
+                android:text="@string/privacy_API_authorizations_title"
+                android:background="@drawable/shape_border_bottom_settings"
+                android:paddingBottom="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <!-- API AUTHORIZATIONS CONTENT -->
+            <TextView
+                android:text="@string/privacy_API_authorizations"
+                android:autoLink="web"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
