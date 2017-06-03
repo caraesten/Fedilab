@@ -131,11 +131,15 @@ public class SearchListAdapter extends BaseAdapter {
                 holder.status_toot_date = (TextView) v.findViewById(R.id.status_toot_date);
                 holder.status_reblog_user = (TextView) v.findViewById(R.id.status_reblog_user);
                 holder.main_container = (LinearLayout) v.findViewById(R.id.main_container);
+                holder.status_search_title = (TextView) v.findViewById(R.id.status_search_title);
                 v.setTag(holder);
             } else {
                 holder = (ViewHolderStatus) v.getTag();
             }
-
+            if( isFirstTypeItem(type, position) )
+                holder.status_search_title.setVisibility(View.VISIBLE);
+            else
+                holder.status_search_title.setVisibility(View.GONE);
             final float scale = context.getResources().getDisplayMetrics().density;
             if( !status.getIn_reply_to_account_id().equals("null") || !status.getIn_reply_to_id().equals("null") ){
                 Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_reply);
@@ -220,12 +224,16 @@ public class SearchListAdapter extends BaseAdapter {
                 holder.account_sc = (TextView) v.findViewById(R.id.account_sc);
                 holder.account_fgc = (TextView) v.findViewById(R.id.account_fgc);
                 holder.account_frc = (TextView) v.findViewById(R.id.account_frc);
-
+                holder.account_search_title = (TextView) v.findViewById(R.id.account_search_title);
                 v.setTag(holder);
             } else {
                 holder = (ViewHolderAccounts) v.getTag();
             }
 
+            if( isFirstTypeItem(type, position) )
+                holder.account_search_title.setVisibility(View.VISIBLE);
+            else
+                holder.account_search_title.setVisibility(View.GONE);
 
             holder.account_dn.setText(account.getDisplay_name());
             holder.account_un.setText(String.format("@%s",account.getUsername()));
@@ -260,10 +268,15 @@ public class SearchListAdapter extends BaseAdapter {
                 v = layoutInflater.inflate(R.layout.drawer_tag, parent, false);
                 holder = new ViewHolderTag();
                 holder.tag_name = (TextView) v.findViewById(R.id.tag_name);
+                holder.tag_search_title = (TextView) v.findViewById(R.id.tag_search_title);
                 v.setTag(holder);
             } else {
                 holder = (ViewHolderTag) v.getTag();
             }
+            if( isFirstTypeItem(type, position) )
+                holder.tag_search_title.setVisibility(View.VISIBLE);
+            else
+                holder.tag_search_title.setVisibility(View.GONE);
             holder.tag_name.setText(String.format("#%s",tag));
             holder.tag_name.setPaintFlags(holder.tag_name.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             holder.tag_name.setOnClickListener(new View.OnClickListener() {
@@ -280,6 +293,15 @@ public class SearchListAdapter extends BaseAdapter {
         }
     }
 
+    private boolean isFirstTypeItem(int type, int position){
+        if( position == 0 && type == STATUS_TYPE)
+            return true;
+        else if( position == statuses.size() && type == ACCOUNT_TYPE )
+            return true;
+        else if( position ==  (statuses.size() + accounts.size()) && type == TAG_TYPE )
+            return true;
+        return false;
+    }
 
     private class ViewHolderStatus {
         TextView status_content;
@@ -289,6 +311,7 @@ public class SearchListAdapter extends BaseAdapter {
         TextView status_toot_date;
         TextView status_reblog_user;
         LinearLayout main_container;
+        TextView status_search_title;
     }
 
 
@@ -300,9 +323,11 @@ public class SearchListAdapter extends BaseAdapter {
         TextView account_sc;
         TextView account_fgc;
         TextView account_frc;
+        TextView account_search_title;
     }
 
     private class ViewHolderTag {
         TextView tag_name;
+        TextView tag_search_title;
     }
 }

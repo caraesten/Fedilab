@@ -22,6 +22,7 @@
     <string name="email">Email</string>
     <string name="accounts">Comptes</string>
     <string name="toots">Pouets</string>
+    <string name="tags">Tags</string>
     <string name="token">Jeton</string>
     <string name="two_factor_authentification">Authentification en deux étapes ?</string>
     <string name="other_instance">Autre instance que mastodon.etalab.gouv.fr ?</string>
