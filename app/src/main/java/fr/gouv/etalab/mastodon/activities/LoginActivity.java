@@ -24,6 +24,8 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -87,6 +89,19 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //For other instances
+        TextView other_instance = (TextView) findViewById(R.id.other_instance);
+        other_instance.setPaintFlags(other_instance.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        other_instance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
+                intent.putExtra("addAccount", true);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         Bundle b = getIntent().getExtras();
         if(b != null)
             addAccount = b.getBoolean("addAccount", false);
@@ -106,6 +121,8 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         }
+        if( addAccount)
+            other_instance.setVisibility(View.GONE);
     }
 
     @Override
@@ -199,7 +216,9 @@ public class LoginActivity extends AppCompatActivity {
                 requestParams.add("scope"," read write follow");
                 client.setUserAgent(USER_AGENT);
                 try {
-                    client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
+                    MastalabSSLSocketFactory mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());
+                    mastalabSSLSocketFactory.setHostnameVerifier(MastalabSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+                    client.setSSLSocketFactory(mastalabSSLSocketFactory);
                     client.post("https://" + instance+ "/oauth/token", requestParams, new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -236,6 +255,29 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_login, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_about) {
+            Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
+            startActivity(intent);
+        }else if(id == R.id.action_privacy){
+            Intent intent = new Intent(getApplicationContext(), PrivacyActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

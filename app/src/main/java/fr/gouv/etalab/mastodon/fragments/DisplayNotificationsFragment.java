@@ -20,6 +20,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private Context context;
     private AsyncTask<Void, Void, Void> asyncTask;
     private NotificationsListAdapter notificationsListAdapter;
-    private String max_id = null;
+    private String max_id;
     private List<Notification> notifications;
     private RelativeLayout mainLoader, nextElementLoader, textviewNoAction;
     private boolean firstLoad;
@@ -66,7 +67,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
-
+        max_id = null;
         context = getContext();
         firstLoad = true;
         flag_loading = true;

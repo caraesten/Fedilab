@@ -6,6 +6,7 @@
 
     <string name="action_settings">Paramètres</string>
     <string name="action_about">A propos</string>
+    <string name="action_privacy">Confidentialité</string>
     <string name="action_logout">Déconnexion</string>
 
     <string name="login">Connexion</string>
@@ -23,10 +24,12 @@
     <string name="toots">Pouets</string>
     <string name="token">Jeton</string>
     <string name="two_factor_authentification">Authentification en deux étapes ?</string>
+    <string name="other_instance">Autre instance que mastodon.etalab.gouv.fr ?</string>
     <string name="no_result">Aucun résultat !</string>
     <string name="instance">Instance</string>
     <string name="toast_account_changed">Utilisation du compte %1$s</string>
     <string name="add_account">Ajouter un compte</string>
+    <string name="clipboard">Le contenu du pouet a été copié dans le presse-papier</string>
     <!--- Menu -->
     <string name="home_menu">Accueil</string>
     <string name="home_timeline">Accueil</string>
@@ -61,15 +64,18 @@
         <item>Masquer</item>
         <item>Bloquer</item>
         <item>Signaler</item>
+        <item>Copier</item>
     </string-array>
     <string-array name="more_action_owner">
         <item>Supprimer</item>
+        <item>Copier</item>
     </string-array>
 
     <string-array name="more_action_confirm">
         <item>Masquer ce compte ?</item>
         <item>Bloquer ce compte ?</item>
         <item>Signaler ce pouet ?</item>
+        <item>null</item> <!-- Ugly hack to fix confirm box-->
     </string-array>
 
 
@@ -218,6 +224,26 @@
     <string name="request_sent">Demande envoyée</string>
     <string name="followed_by">Vous suit</string>
 
-
     <string name="action_search">Recherche</string>
+
+
+
+    <!-- PRIVACY -->
+    <string name="privacy_authorizations_title">Autorisations de l\'application</string>
+    <string name="privacy_authorizations">
+        - <b>ACCESS_NETWORK_STATE</b> : Utilisée pour savoir si l\'appareil est connecté au WIFI.\n
+        - <b>INTERNET</b> : Utilisée pour les requêtes vers l\'instance.\n
+        - <b>WRITE_EXTERNAL_STORAGE</b> : Utilisée pour télécharger les médias / déplacer sur la carte SD.\n
+        - <b>READ_EXTERNAL_STORAGE</b> : Utilisée pour ajouter des médias aux pouets.\n
+        - <b>BOOT_COMPLETED</b> : Utilisée pour lancer le service de notifications quand l\'appareil démarre.\n
+        - <b>WAKE_LOCK</b> : Utilisée lors du service de notifications.\n
+    </string>
+
+    <string name="privacy_API_authorizations_title">Autorisations de l\'API</string>
+    <string name="privacy_API_authorizations">
+        - <b>Read</b> : Lire les données du compte.\n
+        - <b>Write</b> : Envoyer des messages et attacher des médias aux messages.\n
+        - <b>Follow</b> : S\'abonner, se désabonner, bloquer, débloquer.\n\n
+        <b>&#9888; Ces actions ne sont réalisées qu\'à la demande de l\'utilisateur.</b>
+    </string>
 </resources>

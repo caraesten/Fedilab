@@ -851,6 +851,32 @@ public class API {
     }
 
     /**
+     * Retrieves Developer account when searching (ie: via @...) *synchronously*
+     *
+     * @return List<Account>
+     */
+    public List<Account> searchDeveloper() {
+        RequestParams params = new RequestParams();
+        params.add("q", "tschneider");
+        get("/accounts/search", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                accounts = new ArrayList<>();
+                account = parseAccountResponse(response);
+                accounts.add(account);
+            }
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                accounts = parseDeveloperResponse(response);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
+                setError(statusCode, error);
+            }
+        });
+        return accounts;
+    }
+    /**
      * Retrieves Accounts when searching (ie: via @...) *synchronously*
      *
      * @param query  String search
@@ -926,60 +952,10 @@ public class API {
         try {
             int i = 0;
             while (i < jsonArray.length() ){
-                Status status = new Status();
+
                 JSONObject resobj = jsonArray.getJSONObject(i);
-                status.setId(resobj.get("id").toString());
-                status.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
-                status.setIn_reply_to_id(resobj.get("in_reply_to_id").toString());
-                status.setIn_reply_to_account_id(resobj.get("in_reply_to_account_id").toString());
-                status.setSensitive(Boolean.getBoolean(resobj.get("sensitive").toString()));
-                status.setSpoiler_text(resobj.get("spoiler_text").toString());
-                status.setVisibility(resobj.get("visibility").toString());
-
-                //TODO: replace by the value
-                status.setApplication(new Application());
-
-                JSONArray arrayAttachement = resobj.getJSONArray("media_attachments");
-                List<Attachment> attachments = new ArrayList<>();
-                if( arrayAttachement != null){
-                    for(int j = 0 ; j < arrayAttachement.length() ; j++){
-                        JSONObject attObj = arrayAttachement.getJSONObject(j);
-                        Attachment attachment = new Attachment();
-                        attachment.setId(attObj.get("id").toString());
-                        attachment.setPreview_url(attObj.get("preview_url").toString());
-                        attachment.setRemote_url(attObj.get("remote_url").toString());
-                        attachment.setType(attObj.get("type").toString());
-                        attachment.setText_url(attObj.get("text_url").toString());
-                        attachment.setUrl(attObj.get("url").toString());
-                        attachments.add(attachment);
-                    }
-                }
-                List<Mention> mentions = new ArrayList<>();
-                JSONArray arrayMention = resobj.getJSONArray("mentions");
-                if( arrayMention != null){
-                    for(int j = 0 ; j < arrayMention.length() ; j++){
-                        JSONObject menObj = arrayMention.getJSONObject(j);
-                        Mention mention = new Mention();
-                        mention.setId(menObj.get("id").toString());
-                        mention.setUrl(menObj.get("url").toString());
-                        mention.setAcct(menObj.get("acct").toString());
-                        mention.setUsername(menObj.get("username").toString());
-                        mentions.add(mention);
-                    }
-                }
-                status.setMedia_attachments(attachments);
-                status.setMentions(mentions);
-                status.setAccount(parseAccountResponse(resobj.getJSONObject("account")));
-                status.setContent(resobj.get("content").toString());
-                status.setFavourites_count(Integer.valueOf(resobj.get("favourites_count").toString()));
-                status.setReblogs_count(Integer.valueOf(resobj.get("reblogs_count").toString()));
-                status.setReblogged(Boolean.valueOf(resobj.get("reblogged").toString()));
-                status.setFavourited(Boolean.valueOf(resobj.get("favourited").toString()));
-                try{
-                    status.setReblog(parseStatuses(resobj.getJSONObject("reblog")));
-                }catch (Exception ignored){}
+                Status status = parseStatuses(resobj);
                 i++;
-
                 statuses.add(status);
             }
 
@@ -1025,6 +1001,20 @@ public class API {
                 }
             }
             status.setMedia_attachments(attachments);
+            List<Mention> mentions = new ArrayList<>();
+            JSONArray arrayMention = resobj.getJSONArray("mentions");
+            if( arrayMention != null){
+                for(int j = 0 ; j < arrayMention.length() ; j++){
+                    JSONObject menObj = arrayMention.getJSONObject(j);
+                    Mention mention = new Mention();
+                    mention.setId(menObj.get("id").toString());
+                    mention.setUrl(menObj.get("url").toString());
+                    mention.setAcct(menObj.get("acct").toString());
+                    mention.setUsername(menObj.get("username").toString());
+                    mentions.add(mention);
+                }
+            }
+            status.setMentions(mentions);
             status.setAccount(parseAccountResponse(resobj.getJSONObject("account")));
             status.setContent(resobj.get("content").toString());
             status.setFavourites_count(Integer.valueOf(resobj.get("favourites_count").toString()));
@@ -1082,26 +1072,38 @@ public class API {
         try {
             int i = 0;
             while (i < jsonArray.length() ) {
-                Account account = new Account();
                 JSONObject resobj = jsonArray.getJSONObject(i);
-                account.setId(resobj.get("id").toString());
-                account.setUsername(resobj.get("username").toString());
-                account.setAcct(resobj.get("acct").toString());
-                account.setDisplay_name(resobj.get("display_name").toString());
-                account.setLocked(Boolean.parseBoolean(resobj.get("locked").toString()));
-                account.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
-                account.setFollowers_count(Integer.valueOf(resobj.get("followers_count").toString()));
-                account.setFollowing_count(Integer.valueOf(resobj.get("following_count").toString()));
-                account.setStatuses_count(Integer.valueOf(resobj.get("statuses_count").toString()));
-                account.setNote(resobj.get("note").toString());
-                account.setUrl(resobj.get("url").toString());
-                account.setAvatar(resobj.get("avatar").toString());
-                account.setAvatar_static(resobj.get("avatar_static").toString());
-                account.setHeader(resobj.get("header").toString());
-                account.setHeader_static(resobj.get("header_static").toString());
+                Account account = parseAccountResponse(resobj);
                 accounts.add(account);
                 i++;
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return accounts;
+    }
+
+
+    /**
+     * Parse json response for list of accounts which could contain the developer name
+     * @param jsonArray JSONArray
+     * @return List<Account>
+     */
+    private List<Account> parseDeveloperResponse(JSONArray jsonArray){
+
+        List<Account> accounts = new ArrayList<>();
+        try {
+            int i = 0;
+            Account account = null;
+            while (i < jsonArray.length() ) {
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                account = parseAccountResponse(resobj);
+                if( account.getAcct().contains(Helper.INSTANCE))
+                    accounts.add(account);
+                i++;
+            }
+            if( accounts.size() == 0)
+                accounts.add(account);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -1208,16 +1210,9 @@ public class API {
         try {
             int i = 0;
             while (i < jsonArray.length() ) {
-                Notification notification = new Notification();
+
                 JSONObject resobj = jsonArray.getJSONObject(i);
-                notification.setId(resobj.get("id").toString());
-                notification.setType(resobj.get("type").toString());
-                notification.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
-                notification.setAccount(parseAccountResponse(resobj.getJSONObject("account")));
-                try{
-                    notification.setStatus(parseStatuses(resobj.getJSONObject("status")));
-                }catch (Exception ignored){}
-                notification.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
+                Notification notification = parseNotificationResponse(resobj);
                 notifications.add(notification);
                 i++;
             }
@@ -1246,7 +1241,9 @@ public class API {
             client.setConnectTimeout(10000); //10s timeout
             client.setUserAgent(USER_AGENT);
             client.addHeader("Authorization", "Bearer "+prefKeyOauthTokenT);
-            client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
+            MastalabSSLSocketFactory mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());
+            mastalabSSLSocketFactory.setHostnameVerifier(MastalabSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+            client.setSSLSocketFactory(mastalabSSLSocketFactory);
             client.get(getAbsoluteUrl(action), params, responseHandler);
 
         } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
@@ -1261,7 +1258,9 @@ public class API {
             client.setConnectTimeout(10000); //10s timeout
             client.setUserAgent(USER_AGENT);
             client.addHeader("Authorization", "Bearer "+prefKeyOauthTokenT);
-            client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
+            MastalabSSLSocketFactory mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());
+            mastalabSSLSocketFactory.setHostnameVerifier(MastalabSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+            client.setSSLSocketFactory(mastalabSSLSocketFactory);
             client.post(getAbsoluteUrl(action), params, responseHandler);
         } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
             Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();
@@ -1274,7 +1273,9 @@ public class API {
             client.setConnectTimeout(10000); //10s timeout
             client.setUserAgent(USER_AGENT);
             client.addHeader("Authorization", "Bearer "+prefKeyOauthTokenT);
-            client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
+            MastalabSSLSocketFactory mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());
+            mastalabSSLSocketFactory.setHostnameVerifier(MastalabSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+            client.setSSLSocketFactory(mastalabSSLSocketFactory);
             client.delete(getAbsoluteUrl(action), params, responseHandler);
         } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
             Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();

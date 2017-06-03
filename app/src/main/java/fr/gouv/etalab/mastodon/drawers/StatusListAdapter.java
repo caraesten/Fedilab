@@ -16,6 +16,8 @@ package fr.gouv.etalab.mastodon.drawers;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,6 +34,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.text.util.Linkify;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -437,7 +440,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         final RelativeLayout loader = (RelativeLayout) view.findViewById(R.id.loader);
         switch (attachment.getType()){
             case "image": {
-                String url = attachment.getRemote_url();
+                String url = attachment.getPreview_url();
                 if(url == null || url.trim().equals(""))
                     url = attachment.getUrl();
                 final ImageView imageView = (ImageView) view.findViewById(R.id.dialog_imageview);
@@ -666,20 +669,48 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 AlertDialog.Builder builderInner = new AlertDialog.Builder(context);
                 builderInner.setTitle(stringArrayConf[which]);
                 if( isOwner) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                        builderInner.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_COMPACT));
-                    else
-                        //noinspection deprecation
-                        builderInner.setMessage(Html.fromHtml(status.getContent()));
-                }else {
-                    if( which < 2 ){
-                        builderInner.setMessage(status.getAccount().getAcct());
-                    }else {
+                    if( which == 0) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                             builderInner.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_COMPACT));
                         else
                             //noinspection deprecation
                             builderInner.setMessage(Html.fromHtml(status.getContent()));
+                    }else{
+                        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                        String content;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                            content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_COMPACT).toString();
+                        else
+                            //noinspection deprecation
+                            content = Html.fromHtml(status.getContent()).toString();
+                        ClipData clip = ClipData.newPlainText(Helper.CLIP_BOARD, content);
+                        clipboard.setPrimaryClip(clip);
+                        Toast.makeText(context,R.string.clipboard,Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                        return;
+                    }
+                }else {
+                    if( which < 2 ){
+                        builderInner.setMessage(status.getAccount().getAcct());
+                    }else if( which < 3) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                            builderInner.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_COMPACT));
+                        else
+                            //noinspection deprecation
+                            builderInner.setMessage(Html.fromHtml(status.getContent()));
+                    }else{
+                        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                        String content;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                            content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_COMPACT).toString();
+                        else
+                            //noinspection deprecation
+                            content = Html.fromHtml(status.getContent()).toString();
+                        ClipData clip = ClipData.newPlainText(Helper.CLIP_BOARD, content);
+                        clipboard.setPrimaryClip(clip);
+                        Toast.makeText(context,R.string.clipboard,Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                        return;
                     }
                 }
                 //Text for report

@@ -22,7 +22,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.widget.Toast;
 
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobManager;
@@ -64,6 +63,7 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
     static final String HOME_TIMELINE = "home_timeline";
     private int notificationId;
 
+
     @NonNull
     @Override
     protected Result onRunJob(Params params) {
@@ -93,11 +93,17 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
      * Task in background starts here.
      */
     private void callAsynchronousTask() {
+
+
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean notif_hometimeline = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, true);
+
         //User disagree with home timeline refresh
         if( !notif_hometimeline)
             return; //Nothing is done
+        //No account connected, the service is stopped
+        if(!Helper.isLoggedIn(getContext()))
+            return;
         SQLiteDatabase db = Sqlite.getInstance(getContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         //If an Internet connection and user agrees with notification refresh
         //If WIFI only and on WIFI OR user defined any connections to use the service.
@@ -109,7 +115,8 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
             //Retrieve users in db that owner has.
             for (Account account: accounts) {
                 String since_id = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + account.getId(), null);
-                notificationId = (int) Math.round(Double.parseDouble(account.getId())/100) + 2;
+                long notif_id = Long.parseLong(account.getId());
+                notificationId = ((notif_id + 2) > 2147483647 )?(int)(2147483647 - notif_id -2):(int)(notif_id + 2);
                 new RetrieveHomeTimelineServiceAsyncTask(getContext(), account.getInstance(), account.getToken(), since_id, account.getAcct(), account.getId(), HomeTimelineSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
             }
@@ -162,7 +169,9 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
         intent.putExtra(INTENT_ACTION, HOME_TIMELINE_INTENT);
         intent.putExtra(PREF_KEY_ID, userId);
-        notify_user(getContext(), intent, notificationId, icon_notification,title,message);
+
+        if( max_id != null)
+            notify_user(getContext(), intent, notificationId, icon_notification,title,message);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, statuses.get(0).getId());
         editor.apply();

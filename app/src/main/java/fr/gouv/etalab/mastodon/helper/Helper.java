@@ -110,6 +110,7 @@ public class Helper {
     public static final String WEBSITE = "website";
     public static final String LAST_NOTIFICATION_MAX_ID = "last_notification_max_id";
     public static final String LAST_HOMETIMELINE_MAX_ID = "last_hometimeline_max_id";
+    public static final String CLIP_BOARD = "clipboard";
     //Notifications
     public static final int NOTIFICATION_INTENT = 1;
     public static final int HOME_TIMELINE_INTENT = 2;
@@ -418,6 +419,7 @@ public class Helper {
         // prepare intent which is triggered if the user click on the notification
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         PendingIntent pIntent = PendingIntent.getActivity(context, notificationId, intent, PendingIntent.FLAG_ONE_SHOT);
+
         RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         // build notification
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)

@@ -47,7 +47,9 @@ public class OauthClient {
         try {
             client.setConnectTimeout(10000); //10s timeout
             client.setUserAgent(USER_AGENT);
-            client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
+            MastalabSSLSocketFactory mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());
+            mastalabSSLSocketFactory.setHostnameVerifier(MastalabSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+            client.setSSLSocketFactory(mastalabSSLSocketFactory);
             client.get(getAbsoluteUrl(action), params, responseHandler);
         } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
             e.printStackTrace();
@@ -58,7 +60,9 @@ public class OauthClient {
         try {
             client.setConnectTimeout(10000); //10s timeout
             client.setUserAgent(USER_AGENT);
-            client.setSSLSocketFactory(new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore()));
+            MastalabSSLSocketFactory mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());
+            mastalabSSLSocketFactory.setHostnameVerifier(MastalabSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+            client.setSSLSocketFactory(mastalabSSLSocketFactory);
             client.post(getAbsoluteUrl(action), params, responseHandler);
         } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
             e.printStackTrace();
