@@ -7,8 +7,8 @@ android {
         applicationId "fr.gouv.etalab.mastodon"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 14
-        versionName "1.1.7"
+        versionCode 15
+        versionName "1.1.8"
     }
     buildTypes {
         release {
@@ -24,7 +24,6 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.loopj.android:android-async-http:1.4.9'
-    compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile 'com.evernote:android-job:1.1.10'
 }

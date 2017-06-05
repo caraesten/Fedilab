@@ -24,6 +24,33 @@
         android:layout_height="wrap_content"
         xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical">
+
+        <!-- General -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="@dimen/fab_margin"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
+
+            <!-- PRIVACY TITLE -->
+            <TextView
+                android:text="@string/privacy_API_title"
+                android:background="@drawable/shape_border_bottom_settings"
+                android:paddingBottom="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <!-- PRIVACY CONTENT -->
+            <TextView
+                android:text="@string/privacy_API"
+                android:autoLink="web"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
         <!-- App authorizations -->
         <LinearLayout
             android:layout_width="match_parent"

@@ -18,4 +18,7 @@
     <color name="light_grey">#E0E0E0</color>
     <color name="darkicon">#424242</color>
     <color name="yellowicon">#FDD835</color>
+
+
+    <color name="background_image">#282c37</color>
 </resources>

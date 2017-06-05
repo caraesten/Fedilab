@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -71,6 +72,7 @@ public class API {
     private int tootPerPage, accountPerPage, notificationPerPage;
     private int actionCode;
     private String instance;
+    private Instance instanceEntity;
     private String prefKeyOauthTokenT;
     private APIResponse apiResponse;
     private Error APIError;
@@ -120,6 +122,57 @@ public class API {
             this.prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         apiResponse = new APIResponse();
         APIError = null;
+    }
+
+
+    /***
+     * Get info on the current Instance *synchronously*
+     * @return APIResponse
+     */
+    public APIResponse getInstance() {
+        get("/instance", null, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                instanceEntity = parseInstance(response);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
+                setError(statusCode, error);
+            }
+        });
+        apiResponse.setInstance(instanceEntity);
+        return apiResponse;
+    }
+
+    /***
+     * Update credential of the authenticated user *synchronously*
+     * @return APIResponse
+     */
+    public APIResponse updateCredential(String display_name, String note, String avatar, String header) {
+        RequestParams requestParams = new RequestParams();
+
+        if( display_name != null)
+            requestParams.add("display_name",display_name);
+        if( note != null)
+            requestParams.add("note",note);
+        if( avatar != null)
+            requestParams.add("avatar",avatar);
+        if( header != null)
+            requestParams.add("header",header);
+        patch("/accounts/update_credentials", requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            }
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
+                setError(statusCode, error);
+            }
+        });
+        return apiResponse;
     }
 
 
@@ -215,7 +268,7 @@ public class API {
      * Retrieves status for the account *synchronously*
      *
      * @param accountId String Id of the account
-     * @return List<Status>
+     * @return APIResponse
      */
     public APIResponse getStatus(String accountId) {
         return getStatus(accountId, false, false, null, null, tootPerPage);
@@ -226,7 +279,7 @@ public class API {
      *
      * @param accountId String Id of the account
      * @param max_id    String id max
-     * @return List<Status>
+     * @return APIResponse
      */
     public APIResponse getStatus(String accountId, String max_id) {
         return getStatus(accountId, false, false, max_id, null, tootPerPage);
@@ -288,7 +341,7 @@ public class API {
      * Retrieves one status *synchronously*
      *
      * @param statusId  String Id of the status
-     * @return List<Status>
+     * @return APIResponse
      */
     public APIResponse getStatusbyId(String statusId) {
         statuses = new ArrayList<>();
@@ -341,7 +394,7 @@ public class API {
     /**
      * Retrieves home timeline for the account *synchronously*
      * @param max_id   String id max
-     * @return List<Status>
+     * @return APIResponse
      */
     public APIResponse getHomeTimeline( String max_id) {
         return getHomeTimeline(max_id, null, tootPerPage);
@@ -349,7 +402,7 @@ public class API {
 
     /**
      * Retrieves home timeline for the account since an Id value *synchronously*
-     * @return List<Status>
+     * @return APIResponse
      */
     public APIResponse getHomeTimelineSinceId(String since_id) {
         return getHomeTimeline(null, since_id, tootPerPage);
@@ -402,7 +455,7 @@ public class API {
      * Retrieves public timeline for the account *synchronously*
      * @param local boolean only local timeline
      * @param max_id String id max
-     * @return List<Status>
+     * @return APIResponse
      */
     public APIResponse getPublicTimeline(boolean local, String max_id){
         return getPublicTimeline(local, max_id, null, tootPerPage);
@@ -457,7 +510,7 @@ public class API {
      * @param tag String
      * @param local boolean only local timeline
      * @param max_id String id max
-     * @return List<Status>
+     * @return APIResponse
      */
     public APIResponse getPublicTimelineTag(String tag, boolean local, String max_id){
         return getPublicTimelineTag(tag, local, max_id, null, tootPerPage);
@@ -513,7 +566,7 @@ public class API {
     /**
      * Retrieves muted users by the authenticated account *synchronously*
      * @param max_id String id max
-     * @return List<Status>
+     * @return APIResponse
      */
     public APIResponse getMuted(String max_id){
         return getAccounts("/mutes", max_id, null, accountPerPage);
@@ -522,7 +575,7 @@ public class API {
     /**
      * Retrieves blocked users by the authenticated account *synchronously*
      * @param max_id String id max
-     * @return List<Status>
+     * @return APIResponse
      */
     public APIResponse getBlocks(String max_id){
         return getAccounts("/blocks", max_id, null, accountPerPage);
@@ -533,7 +586,7 @@ public class API {
      * Retrieves following for the account specified by targetedId  *synchronously*
      * @param targetedId String targetedId
      * @param max_id String id max
-     * @return List<Status>
+     * @return APIResponse
      */
     public APIResponse getFollowing(String targetedId, String max_id){
         return getAccounts(String.format("/accounts/%s/following",targetedId),max_id, null, accountPerPage);
@@ -543,7 +596,7 @@ public class API {
      * Retrieves followers for the account specified by targetedId  *synchronously*
      * @param targetedId String targetedId
      * @param max_id String id max
-     * @return List<Status>
+     * @return APIResponse
      */
     public APIResponse getFollowers(String targetedId, String max_id){
         return getAccounts(String.format("/accounts/%s/followers",targetedId),max_id, null, accountPerPage);
@@ -595,7 +648,7 @@ public class API {
     /**
      * Retrieves favourited status for the authenticated account *synchronously*
      * @param max_id String id max
-     * @return List<Status>
+     * @return APIResponse
      */
     public APIResponse getFavourites(String max_id){
         return getFavourites(max_id, null, tootPerPage);
@@ -788,7 +841,7 @@ public class API {
     /**
      * Retrieves notifications for the authenticated account since an id*synchronously*
      * @param since_id String since max
-     * @return List<Notification>
+     * @return APIResponse
      */
     public APIResponse getNotificationsSince(String since_id){
         return getNotifications(null, since_id, notificationPerPage);
@@ -797,7 +850,7 @@ public class API {
     /**
      * Retrieves notifications for the authenticated account *synchronously*
      * @param max_id String id max
-     * @return List<Notification>
+     * @return APIResponse
      */
     public APIResponse getNotifications(String max_id){
         return getNotifications(max_id, null, notificationPerPage);
@@ -899,7 +952,7 @@ public class API {
     /**
      * Retrieves Developer account when searching (ie: via @...) *synchronously*
      *
-     * @return List<Account>
+     * @return APIResponse
      */
     public APIResponse searchDeveloper() {
         RequestParams params = new RequestParams();
@@ -931,7 +984,7 @@ public class API {
      * Retrieves Accounts when searching (ie: via @...) *synchronously*
      *
      * @param query  String search
-     * @return List<Account>
+     * @return APIResponse
      */
     public APIResponse searchAccounts(String query) {
 
@@ -1086,6 +1139,25 @@ public class API {
         return status;
     }
 
+    /**
+     * Parse json response an unique instance
+     * @param resobj JSONObject
+     * @return Instance
+     */
+    private Instance parseInstance(JSONObject resobj){
+
+        Instance instance = new Instance();
+        try {
+            instance.setUri(resobj.get("uri").toString());
+            instance.setTitle(resobj.get("title").toString());
+            instance.setDescription(resobj.get("description").toString());
+            instance.setEmail(resobj.get("email").toString());
+            instance.setVersion(resobj.get("version").toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return instance;
+    }
 
     /**
      * Parse json response an unique account
@@ -1334,6 +1406,21 @@ public class API {
             mastalabSSLSocketFactory.setHostnameVerifier(MastalabSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
             client.setSSLSocketFactory(mastalabSSLSocketFactory);
             client.delete(getAbsoluteUrl(action), params, responseHandler);
+        } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
+            Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+    }
+
+    private void patch(String action, RequestParams params, AsyncHttpResponseHandler responseHandler){
+        try {
+            client.setConnectTimeout(10000); //10s timeout
+            client.setUserAgent(USER_AGENT);
+            client.addHeader("Authorization", "Bearer "+prefKeyOauthTokenT);
+            MastalabSSLSocketFactory mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());
+            mastalabSSLSocketFactory.setHostnameVerifier(MastalabSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+            client.setSSLSocketFactory(mastalabSSLSocketFactory);
+            client.patch(getAbsoluteUrl(action), params, responseHandler);
         } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
             Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();
             e.printStackTrace();

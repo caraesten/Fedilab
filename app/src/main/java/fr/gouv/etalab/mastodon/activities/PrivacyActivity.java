@@ -34,6 +34,7 @@ public class PrivacyActivity extends AppCompatActivity {
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_privacy);
+        setTitle(getString(R.string.action_privacy));
     }
 
     @Override

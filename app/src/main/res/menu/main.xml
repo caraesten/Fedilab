@@ -15,6 +15,10 @@
         android:title="@string/action_privacy"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_about_instance"
+        android:title="@string/action_about_instance"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_logout"
         android:title="@string/action_logout"
         app:showAsAction="never" />

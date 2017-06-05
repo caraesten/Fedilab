@@ -42,6 +42,7 @@ public class TabLayoutSettingsFragment extends Fragment {
         TabLayout tabLayout = (TabLayout) inflatedView.findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.notifications)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.optimization)));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.profile)));
         final ViewPager viewPager = (ViewPager) inflatedView.findViewById(R.id.viewpager);
 
         viewPager.setAdapter(new PagerAdapter
@@ -86,6 +87,8 @@ public class TabLayoutSettingsFragment extends Fragment {
                     return new SettingsNotificationsFragment();
                 case 1:
                     return new SettingsOptimizationFragment();
+                case 2:
+                    return new SettingsProfileFragment();
                 default:
                     return new SettingsNotificationsFragment();
             }
