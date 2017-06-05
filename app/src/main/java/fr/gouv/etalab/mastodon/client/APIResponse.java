@@ -20,6 +20,7 @@ public class APIResponse {
     private List<Notification> notifications = null;
     private fr.gouv.etalab.mastodon.client.Entities.Error error = null;
     private String since_id, max_id;
+    private Instance instance;
 
     public List<Account> getAccounts() {
         return accounts;
@@ -75,5 +76,13 @@ public class APIResponse {
 
     public void setSince_id(String since_id) {
         this.since_id = since_id;
+    }
+
+    public Instance getInstance() {
+        return instance;
+    }
+
+    public void setInstance(Instance instance) {
+        this.instance = instance;
     }
 }

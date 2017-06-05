@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2017 Thomas Schneider
+
+    This file is a part of Mastodon Etalab for mastodon.etalab.gouv.fr
+
+    This program is free software; you can redistribute it and/or modify it under the terms of the
+    GNU General Public License as published by the Free Software Foundation; either version 3 of the
+    License, or (at your option) any later version.
+
+    Mastodon Etalab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+    the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+    Public License for more details.
+
+    You should have received a copy of the GNU General Public License along with Thomas Schneider; if not,
+    see <http://www.gnu.org/licenses>.
+-->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background_image"
+    >
+    <ImageView
+        android:id="@+id/back_ground_image"
+        android:alpha="0.2"
+        android:layout_width="match_parent"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:layout_height="wrap_content"
+        tools:ignore="ContentDescription" />
+    <RelativeLayout
+        android:padding="@dimen/fab_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!-- Profile picture -->
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/dialog_profile_picture"
+            android:layout_width="80dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:layout_centerHorizontal="true"
+            android:layout_height="80dp"
+            tools:ignore="ContentDescription" />
+        <!-- Screen name -->
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/dialog_profile_picture"
+            android:layout_centerHorizontal="true"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:gravity="center_horizontal|top"
+            android:id="@+id/dialog_profile_name"
+            android:layout_width="match_parent"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:layout_height="wrap_content"
+            />
+        <!-- Description -->
+        <TextView
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/dialog_profile_name"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:id="@+id/dialog_profile_description"
+            android:minLines="4"
+            android:lines="4"
+            android:maxLines="5"
+            />
+    </RelativeLayout>
+
+
+</RelativeLayout>
+
+

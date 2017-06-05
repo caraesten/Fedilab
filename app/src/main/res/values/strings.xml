@@ -6,6 +6,7 @@
 
     <string name="action_settings">Paramètres</string>
     <string name="action_about">A propos</string>
+    <string name="action_about_instance">A propos de l\'instance</string>
     <string name="action_privacy">Confidentialité</string>
     <string name="action_logout">Déconnexion</string>
 
@@ -24,6 +25,7 @@
     <string name="toots">Pouets</string>
     <string name="tags">Tags</string>
     <string name="token">Jeton</string>
+    <string name="save">Sauvegarder</string>
     <string name="two_factor_authentification">Authentification en deux étapes ?</string>
     <string name="other_instance">Autre instance que mastodon.etalab.gouv.fr ?</string>
     <string name="no_result">Aucun résultat !</string>
@@ -31,6 +33,8 @@
     <string name="toast_account_changed">Utilisation du compte %1$s</string>
     <string name="add_account">Ajouter un compte</string>
     <string name="clipboard">Le contenu du pouet a été copié dans le presse-papier</string>
+    <string name="change">Changer</string>
+    <string name="choose_picture">Changer l\'image…</string>
     <!--- Menu -->
     <string name="home_menu">Accueil</string>
     <string name="home_timeline">Accueil</string>
@@ -45,9 +49,11 @@
     <string name="blocked_menu">Utilisateurs bloqués</string>
     <string name="notifications">Notifications</string>
     <string name="optimization">Optimisation</string>
+    <string name="profile">Profil</string>
     <string name="make_a_choice">Que souhaitez-vous faire ?</string>
     <string name="delete_account_title">Supprimer un compte</string>
     <string name="delete_account_message">Supprimer le compte %1$s de l\'application ?</string>
+    <string name="send_email">Envoyer un email</string>
 
     <!-- Status -->
     <string name="no_status">Aucun pouet à afficher !</string>
@@ -135,6 +141,8 @@
         <item>N\'afficher que pour les personnes mentionnées</item>
     </string-array>
 
+    <!-- Instance -->
+    <string name="instance_no_description">Aucune description !</string>
 
     <!-- About -->
     <string name="about_vesrion">Version %1$s</string>
@@ -190,6 +198,7 @@
     <string name="toast_error">Oups ! Une erreur s\'est produite !</string>
     <string name="toast_error_loading_account">Une erreur s\'est produite en chargeant le compte !</string>
     <string name="toast_error_login">Impossible de vous connecter !</string>
+    <string name="toast_update_credential_ok">Les données du profil ont été sauvegardées !</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimisation du chargement</string>
     <string name="set_toots_page">Nombre de pouets par chargement</string>
@@ -213,11 +222,18 @@
     <string name="set_wifi_only">Notifier en WIFI seulement</string>
     <string name="set_notif_silent">Utiliser le vibreur</string>
 
+    <string name="settings_title_profile">Modifier le profil</string>
+    <string name="set_profile_description">Présentation…</string>
+    <string name="set_save_changes">Enregistrer les modifications</string>
+    <string name="set_header_picture_overlay">Choisissez une image d\'entête</string>
+    <string name="note_no_space">Vous avez atteint les 160 caractères autorisés !</string>
+    <string name="username_no_space">Vous avez atteint les 30 caractères autorisés !</string>
+
     <string name="set_title_news">Actualités</string>
     <string name="set_notification_news">Notifier lors de nouveaux pouets sur la page d\'accueil</string>
     <string name="set_show_error_messages">Afficher les messages d\'erreur</string>
     <string name="action_follow">Suivre</string>
-    <string name="action_unfollow">Se désabonner</string>
+    <string name="action_unfollow">Se désabonner</string>s
     <string name="action_block">Bloquer</string>
     <string name="action_unblock">Débloquer</string>
     <string name="action_mute">Masquer</string>
