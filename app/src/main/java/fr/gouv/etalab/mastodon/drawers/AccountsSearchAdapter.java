@@ -29,6 +29,8 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.vdurmont.emoji.EmojiParser;
+
 import java.util.List;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -90,7 +92,7 @@ public class AccountsSearchAdapter extends BaseAdapter  {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.account_dn.setText(account.getDisplay_name());
+        holder.account_dn.setText(EmojiParser.parseToUnicode(account.getDisplay_name()));
         holder.account_un.setText(String.format("@%s",account.getUsername()));
         //Profile picture
         imageLoader.displayImage(account.getAvatar(), holder.account_pp, options);

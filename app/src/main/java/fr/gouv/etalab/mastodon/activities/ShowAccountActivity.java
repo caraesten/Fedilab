@@ -43,6 +43,7 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.vdurmont.emoji.EmojiParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -278,7 +279,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
         if( account != null){
             setTitle(account.getAcct());
-            account_dn.setText(account.getDisplay_name());
+            account_dn.setText(EmojiParser.parseToUnicode(account.getDisplay_name()));
             account_un.setText(account.getUsername());
             if( account.getAcct() != null && account.getAcct().equals(account.getUsername()))
                 account_ac.setVisibility(View.GONE);

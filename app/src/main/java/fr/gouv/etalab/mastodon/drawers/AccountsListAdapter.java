@@ -37,6 +37,7 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.vdurmont.emoji.EmojiParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -151,7 +152,7 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
                     holder.account_ds.setVisibility(View.VISIBLE);
             }
         });
-        holder.account_dn.setText(account.getDisplay_name());
+        holder.account_dn.setText(EmojiParser.parseToUnicode(account.getDisplay_name()));
         holder.account_un.setText(String.format("@%s",account.getUsername()));
         holder.account_ac.setText(account.getAcct());
         if( account.getDisplay_name().equals(account.getAcct()))

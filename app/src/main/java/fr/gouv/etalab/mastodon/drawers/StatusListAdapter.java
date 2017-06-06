@@ -55,6 +55,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.vdurmont.emoji.EmojiParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -208,7 +209,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }else {
             ppurl = status.getAccount().getAvatar();
             content = status.getContent();
-            displayName = status.getAccount().getDisplay_name();
+            displayName = EmojiParser.parseToUnicode(status.getAccount().getDisplay_name());
             username = status.getAccount().getUsername();
             holder.status_reblog_user.setVisibility(View.GONE);
             holder.status_account_displayname.setText(displayName);

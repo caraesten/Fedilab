@@ -34,6 +34,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.vdurmont.emoji.EmojiParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -167,7 +168,7 @@ public class SearchListAdapter extends BaseAdapter {
             final String content, displayName, username, ppurl;
             if( status.getReblog() != null){
                 content = status.getReblog().getContent();
-                displayName = status.getReblog().getAccount().getDisplay_name();
+                displayName = EmojiParser.parseToUnicode(status.getReblog().getAccount().getDisplay_name());
                 username = status.getReblog().getAccount().getUsername();
                 holder.status_reblog_user.setText(displayName + " " +String.format("@%s",username));
                 ppurl = status.getReblog().getAccount().getAvatar();
@@ -177,7 +178,7 @@ public class SearchListAdapter extends BaseAdapter {
             }else {
                 ppurl = status.getAccount().getAvatar();
                 content = status.getContent();
-                displayName = status.getAccount().getDisplay_name();
+                displayName = EmojiParser.parseToUnicode(status.getAccount().getDisplay_name());
                 username = status.getAccount().getUsername();
                 holder.status_reblog_user.setVisibility(View.GONE);
                 holder.status_account_displayname.setText(displayName);

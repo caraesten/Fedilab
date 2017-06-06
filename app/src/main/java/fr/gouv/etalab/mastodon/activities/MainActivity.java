@@ -202,6 +202,8 @@ public class MainActivity extends AppCompatActivity
     private boolean mamageNewIntent(Intent intent){
         if( intent == null || intent.getExtras() == null )
             return false;
+        String action = intent.getAction();
+        String type = intent.getType();
         Bundle extras = intent.getExtras();
         String userIdIntent;
         boolean matchingIntent = false;
@@ -226,6 +228,17 @@ public class MainActivity extends AppCompatActivity
                 if( navigationView.getMenu().findItem(R.id.nav_home) != null)
                     navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
                 matchingIntent = true;
+            }
+        }else if( Intent.ACTION_SEND.equals(action) && type != null ){
+            if ("text/plain".equals(type)) {
+                String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+                if (sharedText != null) {
+                    Intent intentToot = new Intent(getApplicationContext(), TootActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("sharedContent", sharedText);
+                    intentToot.putExtras(b);
+                    startActivity(intentToot);
+                }
             }
         }
         intent.replaceExtras(new Bundle());
