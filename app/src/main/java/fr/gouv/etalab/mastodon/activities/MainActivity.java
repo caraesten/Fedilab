@@ -141,6 +141,13 @@ public class MainActivity extends AppCompatActivity
         Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(prefKeyOauthTokenT);
         updateHeaderAccountInfo(MainActivity.this, account, headerLayout, imageLoader, options);
 
+        //Locked account can see follow request
+        if (account.isLocked()) {
+            navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);
+        } else {
+            navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
+        }
+
         LinearLayout owner_container = (LinearLayout) headerLayout.findViewById(R.id.owner_container);
         owner_container.setOnClickListener(new View.OnClickListener() {
             @Override

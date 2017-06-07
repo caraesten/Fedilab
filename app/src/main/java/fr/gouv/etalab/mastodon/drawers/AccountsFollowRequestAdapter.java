@@ -16,8 +16,12 @@ package fr.gouv.etalab.mastodon.drawers;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +39,7 @@ import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -101,10 +106,24 @@ public class AccountsFollowRequestAdapter extends BaseAdapter implements OnPostA
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+
+        holder.btn_authorize.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.green_1), PorterDuff.Mode.MULTIPLY);
+        holder.btn_reject.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.red_1), PorterDuff.Mode.MULTIPLY);
         holder.account_un.setText(String.format("@%s", account.getUsername()));
         //Profile picture
         imageLoader.displayImage(account.getAvatar(), holder.account_pp, options);
-
+        holder.account_pp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAccountDetails(account.getId());
+            }
+        });
+        holder.account_un.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAccountDetails(account.getId());
+            }
+        });
         holder.btn_authorize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,6 +137,14 @@ public class AccountsFollowRequestAdapter extends BaseAdapter implements OnPostA
             }
         });
         return convertView;
+    }
+
+    private void openAccountDetails(String userId){
+        Intent intent = new Intent(context, ShowAccountActivity.class);
+        Bundle b = new Bundle();
+        b.putString("accountId", userId);
+        intent.putExtras(b);
+        context.startActivity(intent);
     }
 
     @Override

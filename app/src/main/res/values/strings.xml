@@ -203,6 +203,7 @@
     <string name="toast_error_loading_account">Une erreur s\'est produite en chargeant le compte !</string>
     <string name="toast_error_login">Impossible de vous connecter !</string>
     <string name="toast_update_credential_ok">Les données du profil ont été sauvegardées !</string>
+    <string name="nothing_to_do">Aucune action ne peut être réalisée</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimisation du chargement</string>
     <string name="set_toots_page">Nombre de pouets par chargement</string>
@@ -241,6 +242,7 @@
     <string name="action_block">Bloquer</string>
     <string name="action_unblock">Débloquer</string>
     <string name="action_mute">Masquer</string>
+    <string name="action_no_action">Aucune action</string>
     <string name="action_unmute">Afficher</string>
     <string name="request_sent">Demande envoyée</string>
     <string name="followed_by">Vous suit</string>

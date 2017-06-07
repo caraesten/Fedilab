@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -224,7 +226,9 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         account_follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( doAction == action.FOLLOW){
+                if( doAction == action.NOTHING){
+                    Toast.makeText(getApplicationContext(), R.string.nothing_to_do, Toast.LENGTH_LONG).show();
+                }else if( doAction == action.FOLLOW){
                     account_follow.setEnabled(false);
                     new PostActionAsyncTask(getApplicationContext(), API.StatusAction.FOLLOW, accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }else if( doAction == action.UNFOLLOW){
@@ -323,11 +327,13 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
+        account_follow.setEnabled(true);
         if( relationship.isBlocking()){
             account_follow.setText(R.string.action_unblock);
             doAction = action.UNBLOCK;
         }else if( relationship.isRequested()){
             account_follow.setText(R.string.request_sent);
+            account_follow.getBackground().setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.MULTIPLY);
             doAction = action.NOTHING;
         }else if( relationship.isFollowing()){
             account_follow.setText(R.string.action_unfollow);
@@ -336,13 +342,12 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
             account_follow.setText(R.string.action_follow);
             doAction = action.FOLLOW;
         }else{
+            account_follow.setText(R.string.action_no_action);
+            account_follow.getBackground().setColorFilter(ContextCompat.getColor(this, R.color.red_1), PorterDuff.Mode.MULTIPLY);
             doAction = action.NOTHING;
         }
-        if( doAction == action.NOTHING){
-            account_follow.setEnabled(false);
-        }else {
-            account_follow.setEnabled(true);
-        }
+
+
 
         //The authenticated account is followed by the account
         if( relationship.isFollowed_by()){

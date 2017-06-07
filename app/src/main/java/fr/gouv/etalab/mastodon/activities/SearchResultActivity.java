@@ -99,7 +99,7 @@ public class SearchResultActivity extends AppCompatActivity implements OnRetriev
                 Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
-        if( results == null){
+        if( results == null || (results.getAccounts().size() == 0 && results.getStatuses().size() == 0 && results.getHashtags().size() == 0)){
             RelativeLayout no_result = (RelativeLayout) findViewById(R.id.no_result);
             no_result.setVisibility(View.VISIBLE);
             return;
