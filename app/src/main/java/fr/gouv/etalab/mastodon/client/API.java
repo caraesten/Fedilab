@@ -1151,7 +1151,7 @@ public class API {
             status.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
             status.setIn_reply_to_id(resobj.get("in_reply_to_id").toString());
             status.setIn_reply_to_account_id(resobj.get("in_reply_to_account_id").toString());
-            status.setSensitive(Boolean.getBoolean(resobj.get("sensitive").toString()));
+            status.setSensitive(Boolean.parseBoolean(resobj.get("sensitive").toString()));
             status.setSpoiler_text(resobj.get("spoiler_text").toString());
             status.setVisibility(resobj.get("visibility").toString());
 

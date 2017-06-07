@@ -248,7 +248,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
-        if( apiResponse.getError() != null){
+        //Discards 404 - error which can often happen due to toots which have been deleted
+        if( apiResponse.getError() != null && !apiResponse.getError().getError().startsWith("404 -")){
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)

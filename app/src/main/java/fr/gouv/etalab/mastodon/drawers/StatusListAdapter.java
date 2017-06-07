@@ -240,16 +240,19 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
 
         imageLoader.displayImage(ppurl, holder.status_account_profile, options);
-
         if( status.getMedia_attachments().size() < 1) {
             holder.status_document_container.setVisibility(View.GONE);
             holder.status_show_more.setVisibility(View.GONE);
         }else{
-            if(behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || ( behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi)){
+            //If medias are loaded without any conditions or if device is on wifi
+            if(! status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || ( behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi)) ){
                 loadAttachments(status);
                 holder.status_show_more.setVisibility(View.GONE);
                 status.setAttachmentShown(true);
             }else{
+                //Text depending if toots is sensitive or not
+                String textShowMore = (status.isSensitive())?context.getString(R.string.load_sensitive_attachment):context.getString(R.string.load_attachment);
+                holder.status_show_more.setText(textShowMore);
                 if( !status.isAttachmentShown() ) {
                     holder.status_show_more.setVisibility(View.VISIBLE);
                     holder.status_document_container.setVisibility(View.GONE);

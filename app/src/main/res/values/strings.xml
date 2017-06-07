@@ -135,6 +135,7 @@
     <string name="toot_visibility_tilte">Visibilité du pouet</string>
     <string name="toot_sent">Le pouet a été envoyé !</string>
     <string name="toot_reply_content_title">Vous répondez à ce pouet :</string>
+    <string name="toot_sensitive">Contenu sensible ?</string>
     <string-array name="toot_visibility">
         <item>Afficher dans les fils publics</item>
         <item>Ne pas afficher dans les fils publics</item>
@@ -201,6 +202,7 @@
     <string name="toast_unstatus">Le pouet a été supprimé !</string>
     <string name="toast_error">Oups ! Une erreur s\'est produite !</string>
     <string name="toast_error_loading_account">Une erreur s\'est produite en chargeant le compte !</string>
+    <string name="toast_error_search">Une erreur s\'est produite lors de la recherche !</string>
     <string name="toast_error_login">Impossible de vous connecter !</string>
     <string name="toast_update_credential_ok">Les données du profil ont été sauvegardées !</string>
     <string name="nothing_to_do">Aucune action ne peut être réalisée</string>
@@ -214,6 +216,7 @@
     <string name="set_attachment_ask">Demander</string>
     <string name="set_attachment_action">Charger les médias</string>
     <string name="load_attachment">Charger les images</string>
+    <string name="load_sensitive_attachment">Charger les images sensibles</string>
     <string name="set_display_reply">Afficher le message précédent lors d\'une réponse</string>
 
     <string name="settings_title_notifications">Gestion des notifications</string>
