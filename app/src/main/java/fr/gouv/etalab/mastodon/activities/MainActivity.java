@@ -50,6 +50,7 @@ import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
+import fr.gouv.etalab.mastodon.fragments.DisplayFollowRequestSentFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
@@ -147,7 +148,6 @@ public class MainActivity extends AppCompatActivity
                 menuAccounts(MainActivity.this);
             }
         });
-
         boolean matchingIntent = mamageNewIntent(getIntent());
         if (savedInstanceState == null && !matchingIntent) {
             navigationView.setCheckedItem(R.id.nav_home);
@@ -468,6 +468,12 @@ public class MainActivity extends AppCompatActivity
             fragmentTag = "NOTIFICATIONS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, notificationsFragment, fragmentTag).addToBackStack(fragmentTag).commit();
+        }else if( id == R.id.nav_follow_request){
+            toot.setVisibility(View.GONE);
+            DisplayFollowRequestSentFragment followRequestSentFragment = new DisplayFollowRequestSentFragment();
+            fragmentTag = "FOLLOW_REQUEST_SENT";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, followRequestSentFragment, fragmentTag).addToBackStack(fragmentTag).commit();
         }
 
 

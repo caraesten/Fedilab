@@ -90,6 +90,8 @@ public class API {
         UNFOLLOW,
         CREATESTATUS,
         UNSTATUS,
+        AUTHORIZE,
+        REJECT,
         REPORT
     }
 
@@ -294,7 +296,7 @@ public class API {
      * @param max_id          String id max
      * @param since_id        String since the id
      * @param limit           int limit  - max value 40
-     * @return List<Status>
+     * @return APIResponse
      */
     private APIResponse getStatus(String accountId, boolean onlyMedia,
                                   boolean exclude_replies, String max_id, String since_id, int limit) {
@@ -413,7 +415,7 @@ public class API {
      * @param max_id   String id max
      * @param since_id String since the id
      * @param limit    int limit  - max value 40
-     * @return List<Status>
+     * @return APIResponse
      */
     private APIResponse getHomeTimeline(String max_id, String since_id, int limit) {
 
@@ -466,7 +468,7 @@ public class API {
      * @param max_id String id max
      * @param since_id String since the id
      * @param limit int limit  - max value 40
-     * @return List<Status>
+     * @return APIResponse
      */
     private APIResponse getPublicTimeline(boolean local, String max_id, String since_id, int limit){
 
@@ -522,7 +524,7 @@ public class API {
      * @param max_id String id max
      * @param since_id String since the id
      * @param limit int limit  - max value 40
-     * @return List<Status>
+     * @return APIResponse
      */
     private APIResponse getPublicTimelineTag(String tag, boolean local, String max_id, String since_id, int limit){
 
@@ -607,7 +609,7 @@ public class API {
      * @param max_id String id max
      * @param since_id String since the id
      * @param limit int limit  - max value 40
-     * @return List<Status>
+     * @return APIResponse
      */
     private APIResponse getAccounts(String action, String max_id, String since_id, int limit){
 
@@ -646,6 +648,57 @@ public class API {
 
 
     /**
+     * Retrieves follow requests for the authenticated account *synchronously*
+     * @param max_id String id max
+     * @return APIResponse
+     */
+    public APIResponse getFollowRequest(String max_id){
+        return getFollowRequest(max_id, null, accountPerPage);
+    }
+    /**
+     * Retrieves follow requests for the authenticated account *synchronously*
+     * @param max_id String id max
+     * @param since_id String since the id
+     * @param limit int limit  - max value 40
+     * @return APIResponse
+     */
+    private APIResponse getFollowRequest(String max_id, String since_id, int limit){
+
+        RequestParams params = new RequestParams();
+        if( max_id != null )
+            params.put("max_id", max_id);
+        if( since_id != null )
+            params.put("since_id", since_id);
+        if( 0 > limit || limit > 40)
+            limit = 40;
+        params.put("limit",String.valueOf(limit));
+        accounts = new ArrayList<>();
+        get("/follow_requests", params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
+                Account account = parseAccountResponse(response);
+                accounts.add(account);
+            }
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
+                accounts = parseAccountResponse(response);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
+                setError(statusCode, error);
+            }
+        });
+        apiResponse.setAccounts(accounts);
+        return apiResponse;
+    }
+
+
+    /**
      * Retrieves favourited status for the authenticated account *synchronously*
      * @param max_id String id max
      * @return APIResponse
@@ -658,7 +711,7 @@ public class API {
      * @param max_id String id max
      * @param since_id String since the id
      * @param limit int limit  - max value 40
-     * @return List<Status>
+     * @return APIResponse
      */
     private APIResponse getFavourites(String max_id, String since_id, int limit){
 
@@ -705,6 +758,7 @@ public class API {
     public int postAction(StatusAction statusAction, String targetedId){
         return postAction(statusAction, targetedId, null, null);
     }
+
 
     /**
      * Makes the post action
@@ -766,6 +820,12 @@ public class API {
             case UNSTATUS:
                 action = String.format("/statuses/%s", targetedId);
                 break;
+            case AUTHORIZE:
+                action = String.format("/follow_requests/%s/authorize", targetedId);
+                break;
+            case REJECT:
+                action = String.format("/follow_requests/%s/reject", targetedId);
+                break;
             case REPORT:
                 action = "/reports";
                 params = new RequestParams();
@@ -774,7 +834,6 @@ public class API {
                 params.put("status_ids[]", status.getId());
                 break;
             case CREATESTATUS:
-
                 params = new RequestParams();
                 action = "/statuses";
                 params.put("status", status.getContent());
@@ -860,7 +919,7 @@ public class API {
      * @param max_id String id max
      * @param since_id String since the id
      * @param limit int limit  - max value 40
-     * @return List<Notification>
+     * @return APIResponse
      */
     private APIResponse getNotifications(String max_id, String since_id, int limit){
 
@@ -897,6 +956,11 @@ public class API {
         return apiResponse;
     }
 
+    /**
+     * Upload media
+     * @param inputStream InputStream
+     * @return Attachment
+     */
     public Attachment uploadMedia(InputStream inputStream){
 
         RequestParams params = new RequestParams();

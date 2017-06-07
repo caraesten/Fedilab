@@ -16,11 +16,8 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 
 
@@ -34,25 +31,24 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
     private Context context;
     private OnPostActionInterface listener;
     private int statusCode;
-    private API.StatusAction statusAction;
-    private String statusId;
+    private API.StatusAction apiAction;
+    private String targetedId;
     private String comment;
-    private Account account;
     private fr.gouv.etalab.mastodon.client.Entities.Status status;
     private API api;
 
-    public PostActionAsyncTask(Context context, API.StatusAction statusAction, String statusId, OnPostActionInterface onPostActionInterface){
+    public PostActionAsyncTask(Context context, API.StatusAction apiAction, String targetedId, OnPostActionInterface onPostActionInterface){
         this.context = context;
         this.listener = onPostActionInterface;
-        this.statusAction = statusAction;
-        this.statusId = statusId;
+        this.apiAction = apiAction;
+        this.targetedId = targetedId;
     }
 
-    public PostActionAsyncTask(Context context, API.StatusAction statusAction, String statusId, fr.gouv.etalab.mastodon.client.Entities.Status status, String comment, OnPostActionInterface onPostActionInterface){
+    public PostActionAsyncTask(Context context, API.StatusAction apiAction, String targetedId, fr.gouv.etalab.mastodon.client.Entities.Status status, String comment, OnPostActionInterface onPostActionInterface){
         this.context = context;
         this.listener = onPostActionInterface;
-        this.statusAction = statusAction;
-        this.statusId = statusId;
+        this.apiAction = apiAction;
+        this.targetedId = targetedId;
         this.comment = comment;
         this.status = status;
     }
@@ -61,18 +57,18 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... params) {
 
         api = new API(context);
-        if(statusAction ==  API.StatusAction.REPORT)
+        if(apiAction ==  API.StatusAction.REPORT)
             statusCode = api.reportAction(status, comment);
-        else if(statusAction == API.StatusAction.CREATESTATUS)
+        else if(apiAction == API.StatusAction.CREATESTATUS)
             statusCode = api.statusAction(status);
         else
-            statusCode = api.postAction(statusAction, statusId);
+            statusCode = api.postAction(apiAction, targetedId);
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onPostAction(statusCode, statusAction, statusId, api.getError());
+        listener.onPostAction(statusCode, apiAction, targetedId, api.getError());
     }
 
 }

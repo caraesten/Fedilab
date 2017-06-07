@@ -22,6 +22,10 @@
                         android:id="@+id/nav_notification"
                         android:icon="@drawable/ic_notifications"
                         android:title="@string/notifications" />
+                    <item
+                        android:id="@+id/nav_follow_request"
+                        android:icon="@drawable/ic_group_add"
+                        android:title="@string/follow_request" />
                 </group>
             </menu>
         </item>

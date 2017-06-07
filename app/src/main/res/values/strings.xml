@@ -48,6 +48,7 @@
     <string name="muted_menu">Utilisateurs muets</string>
     <string name="blocked_menu">Utilisateurs bloqués</string>
     <string name="notifications">Notifications</string>
+    <string name="follow_request">Demandes d\'abonnements</string>
     <string name="optimization">Optimisation</string>
     <string name="profile">Profil</string>
     <string name="make_a_choice">Que souhaitez-vous faire ?</string>
@@ -157,9 +158,12 @@
 
     <!-- Accounts -->
     <string name="no_accounts">Aucun compte à afficher</string>
+    <string name="no_follow_request">Aucune demande d\'abonnement</string>
     <string name="status_cnt">Pouets \n %d</string>
     <string name="following_cnt">Abonnements \n %d</string>
     <string name="followers_cnt">Abonnés \n %d</string>
+    <string name="authorize">Autoriser</string>
+    <string name="reject">Rejeter</string>
 
     <!-- Notifications -->
     <string name="no_notifications">Aucune notification à afficher</string>
@@ -270,6 +274,6 @@
         - <b>Android Asynchronous Http Client</b> : Pour la gestion des requêtes\n
         - <b>Universal Image Loader</b> : Pour la gestion des médias\n
         - <b>Android-Job</b> : Pour la gestion des services
-        - <b>Emoji-java</b> : Pour l'affichage des emoji
+        - <b>Emoji-java</b> : Pour l\'affichage des emoji
     </string>
 </resources>
