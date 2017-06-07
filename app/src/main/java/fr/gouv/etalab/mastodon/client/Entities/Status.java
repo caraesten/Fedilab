@@ -45,6 +45,7 @@ public class Status implements Parcelable {
     private String spoiler_text;
     private String visibility;
     private boolean attachmentShown = false;
+    private boolean spoilerShown = false;
     private List<Attachment> media_attachments;
     private List<Mention> mentions;
     private List<Tag> tags;
@@ -69,6 +70,7 @@ public class Status implements Parcelable {
         spoiler_text = in.readString();
         visibility = in.readString();
         attachmentShown = in.readByte() != 0;
+        spoilerShown = in.readByte() != 0;
     }
 
     public Status(){}
@@ -279,5 +281,14 @@ public class Status implements Parcelable {
         dest.writeString(spoiler_text);
         dest.writeString(visibility);
         dest.writeByte((byte) (attachmentShown ? 1 : 0));
+        dest.writeByte((byte) (spoilerShown ? 1 : 0));
+    }
+
+    public boolean isSpoilerShown() {
+        return spoilerShown;
+    }
+
+    public void setSpoilerShown(boolean spoilerShown) {
+        this.spoilerShown = spoilerShown;
     }
 }

@@ -155,10 +155,34 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_reply = (ImageView) convertView.findViewById(R.id.status_reply);
             holder.status_privacy = (ImageView) convertView.findViewById(R.id.status_privacy);
             holder.main_container = (LinearLayout) convertView.findViewById(R.id.main_container);
+            holder.status_spoiler_container = (LinearLayout) convertView.findViewById(R.id.status_spoiler_container);
+            holder.status_content_container = (LinearLayout) convertView.findViewById(R.id.status_content_container);
+            holder.status_spoiler = (TextView) convertView.findViewById(R.id.status_spoiler);
+            holder.status_spoiler_button = (Button) convertView.findViewById(R.id.status_spoiler_button);
+
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+        if( status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()){
+            holder.status_spoiler_container.setVisibility(View.VISIBLE);
+            holder.status_content_container.setVisibility(View.GONE);
+        }else {
+            holder.status_spoiler_button.setVisibility(View.GONE);
+            holder.status_content_container.setVisibility(View.VISIBLE);
+        }
+        if( status.getSpoiler_text() != null)
+            holder.status_spoiler.setText(status.getSpoiler_text());
+
+        //Spoiler opens
+        holder.status_spoiler_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                status.setSpoilerShown(true);
+                holder.status_spoiler_button.setVisibility(View.GONE);
+                statusListAdapter.notifyDataSetChanged();
+            }
+        });
 
         //Hides action bottom bar action when looking to status trough accounts
         if( type == RetrieveFeedsAsyncTask.Type.USER){
@@ -563,6 +587,11 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
 
     private class ViewHolder {
+        LinearLayout status_content_container;
+        LinearLayout status_spoiler_container;
+        TextView status_spoiler;
+        Button status_spoiler_button;
+
         TextView status_content;
         TextView status_account_username;
         TextView status_account_displayname;
