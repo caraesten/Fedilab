@@ -22,21 +22,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.util.Log;
-
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobManager;
 import com.evernote.android.job.JobRequest;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-
-
 import java.io.File;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
@@ -63,7 +58,6 @@ import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
 public class NotificationsSyncJob extends Job implements OnRetrieveNotificationsInterface{
 
     static final String NOTIFICATION_REFRESH = "job_notification";
-    private int notificationId;
 
     @NonNull
     @Override
@@ -121,8 +115,6 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
             //Retrieve users in db that owner has.
             for (Account account: accounts) {
                 String max_id = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId(), null);
-                long notif_id = Long.parseLong(account.getId());
-                notificationId = ((notif_id + 1) > 2147483647 )?(int)(2147483647 - notif_id - 1):(int)(notif_id + 1);
                 new RetrieveNotificationsAsyncTask(getContext(), account.getInstance(), account.getToken(), max_id, account.getAcct(), account.getId(), NotificationsSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
@@ -226,6 +218,8 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
             intent.putExtra(INTENT_ACTION, NOTIFICATION_INTENT);
             intent.putExtra(PREF_KEY_ID, userId);
+            long notif_id = Long.parseLong(userId);
+            int notificationId = ((notif_id + 1) > 2147483647) ? (int) (2147483647 - notif_id - 1) : (int) (notif_id + 1);
             if( max_id != null)
                 notify_user(getContext(), intent, notificationId, icon_notification,title,message);
         }

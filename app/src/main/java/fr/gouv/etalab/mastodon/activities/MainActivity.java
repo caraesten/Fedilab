@@ -24,6 +24,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -81,7 +82,15 @@ public class MainActivity extends AppCompatActivity
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
     private View headerLayout;
+    static final int MIN_DISTANCE = 150;
+    private float downX, downY;
+    private int currentScreen = 1;
+    private actionSwipe currentAction;
 
+    private enum actionSwipe{
+        RIGHT_TO_LEFT,
+        LEFT_TO_RIGHT
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -407,18 +416,28 @@ public class MainActivity extends AppCompatActivity
         Bundle bundle = new Bundle();
         FragmentManager fragmentManager = getSupportFragmentManager();
         String fragmentTag = null;
+        currentScreen = -1;
         if (id == R.id.nav_home) {
             toot.setVisibility(View.VISIBLE);
             statusFragment = new DisplayStatusFragment();
             bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.HOME);
             statusFragment.setArguments(bundle);
             fragmentTag = "HOME_TIMELINE";
-            if(! first)
-            fragmentManager.beginTransaction()
-                    .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
-            else{
-                fragmentManager.beginTransaction()
+            currentScreen = 1;
+            if(! first) {
+                if( currentAction == actionSwipe.LEFT_TO_RIGHT)
+                fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+                        .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
+                else
+                    fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
+                            .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
+            }else{
+                if( currentAction == actionSwipe.LEFT_TO_RIGHT)
+                    fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
                         .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
+                else
+                    fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
+                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
                 first = false;
             }
         } else if (id == R.id.nav_local) {
@@ -427,8 +446,13 @@ public class MainActivity extends AppCompatActivity
             bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.LOCAL);
             statusFragment.setArguments(bundle);
             fragmentTag = "LOCAL_TIMELINE";
-            fragmentManager.beginTransaction()
+            currentScreen = 2;
+            if( currentAction == actionSwipe.LEFT_TO_RIGHT)
+                fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
                     .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
+            else
+                fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
+                        .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
 
         } else if (id == R.id.nav_global) {
             toot.setVisibility(View.VISIBLE);
@@ -436,8 +460,13 @@ public class MainActivity extends AppCompatActivity
             bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
             statusFragment.setArguments(bundle);
             fragmentTag = "PUBLIC_TIMELINE";
-            fragmentManager.beginTransaction()
+            currentScreen = 3;
+            if( currentAction == actionSwipe.LEFT_TO_RIGHT)
+                fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
                     .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
+            else
+                fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
+                        .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
         } else if (id == R.id.nav_settings) {
             toot.setVisibility(View.GONE);
             TabLayoutSettingsFragment tabLayoutSettingsFragment= new TabLayoutSettingsFragment();
@@ -482,8 +511,6 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, followRequestSentFragment, fragmentTag).addToBackStack(fragmentTag).commit();
         }
-
-
         setTitle(item.getTitle());
         populateTitleWithTag(fragmentTag, item.getTitle().toString(), item.getItemId());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -523,4 +550,65 @@ public class MainActivity extends AppCompatActivity
             updateHeaderAccountInfo(MainActivity.this, account, headerLayout, imageLoader, options);
         }
     }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        //Default dispatchTouchEvent is returned when not in communication page
+        if( currentScreen >3 || currentScreen < 1)
+            return super.dispatchTouchEvent(event);
+        switch(event.getAction()){
+            case MotionEvent.ACTION_DOWN: {
+                downX = event.getX();
+                downY = event.getY();
+                return super.dispatchTouchEvent(event);
+            }
+            case MotionEvent.ACTION_UP: {
+                float upX = event.getX();
+                float upY = event.getY();
+                float deltaX = downX - upX;
+                float deltaY = downY - upY;
+                // swipe horizontal
+                if(Math.abs(deltaX) > MIN_DISTANCE && Math.abs(deltaY) < MIN_DISTANCE){
+                    if(deltaX < 0) { switchOnSwipe(actionSwipe.LEFT_TO_RIGHT); return true; }
+                    if(deltaX > 0) { switchOnSwipe(actionSwipe.RIGHT_TO_LEFT); return true; }
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event);
+    }
+
+
+    private void switchOnSwipe(actionSwipe action){
+        currentScreen = (action == actionSwipe.LEFT_TO_RIGHT)?currentScreen-1:currentScreen+1;
+        if( currentScreen > 3 )
+            currentScreen = 1;
+        if( currentScreen < 1)
+            currentScreen = 3;
+        currentAction = action;
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        switch (currentScreen){
+            case 1:
+                unCheckAllMenuItems(navigationView.getMenu());
+                navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
+                if( navigationView.getMenu().findItem(R.id.nav_home) != null)
+                    navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
+                break;
+            case 2:
+                unCheckAllMenuItems(navigationView.getMenu());
+                navigationView.getMenu().performIdentifierAction(R.id.nav_local, 0);
+                if( navigationView.getMenu().findItem(R.id.nav_local) != null)
+                    navigationView.getMenu().findItem(R.id.nav_local).setChecked(true);
+                break;
+            case 3:
+                unCheckAllMenuItems(navigationView.getMenu());
+                navigationView.getMenu().performIdentifierAction(R.id.nav_global, 0);
+                if( navigationView.getMenu().findItem(R.id.nav_global) != null)
+                    navigationView.getMenu().findItem(R.id.nav_global).setChecked(true);
+                break;
+            default:
+                break;
+        }
+    }
+
+
 }
