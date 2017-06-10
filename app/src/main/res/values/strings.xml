@@ -279,7 +279,7 @@
         L\'utilisation de bibliothèques est réduite au strict minimum :\n
         - <b>Android Asynchronous Http Client</b> : Pour la gestion des requêtes\n
         - <b>Universal Image Loader</b> : Pour la gestion des médias\n
-        - <b>Android-Job</b> : Pour la gestion des services
+        - <b>Android-Job</b> : Pour la gestion des services\n
         - <b>Emoji-java</b> : Pour l\'affichage des emoji
     </string>
 </resources>

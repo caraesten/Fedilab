@@ -425,14 +425,14 @@ public class MainActivity extends AppCompatActivity
             fragmentTag = "HOME_TIMELINE";
             currentScreen = 1;
             if(! first) {
-                if( currentAction == actionSwipe.LEFT_TO_RIGHT)
+                if( currentAction == actionSwipe.RIGHT_TO_LEFT)
                 fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
                         .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
                 else
                     fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
                             .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
             }else{
-                if( currentAction == actionSwipe.LEFT_TO_RIGHT)
+                if( currentAction == actionSwipe.RIGHT_TO_LEFT)
                     fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
                         .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
                 else
@@ -447,7 +447,7 @@ public class MainActivity extends AppCompatActivity
             statusFragment.setArguments(bundle);
             fragmentTag = "LOCAL_TIMELINE";
             currentScreen = 2;
-            if( currentAction == actionSwipe.LEFT_TO_RIGHT)
+            if( currentAction == actionSwipe.RIGHT_TO_LEFT)
                 fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
                     .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
             else
@@ -461,7 +461,7 @@ public class MainActivity extends AppCompatActivity
             statusFragment.setArguments(bundle);
             fragmentTag = "PUBLIC_TIMELINE";
             currentScreen = 3;
-            if( currentAction == actionSwipe.LEFT_TO_RIGHT)
+            if( currentAction == actionSwipe.RIGHT_TO_LEFT)
                 fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
                     .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
             else
@@ -553,7 +553,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        //Default dispatchTouchEvent is returned when not in communication page
+        //Default dispatchTouchEvent is returned when not in timeline page
         if( currentScreen >3 || currentScreen < 1)
             return super.dispatchTouchEvent(event);
         switch(event.getAction()){
@@ -568,9 +568,12 @@ public class MainActivity extends AppCompatActivity
                 float deltaX = downX - upX;
                 float deltaY = downY - upY;
                 // swipe horizontal
+
                 if(Math.abs(deltaX) > MIN_DISTANCE && Math.abs(deltaY) < MIN_DISTANCE){
-                    if(deltaX < 0) { switchOnSwipe(actionSwipe.LEFT_TO_RIGHT); return true; }
-                    if(deltaX > 0) { switchOnSwipe(actionSwipe.RIGHT_TO_LEFT); return true; }
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                    if(deltaX < 0) { switchOnSwipe(actionSwipe.LEFT_TO_RIGHT); drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);return true; }
+                    if(deltaX > 0) { switchOnSwipe(actionSwipe.RIGHT_TO_LEFT); drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);return true; }
                 }
             }
         }
