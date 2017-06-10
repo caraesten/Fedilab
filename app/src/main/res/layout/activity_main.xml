@@ -44,6 +44,7 @@
         </android.support.design.widget.AppBarLayout>
 
 
+
         <!-- Framelayout to display Fragments -->
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/main_app_container"

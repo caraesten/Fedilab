@@ -532,10 +532,6 @@ public class Helper {
                                 Toast.makeText(activity, activity.getString(R.string.toast_account_changed, "@" + account.getAcct() + "@" + account.getInstance()), Toast.LENGTH_LONG).show();
                                 changeUser(activity, userId);
                                 arrow.setImageResource(R.drawable.ic_arrow_drop_down);
-                                navigationView.getMenu().clear();
-                                navigationView.inflateMenu(R.menu.activity_main_drawer);
-                                navigationView.setCheckedItem(R.id.nav_home);
-                                navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
                                 return true;
                             }
                             return false;
@@ -595,9 +591,19 @@ public class Helper {
      */
     public static void changeUser(Activity activity, String userID) {
 
+        final NavigationView navigationView = (NavigationView) activity.findViewById(R.id.nav_view);
+        navigationView.getMenu().clear();
+        navigationView.inflateMenu(R.menu.activity_main_drawer);
+        navigationView.setCheckedItem(R.id.nav_home);
+        navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(activity,db).getAccountByID(userID);
-
+        //Locked account can see follow request
+        if (account.isLocked()) {
+            navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);
+        } else {
+            navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
+        }
         SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, account.getToken());
@@ -607,7 +613,6 @@ public class Helper {
         DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
         imageLoader = ImageLoader.getInstance();
-        NavigationView navigationView = (NavigationView) activity.findViewById(R.id.nav_view);
         View headerLayout = navigationView.getHeaderView(0);
         updateHeaderAccountInfo(activity, account, headerLayout, imageLoader, options);
     }

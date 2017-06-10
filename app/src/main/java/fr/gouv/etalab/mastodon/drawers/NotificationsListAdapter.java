@@ -42,6 +42,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.vdurmont.emoji.EmojiParser;
 
 import java.util.List;
 
@@ -220,7 +221,7 @@ public class NotificationsListAdapter extends BaseAdapter  {
         });
 
 
-        holder.notification_account_displayname.setText(notification.getAccount().getDisplay_name());
+        holder.notification_account_displayname.setText(EmojiParser.parseToUnicode(notification.getAccount().getDisplay_name()));
         holder.notification_account_username.setText( String.format("@%s",notification.getAccount().getUsername()));
         //Profile picture
         imageLoader.displayImage(notification.getAccount().getAvatar(), holder.notification_account_profile, options);

@@ -37,6 +37,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -96,6 +98,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private DisplayImageOptions options;
     private LinearLayout toot_picture_container;
     private List<Attachment> attachments;
+    private boolean isSensitive = false;
     private ImageButton toot_visibility;
     private Button toot_it;
     private EditText toot_content, toot_cw_content;
@@ -104,6 +107,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private ListView toot_lv_accounts;
     private BroadcastReceiver search_validate;
     private Status tootReply = null;
+    private String sharedContent;
+    private CheckBox toot_sensitive;
 
     private String pattern = "^.*(@([a-zA-Z0-9_]{2,}))$";
     @Override
@@ -127,11 +132,12 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         toot_reply_content_container = (LinearLayout) findViewById(R.id.toot_reply_content_container);
         toot_show_accounts = (RelativeLayout) findViewById(R.id.toot_show_accounts);
         toot_lv_accounts = (ListView) findViewById(R.id.toot_lv_accounts);
-
+        toot_sensitive = (CheckBox) findViewById(R.id.toot_sensitive);
 
         Bundle b = getIntent().getExtras();
         if(b != null) {
             tootReply = b.getParcelable("tootReply");
+            sharedContent = b.getString("sharedContent", null);
         }
         if( tootReply != null) {
             setTitle(R.string.toot_title_reply);
@@ -184,6 +190,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
         }else {
             setTitle(R.string.toot_title);
+        }
+        if( sharedContent != null ){ //Shared content
+            toot_content.setText( String.format("\n%s", sharedContent));
         }
         attachments = new ArrayList<>();
         charsInCw = 0;
@@ -244,6 +253,12 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             toot_visibility.setImageResource(R.drawable.ic_action_globe);
         }
 
+        toot_sensitive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isSensitive = isChecked;
+            }
+        });
 
         toot_space_left.setText(String.valueOf((maxChar - (charsInToot + charsInCw))));
         toot_cw.setOnClickListener(new View.OnClickListener() {
@@ -280,6 +295,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     return;
                 }
                 Status toot = new Status();
+                toot.setSensitive(isSensitive);
                 toot.setMedia_attachments(attachments);
                 if( toot_cw_content.getText().toString().trim().length() > 0)
                     toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
@@ -429,6 +445,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             attachments.add(attachment);
             if( attachments.size() < 4)
                 toot_picture.setEnabled(true);
+            toot_sensitive.setVisibility(View.VISIBLE);
         }
     }
 
@@ -458,6 +475,11 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 View namebar = findViewById(viewId);
                 ((ViewGroup) namebar.getParent()).removeView(namebar);
                 dialog.dismiss();
+                if( attachments.size() == 0 ) {
+                    toot_sensitive.setVisibility(View.GONE);
+                    isSensitive = false;
+                    toot_sensitive.setChecked(false);
+                }
             }
         });
         dialog.show();
@@ -529,6 +551,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 attachments.removeAll(tmp_attachment);
                 tmp_attachment.clear();
             }
+            isSensitive = false;
+            toot_sensitive.setVisibility(View.GONE);
             Toast.makeText(TootActivity.this,R.string.toot_sent, Toast.LENGTH_LONG).show();
         }else {
             Toast.makeText(TootActivity.this,R.string.toast_error, Toast.LENGTH_LONG).show();

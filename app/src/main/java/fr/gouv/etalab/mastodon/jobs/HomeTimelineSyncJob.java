@@ -22,7 +22,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobManager;
@@ -62,8 +61,6 @@ import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
 public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineServiceInterface{
 
     static final String HOME_TIMELINE = "home_timeline";
-    private int notificationId;
-
 
     @NonNull
     @Override
@@ -115,8 +112,6 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
             //Retrieve users in db that owner has.
             for (Account account: accounts) {
                 String since_id = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + account.getId(), null);
-                long notif_id = Long.parseLong(account.getId());
-                notificationId = ((notif_id + 2) > 2147483647 )?(int)(2147483647 - notif_id -2):(int)(notif_id + 2);
                 new RetrieveHomeTimelineServiceAsyncTask(getContext(), account.getInstance(), account.getToken(), since_id, account.getAcct(), account.getId(), HomeTimelineSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
             }
@@ -171,6 +166,8 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
         intent.putExtra(INTENT_ACTION, HOME_TIMELINE_INTENT);
         intent.putExtra(PREF_KEY_ID, userId);
+        long notif_id = Long.parseLong(userId);
+        int notificationId = ((notif_id + 2) > 2147483647) ? (int) (2147483647 - notif_id - 2) : (int) (notif_id + 2);
         if( max_id != null)
             notify_user(getContext(), intent, notificationId, icon_notification,title,message);
         SharedPreferences.Editor editor = sharedpreferences.edit();

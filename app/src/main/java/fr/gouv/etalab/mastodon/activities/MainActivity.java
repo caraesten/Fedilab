@@ -24,6 +24,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -50,6 +51,7 @@ import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
+import fr.gouv.etalab.mastodon.fragments.DisplayFollowRequestSentFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
@@ -80,7 +82,15 @@ public class MainActivity extends AppCompatActivity
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
     private View headerLayout;
+    static final int MIN_DISTANCE = 150;
+    private float downX, downY;
+    private int currentScreen = 1;
+    private actionSwipe currentAction;
 
+    private enum actionSwipe{
+        RIGHT_TO_LEFT,
+        LEFT_TO_RIGHT
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,6 +150,13 @@ public class MainActivity extends AppCompatActivity
         Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(prefKeyOauthTokenT);
         updateHeaderAccountInfo(MainActivity.this, account, headerLayout, imageLoader, options);
 
+        //Locked account can see follow request
+        if (account.isLocked()) {
+            navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);
+        } else {
+            navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
+        }
+
         LinearLayout owner_container = (LinearLayout) headerLayout.findViewById(R.id.owner_container);
         owner_container.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,7 +164,6 @@ public class MainActivity extends AppCompatActivity
                 menuAccounts(MainActivity.this);
             }
         });
-
         boolean matchingIntent = mamageNewIntent(getIntent());
         if (savedInstanceState == null && !matchingIntent) {
             navigationView.setCheckedItem(R.id.nav_home);
@@ -202,6 +218,8 @@ public class MainActivity extends AppCompatActivity
     private boolean mamageNewIntent(Intent intent){
         if( intent == null || intent.getExtras() == null )
             return false;
+        String action = intent.getAction();
+        String type = intent.getType();
         Bundle extras = intent.getExtras();
         String userIdIntent;
         boolean matchingIntent = false;
@@ -226,6 +244,17 @@ public class MainActivity extends AppCompatActivity
                 if( navigationView.getMenu().findItem(R.id.nav_home) != null)
                     navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
                 matchingIntent = true;
+            }
+        }else if( Intent.ACTION_SEND.equals(action) && type != null ){
+            if ("text/plain".equals(type)) {
+                String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+                if (sharedText != null) {
+                    Intent intentToot = new Intent(getApplicationContext(), TootActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("sharedContent", sharedText);
+                    intentToot.putExtras(b);
+                    startActivity(intentToot);
+                }
             }
         }
         intent.replaceExtras(new Bundle());
@@ -387,18 +416,28 @@ public class MainActivity extends AppCompatActivity
         Bundle bundle = new Bundle();
         FragmentManager fragmentManager = getSupportFragmentManager();
         String fragmentTag = null;
+        currentScreen = -1;
         if (id == R.id.nav_home) {
             toot.setVisibility(View.VISIBLE);
             statusFragment = new DisplayStatusFragment();
             bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.HOME);
             statusFragment.setArguments(bundle);
             fragmentTag = "HOME_TIMELINE";
-            if(! first)
-            fragmentManager.beginTransaction()
-                    .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
-            else{
-                fragmentManager.beginTransaction()
+            currentScreen = 1;
+            if(! first) {
+                if( currentAction == actionSwipe.RIGHT_TO_LEFT)
+                fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+                        .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
+                else
+                    fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
+                            .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
+            }else{
+                if( currentAction == actionSwipe.RIGHT_TO_LEFT)
+                    fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
                         .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
+                else
+                    fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
+                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
                 first = false;
             }
         } else if (id == R.id.nav_local) {
@@ -407,8 +446,13 @@ public class MainActivity extends AppCompatActivity
             bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.LOCAL);
             statusFragment.setArguments(bundle);
             fragmentTag = "LOCAL_TIMELINE";
-            fragmentManager.beginTransaction()
+            currentScreen = 2;
+            if( currentAction == actionSwipe.RIGHT_TO_LEFT)
+                fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
                     .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
+            else
+                fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
+                        .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
 
         } else if (id == R.id.nav_global) {
             toot.setVisibility(View.VISIBLE);
@@ -416,8 +460,13 @@ public class MainActivity extends AppCompatActivity
             bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
             statusFragment.setArguments(bundle);
             fragmentTag = "PUBLIC_TIMELINE";
-            fragmentManager.beginTransaction()
+            currentScreen = 3;
+            if( currentAction == actionSwipe.RIGHT_TO_LEFT)
+                fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
                     .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
+            else
+                fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
+                        .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
         } else if (id == R.id.nav_settings) {
             toot.setVisibility(View.GONE);
             TabLayoutSettingsFragment tabLayoutSettingsFragment= new TabLayoutSettingsFragment();
@@ -455,9 +504,13 @@ public class MainActivity extends AppCompatActivity
             fragmentTag = "NOTIFICATIONS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, notificationsFragment, fragmentTag).addToBackStack(fragmentTag).commit();
+        }else if( id == R.id.nav_follow_request){
+            toot.setVisibility(View.GONE);
+            DisplayFollowRequestSentFragment followRequestSentFragment = new DisplayFollowRequestSentFragment();
+            fragmentTag = "FOLLOW_REQUEST_SENT";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, followRequestSentFragment, fragmentTag).addToBackStack(fragmentTag).commit();
         }
-
-
         setTitle(item.getTitle());
         populateTitleWithTag(fragmentTag, item.getTitle().toString(), item.getItemId());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -497,4 +550,68 @@ public class MainActivity extends AppCompatActivity
             updateHeaderAccountInfo(MainActivity.this, account, headerLayout, imageLoader, options);
         }
     }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        //Default dispatchTouchEvent is returned when not in timeline page
+        if( currentScreen >3 || currentScreen < 1)
+            return super.dispatchTouchEvent(event);
+        switch(event.getAction()){
+            case MotionEvent.ACTION_DOWN: {
+                downX = event.getX();
+                downY = event.getY();
+                return super.dispatchTouchEvent(event);
+            }
+            case MotionEvent.ACTION_UP: {
+                float upX = event.getX();
+                float upY = event.getY();
+                float deltaX = downX - upX;
+                float deltaY = downY - upY;
+                // swipe horizontal
+
+                if(Math.abs(deltaX) > MIN_DISTANCE && Math.abs(deltaY) < MIN_DISTANCE){
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                    if(deltaX < 0) { switchOnSwipe(actionSwipe.LEFT_TO_RIGHT); drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);return true; }
+                    if(deltaX > 0) { switchOnSwipe(actionSwipe.RIGHT_TO_LEFT); drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);return true; }
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event);
+    }
+
+
+    private void switchOnSwipe(actionSwipe action){
+        currentScreen = (action == actionSwipe.LEFT_TO_RIGHT)?currentScreen-1:currentScreen+1;
+        if( currentScreen > 3 )
+            currentScreen = 1;
+        if( currentScreen < 1)
+            currentScreen = 3;
+        currentAction = action;
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        switch (currentScreen){
+            case 1:
+                unCheckAllMenuItems(navigationView.getMenu());
+                navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
+                if( navigationView.getMenu().findItem(R.id.nav_home) != null)
+                    navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
+                break;
+            case 2:
+                unCheckAllMenuItems(navigationView.getMenu());
+                navigationView.getMenu().performIdentifierAction(R.id.nav_local, 0);
+                if( navigationView.getMenu().findItem(R.id.nav_local) != null)
+                    navigationView.getMenu().findItem(R.id.nav_local).setChecked(true);
+                break;
+            case 3:
+                unCheckAllMenuItems(navigationView.getMenu());
+                navigationView.getMenu().performIdentifierAction(R.id.nav_global, 0);
+                if( navigationView.getMenu().findItem(R.id.nav_global) != null)
+                    navigationView.getMenu().findItem(R.id.nav_global).setChecked(true);
+                break;
+            default:
+                break;
+        }
+    }
+
+
 }

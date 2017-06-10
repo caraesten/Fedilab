@@ -248,7 +248,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
-        if( apiResponse.getError() != null){
+        //Discards 404 - error which can often happen due to toots which have been deleted
+        if( apiResponse.getError() != null && !apiResponse.getError().getError().startsWith("404 -")){
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
@@ -272,7 +273,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         flag_loading = statuses != null && statuses.size() < tootsPerPage;
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
         if(statuses != null && statuses.size()  > 0 && type == RetrieveFeedsAsyncTask.Type.HOME ){
-            final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             //acct is null when used in Fragment, data need to be retrieved via shared preferences and db
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();

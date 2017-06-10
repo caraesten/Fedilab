@@ -55,6 +55,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.vdurmont.emoji.EmojiParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -154,10 +155,34 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_reply = (ImageView) convertView.findViewById(R.id.status_reply);
             holder.status_privacy = (ImageView) convertView.findViewById(R.id.status_privacy);
             holder.main_container = (LinearLayout) convertView.findViewById(R.id.main_container);
+            holder.status_spoiler_container = (LinearLayout) convertView.findViewById(R.id.status_spoiler_container);
+            holder.status_content_container = (LinearLayout) convertView.findViewById(R.id.status_content_container);
+            holder.status_spoiler = (TextView) convertView.findViewById(R.id.status_spoiler);
+            holder.status_spoiler_button = (Button) convertView.findViewById(R.id.status_spoiler_button);
+
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+        if( status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()){
+            holder.status_spoiler_container.setVisibility(View.VISIBLE);
+            holder.status_content_container.setVisibility(View.GONE);
+        }else {
+            holder.status_spoiler_button.setVisibility(View.GONE);
+            holder.status_content_container.setVisibility(View.VISIBLE);
+        }
+        if( status.getSpoiler_text() != null)
+            holder.status_spoiler.setText(status.getSpoiler_text());
+
+        //Spoiler opens
+        holder.status_spoiler_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                status.setSpoilerShown(true);
+                holder.status_spoiler_button.setVisibility(View.GONE);
+                statusListAdapter.notifyDataSetChanged();
+            }
+        });
 
         //Hides action bottom bar action when looking to status trough accounts
         if( type == RetrieveFeedsAsyncTask.Type.USER){
@@ -208,7 +233,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }else {
             ppurl = status.getAccount().getAvatar();
             content = status.getContent();
-            displayName = status.getAccount().getDisplay_name();
+            displayName = EmojiParser.parseToUnicode(status.getAccount().getDisplay_name());
             username = status.getAccount().getUsername();
             holder.status_reblog_user.setVisibility(View.GONE);
             holder.status_account_displayname.setText(displayName);
@@ -239,16 +264,19 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
 
         imageLoader.displayImage(ppurl, holder.status_account_profile, options);
-
         if( status.getMedia_attachments().size() < 1) {
             holder.status_document_container.setVisibility(View.GONE);
             holder.status_show_more.setVisibility(View.GONE);
         }else{
-            if(behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || ( behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi)){
+            //If medias are loaded without any conditions or if device is on wifi
+            if(! status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || ( behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi)) ){
                 loadAttachments(status);
                 holder.status_show_more.setVisibility(View.GONE);
                 status.setAttachmentShown(true);
             }else{
+                //Text depending if toots is sensitive or not
+                String textShowMore = (status.isSensitive())?context.getString(R.string.load_sensitive_attachment):context.getString(R.string.load_attachment);
+                holder.status_show_more.setText(textShowMore);
                 if( !status.isAttachmentShown() ) {
                     holder.status_show_more.setVisibility(View.VISIBLE);
                     holder.status_document_container.setVisibility(View.GONE);
@@ -559,6 +587,11 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
 
     private class ViewHolder {
+        LinearLayout status_content_container;
+        LinearLayout status_spoiler_container;
+        TextView status_spoiler;
+        Button status_spoiler_button;
+
         TextView status_content;
         TextView status_account_username;
         TextView status_account_displayname;

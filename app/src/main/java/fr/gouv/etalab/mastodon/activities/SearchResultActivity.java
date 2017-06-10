@@ -63,9 +63,9 @@ public class SearchResultActivity extends AppCompatActivity implements OnRetriev
             if( search != null)
                 new RetrieveSearchAsyncTask(getApplicationContext(), search.trim(), SearchResultActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             else
-                Toast.makeText(this,R.string.toast_error_loading_account,Toast.LENGTH_LONG).show();
+                Toast.makeText(this,R.string.toast_error_search,Toast.LENGTH_LONG).show();
         }else{
-            Toast.makeText(this,R.string.toast_error_loading_account,Toast.LENGTH_LONG).show();
+            Toast.makeText(this,R.string.toast_error_search,Toast.LENGTH_LONG).show();
         }
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -99,7 +99,7 @@ public class SearchResultActivity extends AppCompatActivity implements OnRetriev
                 Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
-        if( results == null){
+        if( results == null || (results.getAccounts().size() == 0 && results.getStatuses().size() == 0 && results.getHashtags().size() == 0)){
             RelativeLayout no_result = (RelativeLayout) findViewById(R.id.no_result);
             no_result.setVisibility(View.VISIBLE);
             return;

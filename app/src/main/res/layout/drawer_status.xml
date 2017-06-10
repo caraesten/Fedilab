@@ -83,83 +83,120 @@
                 android:layout_gravity="end"
                 android:gravity="end"
                 android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/status_content"
-                android:layout_marginTop="10dp"
-                android:autoLink="web"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
             <LinearLayout
-                android:id="@+id/status_document_container"
-                android:orientation="horizontal"
+                android:id="@+id/status_spoiler_container"
                 android:layout_width="match_parent"
-                android:layout_height="200dp">
-                <ImageView
-                    android:id="@+id/status_prev1"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    android:layout_height="match_parent"
-                    tools:ignore="ContentDescription" />
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/status_spoiler"
+                    android:layout_marginTop="10dp"
+                    android:autoLink="web"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <Button
+                    android:id="@+id/status_spoiler_button"
+                    android:textAllCaps="false"
+                    android:drawableLeft="@drawable/ic_remove_red_eye"
+                    android:drawableStart="@drawable/ic_remove_red_eye"
+                    android:gravity="center"
+                    android:drawablePadding="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:maxLines="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/load_attachment_spoiler" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/status_content_container"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/status_content"
+                    android:layout_marginTop="10dp"
+                    android:autoLink="web"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginStart="2dp"
-                    android:id="@+id/status_container2"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent">
+                    android:id="@+id/status_document_container"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
                     <ImageView
-                        android:id="@+id/status_prev2"
-                        android:layout_width="match_parent"
+                        android:id="@+id/status_prev1"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
                         android:scaleType="centerCrop"
-                        android:layout_height="0dp"
+                        android:layout_height="match_parent"
                         tools:ignore="ContentDescription" />
                     <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginStart="2dp"
+                        android:id="@+id/status_container2"
                         android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="2dp"
-                        android:id="@+id/status_container3"
-                        android:layout_height="0dp">
+                        android:layout_height="match_parent">
                         <ImageView
-                            android:id="@+id/status_prev3"
+                            android:id="@+id/status_prev2"
+                            android:layout_width="match_parent"
                             android:layout_weight="1"
-                            android:layout_width="0dp"
                             android:scaleType="centerCrop"
-                            android:layout_height="wrap_content"
+                            android:layout_height="0dp"
                             tools:ignore="ContentDescription" />
-                        <ImageView
-                            android:layout_marginLeft="2dp"
-                            android:layout_marginStart="2dp"
-                            android:id="@+id/status_prev4"
+                        <LinearLayout
                             android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:scaleType="centerCrop"
-                            android:layout_height="wrap_content"
-                            tools:ignore="ContentDescription" />
+                            android:layout_width="match_parent"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="2dp"
+                            android:id="@+id/status_container3"
+                            android:layout_height="0dp">
+                            <ImageView
+                                android:id="@+id/status_prev3"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:scaleType="centerCrop"
+                                android:layout_height="wrap_content"
+                                tools:ignore="ContentDescription" />
+                            <ImageView
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginStart="2dp"
+                                android:id="@+id/status_prev4"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:scaleType="centerCrop"
+                                android:layout_height="wrap_content"
+                                tools:ignore="ContentDescription" />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
+                <Button
+                    android:id="@+id/status_show_more"
+                    android:visibility="gone"
+                    android:textAllCaps="false"
+                    android:drawableLeft="@drawable/ic_photo"
+                    android:drawableStart="@drawable/ic_photo"
+                    android:gravity="center"
+                    android:drawablePadding="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:maxLines="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/load_attachment" />
             </LinearLayout>
-            <Button
-                android:id="@+id/status_show_more"
-                android:visibility="gone"
-                android:textAllCaps="false"
-                android:drawableLeft="@drawable/ic_photo"
-                android:drawableStart="@drawable/ic_photo"
-                android:gravity="center"
-                android:drawablePadding="5dp"
-                android:paddingLeft="10dp"
-                android:paddingStart="10dp"
-                android:paddingRight="10dp"
-                android:paddingEnd="10dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:maxLines="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/load_attachment" />
+
         </LinearLayout>
     </LinearLayout>
     <LinearLayout

@@ -48,6 +48,7 @@
     <string name="muted_menu">Utilisateurs muets</string>
     <string name="blocked_menu">Utilisateurs bloqués</string>
     <string name="notifications">Notifications</string>
+    <string name="follow_request">Demandes d\'abonnements</string>
     <string name="optimization">Optimisation</string>
     <string name="profile">Profil</string>
     <string name="make_a_choice">Que souhaitez-vous faire ?</string>
@@ -134,6 +135,7 @@
     <string name="toot_visibility_tilte">Visibilité du pouet</string>
     <string name="toot_sent">Le pouet a été envoyé !</string>
     <string name="toot_reply_content_title">Vous répondez à ce pouet :</string>
+    <string name="toot_sensitive">Contenu sensible ?</string>
     <string-array name="toot_visibility">
         <item>Afficher dans les fils publics</item>
         <item>Ne pas afficher dans les fils publics</item>
@@ -157,9 +159,12 @@
 
     <!-- Accounts -->
     <string name="no_accounts">Aucun compte à afficher</string>
+    <string name="no_follow_request">Aucune demande d\'abonnement</string>
     <string name="status_cnt">Pouets \n %d</string>
     <string name="following_cnt">Abonnements \n %d</string>
     <string name="followers_cnt">Abonnés \n %d</string>
+    <string name="authorize">Autoriser</string>
+    <string name="reject">Rejeter</string>
 
     <!-- Notifications -->
     <string name="no_notifications">Aucune notification à afficher</string>
@@ -197,8 +202,10 @@
     <string name="toast_unstatus">Le pouet a été supprimé !</string>
     <string name="toast_error">Oups ! Une erreur s\'est produite !</string>
     <string name="toast_error_loading_account">Une erreur s\'est produite en chargeant le compte !</string>
+    <string name="toast_error_search">Une erreur s\'est produite lors de la recherche !</string>
     <string name="toast_error_login">Impossible de vous connecter !</string>
     <string name="toast_update_credential_ok">Les données du profil ont été sauvegardées !</string>
+    <string name="nothing_to_do">Aucune action ne peut être réalisée</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimisation du chargement</string>
     <string name="set_toots_page">Nombre de pouets par chargement</string>
@@ -209,6 +216,8 @@
     <string name="set_attachment_ask">Demander</string>
     <string name="set_attachment_action">Charger les médias</string>
     <string name="load_attachment">Charger les images</string>
+    <string name="load_attachment_spoiler">Afficher le contenu ?</string>
+    <string name="load_sensitive_attachment">Charger les images sensibles</string>
     <string name="set_display_reply">Afficher le message précédent lors d\'une réponse</string>
 
     <string name="settings_title_notifications">Gestion des notifications</string>
@@ -237,6 +246,7 @@
     <string name="action_block">Bloquer</string>
     <string name="action_unblock">Débloquer</string>
     <string name="action_mute">Masquer</string>
+    <string name="action_no_action">Aucune action</string>
     <string name="action_unmute">Afficher</string>
     <string name="request_sent">Demande envoyée</string>
     <string name="followed_by">Vous suit</string>
@@ -269,6 +279,7 @@
         L\'utilisation de bibliothèques est réduite au strict minimum :\n
         - <b>Android Asynchronous Http Client</b> : Pour la gestion des requêtes\n
         - <b>Universal Image Loader</b> : Pour la gestion des médias\n
-        - <b>Android-Job</b> : Pour la gestion des services
+        - <b>Android-Job</b> : Pour la gestion des services\n
+        - <b>Emoji-java</b> : Pour l\'affichage des emoji
     </string>
 </resources>
