@@ -34,10 +34,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.emojione.Emojione;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import com.vdurmont.emoji.EmojiParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -152,7 +152,7 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
                     holder.account_ds.setVisibility(View.VISIBLE);
             }
         });
-        holder.account_dn.setText(EmojiParser.parseToUnicode(account.getDisplay_name()));
+        holder.account_dn.setText(Emojione.shortnameToUnicode(account.getDisplay_name(), true));
         holder.account_un.setText(String.format("@%s",account.getUsername()));
         holder.account_ac.setText(account.getAcct());
         if( account.getDisplay_name().equals(account.getAcct()))
@@ -162,6 +162,7 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             holder.account_ds.setText(Html.fromHtml(account.getNote(), Html.FROM_HTML_MODE_COMPACT));
         else
+            //noinspection deprecation
             holder.account_ds.setText(Html.fromHtml(account.getNote()));
         holder.account_ds.setAutoLinkMask(Linkify.WEB_URLS);
         holder.account_sc.setText(String.valueOf(account.getStatuses_count()));

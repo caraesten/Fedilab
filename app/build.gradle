@@ -26,7 +26,5 @@ dependencies {
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile 'com.evernote:android-job:1.1.10'
-    compile ('com.vdurmont:emoji-java:3.2.0') {
-        exclude group: 'org.json'
-    }
+
 }

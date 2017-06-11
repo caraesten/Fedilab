@@ -38,14 +38,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.emojione.Emojione;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import com.vdurmont.emoji.EmojiParser;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -283,7 +283,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
         if( account != null){
             setTitle(account.getAcct());
-            account_dn.setText(EmojiParser.parseToUnicode(account.getDisplay_name()));
+            account_dn.setText(Emojione.shortnameToUnicode(account.getDisplay_name(), true));
             account_un.setText(String.format("@%s", account.getUsername()));
             if( account.getAcct() != null && account.getAcct().equals(account.getUsername()))
                 account_ac.setVisibility(View.GONE);

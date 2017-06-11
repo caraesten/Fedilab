@@ -14,13 +14,9 @@ package fr.gouv.etalab.mastodon.drawers;
  * You should have received a copy of the GNU General Public License along with Thomas Schneider; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -29,29 +25,22 @@ import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.VideoView;
 
+import com.emojione.Emojione;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
-import com.vdurmont.emoji.EmojiParser;
 
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import mastodon.etalab.gouv.fr.mastodon.R;
-import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -162,6 +151,7 @@ public class NotificationsListAdapter extends BaseAdapter  {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 holder.notification_status_content.setText(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_COMPACT));
             else
+                //noinspection deprecation
                 holder.notification_status_content.setText(Html.fromHtml(status.getContent()));
             holder.notification_status_content.setAutoLinkMask(Linkify.WEB_URLS);
             holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
@@ -220,8 +210,7 @@ public class NotificationsListAdapter extends BaseAdapter  {
             }
         });
 
-
-        holder.notification_account_displayname.setText(EmojiParser.parseToUnicode(notification.getAccount().getDisplay_name()));
+        holder.notification_account_displayname.setText(Emojione.shortnameToUnicode(notification.getAccount().getDisplay_name(), true));
         holder.notification_account_username.setText( String.format("@%s",notification.getAccount().getUsername()));
         //Profile picture
         imageLoader.displayImage(notification.getAccount().getAvatar(), holder.notification_account_profile, options);
