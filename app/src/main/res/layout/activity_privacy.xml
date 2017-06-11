@@ -51,6 +51,32 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
+        <!-- data -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="@dimen/fab_margin"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
+
+            <!-- DATA PRIVACY TITLE -->
+            <TextView
+                android:text="@string/privacy_data_title"
+                android:background="@drawable/shape_border_bottom_settings"
+                android:paddingBottom="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <!-- DATA PRIVACY CONTENT -->
+            <TextView
+                android:text="@string/privacy_data"
+                android:autoLink="web"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
         <!-- App authorizations -->
         <LinearLayout
             android:layout_width="match_parent"

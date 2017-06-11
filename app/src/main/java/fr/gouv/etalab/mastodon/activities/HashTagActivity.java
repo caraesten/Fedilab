@@ -89,7 +89,7 @@ public class HashTagActivity extends AppCompatActivity implements OnRetrieveFeed
         nextElementLoader.setVisibility(View.GONE);
         statusListAdapter = new StatusListAdapter(HashTagActivity.this, RetrieveFeedsAsyncTask.Type.TAG, isOnWifi, behaviorWithAttachments, this.statuses);
         lv_status.setAdapter(statusListAdapter);
-        setTitle(tag);
+        setTitle(String.format("#%s", tag));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

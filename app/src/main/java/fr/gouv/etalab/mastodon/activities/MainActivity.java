@@ -89,7 +89,8 @@ public class MainActivity extends AppCompatActivity
 
     private enum actionSwipe{
         RIGHT_TO_LEFT,
-        LEFT_TO_RIGHT
+        LEFT_TO_RIGHT,
+        POP
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +121,7 @@ public class MainActivity extends AppCompatActivity
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -428,15 +429,21 @@ public class MainActivity extends AppCompatActivity
                 if( currentAction == actionSwipe.RIGHT_TO_LEFT)
                 fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
                         .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
-                else
+                else if( currentAction == actionSwipe.LEFT_TO_RIGHT)
                     fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
+                            .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
+                else
+                    fragmentManager.beginTransaction().setCustomAnimations(R.anim.fadein, R.anim.fadeout)
                             .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
             }else{
                 if( currentAction == actionSwipe.RIGHT_TO_LEFT)
                     fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
                         .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
-                else
+                else if( currentAction == actionSwipe.LEFT_TO_RIGHT)
                     fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
+                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
+                else
+                    fragmentManager.beginTransaction().setCustomAnimations(R.anim.fadein, R.anim.fadeout)
                             .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
                 first = false;
             }
@@ -450,10 +457,12 @@ public class MainActivity extends AppCompatActivity
             if( currentAction == actionSwipe.RIGHT_TO_LEFT)
                 fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
                     .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
-            else
+            else if( currentAction == actionSwipe.LEFT_TO_RIGHT)
                 fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
                         .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
-
+            else
+                fragmentManager.beginTransaction().setCustomAnimations(R.anim.fadein, R.anim.fadeout)
+                        .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
         } else if (id == R.id.nav_global) {
             toot.setVisibility(View.VISIBLE);
             statusFragment = new DisplayStatusFragment();
@@ -464,8 +473,11 @@ public class MainActivity extends AppCompatActivity
             if( currentAction == actionSwipe.RIGHT_TO_LEFT)
                 fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
                     .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
-            else
+            else if( currentAction == actionSwipe.LEFT_TO_RIGHT)
                 fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
+                        .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
+            else
+                fragmentManager.beginTransaction().setCustomAnimations(R.anim.fadein, R.anim.fadeout)
                         .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
         } else if (id == R.id.nav_settings) {
             toot.setVisibility(View.GONE);
@@ -551,11 +563,23 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Manage touch event
+     * Allows to swipe from timelines
+     * @param event MotionEvent
+     * @return boolean
+     */
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         //Default dispatchTouchEvent is returned when not in timeline page
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        //Menu is opened returns default action
+        if( drawer.isDrawerOpen(GravityCompat.START))
+            return super.dispatchTouchEvent(event);
+        //Current screen is not one of the timelines
         if( currentScreen >3 || currentScreen < 1)
             return super.dispatchTouchEvent(event);
+
         switch(event.getAction()){
             case MotionEvent.ACTION_DOWN: {
                 downX = event.getX();
@@ -568,12 +592,12 @@ public class MainActivity extends AppCompatActivity
                 float deltaX = downX - upX;
                 float deltaY = downY - upY;
                 // swipe horizontal
-
-                if(Math.abs(deltaX) > MIN_DISTANCE && Math.abs(deltaY) < MIN_DISTANCE){
-                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                if( downX > MIN_DISTANCE & (Math.abs(deltaX) > MIN_DISTANCE && Math.abs(deltaY) < MIN_DISTANCE)){
                     drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                     if(deltaX < 0) { switchOnSwipe(actionSwipe.LEFT_TO_RIGHT); drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);return true; }
                     if(deltaX > 0) { switchOnSwipe(actionSwipe.RIGHT_TO_LEFT); drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);return true; }
+                }else{
+                    currentAction = actionSwipe.POP;
                 }
             }
         }

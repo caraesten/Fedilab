@@ -256,6 +256,14 @@
 
 
     <!-- PRIVACY -->
+    <string name="privacy_data_title">Données enregistrées</string>
+    <string name="privacy_data">
+       Seules les informations de base des comptes connectés sont enregistrées sur l\'appareil.
+        Ces données sont strictement confidentielles et ne sont utilisables que par l\'application. La suppression de l\'application entraîne immédiatement la suppression de ces données.\n
+        &#9888; Les identifiants et les mots de passe ne sont jamais enregistrés, ils ne sont utilisés que lors de l\'authentification sécurisée (SSL) vers l\'instance.
+
+    </string>
+
     <string name="privacy_authorizations_title">Autorisations de l\'application</string>
     <string name="privacy_authorizations">
         - <b>ACCESS_NETWORK_STATE</b> : Utilisée pour savoir si l\'appareil est connecté au WIFI.\n
