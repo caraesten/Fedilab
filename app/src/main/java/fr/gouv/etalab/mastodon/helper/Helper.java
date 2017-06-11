@@ -35,6 +35,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.NotificationCompat;
@@ -64,6 +65,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import fr.gouv.etalab.mastodon.activities.LoginActivity;
+import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -578,7 +580,17 @@ public class Helper {
             arrow.setImageResource(R.drawable.ic_arrow_drop_down);
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.activity_main_drawer);
-
+            final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            Account account = new AccountDAO(activity, db).getAccountByID(userId);
+            if( account != null) {
+                if (account.isLocked()) {
+                    navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);
+                } else {
+                    navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
+                }
+            }
         }
         menuAccountsOpened = !menuAccountsOpened;
 
@@ -626,7 +638,7 @@ public class Helper {
      * @param imageLoader ImageLoader - instance of ImageLoader
      * @param options DisplayImageOptions - current configuration of ImageLoader
      */
-    public static void updateHeaderAccountInfo(Activity activity, Account account, View headerLayout, ImageLoader imageLoader, DisplayImageOptions options){
+    public static void updateHeaderAccountInfo(final Activity activity, final Account account, View headerLayout, ImageLoader imageLoader, DisplayImageOptions options){
         ImageView profilePicture = (ImageView) headerLayout.findViewById(R.id.profilePicture);
         TextView username = (TextView) headerLayout.findViewById(R.id.username);
         TextView displayedName = (TextView) headerLayout.findViewById(R.id.displayedName);
@@ -647,5 +659,18 @@ public class Helper {
             displayedName.setText(account.getDisplay_name());
             imageLoader.displayImage(account.getAvatar(), profilePicture, options);
         }
+        profilePicture.setOnClickListener(null);
+        profilePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (account != null) {
+                    Intent intent = new Intent(activity, ShowAccountActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("accountId", account.getId());
+                    intent.putExtras(b);
+                    activity.startActivity(intent);
+                }
+            }
+        });
     }
 }

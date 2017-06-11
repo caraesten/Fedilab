@@ -23,7 +23,6 @@ import android.widget.BaseAdapter;;
 import android.widget.TextView;
 import java.util.List;
 
-import fr.gouv.etalab.mastodon.client.Entities.Tag;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
 
@@ -35,12 +34,10 @@ public class TagsListAdapter extends BaseAdapter  {
 
     private List<String> tags;
     private LayoutInflater layoutInflater;
-    private Context context;
 
     public TagsListAdapter(Context context, List<String> tags){
         this.tags = tags;
         layoutInflater = LayoutInflater.from(context);
-        this.context = context;
     }
 
     @Override

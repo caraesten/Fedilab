@@ -34,7 +34,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.text.util.Linkify;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,12 +49,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.emojione.Emojione;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
-import com.vdurmont.emoji.EmojiParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -233,7 +232,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }else {
             ppurl = status.getAccount().getAvatar();
             content = status.getContent();
-            displayName = EmojiParser.parseToUnicode(status.getAccount().getDisplay_name());
+            displayName = Emojione.shortnameToUnicode(status.getAccount().getDisplay_name(), true);
             username = status.getAccount().getUsername();
             holder.status_reblog_user.setVisibility(View.GONE);
             holder.status_account_displayname.setText(displayName);

@@ -61,6 +61,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private boolean firstLoad;
     private SwipeRefreshLayout swipeRefreshLayout;
     private int notificationPerPage;
+    private boolean swiped;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -71,6 +72,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         firstLoad = true;
         flag_loading = true;
         notifications = new ArrayList<>();
+        swiped = false;
 
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -110,6 +112,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 notifications = new ArrayList<>();
                 firstLoad = true;
                 flag_loading = true;
+                swiped = true;
                 asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
@@ -159,7 +162,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             return;
         }
         List<Notification> notifications = apiResponse.getNotifications();
-        if( firstLoad && (notifications == null || notifications.size() == 0))
+        if( !swiped && firstLoad && (notifications == null || notifications.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
             textviewNoAction.setVisibility(View.GONE);

@@ -57,6 +57,7 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
     private SwipeRefreshLayout swipeRefreshLayout;
     private int accountPerPage;
     private TextView no_action_text;
+    private boolean swiped;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,7 +70,7 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
         max_id = null;
         firstLoad = true;
         flag_loading = true;
-
+        swiped = false;
 
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -111,6 +112,7 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
                 accounts = new ArrayList<>();
                 firstLoad = true;
                 flag_loading = true;
+                swiped = true;
                 asyncTask = new RetrieveFollowRequestSentAsyncTask(context, max_id, DisplayFollowRequestSentFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
@@ -159,7 +161,7 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
             return;
         }
         List<Account> accounts = apiResponse.getAccounts();
-        if( firstLoad && (accounts == null || accounts.size() == 0)) {
+        if( !swiped && firstLoad && (accounts == null || accounts.size() == 0)) {
             no_action_text.setText(context.getString(R.string.no_follow_request));
             textviewNoAction.setVisibility(View.VISIBLE);
         }else

@@ -256,6 +256,14 @@
 
 
     <!-- PRIVACY -->
+    <string name="privacy_data_title">Données enregistrées</string>
+    <string name="privacy_data">
+       Seules les informations de base des comptes connectés sont enregistrées sur l\'appareil.
+        Ces données sont strictement confidentielles et ne sont utilisables que par l\'application. La suppression de l\'application entraîne immédiatement la suppression de ces données.\n
+        &#9888; Les identifiants et les mots de passe ne sont jamais enregistrés, ils ne sont utilisés que lors de l\'authentification sécurisée (SSL) vers l\'instance.
+
+    </string>
+
     <string name="privacy_authorizations_title">Autorisations de l\'application</string>
     <string name="privacy_authorizations">
         - <b>ACCESS_NETWORK_STATE</b> : Utilisée pour savoir si l\'appareil est connecté au WIFI.\n
@@ -279,7 +287,6 @@
         L\'utilisation de bibliothèques est réduite au strict minimum :\n
         - <b>Android Asynchronous Http Client</b> : Pour la gestion des requêtes\n
         - <b>Universal Image Loader</b> : Pour la gestion des médias\n
-        - <b>Android-Job</b> : Pour la gestion des services\n
-        - <b>Emoji-java</b> : Pour l\'affichage des emoji
+        - <b>Android-Job</b> : Pour la gestion des services
     </string>
 </resources>

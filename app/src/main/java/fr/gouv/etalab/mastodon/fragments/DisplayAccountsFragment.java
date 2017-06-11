@@ -22,23 +22,18 @@ import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
@@ -52,8 +47,6 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountsInterface;
  */
 public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccountsInterface {
 
-
-    private TextView noAction;
     private boolean flag_loading;
     private Context context;
     private AsyncTask<Void, Void, Void> asyncTask;
@@ -66,8 +59,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
     private SwipeRefreshLayout swipeRefreshLayout;
     private int accountPerPage;
     private String targetedId;
-    private boolean hideHeader = false;
-    private boolean comesFromSearch = false;
+    private boolean swiped;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,6 +67,8 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         View rootView = inflater.inflate(R.layout.fragment_accounts, container, false);
 
         context = getContext();
+        boolean comesFromSearch = false;
+        boolean hideHeader = false;
         Bundle bundle = this.getArguments();
         accounts = new ArrayList<>();
         if (bundle != null) {
@@ -93,7 +87,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         max_id = null;
         firstLoad = true;
         flag_loading = true;
-
+        swiped = false;
 
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -109,8 +103,6 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         lv_accounts.setAdapter(accountsListAdapter);
 
         if( !comesFromSearch) {
-
-
             //Hide account header when scrolling for ShowAccountActivity
             if (hideHeader) {
                 lv_accounts.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -187,6 +179,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
                     accounts = new ArrayList<>();
                     firstLoad = true;
                     flag_loading = true;
+                    swiped = true;
                     if (type != RetrieveAccountsAsyncTask.Type.FOLLOWERS && type != RetrieveAccountsAsyncTask.Type.FOLLOWING)
                         asyncTask = new RetrieveAccountsAsyncTask(context, type, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     else
@@ -248,7 +241,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
             return;
         }
         List<Account> accounts = apiResponse.getAccounts();
-        if( firstLoad && (accounts == null || accounts.size() == 0))
+        if( !swiped && firstLoad && (accounts == null || accounts.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
             textviewNoAction.setVisibility(View.GONE);

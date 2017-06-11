@@ -63,9 +63,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private SwipeRefreshLayout swipeRefreshLayout;
     private String targetedId;
     private String tag;
-    private boolean hideHeader = false;
     private int tootsPerPage;
-    private boolean comesFromSearch = false;
+    private boolean swiped;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -74,6 +73,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         statuses = new ArrayList<>();
         context = getContext();
         Bundle bundle = this.getArguments();
+        boolean comesFromSearch = false;
+        boolean hideHeader = false;
         if (bundle != null) {
             type = (RetrieveFeedsAsyncTask.Type) bundle.get("type");
             targetedId = bundle.getString("targetedId", null);
@@ -91,6 +92,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         max_id = null;
         flag_loading = true;
         firstLoad = true;
+        swiped = false;
 
         boolean isOnWifi = Helper.isOnWIFI(context);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
@@ -110,7 +112,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         if( !comesFromSearch){
 
             //Hide account header when scrolling for ShowAccountActivity
-            if( hideHeader ) {
+            if(hideHeader) {
                 lv_status.setOnScrollListener(new AbsListView.OnScrollListener() {
                     int lastFirstVisibleItem = 0;
 
@@ -188,6 +190,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     statuses = new ArrayList<>();
                     firstLoad = true;
                     flag_loading = true;
+                    swiped = true;
                     if( type == RetrieveFeedsAsyncTask.Type.USER)
                         asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     else if( type == RetrieveFeedsAsyncTask.Type.TAG)
@@ -257,7 +260,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             return;
         }
         List<Status> statuses = apiResponse.getStatuses();
-        if( firstLoad && (statuses == null || statuses.size() == 0))
+        if( !swiped && firstLoad && (statuses == null || statuses.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
             textviewNoAction.setVisibility(View.GONE);
