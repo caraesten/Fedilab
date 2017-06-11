@@ -18,8 +18,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 
-//See: https://github.com/Vavassor/Tusky/blob/master/app/src/main/java/com/emojione/Emojione.java
-//
+//From: https://github.com/Vavassor/Tusky/blob/master/app/src/main/java/com/emojione/Emojione.java
+//And also from: https://github.com/emojione/emojione/blob/master/lib/android/com/emojione/Emojione.java
+
 package com.emojione;
 
 import android.os.Build;
@@ -30,7 +31,7 @@ import java.util.regex.Pattern;
 
 public abstract class Emojione
 {
-    private static final HashMap<String, String> _shortNameToUnicode = new HashMap<String, String>();
+    private static final HashMap<String, String> _shortNameToUnicode = new HashMap<>();
     private static final Pattern SHORTNAME_PATTERN = Pattern.compile(":([-+\\w]+):");
 
     /**
@@ -49,7 +50,7 @@ public abstract class Emojione
 
             if (supported) {
                 input = input.replace(":" + matcher.group(1) + ":", unicode);
-            } else if (!supported && removeIfUnsupported) {
+            } else if (removeIfUnsupported) {
                 input = input.replace(":" + matcher.group(1) + ":", "");
             }
         }
