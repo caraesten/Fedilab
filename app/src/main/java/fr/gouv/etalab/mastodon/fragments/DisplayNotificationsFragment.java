@@ -158,7 +158,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
-                Toast.makeText(getContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+                Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
         List<Notification> notifications = apiResponse.getNotifications();
@@ -179,7 +179,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         flag_loading = notifications != null && notifications.size() < notificationPerPage;
         //Store last notification id to avoid to notify for those that have been already seen
         if( notifications != null && notifications.size()  > 0) {
-            final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             //acct is null as userId when used in Fragment, data need to be retrieved via shared preferences and db
             userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();

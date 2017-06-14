@@ -34,6 +34,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.text.util.Linkify;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -138,6 +139,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_account_username = (TextView) convertView.findViewById(R.id.status_account_username);
             holder.status_account_displayname = (TextView) convertView.findViewById(R.id.status_account_displayname);
             holder.status_account_profile = (ImageView) convertView.findViewById(R.id.status_account_profile);
+            holder.status_account_profile_boost = (ImageView) convertView.findViewById(R.id.status_account_profile_boost);
             holder.status_favorite_count = (TextView) convertView.findViewById(R.id.status_favorite_count);
             holder.status_reblog_count = (TextView) convertView.findViewById(R.id.status_reblog_count);
             holder.status_toot_date = (TextView) convertView.findViewById(R.id.status_toot_date);
@@ -158,21 +160,25 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_content_container = (LinearLayout) convertView.findViewById(R.id.status_content_container);
             holder.status_spoiler = (TextView) convertView.findViewById(R.id.status_spoiler);
             holder.status_spoiler_button = (Button) convertView.findViewById(R.id.status_spoiler_button);
-
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         if( status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()){
-            holder.status_spoiler_container.setVisibility(View.VISIBLE);
             holder.status_content_container.setVisibility(View.GONE);
+            holder.status_spoiler_container.setVisibility(View.VISIBLE);
+            holder.status_spoiler_button.setVisibility(View.VISIBLE);
+            holder.status_spoiler.setVisibility(View.VISIBLE);
         }else {
             holder.status_spoiler_button.setVisibility(View.GONE);
             holder.status_content_container.setVisibility(View.VISIBLE);
+            if( status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 )
+                holder.status_spoiler_container.setVisibility(View.VISIBLE);
+            else
+                holder.status_spoiler_container.setVisibility(View.GONE);
         }
         if( status.getSpoiler_text() != null)
             holder.status_spoiler.setText(status.getSpoiler_text());
-
         //Spoiler opens
         holder.status_spoiler_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -263,24 +269,54 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
 
         imageLoader.displayImage(ppurl, holder.status_account_profile, options);
-        if( status.getMedia_attachments().size() < 1) {
-            holder.status_document_container.setVisibility(View.GONE);
-            holder.status_show_more.setVisibility(View.GONE);
+        if( status.getReblog() != null) {
+            imageLoader.displayImage(status.getAccount().getAvatar(), holder.status_account_profile_boost, options);
+            holder.status_account_profile_boost.setVisibility(View.VISIBLE);
         }else{
-            //If medias are loaded without any conditions or if device is on wifi
-            if(! status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || ( behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi)) ){
-                loadAttachments(status);
+            holder.status_account_profile_boost.setVisibility(View.GONE);
+        }
+        if( status.getReblog() == null) {
+            if (status.getMedia_attachments().size() < 1) {
+                holder.status_document_container.setVisibility(View.GONE);
                 holder.status_show_more.setVisibility(View.GONE);
-                status.setAttachmentShown(true);
-            }else{
-                //Text depending if toots is sensitive or not
-                String textShowMore = (status.isSensitive())?context.getString(R.string.load_sensitive_attachment):context.getString(R.string.load_attachment);
-                holder.status_show_more.setText(textShowMore);
-                if( !status.isAttachmentShown() ) {
-                    holder.status_show_more.setVisibility(View.VISIBLE);
-                    holder.status_document_container.setVisibility(View.GONE);
-                }else {
+            } else {
+                //If medias are loaded without any conditions or if device is on wifi
+                if (!status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
                     loadAttachments(status);
+                    holder.status_show_more.setVisibility(View.GONE);
+                    status.setAttachmentShown(true);
+                } else {
+                    //Text depending if toots is sensitive or not
+                    String textShowMore = (status.isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
+                    holder.status_show_more.setText(textShowMore);
+                    if (!status.isAttachmentShown()) {
+                        holder.status_show_more.setVisibility(View.VISIBLE);
+                        holder.status_document_container.setVisibility(View.GONE);
+                    } else {
+                        loadAttachments(status);
+                    }
+                }
+            }
+        }else { //Attachments for reblogs
+            if (status.getReblog().getMedia_attachments().size() < 1) {
+                holder.status_document_container.setVisibility(View.GONE);
+                holder.status_show_more.setVisibility(View.GONE);
+            } else {
+                //If medias are loaded without any conditions or if device is on wifi
+                if (!status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
+                    loadAttachments(status.getReblog());
+                    holder.status_show_more.setVisibility(View.GONE);
+                    status.getReblog().setAttachmentShown(true);
+                } else {
+                    //Text depending if toots is sensitive or not
+                    String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
+                    holder.status_show_more.setText(textShowMore);
+                    if (!status.getReblog().isAttachmentShown()) {
+                        holder.status_show_more.setVisibility(View.VISIBLE);
+                        holder.status_document_container.setVisibility(View.GONE);
+                    } else {
+                        loadAttachments(status.getReblog());
+                    }
                 }
             }
         }
@@ -595,6 +631,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         TextView status_account_username;
         TextView status_account_displayname;
         ImageView status_account_profile;
+        ImageView status_account_profile_boost;
         TextView status_favorite_count;
         TextView status_reblog_count;
         TextView status_toot_date;
