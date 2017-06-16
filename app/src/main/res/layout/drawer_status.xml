@@ -29,7 +29,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
         <RelativeLayout
             android:layout_height="60dp"
             android:layout_width="60dp"
@@ -145,14 +146,28 @@
                     android:id="@+id/status_document_container"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp">
-                    <ImageView
-                        android:id="@+id/status_prev1"
+                    android:layout_height="200dp"
+                    android:baselineAligned="false">
+                    <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:scaleType="centerCrop"
                         android:layout_height="match_parent"
-                        tools:ignore="ContentDescription" />
+                        >
+                        <ImageView
+                            android:id="@+id/status_prev1"
+                            android:layout_width="match_parent"
+                            android:scaleType="centerCrop"
+                            android:layout_height="match_parent"
+                            tools:ignore="ContentDescription" />
+                        <ImageView
+                            android:id="@+id/status_prev1_play"
+                            android:visibility="gone"
+                            android:layout_centerInParent="true"
+                            android:layout_width="wrap_content"
+                            android:src="@drawable/ic_play_arrow"
+                            android:layout_height="wrap_content"
+                            tools:ignore="ContentDescription" />
+                    </RelativeLayout>
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="0dp"
@@ -161,36 +176,78 @@
                         android:id="@+id/status_container2"
                         android:layout_weight="1"
                         android:layout_height="match_parent">
-                        <ImageView
-                            android:id="@+id/status_prev2"
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_weight="1"
                             android:scaleType="centerCrop"
                             android:layout_height="0dp"
-                            tools:ignore="ContentDescription" />
+                            android:layout_weight="1">
+                            <ImageView
+                                android:id="@+id/status_prev2"
+                                android:layout_width="match_parent"
+                                android:scaleType="centerCrop"
+                                android:layout_height="match_parent"
+                                tools:ignore="ContentDescription" />
+                            <ImageView
+                                android:visibility="gone"
+                                android:id="@+id/status_prev2_play"
+                                android:layout_centerInParent="true"
+                                android:layout_width="wrap_content"
+                                android:src="@drawable/ic_play_arrow"
+                                android:layout_height="wrap_content"
+                                tools:ignore="ContentDescription" />
+                        </RelativeLayout>
+
                         <LinearLayout
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:orientation="horizontal"
                             android:layout_marginTop="2dp"
                             android:id="@+id/status_container3"
-                            android:layout_height="0dp">
-                            <ImageView
-                                android:id="@+id/status_prev3"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:scaleType="centerCrop"
-                                android:layout_height="wrap_content"
-                                tools:ignore="ContentDescription" />
-                            <ImageView
+                            android:layout_height="0dp"
+                            android:baselineAligned="false">
+                            <RelativeLayout
                                 android:layout_marginLeft="2dp"
                                 android:layout_marginStart="2dp"
-                                android:id="@+id/status_prev4"
                                 android:layout_weight="1"
                                 android:layout_width="0dp"
-                                android:scaleType="centerCrop"
-                                android:layout_height="wrap_content"
-                                tools:ignore="ContentDescription" />
+                                android:layout_height="wrap_content">
+                                <ImageView
+                                    android:id="@+id/status_prev3"
+                                    android:layout_width="match_parent"
+                                    android:scaleType="centerCrop"
+                                    android:layout_height="match_parent"
+                                    tools:ignore="ContentDescription" />
+                                <ImageView
+                                    android:id="@+id/status_prev3_play"
+                                    android:layout_centerInParent="true"
+                                    android:layout_width="wrap_content"
+                                    android:src="@drawable/ic_play_arrow"
+                                    android:visibility="gone"
+                                    android:layout_height="wrap_content"
+                                    tools:ignore="ContentDescription" />
+                            </RelativeLayout>
+                            <RelativeLayout
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginStart="2dp"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content">
+                                <ImageView
+                                    android:id="@+id/status_prev4"
+                                    android:layout_width="match_parent"
+                                    android:scaleType="centerCrop"
+                                    android:layout_height="match_parent"
+                                    tools:ignore="ContentDescription" />
+                                <ImageView
+                                    android:id="@+id/status_prev4_play"
+                                    android:layout_centerInParent="true"
+                                    android:visibility="gone"
+                                    android:layout_width="wrap_content"
+                                    android:src="@drawable/ic_play_arrow"
+                                    android:layout_height="wrap_content"
+                                    tools:ignore="ContentDescription" />
+                            </RelativeLayout>
+
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
