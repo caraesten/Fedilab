@@ -23,6 +23,7 @@ import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private String tag;
     private int tootsPerPage;
     private boolean swiped;
+    private ListView lv_status;
+    private boolean isOnWifi;
+    private int behaviorWithAttachments;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -94,12 +98,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         firstLoad = true;
         swiped = false;
 
-        boolean isOnWifi = Helper.isOnWIFI(context);
+        isOnWifi = Helper.isOnWIFI(context);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+        behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
 
-        final ListView lv_status = (ListView) rootView.findViewById(R.id.lv_status);
+        lv_status = (ListView) rootView.findViewById(R.id.lv_status);
         tootsPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
         mainLoader = (RelativeLayout) rootView.findViewById(R.id.loader);
         nextElementLoader = (RelativeLayout) rootView.findViewById(R.id.loading_next_status);
@@ -264,6 +268,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             textviewNoAction.setVisibility(View.VISIBLE);
         else
             textviewNoAction.setVisibility(View.GONE);
+        if( swiped ){
+            statusListAdapter = new StatusListAdapter(context, type, isOnWifi, behaviorWithAttachments, this.statuses);
+            lv_status.setAdapter(statusListAdapter);
+            swiped = false;
+        }
         max_id = apiResponse.getMax_id();
         if( statuses != null) {
             for(Status tmpStatus: statuses){

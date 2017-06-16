@@ -34,6 +34,7 @@ import java.util.List;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
+import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -62,6 +63,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private SwipeRefreshLayout swipeRefreshLayout;
     private int notificationPerPage;
     private boolean swiped;
+    private ListView lv_notifications;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,7 +79,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         notificationPerPage = sharedpreferences.getInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 40);
-        ListView lv_notifications = (ListView) rootView.findViewById(R.id.lv_notifications);
+        lv_notifications = (ListView) rootView.findViewById(R.id.lv_notifications);
 
         mainLoader = (RelativeLayout) rootView.findViewById(R.id.loader);
         nextElementLoader = (RelativeLayout) rootView.findViewById(R.id.loading_next_notifications);
@@ -166,6 +168,11 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             textviewNoAction.setVisibility(View.VISIBLE);
         else
             textviewNoAction.setVisibility(View.GONE);
+        if( swiped ){
+            notificationsListAdapter = new NotificationsListAdapter(context, this.notifications);
+            lv_notifications.setAdapter(notificationsListAdapter);
+            swiped = false;
+        }
         max_id = apiResponse.getMax_id();
 
         if( notifications != null) {

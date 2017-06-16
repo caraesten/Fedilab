@@ -58,7 +58,7 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
     private int accountPerPage;
     private TextView no_action_text;
     private boolean swiped;
-
+    private ListView lv_accounts;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -75,7 +75,7 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         accountPerPage = sharedpreferences.getInt(Helper.SET_ACCOUNTS_PER_PAGE, 40);
-        final ListView lv_accounts = (ListView) rootView.findViewById(R.id.lv_accounts);
+        lv_accounts = (ListView) rootView.findViewById(R.id.lv_accounts);
         no_action_text = (TextView) rootView.findViewById(R.id.no_action_text);
         mainLoader = (RelativeLayout) rootView.findViewById(R.id.loader);
         nextElementLoader = (RelativeLayout) rootView.findViewById(R.id.loading_next_accounts);
@@ -167,6 +167,11 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
         }else
             textviewNoAction.setVisibility(View.GONE);
         max_id = apiResponse.getMax_id();
+        if( swiped ){
+            accountsFollowRequestAdapter = new AccountsFollowRequestAdapter(context, this.accounts);
+            lv_accounts.setAdapter(accountsFollowRequestAdapter);
+            swiped = false;
+        }
         if( accounts != null) {
             for(Account tmpAccount: accounts){
                 this.accounts.add(tmpAccount);
