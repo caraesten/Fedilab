@@ -60,6 +60,8 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
     private int accountPerPage;
     private String targetedId;
     private boolean swiped;
+    private ListView lv_accounts;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -92,7 +94,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         accountPerPage = sharedpreferences.getInt(Helper.SET_ACCOUNTS_PER_PAGE, 40);
-        final ListView lv_accounts = (ListView) rootView.findViewById(R.id.lv_accounts);
+        lv_accounts = (ListView) rootView.findViewById(R.id.lv_accounts);
 
         mainLoader = (RelativeLayout) rootView.findViewById(R.id.loader);
         nextElementLoader = (RelativeLayout) rootView.findViewById(R.id.loading_next_accounts);
@@ -238,6 +240,9 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
                 Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            flag_loading = false;
+            swipeRefreshLayout.setRefreshing(false);
+            swiped = false;
             return;
         }
         List<Account> accounts = apiResponse.getAccounts();
@@ -246,6 +251,11 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         else
             textviewNoAction.setVisibility(View.GONE);
         max_id = apiResponse.getMax_id();
+        if( swiped ){
+            accountsListAdapter = new AccountsListAdapter(context, type, this.accounts);
+            lv_accounts.setAdapter(accountsListAdapter);
+            swiped = false;
+        }
         if( accounts != null) {
             for(Account tmpAccount: accounts){
                 this.accounts.add(tmpAccount);
