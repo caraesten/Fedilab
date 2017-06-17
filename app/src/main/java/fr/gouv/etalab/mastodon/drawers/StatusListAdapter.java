@@ -157,6 +157,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_prev4_play = (ImageView) convertView.findViewById(R.id.status_prev4_play);
             holder.status_container2 = (LinearLayout) convertView.findViewById(R.id.status_container2);
             holder.status_container3 = (LinearLayout) convertView.findViewById(R.id.status_container3);
+            holder.status_prev4_container = (RelativeLayout) convertView.findViewById(R.id.status_prev4_container);
             holder.status_reply = (ImageView) convertView.findViewById(R.id.status_reply);
             holder.status_privacy = (ImageView) convertView.findViewById(R.id.status_privacy);
             holder.main_container = (LinearLayout) convertView.findViewById(R.id.main_container);
@@ -463,9 +464,9 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             }else if( attachments.size() == 3){
                 holder.status_container2.setVisibility(View.VISIBLE);
                 holder.status_container3.setVisibility(View.VISIBLE);
-                holder.status_prev4.setVisibility(View.GONE);
+                holder.status_prev4_container.setVisibility(View.GONE);
             }else {
-                holder.status_prev4.setVisibility(View.VISIBLE);
+                holder.status_prev4_container.setVisibility(View.VISIBLE);
             }
             for(final Attachment attachment: attachments){
                 ImageView imageView;
@@ -669,6 +670,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         ImageView status_prev2_play;
         ImageView status_prev3_play;
         ImageView status_prev4_play;
+        RelativeLayout status_prev4_container;
         ImageView status_reply;
         ImageView status_privacy;
         LinearLayout status_container2;

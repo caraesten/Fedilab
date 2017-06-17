@@ -240,6 +240,9 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
                 Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            flag_loading = false;
+            swipeRefreshLayout.setRefreshing(false);
+            swiped = false;
             return;
         }
         List<Account> accounts = apiResponse.getAccounts();

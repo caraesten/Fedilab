@@ -158,6 +158,9 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
                 Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            flag_loading = false;
+            swipeRefreshLayout.setRefreshing(false);
+            swiped = false;
             return;
         }
         List<Account> accounts = apiResponse.getAccounts();

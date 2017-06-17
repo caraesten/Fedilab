@@ -163,9 +163,9 @@
                             android:id="@+id/status_prev1_play"
                             android:visibility="gone"
                             android:layout_centerInParent="true"
-                            android:layout_width="wrap_content"
+                            android:layout_width="20dp"
                             android:src="@drawable/ic_play_arrow"
-                            android:layout_height="wrap_content"
+                            android:layout_height="20dp"
                             tools:ignore="ContentDescription" />
                     </RelativeLayout>
                     <LinearLayout
@@ -191,9 +191,9 @@
                                 android:visibility="gone"
                                 android:id="@+id/status_prev2_play"
                                 android:layout_centerInParent="true"
-                                android:layout_width="wrap_content"
+                                android:layout_width="20dp"
                                 android:src="@drawable/ic_play_arrow"
-                                android:layout_height="wrap_content"
+                                android:layout_height="20dp"
                                 tools:ignore="ContentDescription" />
                         </RelativeLayout>
 
@@ -220,10 +220,10 @@
                                 <ImageView
                                     android:id="@+id/status_prev3_play"
                                     android:layout_centerInParent="true"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="20dp"
                                     android:src="@drawable/ic_play_arrow"
                                     android:visibility="gone"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="20dp"
                                     tools:ignore="ContentDescription" />
                             </RelativeLayout>
                             <RelativeLayout
@@ -231,6 +231,7 @@
                                 android:layout_marginStart="2dp"
                                 android:layout_weight="1"
                                 android:layout_width="0dp"
+                                android:id="@+id/status_prev4_container"
                                 android:layout_height="wrap_content">
                                 <ImageView
                                     android:id="@+id/status_prev4"
@@ -242,9 +243,9 @@
                                     android:id="@+id/status_prev4_play"
                                     android:layout_centerInParent="true"
                                     android:visibility="gone"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="20dp"
                                     android:src="@drawable/ic_play_arrow"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="20dp"
                                     tools:ignore="ContentDescription" />
                             </RelativeLayout>
 
