@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetFileDescriptor;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -41,6 +42,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -55,14 +57,22 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import fr.gouv.etalab.mastodon.activities.LoginActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
@@ -158,6 +168,59 @@ public class Helper {
 
 
     private static boolean menuAccountsOpened = false;
+
+
+    private static final Pattern SHORTNAME_PATTERN = Pattern.compile(":([-+\\w]+):");
+
+    /**
+     * Convert emojis in input to unicode
+     * @param input String
+     * @param removeIfUnsupported boolean
+     * @return String
+     */
+    public static String shortnameToUnicode(String input, boolean removeIfUnsupported) {
+        Matcher matcher = SHORTNAME_PATTERN.matcher(input);
+        boolean supported = Build.VERSION.SDK_INT >= 16;
+        while (matcher.find()) {
+            String unicode = emoji.get(matcher.group(1));
+            if (unicode == null) {
+                continue;
+            }
+            if (supported) {
+                input = input.replace(":" + matcher.group(1) + ":", unicode);
+            } else if (removeIfUnsupported) {
+                input = input.replace(":" + matcher.group(1) + ":", "");
+            }
+        }
+        return input;
+    }
+    //Emoji manager
+    private static Map<String, String> emoji = new HashMap<>();
+
+    public static void fillMapEmoji(Context context) {
+        // here comes file reading code with loop
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(context.getAssets().open("emoji.csv")));
+            String line;
+            while( (line = br.readLine()) != null) {
+                String str[] = line.split(",");
+                String unicode = null;
+                if(str.length == 4)
+                    unicode =  new String(new int[] {Integer.parseInt(str[1].replace("0x","").trim(), 16)},Integer.parseInt(str[2].trim()),Integer.parseInt(str[3].trim()));
+                else if(str.length == 5)
+                    unicode =  new String(new int[] {Integer.parseInt(str[1].replace("0x","").trim(), 16), Integer.parseInt(str[2].replace("0x","").trim(), 16)},Integer.parseInt(str[3].trim()), Integer.parseInt(str[4].trim()));
+                else if(str.length == 6)
+                    unicode =  new String(new int[] {Integer.parseInt(str[1].replace("0x","").trim(), 16), Integer.parseInt(str[2].replace("0x","").trim(), 16), Integer.parseInt(str[3].replace("0x","").trim(), 16)}, Integer.parseInt(str[4].trim()), Integer.parseInt(str[5].trim()));
+                else if(str.length == 7)
+                    unicode =  new String(new int[] {Integer.parseInt(str[1].replace("0x","").trim(), 16), Integer.parseInt(str[2].replace("0x","").trim(), 16), Integer.parseInt(str[3].replace("0x","").trim(), 16), Integer.parseInt(str[4].replace("0x","").trim(), 16)}, Integer.parseInt(str[5].trim()),Integer.parseInt(str[6].trim()));
+                if( unicode != null)
+                    emoji.put(str[0],unicode);
+            }
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /***
      *  Check if the user is connected to Internet

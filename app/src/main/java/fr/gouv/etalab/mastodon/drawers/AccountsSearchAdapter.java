@@ -26,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.emojione.Emojione;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
@@ -91,7 +90,7 @@ public class AccountsSearchAdapter extends BaseAdapter  {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.account_dn.setText(Emojione.shortnameToUnicode(account.getDisplay_name(), true));
+        holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
         holder.account_un.setText(String.format("@%s",account.getUsername()));
         //Profile picture
         imageLoader.displayImage(account.getAvatar(), holder.account_pp, options);

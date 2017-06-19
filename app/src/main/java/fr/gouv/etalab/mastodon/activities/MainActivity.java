@@ -46,6 +46,7 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Map;
 
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity
         LEFT_TO_RIGHT,
         POP
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +107,7 @@ public class MainActivity extends AppCompatActivity
             finish();
             return;
         }
+        Helper.fillMapEmoji(getApplicationContext());
         //Here, the user is authenticated
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

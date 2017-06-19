@@ -175,7 +175,7 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
             lv_accounts.setAdapter(accountsFollowRequestAdapter);
             swiped = false;
         }
-        if( accounts != null) {
+        if( accounts != null && accounts.size() > 0) {
             for(Account tmpAccount: accounts){
                 this.accounts.add(tmpAccount);
             }

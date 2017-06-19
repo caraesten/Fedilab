@@ -50,7 +50,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.emojione.Emojione;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -243,7 +242,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }else {
             ppurl = status.getAccount().getAvatar();
             content = status.getContent();
-            displayName = Emojione.shortnameToUnicode(status.getAccount().getDisplay_name(), true);
+            displayName = Helper.shortnameToUnicode(status.getAccount().getDisplay_name(), true);
             username = status.getAccount().getUsername();
             holder.status_reblog_user.setVisibility(View.GONE);
             holder.status_account_displayname.setText(displayName);
