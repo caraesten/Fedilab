@@ -25,7 +25,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.AssetFileDescriptor;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -42,7 +41,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -59,7 +57,6 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
@@ -173,7 +170,7 @@ public class Helper {
     private static final Pattern SHORTNAME_PATTERN = Pattern.compile(":([-+\\w]+):");
 
     /**
-     * Convert emojis in input to unicode
+     * Converts emojis in input to unicode
      * @param input String
      * @param removeIfUnsupported boolean
      * @return String
@@ -198,21 +195,20 @@ public class Helper {
     private static Map<String, String> emoji = new HashMap<>();
 
     public static void fillMapEmoji(Context context) {
-        // here comes file reading code with loop
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(context.getAssets().open("emoji.csv")));
             String line;
             while( (line = br.readLine()) != null) {
                 String str[] = line.split(",");
                 String unicode = null;
-                if(str.length == 4)
-                    unicode =  new String(new int[] {Integer.parseInt(str[1].replace("0x","").trim(), 16)},Integer.parseInt(str[2].trim()),Integer.parseInt(str[3].trim()));
+                if(str.length == 2)
+                    unicode =  new String(new int[] {Integer.parseInt(str[1].replace("0x","").trim(), 16)}, 0, 1);
+                else if(str.length == 3)
+                    unicode =  new String(new int[] {Integer.parseInt(str[1].replace("0x","").trim(), 16), Integer.parseInt(str[2].replace("0x","").trim(), 16)}, 0, 2);
+                else if(str.length == 4)
+                    unicode =  new String(new int[] {Integer.parseInt(str[1].replace("0x","").trim(), 16), Integer.parseInt(str[2].replace("0x","").trim(), 16), Integer.parseInt(str[3].replace("0x","").trim(), 16)}, 0, 3);
                 else if(str.length == 5)
-                    unicode =  new String(new int[] {Integer.parseInt(str[1].replace("0x","").trim(), 16), Integer.parseInt(str[2].replace("0x","").trim(), 16)},Integer.parseInt(str[3].trim()), Integer.parseInt(str[4].trim()));
-                else if(str.length == 6)
-                    unicode =  new String(new int[] {Integer.parseInt(str[1].replace("0x","").trim(), 16), Integer.parseInt(str[2].replace("0x","").trim(), 16), Integer.parseInt(str[3].replace("0x","").trim(), 16)}, Integer.parseInt(str[4].trim()), Integer.parseInt(str[5].trim()));
-                else if(str.length == 7)
-                    unicode =  new String(new int[] {Integer.parseInt(str[1].replace("0x","").trim(), 16), Integer.parseInt(str[2].replace("0x","").trim(), 16), Integer.parseInt(str[3].replace("0x","").trim(), 16), Integer.parseInt(str[4].replace("0x","").trim(), 16)}, Integer.parseInt(str[5].trim()),Integer.parseInt(str[6].trim()));
+                    unicode =  new String(new int[] {Integer.parseInt(str[1].replace("0x","").trim(), 16), Integer.parseInt(str[2].replace("0x","").trim(), 16), Integer.parseInt(str[3].replace("0x","").trim(), 16), Integer.parseInt(str[4].replace("0x","").trim(), 16)}, 0, 4);
                 if( unicode != null)
                     emoji.put(str[0],unicode);
             }
@@ -736,4 +732,44 @@ public class Helper {
             }
         });
     }
+
+
+    /**
+     * Retrieves the cache size
+     * @param directory File
+     * @return long value in Mo
+     */
+    public static long cacheSize(File directory) {
+        long length = 0;
+        if( directory == null || directory.length() == 0 )
+            return -1;
+        for (File file : directory.listFiles()) {
+            if (file.isFile())
+                try {
+                    length += file.length();
+                }catch (NullPointerException e){
+                    return -1;
+                }
+            else
+                length += cacheSize(file);
+        }
+        return length;
+    }
+
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (String aChildren : children) {
+                boolean success = deleteDir(new File(dir, aChildren));
+                if (!success) {
+                    return false;
+                }
+            }
+            return dir.delete();
+        } else{
+            return dir != null && dir.isFile() && dir.delete();
+        }
+    }
+
+
 }

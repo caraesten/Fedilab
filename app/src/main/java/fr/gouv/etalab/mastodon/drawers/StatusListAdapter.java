@@ -315,7 +315,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     //Text depending if toots is sensitive or not
                     String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
                     holder.status_show_more.setText(textShowMore);
-                    if (!status.getReblog().isAttachmentShown()) {
+                    if (!status.isAttachmentShown()) {
                         holder.status_show_more.setVisibility(View.VISIBLE);
                         holder.status_document_container.setVisibility(View.GONE);
                     } else {
