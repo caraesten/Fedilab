@@ -22,6 +22,8 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/fab_margin"
+        android:paddingRight="@dimen/fab_margin"
         xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical">
 
@@ -30,7 +32,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:padding="@dimen/fab_margin"
             android:layout_marginTop="10dp"
             android:orientation="vertical"
             tools:ignore="UselessParent">
@@ -56,7 +57,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:padding="@dimen/fab_margin"
             android:layout_marginTop="10dp"
             android:orientation="vertical"
             tools:ignore="UselessParent">
@@ -82,7 +82,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:padding="@dimen/fab_margin"
             android:orientation="vertical"
             tools:ignore="UselessParent">
 
@@ -107,7 +106,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:padding="@dimen/fab_margin"
             android:orientation="vertical"
             tools:ignore="UselessParent">
 
