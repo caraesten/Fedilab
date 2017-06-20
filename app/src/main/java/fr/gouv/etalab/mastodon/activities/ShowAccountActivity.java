@@ -41,7 +41,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.emojione.Emojione;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
@@ -283,7 +282,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
         if( account != null){
             setTitle(account.getAcct());
-            account_dn.setText(Emojione.shortnameToUnicode(account.getDisplay_name(), true));
+            account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
             account_un.setText(String.format("@%s", account.getUsername()));
             if( account.getAcct() != null && account.getAcct().equals(account.getUsername()))
                 account_ac.setVisibility(View.GONE);

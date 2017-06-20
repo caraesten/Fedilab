@@ -178,7 +178,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         }
         max_id = apiResponse.getMax_id();
 
-        if( notifications != null) {
+        if( notifications != null && notifications.size() > 0) {
             for(Notification tmpNotification: notifications){
                 this.notifications.add(tmpNotification);
             }

@@ -55,14 +55,21 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import fr.gouv.etalab.mastodon.activities.LoginActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
@@ -158,6 +165,58 @@ public class Helper {
 
 
     private static boolean menuAccountsOpened = false;
+
+
+    private static final Pattern SHORTNAME_PATTERN = Pattern.compile(":([-+\\w]+):");
+
+    /**
+     * Converts emojis in input to unicode
+     * @param input String
+     * @param removeIfUnsupported boolean
+     * @return String
+     */
+    public static String shortnameToUnicode(String input, boolean removeIfUnsupported) {
+        Matcher matcher = SHORTNAME_PATTERN.matcher(input);
+        boolean supported = Build.VERSION.SDK_INT >= 16;
+        while (matcher.find()) {
+            String unicode = emoji.get(matcher.group(1));
+            if (unicode == null) {
+                continue;
+            }
+            if (supported) {
+                input = input.replace(":" + matcher.group(1) + ":", unicode);
+            } else if (removeIfUnsupported) {
+                input = input.replace(":" + matcher.group(1) + ":", "");
+            }
+        }
+        return input;
+    }
+    //Emoji manager
+    private static Map<String, String> emoji = new HashMap<>();
+
+    public static void fillMapEmoji(Context context) {
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(context.getAssets().open("emoji.csv")));
+            String line;
+            while( (line = br.readLine()) != null) {
+                String str[] = line.split(",");
+                String unicode = null;
+                if(str.length == 2)
+                    unicode =  new String(new int[] {Integer.parseInt(str[1].replace("0x","").trim(), 16)}, 0, 1);
+                else if(str.length == 3)
+                    unicode =  new String(new int[] {Integer.parseInt(str[1].replace("0x","").trim(), 16), Integer.parseInt(str[2].replace("0x","").trim(), 16)}, 0, 2);
+                else if(str.length == 4)
+                    unicode =  new String(new int[] {Integer.parseInt(str[1].replace("0x","").trim(), 16), Integer.parseInt(str[2].replace("0x","").trim(), 16), Integer.parseInt(str[3].replace("0x","").trim(), 16)}, 0, 3);
+                else if(str.length == 5)
+                    unicode =  new String(new int[] {Integer.parseInt(str[1].replace("0x","").trim(), 16), Integer.parseInt(str[2].replace("0x","").trim(), 16), Integer.parseInt(str[3].replace("0x","").trim(), 16), Integer.parseInt(str[4].replace("0x","").trim(), 16)}, 0, 4);
+                if( unicode != null)
+                    emoji.put(str[0],unicode);
+            }
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /***
      *  Check if the user is connected to Internet
@@ -673,4 +732,44 @@ public class Helper {
             }
         });
     }
+
+
+    /**
+     * Retrieves the cache size
+     * @param directory File
+     * @return long value in Mo
+     */
+    public static long cacheSize(File directory) {
+        long length = 0;
+        if( directory == null || directory.length() == 0 )
+            return -1;
+        for (File file : directory.listFiles()) {
+            if (file.isFile())
+                try {
+                    length += file.length();
+                }catch (NullPointerException e){
+                    return -1;
+                }
+            else
+                length += cacheSize(file);
+        }
+        return length;
+    }
+
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (String aChildren : children) {
+                boolean success = deleteDir(new File(dir, aChildren));
+                if (!success) {
+                    return false;
+                }
+            }
+            return dir.delete();
+        } else{
+            return dir != null && dir.isFile() && dir.delete();
+        }
+    }
+
+
 }

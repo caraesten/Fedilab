@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2017 Thomas Schneider
+
+    This file is a part of Mastodon Etalab for mastodon.etalab.gouv.fr
+
+    This program is free software; you can redistribute it and/or modify it under the terms of the
+    GNU General Public License as published by the Free Software Foundation; either version 3 of the
+    License, or (at your option) any later version.
+
+    Mastodon Etalab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+    the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+    Public License for more details.
+
+    You should have received a copy of the GNU General Public License along with Thomas Schneider; if not,
+    see <http://www.gnu.org/licenses>.
+-->
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#fff"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <ImageView
+            android:layout_marginTop="20dp"
+            android:layout_width="100dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/mastodonlogo"
+            android:layout_height="100dp"
+            tools:ignore="ContentDescription" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_margin="50dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <EditText
+                android:visibility="gone"
+                android:id="@+id/login_instance"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:inputType="textWebEmailAddress"
+                android:hint="@string/instance"
+                />
+            <EditText
+                android:id="@+id/login_uid"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="@string/email"
+                />
+            <EditText
+                android:id = "@+id/login_passwd"
+                android:inputType="textPassword"
+                android:hint="@string/password"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                />
+            <Button
+                android:id="@+id/login_button"
+                android:textAllCaps="false"
+                android:drawableLeft="@drawable/mastodon_icon"
+                android:drawableStart="@drawable/mastodon_icon"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:drawablePadding="10dp"
+                android:paddingLeft="15dp"
+                android:paddingStart="15dp"
+                android:paddingRight="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:maxLines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="@string/login" />
+            <TextView
+                android:id="@+id/login_two_step"
+                android:textAllCaps="false"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:drawablePadding="10dp"
+                android:padding="20dp"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:text="@string/two_factor_authentification" />
+            <TextView
+                android:id="@+id/other_instance"
+                android:textAllCaps="false"
+                android:gravity="center"
+                android:drawablePadding="10dp"
+                android:padding="20dp"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:text="@string/other_instance" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

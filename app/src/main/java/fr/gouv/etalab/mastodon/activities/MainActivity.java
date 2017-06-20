@@ -15,6 +15,7 @@
 package fr.gouv.etalab.mastodon.activities;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -23,6 +24,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -37,6 +39,7 @@ import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -46,6 +49,7 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Locale;
 
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -92,6 +96,7 @@ public class MainActivity extends AppCompatActivity
         LEFT_TO_RIGHT,
         POP
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +110,7 @@ public class MainActivity extends AppCompatActivity
             finish();
             return;
         }
+        Helper.fillMapEmoji(getApplicationContext());
         //Here, the user is authenticated
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -318,6 +324,39 @@ public class MainActivity extends AppCompatActivity
         }else if(id == R.id.action_about_instance){
             Intent intent = new Intent(getApplicationContext(), InstanceActivity.class);
             startActivity(intent);
+        } else if( id == R.id.action_cache){ //Cache clear feature
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle(R.string.cache_title);
+            long sizeCache = Helper.cacheSize(getCacheDir());
+            float cacheSize = 0;
+            if( sizeCache > 0 ) {
+                if (sizeCache > 0) {
+                    cacheSize = (float) sizeCache / 1000000.0f;
+                }
+            }
+            final float finalCacheSize = cacheSize;
+            builder.setMessage(getString(R.string.cache_message, String.format("%s Mo", String.format(Locale.getDefault(), "%.2f", cacheSize))))
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                            try {
+                                String path = getCacheDir().getPath();
+                                File dir = new File(path);
+                                if (dir.isDirectory()) {
+                                    Helper.deleteDir(dir);
+                                }
+                            } catch (Exception ignored) {}
+                            Toast.makeText(MainActivity.this, getString(R.string.toast_cache_clear,String.format("%s Mo", String.format(Locale.getDefault(), "%.2f", finalCacheSize))), Toast.LENGTH_LONG).show();
+                            dialog.dismiss();
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
         } else if(id == R.id.action_search){
 
             if( toolbar.getChildCount() > 0){

@@ -30,7 +30,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.emojione.Emojione;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
@@ -210,7 +209,7 @@ public class NotificationsListAdapter extends BaseAdapter  {
             }
         });
 
-        holder.notification_account_displayname.setText(Emojione.shortnameToUnicode(notification.getAccount().getDisplay_name(), true));
+        holder.notification_account_displayname.setText(Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true));
         holder.notification_account_username.setText( String.format("@%s",notification.getAccount().getUsername()));
         //Profile picture
         imageLoader.displayImage(notification.getAccount().getAvatar(), holder.notification_account_profile, options);

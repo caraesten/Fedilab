@@ -50,7 +50,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.emojione.Emojione;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -233,7 +232,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         final String content, displayName, username, ppurl;
         if( status.getReblog() != null){
             content = status.getReblog().getContent();
-            displayName = status.getReblog().getAccount().getDisplay_name();
+            displayName = Helper.shortnameToUnicode(status.getReblog().getAccount().getDisplay_name(), true);
             username = status.getReblog().getAccount().getUsername();
             holder.status_reblog_user.setText(displayName + " " +String.format("@%s",username));
             ppurl = status.getReblog().getAccount().getAvatar();
@@ -243,7 +242,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }else {
             ppurl = status.getAccount().getAvatar();
             content = status.getContent();
-            displayName = Emojione.shortnameToUnicode(status.getAccount().getDisplay_name(), true);
+            displayName = Helper.shortnameToUnicode(status.getAccount().getDisplay_name(), true);
             username = status.getAccount().getUsername();
             holder.status_reblog_user.setVisibility(View.GONE);
             holder.status_account_displayname.setText(displayName);
@@ -316,7 +315,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     //Text depending if toots is sensitive or not
                     String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
                     holder.status_show_more.setText(textShowMore);
-                    if (!status.getReblog().isAttachmentShown()) {
+                    if (!status.isAttachmentShown()) {
                         holder.status_show_more.setVisibility(View.VISIBLE);
                         holder.status_document_container.setVisibility(View.GONE);
                     } else {

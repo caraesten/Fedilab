@@ -58,7 +58,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private StatusListAdapter statusListAdapter;
     private String max_id;
     private List<Status> statuses;
-    private static RetrieveFeedsAsyncTask.Type type;
+    private RetrieveFeedsAsyncTask.Type type;
     private RelativeLayout mainLoader, nextElementLoader, textviewNoAction;
     private boolean firstLoad;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -265,6 +265,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
             return;
+        }else if( apiResponse.getError() != null && apiResponse.getError().getError().startsWith("404 -")) {
+            flag_loading = false;
         }
         List<Status> statuses = apiResponse.getStatuses();
         if( !swiped && firstLoad && (statuses == null || statuses.size() == 0))
@@ -277,7 +279,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             swiped = false;
         }
         max_id = apiResponse.getMax_id();
-        if( statuses != null) {
+        if( statuses != null && statuses.size() > 0) {
             for(Status tmpStatus: statuses){
                 this.statuses.add(tmpStatus);
             }
@@ -285,7 +287,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
-        flag_loading = statuses != null && statuses.size() < tootsPerPage;
+        if( flag_loading )
+            flag_loading = statuses != null && statuses.size() < tootsPerPage;
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
         if(statuses != null && statuses.size()  > 0 && type == RetrieveFeedsAsyncTask.Type.HOME ){
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
