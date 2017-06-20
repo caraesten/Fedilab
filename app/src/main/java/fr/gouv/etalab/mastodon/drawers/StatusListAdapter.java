@@ -232,7 +232,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         final String content, displayName, username, ppurl;
         if( status.getReblog() != null){
             content = status.getReblog().getContent();
-            displayName = status.getReblog().getAccount().getDisplay_name();
+            displayName = Helper.shortnameToUnicode(status.getReblog().getAccount().getDisplay_name(), true);
             username = status.getReblog().getAccount().getUsername();
             holder.status_reblog_user.setText(displayName + " " +String.format("@%s",username));
             ppurl = status.getReblog().getAccount().getAvatar();
