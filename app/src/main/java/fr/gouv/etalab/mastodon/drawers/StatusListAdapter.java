@@ -33,8 +33,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
-import android.text.util.Linkify;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -246,7 +244,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             username = status.getAccount().getUsername();
             holder.status_reblog_user.setVisibility(View.GONE);
             holder.status_account_displayname.setText(displayName);
-            holder.status_account_username.setText( String.format("@%s",username));
+            holder.status_account_username.setText(String.format("@%s",username));
         }
 
 
@@ -262,12 +260,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         });
 
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            holder.status_content.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_COMPACT));
-        else
-            //noinspection deprecation
-            holder.status_content.setText(Html.fromHtml(content));
-        holder.status_content.setAutoLinkMask(Linkify.WEB_URLS);
+        holder.status_content = Helper.clickableAccounts(context, holder.status_content,content, status.getReblog() != null?status.getReblog().getMentions():status.getMentions());
+
         holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
         holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
         holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));

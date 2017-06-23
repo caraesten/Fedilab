@@ -40,7 +40,14 @@ import android.os.Environment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -75,6 +82,7 @@ import fr.gouv.etalab.mastodon.activities.LoginActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -771,5 +779,64 @@ public class Helper {
         }
     }
 
+
+    /**
+     * Check if the status contents mentions and fills the content with ClickableSpan
+     * @param context Context
+     * @param statusTV Textview
+     * @param fullContent String, should be the st
+     * @param mentions List<Mention>
+     * @return TextView
+     */
+    public static TextView clickableAccounts(final Context context, TextView statusTV, String fullContent, List<Mention> mentions) {
+        //Retrieves accounts name
+        Pattern sPattern = Pattern.compile("@<span>([a-zA-Z0-9_]{1,})<\\/span>");
+        Matcher m = sPattern.matcher(fullContent);
+        while (m.find()) {
+            fullContent = fullContent.replaceAll(m.group(0), "<font color='#000'>" + m.group(0) + "</font>");
+        }
+        if( mentions == null || mentions.size() == 0) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                statusTV.setText(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_COMPACT));
+            else
+                //noinspection deprecation
+                statusTV.setText(Html.fromHtml(fullContent));
+            return statusTV;
+        }
+        SpannableString spannableString;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            spannableString = new SpannableString(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_COMPACT));
+        else
+            //noinspection deprecation
+            spannableString = new SpannableString(Html.fromHtml(fullContent));
+
+        //Looping through accounts which are mentioned
+        for(final Mention mention: mentions){
+            String targetedAccount = "@" + mention.getUsername();
+            if( spannableString.toString().contains(targetedAccount)){
+
+                int startPosition = spannableString.toString().indexOf(targetedAccount);
+                int endPosition = spannableString.toString().lastIndexOf(targetedAccount) + targetedAccount.length();
+                spannableString.setSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(View textView) {
+                        Intent intent = new Intent(context, ShowAccountActivity.class);
+                        Bundle b = new Bundle();
+                        b.putString("accountId", mention.getId());
+                        intent.putExtras(b);
+                        context.startActivity(intent);
+                    }
+                    @Override
+                    public void updateDrawState(TextPaint ds) {
+                        super.updateDrawState(ds);
+                    }},
+                        startPosition, endPosition,
+                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                statusTV.setText(spannableString, TextView.BufferType.SPANNABLE);
+            }
+            statusTV.setMovementMethod(LinkMovementMethod.getInstance());
+        }
+        return statusTV;
+    }
 
 }
