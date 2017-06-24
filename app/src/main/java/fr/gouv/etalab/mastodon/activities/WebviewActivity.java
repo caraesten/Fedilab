@@ -53,6 +53,8 @@ public class WebviewActivity extends AppCompatActivity {
 
     private String url;
     private ProgressBar pbar;
+    private static boolean isVideoFullscreen;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +107,6 @@ public class WebviewActivity extends AppCompatActivity {
         FrameLayout webview_container = (FrameLayout) findViewById(R.id.webview_container);
         final ViewGroup videoLayout = (ViewGroup) findViewById(R.id.videoLayout); // Your own view, read class comments
 
-
         MastalabWebChromeClient mastalabWebChromeClient = new MastalabWebChromeClient(webView, webview_container, videoLayout);
         mastalabWebChromeClient.setOnToggledFullscreen(new ToggledFullscreenCallback() {
             @Override
@@ -146,6 +147,7 @@ public class WebviewActivity extends AppCompatActivity {
 
     @Override
     public void onDestroy(){
+        isVideoFullscreen = false;
         super.onDestroy();
 
     }
@@ -177,20 +179,19 @@ public class WebviewActivity extends AppCompatActivity {
     }
 
 
-    private class MastalabWebChromeClient extends WebChromeClient implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnErrorListener {
+    private class MastalabWebChromeClient extends WebChromeClient implements MediaPlayer.OnCompletionListener, MediaPlayer.OnErrorListener {
 
         private FrameLayout videoViewContainer;
         private CustomViewCallback videoViewCallback;
 
         private ToggledFullscreenCallback toggledFullscreenCallback;
-        private boolean isVideoFullscreen;
+
         private WebView webView;
         private View activityNonVideoView;
         private ViewGroup activityVideoView;
-        private View loadingView;
 
         MastalabWebChromeClient(WebView webView, FrameLayout webviewContainer, ViewGroup videoLayout){
-            this.isVideoFullscreen = false;
+            isVideoFullscreen = false;
             this.webView = webView;
             this.activityNonVideoView = webviewContainer;
             this.activityVideoView = videoLayout;
@@ -259,7 +260,6 @@ public class WebviewActivity extends AppCompatActivity {
                     // android.widget.VideoView (typically API level <11)
                     android.widget.VideoView videoView = (android.widget.VideoView) focusedChild;
                     // Handle all the required events
-                    videoView.setOnPreparedListener(this);
                     videoView.setOnCompletionListener(this);
                     videoView.setOnErrorListener(this);
                 } else {
@@ -334,14 +334,6 @@ public class WebviewActivity extends AppCompatActivity {
         @Override
         public View getVideoLoadingProgressView() {
             return super.getVideoLoadingProgressView();
-        }
-
-        // Video will start playing, only called in the case of android.widget.VideoView (typically API level <11)
-        @Override
-        public void onPrepared(MediaPlayer mp) {
-            if (loadingView != null) {
-                loadingView.setVisibility(View.GONE);
-            }
         }
 
         // Video finished playing, only called in the case of android.widget.VideoView (typically API level <11)
