@@ -173,7 +173,7 @@ public class LoginActivity extends AppCompatActivity {
                     connectionButton.setEnabled(true);
                     login_two_step.setVisibility(View.VISIBLE);
                     if( client_id_for_webview){
-                        Intent i = new Intent(LoginActivity.this, WebviewActivity.class);
+                        Intent i = new Intent(LoginActivity.this, WebviewConnectActivity.class);
                         i.putExtra("instance", instance);
                         startActivity(i);
                     }

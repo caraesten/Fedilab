@@ -51,6 +51,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -81,6 +82,7 @@ import java.util.regex.Pattern;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.LoginActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
+import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
@@ -155,6 +157,10 @@ public class Helper {
     public static final String SET_NOTIF_SILENT = "set_notif_silent";
     public static final String SET_SHOW_REPLY = "set_show_reply";
     public static final String SET_SHOW_ERROR_MESSAGES = "set_show_error_messages";
+    public static final String SET_EMBEDDED_BROWSER = "set_embedded_browser";
+    public static final String SET_JAVASCRIPT = "set_javascript";
+    public static final String SET_COOKIES = "set_cookies";
+
     //End points
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 
@@ -178,6 +184,12 @@ public class Helper {
 
 
     private static final Pattern SHORTNAME_PATTERN = Pattern.compile(":([-+\\w]+):");
+
+    private static final Pattern urlPattern = Pattern.compile(
+            "(?:^|[\\W])((ht|f)tp(s?):\\/\\/|www\\.)"
+                    + "(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*"
+                    + "[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)",
+            Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 
     /**
      * Converts emojis in input to unicode
@@ -793,19 +805,40 @@ public class Helper {
      * @return TextView
      */
     public static TextView clickableElements(final Context context, TextView statusTV, String fullContent, List<Mention> mentions, List<Tag> tags) {
-        //Retrieves accounts name
-        Pattern sPattern = Pattern.compile("@<span>([a-zA-Z0-9_]{1,})<\\/span>");
-        Matcher m = sPattern.matcher(fullContent);
-        while (m.find()) {
-            fullContent = fullContent.replaceAll(m.group(0), "<font color='#000'>" + m.group(0) + "</font>");
-        }
+
         SpannableString spannableString;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             spannableString = new SpannableString(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_COMPACT));
         else
             //noinspection deprecation
             spannableString = new SpannableString(Html.fromHtml(fullContent));
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
+        if( embedded_browser){
+            Matcher matcher = urlPattern.matcher(spannableString);
+            while (matcher.find()){
+                int matchStart = matcher.start(1);
+                int matchEnd = matcher.end();
+                final String url = spannableString.toString().substring(matchStart, matchEnd);
+                spannableString.setSpan(new ClickableSpan() {
+                        @Override
+                        public void onClick(View textView) {
+                            Intent intent = new Intent(context, WebviewActivity.class);
+                            Bundle b = new Bundle();
+                            b.putString("url", url);
+                            intent.putExtras(b);
+                            context.startActivity(intent);
+                        }
+                        @Override
+                        public void updateDrawState(TextPaint ds) {
+                            super.updateDrawState(ds);
+                        }
+                    },
+                    matchStart, matchEnd,
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
+            }
+        }
         //Deals with mention to make them clickable
         if( mentions != null && mentions.size() > 0 ) {
             //Looping through accounts which are mentioned

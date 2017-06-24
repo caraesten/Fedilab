@@ -32,23 +32,11 @@
             android:layout_height="10dp"
             android:padding="2dp">
         </ProgressBar>
-        <FrameLayout
-            android:id="@+id/webview_container"
+        <WebView
+            android:id="@+id/webviewConnect"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
-            <WebView
-                android:id="@+id/webview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-        </FrameLayout>
-        <!-- View where the video will be shown when video goes fullscreen -->
-        <RelativeLayout
-            android:id="@+id/videoLayout"
-            android:visibility="gone"
-            android:background="@color/black"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_weight="1"
+            />
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>
