@@ -78,11 +78,13 @@ import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.LoginActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
+import fr.gouv.etalab.mastodon.client.Entities.Tag;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -781,27 +783,21 @@ public class Helper {
 
 
     /**
-     * Check if the status contents mentions and fills the content with ClickableSpan
+     * Check if the status contents mentions & tags and fills the content with ClickableSpan
+     * Click on account => ShowAccountActivity
+     * Click on tag => HashTagActivity
      * @param context Context
      * @param statusTV Textview
      * @param fullContent String, should be the st
      * @param mentions List<Mention>
      * @return TextView
      */
-    public static TextView clickableAccounts(final Context context, TextView statusTV, String fullContent, List<Mention> mentions) {
+    public static TextView clickableElements(final Context context, TextView statusTV, String fullContent, List<Mention> mentions, List<Tag> tags) {
         //Retrieves accounts name
         Pattern sPattern = Pattern.compile("@<span>([a-zA-Z0-9_]{1,})<\\/span>");
         Matcher m = sPattern.matcher(fullContent);
         while (m.find()) {
             fullContent = fullContent.replaceAll(m.group(0), "<font color='#000'>" + m.group(0) + "</font>");
-        }
-        if( mentions == null || mentions.size() == 0) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                statusTV.setText(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_COMPACT));
-            else
-                //noinspection deprecation
-                statusTV.setText(Html.fromHtml(fullContent));
-            return statusTV;
         }
         SpannableString spannableString;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -810,32 +806,68 @@ public class Helper {
             //noinspection deprecation
             spannableString = new SpannableString(Html.fromHtml(fullContent));
 
-        //Looping through accounts which are mentioned
-        for(final Mention mention: mentions){
-            String targetedAccount = "@" + mention.getUsername();
-            if( spannableString.toString().contains(targetedAccount)){
+        //Deals with mention to make them clickable
+        if( mentions != null && mentions.size() > 0 ) {
+            //Looping through accounts which are mentioned
+            for (final Mention mention : mentions) {
+                String targetedAccount = "@" + mention.getUsername();
+                if (spannableString.toString().contains(targetedAccount)) {
 
-                int startPosition = spannableString.toString().indexOf(targetedAccount);
-                int endPosition = spannableString.toString().lastIndexOf(targetedAccount) + targetedAccount.length();
-                spannableString.setSpan(new ClickableSpan() {
-                    @Override
-                    public void onClick(View textView) {
-                        Intent intent = new Intent(context, ShowAccountActivity.class);
-                        Bundle b = new Bundle();
-                        b.putString("accountId", mention.getId());
-                        intent.putExtras(b);
-                        context.startActivity(intent);
-                    }
-                    @Override
-                    public void updateDrawState(TextPaint ds) {
-                        super.updateDrawState(ds);
-                    }},
-                        startPosition, endPosition,
-                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-                statusTV.setText(spannableString, TextView.BufferType.SPANNABLE);
+                    int startPosition = spannableString.toString().indexOf(targetedAccount);
+                    int endPosition = spannableString.toString().lastIndexOf(targetedAccount) + targetedAccount.length();
+                    spannableString.setSpan(new ClickableSpan() {
+                                @Override
+                                public void onClick(View textView) {
+                                    Intent intent = new Intent(context, ShowAccountActivity.class);
+                                    Bundle b = new Bundle();
+                                    b.putString("accountId", mention.getId());
+                                    intent.putExtras(b);
+                                    context.startActivity(intent);
+                                }
+                                @Override
+                                public void updateDrawState(TextPaint ds) {
+                                    super.updateDrawState(ds);
+                                }
+                            },
+                            startPosition, endPosition,
+                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+                }
+
             }
-            statusTV.setMovementMethod(LinkMovementMethod.getInstance());
         }
+        //Deals with tags to make them clickable
+        if( tags != null && tags.size() > 0 ) {
+            //Looping through tags which are attached to the toot
+            for (final Tag tag : tags) {
+                String targetedTag = "#" + tag.getName();
+                if (spannableString.toString().contains(targetedTag)) {
+
+                    int startPosition = spannableString.toString().indexOf(targetedTag);
+                    int endPosition = spannableString.toString().lastIndexOf(targetedTag) + targetedTag.length();
+                    spannableString.setSpan(new ClickableSpan() {
+                                @Override
+                                public void onClick(View textView) {
+                                    Intent intent = new Intent(context, HashTagActivity.class);
+                                    Bundle b = new Bundle();
+                                    b.putString("tag", tag.getName());
+                                    intent.putExtras(b);
+                                    context.startActivity(intent);
+                                }
+                                @Override
+                                public void updateDrawState(TextPaint ds) {
+                                    super.updateDrawState(ds);
+                                }
+                            },
+                            startPosition, endPosition,
+                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+                }
+
+            }
+        }
+        statusTV.setText(spannableString, TextView.BufferType.SPANNABLE);
+        statusTV.setMovementMethod(LinkMovementMethod.getInstance());
         return statusTV;
     }
 

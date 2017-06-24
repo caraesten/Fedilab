@@ -260,7 +260,9 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         });
 
 
-        holder.status_content = Helper.clickableAccounts(context, holder.status_content,content, status.getReblog() != null?status.getReblog().getMentions():status.getMentions());
+        holder.status_content = Helper.clickableElements(context, holder.status_content,content,
+                status.getReblog() != null?status.getReblog().getMentions():status.getMentions(),
+                status.getReblog() != null?status.getReblog().getTags():status.getTags());
 
         holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
         holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
