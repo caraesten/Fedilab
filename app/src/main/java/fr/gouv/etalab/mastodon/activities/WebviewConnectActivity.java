@@ -58,7 +58,7 @@ public class WebviewConnectActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_webview);
+        setContentView(R.layout.activity_webview_connect);
         Bundle b = getIntent().getExtras();
         if(b != null)
             instance = b.getString("instance");
