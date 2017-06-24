@@ -23,4 +23,6 @@
     <color name="background_image">#282c37</color>
     <color name="green_1">#009688</color>
     <color name="red_1">#F44336</color>
+
+    <color name="black">#000</color>
 </resources>

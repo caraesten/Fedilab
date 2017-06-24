@@ -40,6 +40,7 @@ public class TabLayoutSettingsFragment extends Fragment {
         View inflatedView = inflater.inflate(R.layout.tablayout_settings, container, false);
 
         TabLayout tabLayout = (TabLayout) inflatedView.findViewById(R.id.tabLayout);
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.settings)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.notifications)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.optimization)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.profile)));
@@ -84,10 +85,12 @@ public class TabLayoutSettingsFragment extends Fragment {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new SettingsNotificationsFragment();
+                    return new SettingsFragment();
                 case 1:
-                    return new SettingsOptimizationFragment();
+                    return new SettingsNotificationsFragment();
                 case 2:
+                    return new SettingsOptimizationFragment();
+                case 3:
                     return new SettingsProfileFragment();
                 default:
                     return new SettingsNotificationsFragment();

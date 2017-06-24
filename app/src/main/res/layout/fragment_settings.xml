@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2017 Thomas Schneider
+
+    This file is a part of Mastodon Etalab for mastodon.etalab.gouv.fr
+
+    This program is free software; you can redistribute it and/or modify it under the terms of the
+    GNU General Public License as published by the Free Software Foundation; either version 3 of the
+    License, or (at your option) any later version.
+
+    Mastodon Etalab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+    the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+    Public License for more details.
+
+    You should have received a copy of the GNU General Public License along with Thomas Schneider; if not,
+    see <http://www.gnu.org/licenses>.
+-->
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeContainer"
+    android:paddingLeft="@dimen/drawer_padding"
+    android:paddingRight="@dimen/drawer_padding"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="@dimen/fab_margin"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+
+        <CheckBox
+            android:id="@+id/set_share_validation"
+            android:layout_width="wrap_content"
+            android:text="@string/set_share_validation"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/set_show_error_messages"
+            android:layout_width="wrap_content"
+            android:text="@string/set_show_error_messages"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:layout_marginTop="10dp"
+            android:id="@+id/set_show_reply"
+            android:layout_width="wrap_content"
+            android:text="@string/set_display_reply"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:layout_marginTop="10dp"
+            android:id="@+id/set_embedded_browser"
+            android:layout_width="wrap_content"
+            android:text="@string/embedded_browser"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/set_javascript_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/use_javascript"/>
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/set_javascript"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:layout_margin="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/set_cookies_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/use_cookies"/>
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/set_cookies"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:layout_margin="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
+

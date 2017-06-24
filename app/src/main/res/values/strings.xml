@@ -53,6 +53,7 @@
     <string name="notifications">Notifications</string>
     <string name="follow_request">Demandes d\'abonnements</string>
     <string name="optimization">Optimisation</string>
+    <string name="settings">Paramètres</string>
     <string name="profile">Profil</string>
     <string name="make_a_choice">Que souhaitez-vous faire ?</string>
     <string name="delete_account_title">Supprimer un compte</string>
@@ -241,6 +242,10 @@
     <string name="set_header_picture_overlay">Choisissez une image d\'entête</string>
     <string name="note_no_space">Vous avez atteint les 160 caractères autorisés !</string>
     <string name="username_no_space">Vous avez atteint les 30 caractères autorisés !</string>
+
+    <string name="embedded_browser">Utiliser le navigateur intégré</string>
+    <string name="use_javascript">Activer Javascript</string>
+    <string name="use_cookies">Autoriser les cookies tiers</string>
 
     <string name="set_title_news">Actualités</string>
     <string name="set_notification_news">Notifier lors de nouveaux pouets sur la page d\'accueil</string>

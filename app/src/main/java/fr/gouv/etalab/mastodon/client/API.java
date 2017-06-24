@@ -1158,6 +1158,7 @@ public class API {
             //TODO: replace by the value
             status.setApplication(new Application());
 
+            //Retrieves attachments
             JSONArray arrayAttachement = resobj.getJSONArray("media_attachments");
             List<Attachment> attachments = new ArrayList<>();
             if( arrayAttachement != null){
@@ -1174,6 +1175,7 @@ public class API {
                 }
             }
             status.setMedia_attachments(attachments);
+            //Retrieves mentions
             List<Mention> mentions = new ArrayList<>();
             JSONArray arrayMention = resobj.getJSONArray("mentions");
             if( arrayMention != null){
@@ -1188,6 +1190,20 @@ public class API {
                 }
             }
             status.setMentions(mentions);
+            //Retrieves tags
+            List<Tag> tags = new ArrayList<>();
+            JSONArray arrayTag = resobj.getJSONArray("tags");
+            if( arrayTag != null){
+                for(int j = 0 ; j < arrayTag.length() ; j++){
+                    JSONObject tagObj = arrayTag.getJSONObject(j);
+                    Tag tag = new Tag();
+                    tag.setName(tagObj.get("name").toString());
+                    tag.setUrl(tagObj.get("url").toString());
+                    tags.add(tag);
+                }
+            }
+            status.setTags(tags);
+
             status.setAccount(parseAccountResponse(resobj.getJSONObject("account")));
             status.setContent(resobj.get("content").toString());
             status.setFavourites_count(Integer.valueOf(resobj.get("favourites_count").toString()));

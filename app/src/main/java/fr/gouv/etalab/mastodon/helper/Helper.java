@@ -40,10 +40,18 @@ import android.os.Environment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,10 +79,14 @@ import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.LoginActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
+import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Mention;
+import fr.gouv.etalab.mastodon.client.Entities.Tag;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -145,6 +157,10 @@ public class Helper {
     public static final String SET_NOTIF_SILENT = "set_notif_silent";
     public static final String SET_SHOW_REPLY = "set_show_reply";
     public static final String SET_SHOW_ERROR_MESSAGES = "set_show_error_messages";
+    public static final String SET_EMBEDDED_BROWSER = "set_embedded_browser";
+    public static final String SET_JAVASCRIPT = "set_javascript";
+    public static final String SET_COOKIES = "set_cookies";
+
     //End points
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 
@@ -168,6 +184,12 @@ public class Helper {
 
 
     private static final Pattern SHORTNAME_PATTERN = Pattern.compile(":([-+\\w]+):");
+
+    private static final Pattern urlPattern = Pattern.compile(
+            "(?:^|[\\W])((ht|f)tp(s?):\\/\\/|www\\.)"
+                    + "(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*"
+                    + "[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)",
+            Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 
     /**
      * Converts emojis in input to unicode
@@ -771,5 +793,115 @@ public class Helper {
         }
     }
 
+
+    /**
+     * Check if the status contents mentions & tags and fills the content with ClickableSpan
+     * Click on account => ShowAccountActivity
+     * Click on tag => HashTagActivity
+     * @param context Context
+     * @param statusTV Textview
+     * @param fullContent String, should be the st
+     * @param mentions List<Mention>
+     * @return TextView
+     */
+    public static TextView clickableElements(final Context context, TextView statusTV, String fullContent, List<Mention> mentions, List<Tag> tags) {
+
+        SpannableString spannableString;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            spannableString = new SpannableString(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_COMPACT));
+        else
+            //noinspection deprecation
+            spannableString = new SpannableString(Html.fromHtml(fullContent));
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
+        if( embedded_browser){
+            Matcher matcher = urlPattern.matcher(spannableString);
+            while (matcher.find()){
+                int matchStart = matcher.start(1);
+                int matchEnd = matcher.end();
+                final String url = spannableString.toString().substring(matchStart, matchEnd);
+                spannableString.setSpan(new ClickableSpan() {
+                        @Override
+                        public void onClick(View textView) {
+                            Intent intent = new Intent(context, WebviewActivity.class);
+                            Bundle b = new Bundle();
+                            b.putString("url", url);
+                            intent.putExtras(b);
+                            context.startActivity(intent);
+                        }
+                        @Override
+                        public void updateDrawState(TextPaint ds) {
+                            super.updateDrawState(ds);
+                        }
+                    },
+                    matchStart, matchEnd,
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+            }
+        }
+        //Deals with mention to make them clickable
+        if( mentions != null && mentions.size() > 0 ) {
+            //Looping through accounts which are mentioned
+            for (final Mention mention : mentions) {
+                String targetedAccount = "@" + mention.getUsername();
+                if (spannableString.toString().contains(targetedAccount)) {
+
+                    int startPosition = spannableString.toString().indexOf(targetedAccount);
+                    int endPosition = spannableString.toString().lastIndexOf(targetedAccount) + targetedAccount.length();
+                    spannableString.setSpan(new ClickableSpan() {
+                                @Override
+                                public void onClick(View textView) {
+                                    Intent intent = new Intent(context, ShowAccountActivity.class);
+                                    Bundle b = new Bundle();
+                                    b.putString("accountId", mention.getId());
+                                    intent.putExtras(b);
+                                    context.startActivity(intent);
+                                }
+                                @Override
+                                public void updateDrawState(TextPaint ds) {
+                                    super.updateDrawState(ds);
+                                }
+                            },
+                            startPosition, endPosition,
+                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+                }
+
+            }
+        }
+        //Deals with tags to make them clickable
+        if( tags != null && tags.size() > 0 ) {
+            //Looping through tags which are attached to the toot
+            for (final Tag tag : tags) {
+                String targetedTag = "#" + tag.getName();
+                if (spannableString.toString().contains(targetedTag)) {
+
+                    int startPosition = spannableString.toString().indexOf(targetedTag);
+                    int endPosition = spannableString.toString().lastIndexOf(targetedTag) + targetedTag.length();
+                    spannableString.setSpan(new ClickableSpan() {
+                                @Override
+                                public void onClick(View textView) {
+                                    Intent intent = new Intent(context, HashTagActivity.class);
+                                    Bundle b = new Bundle();
+                                    b.putString("tag", tag.getName());
+                                    intent.putExtras(b);
+                                    context.startActivity(intent);
+                                }
+                                @Override
+                                public void updateDrawState(TextPaint ds) {
+                                    super.updateDrawState(ds);
+                                }
+                            },
+                            startPosition, endPosition,
+                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+                }
+
+            }
+        }
+        statusTV.setText(spannableString, TextView.BufferType.SPANNABLE);
+        statusTV.setMovementMethod(LinkMovementMethod.getInstance());
+        return statusTV;
+    }
 
 }
