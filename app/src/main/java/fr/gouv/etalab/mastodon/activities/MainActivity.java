@@ -254,10 +254,12 @@ public class MainActivity extends AppCompatActivity
             }
         }else if( Intent.ACTION_SEND.equals(action) && type != null ){
             if ("text/plain".equals(type)) {
+                String sharedSubject = intent.getStringExtra(Intent.EXTRA_SUBJECT);
                 String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
                 if (sharedText != null) {
                     Intent intentToot = new Intent(getApplicationContext(), TootActivity.class);
                     Bundle b = new Bundle();
+                    b.putString("sharedSubject", sharedSubject);
                     b.putString("sharedContent", sharedText);
                     intentToot.putExtras(b);
                     startActivity(intentToot);

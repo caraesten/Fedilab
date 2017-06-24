@@ -107,7 +107,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private ListView toot_lv_accounts;
     private BroadcastReceiver search_validate;
     private Status tootReply = null;
-    private String sharedContent;
+    private String sharedContent, sharedSubject, sharedTitle;
     private CheckBox toot_sensitive;
 
     private String pattern = "^.*(@([a-zA-Z0-9_]{2,}))$";
@@ -138,6 +138,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         if(b != null) {
             tootReply = b.getParcelable("tootReply");
             sharedContent = b.getString("sharedContent", null);
+            sharedSubject = b.getString("sharedSubject", null);
+            sharedTitle = b.getString("sharedTitle", null);
         }
         if( tootReply != null) {
             setTitle(R.string.toot_title_reply);
@@ -191,7 +193,11 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         }else {
             setTitle(R.string.toot_title);
         }
+
         if( sharedContent != null ){ //Shared content
+            if( sharedSubject != null){
+                sharedContent = sharedSubject + "\n\n" + sharedContent;
+            }
             toot_content.setText( String.format("\n%s", sharedContent));
         }
         attachments = new ArrayList<>();

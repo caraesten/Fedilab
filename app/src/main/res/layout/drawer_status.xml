@@ -278,7 +278,7 @@
         android:id="@+id/status_action_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"
+        android:layout_marginTop="10dp"
         android:padding="@dimen/drawer_padding"
         android:layout_marginStart="@dimen/activity_vertical_margin"
         android:layout_marginLeft="@dimen/activity_vertical_margin"
@@ -286,8 +286,6 @@
         android:layout_marginRight="@dimen/activity_vertical_margin"
         android:orientation="horizontal">
         <TextView
-            android:drawableStart="@drawable/dr_favorites"
-            android:drawableLeft="@drawable/dr_favorites"
             android:drawablePadding="2dp"
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
@@ -297,8 +295,6 @@
         <TextView
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
-            android:drawableStart="@drawable/dr_reblogs"
-            android:drawableLeft="@drawable/dr_reblogs"
             android:drawablePadding="2dp"
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
@@ -310,8 +306,8 @@
             android:layout_marginStart="20dp"
             android:id="@+id/status_reply"
             android:layout_gravity="center_vertical"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:src="@drawable/ic_reply"
             tools:ignore="ContentDescription" />
         <LinearLayout
