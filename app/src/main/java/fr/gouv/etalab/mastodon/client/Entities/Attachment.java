@@ -14,11 +14,15 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.client.Entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Thomas on 23/04/2017.
+ * Manages Media
  */
 
-public class Attachment {
+public class Attachment implements Parcelable {
 
     private String id;
     private String type;
@@ -26,6 +30,31 @@ public class Attachment {
     private String remote_url;
     private String preview_url;
     private String text_url;
+
+    public Attachment(Parcel in) {
+        id = in.readString();
+        type = in.readString();
+        url = in.readString();
+        remote_url = in.readString();
+        preview_url = in.readString();
+        text_url = in.readString();
+    }
+
+    public static final Creator<Attachment> CREATOR = new Creator<Attachment>() {
+        @Override
+        public Attachment createFromParcel(Parcel in) {
+            return new Attachment(in);
+        }
+
+        @Override
+        public Attachment[] newArray(int size) {
+            return new Attachment[size];
+        }
+    };
+
+    public Attachment() {
+
+    }
 
     public String getId() {
         return id;
@@ -73,5 +102,20 @@ public class Attachment {
 
     public void setText_url(String text_url) {
         this.text_url = text_url;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(type);
+        dest.writeString(url);
+        dest.writeString(remote_url);
+        dest.writeString(preview_url);
+        dest.writeString(text_url);
     }
 }

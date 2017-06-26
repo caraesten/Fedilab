@@ -22,12 +22,19 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.view.View;
+
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobManager;
 import com.evernote.android.job.JobRequest;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+
 import java.io.File;
 import java.util.List;
 import java.util.Set;
@@ -134,7 +141,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
         boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
         boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
         boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
-        String max_id = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
+        final String max_id = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
         //No previous notifications in cache, so no notification will be sent
         int newFollows = 0;
         int newAdds = 0;
@@ -143,7 +150,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
         int newShare = 0;
         String notificationUrl = null;
         String title = null;
-        String message;
+        final String message;
         for(Notification notification: notifications){
             //The notification associated to max_id is discarded as it is supposed to have already been sent
             if( max_id != null && notification.getId().equals(max_id))
@@ -187,24 +194,6 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                     break;
                 default:
             }
-            if( notificationUrl != null && icon_notification == null){
-                try {
-                    ImageLoader imageLoaderNoty = ImageLoader.getInstance();
-                    File cacheDir = new File(getContext().getCacheDir(), getContext().getString(R.string.app_name));
-                    ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getContext())
-                            .imageDownloader(new PatchBaseImageDownloader(getContext()))
-                            .threadPoolSize(5)
-                            .threadPriority(Thread.MIN_PRIORITY + 3)
-                            .denyCacheImageMultipleSizesInMemory()
-                            .diskCache(new UnlimitedDiskCache(cacheDir))
-                            .build();
-                    imageLoaderNoty.init(config);
-                    icon_notification = imageLoaderNoty.loadImageSync(notificationUrl);
-                }catch (Exception e){
-                    icon_notification = BitmapFactory.decodeResource(getContext().getResources(),
-                            R.drawable.mastodonlogo);
-                }
-            }
         }
         int allNotifCount = newFollows + newAdds + newAsks + newMentions + newShare;
         if( allNotifCount > 0){
@@ -219,9 +208,38 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
             intent.putExtra(INTENT_ACTION, NOTIFICATION_INTENT);
             intent.putExtra(PREF_KEY_ID, userId);
             long notif_id = Long.parseLong(userId);
-            int notificationId = ((notif_id + 1) > 2147483647) ? (int) (2147483647 - notif_id - 1) : (int) (notif_id + 1);
-            if( max_id != null)
-                notify_user(getContext(), intent, notificationId, icon_notification,title,message);
+            final int notificationId = ((notif_id + 1) > 2147483647) ? (int) (2147483647 - notif_id - 1) : (int) (notif_id + 1);
+
+            if( notificationUrl != null && icon_notification == null){
+                ImageLoader imageLoaderNoty = ImageLoader.getInstance();
+                File cacheDir = new File(getContext().getCacheDir(), getContext().getString(R.string.app_name));
+                ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getContext())
+                        .imageDownloader(new PatchBaseImageDownloader(getContext()))
+                        .threadPoolSize(5)
+                        .threadPriority(Thread.MIN_PRIORITY + 3)
+                        .denyCacheImageMultipleSizesInMemory()
+                        .diskCache(new UnlimitedDiskCache(cacheDir))
+                        .build();
+                imageLoaderNoty.init(config);
+                DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
+                        .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+
+                final String finalTitle = title;
+                imageLoaderNoty.loadImage(notificationUrl, options, new SimpleImageLoadingListener(){
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        super.onLoadingComplete(imageUri, view, loadedImage);
+                        if( max_id != null)
+                            notify_user(getContext(), intent, notificationId, loadedImage, finalTitle, message);
+                    }
+                    @Override
+                    public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
+                        if( max_id != null)
+                            notify_user(getContext(), intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
+                                    R.drawable.mastodonlogo), finalTitle, message);
+                    }});
+            }
+
         }
 
         SharedPreferences.Editor editor = sharedpreferences.edit();

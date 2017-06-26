@@ -14,7 +14,6 @@ package fr.gouv.etalab.mastodon.drawers;
  * You should have received a copy of the GNU General Public License along with Thomas Schneider; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -22,21 +21,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -46,18 +39,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.gouv.etalab.mastodon.activities.MainActivity;
+import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
@@ -71,7 +61,6 @@ import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 
-import static fr.gouv.etalab.mastodon.helper.Helper.EXTERNAL_STORAGE_REQUEST_CODE;
 
 
 /**
@@ -463,6 +452,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             }else {
                 holder.status_prev4_container.setVisibility(View.VISIBLE);
             }
+            int position = 1;
             for(final Attachment attachment: attachments){
                 ImageView imageView;
                 if( i == 0) {
@@ -496,114 +486,26 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 if( url.trim().contains("missing.png"))
                     continue;
                 imageLoader.displayImage(url, imageView, options);
+                final int finalPosition = position;
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        showPicture(attachment);
+                        Intent intent = new Intent(context, MediaActivity.class);
+                        Bundle b = new Bundle();
+                        intent.putParcelableArrayListExtra("mediaArray", status.getMedia_attachments());
+                        b.putInt("position", finalPosition);
+                        intent.putExtras(b);
+                        context.startActivity(intent);
                     }
                 });
                 i++;
+                position++;
             }
             holder.status_document_container.setVisibility(View.VISIBLE);
         }else{
             holder.status_document_container.setVisibility(View.GONE);
         }
         holder.status_show_more.setVisibility(View.GONE);
-    }
-
-    private void showPicture(final Attachment attachment) {
-
-        final AlertDialog.Builder alertadd = new AlertDialog.Builder(context);
-        LayoutInflater factory = LayoutInflater.from(context);
-        final View view = factory.inflate(R.layout.show_attachment, null);
-        alertadd.setView(view);
-        final RelativeLayout loader = (RelativeLayout) view.findViewById(R.id.loader);
-        switch (attachment.getType()){
-            case "image": {
-                String url = attachment.getPreview_url();
-                if(url == null || url.trim().equals(""))
-                    url = attachment.getUrl();
-                final ImageView imageView = (ImageView) view.findViewById(R.id.dialog_imageview);
-                imageLoader.displayImage(url, imageView, options, new SimpleImageLoadingListener(){
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        super.onLoadingComplete(imageUri, view, loadedImage);
-                        loader.setVisibility(View.GONE);
-                        imageView.setVisibility(View.VISIBLE);
-                    }
-                    @Override
-                    public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
-                        imageLoader.displayImage(attachment.getPreview_url(), imageView, options);
-                        loader.setVisibility(View.GONE);
-                    }
-                });
-                break;
-            }
-            case "gifv":
-            case "video": {
-                if( attachment.getRemote_url().contains(".gif") ){
-                    view.findViewById(R.id.dialog_webview_container).setVisibility(View.VISIBLE);
-                    WebView webView = (WebView) view.findViewById(R.id.dialog_webview);
-                    webView.getSettings().setJavaScriptEnabled(false);
-                    webView.clearCache(false);
-                    webView.setScrollbarFadingEnabled(true);
-                    webView.getSettings().setBuiltInZoomControls(false);
-                    webView.getSettings().setSupportZoom(false);
-                    webView.getSettings().setUseWideViewPort(false);
-                    webView.setVerticalScrollBarEnabled(false);
-                    webView.setHorizontalScrollBarEnabled(false);
-                    webView.setInitialScale(0);
-                    String url = attachment.getRemote_url();
-                    if(url == null || url.trim().equals(""))
-                        url = attachment.getUrl();
-                    webView.loadUrl(url);
-                    loader.setVisibility(View.GONE);
-                }else {
-                    String url = attachment.getRemote_url();
-                    if(url == null || url.trim().equals(""))
-                        url = attachment.getUrl();
-                    Uri uri = Uri.parse(url);
-                    VideoView videoView = (VideoView) view.findViewById(R.id.dialog_videoview);
-                    videoView.setVisibility(View.VISIBLE);
-                    videoView.setVideoURI(uri);
-                    videoView.start();
-                    videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                        @Override
-                        public void onPrepared(MediaPlayer mp) {
-                            loader.setVisibility(View.GONE);
-                        }
-                    });
-                }
-
-                break;
-            }
-        }
-        String urlDownload = attachment.getRemote_url();
-        if( urlDownload == null || urlDownload.trim().equals(""))
-            urlDownload = attachment.getUrl();
-        final String finalUrlDownload = urlDownload;
-        alertadd.setPositiveButton(R.string.download, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dlg, int sumthin) {
-                if(Build.VERSION.SDK_INT >= 23 ){
-                    if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
-                        ActivityCompat.requestPermissions((MainActivity)context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST_CODE);
-                    } else {
-
-                        Helper.manageDownloads(context, finalUrlDownload);
-                    }
-                }else{
-                    Helper.manageDownloads(context, finalUrlDownload);
-                }
-                dlg.dismiss();
-            }
-        });
-        alertadd.setNeutralButton(R.string.close, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dlg, int sumthin) {
-                dlg.dismiss();
-            }
-        });
-
-        alertadd.show();
     }
 
     @Override

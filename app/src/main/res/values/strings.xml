@@ -10,7 +10,7 @@
     <string name="action_privacy">Confidentialité</string>
     <string name="action_cache">Cache</string>
     <string name="action_logout">Déconnexion</string>
-
+    <string name="action_download">Télécharger</string>
     <string name="login">Connexion</string>
 
     <!-- common -->
@@ -20,6 +20,8 @@
     <string name="cancel">Annuler</string>
     <string name="download">Télécharger</string>
     <string name="download_file">Télécharger %1$s</string>
+    <string name="download_over">Téléchargement terminé</string>
+    <string name="download_from">Fichier : %1$s</string>
     <string name="password">Mot de passe</string>
     <string name="email">Email</string>
     <string name="accounts">Comptes</string>

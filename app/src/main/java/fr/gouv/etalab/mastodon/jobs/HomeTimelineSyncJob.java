@@ -22,13 +22,18 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.view.View;
 
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobManager;
 import com.evernote.android.job.JobRequest;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.io.File;
 import java.util.List;
@@ -124,13 +129,11 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
         List<Status> statuses = apiResponse.getStatuses();
         if( apiResponse.getError() != null || statuses == null || statuses.size() == 0)
             return;
-        Bitmap icon_notification = null;
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
-        String max_id = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
+        final String max_id = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
         //No previous notifications in cache, so no notification will be sent
         String message;
-        String title = null;
 
         for(Status status: statuses){
             //The notification associated to max_id is discarded as it is supposed to have already been sent
@@ -138,41 +141,55 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
             if( (max_id != null && status.getId().equals(max_id)) || status.getAccount().getAcct().trim().equals(acct.trim()))
                 continue;
             String notificationUrl = status.getAccount().getAvatar();
-            if( notificationUrl != null && icon_notification == null){
-                try {
-                    ImageLoader imageLoaderNoty = ImageLoader.getInstance();
-                    File cacheDir = new File(getContext().getCacheDir(), getContext().getString(R.string.app_name));
-                    ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getContext())
-                            .imageDownloader(new PatchBaseImageDownloader(getContext()))
-                            .threadPoolSize(5)
-                            .threadPriority(Thread.MIN_PRIORITY + 3)
-                            .denyCacheImageMultipleSizesInMemory()
-                            .diskCache(new UnlimitedDiskCache(cacheDir))
-                            .build();
-                    imageLoaderNoty.init(config);
-                    icon_notification = imageLoaderNoty.loadImageSync(notificationUrl);
-                    title = getContext().getResources().getString(R.string.notif_pouet, status.getAccount().getUsername());
-                }catch (Exception e){
-                    icon_notification = BitmapFactory.decodeResource(getContext().getResources(),
-                            R.drawable.mastodonlogo);
-                }
+
+            if(statuses.size() > 0 )
+                message = getContext().getResources().getQuantityString(R.plurals.other_notif_hometimeline, statuses.size(), statuses.size());
+            else
+                message = "";
+            final Intent intent = new Intent(getContext(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
+            intent.putExtra(INTENT_ACTION, HOME_TIMELINE_INTENT);
+            intent.putExtra(PREF_KEY_ID, userId);
+            long notif_id = Long.parseLong(userId);
+            final int notificationId = ((notif_id + 2) > 2147483647) ? (int) (2147483647 - notif_id - 2) : (int) (notif_id + 2);
+
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, apiResponse.getMax_id());
+            editor.apply();
+
+            if( notificationUrl != null){
+                ImageLoader imageLoaderNoty = ImageLoader.getInstance();
+                File cacheDir = new File(getContext().getCacheDir(), getContext().getString(R.string.app_name));
+                ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getContext())
+                        .imageDownloader(new PatchBaseImageDownloader(getContext()))
+                        .threadPoolSize(5)
+                        .threadPriority(Thread.MIN_PRIORITY + 3)
+                        .denyCacheImageMultipleSizesInMemory()
+                        .diskCache(new UnlimitedDiskCache(cacheDir))
+                        .build();
+                imageLoaderNoty.init(config);
+                DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
+                        .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+                final String finalMessage = message;
+                final String finalTitle = getContext().getResources().getString(R.string.notif_pouet, status.getAccount().getUsername());
+                imageLoaderNoty.loadImage(notificationUrl, options, new SimpleImageLoadingListener(){
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        super.onLoadingComplete(imageUri, view, loadedImage);
+                        if( max_id != null)
+                            notify_user(getContext(), intent, notificationId, loadedImage, finalTitle, finalMessage);
+                    }
+                    @Override
+                    public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
+                        if( max_id != null)
+                            notify_user(getContext(), intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
+                                    R.drawable.mastodonlogo), finalTitle, finalMessage);
+                    }});
+
+
             }
         }
-        if(statuses.size() > 0 )
-            message = getContext().getResources().getQuantityString(R.plurals.other_notif_hometimeline, statuses.size(), statuses.size());
-        else
-            message = "";
-        final Intent intent = new Intent(getContext(), MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
-        intent.putExtra(INTENT_ACTION, HOME_TIMELINE_INTENT);
-        intent.putExtra(PREF_KEY_ID, userId);
-        long notif_id = Long.parseLong(userId);
-        int notificationId = ((notif_id + 2) > 2147483647) ? (int) (2147483647 - notif_id - 2) : (int) (notif_id + 2);
-        if( max_id != null)
-            notify_user(getContext(), intent, notificationId, icon_notification,title,message);
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, apiResponse.getMax_id());
-        editor.apply();
+
     }
 
 

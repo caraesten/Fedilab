@@ -51,6 +51,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.CookieManager;
+import android.webkit.MimeTypeMap;
+import android.webkit.URLUtil;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -65,9 +69,12 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -75,6 +82,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -445,48 +453,94 @@ public class Helper {
     }
 
 
+
+
+
+
     /**
      * Manage downloads with URLs
      * @param context Context
      * @param url String download url
      */
-    public static void manageDownloads(final Context context, final String url){
+    public static void manageDownloads(final Context context, final String url, Bitmap bitmap){
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        final DownloadManager.Request request;
-        try {
-            request = new DownloadManager.Request(Uri.parse(url.trim()));
-        }catch (Exception e){
-            Toast.makeText(context,R.string.toast_error,Toast.LENGTH_LONG).show();
-            return;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            final DownloadManager.Request request;
+            try {
+                request = new DownloadManager.Request(Uri.parse(url.trim()));
+            }catch (Exception e){
+                Toast.makeText(context,R.string.toast_error,Toast.LENGTH_LONG).show();
+                return;
+            }
+            final String fileName = URLUtil.guessFileName(url, null, null);
+            builder.setMessage(context.getResources().getString(R.string.download_file, fileName));
+            builder.setCancelable(false)
+                    .setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            request.allowScanningByMediaScanner();
+                            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
+                            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                            DownloadManager dm = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
+                            dm.enqueue(request);
+                            dialog.dismiss();
+                        }
+
+                    })
+                    .setNegativeButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            if( alert.getWindow() != null )
+                alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+            alert.show();
+        }else {
+            final String fileName = URLUtil.guessFileName(url, null, null);
+            File myDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            File file = new File (myDir, fileName);
+            try {
+                FileOutputStream out = new FileOutputStream(file);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                out.flush();
+                out.close();
+                Random r = new Random();
+                int notificationIdTmp = r.nextInt(10000);
+                // prepare intent which is triggered if the
+                // notification is selected
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+                Intent intent = new Intent();
+                intent.setAction(android.content.Intent.ACTION_VIEW);
+                Uri uri = Uri.parse("file://" + file.getAbsolutePath());
+                intent.setDataAndType(uri, getMimeType(url));
+                final PendingIntent pIntentDownload = PendingIntent.getActivity(context, notificationIdTmp, intent, PendingIntent.FLAG_ONE_SHOT);
+
+                // build notification
+                // the addAction re-use the same intent to keep the example short
+                NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
+                        .setSmallIcon(R.drawable.ic_action_download)
+                        .setTicker(context.getString(R.string.download_over))
+                        .setWhen(System.currentTimeMillis())
+                        .setAutoCancel(true)
+                        .setContentIntent(pIntentDownload)
+                        .setContentText(context.getString(R.string.download_from, fileName))
+                        .setContentTitle(context.getString(R.string.download_over));
+                notificationManager.notify(notificationIdTmp, notificationBuilder.build());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        Uri uri =  Uri.parse(url);
-        File f = new File("" + uri);
-        final String fileName = f.getName();
-        builder.setMessage(context.getResources().getString(R.string.download_file, fileName));
-        builder.setCancelable(false)
-                .setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        request.allowScanningByMediaScanner();
-                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,fileName);
-                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                        DownloadManager dm = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
-                        dm.enqueue(request);
-                        dialog.dismiss();
-                    }
-
-                })
-                .setNegativeButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-        AlertDialog alert = builder.create();
-        if( alert.getWindow() != null )
-            alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        alert.show();
     }
 
+    private static String getMimeType(String url) {
+        String type = null;
+        String extension = MimeTypeMap.getFileExtensionFromUrl(url);
+        if (extension != null) {
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+        }
+        return type;
+    }
 
     /**
      * Sends notification with intent
@@ -520,6 +574,53 @@ public class Helper {
         notificationBuilder.setContentTitle(title);
         notificationBuilder.setLargeIcon(icon);
         notificationManager.notify(notificationId, notificationBuilder.build());
+    }
+
+
+    /**
+     * Manage downloads with URLs
+     * @param context Context
+     * @param url String download url
+     */
+    public static void manageMoveFileDownload(final Context context, final String url, Bitmap bitmap, File fileVideo){
+
+        final String fileName = URLUtil.guessFileName(url, null, null);
+        File myDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        File file = new File (myDir, fileName);
+        try {
+            if( bitmap != null) {
+                FileOutputStream out = new FileOutputStream(file);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                out.flush();
+                out.close();
+            }else{
+                file = fileVideo;
+            }
+            Random r = new Random();
+            int notificationIdTmp = r.nextInt(10000);
+            // prepare intent which is triggered if the
+            // notification is selected
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+            Intent intent = new Intent();
+            intent.setAction(android.content.Intent.ACTION_VIEW);
+            Uri uri = Uri.parse("file://" + file.getAbsolutePath());
+            intent.setDataAndType(uri, getMimeType(url));
+            final PendingIntent pIntentDownload = PendingIntent.getActivity(context, notificationIdTmp, intent, PendingIntent.FLAG_ONE_SHOT);
+
+            // build notification
+            // the addAction re-use the same intent to keep the example short
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
+                    .setSmallIcon(R.drawable.ic_action_download)
+                    .setTicker(context.getString(R.string.download_over))
+                    .setWhen(System.currentTimeMillis())
+                    .setAutoCancel(true)
+                    .setContentIntent(pIntentDownload)
+                    .setContentText(context.getString(R.string.download_from, fileName))
+                    .setContentTitle(context.getString(R.string.download_over));
+            notificationManager.notify(notificationIdTmp, notificationBuilder.build());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -902,6 +1003,70 @@ public class Helper {
         statusTV.setText(spannableString, TextView.BufferType.SPANNABLE);
         statusTV.setMovementMethod(LinkMovementMethod.getInstance());
         return statusTV;
+    }
+
+
+    public static WebView initializeWebview(Activity activity, int webviewId){
+
+        WebView webView = (WebView) activity.findViewById(webviewId);
+        final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean javascript = sharedpreferences.getBoolean(Helper.SET_JAVASCRIPT, true);
+
+        webView.getSettings().setJavaScriptEnabled(javascript);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setSupportZoom(true);
+        webView.getSettings().setDisplayZoomControls(false);
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.getSettings().setAllowContentAccess(true);
+        webView.getSettings().setLoadsImagesAutomatically(true);
+        webView.getSettings().setSupportMultipleWindows(false);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            //noinspection deprecation
+            webView.getSettings().setPluginState(WebSettings.PluginState.ON);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            webView.getSettings().setMediaPlaybackRequiresUserGesture(true);
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            boolean cookies = sharedpreferences.getBoolean(Helper.SET_COOKIES, false);
+            CookieManager cookieManager = CookieManager.getInstance();
+            cookieManager.setAcceptThirdPartyCookies(webView, cookies);
+        }
+        webView.getSettings().setAppCacheEnabled(true);
+        webView.getSettings().setDatabaseEnabled(true);
+        webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+
+        return webView;
+    }
+
+
+    public static String md5(final String s) {
+        final String MD5 = "MD5";
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest
+                    .getInstance(MD5);
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            // Create Hex String
+            StringBuilder hexString = new StringBuilder();
+            for (byte aMessageDigest : messageDigest) {
+                String h = Integer.toHexString(0xFF & aMessageDigest);
+                while (h.length() < 2)
+                    h = "0" + h;
+                hexString.append(h);
+            }
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
 }

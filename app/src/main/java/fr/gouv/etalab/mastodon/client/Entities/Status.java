@@ -18,6 +18,7 @@ package fr.gouv.etalab.mastodon.client.Entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class Status implements Parcelable {
     private String visibility;
     private boolean attachmentShown = false;
     private boolean spoilerShown = false;
-    private List<Attachment> media_attachments;
+    private ArrayList<Attachment> media_attachments;
     private List<Mention> mentions;
     private List<Tag> tags;
     private Application application;
@@ -208,11 +209,11 @@ public class Status implements Parcelable {
     }
 
 
-    public List<Attachment> getMedia_attachments() {
+    public ArrayList<Attachment> getMedia_attachments() {
         return media_attachments;
     }
 
-    public void setMedia_attachments(List<Attachment> media_attachments) {
+    public void setMedia_attachments(ArrayList<Attachment> media_attachments) {
         this.media_attachments = media_attachments;
     }
 
