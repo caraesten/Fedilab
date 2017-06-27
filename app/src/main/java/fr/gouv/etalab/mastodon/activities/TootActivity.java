@@ -32,9 +32,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -133,6 +135,44 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         toot_show_accounts = (RelativeLayout) findViewById(R.id.toot_show_accounts);
         toot_lv_accounts = (ListView) findViewById(R.id.toot_lv_accounts);
         toot_sensitive = (CheckBox) findViewById(R.id.toot_sensitive);
+
+        final LinearLayout drawer_layout = (LinearLayout) findViewById(R.id.drawer_layout);
+
+        /*drawer_layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                int heightDiff = drawer_layout.getRootView().getHeight() - drawer_layout.getHeight();
+                if (heightDiff > 100) {
+                    ViewGroup.LayoutParams params = toot_picture_container.getLayoutParams();
+                    params.height = (int) Helper.convertDpToPixel(20, getApplicationContext());
+                    params.width = (int) Helper.convertDpToPixel(20, getApplicationContext());
+                    toot_picture_container.setLayoutParams(params);
+                } else {
+                    ViewGroup.LayoutParams params = toot_picture_container.getLayoutParams();
+                    params.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
+                    params.width = (int) Helper.convertDpToPixel(100, getApplicationContext());
+                    toot_picture_container.setLayoutParams(params);
+                }
+            }
+        });*/
+
+        drawer_layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                int heightDiff = drawer_layout.getRootView().getHeight() - drawer_layout.getHeight();
+                if (heightDiff > Helper.convertDpToPixel(200, getApplicationContext())) {
+                    ViewGroup.LayoutParams params = toot_picture_container.getLayoutParams();
+                    params.height = (int) Helper.convertDpToPixel(50, getApplicationContext());
+                    params.width = (int) Helper.convertDpToPixel(50, getApplicationContext());
+                    toot_picture_container.setLayoutParams(params);
+                }else {
+                    ViewGroup.LayoutParams params = toot_picture_container.getLayoutParams();
+                    params.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
+                    params.width = (int) Helper.convertDpToPixel(100, getApplicationContext());
+                    toot_picture_container.setLayoutParams(params);
+                }
+            }
+        });
 
         Bundle b = getIntent().getExtras();
         if(b != null) {

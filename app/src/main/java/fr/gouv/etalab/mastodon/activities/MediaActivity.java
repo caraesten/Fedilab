@@ -42,6 +42,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.github.chrisbanes.photoview.PhotoView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -76,7 +77,7 @@ public class MediaActivity extends AppCompatActivity  {
 
     private RelativeLayout loader;
     private ArrayList<Attachment>  attachments;
-    private ImageView imageView;
+    private PhotoView imageView;
     private VideoView videoView;
     private float downX, downY;
     private int mediaPosition;
@@ -85,6 +86,7 @@ public class MediaActivity extends AppCompatActivity  {
     private DisplayImageOptions options;
     static final int MIN_DISTANCE = 200;
     private String finalUrlDownload;
+    private String preview_url;
     private ImageView prev, next;
     private boolean isHiding;
     private Bitmap downloadedImage;
@@ -107,7 +109,7 @@ public class MediaActivity extends AppCompatActivity  {
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         loader = (RelativeLayout) findViewById(R.id.loader);
-        imageView = (ImageView) findViewById(R.id.media_picture);
+        imageView = (PhotoView) findViewById(R.id.media_picture);
         videoView = (VideoView) findViewById(R.id.media_video);
         prev = (ImageView) findViewById(R.id.media_prev);
         next = (ImageView) findViewById(R.id.media_next);
@@ -149,10 +151,10 @@ public class MediaActivity extends AppCompatActivity  {
                     if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
                         ActivityCompat.requestPermissions(MediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST_CODE);
                     } else {
-                        Helper.manageMoveFileDownload(MediaActivity.this, finalUrlDownload, downloadedImage, fileVideo);
+                        Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
                     }
                 }else{
-                    Helper.manageMoveFileDownload(MediaActivity.this, finalUrlDownload, downloadedImage, fileVideo);
+                    Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
                 }
                 return true;
             default:
@@ -228,7 +230,7 @@ public class MediaActivity extends AppCompatActivity  {
         if( mediaPosition < 1)
             mediaPosition = attachments.size();
         currentAction = action;
-        Attachment attachment = attachments.get(mediaPosition-1);
+        final Attachment attachment = attachments.get(mediaPosition-1);
         String type = attachment.getType();
         final String url = attachment.getUrl();
         finalUrlDownload = url;
@@ -237,7 +239,7 @@ public class MediaActivity extends AppCompatActivity  {
             videoView.stopPlayback();
         }
         imageView.setVisibility(View.GONE);
-
+        preview_url = attachment.getPreview_url();
         switch (type){
             case "image":
                 imageLoader.displayImage(url, imageView, options, new SimpleImageLoadingListener(){

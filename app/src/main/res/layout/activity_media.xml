@@ -45,12 +45,12 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         tools:ignore="ContentDescription" />
-    <ImageView
+    <com.github.chrisbanes.photoview.PhotoView
         android:visibility="gone"
         android:layout_centerInParent="true"
         android:id="@+id/media_picture"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         tools:ignore="ContentDescription" />
     <VideoView
         android:layout_centerInParent="true"
