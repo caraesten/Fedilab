@@ -84,7 +84,7 @@ public class MediaActivity extends AppCompatActivity  {
     MediaActivity.actionSwipe currentAction;
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
-    static final int MIN_DISTANCE = 200;
+    static final int MIN_DISTANCE = 100;
     private String finalUrlDownload;
     private String preview_url;
     private ImageView prev, next;
@@ -206,6 +206,7 @@ public class MediaActivity extends AppCompatActivity  {
                 float deltaX = downX - upX;
                 float deltaY = downY - upY;
                 // swipe horizontal
+
                 if( downX > MIN_DISTANCE & (Math.abs(deltaX) > MIN_DISTANCE && Math.abs(deltaY) < MIN_DISTANCE)){
                     if(deltaX < 0) { switchOnSwipe(MediaActivity.actionSwipe.LEFT_TO_RIGHT); return true; }
                     if(deltaX > 0) { switchOnSwipe(MediaActivity.actionSwipe.RIGHT_TO_LEFT); return true; }

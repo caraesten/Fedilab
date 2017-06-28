@@ -15,13 +15,19 @@
 package fr.gouv.etalab.mastodon.activities;
 
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.DownloadListener;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 
@@ -29,6 +35,9 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.webview.MastalabWebChromeClient;
 import fr.gouv.etalab.mastodon.webview.MastalabWebViewClient;
 import mastodon.etalab.gouv.fr.mastodon.R;
+
+import static fr.gouv.etalab.mastodon.helper.Helper.EXTERNAL_STORAGE_REQUEST_CODE;
+import static fr.gouv.etalab.mastodon.helper.Helper.manageDownloads;
 
 
 /**
@@ -84,6 +93,21 @@ public class WebviewActivity extends AppCompatActivity {
         });
         webView.setWebChromeClient(mastalabWebChromeClient);
         webView.setWebViewClient(new MastalabWebViewClient(WebviewActivity.this));
+        webView.setDownloadListener(new DownloadListener() {
+            @Override
+            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
+
+                if(Build.VERSION.SDK_INT >= 23 ){
+                    if (ContextCompat.checkSelfPermission(WebviewActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(WebviewActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(WebviewActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST_CODE);
+                    } else {
+                        manageDownloads(WebviewActivity.this, url);
+                    }
+                }else{
+                    manageDownloads(WebviewActivity.this, url);
+                }
+            }
+        });
         webView.loadUrl(url);
     }
 
