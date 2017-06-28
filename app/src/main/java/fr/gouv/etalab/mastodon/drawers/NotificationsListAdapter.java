@@ -185,9 +185,27 @@ public class NotificationsListAdapter extends BaseAdapter  {
                     holder.status_privacy.setImageResource(R.drawable.ic_local_post_office);
                     break;
             }
+            Drawable imgFav, imgReblog;
+            if( status.isFavourited())
+                imgFav = ContextCompat.getDrawable(context, R.drawable.ic_fav_yellow);
+            else
+                imgFav = ContextCompat.getDrawable(context, R.drawable.ic_fav_black);
+
+            if( status.isReblogged())
+                imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_retweet_yellow);
+            else
+                imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_retweet_black);
+
+            imgFav.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (20 * scale + 0.5f));
+            imgReblog.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (20 * scale + 0.5f));
+            holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
+            holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
         }else {
             holder.notification_status_container.setVisibility(View.GONE);
         }
+
+
+
         holder.notification_account_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

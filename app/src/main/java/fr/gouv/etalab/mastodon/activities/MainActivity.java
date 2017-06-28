@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
     private View headerLayout;
-    static final int MIN_DISTANCE = 150;
+    static final int MIN_DISTANCE = 100;
     private float downX, downY;
     private int currentScreen = 1;
     private actionSwipe currentAction;
@@ -254,10 +254,12 @@ public class MainActivity extends AppCompatActivity
             }
         }else if( Intent.ACTION_SEND.equals(action) && type != null ){
             if ("text/plain".equals(type)) {
+                String sharedSubject = intent.getStringExtra(Intent.EXTRA_SUBJECT);
                 String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
                 if (sharedText != null) {
                     Intent intentToot = new Intent(getApplicationContext(), TootActivity.class);
                     Bundle b = new Bundle();
+                    b.putString("sharedSubject", sharedSubject);
                     b.putString("sharedContent", sharedText);
                     intentToot.putExtras(b);
                     startActivity(intentToot);

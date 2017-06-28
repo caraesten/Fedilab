@@ -30,7 +30,7 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="10dp"
-            android:padding="2dp">
+            android:padding="1dp">
         </ProgressBar>
         <FrameLayout
             android:id="@+id/webview_container"

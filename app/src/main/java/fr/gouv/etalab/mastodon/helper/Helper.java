@@ -28,6 +28,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
@@ -51,23 +52,36 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.CookieManager;
+import android.webkit.MimeTypeMap;
+import android.webkit.URLUtil;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.BuildConfig;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.InetAddress;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -75,6 +89,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -87,6 +102,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Tag;
+import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -160,7 +176,7 @@ public class Helper {
     public static final String SET_EMBEDDED_BROWSER = "set_embedded_browser";
     public static final String SET_JAVASCRIPT = "set_javascript";
     public static final String SET_COOKIES = "set_cookies";
-
+    public static final String SET_FOLDER_RECORD = "set_folder_record";
     //End points
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 
@@ -445,6 +461,10 @@ public class Helper {
     }
 
 
+
+
+
+
     /**
      * Manage downloads with URLs
      * @param context Context
@@ -460,15 +480,13 @@ public class Helper {
             Toast.makeText(context,R.string.toast_error,Toast.LENGTH_LONG).show();
             return;
         }
-        Uri uri =  Uri.parse(url);
-        File f = new File("" + uri);
-        final String fileName = f.getName();
+        final String fileName = URLUtil.guessFileName(url, null, null);
         builder.setMessage(context.getResources().getString(R.string.download_file, fileName));
         builder.setCancelable(false)
                 .setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         request.allowScanningByMediaScanner();
-                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,fileName);
+                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
                         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                         DownloadManager dm = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
                         dm.enqueue(request);
@@ -487,6 +505,14 @@ public class Helper {
         alert.show();
     }
 
+    private static String getMimeType(String url) {
+        String type = null;
+        String extension = MimeTypeMap.getFileExtensionFromUrl(url);
+        if (extension != null) {
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+        }
+        return type;
+    }
 
     /**
      * Sends notification with intent
@@ -520,6 +546,97 @@ public class Helper {
         notificationBuilder.setContentTitle(title);
         notificationBuilder.setLargeIcon(icon);
         notificationManager.notify(notificationId, notificationBuilder.build());
+    }
+
+
+    /**
+     * Manage downloads with URLs
+     * @param context Context
+     * @param url String download url
+     */
+    public static void manageMoveFileDownload(final Context context, final String preview_url, final String url, Bitmap bitmap, File fileVideo){
+
+        final String fileName = URLUtil.guessFileName(url, null, null);final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.DIRECTORY_DOWNLOADS);
+ 
+        try {
+            File file;
+            if( bitmap != null) {
+                File filebmp = new File (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
+                FileOutputStream out = new FileOutputStream(filebmp);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                out.flush();
+                out.close();
+                file = new File(myDir, fileName);
+                copy(filebmp, file);
+            }else{
+                File fileVideoTargeded = new File(myDir, fileName);
+                copy(fileVideo, fileVideoTargeded);
+                file = fileVideoTargeded;
+            }
+            Random r = new Random();
+            final int notificationIdTmp = r.nextInt(10000);
+            // prepare intent which is triggered if the
+            // notification is selected
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+            final Intent intent = new Intent();
+            intent.setAction(android.content.Intent.ACTION_VIEW);
+            Uri uri = Uri.parse("file://" + file.getAbsolutePath());
+            intent.setDataAndType(uri, getMimeType(url));
+
+            DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
+                    .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+            ImageLoader imageLoaderNoty = ImageLoader.getInstance();
+            File cacheDir = new File(context.getCacheDir(), context.getString(R.string.app_name));
+            ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+                    .imageDownloader(new PatchBaseImageDownloader(context))
+                    .threadPoolSize(5)
+                    .threadPriority(Thread.MIN_PRIORITY + 3)
+                    .denyCacheImageMultipleSizesInMemory()
+                    .diskCache(new UnlimitedDiskCache(cacheDir))
+                    .build();
+            imageLoaderNoty.init(config);
+            imageLoaderNoty.loadImage(preview_url, options, new SimpleImageLoadingListener(){
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    super.onLoadingComplete(imageUri, view, loadedImage);
+                    notify_user(context, intent, notificationIdTmp, loadedImage, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
+                    Toast.makeText(context, R.string.toast_saved,Toast.LENGTH_LONG).show();
+                }
+                @Override
+                public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
+                    notify_user(context, intent, notificationIdTmp, BitmapFactory.decodeResource(context.getResources(),
+                                R.drawable.ic_save), context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
+                    Toast.makeText(context, R.string.toast_saved,Toast.LENGTH_LONG).show();
+                }});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Copy a file by transferring bytes from in to out
+     * @param src File source file
+     * @param dst File targeted file
+     * @throws IOException Exception
+     */
+    public static void copy(File src, File dst) throws IOException {
+        InputStream in = new FileInputStream(src);
+        try {
+            OutputStream out = new FileOutputStream(dst);
+            try {
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+            }catch (Exception ignored){}finally {
+                out.close();
+            }
+        } catch (Exception ignored){}finally {
+            in.close();
+        }
     }
 
     /**
@@ -902,6 +1019,70 @@ public class Helper {
         statusTV.setText(spannableString, TextView.BufferType.SPANNABLE);
         statusTV.setMovementMethod(LinkMovementMethod.getInstance());
         return statusTV;
+    }
+
+
+    public static WebView initializeWebview(Activity activity, int webviewId){
+
+        WebView webView = (WebView) activity.findViewById(webviewId);
+        final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean javascript = sharedpreferences.getBoolean(Helper.SET_JAVASCRIPT, true);
+
+        webView.getSettings().setJavaScriptEnabled(javascript);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setSupportZoom(true);
+        webView.getSettings().setDisplayZoomControls(false);
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.getSettings().setAllowContentAccess(true);
+        webView.getSettings().setLoadsImagesAutomatically(true);
+        webView.getSettings().setSupportMultipleWindows(false);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            //noinspection deprecation
+            webView.getSettings().setPluginState(WebSettings.PluginState.ON);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            webView.getSettings().setMediaPlaybackRequiresUserGesture(true);
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            boolean cookies = sharedpreferences.getBoolean(Helper.SET_COOKIES, false);
+            CookieManager cookieManager = CookieManager.getInstance();
+            cookieManager.setAcceptThirdPartyCookies(webView, cookies);
+        }
+        webView.getSettings().setAppCacheEnabled(true);
+        webView.getSettings().setDatabaseEnabled(true);
+        webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+
+        return webView;
+    }
+
+
+    public static String md5(final String s) {
+        final String MD5 = "MD5";
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest
+                    .getInstance(MD5);
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            // Create Hex String
+            StringBuilder hexString = new StringBuilder();
+            for (byte aMessageDigest : messageDigest) {
+                String h = Integer.toHexString(0xFF & aMessageDigest);
+                while (h.length() < 2)
+                    h = "0" + h;
+                hexString.append(h);
+            }
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
 }

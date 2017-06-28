@@ -10,7 +10,7 @@
     <string name="action_privacy">Confidentialité</string>
     <string name="action_cache">Cache</string>
     <string name="action_logout">Déconnexion</string>
-
+    <string name="action_download">Télécharger</string>
     <string name="login">Connexion</string>
 
     <!-- common -->
@@ -20,6 +20,10 @@
     <string name="cancel">Annuler</string>
     <string name="download">Télécharger</string>
     <string name="download_file">Télécharger %1$s</string>
+    <string name="download_over">Téléchargement terminé</string>
+    <string name="save_file">Enregistrer %1$s</string>
+    <string name="save_over">Enregistrement terminé</string>
+    <string name="download_from">Fichier : %1$s</string>
     <string name="password">Mot de passe</string>
     <string name="email">Email</string>
     <string name="accounts">Comptes</string>
@@ -59,7 +63,9 @@
     <string name="delete_account_title">Supprimer un compte</string>
     <string name="delete_account_message">Supprimer le compte %1$s de l\'application ?</string>
     <string name="send_email">Envoyer un email</string>
-
+    <string name="choose_file">Veuillez sélectionner un fichier</string>
+    <string name="choose_file_error">Aucun explorateur de fichiers trouvé !</string>
+    <string name="click_to_change">Cliquez sur le chemin pour changer</string>
     <!-- Status -->
     <string name="no_status">Aucun pouet à afficher !</string>
     <string name="fav_added">Pouet ajouté aux favoris !</string>
@@ -211,6 +217,7 @@
     <string name="toast_error_login">Impossible de vous connecter !</string>
     <string name="toast_update_credential_ok">Les données du profil ont été sauvegardées !</string>
     <string name="nothing_to_do">Aucune action ne peut être réalisée</string>
+    <string name="toast_saved">Le média a été enregistré !</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimisation du chargement</string>
     <string name="set_toots_page">Nombre de pouets par chargement</string>
@@ -224,6 +231,7 @@
     <string name="load_attachment_spoiler">Afficher le contenu ?</string>
     <string name="load_sensitive_attachment">Charger les images sensibles</string>
     <string name="set_display_reply">Afficher le message précédent lors d\'une réponse</string>
+    <string name="set_folder_title">Destination : </string>
 
     <string name="settings_title_notifications">Gestion des notifications</string>
     <string name="set_notif_follow">Notifier lorsque quelqu’un me suit</string>
@@ -299,6 +307,7 @@
         L\'utilisation de bibliothèques est réduite au strict minimum :\n
         - <b>Android Asynchronous Http Client</b> : Pour la gestion des requêtes\n
         - <b>Universal Image Loader</b> : Pour la gestion des médias\n
-        - <b>Android-Job</b> : Pour la gestion des services
+        - <b>Android-Job</b> : Pour la gestion des services\n
+        - <b>PhotoView</b> : Pour la gestion des images
     </string>
 </resources>

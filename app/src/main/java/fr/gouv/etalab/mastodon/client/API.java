@@ -1160,7 +1160,7 @@ public class API {
 
             //Retrieves attachments
             JSONArray arrayAttachement = resobj.getJSONArray("media_attachments");
-            List<Attachment> attachments = new ArrayList<>();
+            ArrayList<Attachment> attachments = new ArrayList<>();
             if( arrayAttachement != null){
                 for(int j = 0 ; j < arrayAttachement.length() ; j++){
                     JSONObject attObj = arrayAttachement.getJSONObject(j);
