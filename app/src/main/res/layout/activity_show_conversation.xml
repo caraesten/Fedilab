@@ -11,15 +11,18 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="fr.gouv.etalab.mastodon.activities.ShowConversationActivity"
     >
-    <ListView
-        android:visibility="gone"
-        android:id="@+id/lv_status"
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none"
-        android:divider="@null"
-        >
-    </ListView>
+        android:id="@+id/swipeContainer"
+        android:layout_height="match_parent">
+        <ListView
+            android:visibility="gone"
+            android:id="@+id/lv_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:divider="@null" />
+    </android.support.v4.widget.SwipeRefreshLayout>
     <!-- Main Loader -->
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/loader"

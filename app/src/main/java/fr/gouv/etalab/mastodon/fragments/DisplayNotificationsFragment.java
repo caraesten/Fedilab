@@ -118,10 +118,16 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,
-                R.color.colorPrimary,
-                R.color.colorPrimaryDark);
-
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+        if( theme == Helper.THEME_LIGHT) {
+            swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,
+                    R.color.colorPrimary,
+                    R.color.colorPrimaryDark);
+        }else {
+            swipeRefreshLayout.setColorSchemeResources(R.color.colorAccentD,
+                    R.color.colorPrimaryD,
+                    R.color.colorPrimaryDarkD);
+        }
 
         asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         return rootView;

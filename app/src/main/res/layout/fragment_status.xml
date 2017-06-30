@@ -32,9 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none"
-            android:divider="@null"
-            >
-        </ListView>
+            android:divider="@null" />
     </android.support.v4.widget.SwipeRefreshLayout>
     <RelativeLayout
         android:id="@+id/no_action"
