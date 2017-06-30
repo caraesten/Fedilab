@@ -157,10 +157,12 @@ public class Helper {
     public static final String SET_ACCOUNTS_PER_PAGE = "set_accounts_per_page";
     public static final String SET_NOTIFICATIONS_PER_PAGE = "set_notifications_per_page";
     public static final String SET_ATTACHMENT_ACTION = "set_attachment_action";
+    public static final String SET_THEME = "set_theme";
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;
-
+    public static final int THEME_LIGHT = 1;
+    public static final int THEME_DARK = 2;
 
     public static final String SET_NOTIF_FOLLOW = "set_notif_follow";
     public static final String SET_NOTIF_ADD = "set_notif_follow_add";
@@ -177,6 +179,7 @@ public class Helper {
     public static final String SET_JAVASCRIPT = "set_javascript";
     public static final String SET_COOKIES = "set_cookies";
     public static final String SET_FOLDER_RECORD = "set_folder_record";
+
     //End points
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 

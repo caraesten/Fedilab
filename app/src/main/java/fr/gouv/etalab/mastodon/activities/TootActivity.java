@@ -116,6 +116,13 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+        if( theme == Helper.THEME_LIGHT){
+            setTheme(R.style.AppTheme);
+        }else {
+            setTheme(R.style.AppThemeDark);
+        }
         setContentView(R.layout.activity_toot);
 
         if( getSupportActionBar() != null)
@@ -182,7 +189,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         }
         if( tootReply != null) {
             setTitle(R.string.toot_title_reply);
-            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             boolean show_reply = sharedpreferences.getBoolean(Helper.SET_SHOW_REPLY, false);
             if( show_reply ){
@@ -269,7 +275,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
         FloatingActionButton toot_close_accounts = (FloatingActionButton) findViewById(R.id.toot_close_accounts);
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         Account account = new AccountDAO(getApplicationContext(),db).getAccountByID(userId);
         boolean isAccountPrivate = account.isLocked();

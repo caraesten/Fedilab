@@ -1,24 +1,103 @@
 <resources>
+    <attr format="reference" name="cardStyle"/>
+    <attr format="reference" name="appBarLayout"/>
+    <attr format="reference" name="headerbg"/>
+    <attr format="reference" name="shapeBorder"/>
+    <attr format="reference" name="imgbd"/>
+    <attr format="reference" name="splash"/>
+    <attr format="reference" name="popupOverlay"/>
+    <attr format="reference" name="appBarOverlay"/>
 
-    <!-- Base application theme. -->
+    <!-- Light theme -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="cardStyle">@style/CardView.Light</item>
+        <item name="headerbg">@style/Header.Light</item>
+        <item name="shapeBorder">@style/Shape.Light</item>
+        <item name="imgbd">@style/Image.Border.Light</item>
+        <item name="popupOverlay">@style/AppTheme.PopupOverlay</item>
+    </style>
+    <style name="AppTheme_NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="cardStyle">@style/CardView.Light</item>
+        <item name="headerbg">@style/Header.Light</item>
+        <item name="shapeBorder">@style/Shape.Light</item>
+        <item name="imgbd">@style/Image.Border.Light</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="popupOverlay">@style/AppTheme.PopupOverlay</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
+
+    <!-- Dark theme -->
+    <style name="AppThemeDark" parent="Theme.AppCompat">
+        <item name="cardStyle">@style/CardView.Dark</item>
+        <item name="headerbg">@style/Header.Dark</item>
+        <item name="shapeBorder">@style/Shape.Dark</item>
+        <item name="imgbd">@style/Image.Border.Dark</item>
+        <item name="popupOverlay">@style/AppThemeDark.PopupOverlay</item>
+    </style>
+
+    <style name="AppThemeDark_NoActionBar" parent="Theme.AppCompat.NoActionBar">
+        <item name="cardStyle">@style/CardView.Dark</item>
+        <item name="headerbg">@style/Header.Dark</item>
+        <item name="shapeBorder">@style/Shape.Dark</item>
+        <item name="imgbd">@style/Image.Border.Dark</item>
+        <item name="popupOverlay">@style/AppThemeDark.PopupOverlay</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+    <style name="AppThemeDark.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark">
+    </style>
+
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
+
+    <style name="Image.Border.Dark" parent="AppThemeDark">
+        <item name="android:background">@drawable/imageview_border_dark</item>
+    </style>
+
+    <style name="Image.Border.Light" parent="AppTheme">
+        <item name="android:background">@drawable/imageview_border</item>
+    </style>
+
+    <style name="Header.Dark" parent="AppThemeDark">
+        <item name="android:background">@drawable/side_nav_bar_dark</item>
+    </style>
+
+    <style name="Header.Light" parent="AppTheme">
+        <item name="android:background">@drawable/side_nav_bar</item>
+    </style>
+
+
+    <style name="Shape.Dark" parent="AppThemeDark">
+        <item name="android:background">@drawable/shape_border_bottom_settings_dark</item>
+    </style>
+
+    <style name="Shape.Light" parent="AppTheme">
+        <item name="android:background">@drawable/shape_border_bottom_settings</item>
+    </style>
+
+    <style name="CardViewStyle.Dark" parent="CardView">
+        <item name="cardBackgroundColor">@color/cardview_dark_background</item>
+    </style>
+
+    <style name="CardViewStyle.Light" parent="CardView">
+        <item name="cardBackgroundColor">@color/cardview_light_background</item>
+    </style>
+
 
 </resources>

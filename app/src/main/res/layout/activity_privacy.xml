@@ -32,14 +32,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:orientation="vertical"
             tools:ignore="UselessParent">
 
             <!-- PRIVACY TITLE -->
             <TextView
                 android:text="@string/privacy_API_title"
-                android:background="@drawable/shape_border_bottom_settings"
+                style="?attr/shapeBorder"
                 android:paddingBottom="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
@@ -64,7 +64,7 @@
             <!-- DATA PRIVACY TITLE -->
             <TextView
                 android:text="@string/privacy_data_title"
-                android:background="@drawable/shape_border_bottom_settings"
+                style="?attr/shapeBorder"
                 android:paddingBottom="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
@@ -81,6 +81,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:orientation="vertical"
             tools:ignore="UselessParent">
@@ -88,7 +89,7 @@
             <!-- APPS AUTHORIZATIONS TITLE -->
             <TextView
                 android:text="@string/privacy_authorizations_title"
-                android:background="@drawable/shape_border_bottom_settings"
+                style="?attr/shapeBorder"
                 android:paddingBottom="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
@@ -106,13 +107,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical"
             tools:ignore="UselessParent">
 
             <!-- API AUTHORIZATIONS TITLE -->
             <TextView
                 android:text="@string/privacy_API_authorizations_title"
-                android:background="@drawable/shape_border_bottom_settings"
+                style="?attr/shapeBorder"
                 android:paddingBottom="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"

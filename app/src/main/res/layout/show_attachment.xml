@@ -49,7 +49,6 @@
         android:id="@+id/loader"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
         android:layout_gravity="center"
         android:gravity="center"
         >
