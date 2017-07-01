@@ -18,8 +18,11 @@ package fr.gouv.etalab.mastodon.activities;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -52,10 +55,21 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
     private String statusId;
     private Status initialStatus;
     public static int position;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private ListView lv_status;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+        if( theme == Helper.THEME_LIGHT){
+            setTheme(R.style.AppTheme);
+        }else {
+            setTheme(R.style.AppThemeDark);
+        }
         setContentView(R.layout.activity_show_conversation);
 
         if( getSupportActionBar() != null)
@@ -66,7 +80,46 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
         if( statusId == null)
             finish();
         setTitle(R.string.conversation);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        if( theme == Helper.THEME_LIGHT) {
+            swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,
+                    R.color.colorPrimary,
+                    R.color.colorPrimaryDark);
+        }else {
+            swipeRefreshLayout.setColorSchemeResources(R.color.colorAccentD,
+                    R.color.colorPrimaryD,
+                    R.color.colorPrimaryDarkD);
+        }
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        });
+        lv_status = (ListView) findViewById(R.id.lv_status);
+        lv_status.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
+
+                    if (lv_status.getLastVisiblePosition() == lv_status.getAdapter().getCount() -1 &&  lv_status.getFirstVisiblePosition() > 0 &&
+                            lv_status.getChildAt(lv_status.getChildCount() - 1).getBottom() <= lv_status.getHeight()) {
+
+                        swipeRefreshLayout.setRefreshing(true);
+                        ( new Handler()).postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            }
+                        }, 1000);
+
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -98,6 +151,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
 
     @Override
     public void onRetrieveFeeds(Context context, Error error) {
+        swipeRefreshLayout.setRefreshing(false);
         if( error != null){
             final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
@@ -120,10 +174,10 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
         if( context.getDescendants() != null && context.getDescendants().size() > 0){
             for(Status status: context.getDescendants()){
                 statuses.add(status);
+                statusId = status.getId();
             }
         }
         RelativeLayout loader = (RelativeLayout) findViewById(R.id.loader);
-        ListView lv_status = (ListView) findViewById(R.id.lv_status);
         StatusListAdapter statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, RetrieveFeedsAsyncTask.Type.CONTEXT, isOnWifi, behaviorWithAttachments, statuses);
         lv_status.setAdapter(statusListAdapter);
         statusListAdapter.notifyDataSetChanged();

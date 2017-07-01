@@ -54,6 +54,7 @@
     <string name="communication_menu_title">Communication</string>
     <string name="muted_menu">Utilisateurs muets</string>
     <string name="blocked_menu">Utilisateurs bloqués</string>
+    <string name="account_list_menu">Comptes</string>
     <string name="notifications">Notifications</string>
     <string name="follow_request">Demandes d\'abonnements</string>
     <string name="optimization">Optimisation</string>
@@ -65,7 +66,7 @@
     <string name="send_email">Envoyer un email</string>
     <string name="choose_file">Veuillez sélectionner un fichier</string>
     <string name="choose_file_error">Aucun explorateur de fichiers trouvé !</string>
-    <string name="click_to_change">Cliquez sur le chemin pour changer</string>
+    <string name="click_to_change">Cliquer sur le chemin pour changer</string>
     <!-- Status -->
     <string name="no_status">Aucun pouet à afficher !</string>
     <string name="fav_added">Pouet ajouté aux favoris !</string>
@@ -243,7 +244,7 @@
     <string name="settings_title_more_options">Options avancées</string>
     <string name="set_wifi_only">Notifier en WIFI seulement</string>
     <string name="set_notif_silent">Utiliser le vibreur</string>
-
+    <string name="set_night_mode">Mode nuit</string>
     <string name="settings_title_profile">Modifier le profil</string>
     <string name="set_profile_description">Présentation…</string>
     <string name="set_save_changes">Enregistrer les modifications</string>
@@ -281,7 +282,6 @@
        Seules les informations de base des comptes connectés sont enregistrées sur l\'appareil.
         Ces données sont strictement confidentielles et ne sont utilisables que par l\'application. La suppression de l\'application entraîne immédiatement la suppression de ces données.\n
         &#9888; Les identifiants et les mots de passe ne sont jamais enregistrés, ils ne sont utilisés que lors de l\'authentification sécurisée (SSL) vers l\'instance.
-
     </string>
 
     <string name="privacy_authorizations_title">Autorisations de l\'application</string>
@@ -291,7 +291,7 @@
         - <b>WRITE_EXTERNAL_STORAGE</b> : Utilisée pour télécharger les médias / déplacer sur la carte SD.\n
         - <b>READ_EXTERNAL_STORAGE</b> : Utilisée pour ajouter des médias aux pouets.\n
         - <b>BOOT_COMPLETED</b> : Utilisée pour lancer le service de notifications quand l\'appareil démarre.\n
-        - <b>WAKE_LOCK</b> : Utilisée lors du service de notifications.\n
+        - <b>WAKE_LOCK</b> : Utilisée lors du service de notifications.
     </string>
 
     <string name="privacy_API_authorizations_title">Autorisations de l\'API</string>
@@ -299,7 +299,7 @@
         - <b>Read</b> : Lire les données du compte.\n
         - <b>Write</b> : Envoyer des messages et attacher des médias aux messages.\n
         - <b>Follow</b> : S\'abonner, se désabonner, bloquer, débloquer.\n\n
-        <b>&#9888; Ces actions ne sont réalisées qu\'à la demande de l\'utilisateur.</b>\n\n
+        <b>&#9888; Ces actions ne sont réalisées qu\'à la demande de l\'utilisateur.</b>
     </string>
     <string name="privacy_API_title">Suivi et bibliothèques</string>
     <string name="privacy_API">

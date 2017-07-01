@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- LIGHT -->
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#2196F3</color>
-
+    <!-- DARK -->
+    <color name="colorPrimaryD">#616161</color>
+    <color name="colorPrimaryDarkD">#212121</color>
+    <color name="colorAccentD">#009688</color>
 
     <!-- Header Profile-->
     <color name="header1">#0288D1</color>
     <color name="header2">#03A9F4</color>
     <color name="header3">#4FC3F7</color>
+    <!-- Header Profile DARK-->
+    <color name="header1D">#263238</color>
+    <color name="header2D">#455A64</color>
+    <color name="header3D">#607D8B</color>
+
+    <color name="dark_text">#BDBDBD</color>
+    <color name="transparent">#00000000</color>
 
 
     <color name="splashc">#F5F5F5</color>
+    <color name="splashc_dark">#546E7A</color>
 
     <color name="white">#FFF</color>
     <color name="blue_light">#C5CAE9</color>
@@ -24,4 +37,6 @@
     <color name="green_1">#009688</color>
     <color name="red_1">#F44336</color>
     <color name="black">#000</color>
+
+
 </resources>

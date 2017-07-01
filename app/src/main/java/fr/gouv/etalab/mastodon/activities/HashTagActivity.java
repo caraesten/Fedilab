@@ -21,6 +21,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
@@ -62,7 +63,18 @@ public class HashTagActivity extends AppCompatActivity implements OnRetrieveFeed
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+        if( theme == Helper.THEME_LIGHT){
+            setTheme(R.style.AppTheme);
+        }else {
+            setTheme(R.style.AppThemeDark);
+        }
+
         setContentView(R.layout.activity_hashtag);
+
 
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -77,8 +89,10 @@ public class HashTagActivity extends AppCompatActivity implements OnRetrieveFeed
         firstLoad = true;
         boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+
+
         int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+
 
         final ListView lv_status = (ListView) findViewById(R.id.lv_status);
         tootsPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
@@ -100,9 +114,15 @@ public class HashTagActivity extends AppCompatActivity implements OnRetrieveFeed
                 new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.TAG, tag,null, max_id, HashTagActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,
-                R.color.colorPrimary,
-                R.color.colorPrimaryDark);
+        if( theme == Helper.THEME_LIGHT) {
+            swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,
+                    R.color.colorPrimary,
+                    R.color.colorPrimaryDark);
+        }else {
+            swipeRefreshLayout.setColorSchemeResources(R.color.colorAccentD,
+                    R.color.colorPrimaryD,
+                    R.color.colorPrimaryDarkD);
+        }
 
         lv_status.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override

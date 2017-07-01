@@ -20,6 +20,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
+    style="?attr/cardStyle"
     android:layout_marginTop="10dp"
     card_view:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true">

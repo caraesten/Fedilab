@@ -25,7 +25,6 @@
         android:id="@+id/picture_actionbar"
         android:maxLines="1"
         android:layout_width="match_parent"
-        android:textColor="@color/white"
         android:layout_height="wrap_content"
         android:textSize="14sp" />
 </LinearLayout>

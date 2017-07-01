@@ -30,6 +30,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -61,6 +62,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
 /**
@@ -184,6 +186,32 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         if( type == RetrieveFeedsAsyncTask.Type.USER){
             holder.status_action_container.setVisibility(View.GONE);
         }
+        //Manages theme for icon colors
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+        if( theme == Helper.THEME_DARK){
+            changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_action_more,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_fav_black,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
+        }else {
+            changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_action_more,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_fav_black,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_photo,R.color.black);
+        }
+
+
         final float scale = context.getResources().getDisplayMetrics().density;
         if( !status.getIn_reply_to_account_id().equals("null") || !status.getIn_reply_to_id().equals("null") ){
             Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_reply);
@@ -196,6 +224,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }else{
             holder.status_account_displayname.setCompoundDrawables( null, null, null, null);
         }
+
+
         //Click on a conversation
         if( type != RetrieveFeedsAsyncTask.Type.CONTEXT ){
             holder.status_content.setOnClickListener(new View.OnClickListener() {
@@ -209,10 +239,18 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 }
             });
         }else {
-            if( position == ShowConversationActivity.position){
-                holder.main_container.setBackgroundResource(R.color.blue_light);
+            if( theme == Helper.THEME_LIGHT){
+                if( position == ShowConversationActivity.position){
+                    holder.main_container.setBackgroundResource(R.color.blue_light);
+                }else {
+                    holder.main_container.setBackgroundResource(R.color.white);
+                }
             }else {
-                holder.main_container.setBackgroundResource(R.color.white);
+                if( position == ShowConversationActivity.position){
+                    holder.main_container.setBackgroundResource(R.color.header2D);
+                }else {
+                    holder.main_container.setBackgroundResource(R.color.cardview_dark_background);
+                }
             }
         }
 
@@ -354,7 +392,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_favorite_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
                 boolean confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
                 if( confirmation )
                     displayConfirmationDialog(FAVOURITE,status);
@@ -366,7 +404,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_reblog_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 boolean confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
                 if( confirmation )
                     displayConfirmationDialog(REBLOG,status);
@@ -635,7 +672,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         final boolean isOwner = status.getAccount().getId().equals(userId);
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
-        builderSingle.setTitle(R.string.make_a_choice);
+        //builderSingle.setTitle(R.string.make_a_choice);
         final String[] stringArray, stringArrayConf;
         final API.StatusAction[] doAction;
         if( isOwner) {
@@ -752,6 +789,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 builderInner.show();
             }
         });
+        builderSingle.create().requestWindowFeature(Window.FEATURE_NO_TITLE);
         builderSingle.show();
     }
 }

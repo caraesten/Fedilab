@@ -173,6 +173,24 @@ public class SettingsFragment extends Fragment {
             file_chooser.setVisibility(View.GONE);
         }
 
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+        final SwitchCompat set_night_mode = (SwitchCompat) rootView.findViewById(R.id.set_night_mode);
+        set_night_mode.setChecked(theme == Helper.THEME_DARK);
+        set_night_mode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putInt(Helper.SET_THEME, isChecked?Helper.THEME_DARK:Helper.THEME_LIGHT);
+                editor.apply();
+                if( isChecked){
+                    getActivity().setTheme(R.style.AppThemeDark);
+                }else {
+                    getActivity().setTheme(R.style.AppTheme);
+                }
+                getActivity().recreate();
+            }
+        });
+
         return rootView;
     }
 

@@ -78,7 +78,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
 
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        notificationPerPage = sharedpreferences.getInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 40);
+        notificationPerPage = sharedpreferences.getInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 15);
         lv_notifications = (ListView) rootView.findViewById(R.id.lv_notifications);
 
         mainLoader = (RelativeLayout) rootView.findViewById(R.id.loader);
@@ -118,10 +118,16 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,
-                R.color.colorPrimary,
-                R.color.colorPrimaryDark);
-
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+        if( theme == Helper.THEME_LIGHT) {
+            swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,
+                    R.color.colorPrimary,
+                    R.color.colorPrimaryDark);
+        }else {
+            swipeRefreshLayout.setColorSchemeResources(R.color.colorAccentD,
+                    R.color.colorPrimaryD,
+                    R.color.colorPrimaryDarkD);
+        }
 
         asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         return rootView;

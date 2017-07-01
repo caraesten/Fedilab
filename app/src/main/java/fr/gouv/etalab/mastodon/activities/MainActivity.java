@@ -25,6 +25,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -101,6 +102,14 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+        if( theme == Helper.THEME_LIGHT){
+            setTheme(R.style.AppTheme_NoActionBar);
+        }else {
+            setTheme(R.style.AppThemeDark_NoActionBar);
+        }
         setContentView(R.layout.activity_main);
         //Test if user is still log in
         if( ! Helper.isLoggedIn(getApplicationContext())) {
@@ -152,7 +161,6 @@ public class MainActivity extends AppCompatActivity
 
         headerLayout = navigationView.getHeaderView(0);
 
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(prefKeyOauthTokenT);
         updateHeaderAccountInfo(MainActivity.this, account, headerLayout, imageLoader, options);
@@ -225,6 +233,7 @@ public class MainActivity extends AppCompatActivity
     private boolean mamageNewIntent(Intent intent){
         if( intent == null || intent.getExtras() == null )
             return false;
+
         String action = intent.getAction();
         String type = intent.getType();
         Bundle extras = intent.getExtras();
@@ -389,7 +398,7 @@ public class MainActivity extends AppCompatActivity
                     }
                 }
                 //Open the search bar
-                final EditText search = new EditText(getApplicationContext());
+                final EditText search = new EditText(MainActivity.this);
                 search.setSingleLine(true);
                 search.setLayoutParams( new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,

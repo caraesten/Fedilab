@@ -7,8 +7,8 @@ android {
         applicationId "fr.gouv.etalab.mastodon"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 23
-        versionName "1.2.6"
+        versionCode 24
+        versionName "1.2.7"
     }
     buildTypes {
         release {
@@ -32,5 +32,6 @@ dependencies {
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile 'com.evernote:android-job:1.1.11'
     compile 'com.github.chrisbanes:PhotoView:2.0.0'
+
 
 }

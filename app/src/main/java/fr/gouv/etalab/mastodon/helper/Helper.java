@@ -26,10 +26,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -38,9 +42,11 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.ColorInt;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -49,7 +55,9 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
@@ -157,10 +165,12 @@ public class Helper {
     public static final String SET_ACCOUNTS_PER_PAGE = "set_accounts_per_page";
     public static final String SET_NOTIFICATIONS_PER_PAGE = "set_notifications_per_page";
     public static final String SET_ATTACHMENT_ACTION = "set_attachment_action";
+    public static final String SET_THEME = "set_theme";
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;
-
+    public static final int THEME_LIGHT = 1;
+    public static final int THEME_DARK = 2;
 
     public static final String SET_NOTIF_FOLLOW = "set_notif_follow";
     public static final String SET_NOTIF_ADD = "set_notif_follow_add";
@@ -177,6 +187,7 @@ public class Helper {
     public static final String SET_JAVASCRIPT = "set_javascript";
     public static final String SET_COOKIES = "set_cookies";
     public static final String SET_FOLDER_RECORD = "set_folder_record";
+
     //End points
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 
@@ -684,20 +695,35 @@ public class Helper {
         if( currrentUserId == null)
             return;
 
+        MenuItem menu_account = navigationView.getMenu().findItem(R.id.nav_account_list);
+        MenuItem nav_main_com = navigationView.getMenu().findItem(R.id.nav_main_com);
+        MenuItem nav_main_opt= navigationView.getMenu().findItem(R.id.nav_main_opt);
+        final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+        if( theme == Helper.THEME_DARK){
+            changeDrawableColor(activity, R.drawable.ic_person_add,R.color.dark_text);
+            changeDrawableColor(activity, R.drawable.ic_person,R.color.dark_text);
+            changeDrawableColor(activity, R.drawable.ic_cancel,R.color.dark_text);
+        }else {
+            changeDrawableColor(activity, R.drawable.ic_person_add,R.color.black);
+            changeDrawableColor(activity, R.drawable.ic_person,R.color.black);
+            changeDrawableColor(activity, R.drawable.ic_cancel,R.color.black);
+        }
+
         if( !menuAccountsOpened ){
 
             arrow.setImageResource(R.drawable.ic_arrow_drop_up);
 
-            navigationView.getMenu().clear();
-            navigationView.inflateMenu(R.menu.menu_accounts);
-
             SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-
+            menu_account.setVisible(true);
+            nav_main_com.setVisible(false);
+            nav_main_opt.setVisible(false);
             final List<Account> accounts = new AccountDAO(activity, db).getAllAccount();
-            navigationView.setItemIconTintList(null);
+            SubMenu navigationViewSub = navigationView.getMenu().findItem(R.id.nav_account_list).getSubMenu();
+            navigationViewSub.clear();
             for(final Account account: accounts) {
                 if( !currrentUserId.equals(account.getId()) ) {
-                    final MenuItem item = navigationView.getMenu().add("@" + account.getAcct() + "@" + account.getInstance());
+                    final MenuItem item = navigationViewSub.add("@" + account.getAcct() + "@" + account.getInstance());
                     ImageLoader imageLoader;
                     DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                             .cacheOnDisk(true).resetViewBeforeLoading(true).build();
@@ -716,6 +742,7 @@ public class Helper {
                         @Override
                         public void onLoadingComplete(String s, View view, Bitmap bitmap) {
                             item.setIcon(new BitmapDrawable(activity.getResources(), bitmap));
+                            item.getIcon().setColorFilter(0xFFFFFFFF, PorterDuff.Mode.MULTIPLY);
                         }
 
                         @Override
@@ -763,7 +790,7 @@ public class Helper {
 
                 }
             }
-            MenuItem addItem = navigationView.getMenu().add(R.string.add_account);
+            MenuItem addItem = navigationViewSub.add(R.string.add_account);
             addItem.setIcon(R.drawable.ic_person_add);
             addItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
@@ -775,13 +802,14 @@ public class Helper {
                 }
             });
         }else{
+            menu_account.setVisible(false);
+            nav_main_com.setVisible(true);
+            nav_main_opt.setVisible(true);
             arrow.setImageResource(R.drawable.ic_arrow_drop_down);
-            navigationView.getMenu().clear();
-            navigationView.inflateMenu(R.menu.activity_main_drawer);
-            final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             Account account = new AccountDAO(activity, db).getAccountByID(userId);
+
             if( account != null) {
                 if (account.isLocked()) {
                     navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);
@@ -1052,6 +1080,7 @@ public class Helper {
             CookieManager cookieManager = CookieManager.getInstance();
             cookieManager.setAcceptThirdPartyCookies(webView, cookies);
         }
+        webView.setBackgroundColor(Color.TRANSPARENT);
         webView.getSettings().setAppCacheEnabled(true);
         webView.getSettings().setDatabaseEnabled(true);
         webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
@@ -1085,4 +1114,15 @@ public class Helper {
         return "";
     }
 
+    /**
+     * change color of a drawable
+     * @param drawable int the drawable
+     * @param hexaColor example 0xffff00
+     */
+    public static Drawable changeDrawableColor(Context context, int drawable, int hexaColor){
+        int color = Color.parseColor(context.getString(hexaColor));
+        Drawable mDrawable = ContextCompat.getDrawable(context, drawable);
+        mDrawable.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+        return mDrawable;
+    }
 }

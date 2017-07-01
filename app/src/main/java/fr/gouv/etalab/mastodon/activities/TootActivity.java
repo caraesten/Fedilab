@@ -80,6 +80,8 @@ import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
+
 
 /**
  * Created by Thomas on 01/05/2017.
@@ -116,6 +118,13 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+        if( theme == Helper.THEME_LIGHT){
+            setTheme(R.style.AppTheme);
+        }else {
+            setTheme(R.style.AppThemeDark);
+        }
         setContentView(R.layout.activity_toot);
 
         if( getSupportActionBar() != null)
@@ -135,6 +144,25 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         toot_show_accounts = (RelativeLayout) findViewById(R.id.toot_show_accounts);
         toot_lv_accounts = (ListView) findViewById(R.id.toot_lv_accounts);
         toot_sensitive = (CheckBox) findViewById(R.id.toot_sensitive);
+
+
+        if( theme == Helper.THEME_DARK){
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_globe,R.color.dark_text);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_open,R.color.dark_text);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_closed,R.color.dark_text);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_local_post_office,R.color.dark_text);
+
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_globe,R.color.dark_text);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_camera,R.color.dark_text);
+        }else {
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_globe,R.color.black);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_open,R.color.black);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_closed,R.color.black);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_local_post_office,R.color.black);
+
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_globe,R.color.black);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_camera,R.color.black);
+        }
 
         final LinearLayout drawer_layout = (LinearLayout) findViewById(R.id.drawer_layout);
 
@@ -182,7 +210,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         }
         if( tootReply != null) {
             setTitle(R.string.toot_title_reply);
-            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             boolean show_reply = sharedpreferences.getBoolean(Helper.SET_SHOW_REPLY, false);
             if( show_reply ){
@@ -269,7 +296,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
         FloatingActionButton toot_close_accounts = (FloatingActionButton) findViewById(R.id.toot_close_accounts);
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         Account account = new AccountDAO(getApplicationContext(),db).getAccountByID(userId);
         boolean isAccountPrivate = account.isLocked();

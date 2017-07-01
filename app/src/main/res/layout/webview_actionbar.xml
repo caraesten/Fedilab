@@ -22,7 +22,6 @@
     android:orientation="horizontal"
     tools:ignore="UseCompoundDrawables">
     <ImageView
-        android:background="@color/white"
         android:layout_gravity="center_vertical"
         android:id="@+id/webview_favicon"
         android:layout_width="20dp"
@@ -35,7 +34,6 @@
         android:id="@+id/webview_title"
         android:maxLines="1"
         android:layout_width="0dp"
-        android:textColor="@color/white"
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:layout_weight="1" />

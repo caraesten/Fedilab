@@ -36,7 +36,7 @@
         <!-- OPTIMIZATION SETTINGS -->
         <TextView
             android:text="@string/settings_title_optimisation"
-            android:background="@drawable/shape_border_bottom_settings"
+            style="?attr/shapeBorder"
             android:paddingBottom="10dp"
             android:layout_width="match_parent"
             android:layout_marginBottom="10dp"
