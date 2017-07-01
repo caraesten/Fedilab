@@ -19,7 +19,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_image"
+    android:id="@+id/main_container_media"
     >
     <ImageView
         android:visibility="gone"
@@ -75,7 +75,7 @@
             android:textSize="12sp"
             android:visibility="gone"
             android:layout_marginTop="10dp"
-            android:textColor="@color/colorAccent"
+            android:textColor="?attr/colorAccent"
             android:layout_below="@+id/pbar_inf"
             android:layout_width="50dp"
             android:gravity="center"

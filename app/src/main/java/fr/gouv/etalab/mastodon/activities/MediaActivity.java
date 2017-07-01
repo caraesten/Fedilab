@@ -117,6 +117,14 @@ public class MediaActivity extends AppCompatActivity  {
             finish();
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        RelativeLayout main_container_media = (RelativeLayout) findViewById(R.id.main_container_media);
+        if( theme == Helper.THEME_LIGHT){
+            main_container_media.setBackgroundResource(R.color.background_image);
+        }else {
+            main_container_media.setBackgroundResource(R.color.colorPrimaryD);
+        }
+
         loader = (RelativeLayout) findViewById(R.id.loader);
         imageView = (PhotoView) findViewById(R.id.media_picture);
         videoView = (VideoView) findViewById(R.id.media_video);

@@ -80,6 +80,8 @@ import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
+
 
 /**
  * Created by Thomas on 01/05/2017.
@@ -142,6 +144,25 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         toot_show_accounts = (RelativeLayout) findViewById(R.id.toot_show_accounts);
         toot_lv_accounts = (ListView) findViewById(R.id.toot_lv_accounts);
         toot_sensitive = (CheckBox) findViewById(R.id.toot_sensitive);
+
+
+        if( theme == Helper.THEME_DARK){
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_globe,R.color.dark_text);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_open,R.color.dark_text);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_closed,R.color.dark_text);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_local_post_office,R.color.dark_text);
+
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_globe,R.color.dark_text);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_camera,R.color.dark_text);
+        }else {
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_globe,R.color.black);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_open,R.color.black);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_closed,R.color.black);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_local_post_office,R.color.black);
+
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_globe,R.color.black);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_camera,R.color.black);
+        }
 
         final LinearLayout drawer_layout = (LinearLayout) findViewById(R.id.drawer_layout);
 
