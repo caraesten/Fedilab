@@ -94,8 +94,8 @@ public class SettingsOptimizationFragment extends Fragment {
         //Notifications per page
         SeekBar notificationsSeekBar = (SeekBar) rootView.findViewById(R.id.set_notifications_per_page);
         final TextView set_notifications_page_value = (TextView) rootView.findViewById(R.id.set_notifications_page_value);
-        notificationsSeekBar.setMax(30);
-        int notificationsPerPage = sharedpreferences.getInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 40);
+        notificationsSeekBar.setMax(20);
+        int notificationsPerPage = sharedpreferences.getInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 15);
         notificationsSeekBar.setProgress(notificationsPerPage-10);
         set_notifications_page_value.setText(String.valueOf(notificationsPerPage));
         notificationsSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

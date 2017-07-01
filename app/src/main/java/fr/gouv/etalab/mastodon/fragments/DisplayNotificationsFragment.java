@@ -78,7 +78,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
 
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        notificationPerPage = sharedpreferences.getInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 40);
+        notificationPerPage = sharedpreferences.getInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 15);
         lv_notifications = (ListView) rootView.findViewById(R.id.lv_notifications);
 
         mainLoader = (RelativeLayout) rootView.findViewById(R.id.loader);
