@@ -295,10 +295,10 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
             else
                 account_ac.setText(account.getAcct());
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                account_note.setText(Html.fromHtml(account.getNote(), Html.FROM_HTML_MODE_COMPACT));
+                account_note.setText(Html.fromHtml(Helper.shortnameToUnicode(account.getNote(),true), Html.FROM_HTML_MODE_COMPACT));
             else
                 //noinspection deprecation
-                account_note.setText(Html.fromHtml(account.getNote()));
+                account_note.setText(Html.fromHtml(Helper.shortnameToUnicode(account.getNote(), true)));
             tabLayout.getTabAt(0).setText(getString(R.string.status_cnt, account.getStatuses_count()));
             tabLayout.getTabAt(1).setText(getString(R.string.following_cnt, account.getFollowing_count()));
             tabLayout.getTabAt(2).setText(getString(R.string.followers_cnt, account.getFollowers_count()));

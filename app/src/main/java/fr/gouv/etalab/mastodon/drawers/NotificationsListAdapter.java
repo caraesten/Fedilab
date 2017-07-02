@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.drawers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -43,6 +44,8 @@ import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.helper.Helper;
+
+import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
 /**
@@ -157,6 +160,32 @@ public class NotificationsListAdapter extends BaseAdapter  {
             holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
             holder.status_date.setText(Helper.dateDiff(context, status.getCreated_at()));
 
+            //Manages theme for icon colors
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+            if( theme == Helper.THEME_DARK){
+                changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_text);
+                changeDrawableColor(context, R.drawable.ic_action_more,R.color.dark_text);
+                changeDrawableColor(context, R.drawable.ic_action_globe,R.color.dark_text);
+                changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.dark_text);
+                changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_text);
+                changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.dark_text);
+                changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.dark_text);
+                changeDrawableColor(context, R.drawable.ic_fav_black,R.color.dark_text);
+                changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
+                changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
+            }else {
+                changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
+                changeDrawableColor(context, R.drawable.ic_action_more,R.color.black);
+                changeDrawableColor(context, R.drawable.ic_action_globe,R.color.black);
+                changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.black);
+                changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.black);
+                changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.black);
+                changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.black);
+                changeDrawableColor(context, R.drawable.ic_fav_black,R.color.black);
+                changeDrawableColor(context, R.drawable.ic_photo,R.color.black);
+                changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.black);
+            }
 
             //Adds attachment -> disabled, to enable them uncomment the line below
             //loadAttachments(status, holder);

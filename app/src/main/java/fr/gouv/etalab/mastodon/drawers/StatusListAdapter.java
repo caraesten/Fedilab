@@ -199,6 +199,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_fav_black,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
         }else {
             changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
             changeDrawableColor(context, R.drawable.ic_action_more,R.color.black);
@@ -209,6 +210,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.black);
             changeDrawableColor(context, R.drawable.ic_fav_black,R.color.black);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.black);
         }
 
 
@@ -294,7 +296,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
         holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
         holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
-
+        
         imageLoader.displayImage(ppurl, holder.status_account_profile, options);
         if( status.getReblog() != null) {
             imageLoader.displayImage(status.getAccount().getAvatar(), holder.status_account_profile_boost, options);

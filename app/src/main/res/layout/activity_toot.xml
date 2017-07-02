@@ -77,29 +77,34 @@
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:layout_height="0dp" />
-    <LinearLayout
-        android:padding="5dp"
-        android:id="@+id/toot_picture_container"
-        android:layout_width="wrap_content"
+    <HorizontalScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxHeight="100dp"
-        android:layout_gravity="center_vertical"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
         >
-        <RelativeLayout
-            android:id="@+id/loading_picture"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_gravity="bottom|center_horizontal"
-            android:gravity="bottom|center_horizontal"
-            android:layout_height="50dp">
-            <ProgressBar
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:indeterminate="true" />
-        </RelativeLayout>
-    </LinearLayout>
+        <LinearLayout
+            android:padding="5dp"
+            android:id="@+id/toot_picture_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxHeight="100dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            >
+            <RelativeLayout
+                android:id="@+id/loading_picture"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+                <ProgressBar
+                    android:id="@+id/pbar_inf"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:indeterminate="true" />
+            </RelativeLayout>
+        </LinearLayout>
+    </HorizontalScrollView>
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"

@@ -32,7 +32,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -130,6 +129,10 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        imageLoader = ImageLoader.getInstance();
+        options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
+                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+
         toot_it = (Button) findViewById(R.id.toot_it);
         Button toot_cw = (Button) findViewById(R.id.toot_cw);
         final TextView toot_space_left = (TextView) findViewById(R.id.toot_space_left);
@@ -218,7 +221,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 toot_reply_content_container.setVisibility(View.GONE);
             }
             String content = tootReply.getContent();
-            if(tootReply.isReblogged())
+            if(tootReply.getReblog() != null)
                 content = tootReply.getReblog().getContent();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 toot_reply_content.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_COMPACT));
@@ -352,9 +355,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 tootVisibilityDialog();
             }
         });
-        imageLoader = ImageLoader.getInstance();
-        options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+
 
         toot_it.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -382,15 +383,27 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         toot_picture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                getIntent.setType("image/*");
 
-                Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                pickIntent.setType("image/*");
+                Intent intent;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                    intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    intent.setType("*/*");
+                    String[] mimetypes = {"image/*", "video/*"};
+                    intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+                    startActivityForResult(intent, PICK_IMAGE);
+                }else {
+                    Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                    getIntent.setType("image/*");
 
-                Intent chooserIntent = Intent.createChooser(getIntent, getString(R.string.toot_select_image));
-                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
-                startActivityForResult(chooserIntent, PICK_IMAGE);
+                    Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    pickIntent.setType("image/*");
+
+                    Intent chooserIntent = Intent.createChooser(getIntent, getString(R.string.toot_select_image));
+                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+                    startActivityForResult(chooserIntent, PICK_IMAGE);
+                }
+
             }
         });
 
@@ -453,7 +466,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 return;
             }
             try {
-
                 InputStream inputStream = getContentResolver().openInputStream(data.getData());
                 loading_picture.setVisibility(View.VISIBLE);
                 toot_picture.setEnabled(false);
@@ -501,12 +513,13 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
             final ImageView imageView = new ImageView(getApplicationContext());
             imageView.setId(Integer.parseInt(attachment.getId()));
-            LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            imParams.setMargins(20, 5, 20, 5);
             imageLoader.displayImage(url, imageView, options);
+            LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            imParams.setMargins(20, 5, 20, 5);
+            imParams.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
             imageView.setAdjustViewBounds(true);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            toot_picture_container.addView(imageView, imParams);
+            toot_picture_container.addView(imageView, attachments.size(), imParams);
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -539,18 +552,21 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         dialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog,int which) {
-                List<Attachment> tmp_attachment = new ArrayList<>();
-                tmp_attachment.addAll(attachments);
-                attachments.removeAll(tmp_attachment);
-                tmp_attachment.clear();
                 View namebar = findViewById(viewId);
-                ((ViewGroup) namebar.getParent()).removeView(namebar);
+                for(Attachment attachment: attachments){
+                    if( Integer.valueOf(attachment.getId()) == viewId){
+                        attachments.remove(attachment);
+                        ((ViewGroup) namebar.getParent()).removeView(namebar);
+                        break;
+                    }
+                }
                 dialog.dismiss();
                 if( attachments.size() == 0 ) {
                     toot_sensitive.setVisibility(View.GONE);
                     isSensitive = false;
                     toot_sensitive.setChecked(false);
                 }
+                toot_picture.setEnabled(true);
             }
         });
         dialog.show();
