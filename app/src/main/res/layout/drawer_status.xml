@@ -146,6 +146,13 @@
                         android:autoLink="web"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/status_content_translated"
+                        android:layout_marginTop="10dp"
+                        android:autoLink="web"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
                     <LinearLayout
                         android:id="@+id/status_document_container"
                         android:orientation="horizontal"
@@ -322,6 +329,15 @@
                 android:paddingRight="10dp"
                 android:paddingLeft="10dp"
                 android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_marginRight="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:id="@+id/status_translate"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_translate"
+                    tools:ignore="ContentDescription" />
                 <ImageView
                     android:layout_marginRight="20dp"
                     android:layout_marginEnd="20dp"

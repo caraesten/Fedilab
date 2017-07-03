@@ -1125,4 +1125,24 @@ public class Helper {
         mDrawable.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
         return mDrawable;
     }
+
+
+    /**
+     * Returns the current locale of the device
+     * @param context Context
+     * @return String locale
+     */
+    public static String currentLocale(Context context) {
+        String locale;
+        Locale current;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            current = context.getResources().getConfiguration().getLocales().get(0);
+        } else {
+            //noinspection deprecation
+            current = context.getResources().getConfiguration().locale;
+        }
+        locale = current.toString();
+        locale = locale.split("_")[0];
+        return locale;
+    }
 }

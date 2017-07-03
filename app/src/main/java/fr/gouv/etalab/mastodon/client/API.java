@@ -1153,7 +1153,7 @@ public class API {
             status.setSensitive(Boolean.parseBoolean(resobj.get("sensitive").toString()));
             status.setSpoiler_text(resobj.get("spoiler_text").toString());
             status.setVisibility(resobj.get("visibility").toString());
-
+            status.setLanguage(resobj.get("language").toString());
             //TODO: replace by the value
             status.setApplication(new Application());
 

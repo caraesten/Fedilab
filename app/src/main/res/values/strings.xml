@@ -219,6 +219,7 @@
     <string name="toast_update_credential_ok">Les données du profil ont été sauvegardées !</string>
     <string name="nothing_to_do">Aucune action ne peut être réalisée</string>
     <string name="toast_saved">Le média a été enregistré !</string>
+    <string name="toast_error_translate">Une erreur est survenue lors de la traduction !</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimisation du chargement</string>
     <string name="set_toots_page">Nombre de pouets par chargement</string>

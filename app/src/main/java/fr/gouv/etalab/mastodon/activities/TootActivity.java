@@ -53,6 +53,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
+
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -648,8 +649,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     }
 
 
-
-
     @Override
     public void onRetrieveSearchAccounts(APIResponse apiResponse) {
         if( apiResponse.getError() != null){
@@ -667,4 +666,5 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             toot_show_accounts.setVisibility(View.VISIBLE);
         }
     }
+
 }

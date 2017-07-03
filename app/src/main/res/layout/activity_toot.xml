@@ -102,6 +102,16 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:indeterminate="true" />
+                <TextView
+                    android:id="@+id/loader_progress"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    android:layout_marginTop="10dp"
+                    android:textColor="?attr/colorAccent"
+                    android:layout_below="@+id/pbar_inf"
+                    android:layout_width="50dp"
+                    android:gravity="center"
+                    android:layout_height="wrap_content" />
             </RelativeLayout>
         </LinearLayout>
     </HorizontalScrollView>

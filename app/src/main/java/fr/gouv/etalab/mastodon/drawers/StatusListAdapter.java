@@ -27,6 +27,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,12 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +60,8 @@ import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
+import fr.gouv.etalab.mastodon.translation.YandexQuery;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
@@ -62,6 +71,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 
+import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
@@ -69,7 +79,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class StatusListAdapter extends BaseAdapter implements OnPostActionInterface {
+public class StatusListAdapter extends BaseAdapter implements OnPostActionInterface, OnTranslatedInterface {
 
     private Context context;
     private List<Status> statuses;
@@ -124,6 +134,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder = new ViewHolder();
             holder.status_document_container = (LinearLayout) convertView.findViewById(R.id.status_document_container);
             holder.status_content = (TextView) convertView.findViewById(R.id.status_content);
+            holder.status_content_translated = (TextView) convertView.findViewById(R.id.status_content_translated);
             holder.status_account_username = (TextView) convertView.findViewById(R.id.status_account_username);
             holder.status_account_displayname = (TextView) convertView.findViewById(R.id.status_account_displayname);
             holder.status_account_profile = (ImageView) convertView.findViewById(R.id.status_account_profile);
@@ -148,6 +159,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_prev4_container = (RelativeLayout) convertView.findViewById(R.id.status_prev4_container);
             holder.status_reply = (ImageView) convertView.findViewById(R.id.status_reply);
             holder.status_privacy = (ImageView) convertView.findViewById(R.id.status_privacy);
+            holder.status_translate = (ImageView) convertView.findViewById(R.id.status_translate);
             holder.main_container = (LinearLayout) convertView.findViewById(R.id.main_container);
             holder.status_spoiler_container = (LinearLayout) convertView.findViewById(R.id.status_spoiler_container);
             holder.status_content_container = (LinearLayout) convertView.findViewById(R.id.status_content_container);
@@ -181,6 +193,34 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 statusListAdapter.notifyDataSetChanged();
             }
         });
+        if( !status.getLanguage().trim().equals(currentLocale) && !status.getLanguage().trim().equals("null")){
+            holder.status_translate.setVisibility(View.VISIBLE);
+        }else {
+            holder.status_translate.setVisibility(View.GONE);
+        }
+
+        holder.status_translate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    if( !status.isTranslated() ){
+                        new YandexQuery(StatusListAdapter.this).getYandexTextview(position, status.getContent(), currentLocale);
+                    }
+                    status.setTranslationShown(!status.isTranslationShown());
+                    statusListAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                   Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        //Toot was translated and user asked to see it
+        if( status.isTranslationShown()){
+            holder.status_content.setVisibility(View.GONE);
+            holder.status_content_translated.setVisibility(View.VISIBLE);
+        }else { //Toot is not translated
+            holder.status_content.setVisibility(View.VISIBLE);
+            holder.status_content_translated.setVisibility(View.GONE);
+        }
 
         //Hides action bottom bar action when looking to status trough accounts
         if( type == RetrieveFeedsAsyncTask.Type.USER){
@@ -200,6 +240,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             changeDrawableColor(context, R.drawable.ic_fav_black,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_translate,R.color.dark_text);
         }else {
             changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
             changeDrawableColor(context, R.drawable.ic_action_more,R.color.black);
@@ -211,6 +252,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             changeDrawableColor(context, R.drawable.ic_fav_black,R.color.black);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.black);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_translate,R.color.black);
         }
 
 
@@ -293,6 +335,11 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 status.getReblog() != null?status.getReblog().getMentions():status.getMentions(),
                 status.getReblog() != null?status.getReblog().getTags():status.getTags());
 
+        if( status.getContent_translated() != null && status.getContent_translated().length() > 0){
+            holder.status_content_translated = Helper.clickableElements(context, holder.status_content_translated,status.getContent_translated(),
+                    status.getReblog() != null?status.getReblog().getMentions():status.getMentions(),
+                    status.getReblog() != null?status.getReblog().getTags():status.getTags());
+        }
         holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
         holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
         holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
@@ -577,6 +624,27 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }
     }
 
+    @Override
+    public void onTranslatedTextview(int position, String translatedResult, Boolean error) {
+        if( error){
+            Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+            return;
+        }
+        if( statuses.size() > position) {
+            try {
+                JSONObject translationJson = new JSONObject(translatedResult);
+                JSONArray aJsonArray = translationJson.getJSONArray("text");
+                String aJsonString = aJsonArray.get(0).toString();
+                aJsonString = URLDecoder.decode(aJsonString, "UTF-8");
+                statuses.get(position).setTranslated(true);
+                statuses.get(position).setTranslationShown(true);
+                statuses.get(position).setContent_translated(aJsonString);
+                statusListAdapter.notifyDataSetChanged();
+            } catch (JSONException | UnsupportedEncodingException e) {
+                Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
 
 
     private class ViewHolder {
@@ -586,6 +654,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         Button status_spoiler_button;
 
         TextView status_content;
+        TextView status_content_translated;
         TextView status_account_username;
         TextView status_account_displayname;
         ImageView status_account_profile;
@@ -609,6 +678,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         RelativeLayout status_prev4_container;
         ImageView status_reply;
         ImageView status_privacy;
+        ImageView status_translate;
         LinearLayout status_container2;
         LinearLayout status_container3;
         LinearLayout main_container;
