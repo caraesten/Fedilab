@@ -162,7 +162,7 @@ public class NotificationsListAdapter extends BaseAdapter  {
 
             //Manages theme for icon colors
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
             if( theme == Helper.THEME_DARK){
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_action_more,R.color.dark_text);

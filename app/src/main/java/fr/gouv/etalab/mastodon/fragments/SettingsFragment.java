@@ -173,7 +173,7 @@ public class SettingsFragment extends Fragment {
             file_chooser.setVisibility(View.GONE);
         }
 
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         final SwitchCompat set_night_mode = (SwitchCompat) rootView.findViewById(R.id.set_night_mode);
         set_night_mode.setChecked(theme == Helper.THEME_DARK);
         set_night_mode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

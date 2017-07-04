@@ -188,7 +188,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
                         asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             });
-            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
             if( theme == Helper.THEME_LIGHT) {
                 swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,
                         R.color.colorPrimary,

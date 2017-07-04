@@ -33,10 +33,10 @@
         <TextView
             android:id="@+id/status_search_title"
             android:visibility="gone"
-            android:text="@string/status"
-            android:textColor="@color/colorPrimary"
+            android:text="@string/toots"
+            android:textColor="?attr/colorPrimary"
             android:textSize="18sp"
-            android:background="@color/blue_light"
+            android:background="?attr/colorAccent"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             android:layout_marginTop="5dp"

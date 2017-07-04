@@ -22,11 +22,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -160,11 +162,13 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_reply = (ImageView) convertView.findViewById(R.id.status_reply);
             holder.status_privacy = (ImageView) convertView.findViewById(R.id.status_privacy);
             holder.status_translate = (ImageView) convertView.findViewById(R.id.status_translate);
+            holder.status_content_translated_container = (LinearLayout) convertView.findViewById(R.id.status_content_translated_container);
             holder.main_container = (LinearLayout) convertView.findViewById(R.id.main_container);
             holder.status_spoiler_container = (LinearLayout) convertView.findViewById(R.id.status_spoiler_container);
             holder.status_content_container = (LinearLayout) convertView.findViewById(R.id.status_content_container);
             holder.status_spoiler = (TextView) convertView.findViewById(R.id.status_spoiler);
             holder.status_spoiler_button = (Button) convertView.findViewById(R.id.status_spoiler_button);
+            holder.yandex_translate = (TextView) convertView.findViewById(R.id.yandex_translate);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -205,21 +209,30 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 try {
                     if( !status.isTranslated() ){
                         new YandexQuery(StatusListAdapter.this).getYandexTextview(position, status.getContent(), currentLocale);
+                    }else {
+                        status.setTranslationShown(!status.isTranslationShown());
+                        statusListAdapter.notifyDataSetChanged();
                     }
-                    status.setTranslationShown(!status.isTranslationShown());
-                    statusListAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                    Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
                 }
             }
         });
+
+        holder.yandex_translate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://translate.yandex.com/"));
+                context.startActivity(browserIntent);
+            }
+        });
         //Toot was translated and user asked to see it
         if( status.isTranslationShown()){
             holder.status_content.setVisibility(View.GONE);
-            holder.status_content_translated.setVisibility(View.VISIBLE);
+            holder.status_content_translated_container.setVisibility(View.VISIBLE);
         }else { //Toot is not translated
             holder.status_content.setVisibility(View.VISIBLE);
-            holder.status_content_translated.setVisibility(View.GONE);
+            holder.status_content_translated_container.setVisibility(View.GONE);
         }
 
         //Hides action bottom bar action when looking to status trough accounts
@@ -228,7 +241,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }
         //Manages theme for icon colors
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_DARK){
             changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_action_more,R.color.dark_text);
@@ -655,6 +668,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
         TextView status_content;
         TextView status_content_translated;
+        LinearLayout status_content_translated_container;
         TextView status_account_username;
         TextView status_account_displayname;
         ImageView status_account_profile;
@@ -682,6 +696,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         LinearLayout status_container2;
         LinearLayout status_container3;
         LinearLayout main_container;
+        TextView yandex_translate;
     }
 
 

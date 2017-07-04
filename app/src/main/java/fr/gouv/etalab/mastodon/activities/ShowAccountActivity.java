@@ -106,7 +106,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
             setTheme(R.style.AppTheme);
         }else {
@@ -140,7 +140,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
 
         tabLayout = (TabLayout) findViewById(R.id.account_tabLayout);
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.status)));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.following)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.followers)));
 

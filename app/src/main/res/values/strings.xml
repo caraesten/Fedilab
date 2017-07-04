@@ -1,314 +1,313 @@
 <resources>
-    <string name="app_name">Mastalab</string>
+    <string name="app_name" translatable="false">Mastalab</string>
 
-    <string name="navigation_drawer_open">Ouvrir le menu</string>
-    <string name="navigation_drawer_close">Fermer le menu</string>
+    <string name="navigation_drawer_open">Open the menu</string>
+    <string name="navigation_drawer_close">Close the menu</string>
 
-    <string name="action_settings">Paramètres</string>
-    <string name="action_about">A propos</string>
-    <string name="action_about_instance">A propos de l\'instance</string>
-    <string name="action_privacy">Confidentialité</string>
+    <string name="action_about">About</string>
+    <string name="action_about_instance">About the instance</string>
+    <string name="action_privacy">Privacy</string>
     <string name="action_cache">Cache</string>
-    <string name="action_logout">Déconnexion</string>
-    <string name="action_download">Télécharger</string>
-    <string name="login">Connexion</string>
+    <string name="action_logout">Logout</string>
+    <string name="login">Login</string>
 
     <!-- common -->
-    <string name="close">Fermer</string>
-    <string name="yes">Oui</string>
-    <string name="no">Non</string>
-    <string name="cancel">Annuler</string>
-    <string name="download">Télécharger</string>
-    <string name="download_file">Télécharger %1$s</string>
-    <string name="download_over">Téléchargement terminé</string>
-    <string name="save_file">Enregistrer %1$s</string>
-    <string name="save_over">Enregistrement terminé</string>
-    <string name="download_from">Fichier : %1$s</string>
-    <string name="password">Mot de passe</string>
+    <string name="close">Close</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="cancel">Cancel</string>
+    <string name="download">Download</string>
+    <string name="download_file">Download %1$s</string>
+    <string name="download_over">Download complete</string>
+    <string name="save_file">Save %1$s</string>
+    <string name="save_over">Media saved</string>
+    <string name="download_from">File: %1$s</string>
+    <string name="password">Password</string>
     <string name="email">Email</string>
-    <string name="accounts">Comptes</string>
-    <string name="toots">Pouets</string>
+    <string name="accounts">Accounts</string>
+    <string name="toots">Toots</string>
     <string name="tags">Tags</string>
-    <string name="token">Jeton</string>
-    <string name="save">Sauvegarder</string>
-    <string name="two_factor_authentification">Authentification en deux étapes ?</string>
-    <string name="other_instance">Autre instance que mastodon.etalab.gouv.fr ?</string>
-    <string name="no_result">Aucun résultat !</string>
+    <string name="token">Token</string>
+    <string name="save">Save</string>
+    <string name="two_factor_authentification">Two-step authentication?</string>
+    <string name="other_instance">Other instance than mastodon.etalab.gouv.fr?</string>
+    <string name="no_result">No results!</string>
     <string name="instance">Instance</string>
-    <string name="toast_account_changed">Utilisation du compte %1$s</string>
-    <string name="add_account">Ajouter un compte</string>
-    <string name="clipboard">Le contenu du pouet a été copié dans le presse-papier</string>
-    <string name="change">Changer</string>
-    <string name="choose_picture">Changer l\'image…</string>
-    <string name="clear">Nettoyer</string>
+    <string name="toast_account_changed">Now works with the account %1$s</string>
+    <string name="add_account">Add an account</string>
+    <string name="clipboard">The content of the toot has been copied to the clipboard</string>
+    <string name="change">Change</string>
+    <string name="choose_picture">Select a picture…</string>
+    <string name="clear">Clean</string>
+    <string name="microphone">Microphone</string>
+    <string name="speech_prompt">Please, say something</string>
+    <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
 
     <!--- Menu -->
-    <string name="home_menu">Accueil</string>
-    <string name="home_timeline">Accueil</string>
-    <string name="local_menu">Fil public local</string>
-    <string name="global_menu">Fil public global</string>
-    <string name="public_menu">Fil public</string>
+    <string name="home_menu">Home</string>
+    <string name="local_menu">Local timeline</string>
+    <string name="global_menu">Federated timeline</string>
     <string name="neutral_menu_title">Options</string>
-    <string name="parameters_menu">Préférences</string>
-    <string name="favorites_menu">Favoris</string>
+    <string name="favorites_menu">Favourites</string>
     <string name="communication_menu_title">Communication</string>
-    <string name="muted_menu">Utilisateurs muets</string>
-    <string name="blocked_menu">Utilisateurs bloqués</string>
-    <string name="account_list_menu">Comptes</string>
+    <string name="muted_menu">Muted users</string>
+    <string name="blocked_menu">Blocked users</string>
     <string name="notifications">Notifications</string>
-    <string name="follow_request">Demandes d\'abonnements</string>
-    <string name="optimization">Optimisation</string>
-    <string name="settings">Paramètres</string>
-    <string name="profile">Profil</string>
-    <string name="make_a_choice">Que souhaitez-vous faire ?</string>
-    <string name="delete_account_title">Supprimer un compte</string>
-    <string name="delete_account_message">Supprimer le compte %1$s de l\'application ?</string>
-    <string name="send_email">Envoyer un email</string>
-    <string name="choose_file">Veuillez sélectionner un fichier</string>
-    <string name="choose_file_error">Aucun explorateur de fichiers trouvé !</string>
-    <string name="click_to_change">Cliquer sur le chemin pour changer</string>
+    <string name="follow_request">Follow requests</string>
+    <string name="optimization">Optimization</string>
+    <string name="settings">Settings</string>
+    <string name="profile">Profile</string>
+    <string name="make_a_choice">What do you want to do?</string>
+    <string name="delete_account_title">Delete an account</string>
+    <string name="delete_account_message">Delete the account %1$s from the application?</string>
+    <string name="send_email">Send an email</string>
+    <string name="choose_file">Please select a file</string>
+    <string name="choose_file_error">No file explorer found!</string>
+    <string name="click_to_change">Click on the path to change it</string>
     <!-- Status -->
-    <string name="no_status">Aucun pouet à afficher !</string>
-    <string name="fav_added">Pouet ajouté aux favoris !</string>
-    <string name="fav_removed">Pouet supprimé des favoris !</string>
-    <string name="reblog_added">Pouet partagé !</string>
-    <string name="reblog_removed">Pouet supprimé du partage !</string>
-    <string name="reblog_by">Partagé par %1$s</string>
+    <string name="no_status">No toot to display</string>
+    <string name="fav_added">The toot was added to favourites</string>
+    <string name="fav_removed">The toot was removed from favourites!</string>
+    <string name="reblog_added">The toot was boosted!</string>
+    <string name="reblog_removed">The toot is no longer boosted!</string>
+    <string name="reblog_by">Shared via %1$s</string>
 
-    <string name="favourite_add">Ajouter ce pouet aux favoris ?</string>
-    <string name="favourite_remove">Supprimer ce pouet des favoris ?</string>
-    <string name="reblog_add">Partager ce pouet ?</string>
-    <string name="reblog_remove">Supprimer ce pouet des partages ?</string>
+    <string name="favourite_add">Add this toot to your favourites?</string>
+    <string name="favourite_remove">Remove this toot from your favourites?</string>
+    <string name="reblog_add">Boost this toot?</string>
+    <string name="reblog_remove">Unboost this toot?</string>
     <string-array name="more_action">
-        <item>Masquer</item>
-        <item>Bloquer</item>
-        <item>Signaler</item>
-        <item>Copier</item>
+        <item>Mute</item>
+        <item>Block</item>
+        <item>Report</item>
+        <item>Copy</item>
     </string-array>
     <string-array name="more_action_owner">
-        <item>Supprimer</item>
-        <item>Copier</item>
+        <item>Remove</item>
+        <item>Copy</item>
     </string-array>
 
     <string-array name="more_action_confirm">
-        <item>Masquer ce compte ?</item>
-        <item>Bloquer ce compte ?</item>
-        <item>Signaler ce pouet ?</item>
+        <item>Mute this account?</item>
+        <item>Block this account?</item>
+        <item>Report this toot?</item>
         <item>null</item> <!-- Ugly hack to fix confirm box-->
     </string-array>
 
 
     <string-array name="more_action_confirm_account">
-        <item>Afficher de nouveau ce compte ?</item>
-        <item>Débloquer ce compte ?</item>
+        <item>Unmute this account?</item>
+        <item>Unblock this account?</item>
     </string-array>
 
     <string-array name="more_action_owner_confirm">
-        <item>Supprimer ce pouet ?</item>
+        <item>Remove this toot?</item>
         <item>null</item> <!-- Ugly hack to fix confirm box-->
     </string-array>
     <!-- Date -->
     <plurals name="date_seconds">
-        <item quantity="one">Il y a %d seconde</item>
-        <item quantity="other">Il y a %d secondes</item>
+        <item quantity="one">%d second ago</item>
+        <item quantity="other">%d seconds ago</item>
     </plurals>
     <plurals name="date_minutes">
-        <item quantity="one">Il y a %d minute</item>
-        <item quantity="other">Il y a %d minutes</item>
+        <item quantity="one">%d minute ago</item>
+        <item quantity="other">%d minutes ago</item>
     </plurals>
     <plurals name="date_hours">
-        <item quantity="one">Il y a %d heure</item>
-        <item quantity="other">Il y a %d heures</item>
+        <item quantity="one">%d hour ago</item>
+        <item quantity="other">%d hours ago</item>
     </plurals>
-    <string name="date_yesterday">Hier</string>
-    <string name="date_day_before_yesterday">Avant-hier</string>
-    <string name="date_day">Il y a %d jours</string>
+    <string name="date_yesterday">Yesterday</string>
+    <string name="date_day_before_yesterday">Before yesterday</string>
+    <string name="date_day">%d days ago</string>
     <plurals name="date_month">
-        <item quantity="one">Il y a %d mois</item>
-        <item quantity="other">Il y a %d mois</item>
+        <item quantity="one">%d month ago</item>
+        <item quantity="other">%d months ago</item>
     </plurals>
     <plurals name="date_year">
-        <item quantity="one">Il y a un an</item>
-        <item quantity="other">Il y a %d ans</item>
+        <item quantity="one">One year ago</item>
+        <item quantity="other">%d years ago</item>
     </plurals>
 
     <!-- TOOT -->
-    <string name="toot_cw_placeholder">Avertissement</string>
-    <string name="toot_placeholder">Qu\'avez-vous en tête ?</string>
-    <string name="toot_it">POUET !</string>
+    <string name="toot_cw_placeholder">Warning</string>
+    <string name="toot_placeholder">What is on your mind?</string>
+    <string name="toot_it">TOOT!</string>
     <string name="cw">cw</string>
-    <string name="toot_title">Ecrire un pouet</string>
-    <string name="toot_title_reply">Répondre à un pouet</string>
-    <string name="toot_no_space">Vous avez atteint les 500 caractères autorisés !</string>
-    <string name="toot_select_image">Sélectionnez un média</string>
-    <string name="toot_select_image_error">Une erreur s\'est produite lors de la sélection du média !</string>
-    <string name="toot_delete_media">Supprimer le média ?</string>
-    <string name="toot_error_no_content">Votre pouet est vide !</string>
-    <string name="toot_visibility_tilte">Visibilité du pouet</string>
-    <string name="toot_sent">Le pouet a été envoyé !</string>
-    <string name="toot_reply_content_title">Vous répondez à ce pouet :</string>
-    <string name="toot_sensitive">Contenu sensible ?</string>
+    <string name="toot_title">Write a toot</string>
+    <string name="toot_title_reply">Reply to a toot</string>
+    <string name="toot_no_space">You have reached the 500 characters allowed!</string>
+    <string name="toot_select_image">Select a media</string>
+    <string name="toot_select_image_error">An error occurred while selecting the media!</string>
+    <string name="toot_delete_media">Delete this media?</string>
+    <string name="toot_error_no_content">Your toot is empty!</string>
+    <string name="toot_visibility_tilte">Visibility of the toot</string>
+    <string name="toot_sent">The toot has been sent!</string>
+    <string name="toot_reply_content_title">You are replying to this toot:</string>
+    <string name="toot_sensitive">Sensitive content?</string>
     <string-array name="toot_visibility">
-        <item>Afficher dans les fils publics</item>
-        <item>Ne pas afficher dans les fils publics</item>
-        <item>N\'afficher que pour vos abonné(e)s</item>
-        <item>N\'afficher que pour les personnes mentionnées</item>
+        <item>Post to public timelines</item>
+        <item>Do not post to public timelines</item>
+        <item>Post to followers only</item>
+        <item>Post to mentioned users only</item>
     </string-array>
 
     <!-- Instance -->
-    <string name="instance_no_description">Aucune description !</string>
+    <string name="instance_no_description">No description available!</string>
 
     <!-- About -->
-    <string name="about_vesrion">Version %1$s</string>
-    <string name="about_developer">Développeur :</string>
+    <string name="about_vesrion">Release %1$s</string>
+    <string name="about_developer">Developer:</string>
     <string name="about_developer_action">\@tschneider</string>
-    <string name="about_license">Licence : </string>
+    <string name="about_license">License: </string>
     <string name="about_license_action">GNU GPL V3</string>
-    <string name="about_code">Code source : </string>
-    <string name="about_code_action">bitbucket</string>
+    <string name="about_code">Source code: </string>
+    <string name="about_code_action">Bitbucket</string>
     <!-- Conversation -->
     <string name="conversation">Conversation</string>
 
     <!-- Accounts -->
-    <string name="no_accounts">Aucun compte à afficher</string>
-    <string name="no_follow_request">Aucune demande d\'abonnement</string>
-    <string name="status_cnt">Pouets \n %d</string>
-    <string name="following_cnt">Abonnements \n %d</string>
-    <string name="followers_cnt">Abonnés \n %d</string>
-    <string name="authorize">Autoriser</string>
-    <string name="reject">Rejeter</string>
+    <string name="no_accounts">No account to display</string>
+    <string name="no_follow_request">No follow request</string>
+    <string name="status_cnt">Toots \n %d</string>
+    <string name="following_cnt">Following \n %d</string>
+    <string name="followers_cnt">Followers \n %d</string>
+    <string name="authorize">Authorize</string>
+    <string name="reject">Reject</string>
 
     <!-- Notifications -->
-    <string name="no_notifications">Aucune notification à afficher</string>
-    <string name="notif_mention">a mentionné votre pouet</string>
-    <string name="notif_reblog">a partagé votre pouet</string>
-    <string name="notif_favourite">a ajouté votre pouet à ses favoris</string>
-    <string name="notif_follow">vous a suivi</string>
-    <string name="notif_pouet">Nouveau pouet de %1$s</string>
+    <string name="no_notifications">No notification to display</string>
+    <string name="notif_mention">mentioned your status</string>
+    <string name="notif_reblog">boosted your status</string>
+    <string name="notif_favourite">favourited your status</string>
+    <string name="notif_follow">followed you</string>
+    <string name="notif_pouet">New toot from %1$s</string>
     <plurals name="other_notifications">
-        <item quantity="one">et %d autre notification</item>
-        <item quantity="other">et %d autres notifications</item>
+        <item quantity="one">and another notification</item>
+        <item quantity="other">and %d other notifications</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="one">et un autre pouet à découvrir</item>
-        <item quantity="other">et %d autres pouets à découvrir</item>
+        <item quantity="one">and another toot to discover</item>
+        <item quantity="other">and %d other toots to discover</item>
     </plurals>
     <!-- HEADER -->
-    <string name="status">Pouets</string>
-    <string name="following">Abonnements</string>
-    <string name="followers">Abonnés</string>
+    <string name="following">Following</string>
+    <string name="followers">Followers</string>
     <!-- TOAST -->
-    <string name="client_error">Impossible d\'obtenir l\'id du client !</string>
-    <string name="no_internet">Aucune connexion Internet !</string>
-    <string name="toast_block">Le compte a été bloqué !</string>
-    <string name="toast_unblock">Le compte n\'est plus bloqué !</string>
-    <string name="toast_mute">Le compte a été masqué !</string>
-    <string name="toast_unmute">Le compte n\'est plus masqué !</string>
-    <string name="toast_follow">Le compte a été suivi !</string>
-    <string name="toast_unfollow">Le compte n\'est plus suivi !</string>
-    <string name="toast_reblog">Le pouet a été partagé !</string>
-    <string name="toast_unreblog">Le pouet a été supprimé des partages !</string>
-    <string name="toast_favourite">Le pouet a été ajouté aux favoris !</string>
-    <string name="toast_unfavourite">Le pouet a été supprimé des favoris !</string>
-    <string name="toast_report">Le pouet a été signalé !</string>
-    <string name="toast_unstatus">Le pouet a été supprimé !</string>
-    <string name="toast_error">Oups ! Une erreur s\'est produite !</string>
-    <string name="toast_error_loading_account">Une erreur s\'est produite en chargeant le compte !</string>
-    <string name="toast_error_search">Une erreur s\'est produite lors de la recherche !</string>
-    <string name="toast_error_login">Impossible de vous connecter !</string>
-    <string name="toast_update_credential_ok">Les données du profil ont été sauvegardées !</string>
-    <string name="nothing_to_do">Aucune action ne peut être réalisée</string>
-    <string name="toast_saved">Le média a été enregistré !</string>
-    <string name="toast_error_translate">Une erreur est survenue lors de la traduction !</string>
+    <string name="client_error">Unable to get client id!</string>
+    <string name="no_internet">No Internet connection!</string>
+    <string name="toast_block">The account was blocked!</string>
+    <string name="toast_unblock">The account is no longer blocked!</string>
+    <string name="toast_mute">The account was muted!</string>
+    <string name="toast_unmute">The account is no longer muted!</string>
+    <string name="toast_follow">The account was followed!</string>
+    <string name="toast_unfollow">The account is no longer followed!</string>
+    <string name="toast_reblog">The toot was boosted!</string>
+    <string name="toast_unreblog">The toot is no longer boosted!</string>
+    <string name="toast_favourite">The toot was added to your favourites!</string>
+    <string name="toast_unfavourite">The toot was removed from your favourites!</string>
+    <string name="toast_report">The toot was reported!</string>
+    <string name="toast_unstatus">The toot was deleted!</string>
+    <string name="toast_error">Oops ! An error occurred!</string>
+    <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
+    <string name="toast_error_search">An error occurred while searching!</string>
+    <string name="toast_error_login">Can not log in!</string>
+    <string name="toast_update_credential_ok">The profile data have been saved!</string>
+    <string name="nothing_to_do">No action can be taken</string>
+    <string name="toast_saved">The media has been saved!</string>
+    <string name="toast_error_translate">An error occurred while translating!</string>
     <!-- Settings -->
-    <string name="settings_title_optimisation">Optimisation du chargement</string>
-    <string name="set_toots_page">Nombre de pouets par chargement</string>
-    <string name="set_accounts_page">Nombre de comptes par chargement</string>
-    <string name="set_notifications_page">Nombre de notifications par chargement</string>
-    <string name="set_attachment_always">Toujours</string>
+    <string name="settings_title_optimisation">Optimisation of loading</string>
+    <string name="set_toots_page">Number of toots per load</string>
+    <string name="set_accounts_page">Number of accounts per load</string>
+    <string name="set_notifications_page">Number of notifications per load</string>
+    <string name="set_attachment_always">Always</string>
     <string name="set_attachment_wifi">WIFI</string>
-    <string name="set_attachment_ask">Demander</string>
-    <string name="set_attachment_action">Charger les médias</string>
-    <string name="load_attachment">Charger les images</string>
-    <string name="load_attachment_spoiler">Afficher le contenu ?</string>
-    <string name="load_sensitive_attachment">Charger les images sensibles</string>
-    <string name="set_display_reply">Afficher le message précédent lors d\'une réponse</string>
-    <string name="set_folder_title">Destination : </string>
+    <string name="set_attachment_ask">Ask</string>
+    <string name="set_attachment_action">Load the media</string>
+    <string name="load_attachment">Load the pictures</string>
+    <string name="load_attachment_spoiler">Show more…</string>
+    <string name="load_sensitive_attachment">Sensitive content</string>
+    <string name="set_display_reply">Display previous message in responses</string>
+    <string name="set_folder_title">Path: </string>
 
-    <string name="settings_title_notifications">Gestion des notifications</string>
-    <string name="set_notif_follow">Notifier lorsque quelqu’un me suit</string>
-    <string name="set_notif_follow_ask">Notifier lorsque quelqu\'un demande à me suivre</string>
-    <string name="set_notif_follow_share">Notifier lorsque quelqu\'un partage mes pouets</string>
-    <string name="set_notif_follow_add">Notifier lorsque quelqu’un ajoute mes pouets à ses favoris</string>
-    <string name="set_notif_follow_mention">Notifier lorsque quelqu’un me mentionne</string>
-    <string name="set_share_validation">Confirmer avant de partager</string>
-    <string name="settings_title_more_options">Options avancées</string>
-    <string name="set_wifi_only">Notifier en WIFI seulement</string>
-    <string name="set_notif_silent">Utiliser le vibreur</string>
-    <string name="set_night_mode">Mode nuit</string>
-    <string name="settings_title_profile">Modifier le profil</string>
-    <string name="set_profile_description">Présentation…</string>
-    <string name="set_save_changes">Enregistrer les modifications</string>
-    <string name="set_header_picture_overlay">Choisissez une image d\'entête</string>
-    <string name="note_no_space">Vous avez atteint les 160 caractères autorisés !</string>
-    <string name="username_no_space">Vous avez atteint les 30 caractères autorisés !</string>
+    <string name="settings_title_notifications">Manage notifications</string>
+    <string name="set_notif_follow">Notify when someone follows you</string>
+    <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
+    <string name="set_notif_follow_share">Notify when someone boosts your status</string>
+    <string name="set_notif_follow_add">Notify when someone favourites your status</string>
+    <string name="set_notif_follow_mention">Notify when someone mentions you</string>
+    <string name="set_share_validation">Show confirmation dialog before boosting</string>
+    <string name="settings_title_more_options">Advanced settings</string>
+    <string name="set_wifi_only">Notify in WIFI only</string>
+    <string name="set_notif_silent">Silent Notifications</string>
+    <string name="set_night_mode">Night mode</string>
+    <string name="settings_title_profile">Edit profile</string>
+    <string name="set_profile_description">Bio…</string>
+    <string name="set_save_changes">Save changes</string>
+    <string name="set_header_picture_overlay">Choose a header picture</string>
+    <string name="note_no_space">You have reached the 160 characters allowed!</string>
+    <string name="username_no_space">You have reached the 30 characters allowed!</string>
 
-    <string name="embedded_browser">Utiliser le navigateur intégré</string>
-    <string name="use_javascript">Activer Javascript</string>
-    <string name="use_cookies">Autoriser les cookies tiers</string>
+    <string name="embedded_browser">Use the built-in browser</string>
+    <string name="use_javascript">Enable Javascript</string>
+    <string name="use_cookies">Allow third-party cookies</string>
 
-    <string name="set_title_news">Actualités</string>
-    <string name="set_notification_news">Notifier lors de nouveaux pouets sur la page d\'accueil</string>
-    <string name="set_show_error_messages">Afficher les messages d\'erreur</string>
-    <string name="action_follow">Suivre</string>
-    <string name="action_unfollow">Se désabonner</string>s
-    <string name="action_block">Bloquer</string>
-    <string name="action_unblock">Débloquer</string>
-    <string name="action_mute">Masquer</string>
-    <string name="action_no_action">Aucune action</string>
-    <string name="action_unmute">Afficher</string>
-    <string name="request_sent">Demande envoyée</string>
-    <string name="followed_by">Vous suit</string>
+    <string name="set_title_news">News</string>
+    <string name="set_notification_news">Notify for new toots on the home timeline</string>
+    <string name="set_show_error_messages">Display error messages</string>
+    <string name="action_follow">Follow</string>
+    <string name="action_unfollow">Unfollow</string>s
+    <string name="action_block">Block</string>
+    <string name="action_unblock">Unblock</string>
+    <string name="action_mute">Mute</string>
+    <string name="action_no_action">No action</string>
+    <string name="action_unmute">Unmute</string>
+    <string name="request_sent">Request sent</string>
+    <string name="followed_by">Follows you</string>
 
-    <string name="action_search">Recherche</string>
+    <string name="action_search">Search</string>
 
     <!-- CACHE -->
-    <string name="cache_title">Nettoyage du cache</string>
-    <string name="cache_message">Il y a %1$s de données en cache.\n\nSouhaitez-vous les supprimer ?</string>
-    <string name="toast_cache_clear">Le cache a été nettoyé ! %1$s ont été libérés</string>
+    <string name="cache_title">Clear cache</string>
+    <string name="cache_message">There are %1$s data in cache.\n\nWould you like to delete them?</string>
+    <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
 
     <!-- PRIVACY -->
-    <string name="privacy_data_title">Données enregistrées</string>
+    <string name="privacy_data_title">Recorded data</string>
     <string name="privacy_data">
-       Seules les informations de base des comptes connectés sont enregistrées sur l\'appareil.
-        Ces données sont strictement confidentielles et ne sont utilisables que par l\'application. La suppression de l\'application entraîne immédiatement la suppression de ces données.\n
-        &#9888; Les identifiants et les mots de passe ne sont jamais enregistrés, ils ne sont utilisés que lors de l\'authentification sécurisée (SSL) vers l\'instance.
+        Only basic information from accounts are stored on the device.
+        These data are strictly confidential and can only be used by the application.
+        Deleting the application immediately removes these data.\n
+        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
     </string>
 
-    <string name="privacy_authorizations_title">Autorisations de l\'application</string>
+    <string name="privacy_authorizations_title">Permissions:</string>
     <string name="privacy_authorizations">
-        - <b>ACCESS_NETWORK_STATE</b> : Utilisée pour savoir si l\'appareil est connecté au WIFI.\n
-        - <b>INTERNET</b> : Utilisée pour les requêtes vers l\'instance.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b> : Utilisée pour télécharger les médias / déplacer sur la carte SD.\n
-        - <b>READ_EXTERNAL_STORAGE</b> : Utilisée pour ajouter des médias aux pouets.\n
-        - <b>BOOT_COMPLETED</b> : Utilisée pour lancer le service de notifications quand l\'appareil démarre.\n
-        - <b>WAKE_LOCK</b> : Utilisée lors du service de notifications.
+        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
+        - <b>INTERNET</b>: Used for queries to an instance.\n
+        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
+        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
+        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
+        - <b>WAKE_LOCK</b>: Used during the notification service.
     </string>
 
-    <string name="privacy_API_authorizations_title">Autorisations de l\'API</string>
+    <string name="privacy_API_authorizations_title">API permissions:</string>
     <string name="privacy_API_authorizations">
-        - <b>Read</b> : Lire les données du compte.\n
-        - <b>Write</b> : Envoyer des messages et attacher des médias aux messages.\n
-        - <b>Follow</b> : S\'abonner, se désabonner, bloquer, débloquer.\n\n
-        <b>&#9888; Ces actions ne sont réalisées qu\'à la demande de l\'utilisateur.</b>
+        - <b>Read</b>: Read data.\n
+        - <b>Write</b>: Post statuses and upload media for statuses.\n
+        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
+        <b>&#9888; These actions are carried out only when user requests them.</b>
     </string>
-    <string name="privacy_API_title">Suivi et bibliothèques</string>
+    <string name="privacy_API_title">Tracking and Libraries</string>
     <string name="privacy_API">
-        L\'application n\'utilise <b>aucun outil de suivi</b> (mesure d\'audience, rapport d\'erreurs, etc.) et elle ne comporte aucune publicité.\n\n
-        L\'utilisation de bibliothèques est réduite au strict minimum :\n
-        - <b>Android Asynchronous Http Client</b> : Pour la gestion des requêtes\n
-        - <b>Universal Image Loader</b> : Pour la gestion des médias\n
-        - <b>Android-Job</b> : Pour la gestion des services\n
-        - <b>PhotoView</b> : Pour la gestion des images
+        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
+        The use of libraries is minimized: \n
+        - <b>Android Asynchronous Http Client</b>: To manage queries\n
+        - <b>Universal Image Loader</b>: To manage media\n
+        - <b>Android-Job</b>: To manage services\n
+        - <b>PhotoView</b>: To manage images
     </string>
+
+    <string name="yandex" translatable="false">&lt;a hreh="http://translate.yandex.com/">Powered by Yandex.Translate&lt;/a></string>
 </resources>

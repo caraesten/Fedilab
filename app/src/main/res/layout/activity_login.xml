@@ -82,19 +82,20 @@
                 android:textSize="20sp"
                 android:text="@string/login" />
             <TextView
-                android:id="@+id/login_two_step"
+                android:id="@+id/other_instance"
                 android:textAllCaps="false"
                 android:gravity="center"
                 android:layout_marginTop="20dp"
                 android:drawablePadding="10dp"
                 android:padding="20dp"
+                android:textSize="16sp"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
-                android:text="@string/two_factor_authentification" />
+                android:textColor="?attr/colorAccent"
+                android:text="@string/other_instance" />
             <TextView
-                android:id="@+id/other_instance"
+                android:id="@+id/login_two_step"
                 android:textAllCaps="false"
                 android:gravity="center"
                 android:drawablePadding="10dp"
@@ -102,8 +103,9 @@
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
-                android:text="@string/other_instance" />
+                android:textColor="?attr/colorAccent"
+                android:text="@string/two_factor_authentification" />
+
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
