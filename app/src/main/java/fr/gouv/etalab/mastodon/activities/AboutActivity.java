@@ -96,6 +96,14 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveSearcA
                 startActivity(browserIntent);
             }
         });
+        Button about_translation = (Button) findViewById(R.id.about_translation);
+        about_translation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://translate.yandex.com/"));
+                startActivity(browserIntent);
+            }
+        });
     }
 
 

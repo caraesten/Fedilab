@@ -149,8 +149,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         this.context = context;
     }
 
-    public void onStop() {
-        super.onStop();
+    public void onDestroy() {
+        super.onDestroy();
         if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
     }

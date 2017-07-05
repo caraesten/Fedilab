@@ -230,8 +230,8 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         this.context = context;
     }
 
-    public void onStop() {
-        super.onStop();
+    public void onDestroy() {
+        super.onDestroy();
         if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
     }

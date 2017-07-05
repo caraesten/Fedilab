@@ -161,6 +161,7 @@
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Code source : </string>
     <string name="about_code_action">bitbucket</string>
+    <string name="about_yandex">Traduction des pouets :</string>
     <!-- Conversation -->
     <string name="conversation">Conversation</string>
 
@@ -304,5 +305,11 @@
         - <b>Universal Image Loader</b> : Pour la gestion des médias\n
         - <b>Android-Job</b> : Pour la gestion des services\n
         - <b>PhotoView</b> : Pour la gestion des images
+    </string>
+
+    <string name="privacy_API_yandex_title">Traduction des pouets</string>
+    <string name="privacy_API_yandex_authorizations">
+        L\'application offre la possibilité de traduire les pouets en utilisant les paramètres régionaux de l\'appareil et l\'API de Yandex.\n
+        Yandex a sa propre politique de confidentialité qui peut être consultée à l\'adresse suivante : https://yandex.ru/legal/confidential/?lang=en
     </string>
 </resources>

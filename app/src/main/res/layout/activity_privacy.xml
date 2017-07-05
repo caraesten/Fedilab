@@ -127,5 +127,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+
+        <!-- Translations -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
+            <!-- TRANSLATION TITLE -->
+            <TextView
+                android:text="@string/privacy_API_yandex_title"
+                style="?attr/shapeBorder"
+                android:paddingBottom="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <!-- API AUTHORIZATIONS CONTENT -->
+            <TextView
+                android:text="@string/privacy_API_yandex_authorizations"
+                android:autoLink="web"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
