@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -26,13 +27,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,10 +56,12 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
+
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -119,7 +123,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
             setTheme(R.style.AppTheme);
         }else {
@@ -129,6 +133,10 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        imageLoader = ImageLoader.getInstance();
+        options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
+                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 
         toot_it = (Button) findViewById(R.id.toot_it);
         Button toot_cw = (Button) findViewById(R.id.toot_cw);
@@ -218,7 +226,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 toot_reply_content_container.setVisibility(View.GONE);
             }
             String content = tootReply.getContent();
-            if(tootReply.isReblogged())
+            if(tootReply.getReblog() != null)
                 content = tootReply.getReblog().getContent();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 toot_reply_content.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_COMPACT));
@@ -352,9 +360,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 tootVisibilityDialog();
             }
         });
-        imageLoader = ImageLoader.getInstance();
-        options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+
 
         toot_it.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -382,15 +388,27 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         toot_picture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                getIntent.setType("image/*");
 
-                Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                pickIntent.setType("image/*");
+                Intent intent;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                    intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    intent.setType("*/*");
+                    String[] mimetypes = {"image/*", "video/*"};
+                    intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+                    startActivityForResult(intent, PICK_IMAGE);
+                }else {
+                    Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                    getIntent.setType("image/*");
 
-                Intent chooserIntent = Intent.createChooser(getIntent, getString(R.string.toot_select_image));
-                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
-                startActivityForResult(chooserIntent, PICK_IMAGE);
+                    Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    pickIntent.setType("image/*");
+
+                    Intent chooserIntent = Intent.createChooser(getIntent, getString(R.string.toot_select_image));
+                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+                    startActivityForResult(chooserIntent, PICK_IMAGE);
+                }
+
             }
         });
 
@@ -453,7 +471,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 return;
             }
             try {
-
                 InputStream inputStream = getContentResolver().openInputStream(data.getData());
                 loading_picture.setVisibility(View.VISIBLE);
                 toot_picture.setEnabled(false);
@@ -464,6 +481,14 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 toot_picture.setEnabled(true);
                 e.printStackTrace();
             }
+        }else if(requestCode == Helper.REQ_CODE_SPEECH_INPUT && resultCode == Activity.RESULT_OK){
+            if (null != data) {
+
+                ArrayList<String> result = data
+                        .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                toot_content.setText(result.get(0));
+                toot_content.setSelection(toot_content.getText().length());
+            }
         }
     }
 
@@ -473,9 +498,30 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             case android.R.id.home:
                 finish();
                 return true;
+            case R.id.action_microphone:
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
+                        getString(R.string.speech_prompt));
+                try {
+                    startActivityForResult(intent, Helper.REQ_CODE_SPEECH_INPUT);
+                } catch (ActivityNotFoundException a) {
+                    Toast.makeText(getApplicationContext(),
+                            getString(R.string.speech_not_supported),
+                            Toast.LENGTH_SHORT).show();
+                }
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_toot, menu);
+        return true;
     }
 
     @Override
@@ -501,12 +547,13 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
             final ImageView imageView = new ImageView(getApplicationContext());
             imageView.setId(Integer.parseInt(attachment.getId()));
-            LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            imParams.setMargins(20, 5, 20, 5);
             imageLoader.displayImage(url, imageView, options);
+            LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            imParams.setMargins(20, 5, 20, 5);
+            imParams.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
             imageView.setAdjustViewBounds(true);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            toot_picture_container.addView(imageView, imParams);
+            toot_picture_container.addView(imageView, attachments.size(), imParams);
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -539,18 +586,21 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         dialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog,int which) {
-                List<Attachment> tmp_attachment = new ArrayList<>();
-                tmp_attachment.addAll(attachments);
-                attachments.removeAll(tmp_attachment);
-                tmp_attachment.clear();
                 View namebar = findViewById(viewId);
-                ((ViewGroup) namebar.getParent()).removeView(namebar);
+                for(Attachment attachment: attachments){
+                    if( Integer.valueOf(attachment.getId()) == viewId){
+                        attachments.remove(attachment);
+                        ((ViewGroup) namebar.getParent()).removeView(namebar);
+                        break;
+                    }
+                }
                 dialog.dismiss();
                 if( attachments.size() == 0 ) {
                     toot_sensitive.setVisibility(View.GONE);
                     isSensitive = false;
                     toot_sensitive.setChecked(false);
                 }
+                toot_picture.setEnabled(true);
             }
         });
         dialog.show();
@@ -632,8 +682,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     }
 
 
-
-
     @Override
     public void onRetrieveSearchAccounts(APIResponse apiResponse) {
         if( apiResponse.getError() != null){
@@ -651,4 +699,5 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             toot_show_accounts.setVisibility(View.VISIBLE);
         }
     }
+
 }

@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_download"
-        android:title="@string/download"
-        android:icon="@drawable/ic_save"
+        android:id="@+id/action_microphone"
+        android:title="@string/microphone"
+        android:icon="@drawable/ic_action_mic"
         app:showAsAction="always" />
 </menu>

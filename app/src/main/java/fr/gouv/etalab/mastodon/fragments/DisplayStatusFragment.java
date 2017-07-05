@@ -203,7 +203,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             });
-            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
             if( theme == Helper.THEME_LIGHT) {
                 swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,
                         R.color.colorPrimary,
@@ -248,9 +248,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         this.context = context;
     }
 
-
-    public void onStop() {
-        super.onStop();
+    @Override
+    public void onDestroy (){
+        super.onDestroy();
         if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
     }

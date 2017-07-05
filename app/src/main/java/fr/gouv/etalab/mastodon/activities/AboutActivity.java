@@ -51,7 +51,7 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveSearcA
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
             setTheme(R.style.AppTheme);
         }else {
@@ -93,6 +93,14 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveSearcA
             @Override
             public void onClick(View v) {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.gnu.org/licenses/quick-guide-gplv3.fr.html"));
+                startActivity(browserIntent);
+            }
+        });
+        Button about_translation = (Button) findViewById(R.id.about_translation);
+        about_translation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://translate.yandex.com/"));
                 startActivity(browserIntent);
             }
         });

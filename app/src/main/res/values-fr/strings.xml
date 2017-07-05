@@ -1,0 +1,315 @@
+<resources>
+
+    <string name="navigation_drawer_open">Ouvrir le menu</string>
+    <string name="navigation_drawer_close">Fermer le menu</string>
+
+    <string name="action_about">A propos</string>
+    <string name="action_about_instance">A propos de l\'instance</string>
+    <string name="action_privacy">Confidentialité</string>
+    <string name="action_cache">Cache</string>
+    <string name="action_logout">Déconnexion</string>
+    <string name="login">Connexion</string>
+
+    <!-- common -->
+    <string name="close">Fermer</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="cancel">Annuler</string>
+    <string name="download">Télécharger</string>
+    <string name="download_file">Télécharger %1$s</string>
+    <string name="download_over">Téléchargement terminé</string>
+    <string name="save_file">Enregistrer %1$s</string>
+    <string name="save_over">Enregistrement terminé</string>
+    <string name="download_from">Fichier : %1$s</string>
+    <string name="password">Mot de passe</string>
+    <string name="email">Email</string>
+    <string name="accounts">Comptes</string>
+    <string name="toots">Pouets</string>
+    <string name="tags">Tags</string>
+    <string name="token">Jeton</string>
+    <string name="save">Sauvegarder</string>
+    <string name="two_factor_authentification">Authentification en deux étapes ?</string>
+    <string name="other_instance">Autre instance que mastodon.etalab.gouv.fr ?</string>
+    <string name="no_result">Aucun résultat !</string>
+    <string name="instance">Instance</string>
+    <string name="toast_account_changed">Utilisation du compte %1$s</string>
+    <string name="add_account">Ajouter un compte</string>
+    <string name="clipboard">Le contenu du pouet a été copié dans le presse-papier</string>
+    <string name="change">Changer</string>
+    <string name="choose_picture">Changer l\'image…</string>
+    <string name="clear">Nettoyer</string>
+    <string name="microphone">Microphone</string>
+    <string name="speech_prompt">Veuillez dire quelque chose</string>
+    <string name="speech_not_supported">Désolé ! Votre appareil ne supporte pas la commande vocale !</string>
+    <!--- Menu -->
+    <string name="home_menu">Accueil</string>
+    <string name="local_menu">Fil public local</string>
+    <string name="global_menu">Fil public global</string>
+    <string name="neutral_menu_title">Options</string>
+    <string name="favorites_menu">Favoris</string>
+    <string name="communication_menu_title">Communication</string>
+    <string name="muted_menu">Utilisateurs muets</string>
+    <string name="blocked_menu">Utilisateurs bloqués</string>
+    <string name="notifications">Notifications</string>
+    <string name="follow_request">Demandes d\'abonnements</string>
+    <string name="optimization">Optimisation</string>
+    <string name="settings">Paramètres</string>
+    <string name="profile">Profil</string>
+    <string name="make_a_choice">Que souhaitez-vous faire ?</string>
+    <string name="delete_account_title">Supprimer un compte</string>
+    <string name="delete_account_message">Supprimer le compte %1$s de l\'application ?</string>
+    <string name="send_email">Envoyer un email</string>
+    <string name="choose_file">Veuillez sélectionner un fichier</string>
+    <string name="choose_file_error">Aucun explorateur de fichiers trouvé !</string>
+    <string name="click_to_change">Cliquer sur le chemin pour changer</string>
+    <!-- Status -->
+    <string name="no_status">Aucun pouet à afficher !</string>
+    <string name="fav_added">Pouet ajouté aux favoris !</string>
+    <string name="fav_removed">Pouet supprimé des favoris !</string>
+    <string name="reblog_added">Pouet partagé !</string>
+    <string name="reblog_removed">Pouet supprimé du partage !</string>
+    <string name="reblog_by">Partagé par %1$s</string>
+
+    <string name="favourite_add">Ajouter ce pouet aux favoris ?</string>
+    <string name="favourite_remove">Supprimer ce pouet des favoris ?</string>
+    <string name="reblog_add">Partager ce pouet ?</string>
+    <string name="reblog_remove">Supprimer ce pouet des partages ?</string>
+    <string-array name="more_action">
+        <item>Masquer</item>
+        <item>Bloquer</item>
+        <item>Signaler</item>
+        <item>Copier</item>
+    </string-array>
+    <string-array name="more_action_owner">
+        <item>Supprimer</item>
+        <item>Copier</item>
+    </string-array>
+
+    <string-array name="more_action_confirm">
+        <item>Masquer ce compte ?</item>
+        <item>Bloquer ce compte ?</item>
+        <item>Signaler ce pouet ?</item>
+        <item>null</item> <!-- Ugly hack to fix confirm box-->
+    </string-array>
+
+
+    <string-array name="more_action_confirm_account">
+        <item>Afficher de nouveau ce compte ?</item>
+        <item>Débloquer ce compte ?</item>
+    </string-array>
+
+    <string-array name="more_action_owner_confirm">
+        <item>Supprimer ce pouet ?</item>
+        <item>null</item> <!-- Ugly hack to fix confirm box-->
+    </string-array>
+    <!-- Date -->
+    <plurals name="date_seconds">
+        <item quantity="one">Il y a %d seconde</item>
+        <item quantity="other">Il y a %d secondes</item>
+    </plurals>
+    <plurals name="date_minutes">
+        <item quantity="one">Il y a %d minute</item>
+        <item quantity="other">Il y a %d minutes</item>
+    </plurals>
+    <plurals name="date_hours">
+        <item quantity="one">Il y a %d heure</item>
+        <item quantity="other">Il y a %d heures</item>
+    </plurals>
+    <string name="date_yesterday">Hier</string>
+    <string name="date_day_before_yesterday">Avant-hier</string>
+    <string name="date_day">Il y a %d jours</string>
+    <plurals name="date_month">
+        <item quantity="one">Il y a %d mois</item>
+        <item quantity="other">Il y a %d mois</item>
+    </plurals>
+    <plurals name="date_year">
+        <item quantity="one">Il y a %d an</item>
+        <item quantity="other">Il y a %d ans</item>
+    </plurals>
+
+    <!-- TOOT -->
+    <string name="toot_cw_placeholder">Avertissement</string>
+    <string name="toot_placeholder">Qu\'avez-vous en tête ?</string>
+    <string name="toot_it">POUET !</string>
+    <string name="cw">cw</string>
+    <string name="toot_title">Ecrire un pouet</string>
+    <string name="toot_title_reply">Répondre à un pouet</string>
+    <string name="toot_no_space">Vous avez atteint les 500 caractères autorisés !</string>
+    <string name="toot_select_image">Sélectionnez un média</string>
+    <string name="toot_select_image_error">Une erreur s\'est produite lors de la sélection du média !</string>
+    <string name="toot_delete_media">Supprimer le média ?</string>
+    <string name="toot_error_no_content">Votre pouet est vide !</string>
+    <string name="toot_visibility_tilte">Visibilité du pouet</string>
+    <string name="toot_sent">Le pouet a été envoyé !</string>
+    <string name="toot_reply_content_title">Vous répondez à ce pouet :</string>
+    <string name="toot_sensitive">Contenu sensible ?</string>
+    <string-array name="toot_visibility">
+        <item>Afficher dans les fils publics</item>
+        <item>Ne pas afficher dans les fils publics</item>
+        <item>N\'afficher que pour vos abonné(e)s</item>
+        <item>N\'afficher que pour les personnes mentionnées</item>
+    </string-array>
+
+    <!-- Instance -->
+    <string name="instance_no_description">Aucune description !</string>
+
+    <!-- About -->
+    <string name="about_vesrion">Version %1$s</string>
+    <string name="about_developer">Développeur :</string>
+    <string name="about_developer_action">\@tschneider</string>
+    <string name="about_license">Licence : </string>
+    <string name="about_license_action">GNU GPL V3</string>
+    <string name="about_code">Code source : </string>
+    <string name="about_code_action">bitbucket</string>
+    <string name="about_yandex">Traduction des pouets :</string>
+    <!-- Conversation -->
+    <string name="conversation">Conversation</string>
+
+    <!-- Accounts -->
+    <string name="no_accounts">Aucun compte à afficher</string>
+    <string name="no_follow_request">Aucune demande d\'abonnement</string>
+    <string name="status_cnt">Pouets \n %d</string>
+    <string name="following_cnt">Abonnements \n %d</string>
+    <string name="followers_cnt">Abonnés \n %d</string>
+    <string name="authorize">Autoriser</string>
+    <string name="reject">Rejeter</string>
+
+    <!-- Notifications -->
+    <string name="no_notifications">Aucune notification à afficher</string>
+    <string name="notif_mention">a mentionné votre pouet</string>
+    <string name="notif_reblog">a partagé votre pouet</string>
+    <string name="notif_favourite">a ajouté votre pouet à ses favoris</string>
+    <string name="notif_follow">vous a suivi</string>
+    <string name="notif_pouet">Nouveau pouet de %1$s</string>
+    <plurals name="other_notifications">
+        <item quantity="one">et %d autre notification</item>
+        <item quantity="other">et %d autres notifications</item>
+    </plurals>
+    <plurals name="other_notif_hometimeline">
+        <item quantity="one">et %d autre pouet à découvrir</item>
+        <item quantity="other">et %d autres pouets à découvrir</item>
+    </plurals>
+    <!-- HEADER -->
+    <string name="following">Abonnements</string>
+    <string name="followers">Abonnés</string>
+    <!-- TOAST -->
+    <string name="client_error">Impossible d\'obtenir l\'id du client !</string>
+    <string name="no_internet">Aucune connexion Internet !</string>
+    <string name="toast_block">Le compte a été bloqué !</string>
+    <string name="toast_unblock">Le compte n\'est plus bloqué !</string>
+    <string name="toast_mute">Le compte a été masqué !</string>
+    <string name="toast_unmute">Le compte n\'est plus masqué !</string>
+    <string name="toast_follow">Le compte a été suivi !</string>
+    <string name="toast_unfollow">Le compte n\'est plus suivi !</string>
+    <string name="toast_reblog">Le pouet a été partagé !</string>
+    <string name="toast_unreblog">Le pouet a été supprimé des partages !</string>
+    <string name="toast_favourite">Le pouet a été ajouté aux favoris !</string>
+    <string name="toast_unfavourite">Le pouet a été supprimé des favoris !</string>
+    <string name="toast_report">Le pouet a été signalé !</string>
+    <string name="toast_unstatus">Le pouet a été supprimé !</string>
+    <string name="toast_error">Oups ! Une erreur s\'est produite !</string>
+    <string name="toast_error_loading_account">Une erreur s\'est produite en chargeant le compte !</string>
+    <string name="toast_error_search">Une erreur s\'est produite lors de la recherche !</string>
+    <string name="toast_error_login">Impossible de vous connecter !</string>
+    <string name="toast_update_credential_ok">Les données du profil ont été sauvegardées !</string>
+    <string name="nothing_to_do">Aucune action ne peut être réalisée</string>
+    <string name="toast_saved">Le média a été enregistré !</string>
+    <string name="toast_error_translate">Une erreur est survenue lors de la traduction !</string>
+    <!-- Settings -->
+    <string name="settings_title_optimisation">Optimisation du chargement</string>
+    <string name="set_toots_page">Nombre de pouets par chargement</string>
+    <string name="set_accounts_page">Nombre de comptes par chargement</string>
+    <string name="set_notifications_page">Nombre de notifications par chargement</string>
+    <string name="set_attachment_always">Toujours</string>
+    <string name="set_attachment_wifi">WIFI</string>
+    <string name="set_attachment_ask">Demander</string>
+    <string name="set_attachment_action">Charger les médias</string>
+    <string name="load_attachment">Charger les images</string>
+    <string name="load_attachment_spoiler">Afficher le contenu ?</string>
+    <string name="load_sensitive_attachment">Charger les images sensibles</string>
+    <string name="set_display_reply">Afficher le message précédent lors d\'une réponse</string>
+    <string name="set_folder_title">Destination : </string>
+
+    <string name="settings_title_notifications">Gestion des notifications</string>
+    <string name="set_notif_follow">Notifier lorsque quelqu’un me suit</string>
+    <string name="set_notif_follow_ask">Notifier lorsque quelqu\'un demande à me suivre</string>
+    <string name="set_notif_follow_share">Notifier lorsque quelqu\'un partage mes pouets</string>
+    <string name="set_notif_follow_add">Notifier lorsque quelqu’un ajoute mes pouets à ses favoris</string>
+    <string name="set_notif_follow_mention">Notifier lorsque quelqu’un me mentionne</string>
+    <string name="set_share_validation">Confirmer avant de partager</string>
+    <string name="settings_title_more_options">Options avancées</string>
+    <string name="set_wifi_only">Notifier en WIFI seulement</string>
+    <string name="set_notif_silent">Utiliser le vibreur</string>
+    <string name="set_night_mode">Mode nuit</string>
+    <string name="settings_title_profile">Modifier le profil</string>
+    <string name="set_profile_description">Présentation…</string>
+    <string name="set_save_changes">Enregistrer les modifications</string>
+    <string name="set_header_picture_overlay">Choisissez une image d\'entête</string>
+    <string name="note_no_space">Vous avez atteint les 160 caractères autorisés !</string>
+    <string name="username_no_space">Vous avez atteint les 30 caractères autorisés !</string>
+
+    <string name="embedded_browser">Utiliser le navigateur intégré</string>
+    <string name="use_javascript">Activer Javascript</string>
+    <string name="use_cookies">Autoriser les cookies tiers</string>
+
+    <string name="set_title_news">Actualités</string>
+    <string name="set_notification_news">Notifier lors de nouveaux pouets sur la page d\'accueil</string>
+    <string name="set_show_error_messages">Afficher les messages d\'erreur</string>
+    <string name="action_follow">Suivre</string>
+    <string name="action_unfollow">Se désabonner</string>s
+    <string name="action_block">Bloquer</string>
+    <string name="action_unblock">Débloquer</string>
+    <string name="action_mute">Masquer</string>
+    <string name="action_no_action">Aucune action</string>
+    <string name="action_unmute">Afficher</string>
+    <string name="request_sent">Demande envoyée</string>
+    <string name="followed_by">Vous suit</string>
+
+    <string name="action_search">Recherche</string>
+
+    <!-- CACHE -->
+    <string name="cache_title">Nettoyage du cache</string>
+    <string name="cache_message">Il y a %1$s de données en cache.\n\nSouhaitez-vous les supprimer ?</string>
+    <string name="toast_cache_clear">Le cache a été nettoyé ! %1$s ont été libérés</string>
+
+    <!-- PRIVACY -->
+    <string name="privacy_data_title">Données enregistrées</string>
+    <string name="privacy_data">
+       Seules les informations de base des comptes connectés sont enregistrées sur l\'appareil.
+        Ces données sont strictement confidentielles et ne sont utilisables que par l\'application. La suppression de l\'application entraîne immédiatement la suppression de ces données.\n
+        &#9888; Les identifiants et les mots de passe ne sont jamais enregistrés, ils ne sont utilisés que lors de l\'authentification sécurisée (SSL) vers l\'instance.
+    </string>
+
+    <string name="privacy_authorizations_title">Autorisations de l\'application</string>
+    <string name="privacy_authorizations">
+        - <b>ACCESS_NETWORK_STATE</b> : Utilisée pour savoir si l\'appareil est connecté au WIFI.\n
+        - <b>INTERNET</b> : Utilisée pour les requêtes vers l\'instance.\n
+        - <b>WRITE_EXTERNAL_STORAGE</b> : Utilisée pour télécharger les médias / déplacer sur la carte SD.\n
+        - <b>READ_EXTERNAL_STORAGE</b> : Utilisée pour ajouter des médias aux pouets.\n
+        - <b>BOOT_COMPLETED</b> : Utilisée pour lancer le service de notifications quand l\'appareil démarre.\n
+        - <b>WAKE_LOCK</b> : Utilisée lors du service de notifications.
+    </string>
+
+    <string name="privacy_API_authorizations_title">Autorisations de l\'API</string>
+    <string name="privacy_API_authorizations">
+        - <b>Read</b> : Lire les données du compte.\n
+        - <b>Write</b> : Envoyer des messages et attacher des médias aux messages.\n
+        - <b>Follow</b> : S\'abonner, se désabonner, bloquer, débloquer.\n\n
+        <b>&#9888; Ces actions ne sont réalisées qu\'à la demande de l\'utilisateur.</b>
+    </string>
+    <string name="privacy_API_title">Suivi et bibliothèques</string>
+    <string name="privacy_API">
+        L\'application n\'utilise <b>aucun outil de suivi</b> (mesure d\'audience, rapport d\'erreurs, etc.) et elle ne comporte aucune publicité.\n\n
+        L\'utilisation de bibliothèques est réduite au strict minimum :\n
+        - <b>Android Asynchronous Http Client</b> : Pour la gestion des requêtes\n
+        - <b>Universal Image Loader</b> : Pour la gestion des médias\n
+        - <b>Android-Job</b> : Pour la gestion des services\n
+        - <b>PhotoView</b> : Pour la gestion des images
+    </string>
+
+    <string name="privacy_API_yandex_title">Traduction des pouets</string>
+    <string name="privacy_API_yandex_authorizations">
+        L\'application offre la possibilité de traduire les pouets en utilisant les paramètres régionaux de l\'appareil et l\'API de Yandex.\n
+        Yandex a sa propre politique de confidentialité qui peut être consultée à l\'adresse suivante : https://yandex.ru/legal/confidential/?lang=en
+    </string>
+</resources>

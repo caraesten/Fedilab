@@ -106,7 +106,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
             setTheme(R.style.AppTheme);
         }else {
@@ -140,7 +140,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
 
         tabLayout = (TabLayout) findViewById(R.id.account_tabLayout);
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.status)));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.following)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.followers)));
 
@@ -295,10 +295,10 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
             else
                 account_ac.setText(account.getAcct());
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                account_note.setText(Html.fromHtml(account.getNote(), Html.FROM_HTML_MODE_COMPACT));
+                account_note.setText(Html.fromHtml(Helper.shortnameToUnicode(account.getNote(),true), Html.FROM_HTML_MODE_COMPACT));
             else
                 //noinspection deprecation
-                account_note.setText(Html.fromHtml(account.getNote()));
+                account_note.setText(Html.fromHtml(Helper.shortnameToUnicode(account.getNote(), true)));
             tabLayout.getTabAt(0).setText(getString(R.string.status_cnt, account.getStatuses_count()));
             tabLayout.getTabAt(1).setText(getString(R.string.following_cnt, account.getFollowing_count()));
             tabLayout.getTabAt(2).setText(getString(R.string.followers_cnt, account.getFollowers_count()));

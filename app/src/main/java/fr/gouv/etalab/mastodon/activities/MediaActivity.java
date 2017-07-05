@@ -19,11 +19,11 @@ import android.Manifest;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.RectF;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -35,7 +35,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.URLUtil;
 import android.widget.ImageView;
 import android.widget.MediaController;
@@ -43,6 +42,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.github.chrisbanes.photoview.OnMatrixChangedListener;
+import com.github.chrisbanes.photoview.OnPhotoTapListener;
+import com.github.chrisbanes.photoview.OnScaleChangedListener;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
@@ -93,6 +95,7 @@ public class MediaActivity extends AppCompatActivity  {
     private Bitmap downloadedImage;
     private File fileVideo;
     private TextView progress;
+    private boolean canSwipe;
     private enum actionSwipe{
         RIGHT_TO_LEFT,
         LEFT_TO_RIGHT,
@@ -104,7 +107,7 @@ public class MediaActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
             setTheme(R.style.AppTheme);
         }else {
@@ -124,7 +127,7 @@ public class MediaActivity extends AppCompatActivity  {
         }else {
             main_container_media.setBackgroundResource(R.color.colorPrimaryD);
         }
-
+        canSwipe = true;
         loader = (RelativeLayout) findViewById(R.id.loader);
         imageView = (PhotoView) findViewById(R.id.media_picture);
         videoView = (VideoView) findViewById(R.id.media_video);
@@ -144,10 +147,15 @@ public class MediaActivity extends AppCompatActivity  {
                 displayMediaAtPosition(actionSwipe.POP);
             }
         });
+        imageView.setOnMatrixChangeListener(new OnMatrixChangedListener() {
+            @Override
+            public void onMatrixChanged(RectF rect) {
+                canSwipe = (imageView.getScale() == 1 );
+            }
+        });
 
         progress = (TextView) findViewById(R.id.loader_progress);
         setTitle("");
-        final ViewGroup videoLayout = (ViewGroup) findViewById(R.id.videoLayout); // Your own view, read class comments
 
         isHiding = false;
         imageLoader = ImageLoader.getInstance();
@@ -196,7 +204,7 @@ public class MediaActivity extends AppCompatActivity  {
      */
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        if( mediaPosition > attachments.size() || mediaPosition < 1 || attachments.size() <= 1)
+        if( !canSwipe || mediaPosition > attachments.size() || mediaPosition < 1 || attachments.size() <= 1)
             return super.dispatchTouchEvent(event);
         switch(event.getAction()){
             case MotionEvent.ACTION_DOWN: {

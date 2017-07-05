@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity
     private float downX, downY;
     private int currentScreen = 1;
     private actionSwipe currentAction;
+    public static String currentLocale;
 
     private enum actionSwipe{
         RIGHT_TO_LEFT,
@@ -104,7 +105,7 @@ public class MainActivity extends AppCompatActivity
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
 
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
             setTheme(R.style.AppTheme_NoActionBar);
         }else {
@@ -123,6 +124,8 @@ public class MainActivity extends AppCompatActivity
         //Here, the user is authenticated
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //Defines the current locale of the device in a static variable
+        currentLocale = Helper.currentLocale(getApplicationContext());
 
         toot = (FloatingActionButton) findViewById(R.id.toot);
         toot.setOnClickListener(new View.OnClickListener() {

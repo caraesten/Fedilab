@@ -140,6 +140,7 @@ public class Helper {
     public static final String REDIRECT_CONTENT = "urn:ietf:wg:oauth:2.0:oob";
     public static final String REDIRECT_CONTENT_WEB = "mastalab://backtomastalab";
     public static final int EXTERNAL_STORAGE_REQUEST_CODE = 84;
+    public static final int REQ_CODE_SPEECH_INPUT = 132;
 
     //Some definitions
     public static final String CLIENT_NAME = "client_name";
@@ -699,7 +700,7 @@ public class Helper {
         MenuItem nav_main_com = navigationView.getMenu().findItem(R.id.nav_main_com);
         MenuItem nav_main_opt= navigationView.getMenu().findItem(R.id.nav_main_opt);
         final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_DARK){
             changeDrawableColor(activity, R.drawable.ic_person_add,R.color.dark_text);
             changeDrawableColor(activity, R.drawable.ic_person,R.color.dark_text);
@@ -1124,5 +1125,25 @@ public class Helper {
         Drawable mDrawable = ContextCompat.getDrawable(context, drawable);
         mDrawable.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
         return mDrawable;
+    }
+
+
+    /**
+     * Returns the current locale of the device
+     * @param context Context
+     * @return String locale
+     */
+    public static String currentLocale(Context context) {
+        String locale;
+        Locale current;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            current = context.getResources().getConfiguration().getLocales().get(0);
+        } else {
+            //noinspection deprecation
+            current = context.getResources().getConfiguration().locale;
+        }
+        locale = current.toString();
+        locale = locale.split("_")[0];
+        return locale;
     }
 }

@@ -16,7 +16,6 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -854,7 +853,7 @@ public class API {
                 return -1;
         }
         if(statusAction != StatusAction.UNSTATUS ) {
-            post(action, params, new JsonHttpResponseHandler() {
+            post(action, 30000, params, new JsonHttpResponseHandler() {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -966,7 +965,7 @@ public class API {
         RequestParams params = new RequestParams();
         params.put("file", inputStream);
 
-        post("/media", params, new JsonHttpResponseHandler() {
+        post("/media", 120000, params, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -1154,7 +1153,7 @@ public class API {
             status.setSensitive(Boolean.parseBoolean(resobj.get("sensitive").toString()));
             status.setSpoiler_text(resobj.get("spoiler_text").toString());
             status.setVisibility(resobj.get("visibility").toString());
-
+            status.setLanguage(resobj.get("language").toString());
             //TODO: replace by the value
             status.setApplication(new Application());
 
@@ -1461,10 +1460,10 @@ public class API {
         }
     }
 
-    private void post(String action, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+    private void post(String action, int timeout, RequestParams params, AsyncHttpResponseHandler responseHandler) {
 
         try {
-            client.setConnectTimeout(10000); //10s timeout
+            client.setConnectTimeout(timeout); //10s timeout
             client.setUserAgent(USER_AGENT);
             client.addHeader("Authorization", "Bearer "+prefKeyOauthTokenT);
             MastalabSSLSocketFactory mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());

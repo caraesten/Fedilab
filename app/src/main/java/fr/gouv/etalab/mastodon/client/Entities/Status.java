@@ -17,7 +17,6 @@ package fr.gouv.etalab.mastodon.client.Entities;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,6 +36,7 @@ public class Status implements Parcelable {
     private String in_reply_to_account_id;
     private Status reblog;
     private String content;
+    private String content_translated;
     private Date created_at;
     private int reblogs_count;
     private int favourites_count;
@@ -51,7 +51,9 @@ public class Status implements Parcelable {
     private List<Mention> mentions;
     private List<Tag> tags;
     private Application application;
-
+    private String language;
+    private boolean isTranslated = false;
+    private boolean isTranslationShown = false;
 
     protected Status(Parcel in) {
         id = in.readString();
@@ -63,6 +65,7 @@ public class Status implements Parcelable {
         account = in.readParcelable(Account.class.getClassLoader());
         mentions = in.readArrayList(Mention.class.getClassLoader());
         content = in.readString();
+        content_translated = in.readString();
         reblogs_count = in.readInt();
         favourites_count = in.readInt();
         reblogged = in.readByte() != 0;
@@ -70,8 +73,11 @@ public class Status implements Parcelable {
         sensitive = in.readByte() != 0;
         spoiler_text = in.readString();
         visibility = in.readString();
+        language = in.readString();
         attachmentShown = in.readByte() != 0;
         spoilerShown = in.readByte() != 0;
+        isTranslated = in.readByte() != 0;
+        isTranslationShown = in.readByte() != 0;
     }
 
     public Status(){}
@@ -274,6 +280,7 @@ public class Status implements Parcelable {
         dest.writeParcelable(account, flags);
         dest.writeList(mentions);
         dest.writeString(content);
+        dest.writeString(content_translated);
         dest.writeInt(reblogs_count);
         dest.writeInt(favourites_count);
         dest.writeByte((byte) (reblogged ? 1 : 0));
@@ -281,8 +288,11 @@ public class Status implements Parcelable {
         dest.writeByte((byte) (sensitive ? 1 : 0));
         dest.writeString(spoiler_text);
         dest.writeString(visibility);
+        dest.writeString(language);
         dest.writeByte((byte) (attachmentShown ? 1 : 0));
         dest.writeByte((byte) (spoilerShown ? 1 : 0));
+        dest.writeByte((byte) (isTranslated ? 1 : 0));
+        dest.writeByte((byte) (isTranslationShown ? 1 : 0));
     }
 
     public boolean isSpoilerShown() {
@@ -291,5 +301,37 @@ public class Status implements Parcelable {
 
     public void setSpoilerShown(boolean spoilerShown) {
         this.spoilerShown = spoilerShown;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public boolean isTranslated() {
+        return isTranslated;
+    }
+
+    public void setTranslated(boolean translated) {
+        isTranslated = translated;
+    }
+
+    public boolean isTranslationShown() {
+        return isTranslationShown;
+    }
+
+    public void setTranslationShown(boolean translationShown) {
+        isTranslationShown = translationShown;
+    }
+
+    public String getContent_translated() {
+        return content_translated;
+    }
+
+    public void setContent_translated(String content_translated) {
+        this.content_translated = content_translated;
     }
 }

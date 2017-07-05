@@ -116,7 +116,7 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
                 asyncTask = new RetrieveFollowRequestSentAsyncTask(context, max_id, DisplayFollowRequestSentFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT) {
             swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,
                     R.color.colorPrimary,
@@ -148,8 +148,8 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
         this.context = context;
     }
 
-    public void onStop() {
-        super.onStop();
+    public void onDestroy() {
+        super.onDestroy();
         if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
     }
