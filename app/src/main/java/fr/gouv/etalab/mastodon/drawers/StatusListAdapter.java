@@ -28,8 +28,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
-import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -141,6 +139,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_account_displayname = (TextView) convertView.findViewById(R.id.status_account_displayname);
             holder.status_account_profile = (ImageView) convertView.findViewById(R.id.status_account_profile);
             holder.status_account_profile_boost = (ImageView) convertView.findViewById(R.id.status_account_profile_boost);
+            holder.status_account_profile_boost_by = (ImageView) convertView.findViewById(R.id.status_account_profile_boost_by);
             holder.status_favorite_count = (TextView) convertView.findViewById(R.id.status_favorite_count);
             holder.status_reblog_count = (TextView) convertView.findViewById(R.id.status_reblog_count);
             holder.status_toot_date = (TextView) convertView.findViewById(R.id.status_toot_date);
@@ -161,7 +160,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_prev4_container = (RelativeLayout) convertView.findViewById(R.id.status_prev4_container);
             holder.status_reply = (ImageView) convertView.findViewById(R.id.status_reply);
             holder.status_privacy = (ImageView) convertView.findViewById(R.id.status_privacy);
-            holder.status_translate = (ImageView) convertView.findViewById(R.id.status_translate);
+            holder.status_translate = (Button) convertView.findViewById(R.id.status_translate);
             holder.status_content_translated_container = (LinearLayout) convertView.findViewById(R.id.status_content_translated_container);
             holder.main_container = (LinearLayout) convertView.findViewById(R.id.main_container);
             holder.status_spoiler_container = (LinearLayout) convertView.findViewById(R.id.status_spoiler_container);
@@ -357,12 +356,18 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
         holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
         
-        imageLoader.displayImage(ppurl, holder.status_account_profile, options);
+
         if( status.getReblog() != null) {
-            imageLoader.displayImage(status.getAccount().getAvatar(), holder.status_account_profile_boost, options);
+            imageLoader.displayImage(ppurl, holder.status_account_profile_boost, options);
+            imageLoader.displayImage(status.getAccount().getAvatar(), holder.status_account_profile_boost_by, options);
             holder.status_account_profile_boost.setVisibility(View.VISIBLE);
+            holder.status_account_profile_boost_by.setVisibility(View.VISIBLE);
+            holder.status_account_profile.setVisibility(View.GONE);
         }else{
+            imageLoader.displayImage(ppurl, holder.status_account_profile, options);
             holder.status_account_profile_boost.setVisibility(View.GONE);
+            holder.status_account_profile_boost_by.setVisibility(View.GONE);
+            holder.status_account_profile.setVisibility(View.VISIBLE);
         }
         if( status.getReblog() == null) {
             if (status.getMedia_attachments().size() < 1) {
@@ -487,10 +492,18 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             public void onClick(View v) {
                 Intent intent = new Intent(context, ShowAccountActivity.class);
                 Bundle b = new Bundle();
-                if( status.getReblog() == null)
-                    b.putString("accountId", status.getAccount().getId());
-                else
-                    b.putString("accountId", status.getReblog().getAccount().getId());
+                b.putString("accountId", status.getAccount().getId());
+                intent.putExtras(b);
+                context.startActivity(intent);
+            }
+        });
+
+        holder.status_account_profile_boost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ShowAccountActivity.class);
+                Bundle b = new Bundle();
+                b.putString("accountId", status.getReblog().getAccount().getId());
                 intent.putExtras(b);
                 context.startActivity(intent);
             }
@@ -673,6 +686,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         TextView status_account_displayname;
         ImageView status_account_profile;
         ImageView status_account_profile_boost;
+        ImageView status_account_profile_boost_by;
         TextView status_favorite_count;
         TextView status_reblog_count;
         TextView status_toot_date;
@@ -692,7 +706,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         RelativeLayout status_prev4_container;
         ImageView status_reply;
         ImageView status_privacy;
-        ImageView status_translate;
+        Button status_translate;
         LinearLayout status_container2;
         LinearLayout status_container3;
         LinearLayout main_container;

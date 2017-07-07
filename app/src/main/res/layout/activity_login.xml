@@ -28,10 +28,10 @@
         >
         <ImageView
             android:layout_marginTop="20dp"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/mastodonlogo"
-            android:layout_height="100dp"
+            android:layout_height="150dp"
             tools:ignore="ContentDescription" />
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,7 +41,6 @@
             android:orientation="vertical"
             android:layout_height="wrap_content">
             <EditText
-                android:visibility="gone"
                 android:id="@+id/login_instance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -81,19 +80,6 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="@string/login" />
-            <TextView
-                android:id="@+id/other_instance"
-                android:textAllCaps="false"
-                android:gravity="center"
-                android:layout_marginTop="20dp"
-                android:drawablePadding="10dp"
-                android:padding="20dp"
-                android:textSize="16sp"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="?attr/colorAccent"
-                android:text="@string/other_instance" />
             <TextView
                 android:id="@+id/login_two_step"
                 android:textAllCaps="false"

@@ -33,30 +33,58 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
             android:orientation="horizontal"
             android:baselineAligned="false">
             <RelativeLayout
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_width="60dp"
-                android:layout_gravity="center_horizontal|top"
-                android:gravity="center_horizontal|top">
+                >
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerHorizontal="true"
                     android:id="@+id/status_account_profile"
                     tools:ignore="ContentDescription" />
                 <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="gone"
                     android:id="@+id/status_account_profile_boost"
+                    tools:ignore="ContentDescription" />
+                <ImageView
+                    android:id="@+id/status_account_profile_boost_by"
                     android:layout_height="30dp"
                     android:layout_width="30dp"
+                    android:layout_marginTop="25dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
                     style="?attr/shapeBorder"
                     android:visibility="gone"
+                    tools:ignore="ContentDescription" />
+                <Button
+                    android:id="@+id/status_translate"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="70dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:scaleType="center"
+                    android:drawablePadding="0dp"
+                    android:paddingStart="17dp"
+                    android:paddingLeft="17dp"
+                    android:drawableStart="@drawable/ic_translate"
+                    android:drawableLeft="@drawable/ic_translate"
                     tools:ignore="ContentDescription" />
             </RelativeLayout>
             <LinearLayout
@@ -344,15 +372,6 @@
                 android:paddingRight="10dp"
                 android:paddingLeft="10dp"
                 android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_marginRight="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:id="@+id/status_translate"
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/ic_translate"
-                    tools:ignore="ContentDescription" />
                 <ImageView
                     android:layout_marginRight="20dp"
                     android:layout_marginEnd="20dp"

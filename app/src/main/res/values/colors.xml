@@ -8,7 +8,7 @@
     <!-- DARK -->
     <color name="colorPrimaryD">#616161</color>
     <color name="colorPrimaryDarkD">#212121</color>
-    <color name="colorAccentD">#009688</color>
+    <color name="colorAccentD">#4db6ac</color>
 
     <!-- Header Profile-->
     <color name="header1">#0288D1</color>
@@ -37,6 +37,5 @@
     <color name="green_1">#009688</color>
     <color name="red_1">#F44336</color>
     <color name="black">#000</color>
-
 
 </resources>

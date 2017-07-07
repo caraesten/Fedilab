@@ -49,6 +49,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.USER_AGENT;
+import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
 /**
@@ -63,7 +64,6 @@ public class LoginActivity extends AppCompatActivity {
     private TextView login_two_step;
     private static boolean client_id_for_webview = false;
     private String instance;
-    private boolean addAccount = false;
     private EditText login_instance;
 
     @Override
@@ -78,6 +78,11 @@ public class LoginActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_login);
 
+        if( theme == Helper.THEME_DARK) {
+            changeDrawableColor(getApplicationContext(), R.drawable.mastodon_icon, R.color.colorAccentD);
+        }else {
+            changeDrawableColor(getApplicationContext(), R.drawable.mastodon_icon, R.color.colorAccent);
+        }
         final Button connectionButton = (Button) findViewById(R.id.login_button);
         login_instance = (EditText) findViewById(R.id.login_instance);
         connectionButton.setEnabled(false);
@@ -92,58 +97,26 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        //For other instances
-        TextView other_instance = (TextView) findViewById(R.id.other_instance);
-        other_instance.setPaintFlags(other_instance.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        other_instance.setOnClickListener(new View.OnClickListener() {
+        login_instance.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
-                intent.putExtra("addAccount", true);
-                startActivity(intent);
-                finish();
+            public void onFocusChange(View v, boolean hasFocus) {
+                connectionButton.setEnabled(false);
+                login_two_step.setVisibility(View.INVISIBLE);
+                if (!hasFocus) {
+                    retrievesClientId();
+                }
             }
         });
-
-        Bundle b = getIntent().getExtras();
-        if(b != null)
-            addAccount = b.getBoolean("addAccount", false);
-
-        if( addAccount )
-            login_instance.setVisibility(View.VISIBLE);
-
-        if( addAccount) {
-            login_instance.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    connectionButton.setEnabled(false);
-                    login_two_step.setVisibility(View.INVISIBLE);
-                    if (!hasFocus) {
-                        retrievesClientId();
-                    }
-                }
-            });
-        }
-        if( addAccount)
-            other_instance.setVisibility(View.GONE);
     }
 
     @Override
     protected void onResume(){
         super.onResume();
         Button connectionButton = (Button) findViewById(R.id.login_button);
-        if( !addAccount ) {
-            if (client_id_for_webview || !connectionButton.isEnabled()) {
-                connectionButton.setEnabled(false);
-                client_id_for_webview = false;
-                retrievesClientId();
-            }
-        }else {
-            if (login_instance.getText() != null && login_instance.getText().toString().length() > 0 && client_id_for_webview) {
-                connectionButton.setEnabled(false);
-                client_id_for_webview = false;
-                retrievesClientId();
-            }
+        if (login_instance.getText() != null && login_instance.getText().toString().length() > 0 && client_id_for_webview) {
+            connectionButton.setEnabled(false);
+            client_id_for_webview = false;
+            retrievesClientId();
         }
     }
 
@@ -156,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
 
         String action = "/api/v1/apps";
         RequestParams parameters = new RequestParams();
-        parameters.add(Helper.CLIENT_NAME, Helper.OAUTH_REDIRECT_HOST);
+        parameters.add(Helper.CLIENT_NAME, Helper.CLIENT_NAME_VALUE);
         parameters.add(Helper.REDIRECT_URIS, client_id_for_webview?Helper.REDIRECT_CONTENT_WEB:Helper.REDIRECT_CONTENT);
         parameters.add(Helper.SCOPES, Helper.OAUTH_SCOPES);
         parameters.add(Helper.WEBSITE,"https://" + Helper.getLiveInstance(getApplicationContext()));

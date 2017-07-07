@@ -312,4 +312,6 @@
         L\'application offre la possibilité de traduire les pouets en utilisant les paramètres régionaux de l\'appareil et l\'API de Yandex.\n
         Yandex a sa propre politique de confidentialité qui peut être consultée à l\'adresse suivante : https://yandex.ru/legal/confidential/?lang=en
     </string>
+
+    <string name="thanks_text">Merci à Stéphane pour le logo.</string>
 </resources>
