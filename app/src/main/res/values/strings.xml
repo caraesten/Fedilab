@@ -318,4 +318,7 @@
         The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
     </string>
+
+
+    <string name="thanks_text">Thank you to Stéphane for the logo.</string>
 </resources>

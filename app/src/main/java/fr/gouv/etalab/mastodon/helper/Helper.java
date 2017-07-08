@@ -26,7 +26,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -42,7 +41,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.ColorInt;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -54,8 +52,6 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
@@ -132,7 +128,7 @@ public class Helper {
 
     @SuppressWarnings("unused")
     public static  final String TAG = "mastodon_etalab";
-    public static final String OAUTH_REDIRECT_HOST = "fr.gouv.etalab.mastodon";
+    public static final String CLIENT_NAME_VALUE = "Mastalab";
     public static final String INSTANCE = "mastodon.etalab.gouv.fr";
     public static final String OAUTH_SCOPES = "read write follow";
     public static final String PREF_KEY_OAUTH_TOKEN = "oauth_token";
