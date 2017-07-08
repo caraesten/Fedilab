@@ -654,9 +654,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     public void onTranslatedTextview(int position, String translatedResult, Boolean error) {
         if( error){
             Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
-            return;
-        }
-        if( statuses.size() > position) {
+        }else if( statuses.size() > position) {
             try {
                 JSONObject translationJson = new JSONObject(translatedResult);
                 JSONArray aJsonArray = translationJson.getJSONArray("text");
@@ -666,7 +664,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 statuses.get(position).setTranslationShown(true);
                 statuses.get(position).setContent_translated(aJsonString);
                 statusListAdapter.notifyDataSetChanged();
-            } catch (JSONException | UnsupportedEncodingException e) {
+            } catch (JSONException | UnsupportedEncodingException | IllegalArgumentException e) {
                 Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
             }
         }

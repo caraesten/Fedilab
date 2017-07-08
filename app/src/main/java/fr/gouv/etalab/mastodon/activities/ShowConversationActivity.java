@@ -57,7 +57,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
     public static int position;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ListView lv_status;
-
+    private boolean isRefreshed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +79,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
             statusId = b.getString("statusId", null);
         if( statusId == null)
             finish();
+        isRefreshed = false;
         setTitle(R.string.conversation);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -95,6 +96,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                isRefreshed = true;
                 new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
@@ -111,6 +113,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
                         ( new Handler()).postDelayed(new Runnable() {
                             @Override
                             public void run() {
+                                isRefreshed = true;
                                 new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             }
                         }, 1000);
@@ -174,7 +177,6 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
         if( context.getDescendants() != null && context.getDescendants().size() > 0){
             for(Status status: context.getDescendants()){
                 statuses.add(status);
-                statusId = status.getId();
             }
         }
         RelativeLayout loader = (RelativeLayout) findViewById(R.id.loader);
@@ -183,6 +185,12 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
         statusListAdapter.notifyDataSetChanged();
         loader.setVisibility(View.GONE);
         lv_status.setVisibility(View.VISIBLE);
-        lv_status.smoothScrollToPosition(position);
+        if( isRefreshed){
+            position = statuses.size()-1;
+            lv_status.setSelection(position);
+        }else {
+            lv_status.smoothScrollToPosition(position);
+        }
+
     }
 }
