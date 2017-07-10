@@ -1,12 +1,12 @@
 /* Copyright 2017 Thomas Schneider
  *
- * This file is a part of Mastodon Etalab for mastodon.etalab.gouv.fr
+ * This file is a part of Mastalab
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation; either version 3 of the
  * License, or (at your option) any later version.
  *
- * Mastodon Etalab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * Mastalab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
  * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  *
@@ -122,11 +122,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void retrievesClientId(){
         final Button connectionButton = (Button) findViewById(R.id.login_button);
-        if( login_instance.getText() != null && login_instance.getText().length() > 0 )
-            instance = login_instance.getText().toString().trim();
-        else
-            instance = Helper.INSTANCE;
-
+        instance = login_instance.getText().toString().trim();
         String action = "/api/v1/apps";
         RequestParams parameters = new RequestParams();
         parameters.add(Helper.CLIENT_NAME, Helper.CLIENT_NAME_VALUE);

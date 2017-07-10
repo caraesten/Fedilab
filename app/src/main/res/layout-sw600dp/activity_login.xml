@@ -2,13 +2,13 @@
 <!--
     Copyright 2017 Thomas Schneider
 
-    This file is a part of Mastodon Etalab for mastodon.etalab.gouv.fr
+    This file is a part of Mastalab
 
     This program is free software; you can redistribute it and/or modify it under the terms of the
     GNU General Public License as published by the Free Software Foundation; either version 3 of the
     License, or (at your option) any later version.
 
-    Mastodon Etalab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+    Mastalab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
     Public License for more details.
 
@@ -41,7 +41,6 @@
             android:orientation="vertical"
             android:layout_height="wrap_content">
             <EditText
-                android:visibility="gone"
                 android:id="@+id/login_instance"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
@@ -91,19 +90,8 @@
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
+                android:textColor="?attr/colorAccent"
                 android:text="@string/two_factor_authentification" />
-            <TextView
-                android:id="@+id/other_instance"
-                android:textAllCaps="false"
-                android:gravity="center"
-                android:drawablePadding="10dp"
-                android:padding="20dp"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
-                android:text="@string/other_instance" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

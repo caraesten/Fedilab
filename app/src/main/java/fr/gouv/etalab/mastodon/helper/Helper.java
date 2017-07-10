@@ -1,12 +1,12 @@
 /* Copyright 2017 Thomas Schneider
  *
- * This file is a part of Mastodon Etalab for mastodon.etalab.gouv.fr
+ * This file is a part of Mastalab
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation; either version 3 of the
  * License, or (at your option) any later version.
  *
- * Mastodon Etalab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * Mastalab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
  * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  *
@@ -17,6 +17,7 @@
 package fr.gouv.etalab.mastodon.helper;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
@@ -52,6 +53,7 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
@@ -88,6 +90,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -129,7 +132,7 @@ public class Helper {
     @SuppressWarnings("unused")
     public static  final String TAG = "mastodon_etalab";
     public static final String CLIENT_NAME_VALUE = "Mastalab";
-    public static final String INSTANCE = "mastodon.etalab.gouv.fr";
+    public static final String DEVELOPER_INSTANCE = "mastodon.etalab.gouv.fr";
     public static final String OAUTH_SCOPES = "read write follow";
     public static final String PREF_KEY_OAUTH_TOKEN = "oauth_token";
     public static final String PREF_KEY_ID = "userID";
@@ -163,6 +166,8 @@ public class Helper {
     public static final String SET_NOTIFICATIONS_PER_PAGE = "set_notifications_per_page";
     public static final String SET_ATTACHMENT_ACTION = "set_attachment_action";
     public static final String SET_THEME = "set_theme";
+    public static final String SET_TIME_FROM = "set_time_from";
+    public static final String SET_TIME_TO = "set_time_to";
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;
@@ -657,12 +662,12 @@ public class Helper {
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         if( userId == null) //User not authenticated
-            return Helper.INSTANCE;
+            return null;
         Account account = new AccountDAO(context, db).getAccountByID(userId);
         if( account != null){
             return account.getInstance().trim();
         } //User not in db
-        else return Helper.INSTANCE;
+        return null;
     }
 
 
@@ -1141,5 +1146,76 @@ public class Helper {
         locale = current.toString();
         locale = locale.split("_")[0];
         return locale;
+    }
+
+
+    /**
+     * Compare date with these in shared pref.
+     * @param context Context
+     * @param newDate String
+     * @param shouldBeGreater boolean if date passed as a parameter should be greater
+     * @return boolean
+     */
+    public static boolean compareDate(Context context, String newDate, boolean shouldBeGreater){
+        String dateRef;
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        if (shouldBeGreater) {
+            dateRef = sharedpreferences.getString(Helper.SET_TIME_FROM, "07:00");
+        }else {
+            dateRef = sharedpreferences.getString(Helper.SET_TIME_TO, "22:00");
+        }
+        try{
+            Locale userLocale;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                userLocale = context.getResources().getConfiguration().getLocales().get(0);
+            } else {
+                //noinspection deprecation
+                userLocale = context.getResources().getConfiguration().locale;
+            }
+            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", userLocale);
+            Date newDateD = formatter.parse(newDate);
+            Date dateRefD = formatter.parse(dateRef);
+            if (shouldBeGreater) {
+                return (newDateD.after(dateRefD));
+            }else {
+                return (newDateD.before(dateRefD));
+            }
+        } catch (java.text.ParseException e) {
+            return false;
+        }
+    }
+
+
+    /**
+     * Tells if the the service can notify depending of the current hour and minutes
+     * @param context Context
+     * @return boolean
+     */
+    public static boolean canNotify(Context context){
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String dateIni = sharedpreferences.getString(Helper.SET_TIME_FROM, "07:00");
+        String dateEnd = sharedpreferences.getString(Helper.SET_TIME_TO, "22:00");
+        Calendar now = Calendar.getInstance();
+        int hour = now.get(Calendar.HOUR_OF_DAY);
+        int minute = now.get(Calendar.MINUTE);
+        String hourS = String.valueOf(hour).length() == 1?"0"+String.valueOf(hour):String.valueOf(hour);
+        String minuteS = String.valueOf(minute).length() == 1?"0"+String.valueOf(minute):String.valueOf(minute);
+        String currentDate = hourS + ":" + minuteS;
+        try{
+            Locale userLocale;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                userLocale = context.getResources().getConfiguration().getLocales().get(0);
+            } else {
+                //noinspection deprecation
+                userLocale = context.getResources().getConfiguration().locale;
+            }
+            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", userLocale);
+            Date dateIniD = formatter.parse(dateIni);
+            Date dateEndD = formatter.parse(dateEnd);
+            Date currentDateD = formatter.parse(currentDate);
+            return currentDateD.before(dateEndD)&&currentDateD.after(dateIniD);
+        } catch (java.text.ParseException e) {
+            return true;
+        }
     }
 }

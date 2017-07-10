@@ -1,13 +1,13 @@
 package fr.gouv.etalab.mastodon.jobs;
 /* Copyright 2017 Thomas Schneider
  *
- * This file is a part of Mastodon Etalab for mastodon.etalab.gouv.fr
+ * This file is a part of Mastalab
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation; either version 3 of the
  * License, or (at your option) any later version.
  *
- * Mastodon Etalab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * Mastalab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
  * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  *
@@ -54,6 +54,7 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
+import static fr.gouv.etalab.mastodon.helper.Helper.canNotify;
 import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
 
 
@@ -98,6 +99,8 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
      * Task in background starts here.
      */
     private void callAsynchronousTask() {
+        if( !canNotify(getContext()))
+            return;
         SQLiteDatabase db = Sqlite.getInstance(getContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         //If an Internet connection and user agrees with notification refresh
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);

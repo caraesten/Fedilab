@@ -1,13 +1,13 @@
 package fr.gouv.etalab.mastodon.drawers;
 /* Copyright 2017 Thomas Schneider
  *
- * This file is a part of Mastodon Etalab for mastodon.etalab.gouv.fr
+ * This file is a part of Mastalab
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation; either version 3 of the
  * License, or (at your option) any later version.
  *
- * Mastodon Etalab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * Mastalab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
  * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  *
@@ -133,13 +133,13 @@ public class NotificationsListAdapter extends BaseAdapter  {
 
 
         final Status status = notification.getStatus();
-        if( status != null){
-            if( status.getMedia_attachments().size() < 1)
+        if( status != null ){
+            if( status.getMedia_attachments() == null || status.getMedia_attachments().size() < 1)
                 holder.status_document_container.setVisibility(View.GONE);
             else
                 holder.status_document_container.setVisibility(View.VISIBLE);
 
-            if( !status.getIn_reply_to_account_id().equals("null") || !status.getIn_reply_to_id().equals("null") ){
+            if( (status.getIn_reply_to_account_id() != null && !status.getIn_reply_to_account_id().equals("null")) || (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null")) ){
                 Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_reply);
                 img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (15 * scale + 0.5f));
                 holder.notification_account_displayname.setCompoundDrawables( img, null, null, null);

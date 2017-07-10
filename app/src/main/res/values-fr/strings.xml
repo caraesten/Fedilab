@@ -247,6 +247,13 @@
     <string name="set_header_picture_overlay">Choisissez une image d\'entête</string>
     <string name="note_no_space">Vous avez atteint les 160 caractères autorisés !</string>
     <string name="username_no_space">Vous avez atteint les 30 caractères autorisés !</string>
+    <string name="settings_title_hour">Plage horaire pour les notifications :</string>
+    <string name="settings_hour_init">Heure de début</string>
+    <string name="settings_hour_end">Heure de fin</string>
+    <string name="settings_time_from">Entre</string>
+    <string name="settings_time_to">et</string>
+    <string name="settings_time_greater">L\'horaire doit être plus grand que %1$s</string>
+    <string name="settings_time_lower">L\'horaire doit être plus petit que %1$s</string>
 
     <string name="embedded_browser">Utiliser le navigateur intégré</string>
     <string name="use_javascript">Activer Javascript</string>

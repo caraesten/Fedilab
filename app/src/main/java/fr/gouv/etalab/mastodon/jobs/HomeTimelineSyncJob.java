@@ -1,13 +1,13 @@
 package fr.gouv.etalab.mastodon.jobs;
 /* Copyright 2017 Thomas Schneider
  *
- * This file is a part of Mastodon Etalab for mastodon.etalab.gouv.fr
+ * This file is a part of Mastalab
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation; either version 3 of the
  * License, or (at your option) any later version.
  *
- * Mastodon Etalab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * Mastalab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
  * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  *
@@ -55,6 +55,7 @@ import mastodon.etalab.gouv.fr.mastodon.R;
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
+import static fr.gouv.etalab.mastodon.helper.Helper.canNotify;
 import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
 
 
@@ -97,7 +98,8 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
      */
     private void callAsynchronousTask() {
 
-
+        if( !canNotify(getContext()))
+            return;
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean notif_hometimeline = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, true);
         //User disagree with home timeline refresh
@@ -138,7 +140,7 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
         for(Status status: statuses){
             //The notification associated to max_id is discarded as it is supposed to have already been sent
             //Also, if the toot comes from the owner, we will avoid to warn him/her...
-            if( (max_id != null && status.getId().equals(max_id)) || status.getAccount().getAcct().trim().equals(acct.trim()))
+            if( (max_id != null && status.getId().equals(max_id)) || (acct != null && status.getAccount().getAcct().trim().equals(acct.trim()) ))
                 continue;
             String notificationUrl = status.getAccount().getAvatar();
 
@@ -186,12 +188,9 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
                                     R.drawable.mastodonlogo), finalTitle, finalMessage);
                     }});
 
-
             }
         }
 
     }
-
-
 
 }
