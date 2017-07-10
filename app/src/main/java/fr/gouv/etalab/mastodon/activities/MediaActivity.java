@@ -29,7 +29,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -68,6 +67,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.EXTERNAL_STORAGE_REQUEST_CODE;
+import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
 /**
@@ -82,7 +82,7 @@ public class MediaActivity extends AppCompatActivity  {
     private ArrayList<Attachment>  attachments;
     private PhotoView imageView;
     private VideoView videoView;
-    private float downX, downY;
+    private float downX;
     private int mediaPosition;
     MediaActivity.actionSwipe currentAction;
     private ImageLoader imageLoader;
@@ -124,8 +124,12 @@ public class MediaActivity extends AppCompatActivity  {
         RelativeLayout main_container_media = (RelativeLayout) findViewById(R.id.main_container_media);
         if( theme == Helper.THEME_LIGHT){
             main_container_media.setBackgroundResource(R.color.background_image);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_next_pic,R.color.colorAccent);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_prev_pic,R.color.colorAccent);
         }else {
             main_container_media.setBackgroundResource(R.color.colorPrimaryD);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_next_pic,R.color.colorAccentD);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_prev_pic,R.color.colorAccentD);
         }
         canSwipe = true;
         loader = (RelativeLayout) findViewById(R.id.loader);
@@ -209,7 +213,6 @@ public class MediaActivity extends AppCompatActivity  {
         switch(event.getAction()){
             case MotionEvent.ACTION_DOWN: {
                 downX = event.getX();
-                downY = event.getY();
                 //Displays navigation left/right buttons
                 if( attachments != null && attachments.size() > 1 && !isHiding){
                     prev.setVisibility(View.VISIBLE);
@@ -227,12 +230,10 @@ public class MediaActivity extends AppCompatActivity  {
             }
             case MotionEvent.ACTION_UP: {
                 float upX = event.getX();
-                float upY = event.getY();
                 float deltaX = downX - upX;
-                float deltaY = downY - upY;
                 // swipe horizontal
 
-                if( downX > MIN_DISTANCE & (Math.abs(deltaX) > MIN_DISTANCE && Math.abs(deltaY) < MIN_DISTANCE)){
+                if( downX > MIN_DISTANCE & (Math.abs(deltaX) > MIN_DISTANCE ) ){
                     if(deltaX < 0) { switchOnSwipe(MediaActivity.actionSwipe.LEFT_TO_RIGHT); return true; }
                     if(deltaX > 0) { switchOnSwipe(MediaActivity.actionSwipe.RIGHT_TO_LEFT); return true; }
                 }else{
@@ -358,6 +359,9 @@ public class MediaActivity extends AppCompatActivity  {
         String filename = URLUtil.guessFileName(url, null, null);
         if( filename == null)
             filename = url;
+        if( attachments.size() > 1 )
+            filename = String.format("%s  (%s/%s)",filename, mediaPosition, attachments.size());
+
         LayoutInflater mInflater = LayoutInflater.from(MediaActivity.this);
         ActionBar actionBar = getSupportActionBar();
         if( actionBar != null){
