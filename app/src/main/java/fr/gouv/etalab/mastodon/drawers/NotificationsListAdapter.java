@@ -133,13 +133,13 @@ public class NotificationsListAdapter extends BaseAdapter  {
 
 
         final Status status = notification.getStatus();
-        if( status != null){
-            if( status.getMedia_attachments().size() < 1)
+        if( status != null ){
+            if( status.getMedia_attachments() == null || status.getMedia_attachments().size() < 1)
                 holder.status_document_container.setVisibility(View.GONE);
             else
                 holder.status_document_container.setVisibility(View.VISIBLE);
 
-            if( !status.getIn_reply_to_account_id().equals("null") || !status.getIn_reply_to_id().equals("null") ){
+            if( (status.getIn_reply_to_account_id() != null && !status.getIn_reply_to_account_id().equals("null")) || (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null")) ){
                 Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_reply);
                 img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (15 * scale + 0.5f));
                 holder.notification_account_displayname.setCompoundDrawables( img, null, null, null);

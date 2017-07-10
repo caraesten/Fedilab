@@ -196,7 +196,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 statusListAdapter.notifyDataSetChanged();
             }
         });
-        if( !status.getLanguage().trim().equals(currentLocale) && !status.getLanguage().trim().equals("null")){
+        if( currentLocale != null && !status.getLanguage().trim().equals(currentLocale) && !status.getLanguage().trim().equals("null")){
             holder.status_translate.setVisibility(View.VISIBLE);
         }else {
             holder.status_translate.setVisibility(View.GONE);
