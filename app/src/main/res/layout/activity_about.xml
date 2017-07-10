@@ -141,6 +141,7 @@
         <TextView
             android:text="@string/thanks_text"
             android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
