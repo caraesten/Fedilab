@@ -13,19 +13,33 @@ package fr.gouv.etalab.mastodon.fragments;
  *
  * You should have received a copy of the GNU General Public License along with Thomas Schneider; if not,
  * see <http://www.gnu.org/licenses>. */
+import android.annotation.SuppressLint;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ParseException;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
+import android.widget.TimePicker;
+import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import fr.gouv.etalab.mastodon.helper.Helper;
 import mastodon.etalab.gouv.fr.mastodon.R;
+
+import static fr.gouv.etalab.mastodon.helper.Helper.compareDate;
 
 
 /**
@@ -38,7 +52,7 @@ public class SettingsNotificationsFragment extends Fragment {
     private Context context;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_settings_notifications, container, false);
         context = getContext();
@@ -55,6 +69,10 @@ public class SettingsNotificationsFragment extends Fragment {
 
         boolean notif_hometimeline = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, true);
 
+        final String time_from = sharedpreferences.getString(Helper.SET_TIME_FROM, "07:00");
+        final String time_to = sharedpreferences.getString(Helper.SET_TIME_TO, "22:00");
+
+
         final CheckBox set_notif_follow = (CheckBox) rootView.findViewById(R.id.set_notif_follow);
         final CheckBox set_notif_follow_add = (CheckBox) rootView.findViewById(R.id.set_notif_follow_add);
         final CheckBox set_notif_follow_ask = (CheckBox) rootView.findViewById(R.id.set_notif_follow_ask);
@@ -65,6 +83,61 @@ public class SettingsNotificationsFragment extends Fragment {
 
         final SwitchCompat switchCompatWIFI = (SwitchCompat) rootView.findViewById(R.id.set_wifi_only);
         final SwitchCompat switchCompatSilent = (SwitchCompat) rootView.findViewById(R.id.set_silence);
+
+        final Button settings_time_from = (Button) rootView.findViewById(R.id.settings_time_from);
+        final Button settings_time_to = (Button) rootView.findViewById(R.id.settings_time_to);
+
+        settings_time_from.setText(time_from);
+        settings_time_to.setText(time_to);
+
+
+        settings_time_from.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String[] datetime = time_from.split(":");
+                new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        String hours = (String.valueOf(hourOfDay).length() == 1) ? "0"+String.valueOf(hourOfDay):String.valueOf(hourOfDay);
+                        String minutes = (String.valueOf(minute).length() == 1) ? "0"+String.valueOf(minute):String.valueOf(minute);
+                        String newDate = hours + ":" + minutes;
+                        if( compareDate(context, newDate, false) ) {
+                            editor.putString(Helper.SET_TIME_FROM, newDate);
+                            editor.apply();
+                            settings_time_from.setText(newDate);
+                        }else {
+                            String ateRef = sharedpreferences.getString(Helper.SET_TIME_TO, "22:00");
+                            Toast.makeText(context, context.getString(R.string.settings_time_lower, ateRef), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }, Integer.valueOf(datetime[0]), Integer.valueOf(datetime[1]), true).show();
+            }
+        });
+
+        settings_time_to.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String[] datetime = time_to.split(":");
+                new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        String hours = (String.valueOf(hourOfDay).length() ==1) ? "0"+String.valueOf(hourOfDay):String.valueOf(hourOfDay);
+                        String minutes = (String.valueOf(minute).length() ==1) ? "0"+String.valueOf(minute):String.valueOf(minute);
+                        String newDate = hours + ":" + minutes;
+                        if( compareDate(context, newDate, true) ) {
+                            editor.putString(Helper.SET_TIME_TO, newDate);
+                            editor.apply();
+                            settings_time_to.setText(newDate);
+                        }else {
+                            String ateRef = sharedpreferences.getString(Helper.SET_TIME_FROM, "07:00");
+                            Toast.makeText(context, context.getString(R.string.settings_time_greater, ateRef), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }, Integer.valueOf(datetime[0]), Integer.valueOf(datetime[1]), true).show();
+            }
+        });
 
         set_notif_follow.setChecked(notif_follow);
         set_notif_follow_add.setChecked(notif_add);

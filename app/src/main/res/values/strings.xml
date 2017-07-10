@@ -251,6 +251,11 @@
     <string name="note_no_space">You have reached the 160 characters allowed!</string>
     <string name="username_no_space">You have reached the 30 characters allowed!</string>
 
+    <string name="settings_title_hour">Time slot for notifications:</string>
+    <string name="settings_time_from">Between</string>
+    <string name="settings_time_to">and</string>
+    <string name="settings_time_greater">The time must be greater than %1$s</string>
+    <string name="settings_time_lower">The time must be lower than %1$s</string>
     <string name="embedded_browser">Use the built-in browser</string>
     <string name="use_javascript">Enable Javascript</string>
     <string name="use_cookies">Allow third-party cookies</string>

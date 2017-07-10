@@ -55,6 +55,7 @@ import mastodon.etalab.gouv.fr.mastodon.R;
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
+import static fr.gouv.etalab.mastodon.helper.Helper.canNotify;
 import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
 
 
@@ -97,7 +98,8 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
      */
     private void callAsynchronousTask() {
 
-
+        if( !canNotify(getContext()))
+            return;
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean notif_hometimeline = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, true);
         //User disagree with home timeline refresh

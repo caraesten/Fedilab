@@ -54,6 +54,7 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
+import static fr.gouv.etalab.mastodon.helper.Helper.canNotify;
 import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
 
 
@@ -98,6 +99,8 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
      * Task in background starts here.
      */
     private void callAsynchronousTask() {
+        if( !canNotify(getContext()))
+            return;
         SQLiteDatabase db = Sqlite.getInstance(getContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         //If an Internet connection and user agrees with notification refresh
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
