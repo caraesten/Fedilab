@@ -95,7 +95,7 @@ public class SettingsNotificationsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String[] datetime = time_from.split(":");
-                new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -111,7 +111,9 @@ public class SettingsNotificationsFragment extends Fragment {
                             Toast.makeText(context, context.getString(R.string.settings_time_lower, ateRef), Toast.LENGTH_LONG).show();
                         }
                     }
-                }, Integer.valueOf(datetime[0]), Integer.valueOf(datetime[1]), true).show();
+                }, Integer.valueOf(datetime[0]), Integer.valueOf(datetime[1]), true);
+                timePickerDialog.setTitle(context.getString(R.string.settings_hour_init));
+                timePickerDialog.show();
             }
         });
 
@@ -119,23 +121,25 @@ public class SettingsNotificationsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String[] datetime = time_to.split(":");
-                new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                        String hours = (String.valueOf(hourOfDay).length() ==1) ? "0"+String.valueOf(hourOfDay):String.valueOf(hourOfDay);
-                        String minutes = (String.valueOf(minute).length() ==1) ? "0"+String.valueOf(minute):String.valueOf(minute);
+                        String hours = (String.valueOf(hourOfDay).length() == 1) ? "0" + String.valueOf(hourOfDay) : String.valueOf(hourOfDay);
+                        String minutes = (String.valueOf(minute).length() == 1) ? "0" + String.valueOf(minute) : String.valueOf(minute);
                         String newDate = hours + ":" + minutes;
-                        if( compareDate(context, newDate, true) ) {
+                        if (compareDate(context, newDate, true)) {
                             editor.putString(Helper.SET_TIME_TO, newDate);
                             editor.apply();
                             settings_time_to.setText(newDate);
-                        }else {
+                        } else {
                             String ateRef = sharedpreferences.getString(Helper.SET_TIME_FROM, "07:00");
                             Toast.makeText(context, context.getString(R.string.settings_time_greater, ateRef), Toast.LENGTH_LONG).show();
                         }
                     }
-                }, Integer.valueOf(datetime[0]), Integer.valueOf(datetime[1]), true).show();
+                }, Integer.valueOf(datetime[0]), Integer.valueOf(datetime[1]), true);
+                timePickerDialog.setTitle(context.getString(R.string.settings_hour_end));
+                timePickerDialog.show();
             }
         });
 

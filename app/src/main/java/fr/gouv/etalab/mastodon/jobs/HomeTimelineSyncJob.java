@@ -188,12 +188,9 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
                                     R.drawable.mastodonlogo), finalTitle, finalMessage);
                     }});
 
-
             }
         }
 
     }
-
-
 
 }
