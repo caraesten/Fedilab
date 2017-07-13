@@ -13,26 +13,33 @@
  * You should have received a copy of the GNU General Public License along with Thomas Schneider; if not,
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.translation;
+
+import android.util.Log;
+
 import com.loopj.android.http.AsyncHttpResponseHandler;
+
 import org.json.JSONException;
+
 import cz.msebera.android.httpclient.Header;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
 
 /**
- * Created by Thomas on 03/07/2017.
- * Yandex client API
+ * Created by Thomas on 12/07/2017.
+ * Google client API
  */
-public class YandexQuery {
+public class GoogleTranslateQuery {
 
     private OnTranslatedInterface listener;
 
-    public YandexQuery(OnTranslatedInterface listenner) {
+
+    public GoogleTranslateQuery(OnTranslatedInterface listenner) {
         this.listener = listenner;
     }
 
-    public void getYandexTextview(final int position, final String text, final String toLanguage) throws JSONException {
+    public void getGoogleTextview(final int position, final String text, final String toLanguage) throws JSONException {
 
-        YandexClient.get(text, toLanguage, new AsyncHttpResponseHandler() {
+        GoogleTranslateClient.get(text, toLanguage, new AsyncHttpResponseHandler() {
             @Override
             public void onStart() {
             }
