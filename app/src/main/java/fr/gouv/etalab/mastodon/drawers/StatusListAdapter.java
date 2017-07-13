@@ -28,6 +28,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,7 @@ import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
+import fr.gouv.etalab.mastodon.translation.GoogleTranslateQuery;
 import fr.gouv.etalab.mastodon.translation.YandexQuery;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
@@ -207,7 +209,9 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             public void onClick(View v) {
                 try {
                     if( !status.isTranslated() ){
-                        new YandexQuery(StatusListAdapter.this).getYandexTextview(position, status.getContent(), currentLocale);
+                        //new YandexQuery(StatusListAdapter.this).getYandexTextview(position, status.getContent(), currentLocale);
+                        new GoogleTranslateQuery(StatusListAdapter.this).getGoogleTextview(position, status.getContent(), currentLocale);
+
                     }else {
                         status.setTranslationShown(!status.isTranslationShown());
                         statusListAdapter.notifyDataSetChanged();
@@ -656,10 +660,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
         }else if( statuses.size() > position) {
             try {
-                JSONObject translationJson = new JSONObject(translatedResult);
-                JSONArray aJsonArray = translationJson.getJSONArray("text");
-                String aJsonString = aJsonArray.get(0).toString();
-                aJsonString = URLDecoder.decode(aJsonString, "UTF-8");
+                String aJsonString = googleTranslateToText(translatedResult);
                 statuses.get(position).setTranslated(true);
                 statuses.get(position).setTranslationShown(true);
                 statuses.get(position).setContent_translated(aJsonString);
@@ -670,6 +671,36 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }
     }
 
+    private String yandexTranslateToText(String text) throws JSONException, UnsupportedEncodingException{
+        JSONObject translationJson = new JSONObject(text);
+        JSONArray aJsonArray = translationJson.getJSONArray("text");
+        String aJsonString = aJsonArray.get(0).toString();
+        aJsonString = URLDecoder.decode(aJsonString, "UTF-8");
+        return aJsonString;
+    }
+
+    private String googleTranslateToText(String text) throws JSONException, UnsupportedEncodingException{
+
+        int i = 0;
+        String aJsonString = "";
+        while( i < new JSONArray(new JSONArray(text).get(0).toString()).length() ) {
+            aJsonString += new JSONArray(new JSONArray(new JSONArray(text).get(0).toString()).get(i).toString()).get(0).toString();
+            i++;
+        }
+        //Some fixes due to translation with Google
+        aJsonString = aJsonString.trim();
+        aJsonString = aJsonString.replace("< / ","</");
+        aJsonString = aJsonString.replace("</ ","</");
+        aJsonString = aJsonString.replace("> ",">");
+        aJsonString = aJsonString.replace(" <","<");
+        aJsonString = aJsonString.replace(" // ","//");
+        aJsonString = aJsonString.replace("// ","//");
+        aJsonString = aJsonString.replace(" //","//");
+        aJsonString = aJsonString.replace(" www .","www.");
+        aJsonString = aJsonString.replace("www .","www.");
+        aJsonString = URLDecoder.decode(aJsonString, "UTF-8");
+        return aJsonString;
+    }
 
     private class ViewHolder {
         LinearLayout status_content_container;
