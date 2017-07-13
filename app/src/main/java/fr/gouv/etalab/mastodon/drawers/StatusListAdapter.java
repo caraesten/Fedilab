@@ -62,7 +62,6 @@ import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
-import fr.gouv.etalab.mastodon.translation.GoogleTranslateQuery;
 import fr.gouv.etalab.mastodon.translation.YandexQuery;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
@@ -210,7 +209,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 try {
                     if( !status.isTranslated() ){
                         //new YandexQuery(StatusListAdapter.this).getYandexTextview(position, status.getContent(), currentLocale);
-                        new GoogleTranslateQuery(StatusListAdapter.this).getGoogleTextview(position, status.getContent(), currentLocale);
+                        new YandexQuery(StatusListAdapter.this).getYandexTextview(position, status.getContent(), currentLocale);
 
                     }else {
                         status.setTranslationShown(!status.isTranslationShown());
@@ -660,7 +659,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
         }else if( statuses.size() > position) {
             try {
-                String aJsonString = googleTranslateToText(translatedResult);
+                String aJsonString = yandexTranslateToText(translatedResult);
                 statuses.get(position).setTranslated(true);
                 statuses.get(position).setTranslationShown(true);
                 statuses.get(position).setContent_translated(aJsonString);
