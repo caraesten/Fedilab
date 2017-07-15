@@ -26,7 +26,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 @SuppressWarnings("WeakerAccess")
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 2;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -36,7 +36,8 @@ public class Sqlite extends SQLiteOpenHelper {
      */
     //Table of owned accounts
     static final String TABLE_USER_ACCOUNT = "USER_ACCOUNT";
-
+    //Table of stored status
+    static final String TABLE_STATUSES_STORED = "STATUSES_STORED";
 
 
     public static final String COL_USER_ID = "USER_ID";
@@ -69,6 +70,21 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_INSTANCE + " TEXT NOT NULL, " + COL_OAUTHTOKEN + " TEXT NOT NULL, " + COL_CREATED_AT + " TEXT NOT NULL)";
 
 
+    public static final String COL_ID = "ID";
+    public static final String COL_STATUS_SERIALIZED = "STATUS_SERIALIZED";
+    public static final String COL_DATE_CREATION = "DATE_CREATION";
+    public static final String COL_IS_SCHEDULED = "IS_SCHEDULED";
+    public static final String COL_DATE_SCHEDULED = "DATE_SCHEDULED";
+    public static final String COL_SENT = "SENT";
+    public static final String COL_DATE_SENT = "DATE_SENT";
+
+    private static final String CREATE_TABLE_STATUSES_STORED = "CREATE TABLE " + TABLE_STATUSES_STORED + " ("
+            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COL_USER_ID + " TEXT NOT NULL, " + COL_INSTANCE + " TEXT NOT NULL, "
+            + COL_STATUS_SERIALIZED + " TEXT NOT NULL, " + COL_DATE_CREATION + " TEXT NOT NULL, "
+            + COL_IS_SCHEDULED + " INTEGER NOT NULL, " + COL_DATE_SCHEDULED + " TEXT, "
+            + COL_SENT + " INTEGER NOT NULL, " + COL_DATE_SENT + " TEXT)";
+
 
     public Sqlite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -86,12 +102,14 @@ public class Sqlite extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_USER_ACCOUNT);
-
+        db.execSQL(CREATE_TABLE_STATUSES_STORED);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         switch (oldVersion) {
+            case 1:
+                db.execSQL(CREATE_TABLE_STATUSES_STORED);
             default:
                 break;
         }

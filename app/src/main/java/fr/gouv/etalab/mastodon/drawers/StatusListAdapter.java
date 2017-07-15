@@ -557,15 +557,28 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             int i = 0;
             if( attachments.size() == 1){
                 holder.status_container2.setVisibility(View.GONE);
+                if( attachments.get(0).getUrl().trim().contains("missing.png"))
+                    holder.status_document_container.setVisibility(View.GONE);
+                else
+                    holder.status_document_container.setVisibility(View.VISIBLE);
             }else if(attachments.size() == 2){
                 holder.status_container2.setVisibility(View.VISIBLE);
                 holder.status_container3.setVisibility(View.GONE);
+                if( attachments.get(1).getUrl().trim().contains("missing.png"))
+                    holder.status_container2.setVisibility(View.GONE);
+                holder.status_document_container.setVisibility(View.VISIBLE);
             }else if( attachments.size() == 3){
                 holder.status_container2.setVisibility(View.VISIBLE);
                 holder.status_container3.setVisibility(View.VISIBLE);
                 holder.status_prev4_container.setVisibility(View.GONE);
+                if( attachments.get(2).getUrl().trim().contains("missing.png"))
+                    holder.status_container3.setVisibility(View.GONE);
+                holder.status_document_container.setVisibility(View.VISIBLE);
             }else {
                 holder.status_prev4_container.setVisibility(View.VISIBLE);
+                if( attachments.get(2).getUrl().trim().contains("missing.png"))
+                    holder.status_prev4_container.setVisibility(View.GONE);
+                holder.status_document_container.setVisibility(View.VISIBLE);
             }
             int position = 1;
             for(final Attachment attachment: attachments){
@@ -598,9 +611,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 String url = attachment.getPreview_url();
                 if( url == null || url.trim().equals(""))
                     url = attachment.getUrl();
-                if( url.trim().contains("missing.png"))
-                    continue;
-                imageLoader.displayImage(url, imageView, options);
+                if( !url.trim().contains("missing.png"))
+                    imageLoader.displayImage(url, imageView, options);
                 final int finalPosition = position;
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -616,7 +628,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 i++;
                 position++;
             }
-            holder.status_document_container.setVisibility(View.VISIBLE);
         }else{
             holder.status_document_container.setVisibility(View.GONE);
         }

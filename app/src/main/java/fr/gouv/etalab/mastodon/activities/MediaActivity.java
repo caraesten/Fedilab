@@ -39,11 +39,10 @@ import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.github.chrisbanes.photoview.OnMatrixChangedListener;
-import com.github.chrisbanes.photoview.OnPhotoTapListener;
-import com.github.chrisbanes.photoview.OnScaleChangedListener;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
@@ -67,6 +66,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.EXTERNAL_STORAGE_REQUEST_CODE;
+import static fr.gouv.etalab.mastodon.helper.Helper.USER_AGENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
@@ -287,12 +287,8 @@ public class MediaActivity extends AppCompatActivity  {
                 break;
             case "video":
             case "gifv":
-                AsyncHttpClient client = new AsyncHttpClient();
-                MastalabSSLSocketFactory mastalabSSLSocketFactory;
+
                 try {
-                    mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());
-                    mastalabSSLSocketFactory.setHostnameVerifier(MastalabSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-                    client.setSSLSocketFactory(mastalabSSLSocketFactory);
                     File file = new File(getCacheDir() + "/" + Helper.md5(url)+".mp4");
                     if(file.exists()) {
                         Uri uri = Uri.parse(file.getAbsolutePath());
@@ -313,7 +309,13 @@ public class MediaActivity extends AppCompatActivity  {
                     }else{
                         progress.setText("0 %");
                         progress.setVisibility(View.VISIBLE);
-                        client.get(url, new FileAsyncHttpResponseHandler(/* Context */ this) {
+                        AsyncHttpClient client = new AsyncHttpClient();
+                        MastalabSSLSocketFactory mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());
+                        mastalabSSLSocketFactory.setHostnameVerifier(MastalabSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+                        client.setSSLSocketFactory(mastalabSSLSocketFactory);
+                        client.setUserAgent(USER_AGENT);
+                        client.setConnectTimeout(120000); //120s timeout
+                        client.get(url, null, new FileAsyncHttpResponseHandler(MediaActivity.this) {
                             @Override
                             public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
                                 progress.setVisibility(View.GONE);
@@ -353,6 +355,8 @@ public class MediaActivity extends AppCompatActivity  {
                     }
                 } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
                     e.printStackTrace();
+                    progress.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(),R.string.toast_error,Toast.LENGTH_LONG).show();
                 }
                 break;
         }

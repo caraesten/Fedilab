@@ -62,6 +62,8 @@ public class SettingsFragment extends Fragment {
 
 
         boolean show_reply = sharedpreferences.getBoolean(Helper.SET_SHOW_REPLY, false);
+        boolean auto_store = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
+
         final CheckBox set_show_reply = (CheckBox) rootView.findViewById(R.id.set_show_reply);
         set_show_reply.setChecked(show_reply);
 
@@ -70,6 +72,17 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_SHOW_REPLY, set_show_reply.isChecked());
+                editor.apply();
+            }
+        });
+
+        final CheckBox set_auto_store = (CheckBox) rootView.findViewById(R.id.set_auto_store);
+        set_auto_store.setChecked(auto_store);
+        set_auto_store.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_AUTO_STORE, set_auto_store.isChecked());
                 editor.apply();
             }
         });
