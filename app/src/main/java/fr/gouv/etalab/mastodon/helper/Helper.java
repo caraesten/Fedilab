@@ -67,6 +67,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.loopj.android.http.BuildConfig;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -108,6 +109,7 @@ import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.Tag;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -168,6 +170,7 @@ public class Helper {
     public static final String SET_THEME = "set_theme";
     public static final String SET_TIME_FROM = "set_time_from";
     public static final String SET_TIME_TO = "set_time_to";
+    public static final String SET_AUTO_STORE = "set_auto_store";
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;
@@ -1217,5 +1220,15 @@ public class Helper {
         } catch (java.text.ParseException e) {
             return true;
         }
+    }
+
+    public static String statusToStringStorage(Status status){
+        Gson gson = new Gson();
+        return gson.toJson(status);
+    }
+
+    public static Status restoreStatusFromString(String serializedStatus){
+        Gson gson = new Gson();
+        return gson.fromJson(serializedStatus, Status.class);
     }
 }

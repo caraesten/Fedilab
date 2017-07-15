@@ -34,6 +34,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -75,12 +76,15 @@ import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
 import fr.gouv.etalab.mastodon.drawers.AccountsSearchAdapter;
+import fr.gouv.etalab.mastodon.drawers.DraftsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
@@ -117,6 +121,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private Status tootReply = null;
     private String sharedContent, sharedSubject;
     private CheckBox toot_sensitive;
+    public long currentToId;
 
     private String pattern = "^.*(@([a-zA-Z0-9_]{2,}))$";
     @Override
@@ -133,7 +138,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        //By default the toot is not restored so the id -1 is defined
+        currentToId = -1;
         imageLoader = ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
@@ -494,6 +500,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        final SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
@@ -513,6 +520,143 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                             Toast.LENGTH_SHORT).show();
                 }
                 return true;
+            case R.id.action_store:
+                storeToot();
+                return true;
+            case R.id.action_restore:
+                try{
+                    final List<StoredStatus> drafts = new StatusStoredDAO(TootActivity.this, db).getAllDrafts();
+                    if( drafts == null || drafts.size() == 0){
+                        Toast.makeText(getApplicationContext(), R.string.no_draft, Toast.LENGTH_LONG).show();
+                        return true;
+                    }
+                    AlertDialog.Builder builderSingle = new AlertDialog.Builder(TootActivity.this);
+                    builderSingle.setTitle(getString(R.string.choose_toot));
+                    final DraftsListAdapter draftsListAdapter = new DraftsListAdapter(TootActivity.this, drafts);
+                    final int[] ids = new int[drafts.size()];
+                    int i = 0;
+                    for(StoredStatus draft: drafts){
+                        ids[i] = draft.getId();
+                        i++;
+                    }
+                    builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builderSingle.setPositiveButton(R.string.delete_all, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(final DialogInterface dialog, int which) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(TootActivity.this);
+                            builder.setTitle(R.string.delete_all);
+                            builder.setIcon(android.R.drawable.ic_dialog_alert)
+                                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogConfirm, int which) {
+                                            new StatusStoredDAO(getApplicationContext(), db).removeAllDrafts();
+                                            dialogConfirm.dismiss();
+                                            dialog.dismiss();
+                                        }
+                                    })
+                                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogConfirm, int which) {
+                                            dialogConfirm.dismiss();
+                                        }
+                                    })
+                                    .show();
+
+                        }
+                    });
+                    builderSingle.setAdapter(draftsListAdapter, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            int id = ids[which];
+                            StoredStatus draft = new StatusStoredDAO(TootActivity.this, db).getStatus(id);
+                            Status status = draft.getStatus();
+                            //Retrieves attachments
+                            attachments = status.getMedia_attachments();
+                            toot_picture_container.removeAllViews();
+                            loading_picture.setVisibility(View.GONE);
+                            if( attachments != null && attachments.size() > 0){
+                                toot_picture_container.setVisibility(View.VISIBLE);
+                                int i = 0 ;
+                                for(Attachment attachment: attachments){
+                                    String url = attachment.getPreview_url();
+                                    if( url == null || url.trim().equals(""))
+                                        url = attachment.getUrl();
+                                    final ImageView imageView = new ImageView(getApplicationContext());
+                                    imageView.setId(Integer.parseInt(attachment.getId()));
+                                    imageLoader.displayImage(url, imageView, options);
+                                    LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                                    imParams.setMargins(20, 5, 20, 5);
+                                    imParams.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
+                                    imageView.setAdjustViewBounds(true);
+                                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                                    toot_picture_container.addView(imageView, i, imParams);
+                                    imageView.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            showRemove(imageView.getId());
+                                        }
+                                    });
+                                    if( attachments.size() < 4)
+                                        toot_picture.setEnabled(true);
+                                    toot_sensitive.setVisibility(View.VISIBLE);
+                                    i++;
+                                }
+                            }else {
+                                toot_picture_container.setVisibility(View.GONE);
+                            }
+                            //Sensitive content
+                            toot_sensitive.setChecked(status.isSensitive());
+                            if( status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0 ){
+                                toot_cw_content.setText(status.getSpoiler_text());
+                                toot_cw_content.setVisibility(View.VISIBLE);
+                            }else {
+                                toot_cw_content.setText("");
+                                toot_cw_content.setVisibility(View.GONE);
+                            }
+                            String content = status.getContent();
+                            toot_content.setText(content);
+                            toot_content.setSelection(toot_content.getText().length());
+                            switch (status.getVisibility()){
+                                case "public":
+                                    visibility = "public";
+                                    toot_visibility.setImageResource(R.drawable.ic_action_globe);
+                                    break;
+                                case "unlisted":
+                                    visibility = "unlisted";
+                                    toot_visibility.setImageResource(R.drawable.ic_action_lock_open);
+                                    break;
+                                case "private":
+                                    visibility = "private";
+                                    toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
+                                    break;
+                                case "direct":
+                                    visibility = "direct";
+                                    toot_visibility.setImageResource(R.drawable.ic_local_post_office);
+                                    break;
+                            }
+                            //The current id is set to the draft
+                            currentToId = draft.getId();
+                            dialog.dismiss();
+                        }
+                    });
+                    builderSingle.show();
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext(), R.string.toast_error, Toast.LENGTH_LONG).show();
+                }
+                return true;
+
+            /*case R.id.action_schedule:
+                if(toot_content.getText().toString().trim().length() == 0 ){
+                    Toast.makeText(getApplicationContext(),R.string.toot_error_no_content, Toast.LENGTH_LONG).show();
+                    return true;
+                }
+
+                return true;*/
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -649,6 +793,15 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     }
 
     @Override
+    public void onPause(){
+        super.onPause();
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean storeToot = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
+        if( storeToot)
+            storeToot();
+    }
+
+    @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String userId, Error error) {
         if( error != null){
             final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -697,6 +850,40 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             toot_lv_accounts.setAdapter(accountsListAdapter);
             accountsListAdapter.notifyDataSetChanged();
             toot_show_accounts.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void storeToot(){
+        //Nothing to store here....
+        if(toot_content.getText().toString().trim().length() == 0 && (attachments == null || attachments.size() <1) && toot_cw_content.getText().toString().trim().length() == 0)
+            return;
+
+        Status toot = new Status();
+        toot.setSensitive(isSensitive);
+        toot.setMedia_attachments(attachments);
+        if( toot_cw_content.getText().toString().trim().length() > 0)
+            toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
+        toot.setVisibility(visibility);
+        toot.setContent(toot_content.getText().toString().trim());
+        if( tootReply != null)
+            toot.setIn_reply_to_id(tootReply.getId());
+        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        try{
+            if( currentToId == -1 ) {
+                currentToId = new StatusStoredDAO(TootActivity.this, db).insertStatus(toot, false, null);
+
+            }else{
+                StoredStatus storedStatus = new StatusStoredDAO(TootActivity.this, db).getStatus(currentToId);
+                if( storedStatus != null ){
+                    new StatusStoredDAO(TootActivity.this, db).updateStatus(currentToId, toot);
+                }else { //Might have been deleted, so it needs insertion
+                    new StatusStoredDAO(TootActivity.this, db).insertStatus(toot, false, null);
+                }
+            }
+
+            Toast.makeText(getApplicationContext(), R.string.toast_toot_saved, Toast.LENGTH_LONG).show();
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(), R.string.toast_error, Toast.LENGTH_LONG).show();
         }
     }
 

@@ -28,6 +28,7 @@
     <string name="tags">Tags</string>
     <string name="token">Jeton</string>
     <string name="save">Sauvegarder</string>
+    <string name="restore">Restaurer</string>
     <string name="two_factor_authentification">Authentification en deux étapes ?</string>
     <string name="other_instance">Autre instance que mastodon.etalab.gouv.fr ?</string>
     <string name="no_result">Aucun résultat !</string>
@@ -41,6 +42,8 @@
     <string name="microphone">Microphone</string>
     <string name="speech_prompt">Veuillez dire quelque chose</string>
     <string name="speech_not_supported">Désolé ! Votre appareil ne supporte pas la commande vocale !</string>
+    <string name="delete_all">Tout effacer</string>
+    <string name="schedule">Programmer</string>
     <!--- Menu -->
     <string name="home_menu">Accueil</string>
     <string name="local_menu">Fil public local</string>
@@ -149,7 +152,9 @@
         <item>N\'afficher que pour vos abonné(e)s</item>
         <item>N\'afficher que pour les personnes mentionnées</item>
     </string-array>
-
+    <string name="no_draft">Aucun brouillon !</string>
+    <string name="choose_toot">Choisissez un pouet</string>
+    <string name="remove_draft">Supprimer le brouillon ?</string>
     <!-- Instance -->
     <string name="instance_no_description">Aucune description !</string>
 
@@ -215,6 +220,7 @@
     <string name="nothing_to_do">Aucune action ne peut être réalisée</string>
     <string name="toast_saved">Le média a été enregistré !</string>
     <string name="toast_error_translate">Une erreur est survenue lors de la traduction !</string>
+    <string name="toast_toot_saved">Brouillon enregistré !</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimisation du chargement</string>
     <string name="set_toots_page">Nombre de pouets par chargement</string>
@@ -229,6 +235,7 @@
     <string name="load_sensitive_attachment">Charger les images sensibles</string>
     <string name="set_display_reply">Afficher le message précédent lors d\'une réponse</string>
     <string name="set_folder_title">Destination : </string>
+    <string name="set_auto_store_toot">Enregistrer les brouillons automatiquement</string>
 
     <string name="settings_title_notifications">Gestion des notifications</string>
     <string name="set_notif_follow">Notifier lorsque quelqu’un me suit</string>

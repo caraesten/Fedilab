@@ -5,5 +5,20 @@
         android:id="@+id/action_microphone"
         android:title="@string/microphone"
         android:icon="@drawable/ic_action_mic"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_store"
+        android:title="@string/save"
+        android:icon="@drawable/ic_save"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_restore"
+        android:title="@string/restore"
+        android:icon="@drawable/ic_restore"
+        app:showAsAction="never" />
+    <!--<item
+        android:id="@+id/action_schedule"
+        android:title="@string/schedule"
+        android:icon="@drawable/ic_schedule"
+        app:showAsAction="never" />-->
 </menu>

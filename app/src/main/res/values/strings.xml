@@ -29,6 +29,7 @@
     <string name="tags">Tags</string>
     <string name="token">Token</string>
     <string name="save">Save</string>
+    <string name="restore">Restore</string>
     <string name="two_factor_authentification">Two-step authentication?</string>
     <string name="other_instance">Other instance than mastodon.etalab.gouv.fr?</string>
     <string name="no_result">No results!</string>
@@ -42,7 +43,9 @@
     <string name="microphone">Microphone</string>
     <string name="speech_prompt">Please, say something</string>
     <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
+    <string name="delete_all">Delete all</string>
 
+    <string name="schedule">Schedule</string>
     <!--- Menu -->
     <string name="home_menu">Home</string>
     <string name="local_menu">Local timeline</string>
@@ -152,6 +155,9 @@
         <item>Post to mentioned users only</item>
     </string-array>
 
+    <string name="no_draft">No draft!</string>
+    <string name="choose_toot">Choose a toot</string>
+    <string name="remove_draft">Remove draft?</string>
     <!-- Instance -->
     <string name="instance_no_description">No description available!</string>
 
@@ -218,6 +224,8 @@
     <string name="nothing_to_do">No action can be taken</string>
     <string name="toast_saved">The media has been saved!</string>
     <string name="toast_error_translate">An error occurred while translating!</string>
+    <string name="toast_toot_saved">Draft saved!</string>
+
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimisation of loading</string>
     <string name="set_toots_page">Number of toots per load</string>
@@ -232,7 +240,7 @@
     <string name="load_sensitive_attachment">Sensitive content</string>
     <string name="set_display_reply">Display previous message in responses</string>
     <string name="set_folder_title">Path: </string>
-
+    <string name="set_auto_store_toot">Save drafts automatically</string>
     <string name="settings_title_notifications">Manage notifications</string>
     <string name="set_notif_follow">Notify when someone follows you</string>
     <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
