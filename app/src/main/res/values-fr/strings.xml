@@ -318,7 +318,8 @@
         - <b>Android Asynchronous Http Client</b> : Pour la gestion des requêtes\n
         - <b>Universal Image Loader</b> : Pour la gestion des médias\n
         - <b>Android-Job</b> : Pour la gestion des services\n
-        - <b>PhotoView</b> : Pour la gestion des images
+        - <b>PhotoView</b> : Pour la gestion des images\n
+        - <b>Gson</b> : Pour la sauvegarde des brouillons
     </string>
 
     <string name="privacy_API_yandex_title">Traduction des pouets</string>

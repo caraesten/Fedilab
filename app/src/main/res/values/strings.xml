@@ -323,7 +323,8 @@
         - <b>Android Asynchronous Http Client</b>: To manage queries\n
         - <b>Universal Image Loader</b>: To manage media\n
         - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images
+        - <b>PhotoView</b>: To manage images\n
+        - <b>Gson</b> : To save drafts
     </string>
 
     <string name="yandex" translatable="false">&lt;a hreh="http://translate.yandex.com/">Powered by Yandex.Translate&lt;/a></string>
