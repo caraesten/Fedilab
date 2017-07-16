@@ -841,6 +841,9 @@ public class Helper {
         navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(activity,db).getAccountByID(userID);
+        //Can happen when an account has been deleted and there is a click on an old notification
+        if( account == null)
+            return;
         //Locked account can see follow request
         if (account.isLocked()) {
             navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);

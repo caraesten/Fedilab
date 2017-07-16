@@ -35,6 +35,7 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,6 +45,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -51,6 +53,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -61,6 +64,9 @@ import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -83,6 +89,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
+import fr.gouv.etalab.mastodon.jobs.ScheduledTootsSyncJob;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -521,7 +528,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 }
                 return true;
             case R.id.action_store:
-                storeToot();
+                storeToot(true);
                 return true;
             case R.id.action_restore:
                 try{
@@ -650,13 +657,102 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 }
                 return true;
 
-            /*case R.id.action_schedule:
+            case R.id.action_schedule:
                 if(toot_content.getText().toString().trim().length() == 0 ){
                     Toast.makeText(getApplicationContext(),R.string.toot_error_no_content, Toast.LENGTH_LONG).show();
                     return true;
                 }
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TootActivity.this);
+                LayoutInflater inflater = this.getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.datetime_picker, null);
+                dialogBuilder.setView(dialogView);
+                final AlertDialog alertDialog = dialogBuilder.create();
 
-                return true;*/
+                final DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.date_picker);
+                final TimePicker timePicker = (TimePicker) dialogView.findViewById(R.id.time_picker);
+                Button date_time_cancel = (Button) dialogView.findViewById(R.id.date_time_cancel);
+                final Button date_time_previous = (Button) dialogView.findViewById(R.id.date_time_previous);
+                final Button date_time_next = (Button) dialogView.findViewById(R.id.date_time_next);
+                final Button date_time_set = (Button) dialogView.findViewById(R.id.date_time_set);
+
+                //Buttons management
+                date_time_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+                date_time_next.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        datePicker.setVisibility(View.GONE);
+                        timePicker.setVisibility(View.VISIBLE);
+                        date_time_previous.setVisibility(View.VISIBLE);
+                        date_time_next.setVisibility(View.GONE);
+                        date_time_set.setVisibility(View.VISIBLE);
+                    }
+                });
+                date_time_previous.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        datePicker.setVisibility(View.VISIBLE);
+                        timePicker.setVisibility(View.GONE);
+                        date_time_previous.setVisibility(View.GONE);
+                        date_time_next.setVisibility(View.VISIBLE);
+                        date_time_set.setVisibility(View.GONE);
+                    }
+                });
+                date_time_set.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int hour, minute;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            hour = timePicker.getHour();
+                            minute = timePicker.getMinute();
+                        }else {
+                            //noinspection deprecation
+                            hour = timePicker.getCurrentHour();
+                            //noinspection deprecation
+                            minute = timePicker.getCurrentMinute();
+                        }
+                        Calendar calendar = new GregorianCalendar(datePicker.getYear(),
+                                datePicker.getMonth(),
+                                datePicker.getDayOfMonth(),
+                                hour,
+                                minute);
+                        long time = calendar.getTimeInMillis();
+                        if( (time - new Date().getTime()) < 60000 ){
+                            Toast.makeText(getApplicationContext(), R.string.toot_scheduled_date, Toast.LENGTH_LONG).show();
+                        }else {
+                            //Store the toot as draft first
+                            storeToot(false);
+                            //Schedules the toot
+                            ScheduledTootsSyncJob.schedule(getApplicationContext(), true, currentToId, time);
+                            //Clear content
+                            toot_content.setText("");
+                            toot_cw_content.setText("");
+                            if( attachments != null) {
+                                for (Attachment attachment : attachments) {
+                                    View namebar = findViewById(Integer.parseInt(attachment.getId()));
+                                    if (namebar != null && namebar.getParent() != null)
+                                        ((ViewGroup) namebar.getParent()).removeView(namebar);
+                                }
+                                List<Attachment> tmp_attachment = new ArrayList<>();
+                                tmp_attachment.addAll(attachments);
+                                attachments.removeAll(tmp_attachment);
+                                tmp_attachment.clear();
+                            }
+                            isSensitive = false;
+                            toot_sensitive.setVisibility(View.GONE);
+                            currentToId = -1;
+                            Toast.makeText(TootActivity.this,R.string.toot_scheduled, Toast.LENGTH_LONG).show();
+                            alertDialog.dismiss();
+                        }
+                    }
+                });
+
+                alertDialog.show();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -798,7 +894,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean storeToot = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
         if( storeToot)
-            storeToot();
+            storeToot(true);
     }
 
     @Override
@@ -827,6 +923,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             }
             isSensitive = false;
             toot_sensitive.setVisibility(View.GONE);
+            currentToId = -1;
             Toast.makeText(TootActivity.this,R.string.toot_sent, Toast.LENGTH_LONG).show();
         }else {
             Toast.makeText(TootActivity.this,R.string.toast_error, Toast.LENGTH_LONG).show();
@@ -853,7 +950,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         }
     }
 
-    private void storeToot(){
+    private void storeToot(boolean message){
         //Nothing to store here....
         if(toot_content.getText().toString().trim().length() == 0 && (attachments == null || attachments.size() <1) && toot_cw_content.getText().toString().trim().length() == 0)
             return;
@@ -870,20 +967,21 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         try{
             if( currentToId == -1 ) {
-                currentToId = new StatusStoredDAO(TootActivity.this, db).insertStatus(toot, false, null);
+                currentToId = new StatusStoredDAO(TootActivity.this, db).insertStatus(toot);
 
             }else{
                 StoredStatus storedStatus = new StatusStoredDAO(TootActivity.this, db).getStatus(currentToId);
                 if( storedStatus != null ){
                     new StatusStoredDAO(TootActivity.this, db).updateStatus(currentToId, toot);
                 }else { //Might have been deleted, so it needs insertion
-                    new StatusStoredDAO(TootActivity.this, db).insertStatus(toot, false, null);
+                    new StatusStoredDAO(TootActivity.this, db).insertStatus(toot);
                 }
             }
-
-            Toast.makeText(getApplicationContext(), R.string.toast_toot_saved, Toast.LENGTH_LONG).show();
+            if( message )
+                Toast.makeText(getApplicationContext(), R.string.toast_toot_saved, Toast.LENGTH_LONG).show();
         }catch (Exception e){
-            Toast.makeText(getApplicationContext(), R.string.toast_error, Toast.LENGTH_LONG).show();
+            if( message)
+                Toast.makeText(getApplicationContext(), R.string.toast_error, Toast.LENGTH_LONG).show();
         }
     }
 

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2017 Thomas Schneider
+
+    This file is a part of Mastalab
+
+    This program is free software; you can redistribute it and/or modify it under the terms of the
+    GNU General Public License as published by the Free Software Foundation; either version 3 of the
+    License, or (at your option) any later version.
+
+    Mastalab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+    the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+    Public License for more details.
+
+    You should have received a copy of the GNU General Public License along with Thomas Schneider; if not,
+    see <http://www.gnu.org/licenses>.
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <DatePicker
+        android:id="@+id/date_picker"
+        android:layout_width="match_parent"
+        android:calendarViewShown="true"
+        android:gravity="center"
+        android:spinnersShown="false"
+        android:layout_height="wrap_content" />
+    <TimePicker
+        android:visibility="gone"
+        android:gravity="center"
+        android:id="@+id/time_picker"
+        android:layout_weight="4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/date_time_cancel"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="@string/cancel"
+            android:layout_height="wrap_content"
+            tools:ignore="ButtonStyle" />
+        <Button
+            android:visibility="gone"
+            android:id="@+id/date_time_previous"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="@string/previous"
+            android:layout_height="wrap_content"
+            tools:ignore="ButtonStyle" />
+        <Button
+            android:id="@+id/date_time_next"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="@string/next"
+            android:layout_height="wrap_content"
+            tools:ignore="ButtonStyle" />
+        <Button
+            android:visibility="gone"
+            android:id="@+id/date_time_set"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="@string/save"
+            android:layout_height="wrap_content"
+            tools:ignore="ButtonStyle" />
+    </LinearLayout>
+
+</LinearLayout>

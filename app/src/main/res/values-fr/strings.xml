@@ -44,6 +44,8 @@
     <string name="speech_not_supported">Désolé ! Votre appareil ne supporte pas la commande vocale !</string>
     <string name="delete_all">Tout effacer</string>
     <string name="schedule">Programmer</string>
+    <string name="next">Suivant</string>
+    <string name="previous">Précédent</string>
     <!--- Menu -->
     <string name="home_menu">Accueil</string>
     <string name="local_menu">Fil public local</string>
@@ -65,6 +67,8 @@
     <string name="choose_file">Veuillez sélectionner un fichier</string>
     <string name="choose_file_error">Aucun explorateur de fichiers trouvé !</string>
     <string name="click_to_change">Cliquer sur le chemin pour changer</string>
+
+    <string name="scheduled_toots">Pouets programmés</string>
     <!-- Status -->
     <string name="no_status">Aucun pouet à afficher !</string>
     <string name="fav_added">Pouet ajouté aux favoris !</string>
@@ -178,6 +182,14 @@
     <string name="followers_cnt">Abonnés \n %d</string>
     <string name="authorize">Autoriser</string>
     <string name="reject">Rejeter</string>
+
+    <!-- Scheduled toots -->
+    <string name="no_scheduled_toots">Aucun pouet programmé à afficher !</string>
+    <string name="no_scheduled_toots_indications">Ecrivez un toot, puis choisissez <b>Programmer</b> dans le menu du haut.</string>
+    <string name="remove_scheduled">Supprimer le pouet programmé ?</string>
+    <string name="media_count">Média(s): %d</string>
+    <string name="toot_scheduled">Le pouet a été programmé !</string>
+    <string name="toot_scheduled_date">La date doit être supérieure à l\'heure actuelle !</string>
 
     <!-- Notifications -->
     <string name="no_notifications">Aucune notification à afficher</string>

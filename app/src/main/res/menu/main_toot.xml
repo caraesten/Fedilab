@@ -16,9 +16,9 @@
         android:title="@string/restore"
         android:icon="@drawable/ic_restore"
         app:showAsAction="never" />
-    <!--<item
+    <item
         android:id="@+id/action_schedule"
         android:title="@string/schedule"
         android:icon="@drawable/ic_schedule"
-        app:showAsAction="never" />-->
+        app:showAsAction="never" />
 </menu>

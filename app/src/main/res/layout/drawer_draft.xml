@@ -56,5 +56,4 @@
         android:layout_height="40dp"
         android:padding="10dp"
         tools:ignore="ContentDescription" />
-
 </LinearLayout>

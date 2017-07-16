@@ -46,6 +46,9 @@
     <string name="delete_all">Delete all</string>
 
     <string name="schedule">Schedule</string>
+
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
     <!--- Menu -->
     <string name="home_menu">Home</string>
     <string name="local_menu">Local timeline</string>
@@ -67,6 +70,8 @@
     <string name="choose_file">Please select a file</string>
     <string name="choose_file_error">No file explorer found!</string>
     <string name="click_to_change">Click on the path to change it</string>
+
+    <string name="scheduled_toots">Scheduled toots</string>
     <!-- Status -->
     <string name="no_status">No toot to display</string>
     <string name="fav_added">The toot was added to favourites</string>
@@ -182,6 +187,15 @@
     <string name="followers_cnt">Followers \n %d</string>
     <string name="authorize">Authorize</string>
     <string name="reject">Reject</string>
+
+
+    <!-- Scheduled toots -->
+    <string name="no_scheduled_toots">No scheduled toot to display!</string>
+    <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
+    <string name="remove_scheduled">Delete scheduled toot?</string>
+    <string name="media_count">Media: %d</string>
+    <string name="toot_scheduled">The toot has been scheduled!</string>
+    <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
 
     <!-- Notifications -->
     <string name="no_notifications">No notification to display</string>
