@@ -67,7 +67,7 @@
     <string name="choose_file">Veuillez sélectionner un fichier</string>
     <string name="choose_file_error">Aucun explorateur de fichiers trouvé !</string>
     <string name="click_to_change">Cliquer sur le chemin pour changer</string>
-
+    <string name="failed">Erreur !</string>
     <string name="scheduled_toots">Pouets programmés</string>
     <!-- Status -->
     <string name="no_status">Aucun pouet à afficher !</string>
@@ -185,7 +185,7 @@
 
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">Aucun pouet programmé à afficher !</string>
-    <string name="no_scheduled_toots_indications">Ecrivez un toot, puis choisissez <b>Programmer</b> dans le menu du haut.</string>
+    <string name="no_scheduled_toots_indications">Ecrivez un pouet, puis choisissez <b>Programmer</b> dans le menu du haut.</string>
     <string name="remove_scheduled">Supprimer le pouet programmé ?</string>
     <string name="media_count">Média(s): %d</string>
     <string name="toot_scheduled">Le pouet a été programmé !</string>

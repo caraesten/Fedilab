@@ -38,36 +38,39 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
         <Button
             android:id="@+id/date_time_cancel"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:text="@string/cancel"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             tools:ignore="ButtonStyle" />
-        <Button
+        <ImageButton
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:visibility="gone"
             android:id="@+id/date_time_previous"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:text="@string/previous"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:src="@drawable/ic_skip_previous"
+            android:layout_height="40dp"
             tools:ignore="ButtonStyle" />
-        <Button
+        <ImageButton
             android:id="@+id/date_time_next"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:text="@string/next"
-            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_skip_next"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             tools:ignore="ButtonStyle" />
-        <Button
+        <ImageButton
             android:visibility="gone"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:id="@+id/date_time_set"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:text="@string/save"
-            android:layout_height="wrap_content"
+            android:src="@drawable/ic_check"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             tools:ignore="ButtonStyle" />
     </LinearLayout>
 

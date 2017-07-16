@@ -15,6 +15,7 @@ package fr.gouv.etalab.mastodon.fragments;
  * see <http://www.gnu.org/licenses>. */
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -28,6 +29,8 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveScheduledTootsAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
 import fr.gouv.etalab.mastodon.drawers.ScheduledTootsListAdapter;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveScheduledTootsInterface;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
 
@@ -55,10 +58,19 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
         textviewNoAction = (RelativeLayout) rootView.findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
 
-        asyncTask = new RetrieveScheduledTootsAsyncTask(context, DisplayScheduledTootsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        //Removes all scheduled toots that have sent
+        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        new StatusStoredDAO(context, db).removeAllSent();
         return rootView;
     }
 
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        //Retrieves scheduled toots
+        asyncTask = new RetrieveScheduledTootsAsyncTask(context, DisplayScheduledTootsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
 
     @Override
     public void onCreate(Bundle saveInstance)

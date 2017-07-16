@@ -70,7 +70,7 @@
     <string name="choose_file">Please select a file</string>
     <string name="choose_file_error">No file explorer found!</string>
     <string name="click_to_change">Click on the path to change it</string>
-
+    <string name="failed">Failed!</string>
     <string name="scheduled_toots">Scheduled toots</string>
     <!-- Status -->
     <string name="no_status">No toot to display</string>

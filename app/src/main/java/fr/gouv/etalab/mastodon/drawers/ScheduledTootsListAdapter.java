@@ -17,8 +17,12 @@ package fr.gouv.etalab.mastodon.drawers;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +30,19 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.evernote.android.job.Job;
+import com.evernote.android.job.JobManager;
+import com.evernote.android.job.JobRequest;
+
 import java.util.List;
+import java.util.Set;
+
+import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.jobs.ScheduledTootsSyncJob;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -82,9 +95,11 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.drawer_scheduled_toot, parent, false);
             holder = new ViewHolder();
+            holder.scheduled_toot_container = (CardView) convertView.findViewById(R.id.scheduled_toot_container);
             holder.scheduled_toot_title = (TextView) convertView.findViewById(R.id.scheduled_toot_title);
             holder.scheduled_toot_date_creation = (TextView) convertView.findViewById(R.id.scheduled_toot_date_creation);
             holder.scheduled_toot_media_count = (TextView) convertView.findViewById(R.id.scheduled_toot_media_count);
+            holder.scheduled_toot_failed = (TextView) convertView.findViewById(R.id.scheduled_toot_failed);
             holder.scheduled_toot_delete = (ImageView) convertView.findViewById(R.id.scheduled_toot_delete);
             holder.scheduled_toot_privacy = (ImageView) convertView.findViewById(R.id.scheduled_toot_privacy);
             holder.scheduled_toot_date = (Button) convertView.findViewById(R.id.scheduled_toot_date);
@@ -128,12 +143,14 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
         }
         final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
 
+        final Job job = JobManager.instance().getJob(storedStatus.getJobId());
+
         //Delete scheduled toot
         holder.scheduled_toot_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage(status.getContent() + '\n' + storedStatus.getCreation_date());
+                builder.setMessage(status.getContent() + '\n' + Helper.dateToString(context, storedStatus.getCreation_date()));
                 builder.setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle(R.string.remove_scheduled)
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -155,18 +172,44 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
                         .show();
             }
         });
+        if( job == null){
+            holder.scheduled_toot_failed.setVisibility(View.VISIBLE);
+        }else {
+            holder.scheduled_toot_failed.setVisibility(View.GONE);
+        }
         holder.scheduled_toot_media_count.setText(context.getString(R.string.media_count, status.getMedia_attachments().size()));
         holder.scheduled_toot_date_creation.setText(Helper.dateToString(context, storedStatus.getCreation_date()));
+        holder.scheduled_toot_date.setText(Helper.dateToString(context, storedStatus.getScheduled_date()));
+        holder.scheduled_toot_date_creation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
         holder.scheduled_toot_title.setText(status.getContent());
+
+
+
+        holder.scheduled_toot_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentToot = new Intent(context, TootActivity.class);
+                Bundle b = new Bundle();
+                b.putLong("restored", storedStatus.getId());
+                intentToot.putExtras(b);
+                context.startActivity(intentToot);
+            }
+        });
 
         return convertView;
     }
 
 
     private class ViewHolder {
+        CardView scheduled_toot_container;
         TextView scheduled_toot_title;
         TextView scheduled_toot_date_creation;
         TextView scheduled_toot_media_count;
+        TextView scheduled_toot_failed;
         ImageView scheduled_toot_delete;
         ImageView scheduled_toot_privacy;
         Button scheduled_toot_date;

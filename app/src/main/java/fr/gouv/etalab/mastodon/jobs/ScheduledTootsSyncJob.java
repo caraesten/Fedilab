@@ -36,7 +36,7 @@ import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 
 public class ScheduledTootsSyncJob extends Job {
 
-    static final String SCHEDULED_TOOT = "job_scheduled_toot";
+    public static final String SCHEDULED_TOOT = "job_scheduled_toot";
 
 
     @NonNull
@@ -76,11 +76,9 @@ public class ScheduledTootsSyncJob extends Job {
                 .setRequirementsEnforced(false)
                 .build()
                 .schedule();
-        new StatusStoredDAO(context, db).scheduleStatus(id, jobId, new Date());
+        new StatusStoredDAO(context, db).scheduleStatus(id, jobId, new Date(timestampScheduling));
         return jobId;
     }
-
-
 
 
 }

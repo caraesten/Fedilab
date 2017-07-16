@@ -23,6 +23,7 @@
     android:layout_marginTop="10dp"
     style="?attr/cardStyle"
     card_view:cardPreventCornerOverlap="true"
+    android:id="@+id/scheduled_toot_container"
     app:cardUseCompatPadding="true">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -48,36 +49,56 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
                 <ImageView
                     android:id="@+id/scheduled_toot_privacy"
-                    android:padding="10dp"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     tools:ignore="ContentDescription" />
                 <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:id="@+id/scheduled_toot_media_count"
-                    android:layout_width="150dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/scheduled_toot_date_creation"
                     android:textSize="12sp"
-                    android:layout_marginTop="5dp"
                     android:textStyle="italic"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:gravity="end"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <Button
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:focusableInTouchMode="false"
+                    android:id="@+id/scheduled_toot_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:id="@+id/scheduled_toot_failed"
+                    android:textColor="@color/red_1"
+                    android:text="@string/failed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
         </LinearLayout>
-        <Button
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:focusableInTouchMode="false"
-            android:id="@+id/scheduled_toot_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
         <ImageView
             android:id="@+id/scheduled_toot_delete"
             android:src="@drawable/ic_cancel"
