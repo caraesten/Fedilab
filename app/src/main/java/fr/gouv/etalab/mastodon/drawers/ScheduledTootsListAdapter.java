@@ -286,7 +286,6 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
                         }
                     }
                 });
-
                 alertDialog.show();
             }
         });
