@@ -30,6 +30,8 @@ public class ApplicationJob implements JobCreator {
                 return new NotificationsSyncJob();
             case HomeTimelineSyncJob.HOME_TIMELINE:
                 return new HomeTimelineSyncJob();
+            case ScheduledTootsSyncJob.SCHEDULED_TOOT:
+                return new ScheduledTootsSyncJob();
             default:
                 return null;
         }
@@ -37,5 +39,9 @@ public class ApplicationJob implements JobCreator {
 
     public static void cancelAllJob(String TAG){
         JobManager.instance().cancelAllForTag(TAG);
+    }
+
+    public static void cancelJob(int jobId) {
+        JobManager.instance().cancel(jobId);
     }
 }

@@ -79,6 +79,7 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -573,18 +574,22 @@ public class Helper {
     public static void manageMoveFileDownload(final Context context, final String preview_url, final String url, Bitmap bitmap, File fileVideo){
 
         final String fileName = URLUtil.guessFileName(url, null, null);final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.DIRECTORY_DOWNLOADS);
+        String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
  
         try {
             File file;
             if( bitmap != null) {
-                File filebmp = new File (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
-                FileOutputStream out = new FileOutputStream(filebmp);
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                out.flush();
-                out.close();
                 file = new File(myDir, fileName);
-                copy(filebmp, file);
+                file.createNewFile();
+
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                byte[] bitmapdata = bos.toByteArray();
+
+                FileOutputStream fos = new FileOutputStream(file);
+                fos.write(bitmapdata);
+                fos.flush();
+                fos.close();
             }else{
                 File fileVideoTargeded = new File(myDir, fileName);
                 copy(fileVideo, fileVideoTargeded);
@@ -594,7 +599,6 @@ public class Helper {
             final int notificationIdTmp = r.nextInt(10000);
             // prepare intent which is triggered if the
             // notification is selected
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
             final Intent intent = new Intent();
             intent.setAction(android.content.Intent.ACTION_VIEW);
             Uri uri = Uri.parse("file://" + file.getAbsolutePath());
@@ -841,6 +845,9 @@ public class Helper {
         navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(activity,db).getAccountByID(userID);
+        //Can happen when an account has been deleted and there is a click on an old notification
+        if( account == null)
+            return;
         //Locked account can see follow request
         if (account.isLocked()) {
             navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);
@@ -1222,13 +1229,36 @@ public class Helper {
         }
     }
 
+    /**
+     * Serialized a Status class
+     * @param status Status to serialize
+     * @return String serialized Status
+     */
     public static String statusToStringStorage(Status status){
         Gson gson = new Gson();
         return gson.toJson(status);
     }
 
+    /**
+     * Unserialized a Status
+     * @param serializedStatus String serialized status
+     * @return Status
+     */
     public static Status restoreStatusFromString(String serializedStatus){
         Gson gson = new Gson();
         return gson.fromJson(serializedStatus, Status.class);
+    }
+
+    /**
+     * Check if a job id is in array of ids
+     * @param jobIds int[]
+     * @param id int id to check
+     * @return boolean
+     */
+    public static boolean isJobPresent(int[] jobIds, int id){
+        for(int x:jobIds) {
+            if (x == id) {return true;}
+        }
+        return false;
     }
 }

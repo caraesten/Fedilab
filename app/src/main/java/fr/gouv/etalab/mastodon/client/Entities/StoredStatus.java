@@ -14,11 +14,11 @@ public class StoredStatus {
     private Date creation_date;
     private Date scheduled_date;
     private Date sent_date;
-    private boolean isScheduled;
+    private int jobId;
     private boolean isSent;
     private Status status;
     private String instance;
-    private String acct;
+    private String userId;
 
     public int getId() {
         return id;
@@ -52,13 +52,6 @@ public class StoredStatus {
         this.sent_date = sent_date;
     }
 
-    public boolean isScheduled() {
-        return isScheduled;
-    }
-
-    public void setScheduled(boolean scheduled) {
-        isScheduled = scheduled;
-    }
 
     public boolean isSent() {
         return isSent;
@@ -84,11 +77,19 @@ public class StoredStatus {
         this.instance = instance;
     }
 
-    public String getAcct() {
-        return acct;
+    public int getJobId() {
+        return jobId;
     }
 
-    public void setAcct(String acct) {
-        this.acct = acct;
+    public void setJobId(int jobId) {
+        this.jobId = jobId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

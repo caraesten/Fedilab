@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -869,6 +870,7 @@ public class API {
                 public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response) {
                     actionCode = statusCode;
                     setError(statusCode, error);
+                    error.printStackTrace();
                 }
             });
         }else{
@@ -1461,7 +1463,6 @@ public class API {
     }
 
     private void post(String action, int timeout, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-
         try {
             client.setConnectTimeout(timeout); //10s timeout
             client.setUserAgent(USER_AGENT);

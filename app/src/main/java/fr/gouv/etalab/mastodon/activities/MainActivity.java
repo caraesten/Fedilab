@@ -58,6 +58,7 @@ import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayFollowRequestSentFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
+import fr.gouv.etalab.mastodon.fragments.DisplayScheduledTootsFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -201,6 +202,11 @@ public class MainActivity extends AppCompatActivity
                                 unCheckAllMenuItems(navigationView.getMenu());
                                 if( navigationView.getMenu().findItem(tagItem.get(fragmentTag)) != null)
                                     navigationView.getMenu().findItem(tagItem.get(fragmentTag)).setChecked(true);
+                            }
+                            if( fragmentTag.equals("HOME_TIMELINE") || fragmentTag.equals("LOCAL_TIMELINE") || fragmentTag.equals("PUBLIC_TIMELINE") || fragmentTag.equals("SCHEDULED")){
+                                toot.setVisibility(View.VISIBLE);
+                            }else {
+                                toot.setVisibility(View.GONE);
                             }
                         }
                     }
@@ -563,7 +569,13 @@ public class MainActivity extends AppCompatActivity
             fragmentTag = "MUTED";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, accountsFragment, fragmentTag).addToBackStack(fragmentTag).commit();
-        }else if( id == R.id.nav_notification){
+        }else if (id == R.id.nav_scheduled) {
+            toot.setVisibility(View.VISIBLE);
+            DisplayScheduledTootsFragment displayScheduledTootsFragment = new DisplayScheduledTootsFragment();
+            fragmentTag = "SCHEDULED";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, displayScheduledTootsFragment, fragmentTag).addToBackStack(fragmentTag).commit();
+        } else if( id == R.id.nav_notification){
             toot.setVisibility(View.GONE);
             DisplayNotificationsFragment notificationsFragment = new DisplayNotificationsFragment();
             fragmentTag = "NOTIFICATIONS";

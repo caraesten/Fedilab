@@ -168,7 +168,7 @@ public class SettingsFragment extends Fragment {
         }else {
             set_cookies_container.setVisibility(View.GONE);
         }
-        final String targeted_folder = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.DIRECTORY_DOWNLOADS);
+        final String targeted_folder = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
 
         set_folder = (TextView) rootView.findViewById(R.id.set_folder);
         set_folder.setText(targeted_folder);
@@ -217,7 +217,7 @@ public class SettingsFragment extends Fragment {
                     DocumentsContract.getTreeDocumentId(treeUri));
             String path = getPath(context, docUri);
             if( path == null )
-                path = Environment.DIRECTORY_DOWNLOADS;
+                path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString(Helper.SET_FOLDER_RECORD, path);

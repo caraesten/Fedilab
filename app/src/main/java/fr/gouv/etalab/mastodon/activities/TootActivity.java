@@ -35,6 +35,7 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,6 +45,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -51,6 +53,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -61,6 +64,9 @@ import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -83,6 +89,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
+import fr.gouv.etalab.mastodon.jobs.ScheduledTootsSyncJob;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -122,6 +129,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private String sharedContent, sharedSubject;
     private CheckBox toot_sensitive;
     public long currentToId;
+    private long restored;
 
     private String pattern = "^.*(@([a-zA-Z0-9_]{2,}))$";
     @Override
@@ -180,23 +188,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
         final LinearLayout drawer_layout = (LinearLayout) findViewById(R.id.drawer_layout);
 
-        /*drawer_layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                int heightDiff = drawer_layout.getRootView().getHeight() - drawer_layout.getHeight();
-                if (heightDiff > 100) {
-                    ViewGroup.LayoutParams params = toot_picture_container.getLayoutParams();
-                    params.height = (int) Helper.convertDpToPixel(20, getApplicationContext());
-                    params.width = (int) Helper.convertDpToPixel(20, getApplicationContext());
-                    toot_picture_container.setLayoutParams(params);
-                } else {
-                    ViewGroup.LayoutParams params = toot_picture_container.getLayoutParams();
-                    params.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
-                    params.width = (int) Helper.convertDpToPixel(100, getApplicationContext());
-                    toot_picture_container.setLayoutParams(params);
-                }
-            }
-        });*/
 
         drawer_layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -217,10 +208,16 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         });
 
         Bundle b = getIntent().getExtras();
+        restored = -1;
         if(b != null) {
             tootReply = b.getParcelable("tootReply");
             sharedContent = b.getString("sharedContent", null);
             sharedSubject = b.getString("sharedSubject", null);
+            restored = b.getLong("restored", -1);
+        }
+        if( restored != -1 ){
+            toot_it.setVisibility(View.GONE);
+            invalidateOptionsMenu();
         }
         if( tootReply != null) {
             setTitle(R.string.toot_title_reply);
@@ -463,7 +460,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 toot_space_left.setText(String.valueOf((maxChar - totalChar)));
             }
         });
-
+        if( restored != -1 ){
+            restoreToot(restored);
+        }
     }
 
 
@@ -521,7 +520,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 }
                 return true;
             case R.id.action_store:
-                storeToot();
+                storeToot(true);
                 return true;
             case R.id.action_restore:
                 try{
@@ -573,74 +572,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             int id = ids[which];
-                            StoredStatus draft = new StatusStoredDAO(TootActivity.this, db).getStatus(id);
-                            Status status = draft.getStatus();
-                            //Retrieves attachments
-                            attachments = status.getMedia_attachments();
-                            toot_picture_container.removeAllViews();
-                            loading_picture.setVisibility(View.GONE);
-                            if( attachments != null && attachments.size() > 0){
-                                toot_picture_container.setVisibility(View.VISIBLE);
-                                int i = 0 ;
-                                for(Attachment attachment: attachments){
-                                    String url = attachment.getPreview_url();
-                                    if( url == null || url.trim().equals(""))
-                                        url = attachment.getUrl();
-                                    final ImageView imageView = new ImageView(getApplicationContext());
-                                    imageView.setId(Integer.parseInt(attachment.getId()));
-                                    imageLoader.displayImage(url, imageView, options);
-                                    LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-                                    imParams.setMargins(20, 5, 20, 5);
-                                    imParams.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
-                                    imageView.setAdjustViewBounds(true);
-                                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                                    toot_picture_container.addView(imageView, i, imParams);
-                                    imageView.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            showRemove(imageView.getId());
-                                        }
-                                    });
-                                    if( attachments.size() < 4)
-                                        toot_picture.setEnabled(true);
-                                    toot_sensitive.setVisibility(View.VISIBLE);
-                                    i++;
-                                }
-                            }else {
-                                toot_picture_container.setVisibility(View.GONE);
-                            }
-                            //Sensitive content
-                            toot_sensitive.setChecked(status.isSensitive());
-                            if( status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0 ){
-                                toot_cw_content.setText(status.getSpoiler_text());
-                                toot_cw_content.setVisibility(View.VISIBLE);
-                            }else {
-                                toot_cw_content.setText("");
-                                toot_cw_content.setVisibility(View.GONE);
-                            }
-                            String content = status.getContent();
-                            toot_content.setText(content);
-                            toot_content.setSelection(toot_content.getText().length());
-                            switch (status.getVisibility()){
-                                case "public":
-                                    visibility = "public";
-                                    toot_visibility.setImageResource(R.drawable.ic_action_globe);
-                                    break;
-                                case "unlisted":
-                                    visibility = "unlisted";
-                                    toot_visibility.setImageResource(R.drawable.ic_action_lock_open);
-                                    break;
-                                case "private":
-                                    visibility = "private";
-                                    toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
-                                    break;
-                                case "direct":
-                                    visibility = "direct";
-                                    toot_visibility.setImageResource(R.drawable.ic_local_post_office);
-                                    break;
-                            }
-                            //The current id is set to the draft
-                            currentToId = draft.getId();
+                            restoreToot(id);
                             dialog.dismiss();
                         }
                     });
@@ -650,13 +582,113 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 }
                 return true;
 
-            /*case R.id.action_schedule:
+            case R.id.action_schedule:
                 if(toot_content.getText().toString().trim().length() == 0 ){
                     Toast.makeText(getApplicationContext(),R.string.toot_error_no_content, Toast.LENGTH_LONG).show();
                     return true;
                 }
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TootActivity.this);
+                LayoutInflater inflater = this.getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.datetime_picker, null);
+                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                if( theme == Helper.THEME_DARK){
+                    changeDrawableColor(TootActivity.this, R.drawable.ic_skip_previous,R.color.dark_text);
+                    changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next,R.color.dark_text);
+                    changeDrawableColor(TootActivity.this, R.drawable.ic_check,R.color.dark_text);
+                }else {
+                    changeDrawableColor(TootActivity.this, R.drawable.ic_skip_previous,R.color.black);
+                    changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next,R.color.black);
+                    changeDrawableColor(TootActivity.this, R.drawable.ic_check,R.color.black);
+                }
+                dialogBuilder.setView(dialogView);
+                final AlertDialog alertDialog = dialogBuilder.create();
 
-                return true;*/
+                final DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.date_picker);
+                final TimePicker timePicker = (TimePicker) dialogView.findViewById(R.id.time_picker);
+                Button date_time_cancel = (Button) dialogView.findViewById(R.id.date_time_cancel);
+                final ImageButton date_time_previous = (ImageButton) dialogView.findViewById(R.id.date_time_previous);
+                final ImageButton date_time_next = (ImageButton) dialogView.findViewById(R.id.date_time_next);
+                final ImageButton date_time_set = (ImageButton) dialogView.findViewById(R.id.date_time_set);
+
+                //Buttons management
+                date_time_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+                date_time_next.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        datePicker.setVisibility(View.GONE);
+                        timePicker.setVisibility(View.VISIBLE);
+                        date_time_previous.setVisibility(View.VISIBLE);
+                        date_time_next.setVisibility(View.GONE);
+                        date_time_set.setVisibility(View.VISIBLE);
+                    }
+                });
+                date_time_previous.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        datePicker.setVisibility(View.VISIBLE);
+                        timePicker.setVisibility(View.GONE);
+                        date_time_previous.setVisibility(View.GONE);
+                        date_time_next.setVisibility(View.VISIBLE);
+                        date_time_set.setVisibility(View.GONE);
+                    }
+                });
+                date_time_set.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int hour, minute;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            hour = timePicker.getHour();
+                            minute = timePicker.getMinute();
+                        }else {
+                            //noinspection deprecation
+                            hour = timePicker.getCurrentHour();
+                            //noinspection deprecation
+                            minute = timePicker.getCurrentMinute();
+                        }
+                        Calendar calendar = new GregorianCalendar(datePicker.getYear(),
+                                datePicker.getMonth(),
+                                datePicker.getDayOfMonth(),
+                                hour,
+                                minute);
+                        long time = calendar.getTimeInMillis();
+                        if( (time - new Date().getTime()) < 60000 ){
+                            Toast.makeText(getApplicationContext(), R.string.toot_scheduled_date, Toast.LENGTH_LONG).show();
+                        }else {
+                            //Store the toot as draft first
+                            storeToot(false);
+                            //Schedules the toot
+                            ScheduledTootsSyncJob.schedule(getApplicationContext(), currentToId, time);
+                            //Clear content
+                            toot_content.setText("");
+                            toot_cw_content.setText("");
+                            if( attachments != null) {
+                                for (Attachment attachment : attachments) {
+                                    View namebar = findViewById(Integer.parseInt(attachment.getId()));
+                                    if (namebar != null && namebar.getParent() != null)
+                                        ((ViewGroup) namebar.getParent()).removeView(namebar);
+                                }
+                                List<Attachment> tmp_attachment = new ArrayList<>();
+                                tmp_attachment.addAll(attachments);
+                                attachments.removeAll(tmp_attachment);
+                                tmp_attachment.clear();
+                            }
+                            isSensitive = false;
+                            toot_sensitive.setVisibility(View.GONE);
+                            currentToId = -1;
+                            Toast.makeText(TootActivity.this,R.string.toot_scheduled, Toast.LENGTH_LONG).show();
+                            alertDialog.dismiss();
+                        }
+                    }
+                });
+
+                alertDialog.show();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -665,6 +697,14 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_toot, menu);
+        if( restored != -1 ){
+            MenuItem itemRestore = menu.findItem(R.id.action_restore);
+            if( itemRestore != null)
+                itemRestore.setVisible(false);
+            MenuItem itemSchedule = menu.findItem(R.id.action_schedule);
+            if( itemSchedule != null)
+                itemSchedule.setVisible(false);
+        }
         return true;
     }
 
@@ -798,7 +838,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean storeToot = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
         if( storeToot)
-            storeToot();
+            storeToot(true);
     }
 
     @Override
@@ -827,6 +867,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             }
             isSensitive = false;
             toot_sensitive.setVisibility(View.GONE);
+            currentToId = -1;
             Toast.makeText(TootActivity.this,R.string.toot_sent, Toast.LENGTH_LONG).show();
         }else {
             Toast.makeText(TootActivity.this,R.string.toast_error, Toast.LENGTH_LONG).show();
@@ -853,7 +894,80 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         }
     }
 
-    private void storeToot(){
+    private void restoreToot(long id){
+        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        StoredStatus draft = new StatusStoredDAO(TootActivity.this, db).getStatus(id);
+        Status status = draft.getStatus();
+        //Retrieves attachments
+        attachments = status.getMedia_attachments();
+        toot_picture_container.removeAllViews();
+        loading_picture.setVisibility(View.GONE);
+        if( attachments != null && attachments.size() > 0){
+            toot_picture_container.setVisibility(View.VISIBLE);
+            int i = 0 ;
+            for(Attachment attachment: attachments){
+                String url = attachment.getPreview_url();
+                if( url == null || url.trim().equals(""))
+                    url = attachment.getUrl();
+                final ImageView imageView = new ImageView(getApplicationContext());
+                imageView.setId(Integer.parseInt(attachment.getId()));
+                imageLoader.displayImage(url, imageView, options);
+                LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                imParams.setMargins(20, 5, 20, 5);
+                imParams.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
+                imageView.setAdjustViewBounds(true);
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                toot_picture_container.addView(imageView, i, imParams);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showRemove(imageView.getId());
+                    }
+                });
+                if( attachments.size() < 4)
+                    toot_picture.setEnabled(true);
+                toot_sensitive.setVisibility(View.VISIBLE);
+                i++;
+            }
+        }else {
+            toot_picture_container.setVisibility(View.GONE);
+        }
+        //Sensitive content
+        toot_sensitive.setChecked(status.isSensitive());
+        if( status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0 ){
+            toot_cw_content.setText(status.getSpoiler_text());
+            toot_cw_content.setVisibility(View.VISIBLE);
+        }else {
+            toot_cw_content.setText("");
+            toot_cw_content.setVisibility(View.GONE);
+        }
+        String content = status.getContent();
+        toot_content.setText(content);
+        toot_content.setSelection(toot_content.getText().length());
+        switch (status.getVisibility()){
+            case "public":
+                visibility = "public";
+                toot_visibility.setImageResource(R.drawable.ic_action_globe);
+                break;
+            case "unlisted":
+                visibility = "unlisted";
+                toot_visibility.setImageResource(R.drawable.ic_action_lock_open);
+                break;
+            case "private":
+                visibility = "private";
+                toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
+                break;
+            case "direct":
+                visibility = "direct";
+                toot_visibility.setImageResource(R.drawable.ic_local_post_office);
+                break;
+        }
+        //The current id is set to the draft
+        currentToId = draft.getId();
+    }
+
+
+    private void storeToot(boolean message){
         //Nothing to store here....
         if(toot_content.getText().toString().trim().length() == 0 && (attachments == null || attachments.size() <1) && toot_cw_content.getText().toString().trim().length() == 0)
             return;
@@ -870,20 +984,21 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         try{
             if( currentToId == -1 ) {
-                currentToId = new StatusStoredDAO(TootActivity.this, db).insertStatus(toot, false, null);
+                currentToId = new StatusStoredDAO(TootActivity.this, db).insertStatus(toot);
 
             }else{
                 StoredStatus storedStatus = new StatusStoredDAO(TootActivity.this, db).getStatus(currentToId);
                 if( storedStatus != null ){
                     new StatusStoredDAO(TootActivity.this, db).updateStatus(currentToId, toot);
                 }else { //Might have been deleted, so it needs insertion
-                    new StatusStoredDAO(TootActivity.this, db).insertStatus(toot, false, null);
+                    new StatusStoredDAO(TootActivity.this, db).insertStatus(toot);
                 }
             }
-
-            Toast.makeText(getApplicationContext(), R.string.toast_toot_saved, Toast.LENGTH_LONG).show();
+            if( message )
+                Toast.makeText(getApplicationContext(), R.string.toast_toot_saved, Toast.LENGTH_LONG).show();
         }catch (Exception e){
-            Toast.makeText(getApplicationContext(), R.string.toast_error, Toast.LENGTH_LONG).show();
+            if( message)
+                Toast.makeText(getApplicationContext(), R.string.toast_error, Toast.LENGTH_LONG).show();
         }
     }
 

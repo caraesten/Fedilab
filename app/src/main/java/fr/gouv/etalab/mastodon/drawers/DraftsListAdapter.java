@@ -106,7 +106,7 @@ public class DraftsListAdapter extends BaseAdapter  {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage(draft.getStatus().getContent() + '\n' + draft.getCreation_date());
+                builder.setMessage(draft.getStatus().getContent() + '\n' + Helper.dateToString(context, draft.getCreation_date()));
                 builder.setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle(R.string.remove_draft)
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
