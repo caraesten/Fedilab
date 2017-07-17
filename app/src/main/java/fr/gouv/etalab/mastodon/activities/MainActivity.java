@@ -203,6 +203,11 @@ public class MainActivity extends AppCompatActivity
                                 if( navigationView.getMenu().findItem(tagItem.get(fragmentTag)) != null)
                                     navigationView.getMenu().findItem(tagItem.get(fragmentTag)).setChecked(true);
                             }
+                            if( fragmentTag.equals("HOME_TIMELINE") || fragmentTag.equals("LOCAL_TIMELINE") || fragmentTag.equals("PUBLIC_TIMELINE") || fragmentTag.equals("SCHEDULED")){
+                                toot.setVisibility(View.VISIBLE);
+                            }else {
+                                toot.setVisibility(View.GONE);
+                            }
                         }
                     }
                 }
@@ -565,6 +570,7 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, accountsFragment, fragmentTag).addToBackStack(fragmentTag).commit();
         }else if (id == R.id.nav_scheduled) {
+            toot.setVisibility(View.VISIBLE);
             DisplayScheduledTootsFragment displayScheduledTootsFragment = new DisplayScheduledTootsFragment();
             fragmentTag = "SCHEDULED";
             fragmentManager.beginTransaction()
