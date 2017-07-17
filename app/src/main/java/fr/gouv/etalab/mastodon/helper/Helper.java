@@ -79,6 +79,7 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -573,18 +574,22 @@ public class Helper {
     public static void manageMoveFileDownload(final Context context, final String preview_url, final String url, Bitmap bitmap, File fileVideo){
 
         final String fileName = URLUtil.guessFileName(url, null, null);final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.DIRECTORY_DOWNLOADS);
+        String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
  
         try {
             File file;
             if( bitmap != null) {
-                File filebmp = new File (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
-                FileOutputStream out = new FileOutputStream(filebmp);
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                out.flush();
-                out.close();
                 file = new File(myDir, fileName);
-                copy(filebmp, file);
+                file.createNewFile();
+
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                byte[] bitmapdata = bos.toByteArray();
+
+                FileOutputStream fos = new FileOutputStream(file);
+                fos.write(bitmapdata);
+                fos.flush();
+                fos.close();
             }else{
                 File fileVideoTargeded = new File(myDir, fileName);
                 copy(fileVideo, fileVideoTargeded);
@@ -594,7 +599,6 @@ public class Helper {
             final int notificationIdTmp = r.nextInt(10000);
             // prepare intent which is triggered if the
             // notification is selected
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
             final Intent intent = new Intent();
             intent.setAction(android.content.Intent.ACTION_VIEW);
             Uri uri = Uri.parse("file://" + file.getAbsolutePath());

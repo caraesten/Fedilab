@@ -173,7 +173,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
             }
         });
         if( job == null){
-            holder.scheduled_toot_failed.setVisibility(View.VISIBLE);
+            holder.scheduled_toot_failed.setVisibility(View.GONE);
         }else {
             holder.scheduled_toot_failed.setVisibility(View.GONE);
         }

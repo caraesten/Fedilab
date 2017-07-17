@@ -18,7 +18,7 @@ public class StoredStatus {
     private boolean isSent;
     private Status status;
     private String instance;
-    private String acct;
+    private String userId;
 
     public int getId() {
         return id;
@@ -77,19 +77,19 @@ public class StoredStatus {
         this.instance = instance;
     }
 
-    public String getAcct() {
-        return acct;
-    }
-
-    public void setAcct(String acct) {
-        this.acct = acct;
-    }
-
     public int getJobId() {
         return jobId;
     }
 
     public void setJobId(int jobId) {
         this.jobId = jobId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

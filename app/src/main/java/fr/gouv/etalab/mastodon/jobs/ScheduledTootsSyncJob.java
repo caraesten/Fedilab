@@ -23,8 +23,10 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
+import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 
@@ -36,8 +38,7 @@ import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 
 public class ScheduledTootsSyncJob extends Job {
 
-    public static final String SCHEDULED_TOOT = "job_scheduled_toot";
-
+    static final String SCHEDULED_TOOT = "job_scheduled_toot";
 
     @NonNull
     @Override
@@ -45,16 +46,23 @@ public class ScheduledTootsSyncJob extends Job {
         //Code refresh here
         int jobId = params.getId();
         SQLiteDatabase db = Sqlite.getInstance(getContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        StoredStatus storedStatus = new StatusStoredDAO(getContext(), db).getStatusScheduled(jobId);
         //Retrieves the stored status
+        StoredStatus storedStatus = new StatusStoredDAO(getContext(), db).getStatusScheduled(jobId);
         if( storedStatus != null){
-            //Retrieves the linked status to toot
-            Status status = storedStatus.getStatus();
-            if( status != null){
-                int statusCode = new API(getContext()).statusAction(status);
-                //Toot was sent
-                if( statusCode == 200){
-                    new StatusStoredDAO(getContext(), db).updateScheduledDone(jobId, new Date());
+            String userId = storedStatus.getUserId();
+            String instance = storedStatus.getInstance();
+            if( instance != null && userId != null){
+            Account account = new AccountDAO(getContext(), db).getAccountByUserIDInstance(userId, instance);
+                if( account != null){
+                    //Retrieves the linked status to toot
+                    Status status = storedStatus.getStatus();
+                    if( status != null){
+                        int statusCode = new API(getContext(), account.getInstance(), account.getToken()).statusAction(status);
+                        //Toot was sent
+                        if( statusCode == 200){
+                            new StatusStoredDAO(getContext(), db).updateScheduledDone(jobId, new Date());
+                        }
+                    }
                 }
             }
         }
