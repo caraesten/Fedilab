@@ -20,28 +20,34 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
-import com.evernote.android.job.Job;
-import com.evernote.android.job.JobManager;
-import com.evernote.android.job.JobRequest;
-
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Set;
 
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
+import fr.gouv.etalab.mastodon.client.Entities.Application;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.jobs.ApplicationJob;
 import fr.gouv.etalab.mastodon.jobs.ScheduledTootsSyncJob;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
@@ -60,13 +66,14 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
     private List<StoredStatus> storedStatuses;
     private LayoutInflater layoutInflater;
     private ScheduledTootsListAdapter scheduledTootsListAdapter;
+    private RelativeLayout textviewNoAction;
 
-
-    public ScheduledTootsListAdapter(Context context, List<StoredStatus> storedStatuses){
+    public ScheduledTootsListAdapter(Context context, List<StoredStatus> storedStatuses, RelativeLayout textviewNoAction){
         this.context = context;
         this.storedStatuses = storedStatuses;
         layoutInflater = LayoutInflater.from(this.context);
         scheduledTootsListAdapter = this;
+        this.textviewNoAction = textviewNoAction;
     }
 
 
@@ -143,8 +150,6 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
         }
         final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
 
-        final Job job = JobManager.instance().getJob(storedStatus.getJobId());
-
         //Delete scheduled toot
         holder.scheduled_toot_delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,6 +164,12 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
                                 new StatusStoredDAO(context, db).remove(storedStatus.getId());
                                 storedStatuses.remove(storedStatus);
                                 scheduledTootsListAdapter.notifyDataSetChanged();
+                                if( storedStatuses.size() == 0 && textviewNoAction != null && textviewNoAction.getVisibility() == View.GONE)
+                                        textviewNoAction.setVisibility(View.VISIBLE);
+                                try {
+                                    //Cancel the job
+                                    ApplicationJob.cancelJob(storedStatus.getJobId());
+                                }catch (Exception ignored){}
                                 dialog.dismiss();
                             }
                         })
@@ -172,17 +183,111 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
                         .show();
             }
         });
-        if( job == null){
+
+        if (storedStatus.getJobId() > 0) {
             holder.scheduled_toot_failed.setVisibility(View.GONE);
         }else {
-            holder.scheduled_toot_failed.setVisibility(View.GONE);
+            holder.scheduled_toot_failed.setVisibility(View.VISIBLE);
         }
         holder.scheduled_toot_media_count.setText(context.getString(R.string.media_count, status.getMedia_attachments().size()));
         holder.scheduled_toot_date_creation.setText(Helper.dateToString(context, storedStatus.getCreation_date()));
         holder.scheduled_toot_date.setText(Helper.dateToString(context, storedStatus.getScheduled_date()));
-        holder.scheduled_toot_date_creation.setOnClickListener(new View.OnClickListener() {
+        holder.scheduled_toot_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+                LayoutInflater inflater = ((MainActivity)context).getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.datetime_picker, null);
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                if( theme == Helper.THEME_DARK){
+                    changeDrawableColor(context, R.drawable.ic_skip_previous,R.color.dark_text);
+                    changeDrawableColor(context, R.drawable.ic_skip_next,R.color.dark_text);
+                    changeDrawableColor(context, R.drawable.ic_check,R.color.dark_text);
+                }else {
+                    changeDrawableColor(context, R.drawable.ic_skip_previous,R.color.black);
+                    changeDrawableColor(context, R.drawable.ic_skip_next,R.color.black);
+                    changeDrawableColor(context, R.drawable.ic_check,R.color.black);
+                }
+                dialogBuilder.setView(dialogView);
+                final AlertDialog alertDialog = dialogBuilder.create();
+
+                final DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.date_picker);
+                final TimePicker timePicker = (TimePicker) dialogView.findViewById(R.id.time_picker);
+                Button date_time_cancel = (Button) dialogView.findViewById(R.id.date_time_cancel);
+                final ImageButton date_time_previous = (ImageButton) dialogView.findViewById(R.id.date_time_previous);
+                final ImageButton date_time_next = (ImageButton) dialogView.findViewById(R.id.date_time_next);
+                final ImageButton date_time_set = (ImageButton) dialogView.findViewById(R.id.date_time_set);
+
+                //Buttons management
+                date_time_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+                date_time_next.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        datePicker.setVisibility(View.GONE);
+                        timePicker.setVisibility(View.VISIBLE);
+                        date_time_previous.setVisibility(View.VISIBLE);
+                        date_time_next.setVisibility(View.GONE);
+                        date_time_set.setVisibility(View.VISIBLE);
+                    }
+                });
+                date_time_previous.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        datePicker.setVisibility(View.VISIBLE);
+                        timePicker.setVisibility(View.GONE);
+                        date_time_previous.setVisibility(View.GONE);
+                        date_time_next.setVisibility(View.VISIBLE);
+                        date_time_set.setVisibility(View.GONE);
+                    }
+                });
+                date_time_set.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int hour, minute;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            hour = timePicker.getHour();
+                            minute = timePicker.getMinute();
+                        }else {
+                            //noinspection deprecation
+                            hour = timePicker.getCurrentHour();
+                            //noinspection deprecation
+                            minute = timePicker.getCurrentMinute();
+                        }
+                        Calendar calendar = new GregorianCalendar(datePicker.getYear(),
+                                datePicker.getMonth(),
+                                datePicker.getDayOfMonth(),
+                                hour,
+                                minute);
+                        long time = calendar.getTimeInMillis();
+                        if( (time - new Date().getTime()) < 60000 ){
+                            Toast.makeText(context, R.string.toot_scheduled_date, Toast.LENGTH_LONG).show();
+                        }else {
+                            //Schedules the toot to the new date
+                            try {
+                                //Removes the job
+                                ApplicationJob.cancelJob(storedStatus.getJobId());
+                                //Replace it by the new one
+                                ScheduledTootsSyncJob.schedule(context, storedStatus.getId(), time);
+                                StoredStatus storedStatusnew = new StatusStoredDAO(context, db).getStatus(storedStatus.getId());
+                                //Date displayed is changed
+                                storedStatus.setScheduled_date(storedStatusnew.getScheduled_date());
+                                scheduledTootsListAdapter.notifyDataSetChanged();
+                                //Notifiy all is ok
+                                Toast.makeText(context,R.string.toot_scheduled, Toast.LENGTH_LONG).show();
+                            }catch (Exception ignored){}
+                            alertDialog.dismiss();
+                        }
+                    }
+                });
+
+                alertDialog.show();
             }
         });
         holder.scheduled_toot_title.setText(status.getContent());
@@ -202,7 +307,6 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
 
         return convertView;
     }
-
 
     private class ViewHolder {
         CardView scheduled_toot_container;

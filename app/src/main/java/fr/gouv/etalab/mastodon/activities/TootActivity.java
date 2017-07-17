@@ -176,10 +176,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
             changeDrawableColor(TootActivity.this, R.drawable.ic_action_globe,R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_action_camera,R.color.dark_text);
-
-            changeDrawableColor(TootActivity.this, R.drawable.ic_skip_previous,R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next,R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_check,R.color.dark_text);
         }else {
             changeDrawableColor(TootActivity.this, R.drawable.ic_action_globe,R.color.black);
             changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_open,R.color.black);
@@ -188,32 +184,10 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
             changeDrawableColor(TootActivity.this, R.drawable.ic_action_globe,R.color.black);
             changeDrawableColor(TootActivity.this, R.drawable.ic_action_camera,R.color.black);
-
-
-            changeDrawableColor(TootActivity.this, R.drawable.ic_skip_previous,R.color.black);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next,R.color.black);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_check,R.color.black);
         }
 
         final LinearLayout drawer_layout = (LinearLayout) findViewById(R.id.drawer_layout);
 
-        /*drawer_layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                int heightDiff = drawer_layout.getRootView().getHeight() - drawer_layout.getHeight();
-                if (heightDiff > 100) {
-                    ViewGroup.LayoutParams params = toot_picture_container.getLayoutParams();
-                    params.height = (int) Helper.convertDpToPixel(20, getApplicationContext());
-                    params.width = (int) Helper.convertDpToPixel(20, getApplicationContext());
-                    toot_picture_container.setLayoutParams(params);
-                } else {
-                    ViewGroup.LayoutParams params = toot_picture_container.getLayoutParams();
-                    params.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
-                    params.width = (int) Helper.convertDpToPixel(100, getApplicationContext());
-                    toot_picture_container.setLayoutParams(params);
-                }
-            }
-        });*/
 
         drawer_layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -616,6 +590,17 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TootActivity.this);
                 LayoutInflater inflater = this.getLayoutInflater();
                 View dialogView = inflater.inflate(R.layout.datetime_picker, null);
+                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                if( theme == Helper.THEME_DARK){
+                    changeDrawableColor(TootActivity.this, R.drawable.ic_skip_previous,R.color.dark_text);
+                    changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next,R.color.dark_text);
+                    changeDrawableColor(TootActivity.this, R.drawable.ic_check,R.color.dark_text);
+                }else {
+                    changeDrawableColor(TootActivity.this, R.drawable.ic_skip_previous,R.color.black);
+                    changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next,R.color.black);
+                    changeDrawableColor(TootActivity.this, R.drawable.ic_check,R.color.black);
+                }
                 dialogBuilder.setView(dialogView);
                 final AlertDialog alertDialog = dialogBuilder.create();
 
@@ -678,7 +663,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                             //Store the toot as draft first
                             storeToot(false);
                             //Schedules the toot
-                            ScheduledTootsSyncJob.schedule(getApplicationContext(), false, currentToId, time);
+                            ScheduledTootsSyncJob.schedule(getApplicationContext(), currentToId, time);
                             //Clear content
                             toot_content.setText("");
                             toot_cw_content.setText("");

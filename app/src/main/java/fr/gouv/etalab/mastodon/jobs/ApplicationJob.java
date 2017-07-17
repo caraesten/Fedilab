@@ -41,7 +41,7 @@ public class ApplicationJob implements JobCreator {
         JobManager.instance().cancelAllForTag(TAG);
     }
 
-    private void cancelJob(int jobId) {
+    public static void cancelJob(int jobId) {
         JobManager.instance().cancel(jobId);
     }
 }

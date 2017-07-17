@@ -24,11 +24,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+
+import com.evernote.android.job.JobManager;
+import com.evernote.android.job.JobRequest;
+
 import java.util.List;
+import java.util.Set;
+
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveScheduledTootsAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
 import fr.gouv.etalab.mastodon.drawers.ScheduledTootsListAdapter;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveScheduledTootsInterface;
+import fr.gouv.etalab.mastodon.jobs.ScheduledTootsSyncJob;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -98,8 +105,9 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
 
         mainLoader.setVisibility(View.GONE);
         if( storedStatuses != null && storedStatuses.size() > 0 ){
-            ScheduledTootsListAdapter scheduledTootsListAdapter = new ScheduledTootsListAdapter(context, storedStatuses);
+            ScheduledTootsListAdapter scheduledTootsListAdapter = new ScheduledTootsListAdapter(context, storedStatuses, textviewNoAction);
             lv_scheduled_toots.setAdapter(scheduledTootsListAdapter);
+            textviewNoAction.setVisibility(View.GONE);
         }else {
             textviewNoAction.setVisibility(View.VISIBLE);
         }

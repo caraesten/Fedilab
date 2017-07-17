@@ -17,6 +17,8 @@ package fr.gouv.etalab.mastodon.jobs;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
+import android.util.Log;
+
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobRequest;
 import java.util.Date;
@@ -26,6 +28,7 @@ import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
@@ -38,7 +41,7 @@ import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 
 public class ScheduledTootsSyncJob extends Job {
 
-    static final String SCHEDULED_TOOT = "job_scheduled_toot";
+    public static final String SCHEDULED_TOOT = "job_scheduled_toot";
 
     @NonNull
     @Override
@@ -52,7 +55,7 @@ public class ScheduledTootsSyncJob extends Job {
             String userId = storedStatus.getUserId();
             String instance = storedStatus.getInstance();
             if( instance != null && userId != null){
-            Account account = new AccountDAO(getContext(), db).getAccountByUserIDInstance(userId, instance);
+                Account account = new AccountDAO(getContext(), db).getAccountByUserIDInstance(userId, instance);
                 if( account != null){
                     //Retrieves the linked status to toot
                     Status status = storedStatus.getStatus();
@@ -70,7 +73,7 @@ public class ScheduledTootsSyncJob extends Job {
     }
 
 
-    public static int schedule(Context context, boolean updateCurrent, long id, long timestampScheduling){
+    public static int schedule(Context context, long id, long timestampScheduling){
 
         long startMs = (timestampScheduling -  new Date().getTime());
         long endMs = startMs + TimeUnit.MINUTES.toMillis(5);
@@ -79,7 +82,7 @@ public class ScheduledTootsSyncJob extends Job {
         int jobId = new  JobRequest.Builder(ScheduledTootsSyncJob.SCHEDULED_TOOT)
                 .setExecutionWindow(startMs, endMs)
                 .setPersisted(true)
-                .setUpdateCurrent(updateCurrent)
+                .setUpdateCurrent(false)
                 .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
                 .setRequirementsEnforced(false)
                 .build()

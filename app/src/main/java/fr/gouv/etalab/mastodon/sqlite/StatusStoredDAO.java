@@ -96,6 +96,19 @@ public class StatusStoredDAO {
                 new String[]{String.valueOf(id)});
     }
 
+    /**
+     * Update a Status in database
+     * @param id long
+     * @param jobId int
+     * @return int
+     */
+    public int updateJobId(long id, int jobId) {
+        ContentValues values = new ContentValues();
+        values.put(Sqlite.COL_IS_SCHEDULED, jobId);
+        return db.update(Sqlite.TABLE_STATUSES_STORED,
+                values, Sqlite.COL_ID + " =  ? ",
+                new String[]{String.valueOf(id)});
+    }
 
     /**
      * Schedule a status in db
@@ -159,7 +172,7 @@ public class StatusStoredDAO {
     }
 
     public int removeAllSent(){
-        return db.delete(Sqlite.TABLE_STATUSES_STORED,  Sqlite.COL_IS_SCHEDULED + " > 0 AND "  + Sqlite.COL_SENT + " = 1", null);
+        return db.delete(Sqlite.TABLE_STATUSES_STORED,  Sqlite.COL_IS_SCHEDULED + " != 0 AND "  + Sqlite.COL_SENT + " = 1", null);
     }
 
     //------- GETTERS  -------
@@ -206,7 +219,7 @@ public class StatusStoredDAO {
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             String instance = Helper.getLiveInstance(context);
-            Cursor c = db.query(Sqlite.TABLE_STATUSES_STORED, null, Sqlite.COL_USER_ID + " = '" + userId+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_IS_SCHEDULED + " > 0 AND " + Sqlite.COL_SENT + " = 0", null, null, null, Sqlite.COL_DATE_SCHEDULED + " ASC", null);
+            Cursor c = db.query(Sqlite.TABLE_STATUSES_STORED, null, Sqlite.COL_USER_ID + " = '" + userId+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_IS_SCHEDULED + " != 0 AND " + Sqlite.COL_SENT + " = 0", null, null, null, Sqlite.COL_DATE_SCHEDULED + " ASC", null);
             return cursorToListStatuses(c);
         } catch (Exception e) {
             return null;
@@ -221,7 +234,7 @@ public class StatusStoredDAO {
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             String instance = Helper.getLiveInstance(context);
-            Cursor c = db.query(Sqlite.TABLE_STATUSES_STORED, null, Sqlite.COL_USER_ID + " = '" + userId+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " +Sqlite.COL_IS_SCHEDULED + " = 1 AND " + Sqlite.COL_SENT + " = 0", null, null, null, Sqlite.COL_DATE_CREATION + " DESC", null);
+            Cursor c = db.query(Sqlite.TABLE_STATUSES_STORED, null, Sqlite.COL_USER_ID + " = '" + userId+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " +Sqlite.COL_IS_SCHEDULED + " != 0 AND " + Sqlite.COL_SENT + " = 0", null, null, null, Sqlite.COL_DATE_CREATION + " DESC", null);
             return cursorToListStatuses(c);
         } catch (Exception e) {
             return null;
@@ -237,7 +250,7 @@ public class StatusStoredDAO {
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             String instance = Helper.getLiveInstance(context);
-            Cursor c = db.query(Sqlite.TABLE_STATUSES_STORED, null, Sqlite.COL_USER_ID + " = '" + userId+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " +Sqlite.COL_IS_SCHEDULED + " = 1 AND " + Sqlite.COL_SENT + " = 1", null, null, null, Sqlite.COL_DATE_CREATION + " DESC", null);
+            Cursor c = db.query(Sqlite.TABLE_STATUSES_STORED, null, Sqlite.COL_USER_ID + " = '" + userId+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " +Sqlite.COL_IS_SCHEDULED + " != 0 AND " + Sqlite.COL_SENT + " = 1", null, null, null, Sqlite.COL_DATE_CREATION + " DESC", null);
             return cursorToListStatuses(c);
         } catch (Exception e) {
             return null;
@@ -292,6 +305,8 @@ public class StatusStoredDAO {
         storedStatus.setCreation_date(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_DATE_CREATION))));
         storedStatus.setScheduled_date(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_DATE_SCHEDULED))));
         storedStatus.setSent_date(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_DATE_SENT))));
+        storedStatus.setUserId(c.getString(c.getColumnIndex(Sqlite.COL_USER_ID)));
+        storedStatus.setInstance(c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE)));
         //Close the cursor
         c.close();
         //Stored status is returned
@@ -319,6 +334,8 @@ public class StatusStoredDAO {
             storedStatus.setCreation_date(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_DATE_CREATION))));
             storedStatus.setScheduled_date(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_DATE_SCHEDULED))));
             storedStatus.setSent_date(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_DATE_SENT))));
+            storedStatus.setUserId(c.getString(c.getColumnIndex(Sqlite.COL_USER_ID)));
+            storedStatus.setInstance(c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE)));
             storedStatuses.add(storedStatus);
         }
         //Close the cursor

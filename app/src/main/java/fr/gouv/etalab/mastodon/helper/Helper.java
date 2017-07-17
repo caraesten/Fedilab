@@ -1229,13 +1229,36 @@ public class Helper {
         }
     }
 
+    /**
+     * Serialized a Status class
+     * @param status Status to serialize
+     * @return String serialized Status
+     */
     public static String statusToStringStorage(Status status){
         Gson gson = new Gson();
         return gson.toJson(status);
     }
 
+    /**
+     * Unserialized a Status
+     * @param serializedStatus String serialized status
+     * @return Status
+     */
     public static Status restoreStatusFromString(String serializedStatus){
         Gson gson = new Gson();
         return gson.fromJson(serializedStatus, Status.class);
+    }
+
+    /**
+     * Check if a job id is in array of ids
+     * @param jobIds int[]
+     * @param id int id to check
+     * @return boolean
+     */
+    public static boolean isJobPresent(int[] jobIds, int id){
+        for(int x:jobIds) {
+            if (x == id) {return true;}
+        }
+        return false;
     }
 }

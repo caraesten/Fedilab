@@ -141,7 +141,7 @@ public class AccountDAO {
      */
     public Account getAccountByUserIDInstance(String accountId, String instance){
         try {
-            Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null, Sqlite.COL_USER_ID + " = '" + accountId + "' AND " + Sqlite.COL_INSTANCE + "= '"+ Sqlite.COL_INSTANCE +"'", null, null, null, null, "1");
+            Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null, Sqlite.COL_USER_ID + " = '" + accountId + "' AND " + Sqlite.COL_INSTANCE + "= '"+ instance +"'", null, null, null, null, "1");
             return cursorToUser(c);
         } catch (Exception e) {
             return null;
