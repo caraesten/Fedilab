@@ -26,7 +26,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 @SuppressWarnings("WeakerAccess")
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 2;
+    public static final int DB_VERSION = 3;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -72,6 +72,7 @@ public class Sqlite extends SQLiteOpenHelper {
 
     public static final String COL_ID = "ID";
     public static final String COL_STATUS_SERIALIZED = "STATUS_SERIALIZED";
+    public static final String COL_STATUS_REPLY_SERIALIZED = "STATUS_REPLY_SERIALIZED";
     public static final String COL_DATE_CREATION = "DATE_CREATION";
     public static final String COL_IS_SCHEDULED = "IS_SCHEDULED";
     public static final String COL_DATE_SCHEDULED = "DATE_SCHEDULED";
@@ -110,6 +111,8 @@ public class Sqlite extends SQLiteOpenHelper {
         switch (oldVersion) {
             case 1:
                 db.execSQL(CREATE_TABLE_STATUSES_STORED);
+            case 2:
+                db.execSQL("ALTER TABLE " + TABLE_STATUSES_STORED + " ADD COLUMN " + COL_STATUS_REPLY_SERIALIZED + " TEXT");
             default:
                 break;
         }

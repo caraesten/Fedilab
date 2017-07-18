@@ -190,6 +190,7 @@
     <string name="media_count">Média(s): %d</string>
     <string name="toot_scheduled">Le pouet a été programmé !</string>
     <string name="toot_scheduled_date">La date doit être supérieure à l\'heure actuelle !</string>
+    <string name="warning_battery">L\'économiseur de batterie est activé ! Il se peut que cela ne fonctionne pas comme prévu.</string>
 
     <!-- Notifications -->
     <string name="no_notifications">Aucune notification à afficher</string>

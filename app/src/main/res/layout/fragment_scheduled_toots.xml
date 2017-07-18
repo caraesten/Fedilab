@@ -31,6 +31,29 @@
         android:divider="@null"
         >
     </ListView>
+    <TextView
+        android:id="@+id/warning_battery_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_action_warning"
+        android:drawableStart="@drawable/ic_action_warning"
+        android:drawableRight="@drawable/ic_cancel"
+        android:drawableEnd="@drawable/ic_cancel"
+        android:drawablePadding="5dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:clickable="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginRight="100dp"
+        android:textColor="?attr/colorAccent"
+        android:textStyle="italic"
+        android:textSize="12sp"
+        android:text="@string/warning_battery"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentBottom="true"
+        />
     <RelativeLayout
         android:id="@+id/no_action"
         android:visibility="gone"

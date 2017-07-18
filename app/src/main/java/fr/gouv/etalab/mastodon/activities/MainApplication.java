@@ -14,6 +14,7 @@ package fr.gouv.etalab.mastodon.activities;
  * You should have received a copy of the GNU General Public License along with Thomas Schneider; if not,
  * see <http://www.gnu.org/licenses>. */
 import android.app.Application;
+import android.os.StrictMode;
 
 import com.evernote.android.job.JobManager;
 
@@ -36,5 +37,8 @@ public class MainApplication extends Application{
         JobManager.instance().getConfig().setVerbose(false);
         NotificationsSyncJob.schedule(false);
         HomeTimelineSyncJob.schedule(false);
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+
     }
 }
