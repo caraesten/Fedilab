@@ -14,31 +14,36 @@ package fr.gouv.etalab.mastodon.fragments;
  * You should have received a copy of the GNU General Public License along with Thomas Schneider; if not,
  * see <http://www.gnu.org/licenses>. */
 
+import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-
-import com.evernote.android.job.JobManager;
-import com.evernote.android.job.JobRequest;
-
+import android.widget.TextView;
 import java.util.List;
-import java.util.Set;
-
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveScheduledTootsAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
 import fr.gouv.etalab.mastodon.drawers.ScheduledTootsListAdapter;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveScheduledTootsInterface;
-import fr.gouv.etalab.mastodon.jobs.ScheduledTootsSyncJob;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import mastodon.etalab.gouv.fr.mastodon.R;
+import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
 /**
@@ -52,6 +57,7 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
     private AsyncTask<Void, Void, Void> asyncTask;
     private RelativeLayout mainLoader, textviewNoAction;
     private ListView lv_scheduled_toots;
+    private TextView warning_battery_message;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,6 +68,7 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
         lv_scheduled_toots = (ListView) rootView.findViewById(R.id.lv_scheduled_toots);
 
         mainLoader = (RelativeLayout) rootView.findViewById(R.id.loader);
+        warning_battery_message = (TextView) rootView.findViewById(R.id.warning_battery_message);
         textviewNoAction = (RelativeLayout) rootView.findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
 
@@ -77,6 +84,61 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
         super.onResume();
         //Retrieves scheduled toots
         asyncTask = new RetrieveScheduledTootsAsyncTask(context, DisplayScheduledTootsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            final PowerManager powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            //Battery saver is one and user never asked to stop showing the message
+            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+            if( theme == Helper.THEME_DARK) {
+                changeDrawableColor(context, R.drawable.ic_action_warning, R.color.colorAccentD);
+                changeDrawableColor(context, R.drawable.ic_cancel, R.color.colorAccentD);
+            }else {
+                changeDrawableColor(context, R.drawable.ic_action_warning, R.color.colorAccent);
+                changeDrawableColor(context, R.drawable.ic_cancel, R.color.colorAccent);
+            }
+            if( powerManager.isPowerSaveMode() && sharedpreferences.getBoolean(Helper.SHOW_BATTERY_SAVER_MESSAGE,true)){
+                warning_battery_message.setVisibility(View.VISIBLE);
+            }else {
+                warning_battery_message.setVisibility(View.GONE);
+            }
+            warning_battery_message.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    final int DRAWABLE_RIGHT = 2;
+                    if(event.getAction() == MotionEvent.ACTION_UP) {
+                        if(event.getRawX() >= (warning_battery_message.getRight() - warning_battery_message.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                            editor.putBoolean(Helper.SHOW_BATTERY_SAVER_MESSAGE, false);
+                            editor.apply();
+                            warning_battery_message.setVisibility(View.GONE);
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            });
+            warning_battery_message.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("BatteryLife")
+                @Override
+                public void onClick(View v) {
+                    try {
+                        Intent battSaverIntent = new Intent();
+                        battSaverIntent.setComponent(new ComponentName("com.android.settings", "com.android.settings.Settings$BatterySaverSettingsActivity"));
+                        startActivityForResult(battSaverIntent, 0);
+                    }catch (ActivityNotFoundException e){
+                        try {
+                            Intent batterySaverIntent;
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
+                                batterySaverIntent = new Intent(Settings.ACTION_BATTERY_SAVER_SETTINGS);
+                                startActivity(batterySaverIntent);
+                            }
+                        }catch (ActivityNotFoundException ignored){}
+                    }
+                }
+            });
+        }else {
+            warning_battery_message.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -97,7 +159,6 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
         if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
     }
-
 
 
     @Override

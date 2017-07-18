@@ -196,7 +196,7 @@
     <string name="media_count">Media: %d</string>
     <string name="toot_scheduled">The toot has been scheduled!</string>
     <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
-
+    <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
     <!-- Notifications -->
     <string name="no_notifications">No notification to display</string>
     <string name="notif_mention">mentioned your status</string>

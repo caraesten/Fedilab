@@ -34,7 +34,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -59,7 +58,6 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -96,7 +94,6 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
-
 
 /**
  * Created by Thomas on 01/05/2017.
@@ -169,9 +166,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         toot_lv_accounts = (ListView) findViewById(R.id.toot_lv_accounts);
         toot_sensitive = (CheckBox) findViewById(R.id.toot_sensitive);
 
-
         final LinearLayout drawer_layout = (LinearLayout) findViewById(R.id.drawer_layout);
-
 
         drawer_layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -242,7 +237,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(search_validate, new IntentFilter(Helper.SEARCH_VALIDATE_ACCOUNT));
 
-
         FloatingActionButton toot_close_accounts = (FloatingActionButton) findViewById(R.id.toot_close_accounts);
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
@@ -303,7 +297,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 tootVisibilityDialog();
             }
         });
-
 
         toot_it.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -429,7 +422,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             }
         }else if(requestCode == Helper.REQ_CODE_SPEECH_INPUT && resultCode == Activity.RESULT_OK){
             if (null != data) {
-
                 ArrayList<String> result = data
                         .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                 toot_content.setText(result.get(0));
@@ -725,7 +717,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
     private void tootVisibilityDialog(){
 
-
         AlertDialog.Builder dialog = new AlertDialog.Builder(TootActivity.this);
         dialog.setTitle(R.string.toot_visibility_tilte);
         final String[] stringArray = getResources().getStringArray(R.array.toot_visibility);
@@ -960,8 +951,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             }
             toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
         }
-
-
     }
 
 
