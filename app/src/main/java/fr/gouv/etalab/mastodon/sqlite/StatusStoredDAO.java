@@ -51,8 +51,7 @@ public class StatusStoredDAO {
      * @param status Status
      * @return boolean
      */
-    public long insertStatus(Status status)
-    {
+    public long insertStatus(Status status, Status statusReply) {
         ContentValues values = new ContentValues();
         String serializedStatus = Helper.statusToStringStorage(status);
 
@@ -61,6 +60,10 @@ public class StatusStoredDAO {
         String instance = Helper.getLiveInstance(context);
         if( userId == null || instance == null)
             return -1;
+        if( statusReply != null){
+            String serializedStatusReply = Helper.statusToStringStorage(statusReply);
+            values.put(Sqlite.COL_STATUS_REPLY_SERIALIZED, serializedStatusReply);
+        }
         values.put(Sqlite.COL_STATUS_SERIALIZED, serializedStatus);
         values.put(Sqlite.COL_DATE_CREATION, Helper.dateToString(context, new Date()));
         values.put(Sqlite.COL_IS_SCHEDULED, 0);
@@ -300,6 +303,8 @@ public class StatusStoredDAO {
         storedStatus.setId(c.getInt(c.getColumnIndex(Sqlite.COL_ID)));
         Status status = Helper.restoreStatusFromString(c.getString(c.getColumnIndex(Sqlite.COL_STATUS_SERIALIZED)));
         storedStatus.setStatus(status);
+        Status statusReply = Helper.restoreStatusFromString(c.getString(c.getColumnIndex(Sqlite.COL_STATUS_REPLY_SERIALIZED)));
+        storedStatus.setStatusReply(statusReply);
         storedStatus.setSent(c.getInt(c.getColumnIndex(Sqlite.COL_SENT)) == 1);
         storedStatus.setJobId(c.getInt(c.getColumnIndex(Sqlite.COL_IS_SCHEDULED)));
         storedStatus.setCreation_date(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_DATE_CREATION))));
@@ -329,6 +334,8 @@ public class StatusStoredDAO {
             storedStatus.setId(c.getInt(c.getColumnIndex(Sqlite.COL_ID)));
             Status status = Helper.restoreStatusFromString(c.getString(c.getColumnIndex(Sqlite.COL_STATUS_SERIALIZED)));
             storedStatus.setStatus(status);
+            Status statusReply = Helper.restoreStatusFromString(c.getString(c.getColumnIndex(Sqlite.COL_STATUS_REPLY_SERIALIZED)));
+            storedStatus.setStatusReply(statusReply);
             storedStatus.setSent(c.getInt(c.getColumnIndex(Sqlite.COL_SENT)) == 1);
             storedStatus.setJobId(c.getInt(c.getColumnIndex(Sqlite.COL_IS_SCHEDULED)) );
             storedStatus.setCreation_date(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_DATE_CREATION))));

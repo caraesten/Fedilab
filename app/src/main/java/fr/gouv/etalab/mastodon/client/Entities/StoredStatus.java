@@ -17,6 +17,7 @@ public class StoredStatus {
     private int jobId;
     private boolean isSent;
     private Status status;
+    private Status statusReply;
     private String instance;
     private String userId;
 
@@ -91,5 +92,13 @@ public class StoredStatus {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public Status getStatusReply() {
+        return statusReply;
+    }
+
+    public void setStatusReply(Status statusReply) {
+        this.statusReply = statusReply;
     }
 }
