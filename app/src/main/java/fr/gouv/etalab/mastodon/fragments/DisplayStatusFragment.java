@@ -112,7 +112,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         textviewNoAction = (RelativeLayout) rootView.findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
-        statusListAdapter = new StatusListAdapter(context, type, isOnWifi, behaviorWithAttachments, this.statuses);
+        statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, this.statuses);
         lv_status.setAdapter(statusListAdapter);
 
         if( !comesFromSearch){
@@ -279,7 +279,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         else
             textviewNoAction.setVisibility(View.GONE);
         if( swiped ){
-            statusListAdapter = new StatusListAdapter(context, type, isOnWifi, behaviorWithAttachments, this.statuses);
+            statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, this.statuses);
             lv_status.setAdapter(statusListAdapter);
             swiped = false;
         }

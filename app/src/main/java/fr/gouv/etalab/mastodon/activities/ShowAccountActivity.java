@@ -115,16 +115,9 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         }
         setContentView(R.layout.activity_show_account);
         instanceValue += 1;
-        imageLoader = ImageLoader.getInstance();
-        statuses = new ArrayList<>();
-        boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
-        int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-        statusListAdapter = new StatusListAdapter(getApplicationContext(), RetrieveFeedsAsyncTask.Type.USER, isOnWifi, behaviorWithAttachments, this.statuses);
-        options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+        Bundle b = getIntent().getExtras();
         account_follow = (Button) findViewById(R.id.account_follow);
         account_follow.setEnabled(false);
-        Bundle b = getIntent().getExtras();
         if(b != null){
             accountId = b.getString("accountId");
             new RetrieveRelationshipAsyncTask(getApplicationContext(), accountId,ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -136,6 +129,15 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         }else{
             Toast.makeText(this,R.string.toast_error_loading_account,Toast.LENGTH_LONG).show();
         }
+        imageLoader = ImageLoader.getInstance();
+        statuses = new ArrayList<>();
+        boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
+        int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+        statusListAdapter = new StatusListAdapter(getApplicationContext(), RetrieveFeedsAsyncTask.Type.USER, accountId, isOnWifi, behaviorWithAttachments, this.statuses);
+        options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
+                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+
+
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

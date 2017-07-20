@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.text.Html;
 import android.text.util.Linkify;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,8 +66,9 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
     private RetrieveAccountsAsyncTask.Type action;
     private Context context;
     private AccountsListAdapter accountsListAdapter;
+    private String targetedId;
 
-    public AccountsListAdapter(Context context, RetrieveAccountsAsyncTask.Type action, List<Account> accounts){
+    public AccountsListAdapter(Context context, RetrieveAccountsAsyncTask.Type action, String targetedId, List<Account> accounts){
         this.context = context;
         this.accounts = accounts;
         layoutInflater = LayoutInflater.from(context);
@@ -75,6 +77,7 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
         this.action = action;
         this.accountsListAdapter = this;
+        this.targetedId = targetedId;
     }
 
 
@@ -174,11 +177,15 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
         holder.account_pp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ShowAccountActivity.class);
-                Bundle b = new Bundle();
-                b.putString("accountId", account.getId());
-                intent.putExtras(b);
-                context.startActivity(intent);
+                //Avoid to reopen details about the current account
+                if( targetedId == null || !targetedId.equals(account.getId())){
+                    Intent intent = new Intent(context, ShowAccountActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("accountId", account.getId());
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+
             }
         });
         return convertView;

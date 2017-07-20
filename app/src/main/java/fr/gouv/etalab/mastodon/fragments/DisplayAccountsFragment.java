@@ -22,7 +22,6 @@ import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,7 +102,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         textviewNoAction = (RelativeLayout) rootView.findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
-        accountsListAdapter = new AccountsListAdapter(context, type, this.accounts);
+        accountsListAdapter = new AccountsListAdapter(context, type, targetedId, this.accounts);
         lv_accounts.setAdapter(accountsListAdapter);
 
         if( !comesFromSearch) {
@@ -257,7 +256,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
             textviewNoAction.setVisibility(View.GONE);
         max_id = apiResponse.getMax_id();
         if( swiped ){
-            accountsListAdapter = new AccountsListAdapter(context, type, this.accounts);
+            accountsListAdapter = new AccountsListAdapter(context, type,targetedId, this.accounts);
             lv_accounts.setAdapter(accountsListAdapter);
             swiped = false;
         }
