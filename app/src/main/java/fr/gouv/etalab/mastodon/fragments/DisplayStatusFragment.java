@@ -69,6 +69,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private ListView lv_status;
     private boolean isOnWifi;
     private int behaviorWithAttachments;
+    private String instanceValue;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,6 +85,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             targetedId = bundle.getString("targetedId", null);
             tag = bundle.getString("tag", null);
             hideHeader = bundle.getBoolean("hideHeader", false);
+            instanceValue = bundle.getString("hideHeaderValue", null);
             if( bundle.containsKey("statuses")){
                 ArrayList<Parcelable> statusesReceived = bundle.getParcelableArrayList("statuses");
                 assert statusesReceived != null;
@@ -126,19 +128,15 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
                     @Override
                     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                        if( firstVisibleItem == 0) {
-                            Intent intent = new Intent(Helper.HEADER_ACCOUNT);
-                            intent.putExtra("hide", false);
-                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-                        }else if (view.getId() == lv_status.getId() && totalItemCount > visibleItemCount) {
+                        if (view.getId() == lv_status.getId() && totalItemCount > visibleItemCount) {
                             final int currentFirstVisibleItem = lv_status.getFirstVisiblePosition();
 
                             if (currentFirstVisibleItem > lastFirstVisibleItem) {
-                                Intent intent = new Intent(Helper.HEADER_ACCOUNT);
+                                Intent intent = new Intent(Helper.HEADER_ACCOUNT+instanceValue);
                                 intent.putExtra("hide", true);
                                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                             } else if (currentFirstVisibleItem < lastFirstVisibleItem) {
-                                Intent intent = new Intent(Helper.HEADER_ACCOUNT);
+                                Intent intent = new Intent(Helper.HEADER_ACCOUNT+instanceValue);
                                 intent.putExtra("hide", false);
                                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                             }

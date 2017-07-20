@@ -82,7 +82,7 @@ public class Sqlite extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_STATUSES_STORED = "CREATE TABLE " + TABLE_STATUSES_STORED + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_USER_ID + " TEXT NOT NULL, " + COL_INSTANCE + " TEXT NOT NULL, "
-            + COL_STATUS_SERIALIZED + " TEXT NOT NULL, " + COL_DATE_CREATION + " TEXT NOT NULL, "
+            + COL_STATUS_SERIALIZED + " TEXT NOT NULL, " + COL_STATUS_REPLY_SERIALIZED + " TEXT, " + COL_DATE_CREATION + " TEXT NOT NULL, "
             + COL_IS_SCHEDULED + " INTEGER NOT NULL, " + COL_DATE_SCHEDULED + " TEXT, "
             + COL_SENT + " INTEGER NOT NULL, " + COL_DATE_SENT + " TEXT)";
 
@@ -112,7 +112,8 @@ public class Sqlite extends SQLiteOpenHelper {
             case 1:
                 db.execSQL(CREATE_TABLE_STATUSES_STORED);
             case 2:
-                db.execSQL("ALTER TABLE " + TABLE_STATUSES_STORED + " ADD COLUMN " + COL_STATUS_REPLY_SERIALIZED + " TEXT");
+                db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATUSES_STORED);
+                db.execSQL(CREATE_TABLE_STATUSES_STORED);
             default:
                 break;
         }
