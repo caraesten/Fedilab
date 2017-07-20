@@ -478,9 +478,21 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 if( confirmation )
                     displayConfirmationDialog(REBLOG,status);
                 else
-                    favouriteAction(status);
+                    reblogAction(status);
             }
         });
+        switch (status.getVisibility()){
+            case "direct":
+            case "private":
+                holder.status_reblog_count.setVisibility(View.GONE);
+                break;
+            case "public":
+            case "unlisted":
+                holder.status_reblog_count.setVisibility(View.VISIBLE);
+                break;
+            default:
+                holder.status_reblog_count.setVisibility(View.VISIBLE);
+        }
 
         holder.status_more.setOnClickListener(new View.OnClickListener() {
             @Override

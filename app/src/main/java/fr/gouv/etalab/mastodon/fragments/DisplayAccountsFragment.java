@@ -22,6 +22,7 @@ import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +62,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
     private String targetedId;
     private boolean swiped;
     private ListView lv_accounts;
-
+    private String instanceValue;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,6 +78,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
             type = (RetrieveAccountsAsyncTask.Type) bundle.get("type");
             targetedId = bundle.getString("targetedId", null);
             hideHeader = bundle.getBoolean("hideHeader", false);
+            instanceValue = bundle.getString("hideHeaderValue", null);
             if( bundle.containsKey("accounts")){
                 ArrayList<Parcelable> accountsReceived = bundle.getParcelableArrayList("accounts");
                 assert accountsReceived != null;
@@ -117,19 +119,15 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
                     @Override
                     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
-                        if( firstVisibleItem == 0) {
-                            Intent intent = new Intent(Helper.HEADER_ACCOUNT);
-                            intent.putExtra("hide", false);
-                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-                        }else if (view.getId() == lv_accounts.getId() && totalItemCount > visibleItemCount) {
+                        if (view.getId() == lv_accounts.getId() && totalItemCount > visibleItemCount) {
                             final int currentFirstVisibleItem = lv_accounts.getFirstVisiblePosition();
 
                             if (currentFirstVisibleItem > lastFirstVisibleItem) {
-                                Intent intent = new Intent(Helper.HEADER_ACCOUNT);
+                                Intent intent = new Intent(Helper.HEADER_ACCOUNT + instanceValue);
                                 intent.putExtra("hide", true);
                                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                             } else if (currentFirstVisibleItem < lastFirstVisibleItem) {
-                                Intent intent = new Intent(Helper.HEADER_ACCOUNT);
+                                Intent intent = new Intent(Helper.HEADER_ACCOUNT + instanceValue);
                                 intent.putExtra("hide", false);
                                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                             }

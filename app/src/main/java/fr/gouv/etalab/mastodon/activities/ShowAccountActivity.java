@@ -91,7 +91,8 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     private BroadcastReceiver hide_header;
     private TextView account_note;
     private String userId;
-    private static boolean isHiddingShowing = false;
+    private boolean isHiddingShowing = false;
+    private static int instanceValue = 0;
 
     public enum action{
         FOLLOW,
@@ -113,7 +114,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
             setTheme(R.style.AppThemeDark);
         }
         setContentView(R.layout.activity_show_account);
-
+        instanceValue += 1;
         imageLoader = ImageLoader.getInstance();
         statuses = new ArrayList<>();
         boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
@@ -220,12 +221,12 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                         public void run() {
                             isHiddingShowing = false;
                         }
-                    }, 1000);
+                    }, 500);
                 }
 
             }
         };
-        LocalBroadcastManager.getInstance(this).registerReceiver(hide_header, new IntentFilter(Helper.HEADER_ACCOUNT));
+        LocalBroadcastManager.getInstance(this).registerReceiver(hide_header, new IntentFilter(Helper.HEADER_ACCOUNT+String.valueOf(instanceValue)));
 
         //Follow button
         account_follow.setOnClickListener(new View.OnClickListener() {
@@ -380,6 +381,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
                     bundle.putString("targetedId", accountId);
                     bundle.putBoolean("hideHeader",true);
+                    bundle.putString("hideHeaderValue",String.valueOf(instanceValue));
                     displayStatusFragment.setArguments(bundle);
                     return displayStatusFragment;
                 case 1:
@@ -387,6 +389,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                     bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWING);
                     bundle.putString("targetedId", accountId);
                     bundle.putBoolean("hideHeader",true);
+                    bundle.putString("hideHeaderValue",String.valueOf(instanceValue));
                     displayAccountsFragment.setArguments(bundle);
                     return displayAccountsFragment;
                 case 2:
@@ -394,6 +397,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                     bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWERS);
                     bundle.putString("targetedId", accountId);
                     bundle.putBoolean("hideHeader",true);
+                    bundle.putString("hideHeaderValue",String.valueOf(instanceValue));
                     displayAccountsFragment.setArguments(bundle);
                     return displayAccountsFragment;
             }

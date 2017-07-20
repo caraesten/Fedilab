@@ -14,10 +14,13 @@ package fr.gouv.etalab.mastodon.drawers;
  * You should have received a copy of the GNU General Public License along with Thomas Schneider; if not,
  * see <http://www.gnu.org/licenses>. */
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -30,16 +33,22 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
+import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
+import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
@@ -52,19 +61,23 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class NotificationsListAdapter extends BaseAdapter  {
+public class NotificationsListAdapter extends BaseAdapter implements OnPostActionInterface {
 
     private Context context;
     private List<Notification> notifications;
     private LayoutInflater layoutInflater;
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
+    private final int REBLOG = 1;
+    private final int FAVOURITE = 2;
+    private NotificationsListAdapter notificationsListAdapter;
 
     public NotificationsListAdapter(Context context, List<Notification> notifications){
         this.context = context;
         this.notifications = notifications;
         layoutInflater = LayoutInflater.from(this.context);
         imageLoader = ImageLoader.getInstance();
+        notificationsListAdapter = this;
         options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
     }
@@ -130,7 +143,7 @@ public class NotificationsListAdapter extends BaseAdapter  {
         }
         holder.notification_type.setText(typeString);
 
-
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         final Status status = notification.getStatus();
         if( status != null ){
@@ -138,7 +151,6 @@ public class NotificationsListAdapter extends BaseAdapter  {
                 holder.status_document_container.setVisibility(View.GONE);
             else
                 holder.status_document_container.setVisibility(View.VISIBLE);
-
             if( (status.getIn_reply_to_account_id() != null && !status.getIn_reply_to_account_id().equals("null")) || (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null")) ){
                 Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_reply);
                 img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (15 * scale + 0.5f));
@@ -161,7 +173,7 @@ public class NotificationsListAdapter extends BaseAdapter  {
             holder.status_date.setText(Helper.dateDiff(context, status.getCreated_at()));
 
             //Manages theme for icon colors
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
             if( theme == Helper.THEME_DARK){
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_text);
@@ -171,6 +183,7 @@ public class NotificationsListAdapter extends BaseAdapter  {
                 changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.dark_text);
+                changeDrawableColor(context, R.drawable.ic_retweet,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_fav_black,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
@@ -182,6 +195,7 @@ public class NotificationsListAdapter extends BaseAdapter  {
                 changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.black);
+                changeDrawableColor(context, R.drawable.ic_retweet,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_fav_black,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_photo,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.black);
@@ -214,6 +228,18 @@ public class NotificationsListAdapter extends BaseAdapter  {
                     holder.status_privacy.setImageResource(R.drawable.ic_local_post_office);
                     break;
             }
+            switch (status.getVisibility()){
+                case "direct":
+                case "private":
+                    holder.status_reblog_count.setVisibility(View.GONE);
+                    break;
+                case "public":
+                case "unlisted":
+                    holder.status_reblog_count.setVisibility(View.VISIBLE);
+                    break;
+                default:
+                    holder.status_reblog_count.setVisibility(View.VISIBLE);
+            }
             Drawable imgFav, imgReblog;
             if( status.isFavourited())
                 imgFav = ContextCompat.getDrawable(context, R.drawable.ic_fav_yellow);
@@ -234,6 +260,28 @@ public class NotificationsListAdapter extends BaseAdapter  {
         }
 
 
+        holder.status_favorite_count.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                boolean confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
+                if( confirmation )
+                    displayConfirmationDialog(FAVOURITE,status);
+                else
+                    favouriteAction(status);
+            }
+        });
+
+        holder.status_reblog_count.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
+                if( confirmation )
+                    displayConfirmationDialog(REBLOG,status);
+                else
+                    reblogAction(status);
+            }
+        });
 
         holder.notification_account_profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -245,6 +293,7 @@ public class NotificationsListAdapter extends BaseAdapter  {
                 context.startActivity(intent);
             }
         });
+
         holder.status_reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -256,11 +305,100 @@ public class NotificationsListAdapter extends BaseAdapter  {
             }
         });
 
+
         holder.notification_account_displayname.setText(Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true));
         holder.notification_account_username.setText( String.format("@%s",notification.getAccount().getUsername()));
         //Profile picture
         imageLoader.displayImage(notification.getAccount().getAvatar(), holder.notification_account_profile, options);
         return convertView;
+    }
+
+    /**
+     * Display a validation message
+     * @param action int
+     * @param status Status
+     */
+    private void displayConfirmationDialog(final int action, final Status status){
+
+        String title = null;
+        if( action == FAVOURITE){
+            if( status.isFavourited())
+                title = context.getString(R.string.favourite_remove);
+            else
+                title = context.getString(R.string.favourite_add);
+        }else if( action == REBLOG ){
+            if( status.isReblogged())
+                title = context.getString(R.string.reblog_remove);
+            else
+                title = context.getString(R.string.reblog_add);
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            builder.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_COMPACT));
+        else
+            //noinspection deprecation
+            builder.setMessage(Html.fromHtml(status.getContent()));
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(title)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if( action == REBLOG)
+                            reblogAction(status);
+                        else if( action == FAVOURITE)
+                            favouriteAction(status);
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+
+                })
+                .show();
+    }
+
+    /**
+     * Favourites/Unfavourites a status
+     * @param status Status
+     */
+    private void favouriteAction(Status status){
+        if( status.isFavourited()){
+            new PostActionAsyncTask(context, API.StatusAction.UNFAVOURITE, status.getId(), NotificationsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            status.setFavourited(false);
+        }else{
+            new PostActionAsyncTask(context, API.StatusAction.FAVOURITE, status.getId(), NotificationsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            status.setFavourited(true);
+        }
+        notificationsListAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Reblog/Unreblog a status
+     * @param status Status
+     */
+    private void reblogAction(Status status){
+        if( status.isReblogged()){
+            new PostActionAsyncTask(context, API.StatusAction.UNREBLOG, status.getId(), NotificationsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            status.setReblogged(false);
+        }else{
+            new PostActionAsyncTask(context, API.StatusAction.REBLOG, status.getId(), NotificationsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            status.setReblogged(true);
+        }
+        notificationsListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onPostAction(int statusCode, API.StatusAction statusAction, String userId, Error error) {
+        if( error != null){
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages)
+                Toast.makeText(context, error.getError(),Toast.LENGTH_LONG).show();
+        }
     }
 
 
