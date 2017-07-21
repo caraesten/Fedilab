@@ -29,6 +29,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -54,6 +55,7 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Stack;
 
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -76,6 +78,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
+import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeUser;
 import static fr.gouv.etalab.mastodon.helper.Helper.loadPPInActionBar;
 import static fr.gouv.etalab.mastodon.helper.Helper.menuAccounts;
@@ -99,6 +102,10 @@ public class MainActivity extends AppCompatActivity
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private RelativeLayout main_app_container;
+    private Stack<Integer> stackBack = new Stack<>();
+
+    public MainActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +113,7 @@ public class MainActivity extends AppCompatActivity
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
 
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
             setTheme(R.style.AppTheme_NoActionBar);
         }else {
@@ -121,6 +128,17 @@ public class MainActivity extends AppCompatActivity
             startActivity(myIntent);
             finish();
             return;
+        }
+        if( theme == Helper.THEME_DARK){
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_action_home_tl,R.color.dark_text);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_action_users_tl,R.color.dark_text);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_action_globe_tl,R.color.dark_text);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_notifications_tl,R.color.dark_text);
+        }else {
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_action_home_tl,R.color.black);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_action_users_tl,R.color.black);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_action_globe_tl,R.color.black);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_notifications_tl,R.color.black);
         }
         Helper.fillMapEmoji(getApplicationContext());
         //Here, the user is authenticated
@@ -139,6 +157,14 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+                if (stackBack.empty())
+                    stackBack.push(0);
+                if (stackBack.contains(tab.getPosition())) {
+                    stackBack.remove(stackBack.indexOf(tab.getPosition()));
+                    stackBack.push(tab.getPosition());
+                } else {
+                    stackBack.push(tab.getPosition());
+                }
                 final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                 MenuItem item = null;
                 String fragmentTag = null;
@@ -169,6 +195,10 @@ public class MainActivity extends AppCompatActivity
                     unCheckAllMenuItems(navigationView.getMenu());
                     item.setChecked(true);
                 }
+                if( tab.getPosition() < 3 )
+                    toot.setVisibility(View.VISIBLE);
+                else
+                    toot.setVisibility(View.GONE);
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
             }
@@ -180,6 +210,17 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+                if( viewPager.getVisibility() == View.GONE){
+                    viewPager.setVisibility(View.VISIBLE);
+                    tabLayout.setVisibility(View.VISIBLE);
+                    main_app_container.setVisibility(View.GONE);
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                }
+                if( tab.getPosition() <3 )
+                    toot.setVisibility(View.VISIBLE);
+                else
+                    toot.setVisibility(View.GONE);
 
             }
         });
@@ -188,7 +229,6 @@ public class MainActivity extends AppCompatActivity
         toolbar_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                toot.setVisibility(View.VISIBLE);
                 //Hide keyboard
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(toolbar_search.getWindowToken(), 0);
@@ -203,24 +243,8 @@ public class MainActivity extends AppCompatActivity
             }
         });
         //Hide/Close the searchview
-        /*toolbar_search.setOnSearchClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if( toolbarTitle.getVisibility() == View.VISIBLE)
-                    toolbarTitle.setVisibility(View.GONE);
-                if( pp_actionBar.getVisibility() == View.VISIBLE)
-                    pp_actionBar.setVisibility(View.GONE);
-            }
-        });*/
-        toolbar_search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if( hasFocus){
-                    toolbarTitle.setVisibility(View.GONE);
-                    pp_actionBar.setVisibility(View.GONE);
-                }
-            }
-        });
+
+
         toolbar_search.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
@@ -228,6 +252,18 @@ public class MainActivity extends AppCompatActivity
                 pp_actionBar.setVisibility(View.VISIBLE);
                 //your code here
                 return false;
+            }
+        });
+        toolbar_search.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( toolbar_search.isIconified()){
+                    toolbarTitle.setVisibility(View.VISIBLE);
+                    pp_actionBar.setVisibility(View.VISIBLE);
+                }else {
+                    toolbarTitle.setVisibility(View.GONE);
+                    pp_actionBar.setVisibility(View.GONE);
+                }
             }
         });
 
@@ -296,44 +332,8 @@ public class MainActivity extends AppCompatActivity
         if (savedInstanceState == null && !matchingIntent) {
             navigationView.setCheckedItem(R.id.nav_home);
             navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
+            toolbarTitle.setText(R.string.home_menu);
         }
-        //Title and menu selection when back pressed
-        getSupportFragmentManager().addOnBackStackChangedListener(
-            new FragmentManager.OnBackStackChangedListener() {
-                public void onBackStackChanged() {
-                    FragmentManager fm = getSupportFragmentManager();
-                    if( fm != null && fm.getBackStackEntryCount() > 0) {
-                        String fragmentTag = fm.getBackStackEntryAt(fm.getBackStackEntryCount() - 1).getName();
-                        if( fragmentTag != null) {
-
-                            if( tagTile.get(fragmentTag) != null)
-                                toolbarTitle.setText(tagTile.get(fragmentTag));
-                            if( tagItem.get(fragmentTag) != null) {
-                                unCheckAllMenuItems(navigationView.getMenu());
-                                if( navigationView.getMenu().findItem(tagItem.get(fragmentTag)) != null)
-                                    navigationView.getMenu().findItem(tagItem.get(fragmentTag)).setChecked(true);
-                            }
-                            if( fragmentTag.equals("HOME_TIMELINE") || fragmentTag.equals("LOCAL_TIMELINE") || fragmentTag.equals("PUBLIC_TIMELINE") || fragmentTag.equals("NOTIFICATIONS")){
-                                main_app_container.setVisibility(View.GONE);
-                                viewPager.setVisibility(View.VISIBLE);
-                                tabLayout.setVisibility(View.VISIBLE);
-                            }else {
-                                main_app_container.setVisibility(View.VISIBLE);
-                                viewPager.setVisibility(View.GONE);
-                                tabLayout.setVisibility(View.GONE);
-                            }
-
-                            //selectTabBar(fragmentTag);
-                            if( fragmentTag.equals("HOME_TIMELINE") || fragmentTag.equals("LOCAL_TIMELINE") || fragmentTag.equals("PUBLIC_TIMELINE") || fragmentTag.equals("SCHEDULED")){
-                                toot.setVisibility(View.VISIBLE);
-                            }else {
-                                toot.setVisibility(View.GONE);
-                            }
-                        }
-                    }
-                }
-        });
-
     }
 
     private void unCheckAllMenuItems(@NonNull final Menu menu) {
@@ -422,7 +422,40 @@ public class MainActivity extends AppCompatActivity
             if( !toolbar_search.isIconified()){
                 toolbar_search.setIconified(true);
             }
-            super.onBackPressed();
+            if( viewPager.getVisibility() == View.VISIBLE){
+                if (stackBack.size() > 1) {
+                    stackBack.pop();
+                    viewPager.setCurrentItem(stackBack.lastElement());
+                }else {
+                    super.onBackPressed();
+                }
+            }else {
+                viewPager.setVisibility(View.VISIBLE);
+                tabLayout.setVisibility(View.VISIBLE);
+                main_app_container.setVisibility(View.GONE);
+                final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                unCheckAllMenuItems(navigationView.getMenu());
+                toot.setVisibility(View.VISIBLE);
+                switch (viewPager.getCurrentItem()){
+                    case 0:
+                        toolbarTitle.setText(R.string.home_menu);
+                        navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
+                        break;
+                    case 1:
+                        toolbarTitle.setText(R.string.local_menu);
+                        navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
+                        break;
+                    case 2:
+                        toolbarTitle.setText(R.string.global_menu);
+                        navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
+                        break;
+                    case 3:
+                        toolbarTitle.setText(R.string.notifications);
+                        navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
+                        break;
+                }
+            }
+
         }
 
     }
@@ -549,7 +582,7 @@ public class MainActivity extends AppCompatActivity
             TabLayoutSettingsFragment tabLayoutSettingsFragment= new TabLayoutSettingsFragment();
             fragmentTag = "TABLAYOUT_SETTINGS";
             fragmentManager.beginTransaction()
-                    .replace(R.id.main_app_container, tabLayoutSettingsFragment, fragmentTag).addToBackStack(fragmentTag).commit();
+                    .replace(R.id.main_app_container, tabLayoutSettingsFragment, fragmentTag).commit();
 
         } else if (id == R.id.nav_favorites) {
             toot.setVisibility(View.GONE);
@@ -558,7 +591,7 @@ public class MainActivity extends AppCompatActivity
             statusFragment.setArguments(bundle);
             fragmentTag = "FAVOURITES";
             fragmentManager.beginTransaction()
-                    .replace(R.id.main_app_container, statusFragment, fragmentTag).addToBackStack(fragmentTag).commit();
+                    .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
         } else if (id == R.id.nav_blocked) {
             toot.setVisibility(View.GONE);
             accountsFragment = new DisplayAccountsFragment();
@@ -566,7 +599,7 @@ public class MainActivity extends AppCompatActivity
             accountsFragment.setArguments(bundle);
             fragmentTag = "BLOCKS";
             fragmentManager.beginTransaction()
-                    .replace(R.id.main_app_container, accountsFragment, fragmentTag).addToBackStack(fragmentTag).commit();
+                    .replace(R.id.main_app_container, accountsFragment, fragmentTag).commit();
         }else if (id == R.id.nav_muted) {
             toot.setVisibility(View.GONE);
             accountsFragment = new DisplayAccountsFragment();
@@ -574,19 +607,19 @@ public class MainActivity extends AppCompatActivity
             accountsFragment.setArguments(bundle);
             fragmentTag = "MUTED";
             fragmentManager.beginTransaction()
-                    .replace(R.id.main_app_container, accountsFragment, fragmentTag).addToBackStack(fragmentTag).commit();
+                    .replace(R.id.main_app_container, accountsFragment, fragmentTag).commit();
         }else if (id == R.id.nav_scheduled) {
             toot.setVisibility(View.VISIBLE);
             DisplayScheduledTootsFragment displayScheduledTootsFragment = new DisplayScheduledTootsFragment();
             fragmentTag = "SCHEDULED";
             fragmentManager.beginTransaction()
-                    .replace(R.id.main_app_container, displayScheduledTootsFragment, fragmentTag).addToBackStack(fragmentTag).commit();
+                    .replace(R.id.main_app_container, displayScheduledTootsFragment, fragmentTag).commit();
         }else if( id == R.id.nav_follow_request){
             toot.setVisibility(View.GONE);
             DisplayFollowRequestSentFragment followRequestSentFragment = new DisplayFollowRequestSentFragment();
             fragmentTag = "FOLLOW_REQUEST_SENT";
             fragmentManager.beginTransaction()
-                    .replace(R.id.main_app_container, followRequestSentFragment, fragmentTag).addToBackStack(fragmentTag).commit();
+                    .replace(R.id.main_app_container, followRequestSentFragment, fragmentTag).commit();
         }
         //selectTabBar(fragmentTag);
         toolbarTitle.setText(item.getTitle());
@@ -653,27 +686,25 @@ public class MainActivity extends AppCompatActivity
             //Selection comes from another menu, no action to do
             DisplayStatusFragment statusFragment;
             Bundle bundle = new Bundle();
+            toot.setVisibility(View.VISIBLE);
             switch (position) {
                 case 0:
-                    toot.setVisibility(View.VISIBLE);
                     statusFragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.HOME);
                     statusFragment.setArguments(bundle);
                     return statusFragment;
                 case 1:
-                    toot.setVisibility(View.VISIBLE);
                     statusFragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.LOCAL);
                     statusFragment.setArguments(bundle);
                     return statusFragment;
                 case 2:
-                    toot.setVisibility(View.VISIBLE);
+
                     statusFragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
                     statusFragment.setArguments(bundle);
                     return statusFragment;
                 case 3:
-                    toot.setVisibility(View.GONE);
                     return new DisplayNotificationsFragment();
 
             }

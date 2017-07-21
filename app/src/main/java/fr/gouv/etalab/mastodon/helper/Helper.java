@@ -109,6 +109,7 @@ import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.LoginActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
+import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -896,7 +897,7 @@ public class Helper {
                     ppDrawable  = new BitmapDrawable(activity.getResources(), Bitmap.createScaledBitmap(loadedImage, (int) convertDpToPixel(25, activity), (int) convertDpToPixel(25, activity), true));
                     toolBar.findViewById(R.id.pp_actionBar).setBackgroundDrawable(ppDrawable);
                 }else{
-                    ActionBar supportActionBar = ((MainActivity) activity).getSupportActionBar();
+                    ActionBar supportActionBar = ((TootActivity) activity).getSupportActionBar();
                     if( supportActionBar != null){
                         ppDrawable = new BitmapDrawable(activity.getResources(), Bitmap.createScaledBitmap(loadedImage, (int) convertDpToPixel(20, activity), (int) convertDpToPixel(20, activity), true));
                         supportActionBar.setIcon(ppDrawable);

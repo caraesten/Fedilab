@@ -24,13 +24,18 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -57,7 +62,9 @@ import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -94,6 +101,7 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
+import static fr.gouv.etalab.mastodon.helper.Helper.loadPPInActionBar;
 
 /**
  * Created by Thomas on 01/05/2017.
@@ -203,6 +211,27 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         }else {
             setTitle(R.string.toot_title);
         }
+        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        Account account = new AccountDAO(getApplicationContext(),db).getAccountByID(userId);
+        ImageLoader imageLoader;
+        DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
+                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+        imageLoader = ImageLoader.getInstance();
+        imageLoader.loadImage(account.getAvatar(), options, new SimpleImageLoadingListener(){
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                super.onLoadingComplete(imageUri, view, loadedImage);
+                if( getSupportActionBar() != null){
+                    BitmapDrawable ppDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(loadedImage, (int) Helper.convertDpToPixel(25, getApplicationContext()), (int) Helper.convertDpToPixel(25, getApplicationContext()), true));
+                    getSupportActionBar().setIcon(ppDrawable);
+                    getSupportActionBar().setDisplayShowHomeEnabled(true);
+                }
+            }
+            @Override
+            public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
+
+            }});
 
         if( sharedContent != null ){ //Shared content
             if( sharedSubject != null){
@@ -238,9 +267,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         LocalBroadcastManager.getInstance(this).registerReceiver(search_validate, new IntentFilter(Helper.SEARCH_VALIDATE_ACCOUNT));
 
         FloatingActionButton toot_close_accounts = (FloatingActionButton) findViewById(R.id.toot_close_accounts);
-        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        Account account = new AccountDAO(getApplicationContext(),db).getAccountByID(userId);
+
         boolean isAccountPrivate = account.isLocked();
 
         FloatingActionButton ic_close = (FloatingActionButton) findViewById(R.id.toot_close_reply);
