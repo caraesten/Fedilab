@@ -136,6 +136,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private CheckBox toot_sensitive;
     public long currentToId;
     private long restored;
+    private TextView title;
+    private ImageView pp_actionBar;
 
     private String pattern = "^.*(@([a-zA-Z0-9_]{2,}))$";
 
@@ -151,8 +153,27 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         }
         setContentView(R.layout.activity_toot);
 
-        if( getSupportActionBar() != null)
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if( actionBar != null ){
+            LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.toot_action_bar, null);
+            actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+
+            ImageView close_toot = (ImageView) actionBar.getCustomView().findViewById(R.id.close_toot);
+            close_toot.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+            title = (TextView) actionBar.getCustomView().findViewById(R.id.toolbar_title);
+            pp_actionBar = (ImageView) actionBar.getCustomView().findViewById(R.id.pp_actionBar);
+
+        }
+
+
+
         //By default the toot is not restored so the id -1 is defined
         currentToId = -1;
         imageLoader = ImageLoader.getInstance();
@@ -209,7 +230,10 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         if( tootReply != null) {
             tootReply();
         }else {
-            setTitle(R.string.toot_title);
+            if( title != null)
+                title.setText(getString(R.string.toot_title));
+            else
+                setTitle(R.string.toot_title);
         }
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
@@ -222,8 +246,11 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 super.onLoadingComplete(imageUri, view, loadedImage);
-                if( getSupportActionBar() != null){
-                    BitmapDrawable ppDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(loadedImage, (int) Helper.convertDpToPixel(25, getApplicationContext()), (int) Helper.convertDpToPixel(25, getApplicationContext()), true));
+                BitmapDrawable ppDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(loadedImage, (int) Helper.convertDpToPixel(25, getApplicationContext()), (int) Helper.convertDpToPixel(25, getApplicationContext()), true));
+                if( pp_actionBar != null){
+                    pp_actionBar.setImageDrawable(ppDrawable);
+                } else if( getSupportActionBar() != null){
+
                     getSupportActionBar().setIcon(ppDrawable);
                     getSupportActionBar().setDisplayShowHomeEnabled(true);
                 }
@@ -920,14 +947,20 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         if( tootReply != null) {
             tootReply();
         }else {
-            setTitle(R.string.toot_title);
+            if( title != null)
+                title.setText(getString(R.string.toot_title));
+            else
+                setTitle(R.string.toot_title);
         }
     }
 
 
     private void tootReply(){
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        setTitle(R.string.toot_title_reply);
+        if( title != null)
+            title.setText(getString(R.string.toot_title_reply));
+        else
+            setTitle(R.string.toot_title_reply);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         boolean show_reply = sharedpreferences.getBoolean(Helper.SET_SHOW_REPLY, false);
         if( show_reply ){

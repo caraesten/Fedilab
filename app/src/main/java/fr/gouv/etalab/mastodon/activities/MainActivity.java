@@ -29,7 +29,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -436,6 +435,7 @@ public class MainActivity extends AppCompatActivity
                 final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                 unCheckAllMenuItems(navigationView.getMenu());
                 toot.setVisibility(View.VISIBLE);
+
                 switch (viewPager.getCurrentItem()){
                     case 0:
                         toolbarTitle.setText(R.string.home_menu);
@@ -443,15 +443,15 @@ public class MainActivity extends AppCompatActivity
                         break;
                     case 1:
                         toolbarTitle.setText(R.string.local_menu);
-                        navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
+                        navigationView.getMenu().findItem(R.id.nav_local).setChecked(true);
                         break;
                     case 2:
                         toolbarTitle.setText(R.string.global_menu);
-                        navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
+                        navigationView.getMenu().findItem(R.id.nav_global).setChecked(true);
                         break;
                     case 3:
                         toolbarTitle.setText(R.string.notifications);
-                        navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
+                        navigationView.getMenu().findItem(R.id.nav_notification).setChecked(true);
                         break;
                 }
             }
@@ -545,6 +545,9 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        unCheckAllMenuItems(navigationView.getMenu());
+        item.setChecked(true);
         //Remove the search bar
         if( !toolbar_search.isIconified() ) {
             toolbarTitle.setVisibility(View.VISIBLE);
