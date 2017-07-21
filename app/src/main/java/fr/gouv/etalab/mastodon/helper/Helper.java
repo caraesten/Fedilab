@@ -46,6 +46,8 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -105,6 +107,7 @@ import java.util.regex.Pattern;
 
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.LoginActivity;
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
@@ -156,6 +159,7 @@ public class Helper {
     public static final String SCOPE = "scope";
     public static final String SCOPES = "scopes";
     public static final String WEBSITE = "website";
+    public static final String WEBSITE_VALUE = "https://play.google.com/store/apps/details?id=fr.gouv.etalab.mastodon";
     public static final String SHOW_BATTERY_SAVER_MESSAGE = "show_battery_saver_message";
     public static final String LAST_NOTIFICATION_MAX_ID = "last_notification_max_id";
     public static final String LAST_HOMETIMELINE_MAX_ID = "last_hometimeline_max_id";
@@ -866,8 +870,46 @@ public class Helper {
         imageLoader = ImageLoader.getInstance();
         View headerLayout = navigationView.getHeaderView(0);
         updateHeaderAccountInfo(activity, account, headerLayout, imageLoader, options);
+        //Adds the profile picture as an icon
+        loadPPInActionBar(activity, account.getAvatar());
     }
 
+
+    /**
+     * Load the profile picture in the current action bar
+     * @param activity Activity The current activity
+     * @param url String the url of the profile picture
+     */
+    public static void loadPPInActionBar(final Activity activity, String url){
+        ImageLoader imageLoader;
+        DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
+                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+        imageLoader = ImageLoader.getInstance();
+        imageLoader.loadImage(url, options, new SimpleImageLoadingListener(){
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                super.onLoadingComplete(imageUri, view, loadedImage);
+
+                Drawable ppDrawable;
+                Toolbar toolBar = (Toolbar) activity.findViewById(R.id.toolbar);
+                if( toolBar != null){
+                    ppDrawable  = new BitmapDrawable(activity.getResources(), Bitmap.createScaledBitmap(loadedImage, (int) convertDpToPixel(25, activity), (int) convertDpToPixel(25, activity), true));
+                    toolBar.findViewById(R.id.pp_actionBar).setBackgroundDrawable(ppDrawable);
+                }else{
+                    ActionBar supportActionBar = ((MainActivity) activity).getSupportActionBar();
+                    if( supportActionBar != null){
+                        ppDrawable = new BitmapDrawable(activity.getResources(), Bitmap.createScaledBitmap(loadedImage, (int) convertDpToPixel(20, activity), (int) convertDpToPixel(20, activity), true));
+                        supportActionBar.setIcon(ppDrawable);
+                    }
+                }
+
+
+            }
+            @Override
+            public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
+
+            }});
+    }
 
     /**
      * Update the header with the new selected account

@@ -29,8 +29,6 @@
         <item name="shapeBorder">@style/Shape.Light</item>
         <item name="imgbd">@style/Image.Border.Light</item>
         <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-
         <item name="popupOverlay">@style/AppTheme.PopupOverlay</item>
     </style>
 
@@ -51,7 +49,6 @@
         <item name="imgbd">@style/Image.Border.Dark</item>
         <item name="popupOverlay">@style/AppThemeDark.PopupOverlay</item>
         <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -98,6 +95,7 @@
     <style name="CardViewStyle.Light" parent="CardView">
         <item name="cardBackgroundColor">@color/cardview_light_background</item>
     </style>
+
 
 
 </resources>
