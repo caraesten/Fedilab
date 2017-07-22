@@ -144,7 +144,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private TextView title;
     private ImageView pp_actionBar;
 
-    private String pattern = "^.*(@([a-zA-Z0-9_]{2,}))$";
+    private String pattern = "^(.|\\s)*(@([a-zA-Z0-9_]{2,}))$";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -418,7 +418,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 Pattern sPattern = Pattern.compile(pattern);
                 Matcher m = sPattern.matcher(s.toString());
                 if(m.matches()) {
-                    String search = m.group(2);
+                    String search = m.group(3);
                     new RetrieveSearchAccountsAsyncTask(getApplicationContext(),search,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }else{
                     toot_show_accounts.setVisibility(View.GONE);
