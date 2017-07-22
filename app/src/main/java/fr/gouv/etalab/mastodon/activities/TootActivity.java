@@ -24,16 +24,22 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -57,7 +63,9 @@ import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -71,6 +79,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.PostStatusAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UploadActionAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
@@ -85,6 +94,7 @@ import fr.gouv.etalab.mastodon.drawers.AccountsSearchAdapter;
 import fr.gouv.etalab.mastodon.drawers.DraftsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnPostStatusActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
 import fr.gouv.etalab.mastodon.jobs.ScheduledTootsSyncJob;
@@ -93,14 +103,17 @@ import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
+import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
+import static fr.gouv.etalab.mastodon.helper.Helper.loadPPInActionBar;
 
 /**
  * Created by Thomas on 01/05/2017.
  * Toot activity class
  */
 
-public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostActionInterface {
+public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostStatusActionInterface {
 
 
     private int charsInCw;
@@ -128,6 +141,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private CheckBox toot_sensitive;
     public long currentToId;
     private long restored;
+    private TextView title;
+    private ImageView pp_actionBar;
 
     private String pattern = "^.*(@([a-zA-Z0-9_]{2,}))$";
 
@@ -143,8 +158,27 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         }
         setContentView(R.layout.activity_toot);
 
-        if( getSupportActionBar() != null)
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if( actionBar != null ){
+            LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.toot_action_bar, null);
+            actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+
+            ImageView close_toot = (ImageView) actionBar.getCustomView().findViewById(R.id.close_toot);
+            close_toot.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+            title = (TextView) actionBar.getCustomView().findViewById(R.id.toolbar_title);
+            pp_actionBar = (ImageView) actionBar.getCustomView().findViewById(R.id.pp_actionBar);
+
+        }
+
+
+
         //By default the toot is not restored so the id -1 is defined
         currentToId = -1;
         imageLoader = ImageLoader.getInstance();
@@ -201,8 +235,35 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         if( tootReply != null) {
             tootReply();
         }else {
-            setTitle(R.string.toot_title);
+            if( title != null)
+                title.setText(getString(R.string.toot_title));
+            else
+                setTitle(R.string.toot_title);
         }
+        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        Account account = new AccountDAO(getApplicationContext(),db).getAccountByID(userId);
+        String url = account.getAvatar();
+        if( url.startsWith("/") ){
+            url = "https://" + Helper.getLiveInstance(getApplicationContext()) + account.getAvatar();
+        }
+        imageLoader.loadImage(url, options, new SimpleImageLoadingListener(){
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                super.onLoadingComplete(imageUri, view, loadedImage);
+                BitmapDrawable ppDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(loadedImage, (int) Helper.convertDpToPixel(25, getApplicationContext()), (int) Helper.convertDpToPixel(25, getApplicationContext()), true));
+                if( pp_actionBar != null){
+                    pp_actionBar.setImageDrawable(ppDrawable);
+                } else if( getSupportActionBar() != null){
+
+                    getSupportActionBar().setIcon(ppDrawable);
+                    getSupportActionBar().setDisplayShowHomeEnabled(true);
+                }
+            }
+            @Override
+            public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
+
+            }});
 
         if( sharedContent != null ){ //Shared content
             if( sharedSubject != null){
@@ -238,9 +299,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         LocalBroadcastManager.getInstance(this).registerReceiver(search_validate, new IntentFilter(Helper.SEARCH_VALIDATE_ACCOUNT));
 
         FloatingActionButton toot_close_accounts = (FloatingActionButton) findViewById(R.id.toot_close_accounts);
-        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        Account account = new AccountDAO(getApplicationContext(),db).getAccountByID(userId);
+
         boolean isAccountPrivate = account.isLocked();
 
         FloatingActionButton ic_close = (FloatingActionButton) findViewById(R.id.toot_close_reply);
@@ -316,7 +375,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 toot.setContent(toot_content.getText().toString().trim());
                 if( tootReply != null)
                     toot.setIn_reply_to_id(tootReply.getId());
-                new PostActionAsyncTask(getApplicationContext(), API.StatusAction.CREATESTATUS, null, toot, null, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new PostStatusAsyncTask(getApplicationContext(), toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
             }
         });
@@ -764,40 +823,57 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             storeToot(true);
     }
 
+
     @Override
-    public void onPostAction(int statusCode, API.StatusAction statusAction, String userId, Error error) {
-        if( error != null){
+    public void onPostStatusAction(APIResponse apiResponse) {
+        if( apiResponse.getError() != null){
             final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
-                Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
-        if( statusCode == 200){
-            //Clear the toot
-            toot_content.setText("");
-            toot_cw_content.setText("");
-            if( attachments != null) {
-                for (Attachment attachment : attachments) {
-                    View namebar = findViewById(Integer.parseInt(attachment.getId()));
-                    if (namebar != null && namebar.getParent() != null)
-                        ((ViewGroup) namebar.getParent()).removeView(namebar);
-                }
-                List<Attachment> tmp_attachment = new ArrayList<>();
-                tmp_attachment.addAll(attachments);
-                attachments.removeAll(tmp_attachment);
-                tmp_attachment.clear();
+        //Clear the toot
+        toot_content.setText("");
+        toot_cw_content.setText("");
+        if( attachments != null) {
+            for (Attachment attachment : attachments) {
+                View namebar = findViewById(Integer.parseInt(attachment.getId()));
+                if (namebar != null && namebar.getParent() != null)
+                    ((ViewGroup) namebar.getParent()).removeView(namebar);
             }
-            isSensitive = false;
-            toot_sensitive.setVisibility(View.GONE);
-            currentToId = -1;
-            Toast.makeText(TootActivity.this,R.string.toot_sent, Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(TootActivity.this,R.string.toast_error, Toast.LENGTH_LONG).show();
+            List<Attachment> tmp_attachment = new ArrayList<>();
+            tmp_attachment.addAll(attachments);
+            attachments.removeAll(tmp_attachment);
+            tmp_attachment.clear();
         }
+        isSensitive = false;
+        toot_sensitive.setVisibility(View.GONE);
+        currentToId = -1;
+        Toast.makeText(TootActivity.this,R.string.toot_sent, Toast.LENGTH_LONG).show();
         toot_it.setEnabled(true);
-    }
+        //It's a reply, so the user will be redirect to its answer
+        if( tootReply != null){
+            List<Status> statuses = apiResponse.getStatuses();
+            if( statuses != null && statuses.size() > 0 ){
+                Status status = statuses.get(0);
+                if( status != null ) {
+                    Intent intent = new Intent(getApplicationContext(), ShowConversationActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("statusId", status.getId());
+                    intent.putExtras(b);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        }else {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.putExtra(INTENT_ACTION, HOME_TIMELINE_INTENT);
+            startActivity(intent);
+            finish();
+        }
 
+    }
 
     @Override
     public void onRetrieveSearchAccounts(APIResponse apiResponse) {
@@ -893,14 +969,20 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         if( tootReply != null) {
             tootReply();
         }else {
-            setTitle(R.string.toot_title);
+            if( title != null)
+                title.setText(getString(R.string.toot_title));
+            else
+                setTitle(R.string.toot_title);
         }
     }
 
 
     private void tootReply(){
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        setTitle(R.string.toot_title_reply);
+        if( title != null)
+            title.setText(getString(R.string.toot_title_reply));
+        else
+            setTitle(R.string.toot_title_reply);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         boolean show_reply = sharedpreferences.getBoolean(Helper.SET_SHOW_REPLY, false);
         if( show_reply ){
@@ -1015,4 +1097,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         }
 
     }
+
+
 }

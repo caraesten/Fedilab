@@ -128,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
         parameters.add(Helper.CLIENT_NAME, Helper.CLIENT_NAME_VALUE);
         parameters.add(Helper.REDIRECT_URIS, client_id_for_webview?Helper.REDIRECT_CONTENT_WEB:Helper.REDIRECT_CONTENT);
         parameters.add(Helper.SCOPES, Helper.OAUTH_SCOPES);
-        parameters.add(Helper.WEBSITE,"https://" + Helper.getLiveInstance(getApplicationContext()));
+        parameters.add(Helper.WEBSITE, Helper.WEBSITE_VALUE);
         new OauthClient(instance).post(action, parameters, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

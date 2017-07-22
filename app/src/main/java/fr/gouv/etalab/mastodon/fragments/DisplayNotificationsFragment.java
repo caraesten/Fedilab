@@ -191,7 +191,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             notificationsListAdapter.notifyDataSetChanged();
         }
         swipeRefreshLayout.setRefreshing(false);
-        firstLoad = false;
         flag_loading = notifications != null && notifications.size() < notificationPerPage;
         //Store last notification id to avoid to notify for those that have been already seen
         if( notifications != null && notifications.size()  > 0) {
@@ -200,11 +199,12 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
-            if( currentAccount != null){
+            if( currentAccount != null && firstLoad){
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + currentAccount.getId(), notifications.get(0).getId());
                 editor.apply();
             }
         }
+        firstLoad = false;
     }
 }

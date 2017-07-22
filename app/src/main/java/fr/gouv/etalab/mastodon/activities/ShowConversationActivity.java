@@ -180,7 +180,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
             }
         }
         RelativeLayout loader = (RelativeLayout) findViewById(R.id.loader);
-        StatusListAdapter statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, RetrieveFeedsAsyncTask.Type.CONTEXT, isOnWifi, behaviorWithAttachments, statuses);
+        StatusListAdapter statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, RetrieveFeedsAsyncTask.Type.CONTEXT, null, isOnWifi, behaviorWithAttachments, statuses);
         lv_status.setAdapter(statusListAdapter);
         statusListAdapter.notifyDataSetChanged();
         loader.setVisibility(View.GONE);

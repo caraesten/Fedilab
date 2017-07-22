@@ -94,8 +94,9 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     private final int FAVOURITE = 2;
     private ViewHolder holder;
     private RetrieveFeedsAsyncTask.Type type;
+    private String targetedId;
 
-    public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, boolean isOnWifi, int behaviorWithAttachments, List<Status> statuses){
+    public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, List<Status> statuses){
         this.context = context;
         this.statuses = statuses;
         this.isOnWifi = isOnWifi;
@@ -106,6 +107,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
         statusListAdapter = this;
         this.type = type;
+        this.targetedId = targetedId;
     }
 
 
@@ -292,8 +294,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ShowConversationActivity.class);
                     Bundle b = new Bundle();
-                    b.putString("statusId", status.getId()); //Your id
-                    intent.putExtras(b); //Put your id to your next Intent
+                    b.putString("statusId", status.getId());
+                    intent.putExtras(b);
                     context.startActivity(intent);
                 }
             });
@@ -333,7 +335,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_account_username.setText(String.format("@%s",username));
         }
 
-
         holder.status_reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -342,6 +343,13 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 b.putParcelable("tootReply", status);
                 intent.putExtras(b); //Put your id to your next Intent
                 context.startActivity(intent);
+                if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
+                    try {
+                        //Avoid to open multi activities when replying in a conversation
+                        ((ShowConversationActivity)context).finish();
+                    }catch (Exception ignored){}
+
+                }
             }
         });
 
@@ -505,22 +513,27 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_account_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ShowAccountActivity.class);
-                Bundle b = new Bundle();
-                b.putString("accountId", status.getAccount().getId());
-                intent.putExtras(b);
-                context.startActivity(intent);
+
+                if( targetedId == null || !targetedId.equals(status.getAccount().getId())){
+                    Intent intent = new Intent(context, ShowAccountActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("accountId", status.getAccount().getId());
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
             }
         });
 
         holder.status_account_profile_boost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ShowAccountActivity.class);
-                Bundle b = new Bundle();
-                b.putString("accountId", status.getReblog().getAccount().getId());
-                intent.putExtras(b);
-                context.startActivity(intent);
+                if( targetedId == null || !targetedId.equals(status.getReblog().getAccount().getId())){
+                    Intent intent = new Intent(context, ShowAccountActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("accountId", status.getReblog().getAccount().getId());
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
             }
         });
 
