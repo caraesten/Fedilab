@@ -291,7 +291,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             statusListAdapter.notifyDataSetChanged();
         }
         swipeRefreshLayout.setRefreshing(false);
-        firstLoad = false;
         if( flag_loading )
             flag_loading = statuses != null && statuses.size() < tootsPerPage;
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
@@ -301,12 +300,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
-            if( currentAccount != null){
+            if( currentAccount != null && firstLoad){
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + currentAccount.getId(), statuses.get(0).getId());
                 editor.apply();
             }
         }
+        firstLoad = false;
 
     }
 }
