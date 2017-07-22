@@ -294,8 +294,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ShowConversationActivity.class);
                     Bundle b = new Bundle();
-                    b.putString("statusId", status.getId()); //Your id
-                    intent.putExtras(b); //Put your id to your next Intent
+                    b.putString("statusId", status.getId());
+                    intent.putExtras(b);
                     context.startActivity(intent);
                 }
             });
@@ -335,7 +335,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_account_username.setText(String.format("@%s",username));
         }
 
-
         holder.status_reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -344,6 +343,13 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 b.putParcelable("tootReply", status);
                 intent.putExtras(b); //Put your id to your next Intent
                 context.startActivity(intent);
+                if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
+                    try {
+                        //Avoid to open multi activities when replying in a conversation
+                        ((ShowConversationActivity)context).finish();
+                    }catch (Exception ignored){}
+
+                }
             }
         });
 

@@ -745,7 +745,11 @@ public class Helper {
                     imageLoader = ImageLoader.getInstance();
                     final ImageView imageView = new ImageView(activity);
                     item.setIcon(R.drawable.ic_person);
-                    imageLoader.displayImage(account.getAvatar(), imageView, options, new ImageLoadingListener() {
+                    String url = account.getAvatar();
+                    if( url.startsWith("/") ){
+                        url = "https://" + Helper.getLiveInstance(activity) + account.getAvatar();
+                    }
+                    imageLoader.displayImage(url, imageView, options, new ImageLoadingListener() {
                         @Override
                         public void onLoadingStarted(String s, View view) {
                         }
@@ -865,14 +869,7 @@ public class Helper {
         editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, account.getToken());
         editor.putString(Helper.PREF_KEY_ID, account.getId());
         editor.apply();
-        ImageLoader imageLoader;
-        DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
-        imageLoader = ImageLoader.getInstance();
-        View headerLayout = navigationView.getHeaderView(0);
-        updateHeaderAccountInfo(activity, account, headerLayout, imageLoader, options);
-        //Adds the profile picture as an icon
-        loadPPInActionBar(activity, account.getAvatar());
+        activity.recreate();
     }
 
 
@@ -886,6 +883,9 @@ public class Helper {
         DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
         imageLoader = ImageLoader.getInstance();
+        if( url.startsWith("/") ){
+            url = "https://" + Helper.getLiveInstance(activity) + url;
+        }
         imageLoader.loadImage(url, options, new SimpleImageLoadingListener(){
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
@@ -939,7 +939,11 @@ public class Helper {
             ownerFollowing.setText(String.valueOf(account.getFollowing_count()));
             username.setText(String.format("@%s",account.getUsername()));
             displayedName.setText(account.getDisplay_name());
-            imageLoader.displayImage(account.getAvatar(), profilePicture, options);
+            String url = account.getAvatar();
+            if( url.startsWith("/") ){
+                url = "https://" + Helper.getLiveInstance(activity) + account.getAvatar();
+            }
+            imageLoader.displayImage(url, profilePicture, options);
         }
         profilePicture.setOnClickListener(null);
         profilePicture.setOnClickListener(new View.OnClickListener() {

@@ -899,6 +899,58 @@ public class API {
 
 
     /**
+     * Posts a status
+     * @param status Status object related to the status
+     * @return APIResponse
+     */
+    public APIResponse postStatusAction(Status status){
+
+        String action;
+        RequestParams params;
+        params = new RequestParams();
+        action = "/statuses";
+        params.put("status", status.getContent());
+        if( status.getIn_reply_to_id() != null)
+            params.put("in_reply_to_id", status.getIn_reply_to_id());
+        if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0 ) {
+            for(Attachment attachment: status.getMedia_attachments()) {
+                params.add("media_ids[]", attachment.getId());
+            }
+        }
+        if( status.isSensitive())
+            params.put("sensitive", Boolean.toString(status.isSensitive()));
+        if( status.getSpoiler_text() != null)
+            params.put("spoiler_text", status.getSpoiler_text());
+        params.put("visibility", status.getVisibility());
+        statuses = new ArrayList<>();
+        post(action, 30000, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Status statusreturned = parseStatuses(response);
+                statuses.add(statusreturned);
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
+            }
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                statuses = parseStatuses(response);
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response) {
+                actionCode = statusCode;
+                setError(statusCode, error);
+                error.printStackTrace();
+            }
+        });
+        apiResponse.setStatuses(statuses);
+        return apiResponse;
+    }
+
+
+    /**
      * Retrieves notifications for the authenticated account since an id*synchronously*
      * @param since_id String since max
      * @return APIResponse
