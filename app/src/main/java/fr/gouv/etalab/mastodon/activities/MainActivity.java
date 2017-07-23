@@ -369,21 +369,17 @@ public class MainActivity extends AppCompatActivity
         String userIdIntent;
         boolean matchingIntent = false;
         if( extras.containsKey(INTENT_ACTION) ){
-            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null); //Id of the authenticated account
             final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             userIdIntent = extras.getString(PREF_KEY_ID); //Id of the account in the intent
             if (extras.getInt(INTENT_ACTION) == NOTIFICATION_INTENT){
-                if( userId!= null && !userId.equals(userIdIntent)) //Connected account is different from the id in the intent
-                    changeUser(MainActivity.this, userIdIntent); //Connects the account which is related to the notification
+                changeUser(MainActivity.this, userIdIntent, false); //Connects the account which is related to the notification
                 unCheckAllMenuItems(navigationView.getMenu());
                 navigationView.getMenu().performIdentifierAction(R.id.nav_notification, 0);
                 if( navigationView.getMenu().findItem(R.id.nav_notification) != null)
                     navigationView.getMenu().findItem(R.id.nav_notification).setChecked(true);
                 matchingIntent = true;
             }else if( extras.getInt(INTENT_ACTION) == HOME_TIMELINE_INTENT){
-                if( userId!= null && !userId.equals(userIdIntent))  //Connected account is different from the id in the intent
-                    changeUser(MainActivity.this, userIdIntent); //Connects the account which is related to the notification
+                changeUser(MainActivity.this, userIdIntent, false); //Connects the account which is related to the notification
                 unCheckAllMenuItems(navigationView.getMenu());
                 navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
                 if( navigationView.getMenu().findItem(R.id.nav_home) != null)

@@ -49,6 +49,7 @@
 
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="open_with">Open with</string>
     <!--- Menu -->
     <string name="home_menu">Home</string>
     <string name="local_menu">Local timeline</string>

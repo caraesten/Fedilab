@@ -46,6 +46,7 @@
     <string name="schedule">Programmer</string>
     <string name="next">Suivant</string>
     <string name="previous">Précédent</string>
+    <string name="open_with">Ouvrir avec</string>
     <!--- Menu -->
     <string name="home_menu">Accueil</string>
     <string name="local_menu">Fil public local</string>

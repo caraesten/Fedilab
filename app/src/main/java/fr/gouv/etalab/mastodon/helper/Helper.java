@@ -776,7 +776,7 @@ public class Helper {
                                 menuAccountsOpened = false;
                                 String userId = account.getId();
                                 Toast.makeText(activity, activity.getString(R.string.toast_account_changed, "@" + account.getAcct() + "@" + account.getInstance()), Toast.LENGTH_LONG).show();
-                                changeUser(activity, userId);
+                                changeUser(activity, userId, true);
                                 arrow.setImageResource(R.drawable.ic_arrow_drop_down);
                                 return true;
                             }
@@ -846,13 +846,15 @@ public class Helper {
      * @param activity Activity
      * @param userID String - the new user id
      */
-    public static void changeUser(Activity activity, String userID) {
+    public static void changeUser(Activity activity, String userID, boolean checkItem) {
 
         final NavigationView navigationView = (NavigationView) activity.findViewById(R.id.nav_view);
         navigationView.getMenu().clear();
         navigationView.inflateMenu(R.menu.activity_main_drawer);
-        navigationView.setCheckedItem(R.id.nav_home);
-        navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
+        if( checkItem ) {
+            navigationView.setCheckedItem(R.id.nav_home);
+            navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
+        }
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(activity,db).getAccountByID(userID);
         //Can happen when an account has been deleted and there is a click on an old notification

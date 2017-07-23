@@ -43,6 +43,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -56,6 +57,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -121,7 +123,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private int maxChar;
     private String visibility;
     private final int PICK_IMAGE = 56556;
-    private RelativeLayout loading_picture;
+    private ProgressBar loading_picture;
     private ImageButton toot_picture;
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
@@ -132,7 +134,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private Button toot_it;
     private EditText toot_content, toot_cw_content;
     private TextView toot_reply_content;
-    private LinearLayout toot_reply_content_container;
+    private RelativeLayout toot_reply_content_container;
     private RelativeLayout toot_show_accounts;
     private ListView toot_lv_accounts;
     private BroadcastReceiver search_validate;
@@ -143,8 +145,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private long restored;
     private TextView title;
     private ImageView pp_actionBar;
-
-    private String pattern = "^(.|\\s)*(@([a-zA-Z0-9_]{2,}))$";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,12 +190,12 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         final TextView toot_space_left = (TextView) findViewById(R.id.toot_space_left);
         toot_visibility = (ImageButton) findViewById(R.id.toot_visibility);
         toot_picture = (ImageButton) findViewById(R.id.toot_picture);
-        loading_picture = (RelativeLayout) findViewById(R.id.loading_picture);
+        loading_picture = (ProgressBar) findViewById(R.id.loading_picture);
         toot_picture_container = (LinearLayout) findViewById(R.id.toot_picture_container);
         toot_content = (EditText) findViewById(R.id.toot_content);
         toot_cw_content = (EditText) findViewById(R.id.toot_cw_content);
         toot_reply_content = (TextView) findViewById(R.id.toot_reply_content);
-        toot_reply_content_container = (LinearLayout) findViewById(R.id.toot_reply_content_container);
+        toot_reply_content_container = (RelativeLayout) findViewById(R.id.toot_reply_content_container);
         toot_show_accounts = (RelativeLayout) findViewById(R.id.toot_show_accounts);
         toot_lv_accounts = (ListView) findViewById(R.id.toot_lv_accounts);
         toot_sensitive = (CheckBox) findViewById(R.id.toot_sensitive);
@@ -406,7 +406,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
             }
         });
-
+        String pattern = "^(.|\\s)*(@([a-zA-Z0-9_]{2,}))$";
+        final Pattern sPattern = Pattern.compile(pattern);
         toot_content.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -415,8 +416,14 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             @Override
             public void afterTextChanged(Editable s) {
 
-                Pattern sPattern = Pattern.compile(pattern);
-                Matcher m = sPattern.matcher(s.toString());
+                int length;
+                //Only check last 20 characters to avoid lags
+                if( s.toString().length() < 20 ){ //Less than 20 characters are written
+                    length = s.toString().length();
+                }else {
+                    length = 20;
+                }
+                Matcher m = sPattern.matcher(s.toString().substring(s.toString().length()- length, s.toString().length()));
                 if(m.matches()) {
                     String search = m.group(3);
                     new RetrieveSearchAccountsAsyncTask(getApplicationContext(),search,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -432,6 +439,21 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 }
                 int totalChar = toot_cw_content.length() + toot_content.length();
                 toot_space_left.setText(String.valueOf((maxChar - totalChar)));
+            }
+        });
+        //Allow scroll of the EditText though it's embedded in a scrollview
+        toot_content.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (v.getId() == R.id.toot_content) {
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                        case MotionEvent.ACTION_UP:
+                            v.getParent().requestDisallowInterceptTouchEvent(false);
+                            break;
+                    }
+                }
+                return false;
             }
         });
 

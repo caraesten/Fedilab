@@ -15,178 +15,170 @@
     You should have received a copy of the GNU General Public License along with Thomas Schneider; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/drawer_layout"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fillViewport="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="20dp"
-    android:paddingBottom="20dp"
-    android:paddingLeft="@dimen/toot_padding"
-    android:paddingRight="@dimen/toot_padding"
-    android:orientation="vertical">
-    <EditText
-        android:id="@+id/toot_cw_content"
-        android:layout_marginTop="20dp"
-        android:animateLayoutChanges="true"
-        android:visibility="gone"
-        android:maxLines="1"
-        android:hint="@string/toot_cw_placeholder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
+    >
     <LinearLayout
-        android:id="@+id/toot_reply_content_container"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:paddingLeft="@dimen/toot_padding"
+        android:paddingRight="@dimen/toot_padding"
         android:orientation="vertical">
-        <TextView
-            android:text="@string/toot_reply_content_title"
+        <EditText
+            android:id="@+id/toot_cw_content"
+            android:layout_marginTop="20dp"
+            android:animateLayoutChanges="true"
+            android:visibility="gone"
+            android:maxLines="1"
+            android:hint="@string/toot_cw_placeholder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/toot_reply_content_container"
+            android:visibility="gone"
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
             <TextView
+                android:id="@+id/toot_reply_content_title"
+                android:text="@string/toot_reply_content_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_below="@+id/toot_reply_content_title"
                 android:id="@+id/toot_reply_content"
                 android:layout_marginTop="10dp"
                 android:gravity="top|start"
                 android:maxLines="4"
+                android:textStyle="italic"
                 android:autoLink="web"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:textSize="12sp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/toot_close_reply"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
                 app:fabSize="mini"
-                android:layout_margin="@dimen/fab_margin"
+                android:layout_margin="5dp"
                 app:srcCompat="@drawable/ic_close" />
-        </LinearLayout>
-
-    </LinearLayout>
-    <EditText
-        android:layout_marginTop="10dp"
-        android:id="@+id/toot_content"
-        android:gravity="top|start"
-        android:hint="@string/toot_placeholder"
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="0dp" />
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-        <LinearLayout
-            android:padding="5dp"
-            android:id="@+id/toot_picture_container"
-            android:layout_width="wrap_content"
+        </RelativeLayout>
+        <EditText
+            android:layout_marginTop="10dp"
+            android:id="@+id/toot_content"
+            android:gravity="top|start"
+            android:inputType="textMultiLine"
+            android:hint="@string/toot_placeholder"
+            android:layout_width="match_parent"
+            android:minLines="4"
+            android:layout_weight="1"
+            android:layout_height="0dp" />
+        <HorizontalScrollView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxHeight="100dp"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
             >
-            <RelativeLayout
-                android:id="@+id/loading_picture"
-                android:visibility="gone"
+            <LinearLayout
+                android:padding="5dp"
+                android:id="@+id/toot_picture_container"
                 android:layout_width="wrap_content"
-                android:gravity="center"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:maxHeight="100dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                >
                 <ProgressBar
-                    android:id="@+id/pbar_inf"
+                    android:id="@+id/loading_picture"
+                    android:visibility="gone"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:indeterminate="true" />
-                <TextView
-                    android:id="@+id/loader_progress"
-                    android:textSize="12sp"
-                    android:visibility="gone"
-                    android:layout_marginTop="10dp"
-                    android:textColor="?attr/colorAccent"
-                    android:layout_below="@+id/pbar_inf"
-                    android:layout_width="50dp"
-                    android:gravity="center"
-                    android:layout_height="wrap_content" />
-            </RelativeLayout>
-        </LinearLayout>
-    </HorizontalScrollView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
-        <RelativeLayout
-            android:visibility="gone"
-            android:id="@+id/toot_show_accounts"
-            android:maxHeight="300dp"
+            </LinearLayout>
+        </HorizontalScrollView>
+        <LinearLayout
             android:layout_width="match_parent"
+            android:orientation="horizontal"
             android:layout_height="wrap_content">
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/toot_close_accounts"
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/toot_show_accounts"
+                android:maxHeight="300dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/toot_close_accounts"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center"
+                    app:fabSize="mini"
+                    android:layout_margin="@dimen/fab_margin"
+                    app:srcCompat="@drawable/ic_close" />
+                <ListView
+                    android:id="@+id/toot_lv_accounts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </RelativeLayout>
+            <ImageButton
+                android:id="@+id/toot_picture"
+                android:padding="5dp"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_action_camera"
+                />
+            <ImageButton
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:id="@+id/toot_visibility"
+                android:padding="5dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_action_globe"
+                />
+            <Button
+                android:id="@+id/toot_cw"
+                android:padding="5dp"
+                android:text="@string/cw"
+                style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:id="@+id/toot_space_left"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:layout_gravity="center"
-                app:fabSize="mini"
-                android:layout_margin="@dimen/fab_margin"
-                app:srcCompat="@drawable/ic_close" />
-            <ListView
-                android:id="@+id/toot_lv_accounts"
+                android:layout_height="40dp" />
+            <Button
+                android:id="@+id/toot_it"
+                android:padding="5dp"
+                android:text="@string/toot_it"
+                android:layout_gravity="end"
+                android:gravity="center"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </RelativeLayout>
-        <ImageButton
-            android:id="@+id/toot_picture"
-            android:padding="5dp"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_action_camera"
-          />
-        <ImageButton
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp"
-            android:id="@+id/toot_visibility"
-            android:padding="5dp"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_action_globe"
-            />
-        <Button
-            android:id="@+id/toot_cw"
-            android:padding="5dp"
-            android:text="@string/cw"
-            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
-        <TextView
-            android:id="@+id/toot_space_left"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_height="40dp" />
-        <Button
-            android:id="@+id/toot_it"
-            android:padding="5dp"
-            android:text="@string/toot_it"
-            android:layout_gravity="end"
-            android:gravity="center"
-            style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <CheckBox
+            android:text="@string/toot_sensitive"
+            android:visibility="gone"
+            android:id="@+id/toot_sensitive"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
     </LinearLayout>
-    <CheckBox
-        android:text="@string/toot_sensitive"
-        android:visibility="gone"
-        android:id="@+id/toot_sensitive"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-</LinearLayout>
+</ScrollView>
