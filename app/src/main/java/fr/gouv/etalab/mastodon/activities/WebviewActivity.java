@@ -142,6 +142,10 @@ public class WebviewActivity extends AppCompatActivity {
         }
     }
 
+    public void setUrl(String newUrl){
+        this.url = newUrl;
+    }
+
     @Override
     public void onDestroy(){
         super.onDestroy();

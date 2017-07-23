@@ -36,10 +36,15 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static android.app.Activity.RESULT_OK;
+import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_THEME_INTENT;
+import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
+import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 
 
 /**
@@ -201,6 +206,10 @@ public class SettingsFragment extends Fragment {
                     getActivity().setTheme(R.style.AppTheme);
                 }
                 getActivity().recreate();
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
+                startActivity(intent);
+
             }
         });
 

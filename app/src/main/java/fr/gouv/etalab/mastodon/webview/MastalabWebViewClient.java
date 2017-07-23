@@ -22,6 +22,8 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
+
+import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
 /**
@@ -57,7 +59,12 @@ public class MastalabWebViewClient extends WebViewClient {
         }else {
             activity.setTitle(url);
         }
-    }
+        //Changes the url in webview activity so that it can be opened with an external app
+        try{
+            if( activity instanceof WebviewActivity)
+                ((WebviewActivity)activity).setUrl(url);
+        }catch (Exception ignore){}
 
+    }
 
 }
