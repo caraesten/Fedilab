@@ -29,6 +29,7 @@
         <item name="shapeBorder">@style/Shape.Light</item>
         <item name="imgbd">@style/Image.Border.Light</item>
         <item name="windowActionBar">false</item>
+        <item name="windowActionModeOverlay">true</item>
         <item name="popupOverlay">@style/AppTheme.PopupOverlay</item>
     </style>
 
@@ -47,6 +48,7 @@
         <item name="headerbg">@style/Header.Dark</item>
         <item name="shapeBorder">@style/Shape.Dark</item>
         <item name="imgbd">@style/Image.Border.Dark</item>
+        <item name="windowActionModeOverlay">true</item>
         <item name="popupOverlay">@style/AppThemeDark.PopupOverlay</item>
         <item name="windowActionBar">false</item>
     </style>
