@@ -230,6 +230,7 @@ public class Helper {
             "(?i)\\b((?:[a-z][\\w-]+:(?:/{1,3}|[a-z0-9%])|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,4}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))",
             Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 
+    private static final Pattern hashtagPattern = Pattern.compile("(#[\\w_À-ú-]{1,})");
     /**
      * Converts emojis in input to unicode
      * @param input String
@@ -1011,7 +1012,7 @@ public class Helper {
      * @param mentions List<Mention>
      * @return TextView
      */
-    public static TextView clickableElements(final Context context, TextView statusTV, String fullContent, List<Mention> mentions, List<Tag> tags) {
+    public static TextView clickableElements(final Context context, TextView statusTV, String fullContent, List<Mention> mentions) {
 
         SpannableString spannableString;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -1076,35 +1077,93 @@ public class Helper {
 
             }
         }
-        //Deals with tags to make them clickable
-        if( tags != null && tags.size() > 0 ) {
-            //Looping through tags which are attached to the toot
-            for (final Tag tag : tags) {
-                String targetedTag = "#" + tag.getName();
-                if (spannableString.toString().contains(targetedTag)) {
-
-                    int startPosition = spannableString.toString().indexOf(targetedTag);
-                    int endPosition = spannableString.toString().lastIndexOf(targetedTag) + targetedTag.length();
-                    spannableString.setSpan(new ClickableSpan() {
-                                @Override
-                                public void onClick(View textView) {
-                                    Intent intent = new Intent(context, HashTagActivity.class);
-                                    Bundle b = new Bundle();
-                                    b.putString("tag", tag.getName());
-                                    intent.putExtras(b);
-                                    context.startActivity(intent);
-                                }
-                                @Override
-                                public void updateDrawState(TextPaint ds) {
-                                    super.updateDrawState(ds);
-                                }
-                            },
-                            startPosition, endPosition,
-                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-
+        Matcher matcher = hashtagPattern.matcher(spannableString);
+        while (matcher.find()){
+            int matchStart = matcher.start(1);
+            int matchEnd = matcher.end();
+            final String tag = spannableString.toString().substring(matchStart, matchEnd);
+            spannableString.setSpan(new ClickableSpan() {
+                @Override
+                public void onClick(View textView) {
+                    Intent intent = new Intent(context, HashTagActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("tag", tag.substring(1));
+                    intent.putExtras(b);
+                    context.startActivity(intent);
                 }
+                @Override
+                public void updateDrawState(TextPaint ds) {
+                    super.updateDrawState(ds);
+                }
+            }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        }
+        statusTV.setText(spannableString, TextView.BufferType.SPANNABLE);
+        statusTV.setMovementMethod(LinkMovementMethod.getInstance());
+        return statusTV;
+    }
 
+
+
+    /**
+     * Check if the account bio contents urls & tags and fills the content with ClickableSpan
+     * Click on url => webview or external app
+     * Click on tag => HashTagActivity
+     * @param context Context
+     * @param statusTV Textview
+     * @param fullContent String, should be the st
+     * @return TextView
+     */
+    public static TextView clickableElementsDescription(final Context context, TextView statusTV, String fullContent) {
+
+        SpannableString spannableString;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            spannableString = new SpannableString(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_COMPACT));
+        else
+            //noinspection deprecation
+            spannableString = new SpannableString(Html.fromHtml(fullContent));
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
+        if( embedded_browser){
+            Matcher matcher = urlPattern.matcher(spannableString);
+            while (matcher.find()){
+                int matchStart = matcher.start(1);
+                int matchEnd = matcher.end();
+                final String url = spannableString.toString().substring(matchStart, matchEnd);
+                spannableString.setSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(View textView) {
+                        Intent intent = new Intent(context, WebviewActivity.class);
+                        Bundle b = new Bundle();
+                        b.putString("url", url);
+                        intent.putExtras(b);
+                        context.startActivity(intent);
+                    }
+                    @Override
+                    public void updateDrawState(TextPaint ds) {
+                        super.updateDrawState(ds);
+                    }
+                }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             }
+        }
+        Matcher matcher = hashtagPattern.matcher(spannableString);
+        while (matcher.find()){
+            int matchStart = matcher.start(1);
+            int matchEnd = matcher.end();
+            final String tag = spannableString.toString().substring(matchStart, matchEnd);
+            spannableString.setSpan(new ClickableSpan() {
+                @Override
+                public void onClick(View textView) {
+                    Intent intent = new Intent(context, HashTagActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("tag", tag.substring(1));
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+                @Override
+                public void updateDrawState(TextPaint ds) {
+                    super.updateDrawState(ds);
+                }
+            }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         statusTV.setText(spannableString, TextView.BufferType.SPANNABLE);
         statusTV.setMovementMethod(LinkMovementMethod.getInstance());
