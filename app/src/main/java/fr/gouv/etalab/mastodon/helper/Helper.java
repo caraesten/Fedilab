@@ -42,6 +42,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -56,6 +57,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
@@ -168,7 +170,7 @@ public class Helper {
     //Notifications
     public static final int NOTIFICATION_INTENT = 1;
     public static final int HOME_TIMELINE_INTENT = 2;
-
+    public static final int CHANGE_THEME_INTENT = 3;
     //Settings
     public static final String SET_TOOTS_PER_PAGE = "set_toots_per_page";
     public static final String SET_ACCOUNTS_PER_PAGE = "set_accounts_per_page";
@@ -225,11 +227,10 @@ public class Helper {
     private static final Pattern SHORTNAME_PATTERN = Pattern.compile(":([-+\\w]+):");
 
     private static final Pattern urlPattern = Pattern.compile(
-            "(?:^|[\\W])((ht|f)tp(s?):\\/\\/|www\\.)"
-                    + "(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*"
-                    + "[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)",
+            "(?i)\\b((?:[a-z][\\w-]+:(?:/{1,3}|[a-z0-9%])|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,4}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))",
             Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 
+    private static final Pattern hashtagPattern = Pattern.compile("(#[\\w_À-ú-]{1,})");
     /**
      * Converts emojis in input to unicode
      * @param input String
@@ -776,7 +777,7 @@ public class Helper {
                                 menuAccountsOpened = false;
                                 String userId = account.getId();
                                 Toast.makeText(activity, activity.getString(R.string.toast_account_changed, "@" + account.getAcct() + "@" + account.getInstance()), Toast.LENGTH_LONG).show();
-                                changeUser(activity, userId);
+                                changeUser(activity, userId, true);
                                 arrow.setImageResource(R.drawable.ic_arrow_drop_down);
                                 return true;
                             }
@@ -846,13 +847,15 @@ public class Helper {
      * @param activity Activity
      * @param userID String - the new user id
      */
-    public static void changeUser(Activity activity, String userID) {
+    public static void changeUser(Activity activity, String userID, boolean checkItem) {
 
         final NavigationView navigationView = (NavigationView) activity.findViewById(R.id.nav_view);
         navigationView.getMenu().clear();
         navigationView.inflateMenu(R.menu.activity_main_drawer);
-        navigationView.setCheckedItem(R.id.nav_home);
-        navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
+        if( checkItem ) {
+            navigationView.setCheckedItem(R.id.nav_home);
+            navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
+        }
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(activity,db).getAccountByID(userID);
         //Can happen when an account has been deleted and there is a click on an old notification
@@ -1009,7 +1012,7 @@ public class Helper {
      * @param mentions List<Mention>
      * @return TextView
      */
-    public static TextView clickableElements(final Context context, TextView statusTV, String fullContent, List<Mention> mentions, List<Tag> tags) {
+    public static TextView clickableElements(final Context context, TextView statusTV, String fullContent, List<Mention> mentions) {
 
         SpannableString spannableString;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -1074,35 +1077,93 @@ public class Helper {
 
             }
         }
-        //Deals with tags to make them clickable
-        if( tags != null && tags.size() > 0 ) {
-            //Looping through tags which are attached to the toot
-            for (final Tag tag : tags) {
-                String targetedTag = "#" + tag.getName();
-                if (spannableString.toString().contains(targetedTag)) {
-
-                    int startPosition = spannableString.toString().indexOf(targetedTag);
-                    int endPosition = spannableString.toString().lastIndexOf(targetedTag) + targetedTag.length();
-                    spannableString.setSpan(new ClickableSpan() {
-                                @Override
-                                public void onClick(View textView) {
-                                    Intent intent = new Intent(context, HashTagActivity.class);
-                                    Bundle b = new Bundle();
-                                    b.putString("tag", tag.getName());
-                                    intent.putExtras(b);
-                                    context.startActivity(intent);
-                                }
-                                @Override
-                                public void updateDrawState(TextPaint ds) {
-                                    super.updateDrawState(ds);
-                                }
-                            },
-                            startPosition, endPosition,
-                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-
+        Matcher matcher = hashtagPattern.matcher(spannableString);
+        while (matcher.find()){
+            int matchStart = matcher.start(1);
+            int matchEnd = matcher.end();
+            final String tag = spannableString.toString().substring(matchStart, matchEnd);
+            spannableString.setSpan(new ClickableSpan() {
+                @Override
+                public void onClick(View textView) {
+                    Intent intent = new Intent(context, HashTagActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("tag", tag.substring(1));
+                    intent.putExtras(b);
+                    context.startActivity(intent);
                 }
+                @Override
+                public void updateDrawState(TextPaint ds) {
+                    super.updateDrawState(ds);
+                }
+            }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        }
+        statusTV.setText(spannableString, TextView.BufferType.SPANNABLE);
+        statusTV.setMovementMethod(LinkMovementMethod.getInstance());
+        return statusTV;
+    }
 
+
+
+    /**
+     * Check if the account bio contents urls & tags and fills the content with ClickableSpan
+     * Click on url => webview or external app
+     * Click on tag => HashTagActivity
+     * @param context Context
+     * @param statusTV Textview
+     * @param fullContent String, should be the st
+     * @return TextView
+     */
+    public static TextView clickableElementsDescription(final Context context, TextView statusTV, String fullContent) {
+
+        SpannableString spannableString;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            spannableString = new SpannableString(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_COMPACT));
+        else
+            //noinspection deprecation
+            spannableString = new SpannableString(Html.fromHtml(fullContent));
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
+        if( embedded_browser){
+            Matcher matcher = urlPattern.matcher(spannableString);
+            while (matcher.find()){
+                int matchStart = matcher.start(1);
+                int matchEnd = matcher.end();
+                final String url = spannableString.toString().substring(matchStart, matchEnd);
+                spannableString.setSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(View textView) {
+                        Intent intent = new Intent(context, WebviewActivity.class);
+                        Bundle b = new Bundle();
+                        b.putString("url", url);
+                        intent.putExtras(b);
+                        context.startActivity(intent);
+                    }
+                    @Override
+                    public void updateDrawState(TextPaint ds) {
+                        super.updateDrawState(ds);
+                    }
+                }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             }
+        }
+        Matcher matcher = hashtagPattern.matcher(spannableString);
+        while (matcher.find()){
+            int matchStart = matcher.start(1);
+            int matchEnd = matcher.end();
+            final String tag = spannableString.toString().substring(matchStart, matchEnd);
+            spannableString.setSpan(new ClickableSpan() {
+                @Override
+                public void onClick(View textView) {
+                    Intent intent = new Intent(context, HashTagActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("tag", tag.substring(1));
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+                @Override
+                public void updateDrawState(TextPaint ds) {
+                    super.updateDrawState(ds);
+                }
+            }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         statusTV.setText(spannableString, TextView.BufferType.SPANNABLE);
         statusTV.setMovementMethod(LinkMovementMethod.getInstance());
@@ -1308,5 +1369,17 @@ public class Helper {
             if (x == id) {return true;}
         }
         return false;
+    }
+
+    public static void unCheckAllMenuItems(@NonNull final Menu menu) {
+        int size = menu.size();
+        for (int i = 0; i < size; i++) {
+            final MenuItem item = menu.getItem(i);
+            if(item.hasSubMenu()) {
+                unCheckAllMenuItems(item.getSubMenu());
+            } else {
+                item.setChecked(false);
+            }
+        }
     }
 }

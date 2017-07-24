@@ -210,9 +210,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             public void onClick(View v) {
                 try {
                     if( !status.isTranslated() ){
-                        //new YandexQuery(StatusListAdapter.this).getYandexTextview(position, status.getContent(), currentLocale);
                         new YandexQuery(StatusListAdapter.this).getYandexTextview(position, status.getContent(), currentLocale);
-
                     }else {
                         status.setTranslationShown(!status.isTranslationShown());
                         statusListAdapter.notifyDataSetChanged();
@@ -272,7 +270,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             changeDrawableColor(context, R.drawable.ic_translate,R.color.black);
         }
 
-
+        //Redraws top icons (boost/reply)
         final float scale = context.getResources().getDisplayMetrics().density;
         if( !status.getIn_reply_to_account_id().equals("null") || !status.getIn_reply_to_id().equals("null") ){
             Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_reply);
@@ -285,7 +283,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }else{
             holder.status_account_displayname.setCompoundDrawables( null, null, null, null);
         }
-
 
         //Click on a conversation
         if( type != RetrieveFeedsAsyncTask.Type.CONTEXT ){
@@ -355,13 +352,11 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
 
         holder.status_content = Helper.clickableElements(context, holder.status_content,content,
-                status.getReblog() != null?status.getReblog().getMentions():status.getMentions(),
-                status.getReblog() != null?status.getReblog().getTags():status.getTags());
+                status.getReblog() != null?status.getReblog().getMentions():status.getMentions());
 
         if( status.getContent_translated() != null && status.getContent_translated().length() > 0){
             holder.status_content_translated = Helper.clickableElements(context, holder.status_content_translated,status.getContent_translated(),
-                    status.getReblog() != null?status.getReblog().getMentions():status.getMentions(),
-                    status.getReblog() != null?status.getReblog().getTags():status.getTags());
+                    status.getReblog() != null?status.getReblog().getMentions():status.getMentions());
         }
         holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
         holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));

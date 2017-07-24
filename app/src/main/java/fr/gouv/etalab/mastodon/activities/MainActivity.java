@@ -29,6 +29,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -73,6 +74,7 @@ import fr.gouv.etalab.mastodon.fragments.TabLayoutSettingsFragment;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_THEME_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
@@ -81,6 +83,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeUser;
 import static fr.gouv.etalab.mastodon.helper.Helper.loadPPInActionBar;
 import static fr.gouv.etalab.mastodon.helper.Helper.menuAccounts;
+import static fr.gouv.etalab.mastodon.helper.Helper.unCheckAllMenuItems;
 import static fr.gouv.etalab.mastodon.helper.Helper.updateHeaderAccountInfo;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
@@ -335,17 +338,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void unCheckAllMenuItems(@NonNull final Menu menu) {
-        int size = menu.size();
-        for (int i = 0; i < size; i++) {
-            final MenuItem item = menu.getItem(i);
-            if(item.hasSubMenu()) {
-                unCheckAllMenuItems(item.getSubMenu());
-            } else {
-                item.setChecked(false);
-            }
-        }
-    }
+
 
 
     @Override
@@ -369,25 +362,23 @@ public class MainActivity extends AppCompatActivity
         String userIdIntent;
         boolean matchingIntent = false;
         if( extras.containsKey(INTENT_ACTION) ){
-            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null); //Id of the authenticated account
             final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             userIdIntent = extras.getString(PREF_KEY_ID); //Id of the account in the intent
             if (extras.getInt(INTENT_ACTION) == NOTIFICATION_INTENT){
-                if( userId!= null && !userId.equals(userIdIntent)) //Connected account is different from the id in the intent
-                    changeUser(MainActivity.this, userIdIntent); //Connects the account which is related to the notification
                 unCheckAllMenuItems(navigationView.getMenu());
-                navigationView.getMenu().performIdentifierAction(R.id.nav_notification, 0);
-                if( navigationView.getMenu().findItem(R.id.nav_notification) != null)
-                    navigationView.getMenu().findItem(R.id.nav_notification).setChecked(true);
+                changeUser(MainActivity.this, userIdIntent, false); //Connects the account which is related to the notification
+                tabLayout.getTabAt(3).select();
                 matchingIntent = true;
             }else if( extras.getInt(INTENT_ACTION) == HOME_TIMELINE_INTENT){
-                if( userId!= null && !userId.equals(userIdIntent))  //Connected account is different from the id in the intent
-                    changeUser(MainActivity.this, userIdIntent); //Connects the account which is related to the notification
                 unCheckAllMenuItems(navigationView.getMenu());
-                navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
-                if( navigationView.getMenu().findItem(R.id.nav_home) != null)
-                    navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
+                changeUser(MainActivity.this, userIdIntent, false); //Connects the account which is related to the notification
+                tabLayout.getTabAt(0).select();
+                matchingIntent = true;
+            }else if( extras.getInt(INTENT_ACTION) == CHANGE_THEME_INTENT){
+                unCheckAllMenuItems(navigationView.getMenu());
+                navigationView.setCheckedItem(R.id.nav_settings);
+                navigationView.getMenu().performIdentifierAction(R.id.nav_settings, 0);
+                toolbarTitle.setText(R.string.settings);
                 matchingIntent = true;
             }
         }else if( Intent.ACTION_SEND.equals(action) && type != null ){
