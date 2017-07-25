@@ -1098,6 +1098,7 @@ public class Helper {
             }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         statusTV.setText(spannableString, TextView.BufferType.SPANNABLE);
+        statusTV.setMovementMethod(null);
         statusTV.setMovementMethod(LinkMovementMethod.getInstance());
         return statusTV;
     }
@@ -1166,6 +1167,7 @@ public class Helper {
             }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         statusTV.setText(spannableString, TextView.BufferType.SPANNABLE);
+        statusTV.setMovementMethod(null);
         statusTV.setMovementMethod(LinkMovementMethod.getInstance());
         return statusTV;
     }

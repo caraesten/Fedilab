@@ -531,10 +531,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 }
             }
         });
-
-
-
-
         //Profile picture
         return convertView;
     }
