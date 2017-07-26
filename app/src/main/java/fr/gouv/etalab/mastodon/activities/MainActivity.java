@@ -74,6 +74,7 @@ import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_THEME_INTENT;
+import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_USER_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
@@ -173,8 +174,8 @@ public class MainActivity extends AppCompatActivity
                 tabLayout.setVisibility(View.VISIBLE);
                 switch (tab.getPosition()){
                     case 0:
-                        fragmentTag = "HOME_TIMELINE";
                         item = navigationView.getMenu().findItem(R.id.nav_home);
+                        fragmentTag = "HOME_TIMELINE";
                         break;
                     case 1:
                         fragmentTag = "LOCAL_TIMELINE";
@@ -368,15 +369,18 @@ public class MainActivity extends AppCompatActivity
                 tabLayout.getTabAt(3).select();
                 matchingIntent = true;
             }else if( extras.getInt(INTENT_ACTION) == HOME_TIMELINE_INTENT){
-                unCheckAllMenuItems(navigationView);
-                changeUser(MainActivity.this, userIdIntent, false); //Connects the account which is related to the notification
-                tabLayout.getTabAt(0).select();
-                matchingIntent = true;
+                changeUser(MainActivity.this, userIdIntent, true); //Connects the account which is related to the notification
             }else if( extras.getInt(INTENT_ACTION) == CHANGE_THEME_INTENT){
                 unCheckAllMenuItems(navigationView);
                 navigationView.setCheckedItem(R.id.nav_settings);
                 navigationView.getMenu().performIdentifierAction(R.id.nav_settings, 0);
                 toolbarTitle.setText(R.string.settings);
+                matchingIntent = true;
+            }else if( extras.getInt(INTENT_ACTION) == CHANGE_USER_INTENT){
+                unCheckAllMenuItems(navigationView);
+                navigationView.setCheckedItem(R.id.nav_home);
+                navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
+                toolbarTitle.setText(R.string.home_menu);
                 matchingIntent = true;
             }
         }else if( Intent.ACTION_SEND.equals(action) && type != null ){
@@ -524,7 +528,6 @@ public class MainActivity extends AppCompatActivity
         //Proceeds to update of the authenticated account
         if(Helper.isLoggedIn(getApplicationContext()))
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
     }
 
 
@@ -660,7 +663,7 @@ public class MainActivity extends AppCompatActivity
     /**
      * Page Adapter for settings
      */
-    private class PagerAdapter extends FragmentStatePagerAdapter {
+    private class PagerAdapter extends FragmentStatePagerAdapter  {
         int mNumOfTabs;
 
         private PagerAdapter(FragmentManager fm, int NumOfTabs) {

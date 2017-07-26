@@ -17,7 +17,6 @@
 package fr.gouv.etalab.mastodon.helper;
 
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
@@ -53,10 +52,10 @@ import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
+import android.text.method.ArrowKeyMovementMethod;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -117,7 +116,6 @@ import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
-import fr.gouv.etalab.mastodon.client.Entities.Tag;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -171,6 +169,7 @@ public class Helper {
     public static final int NOTIFICATION_INTENT = 1;
     public static final int HOME_TIMELINE_INTENT = 2;
     public static final int CHANGE_THEME_INTENT = 3;
+    public static final int CHANGE_USER_INTENT = 4;
     //Settings
     public static final String SET_TOOTS_PER_PAGE = "set_toots_per_page";
     public static final String SET_ACCOUNTS_PER_PAGE = "set_accounts_per_page";
@@ -587,6 +586,7 @@ public class Helper {
             File file;
             if( bitmap != null) {
                 file = new File(myDir, fileName);
+                //noinspection ResultOfMethodCallIgnored
                 file.createNewFile();
 
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -852,10 +852,6 @@ public class Helper {
         final NavigationView navigationView = (NavigationView) activity.findViewById(R.id.nav_view);
         navigationView.getMenu().clear();
         navigationView.inflateMenu(R.menu.activity_main_drawer);
-        if( checkItem ) {
-            navigationView.setCheckedItem(R.id.nav_home);
-            navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
-        }
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(activity,db).getAccountByID(userID);
         //Can happen when an account has been deleted and there is a click on an old notification
@@ -873,6 +869,11 @@ public class Helper {
         editor.putString(Helper.PREF_KEY_ID, account.getId());
         editor.apply();
         activity.recreate();
+        if( checkItem ) {
+            Intent intent = new Intent(activity, MainActivity.class);
+            intent.putExtra(INTENT_ACTION, CHANGE_USER_INTENT);
+            activity.startActivity(intent);
+        }
     }
 
 
@@ -1100,6 +1101,9 @@ public class Helper {
         statusTV.setText(spannableString, TextView.BufferType.SPANNABLE);
         statusTV.setMovementMethod(null);
         statusTV.setMovementMethod(LinkMovementMethod.getInstance());
+        statusTV.setMovementMethod(ArrowKeyMovementMethod.getInstance());
+        statusTV.setFocusable(true);
+        statusTV.setFocusableInTouchMode(true);
         return statusTV;
     }
 
