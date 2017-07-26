@@ -29,7 +29,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -105,7 +104,6 @@ public class MainActivity extends AppCompatActivity
     private ViewPager viewPager;
     private RelativeLayout main_app_container;
     private Stack<Integer> stackBack = new Stack<>();
-
     public MainActivity() {
     }
 
@@ -194,7 +192,7 @@ public class MainActivity extends AppCompatActivity
                 if( item != null){
                     toolbarTitle.setText(item.getTitle());
                     populateTitleWithTag(fragmentTag, item.getTitle().toString(), item.getItemId());
-                    unCheckAllMenuItems(navigationView.getMenu());
+                    unCheckAllMenuItems(navigationView);
                     item.setChecked(true);
                 }
                 if( tab.getPosition() < 3 )
@@ -365,17 +363,17 @@ public class MainActivity extends AppCompatActivity
             final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             userIdIntent = extras.getString(PREF_KEY_ID); //Id of the account in the intent
             if (extras.getInt(INTENT_ACTION) == NOTIFICATION_INTENT){
-                unCheckAllMenuItems(navigationView.getMenu());
                 changeUser(MainActivity.this, userIdIntent, false); //Connects the account which is related to the notification
+                unCheckAllMenuItems(navigationView);
                 tabLayout.getTabAt(3).select();
                 matchingIntent = true;
             }else if( extras.getInt(INTENT_ACTION) == HOME_TIMELINE_INTENT){
-                unCheckAllMenuItems(navigationView.getMenu());
+                unCheckAllMenuItems(navigationView);
                 changeUser(MainActivity.this, userIdIntent, false); //Connects the account which is related to the notification
                 tabLayout.getTabAt(0).select();
                 matchingIntent = true;
             }else if( extras.getInt(INTENT_ACTION) == CHANGE_THEME_INTENT){
-                unCheckAllMenuItems(navigationView.getMenu());
+                unCheckAllMenuItems(navigationView);
                 navigationView.setCheckedItem(R.id.nav_settings);
                 navigationView.getMenu().performIdentifierAction(R.id.nav_settings, 0);
                 toolbarTitle.setText(R.string.settings);
@@ -424,7 +422,7 @@ public class MainActivity extends AppCompatActivity
                 tabLayout.setVisibility(View.VISIBLE);
                 main_app_container.setVisibility(View.GONE);
                 final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-                unCheckAllMenuItems(navigationView.getMenu());
+                unCheckAllMenuItems(navigationView);
                 toot.setVisibility(View.VISIBLE);
 
                 switch (viewPager.getCurrentItem()){
@@ -526,6 +524,7 @@ public class MainActivity extends AppCompatActivity
         //Proceeds to update of the authenticated account
         if(Helper.isLoggedIn(getApplicationContext()))
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
     }
 
 
@@ -537,7 +536,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        unCheckAllMenuItems(navigationView.getMenu());
+        unCheckAllMenuItems(navigationView);
         item.setChecked(true);
         //Remove the search bar
         if( !toolbar_search.isIconified() ) {

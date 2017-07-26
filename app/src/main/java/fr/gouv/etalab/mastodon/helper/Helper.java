@@ -1029,21 +1029,21 @@ public class Helper {
                 int matchEnd = matcher.end();
                 final String url = spannableString.toString().substring(matchStart, matchEnd);
                 spannableString.setSpan(new ClickableSpan() {
-                        @Override
-                        public void onClick(View textView) {
-                            Intent intent = new Intent(context, WebviewActivity.class);
-                            Bundle b = new Bundle();
-                            b.putString("url", url);
-                            intent.putExtras(b);
-                            context.startActivity(intent);
-                        }
-                        @Override
-                        public void updateDrawState(TextPaint ds) {
-                            super.updateDrawState(ds);
-                        }
-                    },
-                    matchStart, matchEnd,
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    @Override
+                    public void onClick(View textView) {
+                        Intent intent = new Intent(context, WebviewActivity.class);
+                        Bundle b = new Bundle();
+                        b.putString("url", url);
+                        intent.putExtras(b);
+                        context.startActivity(intent);
+                    }
+                    @Override
+                    public void updateDrawState(TextPaint ds) {
+                        super.updateDrawState(ds);
+                    }
+                },
+                matchStart, matchEnd,
+                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
             }
         }
@@ -1057,21 +1057,21 @@ public class Helper {
                     int startPosition = spannableString.toString().indexOf(targetedAccount);
                     int endPosition = spannableString.toString().lastIndexOf(targetedAccount) + targetedAccount.length();
                     spannableString.setSpan(new ClickableSpan() {
-                                @Override
-                                public void onClick(View textView) {
-                                    Intent intent = new Intent(context, ShowAccountActivity.class);
-                                    Bundle b = new Bundle();
-                                    b.putString("accountId", mention.getId());
-                                    intent.putExtras(b);
-                                    context.startActivity(intent);
-                                }
-                                @Override
-                                public void updateDrawState(TextPaint ds) {
-                                    super.updateDrawState(ds);
-                                }
-                            },
-                            startPosition, endPosition,
-                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                        @Override
+                        public void onClick(View textView) {
+                            Intent intent = new Intent(context, ShowAccountActivity.class);
+                            Bundle b = new Bundle();
+                            b.putString("accountId", mention.getId());
+                            intent.putExtras(b);
+                            context.startActivity(intent);
+                        }
+                        @Override
+                        public void updateDrawState(TextPaint ds) {
+                            super.updateDrawState(ds);
+                        }
+                    },
+                    startPosition, endPosition,
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
                 }
 
@@ -1373,12 +1373,19 @@ public class Helper {
         return false;
     }
 
-    public static void unCheckAllMenuItems(@NonNull final Menu menu) {
+
+
+    public static void unCheckAllMenuItems(NavigationView navigationView){
+        navigationView.setCheckedItem(R.id.menu_none);
+        unCheckAllMenuItemsRec(navigationView.getMenu());
+    }
+
+    private static void unCheckAllMenuItemsRec(@NonNull final Menu menu) {
         int size = menu.size();
         for (int i = 0; i < size; i++) {
             final MenuItem item = menu.getItem(i);
             if(item.hasSubMenu()) {
-                unCheckAllMenuItems(item.getSubMenu());
+                unCheckAllMenuItemsRec(item.getSubMenu());
             } else {
                 item.setChecked(false);
             }
