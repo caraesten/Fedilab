@@ -1121,6 +1121,7 @@ public class Helper {
     public static TextView clickableElementsDescription(final Context context, TextView statusTV, String fullContent) {
 
         SpannableString spannableString;
+        fullContent = Helper.shortnameToUnicode(fullContent, true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             spannableString = new SpannableString(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_COMPACT));
         else
@@ -1170,6 +1171,7 @@ public class Helper {
                 }
             }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
+
         statusTV.setText(spannableString, TextView.BufferType.SPANNABLE);
         statusTV.setMovementMethod(null);
         statusTV.setMovementMethod(LinkMovementMethod.getInstance());
