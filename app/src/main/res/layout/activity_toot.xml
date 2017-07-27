@@ -159,6 +159,7 @@
             <TextView
                 android:id="@+id/toot_space_left"
                 android:layout_width="0dp"
+                android:textColor="?attr/colorAccent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:layout_gravity="center"

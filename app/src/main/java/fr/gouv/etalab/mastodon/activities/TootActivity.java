@@ -25,21 +25,20 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -108,7 +107,6 @@ import mastodon.etalab.gouv.fr.mastodon.R;
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
-import static fr.gouv.etalab.mastodon.helper.Helper.loadPPInActionBar;
 
 /**
  * Created by Thomas on 01/05/2017.
@@ -145,12 +143,14 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private long restored;
     private TextView title;
     private ImageView pp_actionBar;
+    private Toast mToast;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
             setTheme(R.style.AppTheme);
         }else {
@@ -430,15 +430,21 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 }else{
                     toot_show_accounts.setVisibility(View.GONE);
                 }
-                if( s.length() + charsInCw > maxChar){
-                    String content = s.toString().substring(0,(maxChar - charsInCw));
-                    toot_content.setText(content);
-                    charsInToot = content.length();
-                    toot_content.setSelection(toot_content.getText().length());
-                    Toast.makeText(getApplicationContext(),R.string.toot_no_space,Toast.LENGTH_LONG).show();
-                }
                 int totalChar = toot_cw_content.length() + toot_content.length();
-                toot_space_left.setText(String.valueOf((maxChar - totalChar)));
+                int remainChar = (maxChar - totalChar);
+                if( remainChar >= 0){
+                    toot_it.setEnabled(true);
+                    if( theme == Helper.THEME_LIGHT){
+                        toot_space_left.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
+                    }else {
+                        toot_space_left.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccentD));
+                    }
+                }else {
+                    toot_it.setEnabled(false);
+                    showAToast(getString(R.string.toot_no_space));
+                    toot_space_left.setTextColor( Color.RED);
+                }
+                toot_space_left.setText(String.valueOf(remainChar));
             }
         });
         //Allow scroll of the EditText though it's embedded in a scrollview
@@ -464,14 +470,22 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
-                if( s.length() + charsInToot > maxChar){
-                    String content = s.toString().substring(0,(maxChar - charsInToot));
-                    toot_cw_content.setText(content);
-                    toot_cw_content.setSelection(toot_cw_content.getText().length());
-                    Toast.makeText(getApplicationContext(),R.string.toot_no_space,Toast.LENGTH_LONG).show();
-                }
                 int totalChar = toot_cw_content.length() + toot_content.length();
-                toot_space_left.setText(String.valueOf((maxChar - totalChar)));
+                int remainChar = (maxChar - totalChar);
+                if( remainChar >= 0){
+                    toot_it.setEnabled(true);
+                    if( theme == Helper.THEME_LIGHT){
+                        toot_space_left.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
+                    }else {
+                        toot_space_left.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccentD));
+                    }
+                }else {
+                    toot_it.setEnabled(false);
+                    showAToast(getString(R.string.toot_no_space));
+                    toot_space_left.setTextColor(Color.RED);
+
+                }
+                toot_space_left.setText(String.valueOf(remainChar));
             }
         });
         if( restored != -1 ){
@@ -481,6 +495,13 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     }
 
 
+    public void showAToast (String message){
+        if (mToast != null) {
+            mToast.cancel();
+        }
+        mToast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+        mToast.show();
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

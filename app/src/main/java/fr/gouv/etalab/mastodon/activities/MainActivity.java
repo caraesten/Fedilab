@@ -29,7 +29,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -75,6 +74,7 @@ import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_THEME_INTENT;
+import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_USER_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
@@ -105,7 +105,6 @@ public class MainActivity extends AppCompatActivity
     private ViewPager viewPager;
     private RelativeLayout main_app_container;
     private Stack<Integer> stackBack = new Stack<>();
-
     public MainActivity() {
     }
 
@@ -175,8 +174,8 @@ public class MainActivity extends AppCompatActivity
                 tabLayout.setVisibility(View.VISIBLE);
                 switch (tab.getPosition()){
                     case 0:
-                        fragmentTag = "HOME_TIMELINE";
                         item = navigationView.getMenu().findItem(R.id.nav_home);
+                        fragmentTag = "HOME_TIMELINE";
                         break;
                     case 1:
                         fragmentTag = "LOCAL_TIMELINE";
@@ -194,7 +193,7 @@ public class MainActivity extends AppCompatActivity
                 if( item != null){
                     toolbarTitle.setText(item.getTitle());
                     populateTitleWithTag(fragmentTag, item.getTitle().toString(), item.getItemId());
-                    unCheckAllMenuItems(navigationView.getMenu());
+                    unCheckAllMenuItems(navigationView);
                     item.setChecked(true);
                 }
                 if( tab.getPosition() < 3 )
@@ -365,20 +364,23 @@ public class MainActivity extends AppCompatActivity
             final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             userIdIntent = extras.getString(PREF_KEY_ID); //Id of the account in the intent
             if (extras.getInt(INTENT_ACTION) == NOTIFICATION_INTENT){
-                unCheckAllMenuItems(navigationView.getMenu());
                 changeUser(MainActivity.this, userIdIntent, false); //Connects the account which is related to the notification
+                unCheckAllMenuItems(navigationView);
                 tabLayout.getTabAt(3).select();
                 matchingIntent = true;
             }else if( extras.getInt(INTENT_ACTION) == HOME_TIMELINE_INTENT){
-                unCheckAllMenuItems(navigationView.getMenu());
-                changeUser(MainActivity.this, userIdIntent, false); //Connects the account which is related to the notification
-                tabLayout.getTabAt(0).select();
-                matchingIntent = true;
+                changeUser(MainActivity.this, userIdIntent, true); //Connects the account which is related to the notification
             }else if( extras.getInt(INTENT_ACTION) == CHANGE_THEME_INTENT){
-                unCheckAllMenuItems(navigationView.getMenu());
+                unCheckAllMenuItems(navigationView);
                 navigationView.setCheckedItem(R.id.nav_settings);
                 navigationView.getMenu().performIdentifierAction(R.id.nav_settings, 0);
                 toolbarTitle.setText(R.string.settings);
+                matchingIntent = true;
+            }else if( extras.getInt(INTENT_ACTION) == CHANGE_USER_INTENT){
+                unCheckAllMenuItems(navigationView);
+                navigationView.setCheckedItem(R.id.nav_home);
+                navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
+                toolbarTitle.setText(R.string.home_menu);
                 matchingIntent = true;
             }
         }else if( Intent.ACTION_SEND.equals(action) && type != null ){
@@ -424,7 +426,7 @@ public class MainActivity extends AppCompatActivity
                 tabLayout.setVisibility(View.VISIBLE);
                 main_app_container.setVisibility(View.GONE);
                 final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-                unCheckAllMenuItems(navigationView.getMenu());
+                unCheckAllMenuItems(navigationView);
                 toot.setVisibility(View.VISIBLE);
 
                 switch (viewPager.getCurrentItem()){
@@ -537,7 +539,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        unCheckAllMenuItems(navigationView.getMenu());
+        unCheckAllMenuItems(navigationView);
         item.setChecked(true);
         //Remove the search bar
         if( !toolbar_search.isIconified() ) {
@@ -661,7 +663,7 @@ public class MainActivity extends AppCompatActivity
     /**
      * Page Adapter for settings
      */
-    private class PagerAdapter extends FragmentStatePagerAdapter {
+    private class PagerAdapter extends FragmentStatePagerAdapter  {
         int mNumOfTabs;
 
         private PagerAdapter(FragmentManager fm, int NumOfTabs) {
