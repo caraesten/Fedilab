@@ -46,8 +46,10 @@ import com.github.chrisbanes.photoview.OnMatrixChangedListener;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -62,6 +64,7 @@ import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.MastalabSSLSocketFactory;
+import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
@@ -163,6 +166,15 @@ public class MediaActivity extends AppCompatActivity  {
 
         isHiding = false;
         imageLoader = ImageLoader.getInstance();
+        File cacheDir = new File(getCacheDir(), getString(R.string.app_name));
+        ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(this)
+                .imageDownloader(new PatchBaseImageDownloader(getApplicationContext()))
+                .threadPoolSize(5)
+                .threadPriority(Thread.MIN_PRIORITY + 3)
+                .denyCacheImageMultipleSizesInMemory()
+                .diskCache(new UnlimitedDiskCache(cacheDir))
+                .build();
+        imageLoader.init(configImg);
         options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
         setTitle("");

@@ -62,12 +62,15 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -91,6 +94,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
+import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.drawers.AccountsSearchAdapter;
 import fr.gouv.etalab.mastodon.drawers.DraftsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -182,6 +186,15 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         //By default the toot is not restored so the id -1 is defined
         currentToId = -1;
         imageLoader = ImageLoader.getInstance();
+        File cacheDir = new File(getCacheDir(), getString(R.string.app_name));
+        ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(this)
+                .imageDownloader(new PatchBaseImageDownloader(getApplicationContext()))
+                .threadPoolSize(5)
+                .threadPriority(Thread.MIN_PRIORITY + 3)
+                .denyCacheImageMultipleSizesInMemory()
+                .diskCache(new UnlimitedDiskCache(cacheDir))
+                .build();
+        imageLoader.init(configImg);
         options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 

@@ -25,7 +25,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
-import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +38,6 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
@@ -162,12 +160,9 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             }else{
                 holder.notification_account_displayname.setCompoundDrawables( null, null, null, null);
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                holder.notification_status_content.setText(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_COMPACT));
-            else
-                //noinspection deprecation
-                holder.notification_status_content.setText(Html.fromHtml(status.getContent()));
-            holder.notification_status_content.setAutoLinkMask(Linkify.WEB_URLS);
+
+            holder.notification_status_content = Helper.clickableElements(context, holder.notification_status_content,status.getContent(),
+                    status.getReblog() != null?status.getReblog().getMentions():status.getMentions());
             holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
             holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
             holder.status_date.setText(Helper.dateDiff(context, status.getCreated_at()));
