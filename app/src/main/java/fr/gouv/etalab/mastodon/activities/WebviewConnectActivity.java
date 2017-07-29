@@ -17,6 +17,7 @@ package fr.gouv.etalab.mastodon.activities;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -30,6 +31,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -54,9 +56,9 @@ public class WebviewConnectActivity extends AppCompatActivity {
     private AlertDialog alert;
     private String clientId, clientSecret;
     private String instance;
+    private int retry;
 
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -71,7 +73,7 @@ public class WebviewConnectActivity extends AppCompatActivity {
             instance = b.getString("instance");
         if( instance == null)
             finish();
-
+        retry = 0;
         clientId = sharedpreferences.getString(Helper.CLIENT_ID, null);
         clientSecret = sharedpreferences.getString(Helper.CLIENT_SECRET, null);
 
@@ -99,6 +101,13 @@ public class WebviewConnectActivity extends AppCompatActivity {
                 super.shouldOverrideUrlLoading(view,url);
                 if( url.contains(Helper.REDIRECT_CONTENT_WEB)){
                     String val[] = url.split("code=");
+                    if (val.length< 2){
+                        Toast.makeText(getApplicationContext(), R.string.toast_code_error, Toast.LENGTH_LONG).show();
+                        Intent myIntent = new Intent(WebviewConnectActivity.this, LoginActivity.class);
+                        startActivity(myIntent);
+                        finish();
+                        return false;
+                    }
                     String code = val[1];
 
                     String action = "/oauth/token";
