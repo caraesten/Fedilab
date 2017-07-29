@@ -34,6 +34,7 @@
     <string name="other_instance">Other instance than mastodon.etalab.gouv.fr?</string>
     <string name="no_result">No results!</string>
     <string name="instance">Instance</string>
+    <string name="instance_example">Instance: mastodon.social</string>
     <string name="toast_account_changed">Now works with the account %1$s</string>
     <string name="add_account">Add an account</string>
     <string name="clipboard">The content of the toot has been copied to the clipboard</string>
@@ -233,6 +234,7 @@
     <string name="toast_unstatus">The toot was deleted!</string>
     <string name="toast_error">Oops ! An error occurred!</string>
     <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
+    <string name="toast_error_instance">The instance domain does not seem to be valide!</string>
     <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
     <string name="toast_error_search">An error occurred while searching!</string>
     <string name="toast_error_login">Can not log in!</string>

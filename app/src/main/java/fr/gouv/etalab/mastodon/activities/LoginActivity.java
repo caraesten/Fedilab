@@ -21,6 +21,7 @@ import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -103,7 +104,12 @@ public class LoginActivity extends AppCompatActivity {
                 connectionButton.setEnabled(false);
                 login_two_step.setVisibility(View.INVISIBLE);
                 if (!hasFocus) {
-                    retrievesClientId();
+                    if( Patterns.WEB_URL.matcher(login_instance.getText().toString().trim()).matches() ){
+                        retrievesClientId();
+                    }else {
+                        Toast.makeText(getApplicationContext(), R.string.toast_error_instance, Toast.LENGTH_LONG).show();
+                    }
+
                 }
             }
         });
