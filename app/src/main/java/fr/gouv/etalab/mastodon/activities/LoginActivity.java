@@ -37,6 +37,8 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -104,12 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                 connectionButton.setEnabled(false);
                 login_two_step.setVisibility(View.INVISIBLE);
                 if (!hasFocus) {
-                    if( Patterns.WEB_URL.matcher(login_instance.getText().toString().trim()).matches() ){
-                        retrievesClientId();
-                    }else {
-                        Toast.makeText(getApplicationContext(), R.string.toast_error_instance, Toast.LENGTH_LONG).show();
-                    }
-
+                    retrievesClientId();
                 }
             }
         });
@@ -128,7 +125,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private void retrievesClientId(){
         final Button connectionButton = (Button) findViewById(R.id.login_button);
-        instance = login_instance.getText().toString().trim();
+        try {
+            instance =  URLEncoder.encode(login_instance.getText().toString().trim(), "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            Toast.makeText(LoginActivity.this,R.string.client_error, Toast.LENGTH_LONG).show();
+        }
         String action = "/api/v1/apps";
         RequestParams parameters = new RequestParams();
         parameters.add(Helper.CLIENT_NAME, Helper.CLIENT_NAME_VALUE);
