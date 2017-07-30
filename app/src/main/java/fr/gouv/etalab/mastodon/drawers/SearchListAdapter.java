@@ -31,10 +31,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +46,7 @@ import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
@@ -63,9 +67,6 @@ public class SearchListAdapter extends BaseAdapter {
     private static final int ACCOUNT_TYPE = 1;
     private static final int TAG_TYPE = 2;
     private LayoutInflater layoutInflater;
-    private ImageLoader imageLoader;
-    private DisplayImageOptions options;
-
 
     public SearchListAdapter(Context context, List<Status> statuses, List<Account> accounts, List<String> tags){
         this.context = context;
@@ -73,9 +74,6 @@ public class SearchListAdapter extends BaseAdapter {
         this.accounts = ( accounts != null)?accounts:new ArrayList<Account>();
         this.tags = ( tags != null)?tags:new ArrayList<String>();
         layoutInflater = LayoutInflater.from(context);
-        imageLoader = ImageLoader.getInstance();
-        options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
     }
 
     @Override
@@ -116,6 +114,18 @@ public class SearchListAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        File cacheDir = new File(context.getCacheDir(), context.getString(R.string.app_name));
+        ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(context)
+                .imageDownloader(new PatchBaseImageDownloader(context))
+                .threadPoolSize(5)
+                .threadPriority(Thread.MIN_PRIORITY + 3)
+                .denyCacheImageMultipleSizesInMemory()
+                .diskCache(new UnlimitedDiskCache(cacheDir))
+                .build();
+        imageLoader.init(configImg);
+        DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
+                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
         int type = getItemViewType(position);
         if( type == STATUS_TYPE){
             View v = convertView;

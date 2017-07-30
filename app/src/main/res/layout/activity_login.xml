@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textWebEmailAddress"
-                android:hint="@string/instance"
+                android:hint="@string/instance_example"
                 />
             <EditText
                 android:id="@+id/login_uid"

@@ -33,6 +33,7 @@
     <string name="other_instance">Autre instance que mastodon.etalab.gouv.fr ?</string>
     <string name="no_result">Aucun résultat !</string>
     <string name="instance">Instance</string>
+    <string name="instance_example">Instance : mastodon.social</string>
     <string name="toast_account_changed">Utilisation du compte %1$s</string>
     <string name="add_account">Ajouter un compte</string>
     <string name="clipboard">Le contenu du pouet a été copié dans le presse-papier</string>
@@ -208,6 +209,10 @@
         <item quantity="one">et %d autre pouet à découvrir</item>
         <item quantity="other">et %d autres pouets à découvrir</item>
     </plurals>
+    <string name="delete_notification_ask">Supprimer une notification ?</string>
+    <string name="delete_notification_ask_all">Supprimer toutes les notifications ?</string>
+    <string name="delete_notification">La notification a été supprimée!</string>
+    <string name="delete_notification_all">Toutes les notifications ont été supprimées !</string>
     <!-- HEADER -->
     <string name="following">Abonnements</string>
     <string name="followers">Abonnés</string>
@@ -227,6 +232,8 @@
     <string name="toast_report">Le pouet a été signalé !</string>
     <string name="toast_unstatus">Le pouet a été supprimé !</string>
     <string name="toast_error">Oups ! Une erreur s\'est produite !</string>
+    <string name="toast_code_error">Une erreur s\'est produite ! L\'instance n\'a retourné aucun code d\authorisation !</string>
+    <string name="toast_error_instance">Le nom de l\'instance ne semble pas être valide !</string>
     <string name="toast_error_loading_account">Une erreur s\'est produite en chargeant le compte !</string>
     <string name="toast_error_search">Une erreur s\'est produite lors de la recherche !</string>
     <string name="toast_error_login">Impossible de vous connecter !</string>
