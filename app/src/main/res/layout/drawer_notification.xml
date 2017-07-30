@@ -30,13 +30,29 @@
         android:layout_height="wrap_content"
         android:id="@+id/main_container"
         android:orientation="horizontal">
-        <ImageView
-            android:id="@+id/notification_account_profile"
-            android:layout_height="50dp"
-            android:layout_width="50dp"
-            android:layout_gravity="center_horizontal|top"
-            android:gravity="center_horizontal|top"
-            tools:ignore="ContentDescription" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/notification_account_profile"
+                android:layout_height="50dp"
+                android:layout_width="50dp"
+                android:layout_gravity="center_horizontal|top"
+                android:gravity="center_horizontal|top"
+                tools:ignore="ContentDescription" />
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_horizontal"
+                android:id="@+id/notification_delete"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_delete"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
         <LinearLayout
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"

@@ -38,15 +38,19 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.PostNotificationsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnPostNotificationsActionInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
@@ -59,7 +63,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class NotificationsListAdapter extends BaseAdapter implements OnPostActionInterface {
+public class NotificationsListAdapter extends BaseAdapter implements OnPostActionInterface, OnPostNotificationsActionInterface {
 
     private Context context;
     private List<Notification> notifications;
@@ -118,6 +122,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             holder.status_date = (TextView) convertView.findViewById(R.id.status_date);
             holder.status_reply = (ImageView) convertView.findViewById(R.id.status_reply);
             holder.status_privacy = (ImageView) convertView.findViewById(R.id.status_privacy);
+            holder.notification_delete = (ImageView) convertView.findViewById(R.id.notification_delete);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -143,6 +148,36 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
 
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
+        //Manages theme for icon colors
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if( theme == Helper.THEME_DARK){
+            changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_action_more,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_retweet,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_fav_black,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_delete,R.color.dark_text);
+        }else {
+            changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_action_more,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_retweet,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_fav_black,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_photo,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_delete,R.color.black);
+        }
+
         final Status status = notification.getStatus();
         if( status != null ){
             if( status.getMedia_attachments() == null || status.getMedia_attachments().size() < 1)
@@ -166,35 +201,6 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
             holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
             holder.status_date.setText(Helper.dateDiff(context, status.getCreated_at()));
-
-            //Manages theme for icon colors
-
-            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-            if( theme == Helper.THEME_DARK){
-                changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_action_more,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_action_globe,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_retweet,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_fav_black,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
-            }else {
-                changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_action_more,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_action_globe,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_retweet,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_fav_black,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_photo,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.black);
-            }
 
             //Adds attachment -> disabled, to enable them uncomment the line below
             //loadAttachments(status, holder);
@@ -300,7 +306,12 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             }
         });
 
-
+        holder.notification_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayConfirmationNotificationDialog(notification);
+            }
+        });
         holder.notification_account_displayname.setText(Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true));
         holder.notification_account_username.setText( String.format("@%s",notification.getAccount().getUsername()));
         //Profile picture
@@ -357,6 +368,44 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
     }
 
     /**
+     * Display a validation message for notification deletion
+     * @param notification Notification
+     */
+    private void displayConfirmationNotificationDialog(final Notification notification){
+        final ArrayList seletedItems = new ArrayList();
+        AlertDialog dialog = new AlertDialog.Builder(context)
+                .setTitle(R.string.delete_notification_ask)
+                .setMultiChoiceItems(new String[]{context.getString(R.string.delete_notification_ask_all)}, null, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
+                        if (isChecked) {
+                            //noinspection unchecked
+                            seletedItems.add(indexSelected);
+                        } else  {
+                            if (seletedItems.contains(indexSelected))
+                                seletedItems.remove(Integer.valueOf(indexSelected));
+                        }
+
+                    }
+                }).setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        if (seletedItems.size() > 0)
+                            new PostNotificationsAsyncTask(context, null, NotificationsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        else
+                            new PostNotificationsAsyncTask(context, notification, NotificationsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        dialog.dismiss();
+                    }
+                }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                }).create();
+        dialog.show();
+    }
+
+    /**
      * Favourites/Unfavourites a status
      * @param status Status
      */
@@ -396,6 +445,25 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
         }
     }
 
+    @Override
+    public void onPostNotificationsAction(APIResponse apiResponse, Notification notification) {
+        if(apiResponse.getError() != null){
+            Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();
+            return;
+        }
+        if( notification != null){
+            notifications.remove(notification);
+            notificationsListAdapter.notifyDataSetChanged();
+            Toast.makeText(context,R.string.delete_notification,Toast.LENGTH_LONG).show();
+        }else{
+            notifications.clear();
+            notifications = new ArrayList<>();
+            notificationsListAdapter.notifyDataSetChanged();
+            Toast.makeText(context,R.string.delete_notification_all,Toast.LENGTH_LONG).show();
+        }
+
+    }
+
 
     private class ViewHolder {
         TextView notification_status_content;
@@ -403,6 +471,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
         TextView notification_account_username;
         TextView notification_account_displayname;
         ImageView notification_account_profile;
+        ImageView notification_delete;
         TextView status_favorite_count;
         TextView status_reblog_count;
         TextView status_date;

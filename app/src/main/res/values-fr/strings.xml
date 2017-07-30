@@ -209,6 +209,10 @@
         <item quantity="one">et %d autre pouet à découvrir</item>
         <item quantity="other">et %d autres pouets à découvrir</item>
     </plurals>
+    <string name="delete_notification_ask">Supprimer une notification ?</string>
+    <string name="delete_notification_ask_all">Supprimer toutes les notifications ?</string>
+    <string name="delete_notification">La notification a été supprimée!</string>
+    <string name="delete_notification_all">Toutes les notifications ont été supprimées !</string>
     <!-- HEADER -->
     <string name="following">Abonnements</string>
     <string name="followers">Abonnés</string>

@@ -214,6 +214,10 @@
         <item quantity="one">and another toot to discover</item>
         <item quantity="other">and %d other toots to discover</item>
     </plurals>
+    <string name="delete_notification_ask">Delete a notification?</string>
+    <string name="delete_notification_ask_all">Delete all notifications?</string>
+    <string name="delete_notification">The notification has been deleted!</string>
+    <string name="delete_notification_all">All notifications have been deleted!</string>
     <!-- HEADER -->
     <string name="following">Following</string>
     <string name="followers">Followers</string>

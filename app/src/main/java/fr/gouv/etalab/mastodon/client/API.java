@@ -951,6 +951,40 @@ public class API {
 
 
     /**
+     * Posts a status
+     * @param notificationId String, the current notification id, if null all notifications are deleted
+     * @return APIResponse
+     */
+    public APIResponse postNoticationAction(String notificationId){
+
+        String action;
+        RequestParams requestParams = new RequestParams();
+        if( notificationId == null)
+            action = "/notifications/clear";
+        else {
+            requestParams.add("id",notificationId);
+            action = "/notifications/dismiss";
+        }
+        post(action, 30000, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response) {
+                setError(statusCode, error);
+                error.printStackTrace();
+            }
+        });
+        return apiResponse;
+    }
+
+
+    /**
      * Retrieves notifications for the authenticated account since an id*synchronously*
      * @param since_id String since max
      * @return APIResponse
