@@ -19,9 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.PorterDuff;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -29,20 +27,16 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,7 +46,6 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
 
 import java.io.File;
@@ -104,6 +97,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     private String userId;
     private boolean isHiddingShowing = false;
     private static int instanceValue = 0;
+    private Relationship relationship;
 
     public enum action{
         FOLLOW,
@@ -226,7 +220,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                         account_pp.getLayoutParams().width = (int) Helper.convertDpToPixel(50, context);
                         account_pp.getLayoutParams().height = (int) Helper.convertDpToPixel(50, context);
                     }else {
-                        account_follow.setVisibility(View.VISIBLE);
+                        manageButtonVisibility();
                         if( accountId != null && accountId.equals(userId)){
                             account_follow.setVisibility(View.GONE);
                         }
@@ -359,25 +353,8 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
-        account_follow.setEnabled(true);
-        if( relationship.isBlocking()){
-            account_follow.setImageResource(R.drawable.ic_unlock_alt);
-            doAction = action.UNBLOCK;
-        }else if( relationship.isRequested()){
-            account_follow_request.setVisibility(View.VISIBLE);
-            account_follow.setVisibility(View.GONE);
-            doAction = action.NOTHING;
-        }else if( relationship.isFollowing()){
-            account_follow.setImageResource(R.drawable.ic_user_times);
-            doAction = action.UNFOLLOW;
-        }else if( !relationship.isFollowing()){
-            account_follow.setImageResource(R.drawable.ic_user_plus);
-            doAction = action.FOLLOW;
-        }else{
-            account_follow.setVisibility(View.GONE);
-            doAction = action.NOTHING;
-        }
-
+        this.relationship = relationship;
+        manageButtonVisibility();
 
 
         //The authenticated account is followed by the account
@@ -388,6 +365,32 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
     }
 
+    //Manages the visibility of the button
+    private void manageButtonVisibility(){
+        if( relationship == null)
+            return;
+        account_follow.setEnabled(true);
+        if( relationship.isBlocking()){
+            account_follow.setImageResource(R.drawable.ic_unlock_alt);
+            doAction = action.UNBLOCK;
+            account_follow.setVisibility(View.VISIBLE);
+        }else if( relationship.isRequested()){
+            account_follow_request.setVisibility(View.VISIBLE);
+            account_follow.setVisibility(View.GONE);
+            doAction = action.NOTHING;
+        }else if( relationship.isFollowing()){
+            account_follow.setImageResource(R.drawable.ic_user_times);
+            doAction = action.UNFOLLOW;
+            account_follow.setVisibility(View.VISIBLE);
+        }else if( !relationship.isFollowing()){
+            account_follow.setImageResource(R.drawable.ic_user_plus);
+            doAction = action.FOLLOW;
+            account_follow.setVisibility(View.VISIBLE);
+        }else{
+            account_follow.setVisibility(View.GONE);
+            doAction = action.NOTHING;
+        }
+    }
 
     /**
      * Pager adapter for the 3 fragments
