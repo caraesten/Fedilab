@@ -123,7 +123,8 @@ public class SearchListAdapter extends BaseAdapter {
                 .denyCacheImageMultipleSizesInMemory()
                 .diskCache(new UnlimitedDiskCache(cacheDir))
                 .build();
-        imageLoader.init(configImg);
+        if( !imageLoader.isInited())
+            imageLoader.init(configImg);
         DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
         int type = getItemViewType(position);

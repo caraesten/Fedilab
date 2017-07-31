@@ -118,7 +118,11 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
                     @Override
                     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
-                        if (view.getId() == lv_accounts.getId() && totalItemCount > visibleItemCount) {
+                        if(firstVisibleItem == 0 && Helper.listIsAtTop(lv_accounts)){
+                            Intent intent = new Intent(Helper.HEADER_ACCOUNT+instanceValue);
+                            intent.putExtra("hide", false);
+                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                        }else if (view.getId() == lv_accounts.getId() && totalItemCount > visibleItemCount) {
                             final int currentFirstVisibleItem = lv_accounts.getFirstVisiblePosition();
 
                             if (currentFirstVisibleItem > lastFirstVisibleItem) {

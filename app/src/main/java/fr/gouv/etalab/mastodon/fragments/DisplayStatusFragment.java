@@ -128,9 +128,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
                     @Override
                     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                        if (view.getId() == lv_status.getId() && totalItemCount > visibleItemCount) {
-                            final int currentFirstVisibleItem = lv_status.getFirstVisiblePosition();
 
+                        if(firstVisibleItem == 0 && Helper.listIsAtTop(lv_status)){
+                            Intent intent = new Intent(Helper.HEADER_ACCOUNT+instanceValue);
+                            intent.putExtra("hide", false);
+                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                        }else if (view.getId() == lv_status.getId() && totalItemCount > visibleItemCount) {
+                            final int currentFirstVisibleItem = lv_status.getFirstVisiblePosition();
                             if (currentFirstVisibleItem > lastFirstVisibleItem) {
                                 Intent intent = new Intent(Helper.HEADER_ACCOUNT+instanceValue);
                                 intent.putExtra("hide", true);
@@ -229,7 +233,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
         return rootView;
     }
-
 
 
     @Override

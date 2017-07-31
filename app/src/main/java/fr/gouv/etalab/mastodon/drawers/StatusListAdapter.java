@@ -142,7 +142,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 .denyCacheImageMultipleSizesInMemory()
                 .diskCache(new UnlimitedDiskCache(cacheDir))
                 .build();
-        imageLoader.init(configImg);
+        if( !imageLoader.isInited())
+            imageLoader.init(configImg);
         options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 

@@ -56,6 +56,7 @@ import android.text.method.ArrowKeyMovementMethod;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.DisplayMetrics;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -67,6 +68,7 @@ import android.webkit.URLUtil;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -226,7 +228,7 @@ public class Helper {
     private static final Pattern SHORTNAME_PATTERN = Pattern.compile(":([-+\\w]+):");
 
     private static final Pattern urlPattern = Pattern.compile(
-            "(?i)\\b((?:[a-z][\\w-]+:(?:/{1,3}|[a-z0-9%])|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,4}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))",
+            "(?i)\\b((?:[a-z][\\w-]+:(?:/{1,3}|[a-z0-9%])|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,10}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))",
             Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 
     private static final Pattern hashtagPattern = Pattern.compile("(#[\\w_À-ú-]{1,})");
@@ -1023,7 +1025,7 @@ public class Helper {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
         if( embedded_browser){
-            Matcher matcher = urlPattern.matcher(spannableString);
+            Matcher matcher = Patterns.WEB_URL.matcher(spannableString);
             while (matcher.find()){
                 int matchStart = matcher.start(1);
                 int matchEnd = matcher.end();
@@ -1033,7 +1035,10 @@ public class Helper {
                     public void onClick(View textView) {
                         Intent intent = new Intent(context, WebviewActivity.class);
                         Bundle b = new Bundle();
-                        b.putString("url", url);
+                        String finalUrl = url;
+                        if( !url.startsWith("http://") && ! url.startsWith("https://"))
+                            finalUrl = "http://" + url;
+                        b.putString("url", finalUrl);
                         intent.putExtras(b);
                         context.startActivity(intent);
                     }
@@ -1098,14 +1103,6 @@ public class Helper {
             }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         return spannableString;
-        /*
-        statusTV.setText(spannableString, TextView.BufferType.SPANNABLE);
-        statusTV.setMovementMethod(null);
-        statusTV.setMovementMethod(LinkMovementMethod.getInstance());
-        statusTV.setMovementMethod(ArrowKeyMovementMethod.getInstance());
-        statusTV.setFocusable(true);
-        statusTV.setFocusableInTouchMode(true);
-        return statusTV;*/
     }
 
 
@@ -1115,11 +1112,10 @@ public class Helper {
      * Click on url => webview or external app
      * Click on tag => HashTagActivity
      * @param context Context
-     * @param statusTV Textview
      * @param fullContent String, should be the st
      * @return TextView
      */
-    public static TextView clickableElementsDescription(final Context context, TextView statusTV, String fullContent) {
+    public static SpannableString clickableElementsDescription(final Context context, String fullContent) {
 
         SpannableString spannableString;
         fullContent = Helper.shortnameToUnicode(fullContent, true);
@@ -1131,7 +1127,7 @@ public class Helper {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
         if( embedded_browser){
-            Matcher matcher = urlPattern.matcher(spannableString);
+            Matcher matcher = Patterns.WEB_URL.matcher(spannableString);
             while (matcher.find()){
                 int matchStart = matcher.start(1);
                 int matchEnd = matcher.end();
@@ -1172,11 +1168,7 @@ public class Helper {
                 }
             }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
-
-        statusTV.setText(spannableString, TextView.BufferType.SPANNABLE);
-        statusTV.setMovementMethod(null);
-        statusTV.setMovementMethod(LinkMovementMethod.getInstance());
-        return statusTV;
+        return spannableString;
     }
 
 
@@ -1397,5 +1389,14 @@ public class Helper {
                 item.setChecked(false);
             }
         }
+    }
+
+    /**
+     * Returns true if a ListView is at its top position
+     * @param listView ListView
+     * @return boolean
+     */
+    public static boolean listIsAtTop(ListView listView) {
+        return listView.getChildCount() == 0 || listView.getChildAt(0).getTop() == 0;
     }
 }
