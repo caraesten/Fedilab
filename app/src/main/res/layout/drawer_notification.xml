@@ -22,6 +22,7 @@
     xmlns:card_view="http://schemas.android.com/tools"
     android:layout_marginTop="10dp"
     style="?attr/cardStyle"
+    android:id="@+id/card_status_container"
     card_view:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

@@ -27,7 +27,10 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.text.Html;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,7 +97,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     private StatusListAdapter statusListAdapter;
     private final int REBLOG = 1;
     private final int FAVOURITE = 2;
-    private ViewHolder holder;
     private RetrieveFeedsAsyncTask.Type type;
     private String targetedId;
 
@@ -145,9 +147,11 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 
         final Status status = statuses.get(position);
+        final ViewHolder holder;
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.drawer_status, parent, false);
             holder = new ViewHolder();
+            holder.card_status_container = (CardView) convertView.findViewById(R.id.card_status_container);
             holder.status_document_container = (LinearLayout) convertView.findViewById(R.id.status_document_container);
             holder.status_content = (TextView) convertView.findViewById(R.id.status_content);
             holder.status_content_translated = (TextView) convertView.findViewById(R.id.status_content_translated);
@@ -309,6 +313,16 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     context.startActivity(intent);
                 }
             });
+            holder.card_status_container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ShowConversationActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("statusId", status.getId());
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+            });
         }else {
             if( theme == Helper.THEME_LIGHT){
                 if( position == ShowConversationActivity.position){
@@ -363,14 +377,19 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             }
         });
 
-
-        holder.status_content = Helper.clickableElements(context, holder.status_content,content,
+        SpannableString spannableString = Helper.clickableElements(context,content,
                 status.getReblog() != null?status.getReblog().getMentions():status.getMentions());
+        holder.status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
 
         if( status.getContent_translated() != null && status.getContent_translated().length() > 0){
-            holder.status_content_translated = Helper.clickableElements(context, holder.status_content_translated,status.getContent_translated(),
+            SpannableString spannableStringTrans = Helper.clickableElements(context, status.getContent_translated(),
                     status.getReblog() != null?status.getReblog().getMentions():status.getMentions());
+            holder.status_content_translated.setText(spannableStringTrans, TextView.BufferType.SPANNABLE);
+            holder.status_content_translated.setMovementMethod(null);
+            holder.status_content_translated.setMovementMethod(LinkMovementMethod.getInstance());
         }
+        holder.status_content.setMovementMethod(null);
+        holder.status_content.setMovementMethod(LinkMovementMethod.getInstance());
         holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
         holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
         holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
@@ -395,7 +414,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             } else {
                 //If medias are loaded without any conditions or if device is on wifi
                 if (!status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
-                    loadAttachments(status);
+                    loadAttachments(status, holder);
                     holder.status_show_more.setVisibility(View.GONE);
                     status.setAttachmentShown(true);
                 } else {
@@ -406,7 +425,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         holder.status_show_more.setVisibility(View.VISIBLE);
                         holder.status_document_container.setVisibility(View.GONE);
                     } else {
-                        loadAttachments(status);
+                        loadAttachments(status, holder);
                     }
                 }
             }
@@ -417,7 +436,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             } else {
                 //If medias are loaded without any conditions or if device is on wifi
                 if (!status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
-                    loadAttachments(status.getReblog());
+                    loadAttachments(status.getReblog(), holder);
                     holder.status_show_more.setVisibility(View.GONE);
                     status.getReblog().setAttachmentShown(true);
                 } else {
@@ -428,7 +447,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         holder.status_show_more.setVisibility(View.VISIBLE);
                         holder.status_document_container.setVisibility(View.GONE);
                     } else {
-                        loadAttachments(status.getReblog());
+                        loadAttachments(status.getReblog(), holder);
                     }
                 }
             }
@@ -468,7 +487,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_show_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadAttachments(status);
+                loadAttachments(status, holder);
                 holder.status_show_more.setVisibility(View.GONE);
                 status.setAttachmentShown(true);
                 statusListAdapter.notifyDataSetChanged();
@@ -580,7 +599,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
 
 
-    private void loadAttachments(final Status status){
+    private void loadAttachments(final Status status, ViewHolder holder){
         List<Attachment> attachments = status.getMedia_attachments();
         if( attachments != null && attachments.size() > 0){
             int i = 0;
@@ -746,7 +765,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         LinearLayout status_spoiler_container;
         TextView status_spoiler;
         Button status_spoiler_button;
-
+        CardView card_status_container;
         TextView status_content;
         TextView status_content_translated;
         LinearLayout status_content_translated_container;

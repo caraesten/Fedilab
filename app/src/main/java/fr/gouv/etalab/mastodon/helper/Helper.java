@@ -1008,12 +1008,11 @@ public class Helper {
      * Click on account => ShowAccountActivity
      * Click on tag => HashTagActivity
      * @param context Context
-     * @param statusTV Textview
      * @param fullContent String, should be the st
      * @param mentions List<Mention>
      * @return TextView
      */
-    public static TextView clickableElements(final Context context, TextView statusTV, String fullContent, List<Mention> mentions) {
+    public static SpannableString clickableElements(final Context context, String fullContent, List<Mention> mentions) {
 
         SpannableString spannableString;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -1098,13 +1097,15 @@ public class Helper {
                 }
             }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
+        return spannableString;
+        /*
         statusTV.setText(spannableString, TextView.BufferType.SPANNABLE);
         statusTV.setMovementMethod(null);
         statusTV.setMovementMethod(LinkMovementMethod.getInstance());
         statusTV.setMovementMethod(ArrowKeyMovementMethod.getInstance());
         statusTV.setFocusable(true);
         statusTV.setFocusableInTouchMode(true);
-        return statusTV;
+        return statusTV;*/
     }
 
 

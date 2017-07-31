@@ -164,7 +164,10 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                         newMentions++;
                         if( notificationUrl == null){
                             notificationUrl = notification.getAccount().getAvatar();
-                            title = String.format("@%s %s", notification.getAccount().getUsername(),getContext().getString(R.string.notif_mention));
+                            if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
+                                title = String.format("@%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getContext().getString(R.string.notif_mention));
+                            else
+                                title = String.format("@%s %s", notification.getAccount().getUsername(),getContext().getString(R.string.notif_mention));
                         }
                     }
                 break;
@@ -173,7 +176,11 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                         newShare++;
                         if( notificationUrl == null){
                             notificationUrl = notification.getAccount().getAvatar();
-                            title = String.format("@%s %s", notification.getAccount().getUsername(),getContext().getString(R.string.notif_reblog));
+                            if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
+                                title = String.format("@%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getContext().getString(R.string.notif_reblog));
+                            else
+                                title = String.format("@%s %s", notification.getAccount().getUsername(),getContext().getString(R.string.notif_reblog));
+
                         }
                     }
                     break;
@@ -182,7 +189,10 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                         newAdds++;
                         if( notificationUrl == null){
                             notificationUrl = notification.getAccount().getAvatar();
-                            title = String.format("@%s %s", notification.getAccount().getUsername(),getContext().getString(R.string.notif_favourite));
+                            if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
+                                title = String.format("@%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getContext().getString(R.string.notif_favourite));
+                            else
+                                title = String.format("@%s %s", notification.getAccount().getUsername(),getContext().getString(R.string.notif_favourite));
                         }
                     }
                     break;
@@ -191,7 +201,10 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                         newFollows++;
                         if( notificationUrl == null){
                             notificationUrl = notification.getAccount().getAvatar();
-                            title = String.format("@%s %s", notification.getAccount().getUsername(),getContext().getString(R.string.notif_follow));
+                            if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
+                                title = String.format("@%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getContext().getString(R.string.notif_follow));
+                            else
+                                title = String.format("@%s %s", notification.getAccount().getUsername(),getContext().getString(R.string.notif_follow));
                         }
                     }
                     break;

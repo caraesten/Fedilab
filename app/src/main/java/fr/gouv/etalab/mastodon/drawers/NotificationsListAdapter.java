@@ -24,7 +24,10 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.text.Html;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,6 +113,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.drawer_notification, parent, false);
             holder = new ViewHolder();
+            holder.card_status_container = (CardView) convertView.findViewById(R.id.card_status_container);
             holder.notification_status_container = (LinearLayout) convertView.findViewById(R.id.notification_status_container);
             holder.status_document_container = (LinearLayout) convertView.findViewById(R.id.status_document_container);
             holder.notification_status_content = (TextView) convertView.findViewById(R.id.notification_status_content);
@@ -196,8 +200,11 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 holder.notification_account_displayname.setCompoundDrawables( null, null, null, null);
             }
 
-            holder.notification_status_content = Helper.clickableElements(context, holder.notification_status_content,status.getContent(),
+            SpannableString spannableString = Helper.clickableElements(context, status.getContent(),
                     status.getReblog() != null?status.getReblog().getMentions():status.getMentions());
+            holder.notification_status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
+            holder.notification_status_content.setMovementMethod(null);
+            holder.notification_status_content.setMovementMethod(LinkMovementMethod.getInstance());
             holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
             holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
             holder.status_date.setText(Helper.dateDiff(context, status.getCreated_at()));
@@ -205,6 +212,16 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             //Adds attachment -> disabled, to enable them uncomment the line below
             //loadAttachments(status, holder);
             holder.notification_status_container.setVisibility(View.VISIBLE);
+            holder.card_status_container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ShowConversationActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("statusId", status.getId());
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+            });
             holder.notification_status_content.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -466,6 +483,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
 
 
     private class ViewHolder {
+        CardView card_status_container;
         TextView notification_status_content;
         TextView notification_type;
         TextView notification_account_username;
