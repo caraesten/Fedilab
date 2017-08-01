@@ -19,11 +19,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -32,12 +32,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
-import android.util.Log;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,7 +47,7 @@ import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 
 import java.io.File;
@@ -74,6 +75,8 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRelationshipInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
+
 
 /**
  * Created by Thomas on 01/05/2017.
@@ -87,17 +90,18 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     private DisplayImageOptions options;
     private List<Status> statuses;
     private StatusListAdapter statusListAdapter;
-    private Button account_follow;
+    private FloatingActionButton account_follow;
 
     private static final int NUM_PAGES = 3;
     private ViewPager mPager;
     private String accountId;
     private TabLayout tabLayout;
     private BroadcastReceiver hide_header;
-    private TextView account_note;
+    private TextView account_note, account_follow_request;
     private String userId;
     private boolean isHiddingShowing = false;
     private static int instanceValue = 0;
+    private Relationship relationship;
 
     public enum action{
         FOLLOW,
@@ -118,10 +122,12 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         }else {
             setTheme(R.style.AppThemeDark);
         }
+        setTitle("");
         setContentView(R.layout.activity_show_account);
         instanceValue += 1;
         Bundle b = getIntent().getExtras();
-        account_follow = (Button) findViewById(R.id.account_follow);
+        account_follow = (FloatingActionButton) findViewById(R.id.account_follow);
+        account_follow_request = (TextView) findViewById(R.id.account_follow_request);
         account_follow.setEnabled(false);
         if(b != null){
             accountId = b.getString("accountId");
@@ -148,7 +154,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
         int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
         statusListAdapter = new StatusListAdapter(getApplicationContext(), RetrieveFeedsAsyncTask.Type.USER, accountId, isOnWifi, behaviorWithAttachments, this.statuses);
-        options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
+        options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(80)).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 
 
@@ -210,21 +216,18 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 if( !isHiddingShowing ){
                     isHiddingShowing = true;
                     ImageView account_pp = (ImageView) findViewById(R.id.account_pp);
-                    TextView account_ac = (TextView) findViewById(R.id.account_ac);
                     boolean hide = intent.getBooleanExtra("hide", false);
                     if( hide){
                         account_follow.setVisibility(View.GONE);
                         account_note.setVisibility(View.GONE);
                         tabLayout.setVisibility(View.GONE);
-                        account_ac.setVisibility(View.GONE);
                         account_pp.getLayoutParams().width = (int) Helper.convertDpToPixel(50, context);
                         account_pp.getLayoutParams().height = (int) Helper.convertDpToPixel(50, context);
                     }else {
-                        account_follow.setVisibility(View.VISIBLE);
+                        manageButtonVisibility();
                         if( accountId != null && accountId.equals(userId)){
                             account_follow.setVisibility(View.GONE);
                         }
-                        account_ac.setVisibility(View.VISIBLE);
                         account_pp.getLayoutParams().width = (int) Helper.convertDpToPixel(80, context);
                         account_pp.getLayoutParams().height = (int) Helper.convertDpToPixel(80, context);
                         tabLayout.setVisibility(View.VISIBLE);
@@ -301,17 +304,42 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         ImageView account_pp = (ImageView) findViewById(R.id.account_pp);
         TextView account_dn = (TextView) findViewById(R.id.account_dn);
         TextView account_un = (TextView) findViewById(R.id.account_un);
-        TextView account_ac = (TextView) findViewById(R.id.account_ac);
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if( theme == Helper.THEME_DARK){
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.dark_text);
+        }else {
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.black);
+        }
+        //Redraws icon for locked accounts
+        final float scale = getResources().getDisplayMetrics().density;
+        if( account != null && account.isLocked()){
+            Drawable img = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_action_lock_closed);
+            img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (20 * scale + 0.5f));
+            account_dn.setCompoundDrawables( img, null, null, null);
+        }else{
+            account_dn.setCompoundDrawables( null, null, null, null);
+        }
 
+        ActionBar actionBar = getSupportActionBar();
+        LayoutInflater mInflater = LayoutInflater.from(ShowAccountActivity.this);
+        if( actionBar != null){
+            View show_account_actionbar = mInflater.inflate(R.layout.showaccount_actionbar, null);
+            TextView actionbar_title = (TextView) show_account_actionbar.findViewById(R.id.show_account_title);
+            if( account != null && account.getAcct() != null)
+                actionbar_title.setText(account.getAcct());
+            actionBar.setCustomView(show_account_actionbar);
+            actionBar.setDisplayShowCustomEnabled(true);
+        }else {
+            if(  account != null && account.getAcct() != null)
+                setTitle(account.getAcct());
+        }
         if( account != null){
-            setTitle(account.getAcct());
             account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
             account_un.setText(String.format("@%s", account.getUsername()));
-            if( account.getAcct() != null && account.getAcct().equals(account.getUsername()))
-                account_ac.setVisibility(View.GONE);
-            else
-                account_ac.setText(account.getAcct());
-            account_note = Helper.clickableElementsDescription(ShowAccountActivity.this, account_note,account.getNote());
+            SpannableString spannableString = Helper.clickableElementsDescription(ShowAccountActivity.this, account.getNote());
+            account_note.setText(spannableString, TextView.BufferType.SPANNABLE);
+            account_note.setMovementMethod(LinkMovementMethod.getInstance());
             tabLayout.getTabAt(0).setText(getString(R.string.status_cnt, account.getStatuses_count()));
             tabLayout.getTabAt(1).setText(getString(R.string.following_cnt, account.getFollowing_count()));
             tabLayout.getTabAt(2).setText(getString(R.string.followers_cnt, account.getFollowers_count()));
@@ -345,26 +373,8 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
-        account_follow.setEnabled(true);
-        if( relationship.isBlocking()){
-            account_follow.setText(R.string.action_unblock);
-            doAction = action.UNBLOCK;
-        }else if( relationship.isRequested()){
-            account_follow.setText(R.string.request_sent);
-            account_follow.getBackground().setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.MULTIPLY);
-            doAction = action.NOTHING;
-        }else if( relationship.isFollowing()){
-            account_follow.setText(R.string.action_unfollow);
-            doAction = action.UNFOLLOW;
-        }else if( !relationship.isFollowing()){
-            account_follow.setText(R.string.action_follow);
-            doAction = action.FOLLOW;
-        }else{
-            account_follow.setText(R.string.action_no_action);
-            account_follow.getBackground().setColorFilter(ContextCompat.getColor(this, R.color.red_1), PorterDuff.Mode.MULTIPLY);
-            doAction = action.NOTHING;
-        }
-
+        this.relationship = relationship;
+        manageButtonVisibility();
 
 
         //The authenticated account is followed by the account
@@ -375,6 +385,32 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
     }
 
+    //Manages the visibility of the button
+    private void manageButtonVisibility(){
+        if( relationship == null)
+            return;
+        account_follow.setEnabled(true);
+        if( relationship.isBlocking()){
+            account_follow.setImageResource(R.drawable.ic_unlock_alt);
+            doAction = action.UNBLOCK;
+            account_follow.setVisibility(View.VISIBLE);
+        }else if( relationship.isRequested()){
+            account_follow_request.setVisibility(View.VISIBLE);
+            account_follow.setVisibility(View.GONE);
+            doAction = action.NOTHING;
+        }else if( relationship.isFollowing()){
+            account_follow.setImageResource(R.drawable.ic_user_times);
+            doAction = action.UNFOLLOW;
+            account_follow.setVisibility(View.VISIBLE);
+        }else if( !relationship.isFollowing()){
+            account_follow.setImageResource(R.drawable.ic_user_plus);
+            doAction = action.FOLLOW;
+            account_follow.setVisibility(View.VISIBLE);
+        }else{
+            account_follow.setVisibility(View.GONE);
+            doAction = action.NOTHING;
+        }
+    }
 
     /**
      * Pager adapter for the 3 fragments

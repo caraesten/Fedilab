@@ -173,7 +173,13 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
                 DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                         .cacheOnDisk(true).resetViewBeforeLoading(true).build();
                 final String finalMessage = message;
-                final String finalTitle = getContext().getResources().getString(R.string.notif_pouet, status.getAccount().getUsername());
+                String title;
+                if( status.getAccount().getDisplay_name() != null && status.getAccount().getDisplay_name().length() > 0 )
+                    title = getContext().getResources().getString(R.string.notif_pouet, Helper.shortnameToUnicode(status.getAccount().getDisplay_name(), true));
+                else
+                    title = getContext().getResources().getString(R.string.notif_pouet, status.getAccount().getUsername());
+                final String finalTitle = title;
+
                 imageLoaderNoty.loadImage(notificationUrl, options, new SimpleImageLoadingListener(){
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {

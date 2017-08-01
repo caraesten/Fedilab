@@ -24,8 +24,6 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 
-import fr.gouv.etalab.mastodon.helper.Helper;
-
 import static fr.gouv.etalab.mastodon.helper.Helper.USER_AGENT;
 
 /**

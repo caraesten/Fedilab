@@ -24,7 +24,10 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.text.Html;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,12 +113,12 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.drawer_notification, parent, false);
             holder = new ViewHolder();
+            holder.card_status_container = (CardView) convertView.findViewById(R.id.card_status_container);
             holder.notification_status_container = (LinearLayout) convertView.findViewById(R.id.notification_status_container);
             holder.status_document_container = (LinearLayout) convertView.findViewById(R.id.status_document_container);
             holder.notification_status_content = (TextView) convertView.findViewById(R.id.notification_status_content);
             holder.notification_account_username = (TextView) convertView.findViewById(R.id.notification_account_username);
             holder.notification_type = (TextView) convertView.findViewById(R.id.notification_type);
-            holder.notification_account_displayname = (TextView) convertView.findViewById(R.id.notification_account_displayname);
             holder.notification_account_profile = (ImageView) convertView.findViewById(R.id.notification_account_profile);
             holder.status_favorite_count = (TextView) convertView.findViewById(R.id.status_favorite_count);
             holder.status_reblog_count = (TextView) convertView.findViewById(R.id.status_reblog_count);
@@ -132,16 +135,28 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
         String typeString = "";
         switch (type){
             case "mention":
-                typeString = String.format("@%s %s", notification.getAccount().getAcct(),context.getString(R.string.notif_mention));
+                if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
+                    typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_mention));
+                else
+                    typeString = String.format("@%s %s", notification.getAccount().getAcct(),context.getString(R.string.notif_mention));
                 break;
             case "reblog":
-                typeString = String.format("@%s %s", notification.getAccount().getAcct(),context.getString(R.string.notif_reblog));
+                if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
+                    typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_reblog));
+                else
+                    typeString = String.format("@%s %s", notification.getAccount().getAcct(),context.getString(R.string.notif_reblog));
                 break;
             case "favourite":
-                typeString = String.format("@%s %s", notification.getAccount().getAcct(),context.getString(R.string.notif_favourite));
+                if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
+                    typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_favourite));
+                else
+                    typeString = String.format("@%s %s", notification.getAccount().getAcct(),context.getString(R.string.notif_favourite));
                 break;
             case "follow":
-                typeString = String.format("@%s %s", notification.getAccount().getAcct(),context.getString(R.string.notif_follow));
+                if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
+                    typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_follow));
+                else
+                    typeString = String.format("@%s %s", notification.getAccount().getAcct(),context.getString(R.string.notif_follow));
                 break;
         }
         holder.notification_type.setText(typeString);
@@ -187,17 +202,20 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             if( (status.getIn_reply_to_account_id() != null && !status.getIn_reply_to_account_id().equals("null")) || (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null")) ){
                 Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_reply);
                 img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (15 * scale + 0.5f));
-                holder.notification_account_displayname.setCompoundDrawables( img, null, null, null);
+                holder.notification_account_username.setCompoundDrawables( img, null, null, null);
             }else if( status.isReblogged()){
                 Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_retweet);
                 img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (15 * scale + 0.5f));
-                holder.notification_account_displayname.setCompoundDrawables( img, null, null, null);
+                holder.notification_account_username.setCompoundDrawables( img, null, null, null);
             }else{
-                holder.notification_account_displayname.setCompoundDrawables( null, null, null, null);
+                holder.notification_account_username.setCompoundDrawables( null, null, null, null);
             }
 
-            holder.notification_status_content = Helper.clickableElements(context, holder.notification_status_content,status.getContent(),
+            SpannableString spannableString = Helper.clickableElements(context, status.getContent(),
                     status.getReblog() != null?status.getReblog().getMentions():status.getMentions());
+            holder.notification_status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
+            holder.notification_status_content.setMovementMethod(null);
+            holder.notification_status_content.setMovementMethod(LinkMovementMethod.getInstance());
             holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
             holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
             holder.status_date.setText(Helper.dateDiff(context, status.getCreated_at()));
@@ -205,6 +223,16 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             //Adds attachment -> disabled, to enable them uncomment the line below
             //loadAttachments(status, holder);
             holder.notification_status_container.setVisibility(View.VISIBLE);
+            holder.card_status_container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ShowConversationActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("statusId", status.getId());
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+            });
             holder.notification_status_content.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -312,7 +340,6 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 displayConfirmationNotificationDialog(notification);
             }
         });
-        holder.notification_account_displayname.setText(Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true));
         holder.notification_account_username.setText( String.format("@%s",notification.getAccount().getUsername()));
         //Profile picture
         imageLoader.displayImage(notification.getAccount().getAvatar(), holder.notification_account_profile, options);
@@ -466,10 +493,10 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
 
 
     private class ViewHolder {
+        CardView card_status_container;
         TextView notification_status_content;
         TextView notification_type;
         TextView notification_account_username;
-        TextView notification_account_displayname;
         ImageView notification_account_profile;
         ImageView notification_delete;
         TextView status_favorite_count;
