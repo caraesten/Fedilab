@@ -1025,7 +1025,11 @@ public class Helper {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
         if( embedded_browser){
-            Matcher matcher = Patterns.WEB_URL.matcher(spannableString);
+            Matcher matcher;
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
+                matcher = Patterns.WEB_URL.matcher(spannableString);
+            else
+                matcher = urlPattern.matcher(spannableString);
             while (matcher.find()){
                 int matchStart = matcher.start(1);
                 int matchEnd = matcher.end();
@@ -1127,7 +1131,11 @@ public class Helper {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
         if( embedded_browser){
-            Matcher matcher = Patterns.WEB_URL.matcher(spannableString);
+            Matcher matcher;
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
+                matcher = Patterns.WEB_URL.matcher(spannableString);
+            else
+                matcher = urlPattern.matcher(spannableString);
             while (matcher.find()){
                 int matchStart = matcher.start(1);
                 int matchEnd = matcher.end();
