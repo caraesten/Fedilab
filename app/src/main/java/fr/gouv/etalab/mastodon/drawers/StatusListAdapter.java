@@ -31,6 +31,7 @@ import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -391,8 +392,15 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }
         holder.status_content.setMovementMethod(null);
         holder.status_content.setMovementMethod(LinkMovementMethod.getInstance());
-        holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
-        holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
+        if( status.getReblog() == null)
+            holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
+        else
+            holder.status_favorite_count.setText(String.valueOf(status.getReblog().getFavourites_count()));
+        if( status.getReblog() == null)
+            holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
+        else
+            holder.status_reblog_count.setText(String.valueOf(status.getReblog().getReblogs_count()));
+
         holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
         
 
@@ -468,14 +476,13 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 holder.status_privacy.setImageResource(R.drawable.ic_local_post_office);
                 break;
         }
-
         Drawable imgFav, imgReblog;
-        if( status.isFavourited())
+        if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited()))
             imgFav = ContextCompat.getDrawable(context, R.drawable.ic_fav_yellow);
         else
             imgFav = ContextCompat.getDrawable(context, R.drawable.ic_fav_black);
 
-        if( status.isReblogged())
+        if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged()))
             imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_retweet_yellow);
         else
             imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_retweet_black);
@@ -573,7 +580,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
      * @param status Status
      */
     private void favouriteAction(Status status){
-        if( status.isFavourited()){
+        if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())){
             new PostActionAsyncTask(context, API.StatusAction.UNFAVOURITE, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             status.setFavourited(false);
         }else{
@@ -588,7 +595,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
      * @param status Status
      */
     private void reblogAction(Status status){
-        if( status.isReblogged()){
+        if( status.isReblogged() || (status.getReblog()!= null && status.getReblog().isReblogged())){
             new PostActionAsyncTask(context, API.StatusAction.UNREBLOG, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             status.setReblogged(false);
         }else{
@@ -811,12 +818,12 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
         String title = null;
         if( action == FAVOURITE){
-            if( status.isFavourited())
+            if( status.isFavourited() || ( status.getReblog() != null && status.getReblog().isFavourited()))
                 title = context.getString(R.string.favourite_remove);
             else
                 title = context.getString(R.string.favourite_add);
         }else if( action == REBLOG ){
-            if( status.isReblogged())
+            if( status.isReblogged() || (status.getReblog() != null && status.getReblog().isReblogged()))
                 title = context.getString(R.string.reblog_remove);
             else
                 title = context.getString(R.string.reblog_add);
