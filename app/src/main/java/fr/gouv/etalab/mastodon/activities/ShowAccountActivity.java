@@ -102,6 +102,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     private boolean isHiddingShowing = false;
     private static int instanceValue = 0;
     private Relationship relationship;
+    private TextView account_un;
 
     public enum action{
         FOLLOW,
@@ -129,14 +130,12 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         account_follow = (FloatingActionButton) findViewById(R.id.account_follow);
         account_follow_request = (TextView) findViewById(R.id.account_follow_request);
         account_follow.setEnabled(false);
+        account_un = (TextView) findViewById(R.id.account_un);
         if(b != null){
             accountId = b.getString("accountId");
             new RetrieveRelationshipAsyncTask(getApplicationContext(), accountId,ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new RetrieveAccountAsyncTask(getApplicationContext(),accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            if( accountId != null && accountId.equals(userId)){
-                account_follow.setVisibility(View.GONE);
-            }
         }else{
             Toast.makeText(this,R.string.toast_error_loading_account,Toast.LENGTH_LONG).show();
         }
@@ -221,17 +220,16 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                         account_follow.setVisibility(View.GONE);
                         account_note.setVisibility(View.GONE);
                         tabLayout.setVisibility(View.GONE);
+                        account_un.setVisibility(View.GONE);
                         account_pp.getLayoutParams().width = (int) Helper.convertDpToPixel(50, context);
                         account_pp.getLayoutParams().height = (int) Helper.convertDpToPixel(50, context);
                     }else {
                         manageButtonVisibility();
-                        if( accountId != null && accountId.equals(userId)){
-                            account_follow.setVisibility(View.GONE);
-                        }
                         account_pp.getLayoutParams().width = (int) Helper.convertDpToPixel(80, context);
                         account_pp.getLayoutParams().height = (int) Helper.convertDpToPixel(80, context);
                         tabLayout.setVisibility(View.VISIBLE);
                         account_note.setVisibility(View.VISIBLE);
+                        account_un.setVisibility(View.VISIBLE);
                     }
                     account_pp.requestLayout();
                     Handler handler = new Handler();
@@ -390,7 +388,9 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         if( relationship == null)
             return;
         account_follow.setEnabled(true);
-        if( relationship.isBlocking()){
+        if( accountId != null && accountId.equals(userId)){
+            account_follow.setVisibility(View.GONE);
+        }else if( relationship.isBlocking()){
             account_follow.setImageResource(R.drawable.ic_unlock_alt);
             doAction = action.UNBLOCK;
             account_follow.setVisibility(View.VISIBLE);
