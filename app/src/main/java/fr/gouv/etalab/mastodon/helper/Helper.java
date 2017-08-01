@@ -181,6 +181,7 @@ public class Helper {
     public static final String SET_TIME_FROM = "set_time_from";
     public static final String SET_TIME_TO = "set_time_to";
     public static final String SET_AUTO_STORE = "set_auto_store";
+    public static final String SET_POPUP_PUSH = "set_popup_push";
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;
