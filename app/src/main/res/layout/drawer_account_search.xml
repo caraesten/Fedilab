@@ -20,7 +20,6 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
-    android:layout_marginTop="10dp"
     style="?attr/cardStyle"
     card_view:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true">
@@ -31,6 +30,7 @@
         android:id="@+id/account_container"
         android:orientation="horizontal">
         <ImageView
+            android:layout_margin="5dp"
             android:layout_gravity="center"
             android:id="@+id/account_pp"
             android:layout_width="30dp"

@@ -23,7 +23,6 @@
     android:layout_height="wrap_content"
     android:background="?attr/colorPrimary"
     app:popupTheme="?attr/popupOverlay">
-
     <ImageView
         android:id="@+id/close_toot"
         android:src="@drawable/ic_close"
@@ -32,7 +31,7 @@
         android:gravity="center_vertical"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
-        android:contentDescription="" />
+        tools:ignore="ContentDescription" />
     <ImageView
         android:id="@+id/pp_actionBar"
         android:layout_width="30dp"
@@ -42,10 +41,21 @@
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
         tools:ignore="ContentDescription" />
+    <ProgressBar
+        android:id="@+id/pp_progress"
+        android:visibility="gone"
+        android:indeterminate="true"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:id="@+id/toolbar_title" />
+
 </android.support.v7.widget.Toolbar>

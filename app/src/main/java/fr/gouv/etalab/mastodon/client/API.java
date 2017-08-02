@@ -287,6 +287,7 @@ public class API {
         return getStatus(accountId, false, false, max_id, null, tootPerPage);
     }
 
+
     /**
      * Retrieves status for the account *synchronously*
      *
@@ -1137,12 +1138,16 @@ public class API {
      * @param query  String search
      * @return APIResponse
      */
-    public APIResponse searchAccounts(String query) {
+    public APIResponse searchAccounts(String query, int count) {
 
         RequestParams params = new RequestParams();
         params.add("q", query);
         //params.put("resolve","false");
-        params.add("limit", "4");
+        if( count < 5)
+            count = 5;
+        if( count > 40 )
+            count = 40;
+        params.add("limit", String.valueOf(count));
         get("/accounts/search", params, new JsonHttpResponseHandler() {
 
             @Override

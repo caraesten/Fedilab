@@ -46,6 +46,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -120,8 +121,6 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostStatusActionInterface {
 
 
-    private int charsInCw;
-    private int charsInToot;
     private int maxChar;
     private String visibility;
     private final int PICK_IMAGE = 56556;
@@ -147,6 +146,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private long restored;
     private TextView title;
     private ImageView pp_actionBar;
+    private ProgressBar pp_progress;
     private Toast mToast;
 
 
@@ -173,11 +173,14 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             close_toot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    InputMethodManager inputMethodManager = (InputMethodManager)  getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(toot_content.getWindowToken(), 0);
                     finish();
                 }
             });
             title = (TextView) actionBar.getCustomView().findViewById(R.id.toolbar_title);
             pp_actionBar = (ImageView) actionBar.getCustomView().findViewById(R.id.pp_actionBar);
+            pp_progress = (ProgressBar) actionBar.getCustomView().findViewById(R.id.pp_progress);
 
         }
 
@@ -285,8 +288,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             toot_content.setText( String.format("\n%s", sharedContent));
         }
         attachments = new ArrayList<>();
-        charsInCw = 0;
-        charsInToot = 0;
+        int charsInCw = 0;
+        int charsInToot = 0;
         maxChar = 500;
 
         //Register LocalBroadcast to receive selected accounts after search
@@ -307,6 +310,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     toot_content.setSelection(toot_content.getText().length());
                 }
                 toot_show_accounts.setVisibility(View.GONE);
+                showKeyboard();
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(search_validate, new IntentFilter(Helper.SEARCH_VALIDATE_ACCOUNT));
@@ -321,6 +325,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             @Override
             public void onClick(View v) {
                 toot_show_accounts.setVisibility(View.GONE);
+                showKeyboard();
             }
         });
 
@@ -439,6 +444,10 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 Matcher m = sPattern.matcher(s.toString().substring(s.toString().length()- length, s.toString().length()));
                 if(m.matches()) {
                     String search = m.group(3);
+                    if( pp_progress != null && pp_actionBar != null) {
+                        pp_progress.setVisibility(View.VISIBLE);
+                        pp_actionBar.setVisibility(View.GONE);
+                    }
                     new RetrieveSearchAccountsAsyncTask(getApplicationContext(),search,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }else{
                     toot_show_accounts.setVisibility(View.GONE);
@@ -505,6 +514,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             restoreToot(restored);
         }
         changeColor();
+
     }
 
 
@@ -752,6 +762,14 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     }
 
     @Override
+    public void onBackPressed() {
+        if( toot_show_accounts.getVisibility() == View.VISIBLE) {
+            toot_show_accounts.setVisibility(View.GONE);
+            showKeyboard();
+        }else
+            super.onBackPressed();
+    }
+    @Override
     public void onRetrieveAttachment(final Attachment attachment, Error error) {
         loading_picture.setVisibility(View.GONE);
         toot_picture_container.setVisibility(View.VISIBLE);
@@ -933,6 +951,10 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
     @Override
     public void onRetrieveSearchAccounts(APIResponse apiResponse) {
+        if( pp_progress != null && pp_actionBar != null) {
+            pp_progress.setVisibility(View.GONE);
+            pp_actionBar.setVisibility(View.VISIBLE);
+        }
         if( apiResponse.getError() != null){
             final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
@@ -946,6 +968,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             toot_lv_accounts.setAdapter(accountsListAdapter);
             accountsListAdapter.notifyDataSetChanged();
             toot_show_accounts.setVisibility(View.VISIBLE);
+            InputMethodManager inputMethodManager = (InputMethodManager)  getSystemService(Activity.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(toot_content.getWindowToken(), 0);
         }
     }
 
@@ -1030,6 +1054,11 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             else
                 setTitle(R.string.toot_title);
         }
+    }
+
+    private void showKeyboard(){
+        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.toggleSoftInputFromWindow(toot_content.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
     }
 
 
