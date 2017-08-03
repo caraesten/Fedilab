@@ -51,6 +51,8 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="open_with">Open with</string>
+    <string name="validate">Validate</string>
+    <string name="media">Media</string>
     <!--- Menu -->
     <string name="home_menu">Home</string>
     <string name="local_menu">Local timeline</string>
@@ -307,6 +309,14 @@
 
     <string name="action_search">Search</string>
 
+    <!-- Quick settings for notifications -->
+    <string name="settings_popup_title">Push notifications</string>
+    <string name="settings_popup_message">
+        Please, confirm push notifications that you want to receive.
+        You can enable or disable these notifications later in settings (Notifications tab).
+    </string>
+    <string name="settings_popup_timeline">For unread toots in home time-line?</string>
+    <string name="settings_popup_notification">For unread notifications?</string>
     <!-- CACHE -->
     <string name="cache_title">Clear cache</string>
     <string name="cache_message">There are %1$s data in cache.\n\nWould you like to delete them?</string>

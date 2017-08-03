@@ -310,7 +310,10 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ShowConversationActivity.class);
                     Bundle b = new Bundle();
-                    b.putString("statusId", status.getId());
+                    if( status.getReblog() == null)
+                        b.putString("statusId", status.getId());
+                    else
+                        b.putString("statusId", status.getReblog().getId());
                     intent.putExtras(b);
                     context.startActivity(intent);
                 }
@@ -320,7 +323,10 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ShowConversationActivity.class);
                     Bundle b = new Bundle();
-                    b.putString("statusId", status.getId());
+                    if( status.getReblog() == null)
+                        b.putString("statusId", status.getId());
+                    else
+                        b.putString("statusId", status.getReblog().getId());
                     intent.putExtras(b);
                     context.startActivity(intent);
                 }

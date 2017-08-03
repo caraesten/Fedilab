@@ -48,6 +48,8 @@
     <string name="next">Suivant</string>
     <string name="previous">Précédent</string>
     <string name="open_with">Ouvrir avec</string>
+    <string name="validate">Valider</string>
+    <string name="media">Médias</string>
     <!--- Menu -->
     <string name="home_menu">Accueil</string>
     <string name="local_menu">Fil public local</string>
@@ -301,6 +303,15 @@
     <string name="followed_by">Vous suit</string>
 
     <string name="action_search">Recherche</string>
+
+    <!-- Quick settings for notifications -->
+    <string name="settings_popup_title">Notifications push</string>
+    <string name="settings_popup_message">
+        Veuillez confirmer les notifications que vous souhaitez recevoir.
+        Vous pourrez les activer ou les désactiver plus tard dans les paramètres (onglet Notifications).
+    </string>
+    <string name="settings_popup_timeline">Pour les pouets non lus sur la page d\'accueil</string>
+    <string name="settings_popup_notification">Pour les notifications non lues ?</string>
 
     <!-- CACHE -->
     <string name="cache_title">Nettoyage du cache</string>

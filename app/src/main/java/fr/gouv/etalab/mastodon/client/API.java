@@ -288,6 +288,18 @@ public class API {
     }
 
     /**
+     * Retrieves status with media for the account *synchronously*
+     *
+     * @param accountId String Id of the account
+     * @param max_id    String id max
+     * @return APIResponse
+     */
+    public APIResponse getStatusWithMedia(String accountId, String max_id) {
+        return getStatus(accountId, true, false, max_id, null, tootPerPage);
+    }
+
+
+    /**
      * Retrieves status for the account *synchronously*
      *
      * @param accountId       String Id of the account
@@ -1137,12 +1149,16 @@ public class API {
      * @param query  String search
      * @return APIResponse
      */
-    public APIResponse searchAccounts(String query) {
+    public APIResponse searchAccounts(String query, int count) {
 
         RequestParams params = new RequestParams();
         params.add("q", query);
         //params.put("resolve","false");
-        params.add("limit", "4");
+        if( count < 5)
+            count = 5;
+        if( count > 40 )
+            count = 40;
+        params.add("limit", String.valueOf(count));
         get("/accounts/search", params, new JsonHttpResponseHandler() {
 
             @Override

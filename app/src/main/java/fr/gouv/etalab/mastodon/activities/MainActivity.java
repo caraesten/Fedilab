@@ -29,6 +29,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.SwitchCompat;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -112,7 +114,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
 
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
@@ -334,6 +336,42 @@ public class MainActivity extends AppCompatActivity
             navigationView.setCheckedItem(R.id.nav_home);
             navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
             toolbarTitle.setText(R.string.home_menu);
+        }
+
+        boolean popupShown = sharedpreferences.getBoolean(Helper.SET_POPUP_PUSH, false);
+        if(!popupShown){
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MainActivity.this);
+            LayoutInflater inflater = getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.popup_quick_settings, null);
+            dialogBuilder.setView(dialogView);
+
+            final SwitchCompat set_push_hometimeline = (SwitchCompat) dialogView.findViewById(R.id.set_push_hometimeline);
+            final SwitchCompat set_push_notification = (SwitchCompat) dialogView.findViewById(R.id.set_push_notification);
+            boolean notif_hometimeline = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, true);
+            boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
+            boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
+            boolean notif_ask = sharedpreferences.getBoolean(Helper.SET_NOTIF_ASK, true);
+            boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
+            boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
+            boolean notifif_notifications = !( !notif_follow &&  !notif_add && !notif_ask && !notif_mention && !notif_share);
+            set_push_hometimeline.setChecked(notif_hometimeline);
+            set_push_notification.setChecked(notifif_notifications);
+
+            dialogBuilder.setTitle(R.string.settings_popup_title);
+            dialogBuilder.setCancelable(false);
+            dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putBoolean(Helper.SET_NOTIF_FOLLOW, set_push_notification.isChecked());
+                    editor.putBoolean(Helper.SET_NOTIF_ADD, set_push_notification.isChecked());
+                    editor.putBoolean(Helper.SET_NOTIF_ASK, set_push_notification.isChecked());
+                    editor.putBoolean(Helper.SET_NOTIF_MENTION, set_push_notification.isChecked());
+                    editor.putBoolean(Helper.SET_NOTIF_SHARE, set_push_notification.isChecked());
+                    editor.putBoolean(Helper.SET_NOTIF_HOMETIMELINE, set_push_hometimeline.isChecked());
+                    editor.putBoolean(Helper.SET_POPUP_PUSH, true);
+                    editor.apply();
+                }
+            }).show();
         }
     }
 

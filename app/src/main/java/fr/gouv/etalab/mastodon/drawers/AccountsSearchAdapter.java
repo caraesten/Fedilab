@@ -17,11 +17,14 @@ package fr.gouv.etalab.mastodon.drawers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,6 +33,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
+import java.util.ArrayList;
 import java.util.List;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -40,16 +44,19 @@ import mastodon.etalab.gouv.fr.mastodon.R;
  * Created by Thomas on 05/05/2017.
  * Adapter for accounts when searching
  */
-public class AccountsSearchAdapter extends BaseAdapter  {
+public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filterable {
 
-    private List<Account> accounts;
+    private List<Account> accounts, tempAccounts, suggestions ;
     private LayoutInflater layoutInflater;
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
     private Context context;
 
     public AccountsSearchAdapter(Context context, List<Account> accounts){
+        super(context, android.R.layout.simple_list_item_1, accounts);
         this.accounts = accounts;
+        this.tempAccounts = new ArrayList<>(accounts);
+        this.suggestions = new ArrayList<>(accounts);
         layoutInflater = LayoutInflater.from(context);
         imageLoader = ImageLoader.getInstance();
         this.context = context;
@@ -63,7 +70,7 @@ public class AccountsSearchAdapter extends BaseAdapter  {
     }
 
     @Override
-    public Object getItem(int position) {
+    public Account getItem(int position) {
         return accounts.get(position);
     }
 
@@ -73,8 +80,9 @@ public class AccountsSearchAdapter extends BaseAdapter  {
     }
 
 
+    @NonNull
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
 
         final Account account = accounts.get(position);
         final ViewHolder holder;
@@ -106,6 +114,52 @@ public class AccountsSearchAdapter extends BaseAdapter  {
         return convertView;
     }
 
+    @NonNull
+    @Override
+    public Filter getFilter() {
+        return accountFilter;
+    }
+
+
+    private Filter accountFilter = new Filter() {
+        @Override
+        public CharSequence convertResultToString(Object resultValue) {
+            Account account = (Account) resultValue;
+            return account.getDisplay_name() + " " + account.getUsername();
+        }
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            if (constraint != null) {
+                suggestions.clear();
+                for (Account account : tempAccounts) {
+                    suggestions.add(account);
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = suggestions;
+                filterResults.count = suggestions.size();
+                return filterResults;
+            } else {
+                return new FilterResults();
+            }
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            ArrayList<Account> c = (ArrayList<Account>) results.values;
+            if (results.count > 0) {
+                clear();
+                for (Account cust : c) {
+                    add(cust);
+                    notifyDataSetChanged();
+                }
+            }
+            else{
+                clear();
+                notifyDataSetChanged();
+            }
+        }
+    };
 
     private class ViewHolder {
         ImageView account_pp;

@@ -37,6 +37,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -102,6 +103,8 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     private boolean isHiddingShowing = false;
     private static int instanceValue = 0;
     private Relationship relationship;
+    private TextView account_un;
+    private boolean showMediaOnly;
 
     public enum action{
         FOLLOW,
@@ -129,17 +132,16 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         account_follow = (FloatingActionButton) findViewById(R.id.account_follow);
         account_follow_request = (TextView) findViewById(R.id.account_follow_request);
         account_follow.setEnabled(false);
+        account_un = (TextView) findViewById(R.id.account_un);
         if(b != null){
             accountId = b.getString("accountId");
             new RetrieveRelationshipAsyncTask(getApplicationContext(), accountId,ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new RetrieveAccountAsyncTask(getApplicationContext(),accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            if( accountId != null && accountId.equals(userId)){
-                account_follow.setVisibility(View.GONE);
-            }
         }else{
             Toast.makeText(this,R.string.toast_error_loading_account,Toast.LENGTH_LONG).show();
         }
+        showMediaOnly = false;
         imageLoader = ImageLoader.getInstance();
         File cacheDir = new File(getCacheDir(), getString(R.string.app_name));
         ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(this)
@@ -221,17 +223,16 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                         account_follow.setVisibility(View.GONE);
                         account_note.setVisibility(View.GONE);
                         tabLayout.setVisibility(View.GONE);
+                        account_un.setVisibility(View.GONE);
                         account_pp.getLayoutParams().width = (int) Helper.convertDpToPixel(50, context);
                         account_pp.getLayoutParams().height = (int) Helper.convertDpToPixel(50, context);
                     }else {
                         manageButtonVisibility();
-                        if( accountId != null && accountId.equals(userId)){
-                            account_follow.setVisibility(View.GONE);
-                        }
                         account_pp.getLayoutParams().width = (int) Helper.convertDpToPixel(80, context);
                         account_pp.getLayoutParams().height = (int) Helper.convertDpToPixel(80, context);
                         tabLayout.setVisibility(View.VISIBLE);
                         account_note.setVisibility(View.VISIBLE);
+                        account_un.setVisibility(View.VISIBLE);
                     }
                     account_pp.requestLayout();
                     Handler handler = new Handler();
@@ -282,10 +283,27 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_showaccount, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                return true;
+            case R.id.action_show_media:
+                showMediaOnly = !showMediaOnly;
+                if( showMediaOnly )
+                    item.setIcon(R.drawable.ic_clear_all);
+                else
+                    item.setIcon(R.drawable.ic_perm_media);
+                tabLayout.getTabAt(0).select();
+                PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+                mPager.setAdapter(mPagerAdapter);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -390,7 +408,9 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         if( relationship == null)
             return;
         account_follow.setEnabled(true);
-        if( relationship.isBlocking()){
+        if( accountId != null && accountId.equals(userId)){
+            account_follow.setVisibility(View.GONE);
+        }else if( relationship.isBlocking()){
             account_follow.setImageResource(R.drawable.ic_unlock_alt);
             doAction = action.UNBLOCK;
             account_follow.setVisibility(View.VISIBLE);
@@ -429,6 +449,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
                     bundle.putString("targetedId", accountId);
                     bundle.putBoolean("hideHeader",true);
+                    bundle.putBoolean("showMediaOnly",showMediaOnly);
                     bundle.putString("hideHeaderValue",String.valueOf(instanceValue));
                     displayStatusFragment.setArguments(bundle);
                     return displayStatusFragment;
