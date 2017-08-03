@@ -133,11 +133,8 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
             if (constraint != null) {
                 suggestions.clear();
                 for (Account account : tempAccounts) {
-                    if (account.getAcct().toLowerCase().startsWith(constraint.toString().toLowerCase())) {
-                        suggestions.add(account);
-                    }
+                    suggestions.add(account);
                 }
-
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = suggestions;
                 filterResults.count = suggestions.size();

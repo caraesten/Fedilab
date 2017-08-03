@@ -1045,34 +1045,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     }
 
 
-    /*private void manageShowUsers(searchAction action, boolean click){
-
-        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean show_reply = sharedpreferences.getBoolean(Helper.SET_SHOW_REPLY, false);
-        Log.v(Helper.TAG,"action: " + action);
-        if(action == searchAction.CLOSE){
-            toot_show_accounts.setVisibility(View.GONE);
-            search_small_container.setVisibility(View.GONE);
-            bottom_container.setVisibility(View.VISIBLE);
-            if( show_reply && tootReply != null){
-                toot_reply_content_container.setVisibility(View.VISIBLE);
-            }else {
-                toot_reply_content_container.setVisibility(View.GONE);
-            }
-            toot_content.requestFocus();
-            if( !click) {
-                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.toggleSoftInputFromWindow(toot_content.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
-            }
-        }else if(action == searchAction.OPEN){
-            toot_show_accounts.setVisibility(View.VISIBLE);
-            search_small_container.setVisibility(View.VISIBLE);
-            bottom_container.setVisibility(View.GONE);
-            toot_reply_content_container.setVisibility(View.GONE);
-        }
-    }*/
-
-
     private void tootReply(){
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         if( title != null)

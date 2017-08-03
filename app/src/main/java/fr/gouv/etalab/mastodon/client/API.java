@@ -287,6 +287,17 @@ public class API {
         return getStatus(accountId, false, false, max_id, null, tootPerPage);
     }
 
+    /**
+     * Retrieves status with media for the account *synchronously*
+     *
+     * @param accountId String Id of the account
+     * @param max_id    String id max
+     * @return APIResponse
+     */
+    public APIResponse getStatusWithMedia(String accountId, String max_id) {
+        return getStatus(accountId, true, false, max_id, null, tootPerPage);
+    }
+
 
     /**
      * Retrieves status for the account *synchronously*

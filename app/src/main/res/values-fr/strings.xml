@@ -49,6 +49,7 @@
     <string name="previous">Précédent</string>
     <string name="open_with">Ouvrir avec</string>
     <string name="validate">Valider</string>
+    <string name="media">Médias</string>
     <!--- Menu -->
     <string name="home_menu">Accueil</string>
     <string name="local_menu">Fil public local</string>

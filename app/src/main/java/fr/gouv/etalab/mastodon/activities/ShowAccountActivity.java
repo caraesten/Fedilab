@@ -37,6 +37,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -103,6 +104,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     private static int instanceValue = 0;
     private Relationship relationship;
     private TextView account_un;
+    private boolean showMediaOnly;
 
     public enum action{
         FOLLOW,
@@ -139,6 +141,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         }else{
             Toast.makeText(this,R.string.toast_error_loading_account,Toast.LENGTH_LONG).show();
         }
+        showMediaOnly = false;
         imageLoader = ImageLoader.getInstance();
         File cacheDir = new File(getCacheDir(), getString(R.string.app_name));
         ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(this)
@@ -280,10 +283,27 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_showaccount, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                return true;
+            case R.id.action_show_media:
+                showMediaOnly = !showMediaOnly;
+                if( showMediaOnly )
+                    item.setIcon(R.drawable.ic_clear_all);
+                else
+                    item.setIcon(R.drawable.ic_perm_media);
+                tabLayout.getTabAt(0).select();
+                PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+                mPager.setAdapter(mPagerAdapter);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -429,6 +449,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
                     bundle.putString("targetedId", accountId);
                     bundle.putBoolean("hideHeader",true);
+                    bundle.putBoolean("showMediaOnly",showMediaOnly);
                     bundle.putString("hideHeaderValue",String.valueOf(instanceValue));
                     displayStatusFragment.setArguments(bundle);
                     return displayStatusFragment;

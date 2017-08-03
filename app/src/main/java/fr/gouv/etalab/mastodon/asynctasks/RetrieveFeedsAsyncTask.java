@@ -35,6 +35,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     private OnRetrieveFeedsInterface listener;
     private String targetedID;
     private String tag;
+    private boolean showMediaOnly = false;
 
     public enum Type{
         HOME,
@@ -55,12 +56,13 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.listener = onRetrieveFeedsInterface;
     }
 
-    public RetrieveFeedsAsyncTask(Context context, Type action, String targetedID, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
+    public RetrieveFeedsAsyncTask(Context context, Type action, String targetedID, String max_id, boolean showMediaOnly, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
         this.context = context;
         this.action = action;
         this.max_id = max_id;
         this.listener = onRetrieveFeedsInterface;
         this.targetedID = targetedID;
+        this.showMediaOnly = showMediaOnly;
     }
     public RetrieveFeedsAsyncTask(Context context, Type action, String tag, String targetedID, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
         this.context = context;
@@ -88,7 +90,10 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 apiResponse = api.getFavourites(max_id);
                 break;
             case USER:
-                apiResponse = api.getStatus(targetedID, max_id);
+                if( !showMediaOnly)
+                    apiResponse = api.getStatus(targetedID, max_id);
+                else
+                    apiResponse = api.getStatusWithMedia(targetedID, max_id);
                 break;
             case ONESTATUS:
                 apiResponse = api.getStatusbyId(targetedID);
