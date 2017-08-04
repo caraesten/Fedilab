@@ -11,7 +11,7 @@ package fr.gouv.etalab.mastodon.drawers;
  * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with Thomas Schneider; if not,
+ * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
 import android.app.AlertDialog;
@@ -32,8 +32,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +46,7 @@ import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
@@ -51,6 +54,7 @@ import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.PostNotificationsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnPostNotificationsActionInterface;
@@ -76,13 +80,18 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
     private final int REBLOG = 1;
     private final int FAVOURITE = 2;
     private NotificationsListAdapter notificationsListAdapter;
+    private int behaviorWithAttachments;
+    private boolean isOnWifi;
 
-    public NotificationsListAdapter(Context context, List<Notification> notifications){
+
+    public NotificationsListAdapter(Context context, boolean isOnWifi, int behaviorWithAttachments, List<Notification> notifications){
         this.context = context;
         this.notifications = notifications;
         layoutInflater = LayoutInflater.from(this.context);
         imageLoader = ImageLoader.getInstance();
         notificationsListAdapter = this;
+        this.isOnWifi = isOnWifi;
+        this.behaviorWithAttachments = behaviorWithAttachments;
         options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
     }
@@ -126,6 +135,19 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             holder.status_reply = (ImageView) convertView.findViewById(R.id.status_reply);
             holder.status_privacy = (ImageView) convertView.findViewById(R.id.status_privacy);
             holder.notification_delete = (ImageView) convertView.findViewById(R.id.notification_delete);
+
+            holder.status_show_more = (Button) convertView.findViewById(R.id.status_show_more);
+            holder.status_prev1 = (ImageView) convertView.findViewById(R.id.status_prev1);
+            holder.status_prev2 = (ImageView) convertView.findViewById(R.id.status_prev2);
+            holder.status_prev3 = (ImageView) convertView.findViewById(R.id.status_prev3);
+            holder.status_prev4 = (ImageView) convertView.findViewById(R.id.status_prev4);
+            holder.status_prev1_play = (ImageView) convertView.findViewById(R.id.status_prev1_play);
+            holder.status_prev2_play = (ImageView) convertView.findViewById(R.id.status_prev2_play);
+            holder.status_prev3_play = (ImageView) convertView.findViewById(R.id.status_prev3_play);
+            holder.status_prev4_play = (ImageView) convertView.findViewById(R.id.status_prev4_play);
+            holder.status_container2 = (LinearLayout) convertView.findViewById(R.id.status_container2);
+            holder.status_container3 = (LinearLayout) convertView.findViewById(R.id.status_container3);
+            holder.status_prev4_container = (RelativeLayout) convertView.findViewById(R.id.status_prev4_container);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -284,6 +306,63 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             imgReblog.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (20 * scale + 0.5f));
             holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
             holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
+
+
+            if( status.getReblog() == null) {
+                if (status.getMedia_attachments().size() < 1) {
+                    holder.status_document_container.setVisibility(View.GONE);
+                    holder.status_show_more.setVisibility(View.GONE);
+                } else {
+                    //If medias are loaded without any conditions or if device is on wifi
+                    if (!status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
+                        loadAttachments(status, holder);
+                        holder.status_show_more.setVisibility(View.GONE);
+                        status.setAttachmentShown(true);
+                    } else {
+                        //Text depending if toots is sensitive or not
+                        String textShowMore = (status.isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
+                        holder.status_show_more.setText(textShowMore);
+                        if (!status.isAttachmentShown()) {
+                            holder.status_show_more.setVisibility(View.VISIBLE);
+                            holder.status_document_container.setVisibility(View.GONE);
+                        } else {
+                            loadAttachments(status, holder);
+                        }
+                    }
+                }
+            }else { //Attachments for reblogs
+                if (status.getReblog().getMedia_attachments().size() < 1) {
+                    holder.status_document_container.setVisibility(View.GONE);
+                    holder.status_show_more.setVisibility(View.GONE);
+                } else {
+                    //If medias are loaded without any conditions or if device is on wifi
+                    if (!status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
+                        loadAttachments(status.getReblog(), holder);
+                        holder.status_show_more.setVisibility(View.GONE);
+                        status.getReblog().setAttachmentShown(true);
+                    } else {
+                        //Text depending if toots is sensitive or not
+                        String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
+                        holder.status_show_more.setText(textShowMore);
+                        if (!status.isAttachmentShown()) {
+                            holder.status_show_more.setVisibility(View.VISIBLE);
+                            holder.status_document_container.setVisibility(View.GONE);
+                        } else {
+                            loadAttachments(status.getReblog(), holder);
+                        }
+                    }
+                }
+            }
+            holder.status_show_more.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    loadAttachments(status, holder);
+                    holder.status_show_more.setVisibility(View.GONE);
+                    status.setAttachmentShown(true);
+                    notificationsListAdapter.notifyDataSetChanged();
+                }
+            });
+
         }else {
             holder.notification_status_container.setVisibility(View.GONE);
         }
@@ -491,6 +570,89 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
 
     }
 
+    private void loadAttachments(final Status status, ViewHolder holder){
+        List<Attachment> attachments = status.getMedia_attachments();
+        if( attachments != null && attachments.size() > 0){
+            int i = 0;
+            if( attachments.size() == 1){
+                holder.status_container2.setVisibility(View.GONE);
+                if( attachments.get(0).getUrl().trim().contains("missing.png"))
+                    holder.status_document_container.setVisibility(View.GONE);
+                else
+                    holder.status_document_container.setVisibility(View.VISIBLE);
+            }else if(attachments.size() == 2){
+                holder.status_container2.setVisibility(View.VISIBLE);
+                holder.status_container3.setVisibility(View.GONE);
+                if( attachments.get(1).getUrl().trim().contains("missing.png"))
+                    holder.status_container2.setVisibility(View.GONE);
+                holder.status_document_container.setVisibility(View.VISIBLE);
+            }else if( attachments.size() == 3){
+                holder.status_container2.setVisibility(View.VISIBLE);
+                holder.status_container3.setVisibility(View.VISIBLE);
+                holder.status_prev4_container.setVisibility(View.GONE);
+                if( attachments.get(2).getUrl().trim().contains("missing.png"))
+                    holder.status_container3.setVisibility(View.GONE);
+                holder.status_document_container.setVisibility(View.VISIBLE);
+            }else {
+                holder.status_prev4_container.setVisibility(View.VISIBLE);
+                if( attachments.get(2).getUrl().trim().contains("missing.png"))
+                    holder.status_prev4_container.setVisibility(View.GONE);
+                holder.status_document_container.setVisibility(View.VISIBLE);
+            }
+            int position = 1;
+            for(final Attachment attachment: attachments){
+                ImageView imageView;
+                if( i == 0) {
+                    imageView = holder.status_prev1;
+                    if( attachment.getType().equals("image"))
+                        holder.status_prev1_play.setVisibility(View.GONE);
+                    else
+                        holder.status_prev1_play.setVisibility(View.VISIBLE);
+                }else if( i == 1) {
+                    imageView = holder.status_prev2;
+                    if( attachment.getType().equals("image"))
+                        holder.status_prev2_play.setVisibility(View.GONE);
+                    else
+                        holder.status_prev2_play.setVisibility(View.VISIBLE);
+                }else if(i == 2) {
+                    imageView = holder.status_prev3;
+                    if( attachment.getType().equals("image"))
+                        holder.status_prev3_play.setVisibility(View.GONE);
+                    else
+                        holder.status_prev3_play.setVisibility(View.VISIBLE);
+                }else {
+                    imageView = holder.status_prev4;
+                    if( attachment.getType().equals("image"))
+                        holder.status_prev4_play.setVisibility(View.GONE);
+                    else
+                        holder.status_prev4_play.setVisibility(View.VISIBLE);
+                }
+                String url = attachment.getPreview_url();
+                if( url == null || url.trim().equals(""))
+                    url = attachment.getUrl();
+                if( !url.trim().contains("missing.png"))
+                    imageLoader.displayImage(url, imageView, options);
+                final int finalPosition = position;
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, MediaActivity.class);
+                        Bundle b = new Bundle();
+                        intent.putParcelableArrayListExtra("mediaArray", status.getMedia_attachments());
+                        b.putInt("position", finalPosition);
+                        intent.putExtras(b);
+                        context.startActivity(intent);
+                    }
+                });
+                i++;
+                position++;
+            }
+        }else{
+            holder.status_document_container.setVisibility(View.GONE);
+        }
+        holder.status_show_more.setVisibility(View.GONE);
+    }
+
 
     private class ViewHolder {
         CardView card_status_container;
@@ -504,6 +666,18 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
         TextView status_date;
         ImageView status_reply;
         LinearLayout status_document_container;
+        Button status_show_more;
+        ImageView status_prev1;
+        ImageView status_prev2;
+        ImageView status_prev3;
+        ImageView status_prev4;
+        ImageView status_prev1_play;
+        ImageView status_prev2_play;
+        ImageView status_prev3_play;
+        ImageView status_prev4_play;
+        RelativeLayout status_prev4_container;
+        LinearLayout status_container2;
+        LinearLayout status_container3;
         LinearLayout notification_status_container;
         ImageView status_privacy;
     }

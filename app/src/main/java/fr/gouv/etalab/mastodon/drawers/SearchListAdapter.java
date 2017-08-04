@@ -11,7 +11,7 @@ package fr.gouv.etalab.mastodon.drawers;
  * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with Thomas Schneider; if not,
+ * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
 import android.content.Context;

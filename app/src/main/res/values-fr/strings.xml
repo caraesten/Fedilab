@@ -50,6 +50,8 @@
     <string name="open_with">Ouvrir avec</string>
     <string name="validate">Valider</string>
     <string name="media">Médias</string>
+    <string name="share_with">Partager avec</string>
+    <string name="shared_via">Partagé via Mastalab</string>
     <!--- Menu -->
     <string name="home_menu">Accueil</string>
     <string name="local_menu">Fil public local</string>
@@ -90,10 +92,12 @@
         <item>Bloquer</item>
         <item>Signaler</item>
         <item>Copier</item>
+        <item>Partager</item>
     </string-array>
     <string-array name="more_action_owner">
         <item>Supprimer</item>
         <item>Copier</item>
+        <item>Partager</item>
     </string-array>
 
     <string-array name="more_action_confirm">
@@ -101,6 +105,7 @@
         <item>Bloquer ce compte ?</item>
         <item>Signaler ce pouet ?</item>
         <item>null</item> <!-- Ugly hack to fix confirm box-->
+        <item>null</item>
     </string-array>
 
 
@@ -112,6 +117,7 @@
     <string-array name="more_action_owner_confirm">
         <item>Supprimer ce pouet ?</item>
         <item>null</item> <!-- Ugly hack to fix confirm box-->
+        <item>null</item>
     </string-array>
     <!-- Date -->
     <plurals name="date_seconds">
@@ -176,7 +182,7 @@
     <string name="about_code_action">bitbucket</string>
     <string name="about_yandex">Traduction des pouets :</string>
     <string name="about_thekinrar">Recherche d\'instances :</string>
-    <string name="about_thekinrar_action">API theKinrar</string>
+    <string name="about_thekinrar_action">instances.social</string>
     <!-- Conversation -->
     <string name="conversation">Conversation</string>
 

@@ -53,6 +53,8 @@
     <string name="open_with">Open with</string>
     <string name="validate">Validate</string>
     <string name="media">Media</string>
+    <string name="share_with">Share with</string>
+    <string name="shared_via">Shared via Mastalab</string>
     <!--- Menu -->
     <string name="home_menu">Home</string>
     <string name="local_menu">Local timeline</string>
@@ -93,10 +95,12 @@
         <item>Block</item>
         <item>Report</item>
         <item>Copy</item>
+        <item>Share</item>
     </string-array>
     <string-array name="more_action_owner">
         <item>Remove</item>
         <item>Copy</item>
+        <item>Share</item>
     </string-array>
 
     <string-array name="more_action_confirm">
@@ -104,6 +108,7 @@
         <item>Block this account?</item>
         <item>Report this toot?</item>
         <item>null</item> <!-- Ugly hack to fix confirm box-->
+        <item>null</item>
     </string-array>
 
 
@@ -115,6 +120,7 @@
     <string-array name="more_action_owner_confirm">
         <item>Remove this toot?</item>
         <item>null</item> <!-- Ugly hack to fix confirm box-->
+        <item>null</item>
     </string-array>
     <!-- Date -->
     <plurals name="date_seconds">
@@ -181,7 +187,7 @@
     <string name="about_yandex">Translation of toots:</string>
     <string name="about_yandex_action" translatable="false">Powered by Yandex.Translate</string>
     <string name="about_thekinrar">Search instances:</string>
-    <string name="about_thekinrar_action">theKinrar\'s API</string>
+    <string name="about_thekinrar_action">instances.social</string>
 
     <!-- Conversation -->
     <string name="conversation">Conversation</string>
