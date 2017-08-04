@@ -180,6 +180,9 @@
     <string name="about_code_action">Bitbucket</string>
     <string name="about_yandex">Translation of toots:</string>
     <string name="about_yandex_action" translatable="false">Powered by Yandex.Translate</string>
+    <string name="about_thekinrar">Search instances:</string>
+    <string name="about_thekinrar_action">theKinrar\'s API</string>
+
     <!-- Conversation -->
     <string name="conversation">Conversation</string>
 

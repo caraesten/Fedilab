@@ -21,10 +21,13 @@ import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Patterns;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -34,6 +37,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,6 +50,7 @@ import java.security.UnrecoverableKeyException;
 
 import cz.msebera.android.httpclient.Header;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
+import fr.gouv.etalab.mastodon.client.KinrarClient;
 import fr.gouv.etalab.mastodon.client.MastalabSSLSocketFactory;
 import fr.gouv.etalab.mastodon.client.OauthClient;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -67,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView login_two_step;
     private static boolean client_id_for_webview = false;
     private String instance;
-    private EditText login_instance;
+    private AutoCompleteTextView login_instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +92,55 @@ public class LoginActivity extends AppCompatActivity {
             changeDrawableColor(getApplicationContext(), R.drawable.mastodon_icon, R.color.colorAccent);
         }
         final Button connectionButton = (Button) findViewById(R.id.login_button);
-        login_instance = (EditText) findViewById(R.id.login_instance);
+        login_instance = (AutoCompleteTextView) findViewById(R.id.login_instance);
+
+
+        login_instance.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                if( s.length() > 2 ){
+                    String action = "/instances/search";
+                    RequestParams parameters = new RequestParams();
+                    parameters.add("q", s.toString().trim());
+                    new KinrarClient().get(action, parameters, new AsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                            String response = new String(responseBody);
+                            String[] instances;
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                JSONArray jsonArray = jsonObject.getJSONArray("instances");
+                                if( jsonArray != null){
+                                    instances = new String[jsonArray.length()];
+                                    for(int i = 0 ; i < jsonArray.length() ; i++){
+                                        instances[i] = jsonArray.getJSONObject(i).get("name").toString();
+                                    }
+                                }else {
+                                    instances = new String[]{};
+                                }
+                                login_instance.setAdapter(null);
+                                ArrayAdapter<String> adapter =
+                                        new ArrayAdapter<>(LoginActivity.this, android.R.layout.simple_list_item_1, instances);
+                                login_instance.setAdapter(adapter);
+                                adapter.notifyDataSetChanged();
+
+                            } catch (JSONException ignored) {}
+                        }
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                        }
+                    });
+                }
+            }
+        });
+
+
         connectionButton.setEnabled(false);
         login_two_step = (TextView) findViewById(R.id.login_two_step);
         login_two_step.setVisibility(View.GONE);
@@ -258,5 +311,8 @@ public class LoginActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+
 
 }
