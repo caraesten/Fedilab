@@ -104,7 +104,10 @@ public class LoginActivity extends AppCompatActivity {
             }
             @Override
             public void afterTextChanged(Editable s) {
+
                 if( s.length() > 2 ){
+                    if( s.toString().trim().startsWith("mas") && !s.toString().trim().contains(".") )
+                        return;
                     String action = "/instances/search";
                     RequestParams parameters = new RequestParams();
                     parameters.add("q", s.toString().trim());

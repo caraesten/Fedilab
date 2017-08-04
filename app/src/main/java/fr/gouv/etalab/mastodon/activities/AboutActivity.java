@@ -83,7 +83,7 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveSearcA
         about_thekinrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://instances.social/api/doc/"));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://instances.social/"));
                 startActivity(browserIntent);
             }
         });
