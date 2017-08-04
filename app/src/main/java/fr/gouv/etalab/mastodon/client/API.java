@@ -1258,6 +1258,7 @@ public class API {
             status.setSpoiler_text(resobj.get("spoiler_text").toString());
             status.setVisibility(resobj.get("visibility").toString());
             status.setLanguage(resobj.get("language").toString());
+            status.setUrl(resobj.get("url").toString());
             //TODO: replace by the value
             status.setApplication(new Application());
 

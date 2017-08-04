@@ -907,7 +907,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         else
                             //noinspection deprecation
                             builderInner.setMessage(Html.fromHtml(status.getContent()));
-                    }else{
+                    }else if( which == 1){
                         ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                         String content;
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -920,17 +920,24 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         Toast.makeText(context,R.string.clipboard,Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                         return;
+                    }else {
+                        Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                        sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, status.getUrl());
+                        sendIntent.setType("text/plain");
+                        context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
+                        return;
                     }
                 }else {
                     if( which < 2 ){
                         builderInner.setMessage(status.getAccount().getAcct());
-                    }else if( which < 3) {
+                    }else if( which == 2) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                             builderInner.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_COMPACT));
                         else
                             //noinspection deprecation
                             builderInner.setMessage(Html.fromHtml(status.getContent()));
-                    }else{
+                    }else if( which == 3 ){
                         ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                         String content;
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -942,6 +949,13 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         clipboard.setPrimaryClip(clip);
                         Toast.makeText(context,R.string.clipboard,Toast.LENGTH_LONG).show();
                         dialog.dismiss();
+                        return;
+                    }else {
+                        Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                        sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, status.getUrl());
+                        sendIntent.setType("text/plain");
+                        context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
                         return;
                     }
                 }

@@ -353,7 +353,15 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                     }
                 }
             }
-
+            holder.status_show_more.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    loadAttachments(status, holder);
+                    holder.status_show_more.setVisibility(View.GONE);
+                    status.setAttachmentShown(true);
+                    notificationsListAdapter.notifyDataSetChanged();
+                }
+            });
 
         }else {
             holder.notification_status_container.setVisibility(View.GONE);

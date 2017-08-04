@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -104,14 +105,13 @@ public class LoginActivity extends AppCompatActivity {
             }
             @Override
             public void afterTextChanged(Editable s) {
-
                 if( s.length() > 2 ){
-                    if( s.toString().trim().startsWith("mas") && !s.toString().trim().contains(".") )
+                    if( s.toString().trim().startsWith("mas") && (!s.toString().trim().contains(".") || s.toString().trim().equals("mastodon.")) )
                         return;
                     String action = "/instances/search";
                     RequestParams parameters = new RequestParams();
                     parameters.add("q", s.toString().trim());
-                    parameters.add("count", String.valueOf(10));
+                    parameters.add("count", String.valueOf(5));
                     new KinrarClient().get(action, parameters, new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -132,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
                                 ArrayAdapter<String> adapter =
                                         new ArrayAdapter<>(LoginActivity.this, android.R.layout.simple_list_item_1, instances);
                                 login_instance.setAdapter(adapter);
-                                adapter.notifyDataSetChanged();
+                                login_instance.showDropDown();
 
                             } catch (JSONException ignored) {}
                         }
