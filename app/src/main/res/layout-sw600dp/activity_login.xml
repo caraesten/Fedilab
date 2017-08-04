@@ -40,12 +40,12 @@
             android:gravity="center"
             android:orientation="vertical"
             android:layout_height="wrap_content">
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/login_instance"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:inputType="textWebEmailAddress"
-                android:hint="@string/instance"
+                android:hint="@string/instance_example"
                 />
             <EditText
                 android:id="@+id/login_uid"

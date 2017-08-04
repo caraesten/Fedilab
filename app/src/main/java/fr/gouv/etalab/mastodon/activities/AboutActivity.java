@@ -70,6 +70,7 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveSearcA
         about_developer = (Button) findViewById(R.id.about_developer);
         Button about_code = (Button) findViewById(R.id.about_code);
         Button about_license = (Button) findViewById(R.id.about_license);
+        Button about_thekinrar = (Button) findViewById(R.id.about_thekinrar);
 
         about_code.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -77,6 +78,14 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveSearcA
                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://bitbucket.org/tom79/mastodon_etalab/src"));
                startActivity(browserIntent);
            }
+        });
+
+        about_thekinrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://instances.social/api/doc/"));
+                startActivity(browserIntent);
+            }
         });
         if(Helper.isLoggedIn(getApplicationContext())) {
             about_developer.setEnabled(false);
