@@ -11,7 +11,7 @@ package fr.gouv.etalab.mastodon.client;
  * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with Thomas Schneider; if not,
+ * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
 import android.content.Context;
@@ -1258,6 +1258,7 @@ public class API {
             status.setSpoiler_text(resobj.get("spoiler_text").toString());
             status.setVisibility(resobj.get("visibility").toString());
             status.setLanguage(resobj.get("language").toString());
+            status.setUrl(resobj.get("url").toString());
             //TODO: replace by the value
             status.setApplication(new Application());
 
