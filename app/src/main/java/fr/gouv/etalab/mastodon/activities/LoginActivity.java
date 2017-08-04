@@ -108,6 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                     String action = "/instances/search";
                     RequestParams parameters = new RequestParams();
                     parameters.add("q", s.toString().trim());
+                    parameters.add("count", String.valueOf(10));
                     new KinrarClient().get(action, parameters, new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
