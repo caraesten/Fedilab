@@ -11,7 +11,7 @@ package fr.gouv.etalab.mastodon.fragments;
  * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with Thomas Schneider; if not,
+ * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -34,7 +34,6 @@ import java.util.List;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
-import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -86,7 +85,9 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         textviewNoAction = (RelativeLayout) rootView.findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
-        notificationsListAdapter = new NotificationsListAdapter(context, this.notifications);
+        boolean isOnWifi = Helper.isOnWIFI(context);
+        int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+        notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments,this.notifications);
         lv_notifications.setAdapter(notificationsListAdapter);
         lv_notifications.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
@@ -159,11 +160,10 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
 
     @Override
     public void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId) {
-
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         if( apiResponse.getError() != null){
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
                 Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
@@ -178,7 +178,9 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         else
             textviewNoAction.setVisibility(View.GONE);
         if( swiped ){
-            notificationsListAdapter = new NotificationsListAdapter(context, this.notifications);
+            boolean isOnWifi = Helper.isOnWIFI(context);
+            int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+            notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments, this.notifications);
             lv_notifications.setAdapter(notificationsListAdapter);
             swiped = false;
         }
@@ -194,7 +196,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         flag_loading = notifications != null && notifications.size() < notificationPerPage;
         //Store last notification id to avoid to notify for those that have been already seen
         if( notifications != null && notifications.size()  > 0) {
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             //acct is null as userId when used in Fragment, data need to be retrieved via shared preferences and db
             userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
