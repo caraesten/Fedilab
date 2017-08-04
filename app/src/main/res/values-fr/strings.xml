@@ -175,6 +175,8 @@
     <string name="about_code">Code source : </string>
     <string name="about_code_action">bitbucket</string>
     <string name="about_yandex">Traduction des pouets :</string>
+    <string name="about_thekinrar">Recherche d\'instances :</string>
+    <string name="about_thekinrar_action">API theKinrar</string>
     <!-- Conversation -->
     <string name="conversation">Conversation</string>
 
