@@ -26,12 +26,12 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,21 +63,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
+import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
-import fr.gouv.etalab.mastodon.client.Entities.Error;
-import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
-import fr.gouv.etalab.mastodon.helper.Helper;
-import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
-import fr.gouv.etalab.mastodon.translation.YandexQuery;
-import mastodon.etalab.gouv.fr.mastodon.R;
-import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
+import fr.gouv.etalab.mastodon.translation.YandexQuery;
+import mastodon.etalab.gouv.fr.mastodon.R;
+
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
@@ -505,6 +506,27 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 holder.status_show_more.setVisibility(View.GONE);
                 status.setAttachmentShown(true);
                 statusListAdapter.notifyDataSetChanged();
+
+                /*
+                    Added a Countdown Timer, so that Sensitive (NSFW)
+                    images only get displayed for 5 seconds, giving
+                    the user time to click on them to expand them, if
+                    they want. Images are then hidden again.
+                 */
+                final int timeout = 5;
+
+                new CountDownTimer((timeout * 1000), 1000){
+
+                    public void onTick(long millisUntilFinished) { }
+
+                    public  void onFinish(){
+
+                        status.setAttachmentShown(false);
+                        holder.status_show_more.setVisibility(View.VISIBLE);
+
+                        statusListAdapter.notifyDataSetChanged();
+                    }
+                }.start();
             }
         });
 
