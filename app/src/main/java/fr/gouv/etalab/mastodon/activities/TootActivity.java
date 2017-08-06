@@ -103,8 +103,8 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
 import fr.gouv.etalab.mastodon.jobs.ScheduledTootsSyncJob;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
-import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
@@ -967,7 +967,19 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         //Retrieves attachments
         restored = id;
         attachments = status.getMedia_attachments();
-        toot_picture_container.removeAllViews();
+        int childCount = toot_picture_container.getChildCount();
+        ArrayList<ImageView> toRemove = new ArrayList<>();
+        if( childCount > 0 ){
+            for(int i = 0 ; i < childCount ; i++){
+                if( toot_picture_container.getChildAt(i) instanceof ImageView)
+                    toRemove.add((ImageView) toot_picture_container.getChildAt(i));
+            }
+            if( toRemove.size() > 0){
+                for(ImageView imageView: toRemove)
+                    toot_picture_container.removeView(imageView);
+            }
+            toRemove.clear();
+        }
         loading_picture.setVisibility(View.GONE);
         if( attachments != null && attachments.size() > 0){
             toot_picture_container.setVisibility(View.VISIBLE);

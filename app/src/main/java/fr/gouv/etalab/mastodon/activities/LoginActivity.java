@@ -23,7 +23,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -112,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
                     RequestParams parameters = new RequestParams();
                     parameters.add("q", s.toString().trim());
                     parameters.add("count", String.valueOf(5));
+                    parameters.add("name", String.valueOf(true));
                     new KinrarClient().get(action, parameters, new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
