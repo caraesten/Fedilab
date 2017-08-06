@@ -13,6 +13,7 @@ package fr.gouv.etalab.mastodon.fragments;
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.ContentUris;
@@ -28,13 +29,13 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
@@ -43,7 +44,6 @@ import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static android.app.Activity.RESULT_OK;
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_THEME_INTENT;
-import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 
 
@@ -210,6 +210,33 @@ public class SettingsFragment extends Fragment {
                 intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
                 startActivity(intent);
 
+            }
+        });
+
+        // NSFW Timeout
+        SeekBar nsfwTimeoutSeekBar = (SeekBar) rootView.findViewById(R.id.set_nsfw_timeout);
+        final TextView set_nsfw_timeout_value = (TextView) rootView.findViewById(R.id.set_nsfw_timeout_value);
+
+        nsfwTimeoutSeekBar.setMax(30);
+
+        int nsfwTimeout = sharedpreferences.getInt(Helper.SET_NSFW_TIMEOUT, 5);
+
+        nsfwTimeoutSeekBar.setProgress(nsfwTimeout);
+        set_nsfw_timeout_value.setText(String.valueOf(nsfwTimeout));
+
+        nsfwTimeoutSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                set_nsfw_timeout_value.setText(String.valueOf(progress));
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putInt(Helper.SET_NSFW_TIMEOUT, progress);
+                editor.apply();
             }
         });
 
