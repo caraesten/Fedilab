@@ -1065,7 +1065,7 @@ public class API {
         RequestParams params = new RequestParams();
         params.put("file", inputStream);
 
-        post("/media", 120000, params, new JsonHttpResponseHandler() {
+        post("/media", 240000, params, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

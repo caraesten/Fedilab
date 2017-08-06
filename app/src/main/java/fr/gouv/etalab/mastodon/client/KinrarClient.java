@@ -54,7 +54,7 @@ public class KinrarClient {
 
 
     private String getAbsoluteUrl(String action) {
-        return "https://instances.social/api/1.0/" + action;
+        return "https://instances.social/api/1.0" + action;
     }
 
 
