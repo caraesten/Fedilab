@@ -512,8 +512,9 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     images only get displayed for user set time,
                     giving the user time to click on them to expand them,
                     if they want. Images are then hidden again.
+                    -> Default value is set to 5 seconds
                  */
-                final int timeout = sharedpreferences.getInt(Helper.SET_NSFW_TIMEOUT, 0);
+                final int timeout = sharedpreferences.getInt(Helper.SET_NSFW_TIMEOUT, 5);
 
                 if (timeout > 0) {
 

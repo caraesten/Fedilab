@@ -279,7 +279,7 @@
     <string name="set_wifi_only">Notifier en WIFI seulement</string>
     <string name="set_notif_silent">Utiliser le vibreur</string>
     <string name="set_night_mode">Mode nuit</string>
-    <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
+    <string name="set_nsfw_timeout">Délai d\'affichage NSFW (en secondes, 0 signifie aucun délai)</string>
     <string name="settings_title_profile">Modifier le profil</string>
     <string name="set_profile_description">Présentation…</string>
     <string name="set_save_changes">Enregistrer les modifications</string>
