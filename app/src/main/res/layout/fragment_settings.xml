@@ -166,6 +166,29 @@
                 android:layout_height="wrap_content"
                 />
         </LinearLayout>
+        <!-- NSFW Timeout -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="@string/set_nsfw_timeout"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/set_nsfw_timeout_value"
+                android:layout_gravity="center"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
+            <SeekBar
+                android:layout_gravity="center_vertical"
+                android:id="@+id/set_nsfw_timeout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </SeekBar>
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
 

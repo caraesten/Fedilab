@@ -509,24 +509,27 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
                 /*
                     Added a Countdown Timer, so that Sensitive (NSFW)
-                    images only get displayed for 5 seconds, giving
-                    the user time to click on them to expand them, if
-                    they want. Images are then hidden again.
+                    images only get displayed for user set time,
+                    giving the user time to click on them to expand them,
+                    if they want. Images are then hidden again.
                  */
-                final int timeout = 5;
+                final int timeout = sharedpreferences.getInt(Helper.SET_NSFW_TIMEOUT, 0);
 
-                new CountDownTimer((timeout * 1000), 1000){
+                if (timeout > 0) {
 
-                    public void onTick(long millisUntilFinished) { }
+                    new CountDownTimer((timeout * 1000), 1000) {
 
-                    public  void onFinish(){
+                        public void onTick(long millisUntilFinished) {
+                        }
 
-                        status.setAttachmentShown(false);
-                        holder.status_show_more.setVisibility(View.VISIBLE);
+                        public void onFinish() {
+                            status.setAttachmentShown(false);
+                            holder.status_show_more.setVisibility(View.VISIBLE);
 
-                        statusListAdapter.notifyDataSetChanged();
-                    }
-                }.start();
+                            statusListAdapter.notifyDataSetChanged();
+                        }
+                    }.start();
+                }
             }
         });
 
