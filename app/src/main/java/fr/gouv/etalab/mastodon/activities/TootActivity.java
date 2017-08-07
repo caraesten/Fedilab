@@ -39,6 +39,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -103,8 +104,8 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
 import fr.gouv.etalab.mastodon.jobs.ScheduledTootsSyncJob;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
-import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
@@ -336,8 +337,21 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
         }else {
             if( tootReply == null){
-                visibility = "public";
-                toot_visibility.setImageResource(R.drawable.ic_action_globe);
+                visibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), "public");
+                switch (visibility) {
+                    case "public":
+                        toot_visibility.setImageResource(R.drawable.ic_action_globe);
+                        break;
+                    case "unlisted":
+                        toot_visibility.setImageResource(R.drawable.ic_action_lock_open);
+                        break;
+                    case "private":
+                        toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
+                        break;
+                    case "direct":
+                        toot_visibility.setImageResource(R.drawable.ic_local_post_office);
+                        break;
+                }
             }
         }
 
@@ -967,7 +981,19 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         //Retrieves attachments
         restored = id;
         attachments = status.getMedia_attachments();
-        toot_picture_container.removeAllViews();
+        int childCount = toot_picture_container.getChildCount();
+        ArrayList<ImageView> toRemove = new ArrayList<>();
+        if( childCount > 0 ){
+            for(int i = 0 ; i < childCount ; i++){
+                if( toot_picture_container.getChildAt(i) instanceof ImageView)
+                    toRemove.add((ImageView) toot_picture_container.getChildAt(i));
+            }
+            if( toRemove.size() > 0){
+                for(ImageView imageView: toRemove)
+                    toot_picture_container.removeView(imageView);
+            }
+            toRemove.clear();
+        }
         loading_picture.setVisibility(View.GONE);
         if( attachments != null && attachments.size() > 0){
             toot_picture_container.setVisibility(View.VISIBLE);

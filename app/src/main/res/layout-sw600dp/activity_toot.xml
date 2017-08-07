@@ -26,10 +26,10 @@
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:paddingLeft="@dimen/toot_padding"
-        android:paddingRight="@dimen/toot_padding"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/fab_margin"
+        android:paddingRight="@dimen/fab_margin"
         android:orientation="vertical">
         <EditText
             android:id="@+id/toot_cw_content"

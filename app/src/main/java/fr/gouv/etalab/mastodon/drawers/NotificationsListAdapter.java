@@ -365,6 +365,8 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
 
         }else {
             holder.notification_status_container.setVisibility(View.GONE);
+            holder.notification_account_username.setCompoundDrawables( null, null, null, null);
+            holder.card_status_container.setOnClickListener(null);
         }
 
 

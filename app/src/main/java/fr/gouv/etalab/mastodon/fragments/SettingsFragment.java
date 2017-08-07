@@ -13,13 +13,17 @@ package fr.gouv.etalab.mastodon.fragments;
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,23 +32,32 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
+import fr.gouv.etalab.mastodon.activities.TootActivity;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static android.app.Activity.RESULT_OK;
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_THEME_INTENT;
-import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
+import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
+import static fr.gouv.etalab.mastodon.helper.Helper.loadPPInActionBar;
+import static fr.gouv.etalab.mastodon.helper.Helper.updateHeaderAccountInfo;
 
 
 /**
@@ -61,7 +74,7 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
         context = getContext();
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
@@ -213,9 +226,135 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        // NSFW Timeout
+        SeekBar nsfwTimeoutSeekBar = (SeekBar) rootView.findViewById(R.id.set_nsfw_timeout);
+        final TextView set_nsfw_timeout_value = (TextView) rootView.findViewById(R.id.set_nsfw_timeout_value);
+
+        nsfwTimeoutSeekBar.setMax(30);
+
+        int nsfwTimeout = sharedpreferences.getInt(Helper.SET_NSFW_TIMEOUT, 5);
+
+        nsfwTimeoutSeekBar.setProgress(nsfwTimeout);
+        set_nsfw_timeout_value.setText(String.valueOf(nsfwTimeout));
+
+        nsfwTimeoutSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                set_nsfw_timeout_value.setText(String.valueOf(progress));
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putInt(Helper.SET_NSFW_TIMEOUT, progress);
+                editor.apply();
+            }
+        });
+
+
+
+        LinearLayout toot_visibility_container = (LinearLayout) rootView.findViewById(R.id.toot_visibility_container);
+        String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        final Account account = new AccountDAO(context, db).getAccountByToken(prefKeyOauthTokenT);
+        final ImageView set_toot_visibility = (ImageView) rootView.findViewById(R.id.set_toot_visibility);
+        //Only displayed for non locked accounts
+        if (account != null && !account.isLocked()) {
+            String tootVisibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), "public");
+            switch (tootVisibility) {
+                case "public":
+                    set_toot_visibility.setImageResource(R.drawable.ic_action_globe);
+                    break;
+                case "unlisted":
+                    set_toot_visibility.setImageResource(R.drawable.ic_action_lock_open);
+                    break;
+                case "private":
+                    set_toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
+                    break;
+                case "direct":
+                    set_toot_visibility.setImageResource(R.drawable.ic_local_post_office);
+                    break;
+            }
+            changeColor();
+        }else {
+            toot_visibility_container.setVisibility(View.GONE);
+        }
+
+        set_toot_visibility.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+                dialog.setTitle(R.string.toot_visibility_tilte);
+                final String[] stringArray = getResources().getStringArray(R.array.toot_visibility);
+                final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, stringArray);
+                dialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int position) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int position) {
+                        String visibility = "public";
+
+                        switch (position){
+                            case 0:
+                                visibility = "public";
+                                set_toot_visibility.setImageResource(R.drawable.ic_action_globe);
+                                break;
+                            case 1:
+                                visibility = "unlisted";
+                                set_toot_visibility.setImageResource(R.drawable.ic_action_lock_open);
+                                break;
+                            case 2:
+                                visibility = "private";
+                                set_toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
+                                break;
+                            case 3:
+                                visibility = "direct";
+                                set_toot_visibility.setImageResource(R.drawable.ic_local_post_office);
+                                break;
+                        }
+                        if( account != null) {
+                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                            editor.putString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), visibility);
+                            editor.apply();
+                            Toast.makeText(context, context.getString(R.string.toast_visibility_changed, "@" + account.getAcct() + "@" + account.getInstance()), Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(context, R.string.toast_error,Toast.LENGTH_SHORT).show();
+                        }
+                        changeColor();
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+
         return rootView;
     }
 
+
+    private void changeColor(){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if( theme == Helper.THEME_DARK){
+            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.dark_text);
+        }else {
+            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.black);
+        }
+
+    }
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

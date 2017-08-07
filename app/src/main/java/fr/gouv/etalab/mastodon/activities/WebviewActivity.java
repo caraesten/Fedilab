@@ -52,7 +52,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.manageDownloads;
 public class WebviewActivity extends AppCompatActivity {
 
     private String url;
-
+    private WebView webView;
 
 
     @Override
@@ -74,7 +74,7 @@ public class WebviewActivity extends AppCompatActivity {
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-       WebView webView = Helper.initializeWebview(WebviewActivity.this, R.id.webview);
+       webView = Helper.initializeWebview(WebviewActivity.this, R.id.webview);
 
         setTitle("");
         FrameLayout webview_container = (FrameLayout) findViewById(R.id.webview_container);
@@ -144,6 +144,15 @@ public class WebviewActivity extends AppCompatActivity {
 
     public void setUrl(String newUrl){
         this.url = newUrl;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (webView.canGoBack()){
+            webView.goBack();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override

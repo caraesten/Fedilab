@@ -23,7 +23,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -74,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
     private static boolean client_id_for_webview = false;
     private String instance;
     private AutoCompleteTextView login_instance;
+    boolean isLoadingInstance = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,16 +105,17 @@ public class LoginActivity extends AppCompatActivity {
             }
             @Override
             public void afterTextChanged(Editable s) {
-                if( s.length() > 2 ){
-                    if( s.toString().trim().startsWith("mas") && (!s.toString().trim().contains(".") || s.toString().trim().equals("mastodon.")) )
-                        return;
+                if( s.length() > 2 && !isLoadingInstance){
                     String action = "/instances/search";
                     RequestParams parameters = new RequestParams();
                     parameters.add("q", s.toString().trim());
                     parameters.add("count", String.valueOf(5));
+                    parameters.add("name", String.valueOf(true));
+                    isLoadingInstance = true;
                     new KinrarClient().get(action, parameters, new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                            isLoadingInstance = false;
                             String response = new String(responseBody);
                             String[] instances;
                             try {
@@ -132,12 +133,14 @@ public class LoginActivity extends AppCompatActivity {
                                 ArrayAdapter<String> adapter =
                                         new ArrayAdapter<>(LoginActivity.this, android.R.layout.simple_list_item_1, instances);
                                 login_instance.setAdapter(adapter);
-                                login_instance.showDropDown();
+                                if( login_instance.hasFocus())
+                                    login_instance.showDropDown();
 
-                            } catch (JSONException ignored) {}
+                            } catch (JSONException ignored) {isLoadingInstance = false;}
                         }
                         @Override
                         public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                            isLoadingInstance = false;
                         }
                     });
                 }

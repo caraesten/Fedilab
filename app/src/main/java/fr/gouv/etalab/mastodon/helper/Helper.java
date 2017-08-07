@@ -52,8 +52,6 @@ import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
-import android.text.method.ArrowKeyMovementMethod;
-import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.DisplayMetrics;
 import android.util.Patterns;
@@ -115,6 +113,7 @@ import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
+import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
@@ -122,7 +121,6 @@ import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
-import fr.gouv.etalab.mastodon.client.API;
 
 import static android.app.Notification.DEFAULT_SOUND;
 import static android.app.Notification.DEFAULT_VIBRATE;
@@ -185,6 +183,7 @@ public class Helper {
     public static final String SET_TIME_TO = "set_time_to";
     public static final String SET_AUTO_STORE = "set_auto_store";
     public static final String SET_POPUP_PUSH = "set_popup_push";
+    public static final String SET_NSFW_TIMEOUT = "set_nsfw_timeout";
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;
@@ -206,6 +205,7 @@ public class Helper {
     public static final String SET_JAVASCRIPT = "set_javascript";
     public static final String SET_COOKIES = "set_cookies";
     public static final String SET_FOLDER_RECORD = "set_folder_record";
+    public static final String SET_TOOT_VISIBILITY = "set_toot_visibility";
 
     //End points
     public static final String EP_AUTHORIZE = "/oauth/authorize";

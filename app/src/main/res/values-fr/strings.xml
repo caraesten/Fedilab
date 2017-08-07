@@ -157,6 +157,7 @@
     <string name="toot_delete_media">Supprimer le média ?</string>
     <string name="toot_error_no_content">Votre pouet est vide !</string>
     <string name="toot_visibility_tilte">Visibilité du pouet</string>
+    <string name="toots_visibility_tilte">Visibilité des pouets par défaut : </string>
     <string name="toot_sent">Le pouet a été envoyé !</string>
     <string name="toot_reply_content_title">Vous répondez à ce pouet :</string>
     <string name="toot_sensitive">Contenu sensible ?</string>
@@ -252,6 +253,7 @@
     <string name="toast_saved">Le média a été enregistré !</string>
     <string name="toast_error_translate">Une erreur est survenue lors de la traduction !</string>
     <string name="toast_toot_saved">Brouillon enregistré !</string>
+    <string name="toast_visibility_changed">La visibilité des pouets a été changée pour le compte %1$s</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimisation du chargement</string>
     <string name="set_toots_page">Nombre de pouets par chargement</string>
@@ -279,6 +281,7 @@
     <string name="set_wifi_only">Notifier en WIFI seulement</string>
     <string name="set_notif_silent">Utiliser le vibreur</string>
     <string name="set_night_mode">Mode nuit</string>
+    <string name="set_nsfw_timeout">Délai d\'affichage NSFW (en secondes, 0 signifie aucun délai)</string>
     <string name="settings_title_profile">Modifier le profil</string>
     <string name="set_profile_description">Présentation…</string>
     <string name="set_save_changes">Enregistrer les modifications</string>

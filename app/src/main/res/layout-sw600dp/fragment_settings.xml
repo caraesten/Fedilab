@@ -210,7 +210,7 @@
             <SeekBar
                 android:layout_gravity="center_vertical"
                 android:id="@+id/set_nsfw_timeout"
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content">
             </SeekBar>
         </LinearLayout>

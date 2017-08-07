@@ -32,14 +32,15 @@
         android:id="@+id/main_container"
         android:orientation="horizontal">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <ImageView
+                android:layout_marginTop="5dp"
                 android:id="@+id/notification_account_profile"
                 android:layout_height="50dp"
                 android:layout_width="50dp"
-                android:layout_gravity="center_horizontal|top"
+                android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal|top"
                 tools:ignore="ContentDescription" />
             <ImageView

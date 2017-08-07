@@ -160,6 +160,7 @@
     <string name="toot_delete_media">Delete this media?</string>
     <string name="toot_error_no_content">Your toot is empty!</string>
     <string name="toot_visibility_tilte">Visibility of the toot</string>
+    <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
     <string name="toot_sent">The toot has been sent!</string>
     <string name="toot_reply_content_title">You are replying to this toot:</string>
     <string name="toot_sensitive">Sensitive content?</string>
@@ -258,7 +259,7 @@
     <string name="toast_saved">The media has been saved!</string>
     <string name="toast_error_translate">An error occurred while translating!</string>
     <string name="toast_toot_saved">Draft saved!</string>
-
+    <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimisation of loading</string>
     <string name="set_toots_page">Number of toots per load</string>
@@ -285,6 +286,7 @@
     <string name="set_wifi_only">Notify in WIFI only</string>
     <string name="set_notif_silent">Silent Notifications</string>
     <string name="set_night_mode">Night mode</string>
+    <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Edit profile</string>
     <string name="set_profile_description">Bio…</string>
     <string name="set_save_changes">Save changes</string>
