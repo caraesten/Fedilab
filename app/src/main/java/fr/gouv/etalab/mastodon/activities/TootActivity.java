@@ -337,8 +337,21 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
         }else {
             if( tootReply == null){
-                visibility = "public";
-                toot_visibility.setImageResource(R.drawable.ic_action_globe);
+                visibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), "public");
+                switch (visibility) {
+                    case "public":
+                        toot_visibility.setImageResource(R.drawable.ic_action_globe);
+                        break;
+                    case "unlisted":
+                        toot_visibility.setImageResource(R.drawable.ic_action_lock_open);
+                        break;
+                    case "private":
+                        toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
+                        break;
+                    case "direct":
+                        toot_visibility.setImageResource(R.drawable.ic_local_post_office);
+                        break;
+                }
             }
         }
 

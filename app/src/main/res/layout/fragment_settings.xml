@@ -166,6 +166,29 @@
                 android:layout_height="wrap_content"
                 />
         </LinearLayout>
+
+        <!-- TOOTS visibility -->
+        <LinearLayout
+            android:id="@+id/toot_visibility_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/toots_visibility_tilte"/>
+            <ImageButton
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:id="@+id/set_toot_visibility"
+                android:padding="5dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_action_globe"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
         <!-- NSFW Timeout -->
         <TextView
             android:layout_width="wrap_content"

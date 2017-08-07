@@ -205,6 +205,7 @@ public class Helper {
     public static final String SET_JAVASCRIPT = "set_javascript";
     public static final String SET_COOKIES = "set_cookies";
     public static final String SET_FOLDER_RECORD = "set_folder_record";
+    public static final String SET_TOOT_VISIBILITY = "set_toot_visibility";
 
     //End points
     public static final String EP_AUTHORIZE = "/oauth/authorize";
