@@ -134,8 +134,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private Button toot_it;
     private AutoCompleteTextView toot_content;
     private EditText toot_cw_content;
-    private TextView toot_reply_content;
-    private RelativeLayout toot_reply_content_container;
+    private LinearLayout toot_reply_content_container;
     private BroadcastReceiver search_validate;
     private Status tootReply = null;
     private String sharedContent, sharedSubject;
@@ -209,8 +208,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         toot_picture_container = (LinearLayout) findViewById(R.id.toot_picture_container);
         toot_content = (AutoCompleteTextView) findViewById(R.id.toot_content);
         toot_cw_content = (EditText) findViewById(R.id.toot_cw_content);
-        toot_reply_content = (TextView) findViewById(R.id.toot_reply_content);
-        toot_reply_content_container = (RelativeLayout) findViewById(R.id.toot_reply_content_container);
+        toot_reply_content_container = (LinearLayout) findViewById(R.id.toot_reply_content_container);
         picture_scrollview = (HorizontalScrollView) findViewById(R.id.picture_scrollview);
         toot_sensitive = (CheckBox) findViewById(R.id.toot_sensitive);
         //search_small_container = (LinearLayout) findViewById(R.id.search_small_container);
@@ -1083,11 +1081,13 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         String content = tootReply.getContent();
         if(tootReply.getReblog() != null)
             content = tootReply.getReblog().getContent();
+        //TODO: fill the content here
+        /*
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             toot_reply_content.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY));
         else
             //noinspection deprecation
-            toot_reply_content.setText(Html.fromHtml(content));
+            toot_reply_content.setText(Html.fromHtml(content));*/
         switch (tootReply.getVisibility()){
             case "public":
                 visibility = "public";
