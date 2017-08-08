@@ -533,7 +533,7 @@ public class MainActivity extends AppCompatActivity
                 }
             }
             final float finalCacheSize = cacheSize;
-            builder.setMessage(getString(R.string.cache_message, String.format("%s Mo", String.format(Locale.getDefault(), "%.2f", cacheSize))))
+            builder.setMessage(getString(R.string.cache_message, String.format("%s %s", String.format(Locale.getDefault(), "%.2f", cacheSize), getString(R.string.cache_units))))
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // continue with delete
@@ -544,7 +544,7 @@ public class MainActivity extends AppCompatActivity
                                     Helper.deleteDir(dir);
                                 }
                             } catch (Exception ignored) {}
-                            Toast.makeText(MainActivity.this, getString(R.string.toast_cache_clear,String.format("%s Mo", String.format(Locale.getDefault(), "%.2f", finalCacheSize))), Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, getString(R.string.toast_cache_clear,String.format("%s %s", String.format(Locale.getDefault(), "%.2f", finalCacheSize), getString(R.string.cache_units))), Toast.LENGTH_LONG).show();
                             dialog.dismiss();
                         }
                     })
