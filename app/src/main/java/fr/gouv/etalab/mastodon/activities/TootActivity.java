@@ -1078,12 +1078,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         else
             setTitle(R.string.toot_title_reply);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        boolean show_reply = sharedpreferences.getBoolean(Helper.SET_SHOW_REPLY, false);
-        if( show_reply ){
-            toot_reply_content_container.setVisibility(View.VISIBLE);
-        }else {
-            toot_reply_content_container.setVisibility(View.GONE);
-        }
+
+
         String content = tootReply.getContent();
         if(tootReply.getReblog() != null)
             content = tootReply.getReblog().getContent();
