@@ -105,7 +105,7 @@ public class InstanceActivity extends AppCompatActivity implements OnRetrieveIns
 
         instance_title.setText(instance.getTitle());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            instance_description.setText(Html.fromHtml(instance.getDescription(), Html.FROM_HTML_MODE_COMPACT));
+            instance_description.setText(Html.fromHtml(instance.getDescription(), Html.FROM_HTML_MODE_LEGACY));
         else
             //noinspection deprecation
             instance_description.setText(Html.fromHtml(instance.getDescription()));

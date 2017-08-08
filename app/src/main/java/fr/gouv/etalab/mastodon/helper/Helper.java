@@ -1022,7 +1022,7 @@ public class Helper {
 
         SpannableString spannableString;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableString = new SpannableString(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_COMPACT));
+            spannableString = new SpannableString(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_LEGACY));
         else
             //noinspection deprecation
             spannableString = new SpannableString(Html.fromHtml(fullContent));
@@ -1128,7 +1128,7 @@ public class Helper {
         SpannableString spannableString;
         fullContent = Helper.shortnameToUnicode(fullContent, true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableString = new SpannableString(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_COMPACT));
+            spannableString = new SpannableString(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_LEGACY));
         else
             //noinspection deprecation
             spannableString = new SpannableString(Html.fromHtml(fullContent));

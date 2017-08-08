@@ -174,7 +174,7 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
         else
             holder.account_ac.setVisibility(View.VISIBLE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            holder.account_ds.setText(Html.fromHtml(account.getNote(), Html.FROM_HTML_MODE_COMPACT));
+            holder.account_ds.setText(Html.fromHtml(account.getNote(), Html.FROM_HTML_MODE_LEGACY));
         else
             //noinspection deprecation
             holder.account_ds.setText(Html.fromHtml(account.getNote()));

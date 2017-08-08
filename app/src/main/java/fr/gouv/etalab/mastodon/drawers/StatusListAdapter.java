@@ -902,7 +902,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            builder.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_COMPACT));
+            builder.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
         else
             //noinspection deprecation
             builder.setMessage(Html.fromHtml(status.getContent()));
@@ -968,7 +968,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 if( isOwner) {
                     if( which == 0) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                            builderInner.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_COMPACT));
+                            builderInner.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
                         else
                             //noinspection deprecation
                             builderInner.setMessage(Html.fromHtml(status.getContent()));
@@ -976,7 +976,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                         String content;
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                            content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_COMPACT).toString();
+                            content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
                         else
                             //noinspection deprecation
                             content = Html.fromHtml(status.getContent()).toString();
@@ -998,7 +998,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         builderInner.setMessage(status.getAccount().getAcct());
                     }else if( which == 2) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                            builderInner.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_COMPACT));
+                            builderInner.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
                         else
                             //noinspection deprecation
                             builderInner.setMessage(Html.fromHtml(status.getContent()));
@@ -1006,7 +1006,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                         String content;
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                            content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_COMPACT).toString();
+                            content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
                         else
                             //noinspection deprecation
                             content = Html.fromHtml(status.getContent()).toString();

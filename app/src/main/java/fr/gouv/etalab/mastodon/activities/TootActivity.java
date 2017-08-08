@@ -1088,7 +1088,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         if(tootReply.getReblog() != null)
             content = tootReply.getReblog().getContent();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            toot_reply_content.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_COMPACT));
+            toot_reply_content.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY));
         else
             //noinspection deprecation
             toot_reply_content.setText(Html.fromHtml(content));

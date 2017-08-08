@@ -196,7 +196,7 @@ public class SearchListAdapter extends BaseAdapter {
             }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                holder.status_content.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_COMPACT));
+                holder.status_content.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY));
             else
                 //noinspection deprecation
                 holder.status_content.setText(Html.fromHtml(content));

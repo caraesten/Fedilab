@@ -449,7 +449,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            builder.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_COMPACT));
+            builder.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
         else
             //noinspection deprecation
             builder.setMessage(Html.fromHtml(status.getContent()));

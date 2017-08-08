@@ -56,7 +56,6 @@
                 android:id="@+id/toot_reply_content"
                 android:layout_marginTop="10dp"
                 android:gravity="top|start"
-                android:maxLines="4"
                 android:textStyle="italic"
                 android:autoLink="web"
                 android:textSize="12sp"
