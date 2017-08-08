@@ -33,6 +33,7 @@ import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -386,19 +387,53 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             }
         });
 
-        SpannableString spannableString = Helper.clickableElements(context,content,
-                status.getReblog() != null?status.getReblog().getMentions():status.getMentions());
-        holder.status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
+
 
         if( status.getContent_translated() != null && status.getContent_translated().length() > 0){
             SpannableString spannableStringTrans = Helper.clickableElements(context, status.getContent_translated(),
                     status.getReblog() != null?status.getReblog().getMentions():status.getMentions());
             holder.status_content_translated.setText(spannableStringTrans, TextView.BufferType.SPANNABLE);
-            holder.status_content_translated.setMovementMethod(null);
+            holder.status_content_translated.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    holder.status_content_translated.setFocusableInTouchMode(true);
+                    return false;
+                }
+            });
+            holder.status_content_translated.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        holder.status_content_translated.setFocusableInTouchMode(false);
+                        holder.status_content_translated.clearFocus();
+                    }
+                    return false;
+                }
+            });
             holder.status_content_translated.setMovementMethod(LinkMovementMethod.getInstance());
         }
-        holder.status_content.setMovementMethod(null);
+        SpannableString spannableString = Helper.clickableElements(context,content,
+                status.getReblog() != null?status.getReblog().getMentions():status.getMentions());
+        holder.status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
+        holder.status_content.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                holder.status_content.setFocusableInTouchMode(true);
+                return false;
+            }
+        });
+        holder.status_content.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    holder.status_content.setFocusableInTouchMode(false);
+                    holder.status_content.clearFocus();
+                }
+                return false;
+            }
+        });
         holder.status_content.setMovementMethod(LinkMovementMethod.getInstance());
+
         if( status.getReblog() == null)
             holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
         else
