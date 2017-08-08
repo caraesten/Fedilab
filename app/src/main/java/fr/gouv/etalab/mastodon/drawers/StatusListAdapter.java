@@ -30,8 +30,11 @@ import android.os.CountDownTimer;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.text.Html;
+import android.text.Selection;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -412,7 +415,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             });
             holder.status_content_translated.setMovementMethod(LinkMovementMethod.getInstance());
         }
-        SpannableString spannableString = Helper.clickableElements(context,content,
+
+        final SpannableString spannableString = Helper.clickableElements(context,content,
                 status.getReblog() != null?status.getReblog().getMentions():status.getMentions());
         holder.status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
         holder.status_content.setOnLongClickListener(new View.OnLongClickListener() {
