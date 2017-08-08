@@ -1084,7 +1084,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 else
                     //noinspection deprecation
                     input.setText(Html.fromHtml(content));
-                alert.setPositiveButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                alert.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.dismiss();
                     }

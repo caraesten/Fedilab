@@ -170,6 +170,7 @@
     <string name="no_draft">Aucun brouillon !</string>
     <string name="choose_toot">Choisissez un pouet</string>
     <string name="remove_draft">Supprimer le brouillon ?</string>
+    <string name="show_reply">Cliquer sur le boutton pour afficher le pouet d\'origine</string>
     <!-- Instance -->
     <string name="instance_no_description">Aucune description !</string>
 
