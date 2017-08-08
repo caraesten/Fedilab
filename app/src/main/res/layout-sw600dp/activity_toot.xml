@@ -54,7 +54,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_height="wrap_content" />
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/toot_close_reply"
+                android:id="@+id/toot_show_reply"
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"
                 android:layout_width="30dp"
