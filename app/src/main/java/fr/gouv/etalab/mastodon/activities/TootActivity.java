@@ -134,8 +134,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private Button toot_it;
     private AutoCompleteTextView toot_content;
     private EditText toot_cw_content;
-    private TextView toot_reply_content;
-    private RelativeLayout toot_reply_content_container;
+    private LinearLayout toot_reply_content_container;
     private BroadcastReceiver search_validate;
     private Status tootReply = null;
     private String sharedContent, sharedSubject;
@@ -209,8 +208,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         toot_picture_container = (LinearLayout) findViewById(R.id.toot_picture_container);
         toot_content = (AutoCompleteTextView) findViewById(R.id.toot_content);
         toot_cw_content = (EditText) findViewById(R.id.toot_cw_content);
-        toot_reply_content = (TextView) findViewById(R.id.toot_reply_content);
-        toot_reply_content_container = (RelativeLayout) findViewById(R.id.toot_reply_content_container);
+        toot_reply_content_container = (LinearLayout) findViewById(R.id.toot_reply_content_container);
         picture_scrollview = (HorizontalScrollView) findViewById(R.id.picture_scrollview);
         toot_sensitive = (CheckBox) findViewById(R.id.toot_sensitive);
         //search_small_container = (LinearLayout) findViewById(R.id.search_small_container);
@@ -316,21 +314,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
         boolean isAccountPrivate = account.isLocked();
 
-        FloatingActionButton ic_close = (FloatingActionButton) findViewById(R.id.toot_close_reply);
-
-        /*toot_close_accounts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                manageShowUsers(searchAction.CLOSE, true);
-            }
-        });
-*/
-        ic_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toot_reply_content_container.setVisibility(View.GONE);
-            }
-        });
 
         if(isAccountPrivate){
             visibility = "private";
@@ -1078,20 +1061,38 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         else
             setTitle(R.string.toot_title_reply);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        boolean show_reply = sharedpreferences.getBoolean(Helper.SET_SHOW_REPLY, false);
-        if( show_reply ){
-            toot_reply_content_container.setVisibility(View.VISIBLE);
-        }else {
-            toot_reply_content_container.setVisibility(View.GONE);
-        }
-        String content = tootReply.getContent();
-        if(tootReply.getReblog() != null)
-            content = tootReply.getReblog().getContent();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            toot_reply_content.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY));
-        else
-            //noinspection deprecation
-            toot_reply_content.setText(Html.fromHtml(content));
+
+
+        FloatingActionButton ic_show = (FloatingActionButton) findViewById(R.id.toot_show_reply);
+
+        ic_show.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(TootActivity.this);
+                alert.setTitle(R.string.toot_reply_content_title);
+                final TextView input = new TextView(TootActivity.this);
+                //Set the padding
+                input.setPadding(30, 30, 30, 30);
+                alert.setView(input);
+                String content = tootReply.getContent();
+                if(tootReply.getReblog() != null)
+                    content = tootReply.getReblog().getContent();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                    input.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY));
+                else
+                    //noinspection deprecation
+                    input.setText(Html.fromHtml(content));
+                alert.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
+            }
+        });
+        toot_reply_content_container.setVisibility(View.VISIBLE);
         switch (tootReply.getVisibility()){
             case "public":
                 visibility = "public";

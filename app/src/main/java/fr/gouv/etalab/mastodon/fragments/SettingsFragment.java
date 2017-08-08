@@ -45,7 +45,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
-import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -56,8 +55,6 @@ import static android.app.Activity.RESULT_OK;
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_THEME_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
-import static fr.gouv.etalab.mastodon.helper.Helper.loadPPInActionBar;
-import static fr.gouv.etalab.mastodon.helper.Helper.updateHeaderAccountInfo;
 
 
 /**
@@ -79,20 +76,8 @@ public class SettingsFragment extends Fragment {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
 
-        boolean show_reply = sharedpreferences.getBoolean(Helper.SET_SHOW_REPLY, false);
+
         boolean auto_store = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
-
-        final CheckBox set_show_reply = (CheckBox) rootView.findViewById(R.id.set_show_reply);
-        set_show_reply.setChecked(show_reply);
-
-        set_show_reply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_SHOW_REPLY, set_show_reply.isChecked());
-                editor.apply();
-            }
-        });
 
         final CheckBox set_auto_store = (CheckBox) rootView.findViewById(R.id.set_auto_store);
         set_auto_store.setChecked(auto_store);
