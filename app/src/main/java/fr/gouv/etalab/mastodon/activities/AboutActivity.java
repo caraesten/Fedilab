@@ -128,7 +128,7 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveSearcA
     }
 
     @Override
-    public void onRetrieveSearchAccounts(APIResponse apiResponse) {
+    public void onRetrieveSearchAccounts(APIResponse apiResponse, String search) {
         about_developer.setEnabled(true);
         final List<Account> accounts = apiResponse.getAccounts();
         if( accounts != null && accounts.size() > 0 && accounts.get(0) != null) {

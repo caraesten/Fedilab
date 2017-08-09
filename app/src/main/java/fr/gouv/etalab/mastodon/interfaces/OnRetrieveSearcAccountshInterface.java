@@ -22,5 +22,5 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
  * Interface for search accounts
  */
 public interface OnRetrieveSearcAccountshInterface {
-    void onRetrieveSearchAccounts(APIResponse apiResponse);
+    void onRetrieveSearchAccounts(APIResponse apiResponse, String shearch);
 }
