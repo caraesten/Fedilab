@@ -16,9 +16,7 @@ package fr.gouv.etalab.mastodon.drawers;
 
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v4.content.LocalBroadcastManager;
+import android.support.annotation.NonNull;;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +48,6 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
     private LayoutInflater layoutInflater;
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
-    private Context context;
 
     public AccountsSearchAdapter(Context context, List<Account> accounts){
         super(context, android.R.layout.simple_list_item_1, accounts);
@@ -59,7 +56,6 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
         this.suggestions = new ArrayList<>(accounts);
         layoutInflater = LayoutInflater.from(context);
         imageLoader = ImageLoader.getInstance();
-        this.context = context;
         options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
     }
@@ -103,14 +99,6 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
         //Profile picture
         imageLoader.displayImage(account.getAvatar(), holder.account_pp, options);
 
-        holder.account_container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Helper.SEARCH_VALIDATE_ACCOUNT);
-                intent.putExtra("acct", account.getAcct());
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-            }
-        });
         return convertView;
     }
 
@@ -125,7 +113,7 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
         @Override
         public CharSequence convertResultToString(Object resultValue) {
             Account account = (Account) resultValue;
-            return account.getDisplay_name() + " " + account.getUsername();
+            return "@" + account.getAcct();
         }
 
         @Override
@@ -153,8 +141,7 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
                     add(cust);
                     notifyDataSetChanged();
                 }
-            }
-            else{
+            } else{
                 clear();
                 notifyDataSetChanged();
             }

@@ -17,11 +17,9 @@ package fr.gouv.etalab.mastodon.activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -33,13 +31,11 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,6 +44,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -60,7 +57,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -135,7 +131,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private AutoCompleteTextView toot_content;
     private EditText toot_cw_content;
     private LinearLayout toot_reply_content_container;
-    private BroadcastReceiver search_validate;
     private Status tootReply = null;
     private String sharedContent, sharedSubject;
     private CheckBox toot_sensitive;
@@ -147,6 +142,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private Toast mToast;
     private LinearLayout drawer_layout;
     private HorizontalScrollView picture_scrollview;
+    private String search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -289,28 +285,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         int charsInToot = 0;
         maxChar = 500;
 
-        //Register LocalBroadcast to receive selected accounts after search
-        search_validate = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                String acct = intent.getStringExtra("acct");
-                if( acct != null){
-                    acct = "@" + acct;
-                    String content = toot_content.getText().toString();
-                    String[] splitContent = content.split("@");
-                    String newContent = "";
-                    for(int i = 0 ; i < (splitContent.length -1) ; i++){
-                        newContent += splitContent[i];
-                    }
-                    newContent += acct + " ";
-                    toot_content.setText(newContent);
-                    toot_content.setSelection(toot_content.getText().length());
-                }
-               // manageShowUsers(searchAction.CLOSE, false);
-            }
-        };
-        LocalBroadcastManager.getInstance(this).registerReceiver(search_validate, new IntentFilter(Helper.SEARCH_VALIDATE_ACCOUNT));
-
 
         boolean isAccountPrivate = account.isLocked();
 
@@ -434,7 +408,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 }
                 Matcher m = sPattern.matcher(s.toString().substring(s.toString().length()- length, s.toString().length()));
                 if(m.matches()) {
-                    String search = m.group(3);
+                    search = m.group(3);
                     if( pp_progress != null && pp_actionBar != null) {
                         pp_progress.setVisibility(View.VISIBLE);
                         pp_actionBar.setVisibility(View.GONE);
@@ -746,12 +720,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     }
 
     @Override
-    public void onDestroy(){
-        super.onDestroy();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(search_validate);
-    }
-
-    @Override
     public void onRetrieveAttachment(final Attachment attachment, Error error) {
         loading_picture.setVisibility(View.GONE);
         if( error != null){
@@ -948,13 +916,26 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 Toast.makeText(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
-        List<Account> accounts = apiResponse.getAccounts();
+
+        final List<Account> accounts = apiResponse.getAccounts();
         if( accounts != null && accounts.size() > 0){
             AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, accounts);
             toot_content.showDropDown();
             toot_content.setThreshold(0);
             toot_content.setAdapter(accountsListAdapter);
+            final String toot_content_str = toot_content.getText().toString().replace("@"+search,"");
+            toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Account account = accounts.get(position);
+                    toot_content.setText(toot_content_str + " @" + account.getAcct() + " ");
+                    toot_content.setSelection(toot_content.getText().length()-1);
+                    toot_content.dismissDropDown();
+                }
+            });
         }
+
+
     }
 
     private void restoreToot(long id){
