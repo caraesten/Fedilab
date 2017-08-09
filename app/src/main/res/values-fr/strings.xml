@@ -328,6 +328,7 @@
     <!-- CACHE -->
     <string name="cache_title">Nettoyage du cache</string>
     <string name="cache_message">Il y a %1$s de données en cache.\n\nSouhaitez-vous les supprimer ?</string>
+    <string name="cache_units">Mo</string>
     <string name="toast_cache_clear">Le cache a été nettoyé ! %1$s ont été libérés</string>
 
     <!-- PRIVACY -->
