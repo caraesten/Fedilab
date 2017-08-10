@@ -359,19 +359,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 if( toot_cw_content.getText().toString().trim().length() > 0)
                     toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
                 toot.setVisibility(visibility);
-
-                if( tootReply != null) {
+                toot.setContent(toot_content.getText().toString().trim());
+                if( tootReply != null)
                     toot.setIn_reply_to_id(tootReply.getId());
-
-                    String preToot = toot_content.getText().toString().trim();
-                    String postToot = preToot.replace("{{ . ", "");
-
-                    toot.setContent(postToot.trim());
-                }
-                else
-                {
-                    toot.setContent(toot_content.getText().toString().trim());
-                }
                 new PostStatusAsyncTask(getApplicationContext(), toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
             }
@@ -1164,8 +1154,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     }
                 }
             }
-
-            toot_content.append("{{ . ");
+            //Put a "<space>dot<space>" at the end of all mentioned account to force capitalization
+            toot_content.append(" . ");
             toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
         }
     }
