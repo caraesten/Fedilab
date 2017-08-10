@@ -130,7 +130,7 @@ public class SettingsProfileFragment extends Fragment implements OnRetrieveAccou
 
         final String content;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            content = Html.fromHtml(account.getNote(), Html.FROM_HTML_MODE_COMPACT).toString();
+            content = Html.fromHtml(account.getNote(), Html.FROM_HTML_MODE_LEGACY).toString();
         else
             //noinspection deprecation
             content = Html.fromHtml(account.getNote()).toString();

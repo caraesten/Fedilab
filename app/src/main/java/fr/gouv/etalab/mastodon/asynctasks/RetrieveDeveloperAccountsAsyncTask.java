@@ -31,7 +31,6 @@ public class RetrieveDeveloperAccountsAsyncTask extends AsyncTask<Void, Void, Vo
     private Context context;
     private APIResponse apiResponse;
     private OnRetrieveSearcAccountshInterface listener;
-    private API api;
 
     public RetrieveDeveloperAccountsAsyncTask(Context context, OnRetrieveSearcAccountshInterface onRetrieveSearcAccountshInterface){
         this.context = context;
@@ -40,7 +39,7 @@ public class RetrieveDeveloperAccountsAsyncTask extends AsyncTask<Void, Void, Vo
 
     @Override
     protected Void doInBackground(Void... params) {
-        api = new API(context);
+        API api = new API(context);
         apiResponse = api.searchDeveloper();
         return null;
     }

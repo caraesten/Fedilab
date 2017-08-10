@@ -40,42 +40,29 @@
             android:hint="@string/toot_cw_placeholder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/toot_reply_content_container"
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             >
             <TextView
                 android:id="@+id/toot_reply_content_title"
-                android:text="@string/toot_reply_content_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:layout_below="@+id/toot_reply_content_title"
-                android:id="@+id/toot_reply_content"
-                android:layout_marginTop="10dp"
-                android:gravity="top|start"
-                android:maxLines="4"
-                android:textStyle="italic"
-                android:autoLink="web"
-                android:textSize="12sp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginRight="40dp"
-                android:layout_width="match_parent"
+                android:text="@string/show_reply"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_height="wrap_content" />
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/toot_close_reply"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
+                android:id="@+id/toot_show_reply"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_gravity="center"
+                android:layout_gravity="center_vertical|end"
                 app:fabSize="mini"
-                android:layout_margin="5dp"
-                app:srcCompat="@drawable/ic_close" />
-        </RelativeLayout>
+                app:srcCompat="@drawable/ic_action_eye_open" />
+        </LinearLayout>
         <AutoCompleteTextView
             android:layout_marginTop="10dp"
             android:id="@+id/toot_content"
