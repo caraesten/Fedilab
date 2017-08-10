@@ -398,22 +398,25 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
         toot_content.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-            @Override
-            public void afterTextChanged(Editable s) {
-                if( toot_content.getSelectionStart() > 0 )
-                    currentCursorPosition = toot_content.getSelectionStart();
-                else if( toot_content.getText().length() == 0)
-                    currentCursorPosition = 0;
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                currentCursorPosition = toot_content.getSelectionStart();
                 //Only check last 15 characters before cursor position to avoid lags
                 if( currentCursorPosition < 15 ){ //Less than 15 characters are written before the cursor position
                     searchLength = currentCursorPosition;
                 }else {
                     searchLength = 15;
                 }
-                Matcher m = sPattern.matcher(s.toString().substring(currentCursorPosition- searchLength, currentCursorPosition));
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if( currentCursorPosition- (searchLength-1) < 0 || currentCursorPosition == 0 || currentCursorPosition > s.toString().length())
+                    return;
+                Matcher m = sPattern.matcher(s.toString().substring(currentCursorPosition- (searchLength-1), currentCursorPosition));
                 if(m.matches()) {
                     String search = m.group(3);
                     if (pp_progress != null && pp_actionBar != null) {
@@ -463,7 +466,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                             break;
                     }
                 }
-                currentCursorPosition = toot_content.getOffsetForPosition(event.getX(), event.getY());
                 return false;
             }
         });
@@ -923,7 +925,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     }
 
     @Override
-    public void onRetrieveSearchAccounts(APIResponse apiResponse, final String search) {
+    public void onRetrieveSearchAccounts(APIResponse apiResponse) {
         if( pp_progress != null && pp_actionBar != null) {
             pp_progress.setVisibility(View.GONE);
             pp_actionBar.setVisibility(View.VISIBLE);
@@ -938,22 +940,25 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
         final List<Account> accounts = apiResponse.getAccounts();
         if( accounts != null && accounts.size() > 0){
+
             AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, accounts);
             toot_content.showDropDown();
             toot_content.setThreshold(0);
             toot_content.setAdapter(accountsListAdapter);
             final String oldContent = toot_content.getText().toString();
-
+            String[] searchA = oldContent.substring(0,currentCursorPosition+1).split("@");
+            final String search = searchA[searchA.length-1];
             toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Account account = accounts.get(position);
                     String deltaSearch = oldContent.substring(currentCursorPosition-searchLength, currentCursorPosition);
-                    deltaSearch = deltaSearch.replace("@"+search,"");
+                    if( !search.equals(""))
+                        deltaSearch = deltaSearch.replace("@"+search,"");
                     String newContent = oldContent.substring(0,currentCursorPosition-searchLength);
                     newContent += deltaSearch;
                     newContent += "@" + account.getAcct() + " ";
-                    int newPosition = newContent.length() -1;
+                    int newPosition = newContent.length();
                     if( currentCursorPosition < oldContent.length() - 1)
                         newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
                     toot_content.setText(newContent);

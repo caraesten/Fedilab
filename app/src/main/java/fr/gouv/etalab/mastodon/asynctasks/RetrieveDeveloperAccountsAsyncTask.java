@@ -45,7 +45,7 @@ public class RetrieveDeveloperAccountsAsyncTask extends AsyncTask<Void, Void, Vo
     }
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveSearchAccounts(apiResponse, null);
+        listener.onRetrieveSearchAccounts(apiResponse);
     }
 
 }
