@@ -417,6 +417,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 if( currentCursorPosition- (searchLength-1) < 0 || currentCursorPosition == 0 || currentCursorPosition > s.toString().length())
                     return;
                 Matcher m = sPattern.matcher(s.toString().substring(currentCursorPosition- (searchLength-1), currentCursorPosition));
+
                 if(m.matches()) {
                     String search = m.group(3);
                     if (pp_progress != null && pp_actionBar != null) {
@@ -940,10 +941,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
         final List<Account> accounts = apiResponse.getAccounts();
         if( accounts != null && accounts.size() > 0){
-
             AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, accounts);
-            toot_content.showDropDown();
-            toot_content.setThreshold(0);
+            toot_content.setThreshold(1);
             toot_content.setAdapter(accountsListAdapter);
             final String oldContent = toot_content.getText().toString();
             String[] searchA = oldContent.substring(0,currentCursorPosition+1).split("@");
@@ -963,11 +962,12 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                         newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
                     toot_content.setText(newContent);
                     toot_content.setSelection(newPosition);
-                    toot_content.dismissDropDown();
+                    AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, new ArrayList<Account>());
+                    toot_content.setThreshold(1);
+                    toot_content.setAdapter(accountsListAdapter);
                 }
             });
         }
-
 
     }
 
