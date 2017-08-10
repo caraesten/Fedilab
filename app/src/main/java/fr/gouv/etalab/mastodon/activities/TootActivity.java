@@ -957,7 +957,14 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Account account = accounts.get(position);
-                    String deltaSearch = oldContent.substring(currentCursorPosition-searchLength, currentCursorPosition);
+                    String deltaSearch = "";
+                    if( currentCursorPosition-searchLength > 0 && currentCursorPosition < oldContent.length() )
+                        deltaSearch = oldContent.substring(currentCursorPosition-searchLength, currentCursorPosition);
+                    else {
+                        if( currentCursorPosition >= oldContent.length() )
+                            deltaSearch = oldContent.substring(currentCursorPosition-searchLength, oldContent.length());
+                    }
+
                     if( !search.equals(""))
                         deltaSearch = deltaSearch.replace("@"+search,"");
                     String newContent = oldContent.substring(0,currentCursorPosition-searchLength);
