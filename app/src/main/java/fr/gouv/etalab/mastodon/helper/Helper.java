@@ -54,6 +54,7 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -199,7 +200,6 @@ public class Helper {
     public static final String SET_WIFI_ONLY = "set_wifi_only";
     public static final String SET_NOTIF_HOMETIMELINE = "set_notif_hometimeline";
     public static final String SET_NOTIF_SILENT = "set_notif_silent";
-    public static final String SET_SHOW_REPLY = "set_show_reply";
     public static final String SET_SHOW_ERROR_MESSAGES = "set_show_error_messages";
     public static final String SET_EMBEDDED_BROWSER = "set_embedded_browser";
     public static final String SET_JAVASCRIPT = "set_javascript";
@@ -1022,7 +1022,7 @@ public class Helper {
 
         SpannableString spannableString;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableString = new SpannableString(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_COMPACT));
+            spannableString = new SpannableString(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_LEGACY));
         else
             //noinspection deprecation
             spannableString = new SpannableString(Html.fromHtml(fullContent));
@@ -1067,25 +1067,26 @@ public class Helper {
                 String targetedAccount = "@" + mention.getUsername();
                 if (spannableString.toString().contains(targetedAccount)) {
 
-                    int startPosition = spannableString.toString().indexOf(targetedAccount);
-                    int endPosition = spannableString.toString().lastIndexOf(targetedAccount) + targetedAccount.length();
-                    spannableString.setSpan(new ClickableSpan() {
-                        @Override
-                        public void onClick(View textView) {
-                            Intent intent = new Intent(context, ShowAccountActivity.class);
-                            Bundle b = new Bundle();
-                            b.putString("accountId", mention.getId());
-                            intent.putExtras(b);
-                            context.startActivity(intent);
-                        }
-                        @Override
-                        public void updateDrawState(TextPaint ds) {
-                            super.updateDrawState(ds);
-                        }
-                    },
-                    startPosition, endPosition,
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-
+                    //Accounts can be mentioned several times so we have to loop
+                    for(int startPosition = -1 ; (startPosition = spannableString.toString().indexOf(targetedAccount, startPosition + 1)) != -1 ; startPosition++){
+                        int endPosition = startPosition + targetedAccount.length();
+                        spannableString.setSpan(new ClickableSpan() {
+                                @Override
+                                public void onClick(View textView) {
+                                    Intent intent = new Intent(context, ShowAccountActivity.class);
+                                    Bundle b = new Bundle();
+                                    b.putString("accountId", mention.getId());
+                                    intent.putExtras(b);
+                                    context.startActivity(intent);
+                                }
+                                @Override
+                                public void updateDrawState(TextPaint ds) {
+                                    super.updateDrawState(ds);
+                                }
+                            },
+                                startPosition, endPosition,
+                                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    }
                 }
 
             }
@@ -1128,7 +1129,7 @@ public class Helper {
         SpannableString spannableString;
         fullContent = Helper.shortnameToUnicode(fullContent, true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableString = new SpannableString(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_COMPACT));
+            spannableString = new SpannableString(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_LEGACY));
         else
             //noinspection deprecation
             spannableString = new SpannableString(Html.fromHtml(fullContent));

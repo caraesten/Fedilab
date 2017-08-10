@@ -170,6 +170,7 @@
     <string name="no_draft">Aucun brouillon !</string>
     <string name="choose_toot">Choisissez un pouet</string>
     <string name="remove_draft">Supprimer le brouillon ?</string>
+    <string name="show_reply">Cliquer sur le bouton pour afficher le pouet d\'origine</string>
     <!-- Instance -->
     <string name="instance_no_description">Aucune description !</string>
 
@@ -327,6 +328,7 @@
     <!-- CACHE -->
     <string name="cache_title">Nettoyage du cache</string>
     <string name="cache_message">Il y a %1$s de données en cache.\n\nSouhaitez-vous les supprimer ?</string>
+    <string name="cache_units">Mo</string>
     <string name="toast_cache_clear">Le cache a été nettoyé ! %1$s ont été libérés</string>
 
     <!-- PRIVACY -->

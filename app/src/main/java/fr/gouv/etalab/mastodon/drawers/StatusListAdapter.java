@@ -30,9 +30,13 @@ import android.os.CountDownTimer;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.text.Html;
+import android.text.Selection;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -373,7 +377,10 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             public void onClick(View v) {
                 Intent intent = new Intent(context, TootActivity.class);
                 Bundle b = new Bundle();
-                b.putParcelable("tootReply", status);
+                if( status.getReblog() != null )
+                    b.putParcelable("tootReply", status.getReblog());
+                else
+                    b.putParcelable("tootReply", status);
                 intent.putExtras(b); //Put your id to your next Intent
                 context.startActivity(intent);
                 if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
@@ -386,19 +393,54 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             }
         });
 
-        SpannableString spannableString = Helper.clickableElements(context,content,
-                status.getReblog() != null?status.getReblog().getMentions():status.getMentions());
-        holder.status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
+
 
         if( status.getContent_translated() != null && status.getContent_translated().length() > 0){
             SpannableString spannableStringTrans = Helper.clickableElements(context, status.getContent_translated(),
                     status.getReblog() != null?status.getReblog().getMentions():status.getMentions());
             holder.status_content_translated.setText(spannableStringTrans, TextView.BufferType.SPANNABLE);
-            holder.status_content_translated.setMovementMethod(null);
+            holder.status_content_translated.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    holder.status_content_translated.setFocusableInTouchMode(true);
+                    return false;
+                }
+            });
+            holder.status_content_translated.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        holder.status_content_translated.setFocusableInTouchMode(false);
+                        holder.status_content_translated.clearFocus();
+                    }
+                    return false;
+                }
+            });
             holder.status_content_translated.setMovementMethod(LinkMovementMethod.getInstance());
         }
-        holder.status_content.setMovementMethod(null);
+
+        final SpannableString spannableString = Helper.clickableElements(context,content,
+                status.getReblog() != null?status.getReblog().getMentions():status.getMentions());
+        holder.status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
+        holder.status_content.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                holder.status_content.setFocusableInTouchMode(true);
+                return false;
+            }
+        });
+        holder.status_content.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    holder.status_content.setFocusableInTouchMode(false);
+                    holder.status_content.clearFocus();
+                }
+                return false;
+            }
+        });
         holder.status_content.setMovementMethod(LinkMovementMethod.getInstance());
+
         if( status.getReblog() == null)
             holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
         else
@@ -863,7 +905,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            builder.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_COMPACT));
+            builder.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
         else
             //noinspection deprecation
             builder.setMessage(Html.fromHtml(status.getContent()));
@@ -929,7 +971,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 if( isOwner) {
                     if( which == 0) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                            builderInner.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_COMPACT));
+                            builderInner.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
                         else
                             //noinspection deprecation
                             builderInner.setMessage(Html.fromHtml(status.getContent()));
@@ -937,7 +979,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                         String content;
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                            content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_COMPACT).toString();
+                            content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
                         else
                             //noinspection deprecation
                             content = Html.fromHtml(status.getContent()).toString();
@@ -959,7 +1001,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         builderInner.setMessage(status.getAccount().getAcct());
                     }else if( which == 2) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                            builderInner.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_COMPACT));
+                            builderInner.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
                         else
                             //noinspection deprecation
                             builderInner.setMessage(Html.fromHtml(status.getContent()));
@@ -967,7 +1009,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                         String content;
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                            content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_COMPACT).toString();
+                            content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
                         else
                             //noinspection deprecation
                             content = Html.fromHtml(status.getContent()).toString();

@@ -17,11 +17,9 @@ package fr.gouv.etalab.mastodon.activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -30,10 +28,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -48,6 +46,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -60,7 +59,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -134,9 +132,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private Button toot_it;
     private AutoCompleteTextView toot_content;
     private EditText toot_cw_content;
-    private TextView toot_reply_content;
-    private RelativeLayout toot_reply_content_container;
-    private BroadcastReceiver search_validate;
+    private LinearLayout toot_reply_content_container;
     private Status tootReply = null;
     private String sharedContent, sharedSubject;
     private CheckBox toot_sensitive;
@@ -148,6 +144,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private Toast mToast;
     private LinearLayout drawer_layout;
     private HorizontalScrollView picture_scrollview;
+    private int currentCursorPosition, searchLength;
+    private boolean canDisplayMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,7 +180,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             pp_progress = (ProgressBar) actionBar.getCustomView().findViewById(R.id.pp_progress);
 
         }
-
+        canDisplayMessage = true;
 
 
         //By default the toot is not restored so the id -1 is defined
@@ -209,8 +207,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         toot_picture_container = (LinearLayout) findViewById(R.id.toot_picture_container);
         toot_content = (AutoCompleteTextView) findViewById(R.id.toot_content);
         toot_cw_content = (EditText) findViewById(R.id.toot_cw_content);
-        toot_reply_content = (TextView) findViewById(R.id.toot_reply_content);
-        toot_reply_content_container = (RelativeLayout) findViewById(R.id.toot_reply_content_container);
+        toot_reply_content_container = (LinearLayout) findViewById(R.id.toot_reply_content_container);
         picture_scrollview = (HorizontalScrollView) findViewById(R.id.picture_scrollview);
         toot_sensitive = (CheckBox) findViewById(R.id.toot_sensitive);
         //search_small_container = (LinearLayout) findViewById(R.id.search_small_container);
@@ -291,46 +288,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         int charsInToot = 0;
         maxChar = 500;
 
-        //Register LocalBroadcast to receive selected accounts after search
-        search_validate = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                String acct = intent.getStringExtra("acct");
-                if( acct != null){
-                    acct = "@" + acct;
-                    String content = toot_content.getText().toString();
-                    String[] splitContent = content.split("@");
-                    String newContent = "";
-                    for(int i = 0 ; i < (splitContent.length -1) ; i++){
-                        newContent += splitContent[i];
-                    }
-                    newContent += acct + " ";
-                    toot_content.setText(newContent);
-                    toot_content.setSelection(toot_content.getText().length());
-                }
-               // manageShowUsers(searchAction.CLOSE, false);
-            }
-        };
-        LocalBroadcastManager.getInstance(this).registerReceiver(search_validate, new IntentFilter(Helper.SEARCH_VALIDATE_ACCOUNT));
-
 
         boolean isAccountPrivate = account.isLocked();
 
-        FloatingActionButton ic_close = (FloatingActionButton) findViewById(R.id.toot_close_reply);
-
-        /*toot_close_accounts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                manageShowUsers(searchAction.CLOSE, true);
-            }
-        });
-*/
-        ic_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toot_reply_content_container.setVisibility(View.GONE);
-            }
-        });
 
         if(isAccountPrivate){
             visibility = "private";
@@ -435,29 +395,42 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         });
         String pattern = "^(.|\\s)*(@([a-zA-Z0-9_]{2,}))$";
         final Pattern sPattern = Pattern.compile(pattern);
+
         toot_content.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
             @Override
             public void afterTextChanged(Editable s) {
-                int length;
-                //Only check last 20 characters to avoid lags
-                if( s.toString().length() < 20 ){ //Less than 20 characters are written
-                    length = s.toString().length();
+                if( toot_content.getSelectionStart() != 0)
+                    currentCursorPosition = toot_content.getSelectionStart();
+                if( s.toString().length() == 0 )
+                    currentCursorPosition = 0;
+                //Only check last 15 characters before cursor position to avoid lags
+                if( currentCursorPosition < 15 ){ //Less than 15 characters are written before the cursor position
+                    searchLength = currentCursorPosition;
                 }else {
-                    length = 20;
+                    searchLength = 15;
                 }
-                Matcher m = sPattern.matcher(s.toString().substring(s.toString().length()- length, s.toString().length()));
+                if( currentCursorPosition- (searchLength-1) < 0 || currentCursorPosition == 0 || currentCursorPosition > s.toString().length())
+                    return;
+                Matcher m;
+
+                if( s.toString().charAt(0) == '@')
+                    m = sPattern.matcher(s.toString().substring(currentCursorPosition- searchLength, currentCursorPosition));
+                else
+                    m = sPattern.matcher(s.toString().substring(currentCursorPosition- (searchLength-1), currentCursorPosition));
                 if(m.matches()) {
                     String search = m.group(3);
-                    if( pp_progress != null && pp_actionBar != null) {
+                    if (pp_progress != null && pp_actionBar != null) {
                         pp_progress.setVisibility(View.VISIBLE);
                         pp_actionBar.setVisibility(View.GONE);
                     }
                     new RetrieveSearchAccountsAsyncTask(getApplicationContext(),search,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
                 }else{toot_content.dismissDropDown();}
                 int totalChar = toot_cw_content.length() + toot_content.length();
                 int remainChar = (maxChar - totalChar);
@@ -470,8 +443,20 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     }
                 }else {
                     toot_it.setEnabled(false);
-                    showAToast(getString(R.string.toot_no_space));
                     toot_space_left.setTextColor( Color.RED);
+                    //Delay the advertising message to avoid to flood the user
+                    if( canDisplayMessage ){
+                        canDisplayMessage = false;
+                        showAToast(getString(R.string.toot_no_space));
+                        final Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                canDisplayMessage = true;
+                            }
+                        }, 4000);
+                    }
+
                 }
                 toot_space_left.setText(String.valueOf(remainChar));
             }
@@ -763,12 +748,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     }
 
     @Override
-    public void onDestroy(){
-        super.onDestroy();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(search_validate);
-    }
-
-    @Override
     public void onRetrieveAttachment(final Attachment attachment, Error error) {
         loading_picture.setVisibility(View.GONE);
         if( error != null){
@@ -965,13 +944,44 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 Toast.makeText(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
-        List<Account> accounts = apiResponse.getAccounts();
+
+        final List<Account> accounts = apiResponse.getAccounts();
         if( accounts != null && accounts.size() > 0){
             AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, accounts);
-            toot_content.showDropDown();
-            toot_content.setThreshold(0);
+            toot_content.setThreshold(1);
             toot_content.setAdapter(accountsListAdapter);
+            final String oldContent = toot_content.getText().toString();
+            String[] searchA = oldContent.substring(0,currentCursorPosition).split("@");
+            final String search = searchA[searchA.length-1];
+            toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Account account = accounts.get(position);
+                    String deltaSearch = "";
+                    if( currentCursorPosition-searchLength > 0 && currentCursorPosition < oldContent.length() )
+                        deltaSearch = oldContent.substring(currentCursorPosition-searchLength, currentCursorPosition);
+                    else {
+                        if( currentCursorPosition >= oldContent.length() )
+                            deltaSearch = oldContent.substring(currentCursorPosition-searchLength, oldContent.length());
+                    }
+
+                    if( !search.equals(""))
+                        deltaSearch = deltaSearch.replace("@"+search,"");
+                    String newContent = oldContent.substring(0,currentCursorPosition-searchLength);
+                    newContent += deltaSearch;
+                    newContent += "@" + account.getAcct() + " ";
+                    int newPosition = newContent.length();
+                    if( currentCursorPosition < oldContent.length() - 1)
+                        newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
+                    toot_content.setText(newContent);
+                    toot_content.setSelection(newPosition);
+                    AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, new ArrayList<Account>());
+                    toot_content.setThreshold(1);
+                    toot_content.setAdapter(accountsListAdapter);
+                }
+            });
         }
+
     }
 
     private void restoreToot(long id){
@@ -1078,20 +1088,36 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         else
             setTitle(R.string.toot_title_reply);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        boolean show_reply = sharedpreferences.getBoolean(Helper.SET_SHOW_REPLY, false);
-        if( show_reply ){
-            toot_reply_content_container.setVisibility(View.VISIBLE);
-        }else {
-            toot_reply_content_container.setVisibility(View.GONE);
-        }
-        String content = tootReply.getContent();
-        if(tootReply.getReblog() != null)
-            content = tootReply.getReblog().getContent();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            toot_reply_content.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_COMPACT));
-        else
-            //noinspection deprecation
-            toot_reply_content.setText(Html.fromHtml(content));
+
+
+        FloatingActionButton ic_show = (FloatingActionButton) findViewById(R.id.toot_show_reply);
+
+        ic_show.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(TootActivity.this);
+                alert.setTitle(R.string.toot_reply_content_title);
+                final TextView input = new TextView(TootActivity.this);
+                //Set the padding
+                input.setPadding(30, 30, 30, 30);
+                alert.setView(input);
+                String content = tootReply.getContent();
+                if(tootReply.getReblog() != null)
+                    content = tootReply.getReblog().getContent();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                    input.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY));
+                else
+                    //noinspection deprecation
+                    input.setText(Html.fromHtml(content));
+                alert.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
+            }
+        });
+        toot_reply_content_container.setVisibility(View.VISIBLE);
         switch (tootReply.getVisibility()){
             case "public":
                 visibility = "public";
@@ -1114,17 +1140,22 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         //If toot is not restored
         if( restored == -1 ){
             //Retrieves mentioned accounts + OP and adds them at the beginin of the toot
+            ArrayList<String> mentionedAccountsAdded = new ArrayList<>();
             if( tootReply.getAccount() != null && tootReply.getAccount().getAcct() != null && !tootReply.getAccount().getId().equals(userId)) {
                 toot_content.setText(String.format("@%s ", tootReply.getAccount().getAcct()));
+                mentionedAccountsAdded.add(tootReply.getAccount().getAcct());
             }
             if( tootReply.getMentions() != null ){
                 for(Mention mention : tootReply.getMentions()){
-                    if(  mention.getAcct() != null && !mention.getId().equals(userId)) {
+                    if(  mention.getAcct() != null && !mention.getId().equals(userId) && !mentionedAccountsAdded.contains(mention.getAcct())) {
+                        mentionedAccountsAdded.add(mention.getAcct());
                         String tootTemp = String.format("@%s ", mention.getAcct());
                         toot_content.setText(String.format("%s ", (toot_content.getText().toString() + " " + tootTemp)));
                     }
                 }
             }
+            //Put a dot at the end of all mentioned account to force capitalization
+            toot_content.setText(String.format("%s. ",toot_content.getText().toString().trim()));
             toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
         }
     }

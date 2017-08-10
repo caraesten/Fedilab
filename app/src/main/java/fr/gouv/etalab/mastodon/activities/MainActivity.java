@@ -19,6 +19,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,6 +27,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
@@ -132,17 +134,7 @@ public class MainActivity extends AppCompatActivity
             finish();
             return;
         }
-        if( theme == Helper.THEME_DARK){
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_action_home_tl,R.color.dark_text);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_action_users_tl,R.color.dark_text);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_action_globe_tl,R.color.dark_text);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_notifications_tl,R.color.dark_text);
-        }else {
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_action_home_tl,R.color.black);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_action_users_tl,R.color.black);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_action_globe_tl,R.color.black);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_notifications_tl,R.color.black);
-        }
+
         Helper.fillMapEmoji(getApplicationContext());
         //Here, the user is authenticated
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -227,7 +219,15 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
-
+        if( theme == Helper.THEME_DARK){
+            for(int i = 0 ; i < 4 ; i++)
+                if( tabLayout.getTabAt(i) != null && tabLayout.getTabAt(i).getIcon() != null)
+                    tabLayout.getTabAt(i).getIcon().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+        }else {
+            for(int i = 0 ; i < 4 ; i++)
+                if( tabLayout.getTabAt(i) != null && tabLayout.getTabAt(i).getIcon() != null)
+                    tabLayout.getTabAt(i).getIcon().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.black), PorterDuff.Mode.SRC_IN);
+        }
 
         toolbar_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -533,7 +533,7 @@ public class MainActivity extends AppCompatActivity
                 }
             }
             final float finalCacheSize = cacheSize;
-            builder.setMessage(getString(R.string.cache_message, String.format("%s Mo", String.format(Locale.getDefault(), "%.2f", cacheSize))))
+            builder.setMessage(getString(R.string.cache_message, String.format("%s %s", String.format(Locale.getDefault(), "%.2f", cacheSize), getString(R.string.cache_units))))
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // continue with delete
@@ -544,7 +544,7 @@ public class MainActivity extends AppCompatActivity
                                     Helper.deleteDir(dir);
                                 }
                             } catch (Exception ignored) {}
-                            Toast.makeText(MainActivity.this, getString(R.string.toast_cache_clear,String.format("%s Mo", String.format(Locale.getDefault(), "%.2f", finalCacheSize))), Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, getString(R.string.toast_cache_clear,String.format("%s %s", String.format(Locale.getDefault(), "%.2f", finalCacheSize), getString(R.string.cache_units))), Toast.LENGTH_LONG).show();
                             dialog.dismiss();
                         }
                     })
