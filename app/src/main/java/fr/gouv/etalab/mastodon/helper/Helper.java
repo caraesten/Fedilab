@@ -54,6 +54,7 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -1066,25 +1067,26 @@ public class Helper {
                 String targetedAccount = "@" + mention.getUsername();
                 if (spannableString.toString().contains(targetedAccount)) {
 
-                    int startPosition = spannableString.toString().indexOf(targetedAccount);
-                    int endPosition = spannableString.toString().lastIndexOf(targetedAccount) + targetedAccount.length();
-                    spannableString.setSpan(new ClickableSpan() {
-                        @Override
-                        public void onClick(View textView) {
-                            Intent intent = new Intent(context, ShowAccountActivity.class);
-                            Bundle b = new Bundle();
-                            b.putString("accountId", mention.getId());
-                            intent.putExtras(b);
-                            context.startActivity(intent);
-                        }
-                        @Override
-                        public void updateDrawState(TextPaint ds) {
-                            super.updateDrawState(ds);
-                        }
-                    },
-                    startPosition, endPosition,
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-
+                    //Accounts can be mentioned several times so we have to loop
+                    for(int startPosition = -1 ; (startPosition = spannableString.toString().indexOf(targetedAccount, startPosition + 1)) != -1 ; startPosition++){
+                        int endPosition = startPosition + targetedAccount.length();
+                        spannableString.setSpan(new ClickableSpan() {
+                                @Override
+                                public void onClick(View textView) {
+                                    Intent intent = new Intent(context, ShowAccountActivity.class);
+                                    Bundle b = new Bundle();
+                                    b.putString("accountId", mention.getId());
+                                    intent.putExtras(b);
+                                    context.startActivity(intent);
+                                }
+                                @Override
+                                public void updateDrawState(TextPaint ds) {
+                                    super.updateDrawState(ds);
+                                }
+                            },
+                                startPosition, endPosition,
+                                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    }
                 }
 
             }

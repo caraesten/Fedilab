@@ -28,6 +28,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
@@ -36,6 +37,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -142,7 +144,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private Toast mToast;
     private LinearLayout drawer_layout;
     private HorizontalScrollView picture_scrollview;
-    private String search;
+    private int currentCursorPosition, searchLength;
+    private boolean canDisplayMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,7 +180,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             pp_progress = (ProgressBar) actionBar.getCustomView().findViewById(R.id.pp_progress);
 
         }
-
+        canDisplayMessage = true;
 
 
         //By default the toot is not restored so the id -1 is defined
@@ -402,29 +405,42 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         });
         String pattern = "^(.|\\s)*(@([a-zA-Z0-9_]{2,}))$";
         final Pattern sPattern = Pattern.compile(pattern);
+
         toot_content.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
             @Override
             public void afterTextChanged(Editable s) {
-                int length;
-                //Only check last 20 characters to avoid lags
-                if( s.toString().length() < 20 ){ //Less than 20 characters are written
-                    length = s.toString().length();
+                if( toot_content.getSelectionStart() != 0)
+                    currentCursorPosition = toot_content.getSelectionStart();
+                if( s.toString().length() == 0 )
+                    currentCursorPosition = 0;
+                //Only check last 15 characters before cursor position to avoid lags
+                if( currentCursorPosition < 15 ){ //Less than 15 characters are written before the cursor position
+                    searchLength = currentCursorPosition;
                 }else {
-                    length = 20;
+                    searchLength = 15;
                 }
-                Matcher m = sPattern.matcher(s.toString().substring(s.toString().length()- length, s.toString().length()));
+                if( currentCursorPosition- (searchLength-1) < 0 || currentCursorPosition == 0 || currentCursorPosition > s.toString().length())
+                    return;
+                Matcher m;
+
+                if( s.toString().charAt(0) == '@')
+                    m = sPattern.matcher(s.toString().substring(currentCursorPosition- searchLength, currentCursorPosition));
+                else
+                    m = sPattern.matcher(s.toString().substring(currentCursorPosition- (searchLength-1), currentCursorPosition));
                 if(m.matches()) {
-                    search = m.group(3);
-                    if( pp_progress != null && pp_actionBar != null) {
+                    String search = m.group(3);
+                    if (pp_progress != null && pp_actionBar != null) {
                         pp_progress.setVisibility(View.VISIBLE);
                         pp_actionBar.setVisibility(View.GONE);
                     }
                     new RetrieveSearchAccountsAsyncTask(getApplicationContext(),search,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
                 }else{toot_content.dismissDropDown();}
                 int totalChar = toot_cw_content.length() + toot_content.length();
                 int remainChar = (maxChar - totalChar);
@@ -437,8 +453,20 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     }
                 }else {
                     toot_it.setEnabled(false);
-                    showAToast(getString(R.string.toot_no_space));
                     toot_space_left.setTextColor( Color.RED);
+                    //Delay the advertising message to avoid to flood the user
+                    if( canDisplayMessage ){
+                        canDisplayMessage = false;
+                        showAToast(getString(R.string.toot_no_space));
+                        final Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                canDisplayMessage = true;
+                            }
+                        }, 4000);
+                    }
+
                 }
                 toot_space_left.setText(String.valueOf(remainChar));
             }
@@ -930,21 +958,39 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         final List<Account> accounts = apiResponse.getAccounts();
         if( accounts != null && accounts.size() > 0){
             AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, accounts);
-            toot_content.showDropDown();
-            toot_content.setThreshold(0);
+            toot_content.setThreshold(1);
             toot_content.setAdapter(accountsListAdapter);
-            final String toot_content_str = toot_content.getText().toString().replace("@"+search,"");
+            final String oldContent = toot_content.getText().toString();
+            String[] searchA = oldContent.substring(0,currentCursorPosition).split("@");
+            final String search = searchA[searchA.length-1];
             toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Account account = accounts.get(position);
-                    toot_content.setText(toot_content_str + " @" + account.getAcct() + " ");
-                    toot_content.setSelection(toot_content.getText().length()-1);
-                    toot_content.dismissDropDown();
+                    String deltaSearch = "";
+                    if( currentCursorPosition-searchLength > 0 && currentCursorPosition < oldContent.length() )
+                        deltaSearch = oldContent.substring(currentCursorPosition-searchLength, currentCursorPosition);
+                    else {
+                        if( currentCursorPosition >= oldContent.length() )
+                            deltaSearch = oldContent.substring(currentCursorPosition-searchLength, oldContent.length());
+                    }
+
+                    if( !search.equals(""))
+                        deltaSearch = deltaSearch.replace("@"+search,"");
+                    String newContent = oldContent.substring(0,currentCursorPosition-searchLength);
+                    newContent += deltaSearch;
+                    newContent += "@" + account.getAcct() + " ";
+                    int newPosition = newContent.length();
+                    if( currentCursorPosition < oldContent.length() - 1)
+                        newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
+                    toot_content.setText(newContent);
+                    toot_content.setSelection(newPosition);
+                    AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, new ArrayList<Account>());
+                    toot_content.setThreshold(1);
+                    toot_content.setAdapter(accountsListAdapter);
                 }
             });
         }
-
 
     }
 
@@ -1059,8 +1105,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         ic_show.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 AlertDialog.Builder alert = new AlertDialog.Builder(TootActivity.this);
                 alert.setTitle(R.string.toot_reply_content_title);
                 final TextView input = new TextView(TootActivity.this);
@@ -1106,12 +1150,15 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         //If toot is not restored
         if( restored == -1 ){
             //Retrieves mentioned accounts + OP and adds them at the beginin of the toot
+            ArrayList<String> mentionedAccountsAdded = new ArrayList<>();
             if( tootReply.getAccount() != null && tootReply.getAccount().getAcct() != null && !tootReply.getAccount().getId().equals(userId)) {
                 toot_content.setText(String.format("@%s ", tootReply.getAccount().getAcct()));
+                mentionedAccountsAdded.add(tootReply.getAccount().getAcct());
             }
             if( tootReply.getMentions() != null ){
                 for(Mention mention : tootReply.getMentions()){
-                    if(  mention.getAcct() != null && !mention.getId().equals(userId)) {
+                    if(  mention.getAcct() != null && !mention.getId().equals(userId) && !mentionedAccountsAdded.contains(mention.getAcct())) {
+                        mentionedAccountsAdded.add(mention.getAcct());
                         String tootTemp = String.format("@%s ", mention.getAcct());
                         toot_content.setText(String.format("%s ", (toot_content.getText().toString() + " " + tootTemp)));
                     }
