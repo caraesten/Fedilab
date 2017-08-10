@@ -399,13 +399,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         toot_content.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                currentCursorPosition = toot_content.getSelectionStart();
-                //Only check last 15 characters before cursor position to avoid lags
-                if( currentCursorPosition < 15 ){ //Less than 15 characters are written before the cursor position
-                    searchLength = currentCursorPosition;
-                }else {
-                    searchLength = 15;
-                }
             }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -413,10 +406,20 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             }
             @Override
             public void afterTextChanged(Editable s) {
-
+                if( toot_content.getSelectionStart() != 0)
+                    currentCursorPosition = toot_content.getSelectionStart();
+                if( s.toString().length() == 0 )
+                    currentCursorPosition = 0;
+                //Only check last 15 characters before cursor position to avoid lags
+                if( currentCursorPosition < 15 ){ //Less than 15 characters are written before the cursor position
+                    searchLength = currentCursorPosition;
+                }else {
+                    searchLength = 15;
+                }
                 if( currentCursorPosition- (searchLength-1) < 0 || currentCursorPosition == 0 || currentCursorPosition > s.toString().length())
                     return;
                 Matcher m;
+
                 if( s.toString().charAt(0) == '@')
                     m = sPattern.matcher(s.toString().substring(currentCursorPosition- searchLength, currentCursorPosition));
                 else
@@ -948,7 +951,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             toot_content.setThreshold(1);
             toot_content.setAdapter(accountsListAdapter);
             final String oldContent = toot_content.getText().toString();
-            String[] searchA = oldContent.substring(0,currentCursorPosition+1).split("@");
+            String[] searchA = oldContent.substring(0,currentCursorPosition).split("@");
             final String search = searchA[searchA.length-1];
             toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
