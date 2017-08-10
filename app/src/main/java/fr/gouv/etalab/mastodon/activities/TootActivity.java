@@ -416,8 +416,11 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
                 if( currentCursorPosition- (searchLength-1) < 0 || currentCursorPosition == 0 || currentCursorPosition > s.toString().length())
                     return;
-                Matcher m = sPattern.matcher(s.toString().substring(currentCursorPosition- (searchLength-1), currentCursorPosition));
-
+                Matcher m;
+                if( s.toString().charAt(0) == '@')
+                    m = sPattern.matcher(s.toString().substring(currentCursorPosition- searchLength, currentCursorPosition));
+                else
+                    m = sPattern.matcher(s.toString().substring(currentCursorPosition- (searchLength-1), currentCursorPosition));
                 if(m.matches()) {
                     String search = m.group(3);
                     if (pp_progress != null && pp_actionBar != null) {
