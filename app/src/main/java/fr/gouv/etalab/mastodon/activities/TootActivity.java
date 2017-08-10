@@ -1130,17 +1130,22 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         //If toot is not restored
         if( restored == -1 ){
             //Retrieves mentioned accounts + OP and adds them at the beginin of the toot
+            ArrayList<String> mentionedAccountsAdded = new ArrayList<>();
             if( tootReply.getAccount() != null && tootReply.getAccount().getAcct() != null && !tootReply.getAccount().getId().equals(userId)) {
                 toot_content.setText(String.format("@%s ", tootReply.getAccount().getAcct()));
+                mentionedAccountsAdded.add(tootReply.getAccount().getAcct());
             }
             if( tootReply.getMentions() != null ){
                 for(Mention mention : tootReply.getMentions()){
-                    if(  mention.getAcct() != null && !mention.getId().equals(userId)) {
+                    if(  mention.getAcct() != null && !mention.getId().equals(userId) && !mentionedAccountsAdded.contains(mention.getAcct())) {
+                        mentionedAccountsAdded.add(mention.getAcct());
                         String tootTemp = String.format("@%s ", mention.getAcct());
                         toot_content.setText(String.format("%s ", (toot_content.getText().toString() + " " + tootTemp)));
                     }
                 }
             }
+            //Put a dot at the end of all mentioned account to force capitalization
+            toot_content.setText(String.format("%s. ",toot_content.getText().toString().trim()));
             toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
         }
     }
