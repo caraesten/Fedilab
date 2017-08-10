@@ -1154,8 +1154,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     }
                 }
             }
-            //Put a dot at the end of all mentioned account to force capitalization
-            toot_content.setText(String.format("%s. ",toot_content.getText().toString().trim()));
+            //Put a "<space>dot<space>" at the end of all mentioned account to force capitalization
+            toot_content.append(" . ");
             toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
         }
     }
