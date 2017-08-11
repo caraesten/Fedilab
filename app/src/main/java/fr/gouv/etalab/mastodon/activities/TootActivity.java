@@ -370,7 +370,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                         the end toot cleaner.
                      */
                     String preToot = toot_content.getText().toString().trim();
-                    String postToot = preToot.replaceFirst(" . ", "");
+                    String postToot = preToot.replaceFirst(" \\. ", "");
 
                     toot.setContent(postToot.trim());
                 }else {
@@ -1169,8 +1169,13 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     }
                 }
             }
+
             //Put a "<space>dot<space>" at the end of all mentioned account to force capitalization
-            toot_content.append(" . ");
+            if (toot_content.getText().toString().startsWith("@")) {
+                //Put a "<space>dot<space>" at the end of all mentioned account to force capitalization
+                toot_content.append(" . ");
+            }
+
             toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
         }
     }
