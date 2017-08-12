@@ -373,7 +373,7 @@ public class MainActivity extends AppCompatActivity
                 }
             }).show();
         }
-
+        Helper.switchLayout(MainActivity.this);
 
     }
 

@@ -1437,8 +1437,7 @@ public class Helper {
         final NavigationView navigationView = (NavigationView) activity.findViewById(R.id.nav_view);
         navigationView.inflateMenu(R.menu.activity_main_drawer);
         ViewPager viewPager = (ViewPager) activity.findViewById(R.id.viewpager);
-        Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
-        LinearLayout toolbar_search_container = (LinearLayout) toolbar.findViewById(R.id.toolbar_search_container);
+        LinearLayout toolbar_search_container = (LinearLayout) activity.findViewById(R.id.toolbar_search_container);
 
         ViewGroup.LayoutParams params = toolbar_search_container.getLayoutParams();
         int heightSearchdp, heightSearchdpAlone;
