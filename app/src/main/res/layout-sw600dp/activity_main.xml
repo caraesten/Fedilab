@@ -47,6 +47,7 @@
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/toolbar_search_container"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:orientation="horizontal">
