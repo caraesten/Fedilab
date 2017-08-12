@@ -46,6 +46,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -56,10 +57,12 @@ import android.text.style.ClickableSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Patterns;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.MimeTypeMap;
@@ -67,7 +70,9 @@ import android.webkit.URLUtil;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -1415,5 +1420,62 @@ public class Helper {
      */
     public static boolean listIsAtTop(ListView listView) {
         return listView.getChildCount() == 0 || listView.getChildAt(0).getTop() == 0;
+    }
+
+
+    /**
+     * Changes the menu layout
+     * @param activity Activity must be an instance of MainActivity
+     */
+    public static void switchLayout(Activity activity){
+        //Check if the class calling the method is an instance of MainActivity
+        if( !activity.getClass().isInstance(MainActivity.class))
+            return;
+        boolean isTablet = activity.getResources().getBoolean(R.bool.isTablet);
+        final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int timelineLayout = sharedpreferences.getInt(Helper.SET_TABS, Helper.THEME_TABS);
+        final NavigationView navigationView = (NavigationView) activity.findViewById(R.id.nav_view);
+        navigationView.inflateMenu(R.menu.activity_main_drawer);
+        ViewPager viewPager = (ViewPager) activity.findViewById(R.id.viewpager);
+        Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
+        LinearLayout toolbar_search_container = (LinearLayout) toolbar.findViewById(R.id.toolbar_search_container);
+
+        ViewGroup.LayoutParams params = toolbar_search_container.getLayoutParams();
+        int heightSearchdp, heightSearchdpAlone;
+        if( !isTablet){
+            heightSearchdp = 40;
+            heightSearchdpAlone = 60;
+        }else {
+            heightSearchdp = 40;
+            heightSearchdpAlone = 60;
+        }
+        int heightSearch = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, heightSearchdp, activity.getResources().getDisplayMetrics());
+
+        switch (timelineLayout){
+            case Helper.THEME_TABS:
+                navigationView.getMenu().findItem(R.id.nav_home).setVisible(false);
+                navigationView.getMenu().findItem(R.id.nav_local).setVisible(false);
+                navigationView.getMenu().findItem(R.id.nav_global).setVisible(false);
+                params.height = heightSearch;
+                toolbar_search_container.setLayoutParams(params);
+                viewPager.setVisibility(View.VISIBLE);
+                break;
+            case Helper.THEME_MENU:
+                navigationView.getMenu().findItem(R.id.nav_home).setVisible(true);
+                navigationView.getMenu().findItem(R.id.nav_local).setVisible(true);
+                navigationView.getMenu().findItem(R.id.nav_global).setVisible(true);
+                params.height = heightSearchdpAlone;
+                toolbar_search_container.setLayoutParams(params);
+                viewPager.setVisibility(View.GONE);
+                break;
+            case Helper.THEME_MENU_TABS:
+                navigationView.getMenu().findItem(R.id.nav_home).setVisible(true);
+                navigationView.getMenu().findItem(R.id.nav_local).setVisible(true);
+                navigationView.getMenu().findItem(R.id.nav_global).setVisible(true);
+                params.height = heightSearch;
+                toolbar_search_container.setLayoutParams(params);
+                viewPager.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 }
