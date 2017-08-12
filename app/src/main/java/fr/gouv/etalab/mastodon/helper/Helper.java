@@ -185,11 +185,15 @@ public class Helper {
     public static final String SET_AUTO_STORE = "set_auto_store";
     public static final String SET_POPUP_PUSH = "set_popup_push";
     public static final String SET_NSFW_TIMEOUT = "set_nsfw_timeout";
+    public static final String SET_TABS = "set_tabs";
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;
     public static final int THEME_LIGHT = 1;
     public static final int THEME_DARK = 2;
+    public static final int THEME_TABS = 1;
+    public static final int THEME_MENU = 2;
+    public static final int THEME_MENU_TABS = 3;
 
     public static final String SET_NOTIF_FOLLOW = "set_notif_follow";
     public static final String SET_NOTIF_ADD = "set_notif_follow_add";
