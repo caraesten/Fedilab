@@ -13,28 +13,25 @@ package fr.gouv.etalab.mastodon.fragments;
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
-import android.annotation.SuppressLint;
+
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.ParseException;
-import android.os.Build;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.DatePicker;
+
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import fr.gouv.etalab.mastodon.helper.Helper;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -95,7 +92,7 @@ public class SettingsNotificationsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String[] datetime = time_from.split(":");
-                TimePickerDialog timePickerDialog = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -121,7 +118,7 @@ public class SettingsNotificationsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String[] datetime = time_to.split(":");
-                TimePickerDialog timePickerDialog = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         SharedPreferences.Editor editor = sharedpreferences.edit();

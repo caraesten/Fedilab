@@ -36,26 +36,48 @@
 
     <!-- Dark theme -->
     <style name="AppThemeDark" parent="Theme.AppCompat">
-        <item name="cardStyle">@style/CardView.Dark</item>
+        <item name="cardStyle">@style/CardViewStyle.Dark</item>
         <item name="headerbg">@style/Header.Dark</item>
         <item name="shapeBorder">@style/Shape.Dark</item>
         <item name="imgbd">@style/Image.Border.Dark</item>
+        <item name="android:windowBackground">@color/mastodonC1</item>
         <item name="popupOverlay">@style/AppThemeDark.PopupOverlay</item>
+        <item name="android:spinnerDropDownItemStyle">@style/DarkSpinnerItemStyle</item>
     </style>
 
+
+
     <style name="AppThemeDark_NoActionBar" parent="Theme.AppCompat.NoActionBar">
-        <item name="cardStyle">@style/CardView.Dark</item>
+        <item name="cardStyle">@style/CardViewStyle.Dark</item>
         <item name="headerbg">@style/Header.Dark</item>
+        <item name="android:windowBackground">@color/mastodonC1</item>
         <item name="shapeBorder">@style/Shape.Dark</item>
         <item name="imgbd">@style/Image.Border.Dark</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="popupOverlay">@style/AppThemeDark.PopupOverlay</item>
         <item name="windowActionBar">false</item>
+        <item name="android:spinnerStyle">@style/DarkSpinnerStyle</item>
+        <item name="android:spinnerItemStyle">@style/DarkSpinnerItemStyle</item>
     </style>
+    <style name="DarkSpinnerStyle" parent="Base.Widget.AppCompat.Spinner">
+        <item name="android:popupBackground">@color/mastodonC1</item>
+        <item name="android:windowBackground">@color/mastodonC1</item>
+        <item name="android:colorBackground">@color/mastodonC1</item>
+    </style>
+    <style name="DarkSpinnerItemStyle" parent="Base.Widget.AppCompat.TextView.SpinnerItem">
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="AlertDialogDark" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@color/mastodonC1</item>
+    </style>
+
+    <style name="AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert"/>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppThemeDark.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:windowBackground">@color/mastodonC1</item>
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
@@ -91,7 +113,7 @@
     </style>
 
     <style name="CardViewStyle.Dark" parent="CardView">
-        <item name="cardBackgroundColor">@color/cardview_dark_background</item>
+        <item name="cardBackgroundColor">@color/mastodonC1</item>
     </style>
 
     <style name="CardViewStyle.Light" parent="CardView">

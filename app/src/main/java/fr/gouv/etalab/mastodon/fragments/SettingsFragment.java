@@ -323,9 +323,8 @@ public class SettingsFragment extends Fragment {
         });
 
         final Spinner tabs_layout_spinner = (Spinner) rootView.findViewById(R.id.tabs_layout_spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.settings_menu_tabs, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         tabs_layout_spinner.setAdapter(adapter);
 
         int positionSpinner = (sharedpreferences.getInt(Helper.SET_TABS, Helper.THEME_TABS) - 1);

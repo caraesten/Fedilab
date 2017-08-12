@@ -39,6 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorPrimary"
+                android:theme="@style/AppThemeDark"
                 app:popupTheme="?attr/popupOverlay">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -108,8 +109,7 @@
 
 
         <!-- Framelayout to display Fragments -->
-        <android.support.v4.view.ViewPager
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/viewpager"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
