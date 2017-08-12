@@ -1429,16 +1429,13 @@ public class Helper {
      */
     public static void switchLayout(Activity activity){
         //Check if the class calling the method is an instance of MainActivity
-        if( !activity.getClass().isInstance(MainActivity.class))
-            return;
         boolean isTablet = activity.getResources().getBoolean(R.bool.isTablet);
         final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int timelineLayout = sharedpreferences.getInt(Helper.SET_TABS, Helper.THEME_TABS);
         final NavigationView navigationView = (NavigationView) activity.findViewById(R.id.nav_view);
-        navigationView.inflateMenu(R.menu.activity_main_drawer);
-        ViewPager viewPager = (ViewPager) activity.findViewById(R.id.viewpager);
-        LinearLayout toolbar_search_container = (LinearLayout) activity.findViewById(R.id.toolbar_search_container);
 
+        android.support.design.widget.TabLayout tableLayout = (android.support.design.widget.TabLayout) activity.findViewById(R.id.tabLayout);
+        LinearLayout toolbar_search_container = (LinearLayout) activity.findViewById(R.id.toolbar_search_container);
         ViewGroup.LayoutParams params = toolbar_search_container.getLayoutParams();
         int heightSearchdp, heightSearchdpAlone;
         if( !isTablet){
@@ -1448,32 +1445,33 @@ public class Helper {
             heightSearchdp = 40;
             heightSearchdpAlone = 60;
         }
-        int heightSearch = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, heightSearchdp, activity.getResources().getDisplayMetrics());
-
         switch (timelineLayout){
             case Helper.THEME_TABS:
                 navigationView.getMenu().findItem(R.id.nav_home).setVisible(false);
                 navigationView.getMenu().findItem(R.id.nav_local).setVisible(false);
                 navigationView.getMenu().findItem(R.id.nav_global).setVisible(false);
-                params.height = heightSearch;
+                navigationView.getMenu().findItem(R.id.nav_notification).setVisible(false);
+                params.height = (int) Helper.convertDpToPixel(heightSearchdp, activity);;
                 toolbar_search_container.setLayoutParams(params);
-                viewPager.setVisibility(View.VISIBLE);
+                tableLayout.setVisibility(View.VISIBLE);
                 break;
             case Helper.THEME_MENU:
                 navigationView.getMenu().findItem(R.id.nav_home).setVisible(true);
                 navigationView.getMenu().findItem(R.id.nav_local).setVisible(true);
                 navigationView.getMenu().findItem(R.id.nav_global).setVisible(true);
-                params.height = heightSearchdpAlone;
+                navigationView.getMenu().findItem(R.id.nav_notification).setVisible(true);
+                params.height = (int) Helper.convertDpToPixel(heightSearchdpAlone, activity);;
                 toolbar_search_container.setLayoutParams(params);
-                viewPager.setVisibility(View.GONE);
+                tableLayout.setVisibility(View.GONE);
                 break;
             case Helper.THEME_MENU_TABS:
                 navigationView.getMenu().findItem(R.id.nav_home).setVisible(true);
                 navigationView.getMenu().findItem(R.id.nav_local).setVisible(true);
                 navigationView.getMenu().findItem(R.id.nav_global).setVisible(true);
-                params.height = heightSearch;
+                navigationView.getMenu().findItem(R.id.nav_notification).setVisible(true);
+                params.height = (int) Helper.convertDpToPixel(heightSearchdp, activity);;
                 toolbar_search_container.setLayoutParams(params);
-                viewPager.setVisibility(View.VISIBLE);
+                tableLayout.setVisibility(View.VISIBLE);
                 break;
         }
     }

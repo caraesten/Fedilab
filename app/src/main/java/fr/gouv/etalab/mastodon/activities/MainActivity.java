@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity
                 String fragmentTag = null;
                 main_app_container.setVisibility(View.GONE);
                 viewPager.setVisibility(View.VISIBLE);
-                tabLayout.setVisibility(View.VISIBLE);
+                Helper.switchLayout(MainActivity.this);
                 switch (tab.getPosition()){
                     case 0:
                         item = navigationView.getMenu().findItem(R.id.nav_home);
@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity
             public void onTabReselected(TabLayout.Tab tab) {
                 if( viewPager.getVisibility() == View.GONE){
                     viewPager.setVisibility(View.VISIBLE);
-                    tabLayout.setVisibility(View.VISIBLE);
+                    Helper.switchLayout(MainActivity.this);
                     main_app_container.setVisibility(View.GONE);
                     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                     drawer.closeDrawer(GravityCompat.START);
@@ -462,8 +462,9 @@ public class MainActivity extends AppCompatActivity
                     super.onBackPressed();
                 }
             }else {
+
                 viewPager.setVisibility(View.VISIBLE);
-                tabLayout.setVisibility(View.VISIBLE);
+                Helper.switchLayout(MainActivity.this);
                 main_app_container.setVisibility(View.GONE);
                 final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                 unCheckAllMenuItems(navigationView);

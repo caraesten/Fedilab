@@ -38,4 +38,9 @@
     <color name="red_1">#F44336</color>
     <color name="black">#000</color>
 
+    <!-- Mastodon color scheme -->
+    <color name="mastodonC1">#282c37</color>
+    <color name="mastodonC2">#9baec8</color>
+    <color name="mastodonC3">#d9e1e8</color>
+    <color name="mastodonC4">#2b90d9</color>
 </resources>
