@@ -219,15 +219,10 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
-        if( theme == Helper.THEME_DARK){
-            for(int i = 0 ; i < 4 ; i++)
-                if( tabLayout.getTabAt(i) != null && tabLayout.getTabAt(i).getIcon() != null)
-                    tabLayout.getTabAt(i).getIcon().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-        }else {
-            for(int i = 0 ; i < 4 ; i++)
-                if( tabLayout.getTabAt(i) != null && tabLayout.getTabAt(i).getIcon() != null)
-                    tabLayout.getTabAt(i).getIcon().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.black), PorterDuff.Mode.SRC_IN);
-        }
+        for(int i = 0 ; i < 4 ; i++)
+            if( tabLayout.getTabAt(i) != null && tabLayout.getTabAt(i).getIcon() != null)
+                tabLayout.getTabAt(i).getIcon().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+
 
         toolbar_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

@@ -88,9 +88,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         if( theme == Helper.THEME_DARK) {
-            changeDrawableColor(getApplicationContext(), R.drawable.mastodon_icon, R.color.colorAccentD);
+            changeDrawableColor(getApplicationContext(), R.drawable.mastodon_icon, R.color.mastodonC2);
         }else {
-            changeDrawableColor(getApplicationContext(), R.drawable.mastodon_icon, R.color.colorAccent);
+            changeDrawableColor(getApplicationContext(), R.drawable.mastodon_icon, R.color.mastodonC4);
         }
         final Button connectionButton = (Button) findViewById(R.id.login_button);
         login_instance = (AutoCompleteTextView) findViewById(R.id.login_instance);
@@ -133,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
                                 ArrayAdapter<String> adapter =
                                         new ArrayAdapter<>(LoginActivity.this, android.R.layout.simple_list_item_1, instances);
                                 login_instance.setAdapter(adapter);
-                                if( login_instance.hasFocus())
+                                if( login_instance.hasFocus() && !LoginActivity.this.isFinishing())
                                     login_instance.showDropDown();
 
                             } catch (JSONException ignored) {isLoadingInstance = false;}

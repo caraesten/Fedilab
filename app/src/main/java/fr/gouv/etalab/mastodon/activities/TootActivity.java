@@ -37,7 +37,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -454,11 +453,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 int remainChar = (maxChar - totalChar);
                 if( remainChar >= 0){
                     toot_it.setEnabled(true);
-                    if( theme == Helper.THEME_LIGHT){
-                        toot_space_left.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
-                    }else {
-                        toot_space_left.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccentD));
-                    }
+                    toot_space_left.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4));
                 }else {
                     toot_it.setEnabled(false);
                     toot_space_left.setTextColor( Color.RED);
@@ -505,11 +500,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 int remainChar = (maxChar - totalChar);
                 if( remainChar >= 0){
                     toot_it.setEnabled(true);
-                    if( theme == Helper.THEME_LIGHT){
-                        toot_space_left.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
-                    }else {
-                        toot_space_left.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccentD));
-                    }
+                    toot_space_left.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4));
                 }else {
                     toot_it.setEnabled(false);
                     showAToast(getString(R.string.toot_no_space));
@@ -1222,28 +1213,14 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
 
     private void changeColor(){
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_DARK){
-            changeDrawableColor(TootActivity.this, R.drawable.ic_action_globe,R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_open,R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_closed,R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_local_post_office,R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_action_camera,R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_skip_previous,R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next,R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_check,R.color.dark_text);
-        }else {
-            changeDrawableColor(TootActivity.this, R.drawable.ic_action_globe,R.color.black);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_open,R.color.black);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_closed,R.color.black);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_local_post_office,R.color.black);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_action_camera,R.color.black);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_skip_previous,R.color.black);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next,R.color.black);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_check,R.color.black);
-        }
-
+        changeDrawableColor(TootActivity.this, R.drawable.ic_action_globe,R.color.dark_text);
+        changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_open,R.color.dark_text);
+        changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_closed,R.color.dark_text);
+        changeDrawableColor(TootActivity.this, R.drawable.ic_local_post_office,R.color.dark_text);
+        changeDrawableColor(TootActivity.this, R.drawable.ic_action_camera,R.color.dark_text);
+        changeDrawableColor(TootActivity.this, R.drawable.ic_skip_previous,R.color.dark_text);
+        changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next,R.color.dark_text);
+        changeDrawableColor(TootActivity.this, R.drawable.ic_check,R.color.dark_text);
     }
 
 

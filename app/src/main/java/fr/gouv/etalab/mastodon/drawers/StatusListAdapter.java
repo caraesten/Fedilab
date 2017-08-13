@@ -342,9 +342,9 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }else {
             if( theme == Helper.THEME_LIGHT){
                 if( position == ShowConversationActivity.position){
-                    holder.main_container.setBackgroundResource(R.color.blue_light);
+                    holder.main_container.setBackgroundResource(R.color.mastodonC3_);
                 }else {
-                    holder.main_container.setBackgroundResource(R.color.white);
+                    holder.main_container.setBackgroundResource(R.color.mastodonC3);
                 }
             }else {
                 if( position == ShowConversationActivity.position){
