@@ -146,6 +146,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private HorizontalScrollView picture_scrollview;
     private int currentCursorPosition, searchLength;
     private boolean canDisplayMessage;
+    private int style;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,8 +155,10 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
             setTheme(R.style.AppTheme);
+            style = R.style.AlertDialog;
         }else {
             setTheme(R.style.AppThemeDark);
+            style = R.style.AlertDialogDark;
         }
         setContentView(R.layout.activity_toot);
 
@@ -594,7 +597,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                         Toast.makeText(getApplicationContext(), R.string.no_draft, Toast.LENGTH_LONG).show();
                         return true;
                     }
-                    AlertDialog.Builder builderSingle = new AlertDialog.Builder(TootActivity.this);
+                    AlertDialog.Builder builderSingle = new AlertDialog.Builder(TootActivity.this, style);
                     builderSingle.setTitle(getString(R.string.choose_toot));
                     final DraftsListAdapter draftsListAdapter = new DraftsListAdapter(TootActivity.this, drafts);
                     final int[] ids = new int[drafts.size()];
@@ -612,7 +615,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     builderSingle.setPositiveButton(R.string.delete_all, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(final DialogInterface dialog, int which) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(TootActivity.this);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(TootActivity.this, style);
                             builder.setTitle(R.string.delete_all);
                             builder.setIcon(android.R.drawable.ic_dialog_alert)
                                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -652,7 +655,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     Toast.makeText(getApplicationContext(),R.string.toot_error_no_content, Toast.LENGTH_LONG).show();
                     return true;
                 }
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TootActivity.this);
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TootActivity.this, style);
                 LayoutInflater inflater = this.getLayoutInflater();
                 View dialogView = inflater.inflate(R.layout.datetime_picker, null);
                 dialogBuilder.setView(dialogView);
@@ -810,7 +813,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
      */
     private void showRemove(final int viewId){
 
-        AlertDialog.Builder dialog = new AlertDialog.Builder(TootActivity.this);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(TootActivity.this, style);
 
         dialog.setMessage(R.string.toot_delete_media);
         dialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -847,7 +850,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
     private void tootVisibilityDialog(){
 
-        AlertDialog.Builder dialog = new AlertDialog.Builder(TootActivity.this);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(TootActivity.this, style);
         dialog.setTitle(R.string.toot_visibility_tilte);
         final String[] stringArray = getResources().getStringArray(R.array.toot_visibility);
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(TootActivity.this, android.R.layout.simple_list_item_1, stringArray);
@@ -1110,7 +1113,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         ic_show.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(TootActivity.this);
+                AlertDialog.Builder alert = new AlertDialog.Builder(TootActivity.this, style);
                 alert.setTitle(R.string.toot_reply_content_title);
                 final TextView input = new TextView(TootActivity.this);
                 //Set the padding

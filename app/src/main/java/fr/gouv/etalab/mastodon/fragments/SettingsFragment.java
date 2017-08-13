@@ -69,6 +69,7 @@ public class SettingsFragment extends Fragment {
     private Context context;
     private static final int ACTIVITY_CHOOSE_FILE = 411;
     private TextView set_folder;
+    private int style;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,7 +78,12 @@ public class SettingsFragment extends Fragment {
         context = getContext();
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
-
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if( theme == Helper.THEME_DARK){
+            style = R.style.DialogDark;
+        }else {
+            style = R.style.Dialog;
+        }
 
         boolean auto_store = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
 
@@ -191,7 +197,6 @@ public class SettingsFragment extends Fragment {
             file_chooser.setVisibility(View.GONE);
         }
 
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         final SwitchCompat set_night_mode = (SwitchCompat) rootView.findViewById(R.id.set_night_mode);
         set_night_mode.setChecked(theme == Helper.THEME_DARK);
         set_night_mode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -272,7 +277,7 @@ public class SettingsFragment extends Fragment {
         set_toot_visibility.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context, style);
                 dialog.setTitle(R.string.toot_visibility_tilte);
                 final String[] stringArray = getResources().getStringArray(R.array.toot_visibility);
                 final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, stringArray);

@@ -19,7 +19,7 @@
     <color name="header2D">#455A64</color>
     <color name="header3D">#607D8B</color>
 
-    <color name="dark_text">#BDBDBD</color>
+    <color name="dark_text">#efefef</color>
     <color name="transparent">#00000000</color>
 
 
@@ -40,6 +40,7 @@
 
     <!-- Mastodon color scheme -->
     <color name="mastodonC1">#282c37</color>
+    <color name="mastodonC1_">#313543</color>
     <color name="mastodonC2">#9baec8</color>
     <color name="mastodonC3">#d9e1e8</color>
     <color name="mastodonC4">#2b90d9</color>

@@ -348,9 +348,9 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 }
             }else {
                 if( position == ShowConversationActivity.position){
-                    holder.main_container.setBackgroundResource(R.color.header2D);
+                    holder.main_container.setBackgroundResource(R.color.mastodonC1_);
                 }else {
-                    holder.main_container.setBackgroundResource(R.color.cardview_dark_background);
+                    holder.main_container.setBackgroundResource(R.color.mastodonC1);
                 }
             }
         }

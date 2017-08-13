@@ -125,8 +125,8 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         }else {
             setTheme(R.style.AppThemeDark);
         }
-        setTitle("");
         setContentView(R.layout.activity_show_account);
+        setTitle("");
         instanceValue += 1;
         Bundle b = getIntent().getExtras();
         account_follow = (FloatingActionButton) findViewById(R.id.account_follow);

@@ -47,7 +47,7 @@ public class SettingsNotificationsFragment extends Fragment {
 
 
     private Context context;
-
+    private int style;
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 
@@ -55,6 +55,12 @@ public class SettingsNotificationsFragment extends Fragment {
         context = getContext();
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if( theme == Helper.THEME_DARK){
+            style = R.style.DialogDark;
+        }else {
+            style = R.style.Dialog;
+        }
         boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
         boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
         boolean notif_ask = sharedpreferences.getBoolean(Helper.SET_NOTIF_ASK, true);
@@ -92,7 +98,7 @@ public class SettingsNotificationsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String[] datetime = time_from.split(":");
-                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), style, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -118,7 +124,7 @@ public class SettingsNotificationsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String[] datetime = time_to.split(":");
-                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),style, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         SharedPreferences.Editor editor = sharedpreferences.edit();

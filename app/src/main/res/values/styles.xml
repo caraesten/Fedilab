@@ -34,20 +34,34 @@
     </style>
 
 
+
+
+
     <!-- Dark theme -->
     <style name="AppThemeDark" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/mastodonC1</item>
+        <item name="colorPrimaryDark">@color/mastodonC2</item>
+        <item name="colorAccent">@color/mastodonC4</item>
+        <item name="android:buttonStyle">@style/DarkButtonColor</item>
         <item name="cardStyle">@style/CardViewStyle.Dark</item>
         <item name="headerbg">@style/Header.Dark</item>
+        <item name="android:windowBackground">@color/mastodonC1</item>
         <item name="shapeBorder">@style/Shape.Dark</item>
         <item name="imgbd">@style/Image.Border.Dark</item>
-        <item name="android:windowBackground">@color/mastodonC1</item>
+        <item name="windowActionModeOverlay">true</item>
         <item name="popupOverlay">@style/AppThemeDark.PopupOverlay</item>
-        <item name="android:spinnerDropDownItemStyle">@style/DarkSpinnerItemStyle</item>
+        <item name="android:spinnerStyle">@style/DarkSpinnerStyle</item>
+        <item name="android:spinnerItemStyle">@style/DarkSpinnerItemStyle</item>
+        <item name="android:popupMenuStyle">@style/DarkPopupMenu</item>
+        <item name="android:itemBackground">@drawable/menu_selector_dark</item>
+        <item name="android:actionModeStyle">@style/DarkActionMode</item>
     </style>
 
-
-
     <style name="AppThemeDark_NoActionBar" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/mastodonC1</item>
+        <item name="colorPrimaryDark">@color/mastodonC2</item>
+        <item name="colorAccent">@color/mastodonC4</item>
+        <item name="android:buttonStyle">@style/DarkButtonColor</item>
         <item name="cardStyle">@style/CardViewStyle.Dark</item>
         <item name="headerbg">@style/Header.Dark</item>
         <item name="android:windowBackground">@color/mastodonC1</item>
@@ -58,7 +72,32 @@
         <item name="windowActionBar">false</item>
         <item name="android:spinnerStyle">@style/DarkSpinnerStyle</item>
         <item name="android:spinnerItemStyle">@style/DarkSpinnerItemStyle</item>
+        <item name="android:popupMenuStyle">@style/DarkPopupMenu</item>
+        <item name="android:itemBackground">@drawable/menu_selector_dark</item>
+        <item name="android:actionModeStyle">@style/DarkActionMode</item>
     </style>
+
+    <style name="DarkActionMode" parent="Base.Widget.AppCompat.ActionMode">
+        <item name="android:background">@drawable/menu_selector_dark</item>
+    </style>
+
+    <style name="DarkButtonColor" parent="Base.Widget.AppCompat.Button">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="DialogDark" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@color/mastodonC1</item>
+        <item name="colorAccent">@color/mastodonC4</item>
+        <item name="android:headerBackground">@color/mastodonC2</item>
+        <item name="colorControlNormal">@color/mastodonC2</item>
+    </style>
+
+    <style name="DarkPopupMenu" parent="@android:style/Widget.PopupMenu">
+        <item name="android:windowBackground">@color/mastodonC1</item>
+    </style>
+
+    <style name="Dialog" parent="Theme.AppCompat.Light.Dialog" />
+
     <style name="DarkSpinnerStyle" parent="Base.Widget.AppCompat.Spinner">
         <item name="android:popupBackground">@color/mastodonC1</item>
         <item name="android:windowBackground">@color/mastodonC1</item>
