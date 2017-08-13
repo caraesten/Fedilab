@@ -29,7 +29,12 @@ import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -46,7 +51,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -57,7 +61,6 @@ import android.text.style.ClickableSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Patterns;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -72,7 +75,6 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -939,8 +941,9 @@ public class Helper {
      * @param imageLoader ImageLoader - instance of ImageLoader
      * @param options DisplayImageOptions - current configuration of ImageLoader
      */
-    public static void updateHeaderAccountInfo(final Activity activity, final Account account, View headerLayout, ImageLoader imageLoader, DisplayImageOptions options){
+    public static void updateHeaderAccountInfo(final Activity activity, final Account account, final View headerLayout, ImageLoader imageLoader, DisplayImageOptions options){
         ImageView profilePicture = (ImageView) headerLayout.findViewById(R.id.profilePicture);
+
         TextView username = (TextView) headerLayout.findViewById(R.id.username);
         TextView displayedName = (TextView) headerLayout.findViewById(R.id.displayedName);
         TextView ownerStatus = (TextView) headerLayout.findViewById(R.id.owner_status);
@@ -963,6 +966,37 @@ public class Helper {
                 url = "https://" + Helper.getLiveInstance(activity) + account.getAvatar();
             }
             imageLoader.displayImage(url, profilePicture, options);
+            String urlHeader = account.getHeader();
+            if( urlHeader.startsWith("/") ){
+                urlHeader = "https://" + Helper.getLiveInstance(activity) + account.getHeader();
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && !urlHeader.contains("missing.png")) {
+                DisplayImageOptions optionNew = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
+                        .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+                imageLoader.loadImage(urlHeader, optionNew, new SimpleImageLoadingListener() {
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        super.onLoadingComplete(imageUri, view, loadedImage);
+                        LinearLayout main_header_container = (LinearLayout) headerLayout.findViewById(R.id.main_header_container);
+                        Bitmap workingBitmap = Bitmap.createBitmap(loadedImage);
+                        Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
+                        Canvas canvas = new Canvas(mutableBitmap);
+                        Paint p = new Paint(Color.BLACK);
+                        ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);
+                        p.setColorFilter(filter);
+                        canvas.drawBitmap(mutableBitmap, new Matrix(), p);
+                        BitmapDrawable background = new BitmapDrawable(activity.getResources(), mutableBitmap);
+                        main_header_container.setBackground(background);
+
+                    }
+
+                    @Override
+                    public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason) {
+                        LinearLayout main_header_container = (LinearLayout) headerLayout.findViewById(R.id.main_header_container);
+                        main_header_container.setBackgroundResource(R.drawable.side_nav_bar);
+                    }
+                });
+            }
         }
         profilePicture.setOnClickListener(null);
         profilePicture.setOnClickListener(new View.OnClickListener() {

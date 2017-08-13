@@ -126,14 +126,13 @@ public class MediaActivity extends AppCompatActivity  {
 
         RelativeLayout main_container_media = (RelativeLayout) findViewById(R.id.main_container_media);
         if( theme == Helper.THEME_LIGHT){
-            main_container_media.setBackgroundResource(R.color.background_image);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_next_pic,R.color.colorAccent);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_prev_pic,R.color.colorAccent);
+            main_container_media.setBackgroundResource(R.color.mastodonC2);
         }else {
-            main_container_media.setBackgroundResource(R.color.colorPrimaryD);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_next_pic,R.color.colorAccentD);
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_prev_pic,R.color.colorAccentD);
+            main_container_media.setBackgroundResource(R.color.mastodonC1__);
         }
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_next_pic,R.color.mastodonC4);
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_prev_pic,R.color.mastodonC4);
+
         canSwipe = true;
         loader = (RelativeLayout) findViewById(R.id.loader);
         imageView = (PhotoView) findViewById(R.id.media_picture);
