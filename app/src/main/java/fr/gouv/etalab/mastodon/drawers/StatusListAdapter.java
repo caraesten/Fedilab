@@ -293,7 +293,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             changeDrawableColor(context, R.drawable.ic_fav_black,R.color.black);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.black);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_translate,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_translate,R.color.white);
             style = R.style.AlertDialog;
         }
 

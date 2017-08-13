@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
         if( theme == Helper.THEME_DARK) {
             changeDrawableColor(getApplicationContext(), R.drawable.mastodon_icon, R.color.mastodonC2);
         }else {
-            changeDrawableColor(getApplicationContext(), R.drawable.mastodon_icon, R.color.mastodonC4);
+            changeDrawableColor(getApplicationContext(), R.drawable.mastodon_icon, R.color.mastodonC3);
         }
         final Button connectionButton = (Button) findViewById(R.id.login_button);
         login_instance = (AutoCompleteTextView) findViewById(R.id.login_instance);

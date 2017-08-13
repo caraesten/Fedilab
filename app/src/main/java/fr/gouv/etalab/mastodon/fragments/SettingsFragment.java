@@ -32,6 +32,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,7 @@ public class SettingsFragment extends Fragment {
     private static final int ACTIVITY_CHOOSE_FILE = 411;
     private TextView set_folder;
     private int style;
+    int count = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -334,26 +336,26 @@ public class SettingsFragment extends Fragment {
 
         int positionSpinner = (sharedpreferences.getInt(Helper.SET_TABS, Helper.THEME_TABS) - 1);
         tabs_layout_spinner.setSelection(positionSpinner);
-        tabs_layout_spinner.post(new Runnable() {
-            public void run() {
-                tabs_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putInt(Helper.SET_TABS, (position + 1));
-                        editor.apply();
-                        Helper.switchLayout(getActivity());
-                        getActivity().recreate();
-                        Intent intent = new Intent(context, MainActivity.class);
-                        intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
-                        startActivity(intent);
-                    }
+        tabs_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if( count > 0){
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putInt(Helper.SET_TABS, (position + 1));
+                    editor.apply();
+                    Helper.switchLayout(getActivity());
+                    getActivity().recreate();
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
+                    startActivity(intent);
+                }else {
+                    count++;
+                }
+            }
 
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-                    }
-                });
             }
         });
 
@@ -370,10 +372,10 @@ public class SettingsFragment extends Fragment {
             changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.dark_text);
         }else {
-            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.white);
+            changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.white);
+            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.white);
+            changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.white);
         }
 
     }

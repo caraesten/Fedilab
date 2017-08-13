@@ -13,7 +13,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/mastodonC1</item>
-        <item name="colorPrimaryDark">@color/mastodonC2</item>
+        <item name="colorPrimaryDark">@color/mastodonC3__</item>
         <item name="colorAccent">@color/mastodonC4</item>
         <item name="android:buttonStyle">@style/ButtonColor</item>
         <item name="cardStyle">@style/CardViewStyle.Light</item>
@@ -29,12 +29,12 @@
         <item name="android:itemBackground">@drawable/menu_selector</item>
         <item name="android:actionModeStyle">@style/ActionMode</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListViewStyle</item>
-        <item name="actionBarTextColor">@color/mastodonC3</item>
+        <item name="actionBarTextColor">@color/mastodonC3__</item>
     </style>
 
     <style name="AppTheme_NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/mastodonC2</item>
-        <item name="colorPrimaryDark">@color/mastodonC2</item>
+        <item name="colorPrimary">@color/mastodonC1</item>
+        <item name="colorPrimaryDark">@color/mastodonC3__</item>
         <item name="colorAccent">@color/mastodonC4</item>
         <item name="android:buttonStyle">@style/ButtonColor</item>
         <item name="cardStyle">@style/CardViewStyle.Light</item>
@@ -51,40 +51,42 @@
         <item name="android:itemBackground">@drawable/menu_selector</item>
         <item name="android:actionModeStyle">@style/ActionMode</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListViewStyle</item>
-        <item name="actionBarTextColor">@color/mastodonC3</item>
+        <item name="actionBarTextColor">@color/mastodonC3__</item>
+        <item name="colorButtonNormal">@color/mastodonC4</item>
     </style>
 
     <style name="DropDownListViewStyle" parent="Base.Widget.AppCompat.ListView.DropDown">
-        <item name="android:background">@color/mastodonC2</item>
+        <item name="android:background">@color/mastodonC3__</item>
     </style>
     <style name="ActionMode" parent="Base.Widget.AppCompat.ActionMode">
         <item name="android:background">@drawable/menu_selector</item>
     </style>
     <style name="ButtonColor" parent="Base.Widget.AppCompat.Button">
         <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/button_selector</item>
     </style>
     <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
         <item name="android:windowBackground">@color/mastodonC1</item>
     </style>
     <style name="Dialog" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:windowBackground">@color/mastodonC2</item>
+        <item name="android:windowBackground">@color/mastodonC3__</item>
         <item name="colorAccent">@color/mastodonC4</item>
-        <item name="android:headerBackground">@color/mastodonC2</item>
-        <item name="colorControlNormal">@color/mastodonC2</item>
+        <item name="android:headerBackground">@color/mastodonC3__</item>
+        <item name="colorControlNormal">@color/mastodonC3__</item>
     </style>
     <style name="SpinnerStyle" parent="Base.Widget.AppCompat.Spinner">
-        <item name="android:popupBackground">@color/mastodonC2</item>
-        <item name="android:windowBackground">@color/mastodonC2</item>
-        <item name="android:colorBackground">@color/mastodonC2</item>
+        <item name="android:popupBackground">@color/mastodonC3__</item>
+        <item name="android:windowBackground">@color/mastodonC3__</item>
+        <item name="android:colorBackground">@color/mastodonC3__</item>
     </style>
     <style name="SpinnerItemStyle" parent="Base.Widget.AppCompat.TextView.SpinnerItem">
         <item name="android:padding">10dp</item>
     </style>
     <style name="AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:windowBackground">@color/mastodonC2</item>
+        <item name="android:windowBackground">@color/mastodonC3__</item>
     </style>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:windowBackground">@color/mastodonC2</item>
+        <item name="android:windowBackground">@color/mastodonC3__</item>
     </style>
 
     <style name="Image.Border.Light" parent="AppTheme">
@@ -156,6 +158,7 @@
 
     <style name="DarkButtonColor" parent="Base.Widget.AppCompat.Button">
         <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/button_selector</item>
     </style>
 
     <style name="DialogDark" parent="Theme.AppCompat.Dialog">

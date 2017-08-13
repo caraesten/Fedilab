@@ -3,5 +3,5 @@
     <item android:drawable="@color/mastodonC4" android:state_checked="true" />
     <item android:drawable="@color/mastodonC4" android:state_pressed="true" />
     <item android:drawable="@color/mastodonC4" android:state_focused="true" />
-    <item android:drawable="@color/mastodonC2" />
+    <item android:drawable="@color/mastodonC3__" />
 </selector>

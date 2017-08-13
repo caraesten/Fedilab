@@ -39,17 +39,19 @@
     <color name="black">#000</color>
 
     <!-- Mastodon color scheme -->
+    <color name="mastodonC1__">#585c67</color>
     <color name="mastodonC1">#282c37</color>
     <color name="mastodonC1_">#313543</color>
     <color name="mastodonC2">#9baec8</color>
     <color name="mastodonC3">#d9e1e8</color>
     <color name="mastodonC3_">#ebf3fa</color>
     <color name="mastodonC3__">#efefef</color>
+    <color name="mastodonC4__">#772b90d9</color>
     <color name="mastodonC4">#2b90d9</color>
+    <color name="mastodonC4_">#1b80c9</color>
 
 
-
-    <color name="foreground_material_dark" >@color/mastodonC3</color>
+    <color name="foreground_material_dark" >@color/mastodonC3__</color>
     <color name="foreground_material_light">@color/mastodonC1</color>
 
     <color name="background_material_dark">@color/mastodonC1</color>
@@ -74,22 +76,22 @@
     <color name="button_material_light">@color/mastodonC4</color>
 
     <color name="switch_thumb_normal_material_dark">@color/mastodonC2</color>
-    <color name="switch_thumb_normal_material_light">@color/mastodonC3</color>
+    <color name="switch_thumb_normal_material_light">@color/mastodonC3__</color>
     <color name="switch_thumb_disabled_material_dark">@color/mastodonC1</color>
-    <color name="switch_thumb_disabled_material_light">@color/mastodonC2</color>
+    <color name="switch_thumb_disabled_material_light">@color/mastodonC3__</color>
 
     <color name="bright_foreground_material_dark">@color/mastodonC3</color>
-    <color name="bright_foreground_material_light">@color/mastodonC1</color>
+    <color name="bright_foreground_material_light">@color/mastodonC3</color>
     <!-- White 50% -->
     <color name="bright_foreground_disabled_material_dark">@color/mastodonC3</color>
     <!-- Black 50% -->
-    <color name="bright_foreground_disabled_material_light">@color/mastodonC1</color>
+    <color name="bright_foreground_disabled_material_light">@color/mastodonC3</color>
     <color name="bright_foreground_inverse_material_dark">@color/mastodonC2</color>
 
     <color name="dim_foreground_material_dark">@color/mastodonC2</color>
-    <color name="dim_foreground_material_light">@color/mastodonC1</color>
+    <color name="dim_foreground_material_light">@color/mastodonC2</color>
     <color name="dim_foreground_disabled_material_dark">@color/mastodonC3</color>
-    <color name="dim_foreground_disabled_material_light">@color/mastodonC2</color>
+    <color name="dim_foreground_disabled_material_light">@color/mastodonC3__</color>
 
     <item name="hint_alpha_material_dark" format="float" type="dimen">0.50</item>
     <item name="hint_alpha_material_light" format="float" type="dimen">0.38</item>
@@ -108,7 +110,7 @@
     <!-- 87% black -->
     <color name="primary_text_default_material_light">@color/mastodonC1</color>
     <!-- 54% black -->
-    <color name="secondary_text_default_material_light">@color/mastodonC2</color>
+    <color name="secondary_text_default_material_light">@color/mastodonC3__</color>
 
     <!-- 100% white -->
     <color name="primary_text_default_material_dark">@color/mastodonC3</color>
@@ -123,8 +125,8 @@
     <item name="highlight_alpha_material_colored" format="float" type="dimen">0.26</item>
 
     <!-- 26% of default values -->
-    <color name="primary_text_disabled_material_light">@color/mastodonC3</color>
-    <color name="secondary_text_disabled_material_light">@color/mastodonC3</color>
+    <color name="primary_text_disabled_material_light">@color/mastodonC3__</color>
+    <color name="secondary_text_disabled_material_light">@color/mastodonC3__</color>
 
     <!-- 30% of default values -->
     <color name="primary_text_disabled_material_dark">@color/mastodonC3</color>
