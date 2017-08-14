@@ -237,8 +237,10 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                         main_header_container.setVisibility(View.GONE);
                         if( pp_actionBar != null)
                             pp_actionBar.setVisibility(View.VISIBLE);
+                        tabLayout.setVisibility(View.GONE);
                     }else {
                         manageButtonVisibility();
+                        tabLayout.setVisibility(View.VISIBLE);
                         main_header_container.setVisibility(View.VISIBLE);
                         if( pp_actionBar != null)
                             pp_actionBar.setVisibility(View.GONE);
@@ -250,7 +252,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                         public void run() {
                             isHiddingShowing = false;
                         }
-                    }, 500);
+                    }, 700);
                 }
 
             }
@@ -335,9 +337,9 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_DARK){
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.dark_text);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.mastodonC4);
         }else {
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.black);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.mastodonC4);
         }
         if( account!= null) {
             String urlHeader = account.getHeader();
