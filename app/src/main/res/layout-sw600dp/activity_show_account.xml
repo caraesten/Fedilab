@@ -24,6 +24,7 @@
     android:animateLayoutChanges="true"
     android:orientation="vertical">
     <LinearLayout
+        android:id="@+id/main_header_container"
         android:layout_marginTop="5dp"
         android:layout_width="400dp"
         android:layout_gravity="center"

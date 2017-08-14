@@ -13,7 +13,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/mastodonC1</item>
-        <item name="colorPrimaryDark">@color/mastodonC3__</item>
+        <item name="colorPrimaryDark">@color/mastodonC2</item>
         <item name="colorAccent">@color/mastodonC4</item>
         <item name="android:buttonStyle">@style/ButtonColor</item>
         <item name="cardStyle">@style/CardViewStyle.Light</item>
@@ -34,7 +34,7 @@
 
     <style name="AppTheme_NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/mastodonC1</item>
-        <item name="colorPrimaryDark">@color/mastodonC3__</item>
+        <item name="colorPrimaryDark">@color/mastodonC2</item>
         <item name="colorAccent">@color/mastodonC4</item>
         <item name="android:buttonStyle">@style/ButtonColor</item>
         <item name="cardStyle">@style/CardViewStyle.Light</item>
