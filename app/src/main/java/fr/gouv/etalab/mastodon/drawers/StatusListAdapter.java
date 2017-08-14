@@ -291,8 +291,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.black);
             changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.black);
             changeDrawableColor(context, R.drawable.ic_fav_black,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_photo,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_photo,R.color.white);
+            changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.white);
             changeDrawableColor(context, R.drawable.ic_translate,R.color.white);
             style = R.style.AlertDialog;
         }
@@ -344,7 +344,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 if( position == ShowConversationActivity.position){
                     holder.main_container.setBackgroundResource(R.color.mastodonC3_);
                 }else {
-                    holder.main_container.setBackgroundResource(R.color.mastodonC3);
+                    holder.main_container.setBackgroundResource(R.color.mastodonC3__);
                 }
             }else {
                 if( position == ShowConversationActivity.position){

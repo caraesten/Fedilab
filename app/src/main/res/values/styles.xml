@@ -5,6 +5,7 @@
     <attr format="reference" name="shapeBorder"/>
     <attr format="reference" name="imgbd"/>
     <attr format="color" name="actionBarTextColor"/>
+    <attr format="color" name="color_in_account_header"/>
     <attr format="reference" name="splash"/>
     <attr format="reference" name="popupOverlay"/>
     <attr format="reference" name="appBarOverlay"/>
@@ -30,6 +31,7 @@
         <item name="android:actionModeStyle">@style/ActionMode</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListViewStyle</item>
         <item name="actionBarTextColor">@color/mastodonC3__</item>
+        <item name="color_in_account_header">@color/mastodonC3</item>
     </style>
 
     <style name="AppTheme_NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
@@ -53,6 +55,7 @@
         <item name="android:dropDownListViewStyle">@style/DropDownListViewStyle</item>
         <item name="actionBarTextColor">@color/mastodonC3__</item>
         <item name="colorButtonNormal">@color/mastodonC4</item>
+        <item name="color_in_account_header">@color/mastodonC3</item>
     </style>
 
     <style name="DropDownListViewStyle" parent="Base.Widget.AppCompat.ListView.DropDown">
@@ -125,6 +128,7 @@
         <item name="android:actionModeStyle">@style/DarkActionMode</item>
         <item name="android:dropDownListViewStyle">@style/DarkdropDownListViewStyle</item>
         <item name="actionBarTextColor">@color/mastodonC3</item>
+        <item name="color_in_account_header">@color/mastodonC3</item>
     </style>
 
     <style name="AppThemeDark_NoActionBar" parent="Theme.AppCompat.NoActionBar">
@@ -147,6 +151,7 @@
         <item name="android:actionModeStyle">@style/DarkActionMode</item>
         <item name="android:dropDownListViewStyle">@style/DarkdropDownListViewStyle</item>
         <item name="actionBarTextColor">@color/mastodonC3</item>
+        <item name="color_in_account_header">@color/mastodonC3</item>
     </style>
 
     <style name="DarkdropDownListViewStyle" parent="Base.Widget.AppCompat.ListView.DropDown">
