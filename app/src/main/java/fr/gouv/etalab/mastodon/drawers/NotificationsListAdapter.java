@@ -82,7 +82,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
     private NotificationsListAdapter notificationsListAdapter;
     private int behaviorWithAttachments;
     private boolean isOnWifi;
-
+    private int style;
 
     public NotificationsListAdapter(Context context, boolean isOnWifi, int behaviorWithAttachments, List<Notification> notifications){
         this.context = context;
@@ -446,7 +446,14 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             else
                 title = context.getString(R.string.reblog_add);
         }
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if( theme == Helper.THEME_DARK){
+            style = R.style.DialogDark;
+        }else {
+            style = R.style.Dialog;
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             builder.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
@@ -481,7 +488,15 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
      */
     private void displayConfirmationNotificationDialog(final Notification notification){
         final ArrayList seletedItems = new ArrayList();
-        AlertDialog dialog = new AlertDialog.Builder(context)
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if( theme == Helper.THEME_DARK){
+            style = R.style.DialogDark;
+        }else {
+            style = R.style.Dialog;
+        }
+        AlertDialog dialog = new AlertDialog.Builder(context, style)
                 .setTitle(R.string.delete_notification_ask)
                 .setMultiChoiceItems(new String[]{context.getString(R.string.delete_notification_ask_all)}, null, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override

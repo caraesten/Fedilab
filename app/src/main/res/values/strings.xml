@@ -305,6 +305,14 @@
     <string name="embedded_browser">Use the built-in browser</string>
     <string name="use_javascript">Enable Javascript</string>
     <string name="use_cookies">Allow third-party cookies</string>
+    <string name="settings_ui_layout">Layout for timelines: </string>
+    <string-array name="settings_menu_tabs">
+        <item>Tabs</item>
+        <item>Menu</item>
+        <item>Tabs and menu</item>
+    </string-array>
+
+
 
     <string name="set_title_news">News</string>
     <string name="set_notification_news">Notify for new toots on the home timeline</string>

@@ -32,15 +32,18 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,6 +70,8 @@ public class SettingsFragment extends Fragment {
     private Context context;
     private static final int ACTIVITY_CHOOSE_FILE = 411;
     private TextView set_folder;
+    private int style;
+    int count = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,7 +80,12 @@ public class SettingsFragment extends Fragment {
         context = getContext();
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
-
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if( theme == Helper.THEME_DARK){
+            style = R.style.DialogDark;
+        }else {
+            style = R.style.Dialog;
+        }
 
         boolean auto_store = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
 
@@ -189,7 +199,6 @@ public class SettingsFragment extends Fragment {
             file_chooser.setVisibility(View.GONE);
         }
 
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         final SwitchCompat set_night_mode = (SwitchCompat) rootView.findViewById(R.id.set_night_mode);
         set_night_mode.setChecked(theme == Helper.THEME_DARK);
         set_night_mode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -270,7 +279,7 @@ public class SettingsFragment extends Fragment {
         set_toot_visibility.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context, style);
                 dialog.setTitle(R.string.toot_visibility_tilte);
                 final String[] stringArray = getResources().getStringArray(R.array.toot_visibility);
                 final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, stringArray);
@@ -320,6 +329,36 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        final Spinner tabs_layout_spinner = (Spinner) rootView.findViewById(R.id.tabs_layout_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.settings_menu_tabs, android.R.layout.simple_spinner_item);
+        tabs_layout_spinner.setAdapter(adapter);
+
+        int positionSpinner = (sharedpreferences.getInt(Helper.SET_TABS, Helper.THEME_TABS) - 1);
+        tabs_layout_spinner.setSelection(positionSpinner);
+        tabs_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if( count > 0){
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putInt(Helper.SET_TABS, (position + 1));
+                    editor.apply();
+                    Helper.switchLayout(getActivity());
+                    getActivity().recreate();
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
+                    startActivity(intent);
+                }else {
+                    count++;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         return rootView;
     }
 
@@ -333,10 +372,10 @@ public class SettingsFragment extends Fragment {
             changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.dark_text);
         }else {
-            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.white);
+            changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.white);
+            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.white);
+            changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.white);
         }
 
     }

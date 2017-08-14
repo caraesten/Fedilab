@@ -48,6 +48,7 @@ public class DraftsListAdapter extends BaseAdapter  {
     private LayoutInflater layoutInflater;
     private Context context;
     private DraftsListAdapter draftsListAdapter;
+    private int style;
 
     public DraftsListAdapter(Context context, List<StoredStatus> storedStatuses){
         this.storedStatuses = storedStatuses;
@@ -88,7 +89,7 @@ public class DraftsListAdapter extends BaseAdapter  {
             holder = (ViewHolder) convertView.getTag();
         }
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_DARK){
             changeDrawableColor(context, R.drawable.ic_cancel,R.color.dark_text);
         }else {
@@ -105,7 +106,12 @@ public class DraftsListAdapter extends BaseAdapter  {
         holder.draft_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                if( theme == Helper.THEME_DARK){
+                    style = R.style.DialogDark;
+                }else {
+                    style = R.style.Dialog;
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
                 builder.setMessage(draft.getStatus().getContent() + '\n' + Helper.dateToString(context, draft.getCreation_date()));
                 builder.setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle(R.string.remove_draft)

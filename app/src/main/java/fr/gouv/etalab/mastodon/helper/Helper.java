@@ -29,7 +29,12 @@ import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -60,6 +65,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.MimeTypeMap;
@@ -67,6 +73,7 @@ import android.webkit.URLUtil;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -185,11 +192,15 @@ public class Helper {
     public static final String SET_AUTO_STORE = "set_auto_store";
     public static final String SET_POPUP_PUSH = "set_popup_push";
     public static final String SET_NSFW_TIMEOUT = "set_nsfw_timeout";
+    public static final String SET_TABS = "set_tabs";
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;
     public static final int THEME_LIGHT = 1;
     public static final int THEME_DARK = 2;
+    public static final int THEME_TABS = 1;
+    public static final int THEME_MENU = 2;
+    public static final int THEME_MENU_TABS = 3;
 
     public static final String SET_NOTIF_FOLLOW = "set_notif_follow";
     public static final String SET_NOTIF_ADD = "set_notif_follow_add";
@@ -930,8 +941,9 @@ public class Helper {
      * @param imageLoader ImageLoader - instance of ImageLoader
      * @param options DisplayImageOptions - current configuration of ImageLoader
      */
-    public static void updateHeaderAccountInfo(final Activity activity, final Account account, View headerLayout, ImageLoader imageLoader, DisplayImageOptions options){
+    public static void updateHeaderAccountInfo(final Activity activity, final Account account, final View headerLayout, ImageLoader imageLoader, DisplayImageOptions options){
         ImageView profilePicture = (ImageView) headerLayout.findViewById(R.id.profilePicture);
+
         TextView username = (TextView) headerLayout.findViewById(R.id.username);
         TextView displayedName = (TextView) headerLayout.findViewById(R.id.displayedName);
         TextView ownerStatus = (TextView) headerLayout.findViewById(R.id.owner_status);
@@ -954,6 +966,37 @@ public class Helper {
                 url = "https://" + Helper.getLiveInstance(activity) + account.getAvatar();
             }
             imageLoader.displayImage(url, profilePicture, options);
+            String urlHeader = account.getHeader();
+            if( urlHeader.startsWith("/") ){
+                urlHeader = "https://" + Helper.getLiveInstance(activity) + account.getHeader();
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && !urlHeader.contains("missing.png")) {
+                DisplayImageOptions optionNew = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
+                        .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+                imageLoader.loadImage(urlHeader, optionNew, new SimpleImageLoadingListener() {
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        super.onLoadingComplete(imageUri, view, loadedImage);
+                        LinearLayout main_header_container = (LinearLayout) headerLayout.findViewById(R.id.main_header_container);
+                        Bitmap workingBitmap = Bitmap.createBitmap(loadedImage);
+                        Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
+                        Canvas canvas = new Canvas(mutableBitmap);
+                        Paint p = new Paint(Color.BLACK);
+                        ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);
+                        p.setColorFilter(filter);
+                        canvas.drawBitmap(mutableBitmap, new Matrix(), p);
+                        BitmapDrawable background = new BitmapDrawable(activity.getResources(), mutableBitmap);
+                        main_header_container.setBackground(background);
+
+                    }
+
+                    @Override
+                    public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason) {
+                        LinearLayout main_header_container = (LinearLayout) headerLayout.findViewById(R.id.main_header_container);
+                        main_header_container.setBackgroundResource(R.drawable.side_nav_bar);
+                    }
+                });
+            }
         }
         profilePicture.setOnClickListener(null);
         profilePicture.setOnClickListener(new View.OnClickListener() {
@@ -1411,5 +1454,59 @@ public class Helper {
      */
     public static boolean listIsAtTop(ListView listView) {
         return listView.getChildCount() == 0 || listView.getChildAt(0).getTop() == 0;
+    }
+
+
+    /**
+     * Changes the menu layout
+     * @param activity Activity must be an instance of MainActivity
+     */
+    public static void switchLayout(Activity activity){
+        //Check if the class calling the method is an instance of MainActivity
+        boolean isTablet = activity.getResources().getBoolean(R.bool.isTablet);
+        final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int timelineLayout = sharedpreferences.getInt(Helper.SET_TABS, Helper.THEME_TABS);
+        final NavigationView navigationView = (NavigationView) activity.findViewById(R.id.nav_view);
+
+        android.support.design.widget.TabLayout tableLayout = (android.support.design.widget.TabLayout) activity.findViewById(R.id.tabLayout);
+        LinearLayout toolbar_search_container = (LinearLayout) activity.findViewById(R.id.toolbar_search_container);
+        ViewGroup.LayoutParams params = toolbar_search_container.getLayoutParams();
+        int heightSearchdp, heightSearchdpAlone;
+        if( !isTablet){
+            heightSearchdp = 40;
+            heightSearchdpAlone = 60;
+        }else {
+            heightSearchdp = 40;
+            heightSearchdpAlone = 60;
+        }
+        switch (timelineLayout){
+            case Helper.THEME_TABS:
+                navigationView.getMenu().findItem(R.id.nav_home).setVisible(false);
+                navigationView.getMenu().findItem(R.id.nav_local).setVisible(false);
+                navigationView.getMenu().findItem(R.id.nav_global).setVisible(false);
+                navigationView.getMenu().findItem(R.id.nav_notification).setVisible(false);
+                params.height = (int) Helper.convertDpToPixel(heightSearchdp, activity);;
+                toolbar_search_container.setLayoutParams(params);
+                tableLayout.setVisibility(View.VISIBLE);
+                break;
+            case Helper.THEME_MENU:
+                navigationView.getMenu().findItem(R.id.nav_home).setVisible(true);
+                navigationView.getMenu().findItem(R.id.nav_local).setVisible(true);
+                navigationView.getMenu().findItem(R.id.nav_global).setVisible(true);
+                navigationView.getMenu().findItem(R.id.nav_notification).setVisible(true);
+                params.height = (int) Helper.convertDpToPixel(heightSearchdpAlone, activity);;
+                toolbar_search_container.setLayoutParams(params);
+                tableLayout.setVisibility(View.GONE);
+                break;
+            case Helper.THEME_MENU_TABS:
+                navigationView.getMenu().findItem(R.id.nav_home).setVisible(true);
+                navigationView.getMenu().findItem(R.id.nav_local).setVisible(true);
+                navigationView.getMenu().findItem(R.id.nav_global).setVisible(true);
+                navigationView.getMenu().findItem(R.id.nav_notification).setVisible(true);
+                params.height = (int) Helper.convertDpToPixel(heightSearchdp, activity);;
+                toolbar_search_container.setLayoutParams(params);
+                tableLayout.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 }

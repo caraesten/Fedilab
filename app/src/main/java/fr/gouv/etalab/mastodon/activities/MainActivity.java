@@ -83,7 +83,6 @@ import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
-import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeUser;
 import static fr.gouv.etalab.mastodon.helper.Helper.loadPPInActionBar;
 import static fr.gouv.etalab.mastodon.helper.Helper.menuAccounts;
@@ -165,7 +164,7 @@ public class MainActivity extends AppCompatActivity
                 String fragmentTag = null;
                 main_app_container.setVisibility(View.GONE);
                 viewPager.setVisibility(View.VISIBLE);
-                tabLayout.setVisibility(View.VISIBLE);
+                Helper.switchLayout(MainActivity.this);
                 switch (tab.getPosition()){
                     case 0:
                         item = navigationView.getMenu().findItem(R.id.nav_home);
@@ -207,7 +206,7 @@ public class MainActivity extends AppCompatActivity
             public void onTabReselected(TabLayout.Tab tab) {
                 if( viewPager.getVisibility() == View.GONE){
                     viewPager.setVisibility(View.VISIBLE);
-                    tabLayout.setVisibility(View.VISIBLE);
+                    Helper.switchLayout(MainActivity.this);
                     main_app_container.setVisibility(View.GONE);
                     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                     drawer.closeDrawer(GravityCompat.START);
@@ -219,15 +218,10 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
-        if( theme == Helper.THEME_DARK){
-            for(int i = 0 ; i < 4 ; i++)
-                if( tabLayout.getTabAt(i) != null && tabLayout.getTabAt(i).getIcon() != null)
-                    tabLayout.getTabAt(i).getIcon().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-        }else {
-            for(int i = 0 ; i < 4 ; i++)
-                if( tabLayout.getTabAt(i) != null && tabLayout.getTabAt(i).getIcon() != null)
-                    tabLayout.getTabAt(i).getIcon().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.black), PorterDuff.Mode.SRC_IN);
-        }
+        for(int i = 0 ; i < 4 ; i++)
+            if( tabLayout.getTabAt(i) != null && tabLayout.getTabAt(i).getIcon() != null)
+                tabLayout.getTabAt(i).getIcon().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+
 
         toolbar_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -373,6 +367,8 @@ public class MainActivity extends AppCompatActivity
                 }
             }).show();
         }
+        Helper.switchLayout(MainActivity.this);
+
     }
 
 
@@ -460,8 +456,9 @@ public class MainActivity extends AppCompatActivity
                     super.onBackPressed();
                 }
             }else {
+
                 viewPager.setVisibility(View.VISIBLE);
-                tabLayout.setVisibility(View.VISIBLE);
+                Helper.switchLayout(MainActivity.this);
                 main_app_container.setVisibility(View.GONE);
                 final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                 unCheckAllMenuItems(navigationView);

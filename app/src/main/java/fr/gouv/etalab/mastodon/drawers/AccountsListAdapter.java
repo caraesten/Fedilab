@@ -69,6 +69,7 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
     private Context context;
     private AccountsListAdapter accountsListAdapter;
     private String targetedId;
+    private int style;
 
     public AccountsListAdapter(Context context, RetrieveAccountsAsyncTask.Type action, String targetedId, List<Account> accounts){
         this.context = context;
@@ -115,6 +116,7 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
         final Account account = accounts.get(position);
         final ViewHolder holder;
+
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.drawer_account, parent, false);
             holder = new ViewHolder();
@@ -249,8 +251,14 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
 
         String[] stringArrayConf = context.getResources().getStringArray(R.array.more_action_confirm_account);
         final API.StatusAction doAction;
-
-        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if( theme == Helper.THEME_DARK){
+            style = R.style.DialogDark;
+        }else {
+            style = R.style.Dialog;
+        }
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context, style);
 
         if( action == RetrieveAccountsAsyncTask.Type.BLOCKED) {
             dialog.setMessage(stringArrayConf[1]);

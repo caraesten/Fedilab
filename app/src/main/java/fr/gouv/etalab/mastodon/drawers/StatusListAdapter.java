@@ -105,6 +105,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     private final int FAVOURITE = 2;
     private RetrieveFeedsAsyncTask.Type type;
     private String targetedId;
+    private int style;
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, List<Status> statuses){
         this.context = context;
@@ -280,6 +281,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_translate,R.color.dark_text);
+            style = R.style.AlertDialogDark;
         }else {
             changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
             changeDrawableColor(context, R.drawable.ic_action_more,R.color.black);
@@ -289,9 +291,10 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.black);
             changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.black);
             changeDrawableColor(context, R.drawable.ic_fav_black,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_photo,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_translate,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_photo,R.color.white);
+            changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.white);
+            changeDrawableColor(context, R.drawable.ic_translate,R.color.white);
+            style = R.style.AlertDialog;
         }
 
         //Redraws top icons (boost/reply)
@@ -339,15 +342,15 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }else {
             if( theme == Helper.THEME_LIGHT){
                 if( position == ShowConversationActivity.position){
-                    holder.main_container.setBackgroundResource(R.color.blue_light);
+                    holder.main_container.setBackgroundResource(R.color.mastodonC3_);
                 }else {
-                    holder.main_container.setBackgroundResource(R.color.white);
+                    holder.main_container.setBackgroundResource(R.color.mastodonC3__);
                 }
             }else {
                 if( position == ShowConversationActivity.position){
-                    holder.main_container.setBackgroundResource(R.color.header2D);
+                    holder.main_container.setBackgroundResource(R.color.mastodonC1_);
                 }else {
-                    holder.main_container.setBackgroundResource(R.color.cardview_dark_background);
+                    holder.main_container.setBackgroundResource(R.color.mastodonC1);
                 }
             }
         }
@@ -902,7 +905,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             else
                 title = context.getString(R.string.reblog_add);
         }
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             builder.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
@@ -941,7 +944,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         final boolean isOwner = status.getAccount().getId().equals(userId);
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(context, style);
         //builderSingle.setTitle(R.string.make_a_choice);
         final String[] stringArray, stringArrayConf;
         final API.StatusAction[] doAction;
@@ -966,7 +969,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                AlertDialog.Builder builderInner = new AlertDialog.Builder(context);
+                AlertDialog.Builder builderInner = new AlertDialog.Builder(context, style);
                 builderInner.setTitle(stringArrayConf[which]);
                 if( isOwner) {
                     if( which == 0) {

@@ -67,6 +67,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
     private LayoutInflater layoutInflater;
     private ScheduledTootsListAdapter scheduledTootsListAdapter;
     private RelativeLayout textviewNoAction;
+    private int style;
 
     public ScheduledTootsListAdapter(Context context, List<StoredStatus> storedStatuses, RelativeLayout textviewNoAction){
         this.context = context;
@@ -117,7 +118,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
 
 
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_DARK){
             changeDrawableColor(context, R.drawable.ic_cancel,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_action_globe,R.color.dark_text);
@@ -154,7 +155,12 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
         holder.scheduled_toot_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                if( theme == Helper.THEME_DARK){
+                    style = R.style.DialogDark;
+                }else {
+                    style = R.style.Dialog;
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
                 builder.setMessage(status.getContent() + '\n' + Helper.dateToString(context, storedStatus.getCreation_date()));
                 builder.setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle(R.string.remove_scheduled)
@@ -195,8 +201,12 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
         holder.scheduled_toot_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+                if( theme == Helper.THEME_DARK){
+                    style = R.style.DialogDark;
+                }else {
+                    style = R.style.Dialog;
+                }
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
                 LayoutInflater inflater = ((MainActivity)context).getLayoutInflater();
                 View dialogView = inflater.inflate(R.layout.datetime_picker, null);
                 SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
