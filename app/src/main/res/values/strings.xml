@@ -216,7 +216,7 @@
     <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
     <!-- Notifications -->
     <string name="no_notifications">No notification to display</string>
-    <string name="notif_mention">mentioned your status</string>
+    <string name="notif_mention">mentioned you</string>
     <string name="notif_reblog">boosted your status</string>
     <string name="notif_favourite">favourited your status</string>
     <string name="notif_follow">followed you</string>

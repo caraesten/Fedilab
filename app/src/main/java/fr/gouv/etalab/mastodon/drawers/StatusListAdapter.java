@@ -14,7 +14,7 @@ package fr.gouv.etalab.mastodon.drawers;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -30,12 +30,8 @@ import android.os.CountDownTimer;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.text.Html;
-import android.text.Selection;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -106,7 +102,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     private final int FAVOURITE = 2;
     private RetrieveFeedsAsyncTask.Type type;
     private String targetedId;
-    private int style;
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, List<Status> statuses){
         this.context = context;
@@ -201,29 +196,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
-
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-
-        int iconSizePercent = sharedpreferences.getInt(Helper.SET_ICON_SIZE, 100);
-        int textSizePercent = sharedpreferences.getInt(Helper.SET_TEXT_SIZE, 100);
-
-        holder.status_more.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
-        holder.status_more.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
-        holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
-        holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
-        holder.status_reply.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
-        holder.status_reply.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
-
-        holder.status_content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
-        holder.status_account_displayname.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
-        holder.status_account_username.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12*textSizePercent/100);
-        holder.status_reblog_user.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
-        holder.status_toot_date.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12*textSizePercent/100);
-        holder.status_spoiler.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
-        holder.status_content_translated.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
-
-
         if( status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()){
             holder.status_content_container.setVisibility(View.GONE);
             holder.status_spoiler_container.setVisibility(View.VISIBLE);
@@ -291,6 +263,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_action_container.setVisibility(View.GONE);
         }
         //Manages theme for icon colors
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_DARK){
             changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_text);
@@ -304,7 +277,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_translate,R.color.dark_text);
-            style = R.style.AlertDialogDark;
         }else {
             changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
             changeDrawableColor(context, R.drawable.ic_action_more,R.color.black);
@@ -317,18 +289,17 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             changeDrawableColor(context, R.drawable.ic_photo,R.color.white);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.white);
             changeDrawableColor(context, R.drawable.ic_translate,R.color.white);
-            style = R.style.AlertDialog;
         }
 
         //Redraws top icons (boost/reply)
         final float scale = context.getResources().getDisplayMetrics().density;
         if( !status.getIn_reply_to_account_id().equals("null") || !status.getIn_reply_to_id().equals("null") ){
             Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_reply);
-            img.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
+            img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (15 * scale + 0.5f));
             holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
         }else if( status.getReblog() != null){
             Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_retweet_black);
-            img.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
+            img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (15 * scale + 0.5f));
             holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
         }else{
             holder.status_account_displayname.setCompoundDrawables( null, null, null, null);
@@ -562,8 +533,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         else
             imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_retweet_black);
 
-        imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-        imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+        imgFav.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (20 * scale + 0.5f));
+        imgReblog.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (20 * scale + 0.5f));
         holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
         holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
 
@@ -928,7 +899,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             else
                 title = context.getString(R.string.reblog_add);
         }
-        AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             builder.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
@@ -967,7 +938,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         final boolean isOwner = status.getAccount().getId().equals(userId);
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(context, style);
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
         //builderSingle.setTitle(R.string.make_a_choice);
         final String[] stringArray, stringArrayConf;
         final API.StatusAction[] doAction;
@@ -992,7 +963,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                AlertDialog.Builder builderInner = new AlertDialog.Builder(context, style);
+                AlertDialog.Builder builderInner = new AlertDialog.Builder(context);
                 builderInner.setTitle(stringArrayConf[which]);
                 if( isOwner) {
                     if( which == 0) {
@@ -1102,5 +1073,4 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         builderSingle.create().requestWindowFeature(Window.FEATURE_NO_TITLE);
         builderSingle.show();
     }
-
 }
