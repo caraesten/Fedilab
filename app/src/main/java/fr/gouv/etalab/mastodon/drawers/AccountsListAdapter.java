@@ -14,7 +14,7 @@ package fr.gouv.etalab.mastodon.drawers;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,7 +25,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.text.Html;
 import android.text.util.Linkify;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,7 +68,6 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
     private Context context;
     private AccountsListAdapter accountsListAdapter;
     private String targetedId;
-    private int style;
 
     public AccountsListAdapter(Context context, RetrieveAccountsAsyncTask.Type action, String targetedId, List<Account> accounts){
         this.context = context;
@@ -252,13 +250,7 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
         String[] stringArrayConf = context.getResources().getStringArray(R.array.more_action_confirm_account);
         final API.StatusAction doAction;
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_DARK){
-            style = R.style.DialogDark;
-        }else {
-            style = R.style.Dialog;
-        }
-        AlertDialog.Builder dialog = new AlertDialog.Builder(context, style);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 
         if( action == RetrieveAccountsAsyncTask.Type.BLOCKED) {
             dialog.setMessage(stringArrayConf[1]);

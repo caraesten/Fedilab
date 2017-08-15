@@ -15,7 +15,7 @@ package fr.gouv.etalab.mastodon.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -48,7 +48,6 @@ public class DraftsListAdapter extends BaseAdapter  {
     private LayoutInflater layoutInflater;
     private Context context;
     private DraftsListAdapter draftsListAdapter;
-    private int style;
 
     public DraftsListAdapter(Context context, List<StoredStatus> storedStatuses){
         this.storedStatuses = storedStatuses;
@@ -106,12 +105,8 @@ public class DraftsListAdapter extends BaseAdapter  {
         holder.draft_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( theme == Helper.THEME_DARK){
-                    style = R.style.DialogDark;
-                }else {
-                    style = R.style.Dialog;
-                }
-                AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage(draft.getStatus().getContent() + '\n' + Helper.dateToString(context, draft.getCreation_date()));
                 builder.setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle(R.string.remove_draft)

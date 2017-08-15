@@ -211,7 +211,7 @@
 
     <!-- Notifications -->
     <string name="no_notifications">Aucune notification à afficher</string>
-    <string name="notif_mention">a mentionné votre pouet</string>
+    <string name="notif_mention">vous a mentionné</string>
     <string name="notif_reblog">a partagé votre pouet</string>
     <string name="notif_favourite">a ajouté votre pouet à ses favoris</string>
     <string name="notif_follow">vous a suivi</string>
