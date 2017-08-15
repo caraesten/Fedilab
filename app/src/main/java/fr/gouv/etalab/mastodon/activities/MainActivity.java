@@ -571,11 +571,11 @@ public class MainActivity extends AppCompatActivity
             set_text_size_value.setText(String.format("%s%%",String.valueOf(textSize)));
             set_icon_size_value.setText(String.format("%s%%",String.valueOf(iconSize)));
 
-            set_text_size.setMax(12);
-            set_icon_size.setMax(12);
+            set_text_size.setMax(20);
+            set_icon_size.setMax(20);
 
-            set_text_size.setProgress(((textSize-70)/5));
-            set_icon_size.setProgress(((textSize-70)/5));
+            set_text_size.setProgress(((textSize-50)/5));
+            set_icon_size.setProgress(((iconSize-50)/5));
 
             set_text_size.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
@@ -585,7 +585,7 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-                    int value = 70 + progress*5;
+                    int value = 50 + progress*5;
                     set_text_size_value.setText(String.format("%s%%",String.valueOf(value)));
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putInt(Helper.SET_TEXT_SIZE, value);
@@ -599,7 +599,7 @@ public class MainActivity extends AppCompatActivity
                 public void onStartTrackingTouch(SeekBar seekBar) {}
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    int value = 70 + progress*5;
+                    int value = 50 + progress*5;
                     set_icon_size_value.setText(String.format("%s%%",String.valueOf(value)));
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putInt(Helper.SET_ICON_SIZE, value);
@@ -608,6 +608,7 @@ public class MainActivity extends AppCompatActivity
             });
             builder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        MainActivity.this.recreate();
                         dialog.dismiss();
                     }
                 })
