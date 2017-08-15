@@ -782,12 +782,16 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             imParams.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
             imageView.setAdjustViewBounds(true);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            //Adds the url at the end of the toot 
-            int selectionBefore = toot_content.getSelectionStart();
-            toot_content.setText(toot_content.getText().toString()+"\n"+attachment.getUrl());
-            //Moves the cursor
-            if( selectionBefore >= 0 )
-                toot_content.setSelection(selectionBefore);
+            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, true);
+            if( show_media_urls) {
+                //Adds the url at the end of the toot 
+                int selectionBefore = toot_content.getSelectionStart();
+                toot_content.setText(toot_content.getText().toString() + "\n" + attachment.getUrl());
+                //Moves the cursor
+                if (selectionBefore >= 0)
+                    toot_content.setSelection(selectionBefore);
+            }
             toot_picture_container.addView(imageView, attachments.size(), imParams);
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -826,12 +830,16 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 for(Attachment attachment: attachments){
                     if( Integer.valueOf(attachment.getId()) == viewId){
                         attachments.remove(attachment);
-                        //Adds the url at the end of the toot 
-                        int selectionBefore = toot_content.getSelectionStart();
-                        toot_content.setText(toot_content.getText().toString().replace(attachment.getUrl(),""));
-                        //Moves the cursor
-                        if( selectionBefore >= 0 )
-                            toot_content.setSelection(selectionBefore);
+                        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                        boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, true);
+                        if( show_media_urls) {
+                            //Adds the url at the end of the toot 
+                            int selectionBefore = toot_content.getSelectionStart();
+                            toot_content.setText(toot_content.getText().toString().replace(attachment.getUrl(), ""));
+                            //Moves the cursor
+                            if (selectionBefore >= 0)
+                                toot_content.setSelection(selectionBefore);
+                        }
                         ((ViewGroup) namebar.getParent()).removeView(namebar);
                         break;
                     }

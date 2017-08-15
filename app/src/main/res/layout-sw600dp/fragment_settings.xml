@@ -46,9 +46,13 @@
             android:text="@string/set_show_error_messages"
             android:layout_height="wrap_content" />
 
+        <CheckBox
+            android:id="@+id/set_auto_add_media_url"
+            android:layout_width="wrap_content"
+            android:text="@string/set_auto_add_media_url"
+            android:layout_height="wrap_content" />
 
         <CheckBox
-            android:layout_marginTop="10dp"
             android:id="@+id/set_auto_store"
             android:layout_width="wrap_content"
             android:text="@string/set_auto_store_toot"

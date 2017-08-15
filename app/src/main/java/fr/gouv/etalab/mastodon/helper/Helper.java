@@ -193,6 +193,7 @@ public class Helper {
     public static final String SET_POPUP_PUSH = "set_popup_push";
     public static final String SET_NSFW_TIMEOUT = "set_nsfw_timeout";
     public static final String SET_TABS = "set_tabs";
+    public static final String SET_MEDIA_URLS = "set_media_urls";
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;

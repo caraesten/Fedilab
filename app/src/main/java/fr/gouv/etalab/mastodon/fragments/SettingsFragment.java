@@ -113,6 +113,18 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, true);
+        final CheckBox set_auto_add_media_url = (CheckBox) rootView.findViewById(R.id.set_auto_add_media_url);
+        set_auto_add_media_url.setChecked(show_media_urls);
+
+        set_auto_add_media_url.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_MEDIA_URLS, set_auto_add_media_url.isChecked());
+                editor.apply();
+            }
+        });
 
         boolean notif_validation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
         final CheckBox set_share_validation = (CheckBox) rootView.findViewById(R.id.set_share_validation);
