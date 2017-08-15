@@ -18,7 +18,7 @@ package fr.gouv.etalab.mastodon.helper;
 
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.PendingIntent;
 import android.content.Context;

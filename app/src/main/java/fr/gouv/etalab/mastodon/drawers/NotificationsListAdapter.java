@@ -14,7 +14,7 @@ package fr.gouv.etalab.mastodon.drawers;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -82,7 +82,6 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
     private NotificationsListAdapter notificationsListAdapter;
     private int behaviorWithAttachments;
     private boolean isOnWifi;
-    private int style;
 
     public NotificationsListAdapter(Context context, boolean isOnWifi, int behaviorWithAttachments, List<Notification> notifications){
         this.context = context;
@@ -447,13 +446,8 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 title = context.getString(R.string.reblog_add);
         }
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_DARK){
-            style = R.style.DialogDark;
-        }else {
-            style = R.style.Dialog;
-        }
-        AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             builder.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
@@ -489,14 +483,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
     private void displayConfirmationNotificationDialog(final Notification notification){
         final ArrayList seletedItems = new ArrayList();
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_DARK){
-            style = R.style.DialogDark;
-        }else {
-            style = R.style.Dialog;
-        }
-        AlertDialog dialog = new AlertDialog.Builder(context, style)
+        AlertDialog dialog = new AlertDialog.Builder(context)
                 .setTitle(R.string.delete_notification_ask)
                 .setMultiChoiceItems(new String[]{context.getString(R.string.delete_notification_ask_all)}, null, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override

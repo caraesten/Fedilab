@@ -16,7 +16,7 @@ package fr.gouv.etalab.mastodon.fragments;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -70,7 +70,6 @@ public class SettingsFragment extends Fragment {
     private Context context;
     private static final int ACTIVITY_CHOOSE_FILE = 411;
     private TextView set_folder;
-    private int style;
     int count = 0;
 
     @Override
@@ -81,11 +80,6 @@ public class SettingsFragment extends Fragment {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_DARK){
-            style = R.style.DialogDark;
-        }else {
-            style = R.style.Dialog;
-        }
 
         boolean auto_store = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
 
@@ -279,7 +273,7 @@ public class SettingsFragment extends Fragment {
         set_toot_visibility.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(context, style);
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context);
                 dialog.setTitle(R.string.toot_visibility_tilte);
                 final String[] stringArray = getResources().getStringArray(R.array.toot_visibility);
                 final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, stringArray);

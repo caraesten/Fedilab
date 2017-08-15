@@ -14,7 +14,7 @@ package fr.gouv.etalab.mastodon.drawers;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -43,7 +43,6 @@ import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
-import fr.gouv.etalab.mastodon.client.Entities.Application;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -67,7 +66,6 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
     private LayoutInflater layoutInflater;
     private ScheduledTootsListAdapter scheduledTootsListAdapter;
     private RelativeLayout textviewNoAction;
-    private int style;
 
     public ScheduledTootsListAdapter(Context context, List<StoredStatus> storedStatuses, RelativeLayout textviewNoAction){
         this.context = context;
@@ -155,12 +153,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
         holder.scheduled_toot_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( theme == Helper.THEME_DARK){
-                    style = R.style.DialogDark;
-                }else {
-                    style = R.style.Dialog;
-                }
-                AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage(status.getContent() + '\n' + Helper.dateToString(context, storedStatus.getCreation_date()));
                 builder.setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle(R.string.remove_scheduled)
@@ -201,12 +194,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
         holder.scheduled_toot_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( theme == Helper.THEME_DARK){
-                    style = R.style.DialogDark;
-                }else {
-                    style = R.style.Dialog;
-                }
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
                 LayoutInflater inflater = ((MainActivity)context).getLayoutInflater();
                 View dialogView = inflater.inflate(R.layout.datetime_picker, null);
                 SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
