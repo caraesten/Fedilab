@@ -1482,6 +1482,16 @@ public class Helper {
             heightSearchdp = 40;
             heightSearchdpAlone = 60;
         }
+        String userID = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        Account account = new AccountDAO(activity,db).getAccountByID(userID);
+        if( account != null) {
+            if (account.isLocked()) {
+                navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);
+            } else {
+                navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
+            }
+        }
         switch (timelineLayout){
             case Helper.THEME_TABS:
                 navigationView.getMenu().findItem(R.id.nav_home).setVisible(false);
