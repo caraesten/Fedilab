@@ -46,6 +46,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -552,6 +553,67 @@ public class MainActivity extends AppCompatActivity
                     })
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
+        }else if( id == R.id.action_size){
+            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            int textSize = sharedpreferences.getInt(Helper.SET_TEXT_SIZE,100);
+            int iconSize = sharedpreferences.getInt(Helper.SET_ICON_SIZE,100);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle(R.string.text_size);
+
+            View popup_quick_settings = getLayoutInflater().inflate( R.layout.popup_text_size, null );
+            builder.setView(popup_quick_settings);
+
+            SeekBar set_text_size = (SeekBar) popup_quick_settings.findViewById(R.id.set_text_size);
+            SeekBar set_icon_size = (SeekBar) popup_quick_settings.findViewById(R.id.set_icon_size);
+            final TextView set_text_size_value = (TextView) popup_quick_settings.findViewById(R.id.set_text_size_value);
+            final TextView set_icon_size_value = (TextView) popup_quick_settings.findViewById(R.id.set_icon_size_value);
+            set_text_size_value.setText(String.format("%s%%",String.valueOf(textSize)));
+            set_icon_size_value.setText(String.format("%s%%",String.valueOf(iconSize)));
+
+            set_text_size.setMax(20);
+            set_icon_size.setMax(20);
+
+            set_text_size.setProgress(((textSize-50)/5));
+            set_icon_size.setProgress(((iconSize-50)/5));
+
+            set_text_size.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {}
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {}
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                    int value = 50 + progress*5;
+                    set_text_size_value.setText(String.format("%s%%",String.valueOf(value)));
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putInt(Helper.SET_TEXT_SIZE, value);
+                    editor.apply();
+                }
+            });
+            set_icon_size.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {}
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {}
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    int value = 50 + progress*5;
+                    set_icon_size_value.setText(String.format("%s%%",String.valueOf(value)));
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putInt(Helper.SET_ICON_SIZE, value);
+                    editor.apply();
+                }
+            });
+            builder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        MainActivity.this.recreate();
+                        dialog.dismiss();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
         }
 
         return super.onOptionsItemSelected(item);

@@ -28,6 +28,7 @@ import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -152,6 +153,13 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
+        int iconSizePercent = sharedpreferences.getInt(Helper.SET_ICON_SIZE, 100);
+        int textSizePercent = sharedpreferences.getInt(Helper.SET_TEXT_SIZE, 100);
+
+
         final float scale = context.getResources().getDisplayMetrics().density;
         String type = notification.getType();
         String typeString = "";
@@ -182,8 +190,16 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 break;
         }
         holder.notification_type.setText(typeString);
+        holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
+        holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
+        holder.status_reply.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
+        holder.status_reply.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
 
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        holder.notification_status_content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
+        holder.notification_type.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
+        holder.notification_account_username.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
+        holder.status_date.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12*textSizePercent/100);
+
 
         //Manages theme for icon colors
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -223,11 +239,11 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 holder.status_document_container.setVisibility(View.VISIBLE);
             if( (status.getIn_reply_to_account_id() != null && !status.getIn_reply_to_account_id().equals("null")) || (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null")) ){
                 Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_reply);
-                img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (15 * scale + 0.5f));
+                img.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
                 holder.notification_account_username.setCompoundDrawables( img, null, null, null);
             }else if( status.isReblogged()){
                 Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_retweet);
-                img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (15 * scale + 0.5f));
+                img.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
                 holder.notification_account_username.setCompoundDrawables( img, null, null, null);
             }else{
                 holder.notification_account_username.setCompoundDrawables( null, null, null, null);
@@ -302,8 +318,8 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             else
                 imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_retweet_black);
 
-            imgFav.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (20 * scale + 0.5f));
-            imgReblog.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (20 * scale + 0.5f));
+            imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+            imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
             holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
             holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
 

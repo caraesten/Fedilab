@@ -45,6 +45,9 @@
     <string name="speech_not_supported">Désolé ! Votre appareil ne supporte pas la commande vocale !</string>
     <string name="delete_all">Tout effacer</string>
     <string name="schedule">Programmer</string>
+    <string name="text_size">Taille du texte et des icônes</string>
+    <string name="text_size_change">Modifier la taille du texte :</string>
+    <string name="icon_size_change">Modifier la taille des icônes :</string>
     <string name="next">Suivant</string>
     <string name="previous">Précédent</string>
     <string name="open_with">Ouvrir avec</string>

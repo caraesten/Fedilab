@@ -194,6 +194,8 @@ public class Helper {
     public static final String SET_NSFW_TIMEOUT = "set_nsfw_timeout";
     public static final String SET_TABS = "set_tabs";
     public static final String SET_MEDIA_URLS = "set_media_urls";
+    public static final String SET_TEXT_SIZE = "set_text_size";
+    public static final String SET_ICON_SIZE = "set_icon_size";
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;
