@@ -126,8 +126,8 @@
     </string-array>
 
     <plurals name="preview_replies">
-        <item quantity="one">and one another reply</item>
-        <item quantity="other">and %d other replies</item>
+        <item quantity="one">%d reply</item>
+        <item quantity="other">%d replies</item>
     </plurals>
     <!-- Date -->
     <plurals name="date_seconds">

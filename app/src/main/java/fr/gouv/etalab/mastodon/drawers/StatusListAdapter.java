@@ -32,6 +32,7 @@ import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -69,6 +70,7 @@ import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveContextAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
@@ -77,6 +79,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveContextInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
 import fr.gouv.etalab.mastodon.translation.YandexQuery;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -89,7 +92,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class StatusListAdapter extends BaseAdapter implements OnPostActionInterface, OnTranslatedInterface {
+public class StatusListAdapter extends BaseAdapter implements OnPostActionInterface, OnTranslatedInterface, OnRetrieveContextInterface {
 
     private Context context;
     private List<Status> statuses;
@@ -193,12 +196,48 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_spoiler = (TextView) convertView.findViewById(R.id.status_spoiler);
             holder.status_spoiler_button = (Button) convertView.findViewById(R.id.status_spoiler_button);
             holder.yandex_translate = (TextView) convertView.findViewById(R.id.yandex_translate);
+            holder.status_replies = (LinearLayout) convertView.findViewById(R.id.status_replies);
+            holder.status_replies_profile_pictures = (LinearLayout) convertView.findViewById(R.id.status_replies_profile_pictures);
+            holder.status_replies_text = (TextView) convertView.findViewById(R.id.status_replies_text);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
+        //Display a preview for accounts that have replied *if enabled and only for home timeline*
+        if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
+            boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, true);
+            if (showPreview) {
+                if (status.getReplies() == null) {
+                    new RetrieveContextAsyncTask(context, (status.getReblog() != null) ? status.getReblog().getId() : status.getId(), position, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                } else { // replies have already been retrieved
+                    if ( status.getReplies().size() == 0){
+                        holder.status_replies.setVisibility(View.GONE);
+                    }else if(status.getReplies().size() > 0 ){
+                        holder.status_replies_profile_pictures.removeAllViews();
+                        int i = 0;
+                        for(Status replies: status.getReplies()){
+                            if( i > 5 )
+                                break;
+                            final ImageView imageView = new ImageView(context);
+                            imageLoader.displayImage(replies.getAccount().getAvatar(), imageView, options);
+                            LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                            imParams.setMargins(10, 5, 10, 5);
+                            imParams.height = (int) Helper.convertDpToPixel(50, context);
+                            holder.status_replies_profile_pictures.addView(imageView, imParams);
+                            i++;
+                        }
+                        holder.status_replies_text.setText(context.getResources().getQuantityString(R.plurals.preview_replies, status.getReplies().size(), status.getReplies().size()));
+                        holder.status_replies.setVisibility(View.VISIBLE);
+                        holder.status_replies_text.setVisibility(View.VISIBLE);
+                    }
+                }
+            }else{
+                holder.status_replies.setVisibility(View.GONE);
+            }
+        }
         int iconSizePercent = sharedpreferences.getInt(Helper.SET_ICON_SIZE, 100);
         int textSizePercent = sharedpreferences.getInt(Helper.SET_TEXT_SIZE, 100);
         
@@ -859,6 +898,21 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         return aJsonString;
     }
 
+    @Override
+    public void onRetrieveFeeds(fr.gouv.etalab.mastodon.client.Entities.Context context, Error error) {
+
+    }
+
+    @Override
+    public void onRetrievedReplies(fr.gouv.etalab.mastodon.client.Entities.Context context, Error error, int position) {
+        if( error != null || context.getDescendants() == null || context.getDescendants().size() < 1) {
+            statuses.get(position).setReplies(new ArrayList<Status>());
+        }else{
+            statuses.get(position).setReplies(context.getDescendants());
+        }
+        statusListAdapter.notifyDataSetChanged();
+    }
+
     private class ViewHolder {
         LinearLayout status_content_container;
         LinearLayout status_spoiler_container;
@@ -897,6 +951,10 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         LinearLayout status_container3;
         LinearLayout main_container;
         TextView yandex_translate;
+
+        LinearLayout status_replies;
+        LinearLayout status_replies_profile_pictures;
+        TextView status_replies_text;
     }
 
 

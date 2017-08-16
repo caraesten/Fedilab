@@ -48,6 +48,7 @@ public class Status implements Parcelable {
     private boolean attachmentShown = false;
     private boolean spoilerShown = false;
     private ArrayList<Attachment> media_attachments;
+    private List<Status> replies;
     private List<Mention> mentions;
     private List<Tag> tags;
     private Application application;
@@ -63,6 +64,7 @@ public class Status implements Parcelable {
         in_reply_to_account_id = in.readString();
         reblog = in.readParcelable(Status.class.getClassLoader());
         account = in.readParcelable(Account.class.getClassLoader());
+        replies = in.readArrayList(Status.class.getClassLoader());
         mentions = in.readArrayList(Mention.class.getClassLoader());
         content = in.readString();
         content_translated = in.readString();
@@ -277,6 +279,7 @@ public class Status implements Parcelable {
         dest.writeString(in_reply_to_id);
         dest.writeString(in_reply_to_account_id);
         dest.writeParcelable(reblog, flags);
+        dest.writeList(replies);
         dest.writeParcelable(account, flags);
         dest.writeList(mentions);
         dest.writeString(content);
@@ -333,5 +336,13 @@ public class Status implements Parcelable {
 
     public void setContent_translated(String content_translated) {
         this.content_translated = content_translated;
+    }
+
+    public List<Status> getReplies() {
+        return replies;
+    }
+
+    public void setReplies(List<Status> replies) {
+        this.replies = replies;
     }
 }
