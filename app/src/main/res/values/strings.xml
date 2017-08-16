@@ -124,6 +124,11 @@
         <item>null</item> <!-- Ugly hack to fix confirm box-->
         <item>null</item>
     </string-array>
+
+    <plurals name="preview_replies">
+        <item quantity="one">%d reply</item>
+        <item quantity="other">%d replies</item>
+    </plurals>
     <!-- Date -->
     <plurals name="date_seconds">
         <item quantity="one">%d second ago</item>
@@ -295,6 +300,7 @@
     <string name="set_profile_description">Bio…</string>
     <string name="set_save_changes">Save changes</string>
     <string name="set_header_picture_overlay">Choose a header picture</string>
+    <string name="set_preview_reply">Display the number of replies in hme timeline</string>
     <string name="note_no_space">You have reached the 160 characters allowed!</string>
     <string name="username_no_space">You have reached the 30 characters allowed!</string>
 

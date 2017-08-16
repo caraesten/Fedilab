@@ -193,12 +193,44 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_spoiler = (TextView) convertView.findViewById(R.id.status_spoiler);
             holder.status_spoiler_button = (Button) convertView.findViewById(R.id.status_spoiler_button);
             holder.yandex_translate = (TextView) convertView.findViewById(R.id.yandex_translate);
+            holder.status_replies = (LinearLayout) convertView.findViewById(R.id.status_replies);
+            holder.status_replies_profile_pictures = (LinearLayout) convertView.findViewById(R.id.status_replies_profile_pictures);
+            holder.status_replies_text = (TextView) convertView.findViewById(R.id.status_replies_text);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
+        //Display a preview for accounts that have replied *if enabled and only for home timeline*
+        if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
+            boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, true);
+            if ( status.getReplies().size() == 0){
+                holder.status_replies.setVisibility(View.GONE);
+            }else if(status.getReplies().size() > 0 ){
+                ArrayList<String> addedPictures = new ArrayList<>();
+                holder.status_replies_profile_pictures.removeAllViews();
+                int i = 0;
+                for(Status replies: status.getReplies()){
+                    if( i > 4 )
+                        break;
+                    if( !addedPictures.contains(replies.getAccount().getAcct())){
+                        final ImageView imageView = new ImageView(context);
+                        imageLoader.displayImage(replies.getAccount().getAvatar(), imageView, options);
+                        LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                        imParams.setMargins(10, 5, 10, 5);
+                        imParams.height = (int) Helper.convertDpToPixel(50, context);
+                        holder.status_replies_profile_pictures.addView(imageView, imParams);
+                        i++;
+                        addedPictures.add(replies.getAccount().getAcct());
+                    }
+                }
+                holder.status_replies_text.setText(context.getResources().getQuantityString(R.plurals.preview_replies, status.getReplies().size(), status.getReplies().size()));
+                holder.status_replies.setVisibility(View.VISIBLE);
+                holder.status_replies_text.setVisibility(View.VISIBLE);
+            }
+        }
         int iconSizePercent = sharedpreferences.getInt(Helper.SET_ICON_SIZE, 100);
         int textSizePercent = sharedpreferences.getInt(Helper.SET_TEXT_SIZE, 100);
         
@@ -859,6 +891,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         return aJsonString;
     }
 
+
     private class ViewHolder {
         LinearLayout status_content_container;
         LinearLayout status_spoiler_container;
@@ -897,6 +930,10 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         LinearLayout status_container3;
         LinearLayout main_container;
         TextView yandex_translate;
+
+        LinearLayout status_replies;
+        LinearLayout status_replies_profile_pictures;
+        TextView status_replies_text;
     }
 
 
