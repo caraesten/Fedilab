@@ -24,5 +24,4 @@ import fr.gouv.etalab.mastodon.client.Entities.Error;
  */
 public interface OnRetrieveContextInterface {
     void onRetrieveFeeds(Context context, Error error);
-    void onRetrievedReplies(Context context, Error error, int position);
 }

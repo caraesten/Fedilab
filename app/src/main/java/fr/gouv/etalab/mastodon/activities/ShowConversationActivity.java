@@ -273,8 +273,4 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
 
     }
 
-    @Override
-    public void onRetrievedReplies(Context context, Error error, int position) {
-
-    }
 }

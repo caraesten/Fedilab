@@ -32,7 +32,6 @@ import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -70,7 +69,6 @@ import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveContextAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
@@ -79,7 +77,6 @@ import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveContextInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
 import fr.gouv.etalab.mastodon.translation.YandexQuery;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -92,7 +89,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class StatusListAdapter extends BaseAdapter implements OnPostActionInterface, OnTranslatedInterface, OnRetrieveContextInterface {
+public class StatusListAdapter extends BaseAdapter implements OnPostActionInterface, OnTranslatedInterface {
 
     private Context context;
     private List<Status> statuses;
@@ -209,33 +206,29 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         //Display a preview for accounts that have replied *if enabled and only for home timeline*
         if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
             boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, true);
-            if (showPreview) {
-                if (status.getReplies() == null) {
-                    new RetrieveContextAsyncTask(context, (status.getReblog() != null) ? status.getReblog().getId() : status.getId(), position, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                } else { // replies have already been retrieved
-                    if ( status.getReplies().size() == 0){
-                        holder.status_replies.setVisibility(View.GONE);
-                    }else if(status.getReplies().size() > 0 ){
-                        holder.status_replies_profile_pictures.removeAllViews();
-                        int i = 0;
-                        for(Status replies: status.getReplies()){
-                            if( i > 5 )
-                                break;
-                            final ImageView imageView = new ImageView(context);
-                            imageLoader.displayImage(replies.getAccount().getAvatar(), imageView, options);
-                            LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                            imParams.setMargins(10, 5, 10, 5);
-                            imParams.height = (int) Helper.convertDpToPixel(50, context);
-                            holder.status_replies_profile_pictures.addView(imageView, imParams);
-                            i++;
-                        }
-                        holder.status_replies_text.setText(context.getResources().getQuantityString(R.plurals.preview_replies, status.getReplies().size(), status.getReplies().size()));
-                        holder.status_replies.setVisibility(View.VISIBLE);
-                        holder.status_replies_text.setVisibility(View.VISIBLE);
+            if ( status.getReplies().size() == 0){
+                holder.status_replies.setVisibility(View.GONE);
+            }else if(status.getReplies().size() > 0 ){
+                ArrayList<String> addedPictures = new ArrayList<>();
+                holder.status_replies_profile_pictures.removeAllViews();
+                int i = 0;
+                for(Status replies: status.getReplies()){
+                    if( i > 5 )
+                        break;
+                    if( !addedPictures.contains(replies.getAccount().getAcct())){
+                        final ImageView imageView = new ImageView(context);
+                        imageLoader.displayImage(replies.getAccount().getAvatar(), imageView, options);
+                        LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                        imParams.setMargins(10, 5, 10, 5);
+                        imParams.height = (int) Helper.convertDpToPixel(50, context);
+                        holder.status_replies_profile_pictures.addView(imageView, imParams);
+                        i++;
+                        addedPictures.add(replies.getAccount().getAcct());
                     }
                 }
-            }else{
-                holder.status_replies.setVisibility(View.GONE);
+                holder.status_replies_text.setText(context.getResources().getQuantityString(R.plurals.preview_replies, status.getReplies().size(), status.getReplies().size()));
+                holder.status_replies.setVisibility(View.VISIBLE);
+                holder.status_replies_text.setVisibility(View.VISIBLE);
             }
         }
         int iconSizePercent = sharedpreferences.getInt(Helper.SET_ICON_SIZE, 100);
@@ -898,20 +891,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         return aJsonString;
     }
 
-    @Override
-    public void onRetrieveFeeds(fr.gouv.etalab.mastodon.client.Entities.Context context, Error error) {
-
-    }
-
-    @Override
-    public void onRetrievedReplies(fr.gouv.etalab.mastodon.client.Entities.Context context, Error error, int position) {
-        if( error != null || context.getDescendants() == null || context.getDescendants().size() < 1) {
-            statuses.get(position).setReplies(new ArrayList<Status>());
-        }else{
-            statuses.get(position).setReplies(context.getDescendants());
-        }
-        statusListAdapter.notifyDataSetChanged();
-    }
 
     private class ViewHolder {
         LinearLayout status_content_container;
