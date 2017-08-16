@@ -124,6 +124,11 @@
         <item>null</item> <!-- Ugly hack to fix confirm box-->
         <item>null</item>
     </string-array>
+
+    <plurals name="preview_replies">
+        <item quantity="one">and one another reply</item>
+        <item quantity="other">and %d other replies</item>
+    </plurals>
     <!-- Date -->
     <plurals name="date_seconds">
         <item quantity="one">%d second ago</item>
