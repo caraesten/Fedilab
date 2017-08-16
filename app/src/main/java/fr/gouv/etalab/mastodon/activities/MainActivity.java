@@ -172,16 +172,16 @@ public class MainActivity extends AppCompatActivity
                         fragmentTag = "HOME_TIMELINE";
                         break;
                     case 1:
+                        fragmentTag = "NOTIFICATIONS";
+                        item = navigationView.getMenu().findItem(R.id.nav_notification);
+                        break;
+                    case 2:
                         fragmentTag = "LOCAL_TIMELINE";
                         item = navigationView.getMenu().findItem(R.id.nav_local);
                         break;
-                    case 2:
+                    case 3:
                         item = navigationView.getMenu().findItem(R.id.nav_global);
                         fragmentTag = "PUBLIC_TIMELINE";
-                        break;
-                    case 3:
-                        fragmentTag = "NOTIFICATIONS";
-                        item = navigationView.getMenu().findItem(R.id.nav_notification);
                         break;
                 }
                 if( item != null){
@@ -401,7 +401,7 @@ public class MainActivity extends AppCompatActivity
             if (extras.getInt(INTENT_ACTION) == NOTIFICATION_INTENT){
                 changeUser(MainActivity.this, userIdIntent, false); //Connects the account which is related to the notification
                 unCheckAllMenuItems(navigationView);
-                tabLayout.getTabAt(3).select();
+                tabLayout.getTabAt(1).select();
                 matchingIntent = true;
             }else if( extras.getInt(INTENT_ACTION) == HOME_TIMELINE_INTENT){
                 changeUser(MainActivity.this, userIdIntent, true); //Connects the account which is related to the notification
@@ -471,16 +471,16 @@ public class MainActivity extends AppCompatActivity
                         navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
                         break;
                     case 1:
+                        toolbarTitle.setText(R.string.notifications);
+                        navigationView.getMenu().findItem(R.id.nav_notification).setChecked(true);
+                        break;
+                    case 2:
                         toolbarTitle.setText(R.string.local_menu);
                         navigationView.getMenu().findItem(R.id.nav_local).setChecked(true);
                         break;
-                    case 2:
-                        toolbarTitle.setText(R.string.global_menu);
-                        navigationView.getMenu().findItem(R.id.nav_global).setChecked(true);
-                        break;
                     case 3:
-                        toolbarTitle.setText(R.string.notifications);
-                        navigationView.getMenu().findItem(R.id.nav_notification).setChecked(true);
+                       toolbarTitle.setText(R.string.global_menu);
+                        navigationView.getMenu().findItem(R.id.nav_global).setChecked(true);
                         break;
                 }
             }
@@ -648,15 +648,15 @@ public class MainActivity extends AppCompatActivity
             //noinspection ConstantConditions
             tabLayout.getTabAt(0).select();
             return true;
-        } else if (id == R.id.nav_local) {
+        } else if( id == R.id.nav_notification){
             //noinspection ConstantConditions
             tabLayout.getTabAt(1).select();
             return true;
-        } else if (id == R.id.nav_global) {
+        }else if (id == R.id.nav_local) {
             //noinspection ConstantConditions
             tabLayout.getTabAt(2).select();
             return true;
-        } else if( id == R.id.nav_notification){
+        } else if (id == R.id.nav_global) {
             //noinspection ConstantConditions
             tabLayout.getTabAt(3).select();
             return true;
@@ -787,18 +787,19 @@ public class MainActivity extends AppCompatActivity
                     statusFragment.setArguments(bundle);
                     return statusFragment;
                 case 1:
+                    return new DisplayNotificationsFragment();
+
+                case 2:
                     statusFragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.LOCAL);
                     statusFragment.setArguments(bundle);
                     return statusFragment;
-                case 2:
 
+                case 3:
                     statusFragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
                     statusFragment.setArguments(bundle);
                     return statusFragment;
-                case 3:
-                    return new DisplayNotificationsFragment();
 
             }
             return null;
