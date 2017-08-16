@@ -295,6 +295,7 @@
     <string name="set_profile_description">Présentation…</string>
     <string name="set_save_changes">Enregistrer les modifications</string>
     <string name="set_header_picture_overlay">Choisissez une image d\'entête</string>
+    <string name="set_preview_reply">Afficher le nombre de réponses sur la page d\'accueil</string>
     <string name="note_no_space">Vous avez atteint les 160 caractères autorisés !</string>
     <string name="username_no_space">Vous avez atteint les 30 caractères autorisés !</string>
     <string name="settings_title_hour">Plage horaire pour les notifications :</string>

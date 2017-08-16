@@ -58,6 +58,12 @@
             android:text="@string/set_auto_store_toot"
             android:layout_height="wrap_content" />
 
+        <CheckBox
+            android:id="@+id/set_preview_reply"
+            android:layout_width="wrap_content"
+            android:text="@string/set_preview_reply"
+            android:layout_height="wrap_content" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

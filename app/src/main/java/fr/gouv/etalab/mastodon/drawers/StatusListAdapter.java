@@ -213,7 +213,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 holder.status_replies_profile_pictures.removeAllViews();
                 int i = 0;
                 for(Status replies: status.getReplies()){
-                    if( i > 5 )
+                    if( i > 4 )
                         break;
                     if( !addedPictures.contains(replies.getAccount().getAcct())){
                         final ImageView imageView = new ImageView(context);
