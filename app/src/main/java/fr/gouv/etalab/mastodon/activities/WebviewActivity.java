@@ -119,6 +119,8 @@ public class WebviewActivity extends AppCompatActivity {
                 }
             }
         });
+        if( !url.startsWith("http://") && !url.startsWith("https://"))
+            url = "http://" + url;
         webView.loadUrl(url);
     }
 
