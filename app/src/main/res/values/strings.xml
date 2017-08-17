@@ -398,5 +398,11 @@
     </string>
 
 
-    <string name="thanks_text">Thank you to Stéphane for the logo.</string>
+    <string name="thanks_text">
+        Thank you to Stéphane for the logo.
+    </string>
+
+    <string name="thanks_text_dev">
+        Thank you to @PhotonQyv for his contributions.
+    </string>
 </resources>

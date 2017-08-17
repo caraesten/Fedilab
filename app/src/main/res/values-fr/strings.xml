@@ -387,5 +387,11 @@
         Yandex a sa propre politique de confidentialité qui peut être consultée à l\'adresse suivante : https://yandex.ru/legal/confidential/?lang=en
     </string>
 
-    <string name="thanks_text">Merci à Stéphane pour le logo.</string>
+    <string name="thanks_text">
+        Merci à Stéphane pour le logo.
+    </string>
+
+    <string name="thanks_text_dev">
+        Merci à @PhotonQyv pour ses contributions.
+    </string>
 </resources>
