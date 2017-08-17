@@ -312,6 +312,8 @@ public class MediaActivity extends AppCompatActivity  {
                             @Override
                             public void onPrepared(MediaPlayer mp) {
                                 loader.setVisibility(View.GONE);
+                                mp.start();
+                                mp.setLooping(true);
                             }
                         });
                         videoView.setVisibility(View.VISIBLE);

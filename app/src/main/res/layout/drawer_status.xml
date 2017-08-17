@@ -394,6 +394,7 @@
         </LinearLayout>
         <LinearLayout
             android:visibility="gone"
+            android:layout_marginBottom="5dp"
             android:id="@+id/status_replies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

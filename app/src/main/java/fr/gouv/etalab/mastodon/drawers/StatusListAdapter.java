@@ -32,6 +32,7 @@ import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -206,7 +207,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         //Display a preview for accounts that have replied *if enabled and only for home timeline*
         if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
             boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, true);
-            if ( status.getReplies().size() == 0){
+            if ( !showPreview || status.getReplies() == null || status.getReplies().size() == 0){
                 holder.status_replies.setVisibility(View.GONE);
             }else if(status.getReplies().size() > 0 ){
                 ArrayList<String> addedPictures = new ArrayList<>();
@@ -216,11 +217,14 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     if( i > 4 )
                         break;
                     if( !addedPictures.contains(replies.getAccount().getAcct())){
-                        final ImageView imageView = new ImageView(context);
+                        ImageView imageView = new ImageView(context);
+                        imageView.setMaxHeight((int) Helper.convertDpToPixel(40, context));
+                        imageView.setMaxWidth((int) Helper.convertDpToPixel(40, context));
                         imageLoader.displayImage(replies.getAccount().getAvatar(), imageView, options);
                         LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         imParams.setMargins(10, 5, 10, 5);
-                        imParams.height = (int) Helper.convertDpToPixel(50, context);
+                        imParams.height = (int) Helper.convertDpToPixel(40, context);
+                        imParams.width = (int) Helper.convertDpToPixel(40, context);
                         holder.status_replies_profile_pictures.addView(imageView, imParams);
                         i++;
                         addedPictures.add(replies.getAccount().getAcct());

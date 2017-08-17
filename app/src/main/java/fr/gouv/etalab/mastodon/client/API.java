@@ -1551,7 +1551,7 @@ public class API {
     
     private void get(String action, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         try {
-            client.setConnectTimeout(10000); //10s timeout
+            client.setConnectTimeout(20000); //20s timeout
             client.setUserAgent(USER_AGENT);
             client.addHeader("Authorization", "Bearer "+prefKeyOauthTokenT);
             MastalabSSLSocketFactory mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());
@@ -1582,7 +1582,7 @@ public class API {
 
     private void delete(String action, RequestParams params, AsyncHttpResponseHandler responseHandler){
         try {
-            client.setConnectTimeout(10000); //10s timeout
+            client.setConnectTimeout(20000); //20s timeout
             client.setUserAgent(USER_AGENT);
             client.addHeader("Authorization", "Bearer "+prefKeyOauthTokenT);
             MastalabSSLSocketFactory mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());
@@ -1597,7 +1597,7 @@ public class API {
 
     private void patch(String action, RequestParams params, AsyncHttpResponseHandler responseHandler){
         try {
-            client.setConnectTimeout(10000); //10s timeout
+            client.setConnectTimeout(60000); //60s timeout
             client.setUserAgent(USER_AGENT);
             client.addHeader("Authorization", "Bearer "+prefKeyOauthTokenT);
             MastalabSSLSocketFactory mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());
