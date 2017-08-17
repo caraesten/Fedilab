@@ -31,42 +31,17 @@
         android:layout_height="wrap_content"
         android:id="@+id/main_container"
         android:orientation="horizontal">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <ImageView
-                android:layout_gravity="center_horizontal"
-                android:id="@+id/account_pp"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                tools:ignore="ContentDescription" />
-            <android.support.design.widget.FloatingActionButton
-                android:layout_marginTop="20dp"
-                android:visibility="gone"
-                android:id="@+id/account_action_block"
-                app:fabSize="mini"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:scaleType="center"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_block_white" />
-            <android.support.design.widget.FloatingActionButton
-                android:layout_marginTop="20dp"
-                android:visibility="gone"
-                android:id="@+id/account_action_mute"
-                app:fabSize="mini"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:scaleType="center"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_mute_white" />
-
-        </LinearLayout>
+        <ImageView
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/account_pp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            tools:ignore="ContentDescription" />
         <LinearLayout
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:id="@+id/account_container"
             android:orientation="vertical">
@@ -157,5 +132,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            android:id="@+id/account_action_block"
+            app:fabSize="mini"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="center"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:src="@drawable/ic_block_white" />
+        <android.support.design.widget.FloatingActionButton
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            android:id="@+id/account_action_mute"
+            app:fabSize="mini"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="center"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:src="@drawable/ic_mute_white" />
     </LinearLayout>
 </android.support.v7.widget.CardView>

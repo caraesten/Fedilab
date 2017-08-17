@@ -85,7 +85,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
             case HOME:
                 apiResponse = api.getHomeTimeline(max_id);
                 final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, true);
+                boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);
                 //Retrieves attached replies to a toot
                 if( showPreview){
                     List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = apiResponse.getStatuses();

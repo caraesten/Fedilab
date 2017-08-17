@@ -154,9 +154,7 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
                 moreOptionDialog(account);
             }
         });
-
-
-
+        
         holder.account_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

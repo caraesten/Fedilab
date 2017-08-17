@@ -14,6 +14,8 @@ package fr.gouv.etalab.mastodon.drawers;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,12 +30,16 @@ import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -83,6 +89,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
     private NotificationsListAdapter notificationsListAdapter;
     private int behaviorWithAttachments;
     private boolean isOnWifi;
+    private String targetedId;
 
     public NotificationsListAdapter(Context context, boolean isOnWifi, int behaviorWithAttachments, List<Notification> notifications){
         this.context = context;
@@ -148,6 +155,8 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             holder.status_container2 = (LinearLayout) convertView.findViewById(R.id.status_container2);
             holder.status_container3 = (LinearLayout) convertView.findViewById(R.id.status_container3);
             holder.status_prev4_container = (RelativeLayout) convertView.findViewById(R.id.status_prev4_container);
+            holder.status_action_container = (LinearLayout) convertView.findViewById(R.id.status_action_container);
+            holder.status_more = (ImageView) convertView.findViewById(R.id.status_more);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -164,30 +173,35 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
         String typeString = "";
         switch (type){
             case "mention":
+                holder.status_action_container.setVisibility(View.VISIBLE);
                 if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
                     typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_mention));
                 else
                     typeString = String.format("@%s %s", notification.getAccount().getAcct(),context.getString(R.string.notif_mention));
                 break;
             case "reblog":
+                holder.status_action_container.setVisibility(View.GONE);
                 if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
                     typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_reblog));
                 else
                     typeString = String.format("@%s %s", notification.getAccount().getAcct(),context.getString(R.string.notif_reblog));
                 break;
             case "favourite":
+                holder.status_action_container.setVisibility(View.GONE);
                 if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
                     typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_favourite));
                 else
                     typeString = String.format("@%s %s", notification.getAccount().getAcct(),context.getString(R.string.notif_favourite));
                 break;
             case "follow":
+                holder.status_action_container.setVisibility(View.GONE);
                 if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
                     typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_follow));
                 else
                     typeString = String.format("@%s %s", notification.getAccount().getAcct(),context.getString(R.string.notif_follow));
                 break;
         }
+
         holder.notification_type.setText(typeString);
         holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
         holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
@@ -437,6 +451,14 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             }
         });
         holder.notification_account_username.setText( String.format("@%s",notification.getAccount().getUsername()));
+
+        holder.status_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                moreOptionDialog(status);
+            }
+        });
+
         //Profile picture
         imageLoader.displayImage(notification.getAccount().getAvatar(), holder.notification_account_profile, options);
         return convertView;
@@ -461,7 +483,6 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             else
                 title = context.getString(R.string.reblog_add);
         }
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
@@ -562,12 +583,23 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
     }
 
     @Override
-    public void onPostAction(int statusCode, API.StatusAction statusAction, String userId, Error error) {
+    public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
         if( error != null){
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
                 Toast.makeText(context, error.getError(),Toast.LENGTH_LONG).show();
+        }
+        Helper.manageMessageStatusCode(context, statusCode, statusAction);
+        //When muting or blocking an account, its status are removed from the list
+        List<Notification> notificationsToRemove = new ArrayList<>();
+        if( statusAction == API.StatusAction.MUTE || statusAction == API.StatusAction.BLOCK){
+            for(Notification notification: notifications){
+                if( notification.getType().equals("mention") && notification.getAccount().getId().equals(targetedId))
+                    notificationsToRemove.add(notification);
+            }
+            notifications.removeAll(notificationsToRemove);
+            notificationsListAdapter.notifyDataSetChanged();
         }
     }
 
@@ -686,6 +718,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
         TextView status_date;
         ImageView status_reply;
         LinearLayout status_document_container;
+        LinearLayout status_action_container;
         Button status_show_more;
         ImageView status_prev1;
         ImageView status_prev2;
@@ -695,11 +728,160 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
         ImageView status_prev2_play;
         ImageView status_prev3_play;
         ImageView status_prev4_play;
+        ImageView status_more;
         RelativeLayout status_prev4_container;
         LinearLayout status_container2;
         LinearLayout status_container3;
         LinearLayout notification_status_container;
         ImageView status_privacy;
+    }
+
+
+
+    /**
+     * More option for status (report / remove status / Mute / Block)
+     * @param status Status current status
+     */
+    private void moreOptionDialog(final Status status){
+
+
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        final boolean isOwner = status.getAccount().getId().equals(userId);
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
+        //builderSingle.setTitle(R.string.make_a_choice);
+        final String[] stringArray, stringArrayConf;
+        final API.StatusAction[] doAction;
+        if( isOwner) {
+            stringArray = context.getResources().getStringArray(R.array.more_action_owner);
+            stringArrayConf = context.getResources().getStringArray(R.array.more_action_owner_confirm);
+            doAction = new API.StatusAction[]{API.StatusAction.UNSTATUS};
+
+        }else {
+            stringArray = context.getResources().getStringArray(R.array.more_action);
+            stringArrayConf = context.getResources().getStringArray(R.array.more_action_confirm);
+            doAction = new API.StatusAction[]{API.StatusAction.MUTE,API.StatusAction.BLOCK,API.StatusAction.REPORT};
+        }
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, stringArray);
+        builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                AlertDialog.Builder builderInner = new AlertDialog.Builder(context);
+                builderInner.setTitle(stringArrayConf[which]);
+                if( isOwner) {
+                    if( which == 0) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                            builderInner.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
+                        else
+                            //noinspection deprecation
+                            builderInner.setMessage(Html.fromHtml(status.getContent()));
+                    }else if( which == 1){
+                        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                        String content;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                            content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
+                        else
+                            //noinspection deprecation
+                            content = Html.fromHtml(status.getContent()).toString();
+                        ClipData clip = ClipData.newPlainText(Helper.CLIP_BOARD, content);
+                        clipboard.setPrimaryClip(clip);
+                        Toast.makeText(context,R.string.clipboard,Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                        return;
+                    }else {
+                        Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                        sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, status.getUrl());
+                        sendIntent.setType("text/plain");
+                        context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
+                        return;
+                    }
+                }else {
+                    if( which < 2 ){
+                        builderInner.setMessage(status.getAccount().getAcct());
+                    }else if( which == 2) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                            builderInner.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
+                        else
+                            //noinspection deprecation
+                            builderInner.setMessage(Html.fromHtml(status.getContent()));
+                    }else if( which == 3 ){
+                        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                        String content;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                            content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
+                        else
+                            //noinspection deprecation
+                            content = Html.fromHtml(status.getContent()).toString();
+                        ClipData clip = ClipData.newPlainText(Helper.CLIP_BOARD, content);
+                        clipboard.setPrimaryClip(clip);
+                        Toast.makeText(context,R.string.clipboard,Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                        return;
+                    }else {
+                        Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                        sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, status.getUrl());
+                        sendIntent.setType("text/plain");
+                        context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
+                        return;
+                    }
+                }
+                //Text for report
+                EditText input = null;
+                final int position = which;
+                if( doAction[which] == API.StatusAction.REPORT){
+                    input = new EditText(context);
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT);
+                    input.setLayoutParams(lp);
+                    builderInner.setView(input);
+                }
+                builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,int which) {
+                        dialog.dismiss();
+                    }
+                });
+                final EditText finalInput = input;
+                builderInner.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,int which) {
+                        API.StatusAction statusAction = doAction[position];
+                        if(statusAction ==  API.StatusAction.REPORT || statusAction == API.StatusAction.CREATESTATUS){
+                            String comment = null;
+                            if( finalInput != null && finalInput.getText() != null)
+                                comment = finalInput.getText().toString();
+                            new PostActionAsyncTask(context, statusAction, status.getId(), status, comment, NotificationsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }else{
+                            String targetedId;
+                            if( doAction[position] == API.StatusAction.FAVOURITE ||
+                                    doAction[position] == API.StatusAction.UNFAVOURITE ||
+                                    doAction[position] == API.StatusAction.REBLOG ||
+                                    doAction[position] == API.StatusAction.UNREBLOG ||
+                                    doAction[position] == API.StatusAction.UNSTATUS
+                                    )
+                                targetedId = status.getId();
+                            else
+                                targetedId = status.getAccount().getId();
+                            new PostActionAsyncTask(context, statusAction, targetedId, NotificationsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }
+                        dialog.dismiss();
+                    }
+                });
+                builderInner.show();
+            }
+        });
+        builderSingle.create().requestWindowFeature(Window.FEATURE_NO_TITLE);
+        builderSingle.show();
     }
 
 }
