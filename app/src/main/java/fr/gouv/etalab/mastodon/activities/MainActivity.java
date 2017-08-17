@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity
     private ViewPager viewPager;
     private RelativeLayout main_app_container;
     private Stack<Integer> stackBack = new Stack<>();
+
     public MainActivity() {
     }
 
@@ -145,8 +146,9 @@ public class MainActivity extends AppCompatActivity
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         main_app_container = (RelativeLayout) findViewById(R.id.main_app_container);
-        viewPager.setAdapter(new PagerAdapter
-                (getSupportFragmentManager(), tabLayout.getTabCount()));
+        PagerAdapter adapter = new PagerAdapter
+                (getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -216,7 +218,21 @@ public class MainActivity extends AppCompatActivity
                     toot.setVisibility(View.VISIBLE);
                 else
                     toot.setVisibility(View.GONE);
-
+                Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
+                switch (tab.getPosition()){
+                    case 0:
+                    case 2:
+                    case 3:
+                        DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
+                        if( displayStatusFragment != null )
+                            displayStatusFragment.scrollToTop();
+                        break;
+                    case 1:
+                        DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
+                        if( displayNotificationsFragment != null )
+                            displayNotificationsFragment.scrollToTop();
+                        break;
+                }
             }
         });
         for(int i = 0 ; i < 4 ; i++)
@@ -787,20 +803,18 @@ public class MainActivity extends AppCompatActivity
                     statusFragment.setArguments(bundle);
                     return statusFragment;
                 case 1:
+                    toot.setVisibility(View.GONE);
                     return new DisplayNotificationsFragment();
-
                 case 2:
                     statusFragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.LOCAL);
                     statusFragment.setArguments(bundle);
                     return statusFragment;
-
                 case 3:
                     statusFragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
                     statusFragment.setArguments(bundle);
                     return statusFragment;
-
             }
             return null;
         }

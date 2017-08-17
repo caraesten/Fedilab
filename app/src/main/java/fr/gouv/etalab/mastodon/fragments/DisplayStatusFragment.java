@@ -308,4 +308,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         firstLoad = false;
 
     }
+
+    public void scrollToTop(){
+        if( lv_status != null)
+            lv_status.setAdapter(statusListAdapter);
+    }
 }

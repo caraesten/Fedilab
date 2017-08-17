@@ -202,4 +202,9 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         }
         firstLoad = false;
     }
+
+    public void scrollToTop(){
+        if( lv_notifications != null)
+            lv_notifications.setAdapter(notificationsListAdapter);
+    }
 }
