@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity
                     unCheckAllMenuItems(navigationView);
                     item.setChecked(true);
                 }
-                if( tab.getPosition() < 3 )
+                if( tab.getPosition() != 1 )
                     toot.setVisibility(View.VISIBLE);
                 else
                     toot.setVisibility(View.GONE);
@@ -214,7 +214,7 @@ public class MainActivity extends AppCompatActivity
                     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                     drawer.closeDrawer(GravityCompat.START);
                 }
-                if( tab.getPosition() <3 )
+                if( tab.getPosition() != 1 )
                     toot.setVisibility(View.VISIBLE);
                 else
                     toot.setVisibility(View.GONE);
@@ -487,6 +487,7 @@ public class MainActivity extends AppCompatActivity
                         navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
                         break;
                     case 1:
+                        toot.setVisibility(View.GONE);
                         toolbarTitle.setText(R.string.notifications);
                         navigationView.getMenu().findItem(R.id.nav_notification).setChecked(true);
                         break;
@@ -795,7 +796,6 @@ public class MainActivity extends AppCompatActivity
             //Selection comes from another menu, no action to do
             DisplayStatusFragment statusFragment;
             Bundle bundle = new Bundle();
-            toot.setVisibility(View.VISIBLE);
             switch (position) {
                 case 0:
                     statusFragment = new DisplayStatusFragment();
@@ -803,7 +803,6 @@ public class MainActivity extends AppCompatActivity
                     statusFragment.setArguments(bundle);
                     return statusFragment;
                 case 1:
-                    toot.setVisibility(View.GONE);
                     return new DisplayNotificationsFragment();
                 case 2:
                     statusFragment = new DisplayStatusFragment();
