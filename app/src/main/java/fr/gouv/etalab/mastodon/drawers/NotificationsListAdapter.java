@@ -459,6 +459,10 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             }
         });
 
+        if( theme == Helper.THEME_LIGHT) {
+            holder.status_show_more.setTextColor(ContextCompat.getColor(context, R.color.white));
+        }
+
         //Profile picture
         imageLoader.displayImage(notification.getAccount().getAvatar(), holder.notification_account_profile, options);
         return convertView;

@@ -594,6 +594,10 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
         holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
 
+        if( theme == Helper.THEME_LIGHT) {
+            holder.status_show_more.setTextColor(ContextCompat.getColor(context, R.color.white));
+            holder.status_spoiler_button.setTextColor(ContextCompat.getColor(context, R.color.white));
+        }
         holder.status_show_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
