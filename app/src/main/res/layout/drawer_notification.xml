@@ -15,270 +15,284 @@
     You should have received a copy of the GNU General Public License along with Mastalab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginTop="10dp"
     style="?attr/cardStyle"
     android:id="@+id/card_status_container"
     card_view:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/main_container"
-        android:orientation="horizontal">
+        android:orientation="vertical">
         <LinearLayout
-            android:layout_width="60dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <ImageView
-                android:layout_marginTop="5dp"
-                android:id="@+id/notification_account_profile"
-                android:layout_height="50dp"
-                android:layout_width="50dp"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal|top"
-                tools:ignore="ContentDescription" />
-            <ImageView
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="center_horizontal"
-                android:id="@+id/notification_delete"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_delete"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                tools:ignore="ContentDescription" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:padding="5dp"
-                android:id="@+id/notification_type"
-                android:textSize="14sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:layout_marginLeft="5dp"
-                android:layout_marginStart="5dp"
-                android:id="@+id/notification_account_username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/status_date"
-                android:layout_width="match_parent"
-                android:textSize="12sp"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"
-                android:layout_gravity="end"
-                android:gravity="end"
-                android:layout_height="wrap_content" />
+            android:id="@+id/main_container"
+            android:orientation="horizontal">
             <LinearLayout
-                android:id="@+id/notification_status_container"
-                android:layout_width="match_parent"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/notification_account_profile"
+                    android:layout_height="50dp"
+                    android:layout_width="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal|top"
+                    tools:ignore="ContentDescription" />
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center_horizontal"
+                    android:id="@+id/notification_delete"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_delete"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    tools:ignore="ContentDescription" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/notification_status_content"
-                    android:layout_marginTop="10dp"
-                    android:textIsSelectable="true"
-                    android:autoLink="web"
+                    android:padding="5dp"
+                    android:id="@+id/notification_type"
+                    android:textSize="14sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
-                <LinearLayout
-                    android:id="@+id/status_document_container"
-                    android:orientation="horizontal"
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/notification_account_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/status_date"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:baselineAligned="false">
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        >
-                        <ImageView
-                            android:id="@+id/status_prev1"
-                            android:layout_width="match_parent"
-                            android:scaleType="centerCrop"
-                            android:layout_height="match_parent"
-                            tools:ignore="ContentDescription" />
-                        <ImageView
-                            android:id="@+id/status_prev1_play"
-                            android:visibility="gone"
-                            android:layout_centerInParent="true"
-                            android:layout_width="20dp"
-                            android:src="@drawable/ic_play_arrow"
-                            android:layout_height="20dp"
-                            tools:ignore="ContentDescription" />
-                    </RelativeLayout>
+                    android:textSize="12sp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:layout_gravity="end"
+                    android:gravity="end"
+                    android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:id="@+id/notification_status_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/notification_status_content"
+                        android:layout_marginTop="10dp"
+                        android:textIsSelectable="true"
+                        android:autoLink="web"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
                     <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_marginLeft="2dp"
-                        android:layout_marginStart="2dp"
-                        android:id="@+id/status_container2"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent">
+                        android:id="@+id/status_document_container"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:baselineAligned="false">
                         <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:scaleType="centerCrop"
-                            android:layout_height="0dp"
-                            android:layout_weight="1">
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            >
                             <ImageView
-                                android:id="@+id/status_prev2"
+                                android:id="@+id/status_prev1"
                                 android:layout_width="match_parent"
                                 android:scaleType="centerCrop"
                                 android:layout_height="match_parent"
                                 tools:ignore="ContentDescription" />
                             <ImageView
+                                android:id="@+id/status_prev1_play"
                                 android:visibility="gone"
-                                android:id="@+id/status_prev2_play"
                                 android:layout_centerInParent="true"
                                 android:layout_width="20dp"
                                 android:src="@drawable/ic_play_arrow"
                                 android:layout_height="20dp"
                                 tools:ignore="ContentDescription" />
                         </RelativeLayout>
-
                         <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginStart="2dp"
+                            android:id="@+id/status_container2"
                             android:layout_weight="1"
-                            android:layout_width="match_parent"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="2dp"
-                            android:id="@+id/status_container3"
-                            android:layout_height="0dp"
-                            android:baselineAligned="false">
+                            android:layout_height="match_parent">
                             <RelativeLayout
-                                android:layout_marginLeft="2dp"
-                                android:layout_marginStart="2dp"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content">
+                                android:layout_width="match_parent"
+                                android:scaleType="centerCrop"
+                                android:layout_height="0dp"
+                                android:layout_weight="1">
                                 <ImageView
-                                    android:id="@+id/status_prev3"
+                                    android:id="@+id/status_prev2"
                                     android:layout_width="match_parent"
                                     android:scaleType="centerCrop"
                                     android:layout_height="match_parent"
                                     tools:ignore="ContentDescription" />
                                 <ImageView
-                                    android:id="@+id/status_prev3_play"
+                                    android:visibility="gone"
+                                    android:id="@+id/status_prev2_play"
                                     android:layout_centerInParent="true"
                                     android:layout_width="20dp"
                                     android:src="@drawable/ic_play_arrow"
-                                    android:visibility="gone"
                                     android:layout_height="20dp"
                                     tools:ignore="ContentDescription" />
                             </RelativeLayout>
-                            <RelativeLayout
-                                android:layout_marginLeft="2dp"
-                                android:layout_marginStart="2dp"
+
+                            <LinearLayout
                                 android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:id="@+id/status_prev4_container"
-                                android:layout_height="wrap_content">
-                                <ImageView
-                                    android:id="@+id/status_prev4"
-                                    android:layout_width="match_parent"
-                                    android:scaleType="centerCrop"
-                                    android:layout_height="match_parent"
-                                    tools:ignore="ContentDescription" />
-                                <ImageView
-                                    android:id="@+id/status_prev4_play"
-                                    android:layout_centerInParent="true"
-                                    android:visibility="gone"
-                                    android:layout_width="20dp"
-                                    android:src="@drawable/ic_play_arrow"
-                                    android:layout_height="20dp"
-                                    tools:ignore="ContentDescription" />
-                            </RelativeLayout>
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="2dp"
+                                android:id="@+id/status_container3"
+                                android:layout_height="0dp"
+                                android:baselineAligned="false">
+                                <RelativeLayout
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_marginStart="2dp"
+                                    android:layout_weight="1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content">
+                                    <ImageView
+                                        android:id="@+id/status_prev3"
+                                        android:layout_width="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:layout_height="match_parent"
+                                        tools:ignore="ContentDescription" />
+                                    <ImageView
+                                        android:id="@+id/status_prev3_play"
+                                        android:layout_centerInParent="true"
+                                        android:layout_width="20dp"
+                                        android:src="@drawable/ic_play_arrow"
+                                        android:visibility="gone"
+                                        android:layout_height="20dp"
+                                        tools:ignore="ContentDescription" />
+                                </RelativeLayout>
+                                <RelativeLayout
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_marginStart="2dp"
+                                    android:layout_weight="1"
+                                    android:layout_width="0dp"
+                                    android:id="@+id/status_prev4_container"
+                                    android:layout_height="wrap_content">
+                                    <ImageView
+                                        android:id="@+id/status_prev4"
+                                        android:layout_width="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:layout_height="match_parent"
+                                        tools:ignore="ContentDescription" />
+                                    <ImageView
+                                        android:id="@+id/status_prev4_play"
+                                        android:layout_centerInParent="true"
+                                        android:visibility="gone"
+                                        android:layout_width="20dp"
+                                        android:src="@drawable/ic_play_arrow"
+                                        android:layout_height="20dp"
+                                        tools:ignore="ContentDescription" />
+                                </RelativeLayout>
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
-                <Button
-                    android:id="@+id/status_show_more"
-                    android:visibility="gone"
-                    android:textAllCaps="false"
-                    android:drawableLeft="@drawable/ic_photo"
-                    android:drawableStart="@drawable/ic_photo"
-                    android:gravity="center"
-                    android:drawablePadding="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingStart="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingEnd="10dp"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:maxLines="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/load_attachment" />
-                <LinearLayout
-                    android:id="@+id/status_action_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:padding="@dimen/drawer_padding"
-                    android:layout_marginStart="@dimen/activity_vertical_margin"
-                    android:layout_marginLeft="@dimen/activity_vertical_margin"
-                    android:layout_marginEnd="@dimen/activity_vertical_margin"
-                    android:layout_marginRight="@dimen/activity_vertical_margin"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:drawablePadding="2dp"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="center_vertical"
-                        android:id="@+id/status_favorite_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <TextView
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginStart="20dp"
-                        android:drawablePadding="2dp"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="center_vertical"
-                        android:id="@+id/status_reblog_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <ImageView
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginStart="20dp"
-                        android:id="@+id/status_reply"
-                        android:layout_gravity="center_vertical"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_reply"
-                        tools:ignore="ContentDescription" />
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_gravity="end"
-                        android:gravity="end"
-                        android:paddingRight="10dp"
+                    <Button
+                        android:id="@+id/status_show_more"
+                        android:visibility="gone"
+                        android:textAllCaps="false"
+                        android:drawableLeft="@drawable/ic_photo"
+                        android:drawableStart="@drawable/ic_photo"
+                        android:gravity="center"
+                        android:drawablePadding="5dp"
                         android:paddingLeft="10dp"
-                        android:layout_height="wrap_content">
-                        <ImageView
-                            android:layout_marginRight="20dp"
-                            android:layout_marginEnd="20dp"
-                            android:id="@+id/status_privacy"
-                            android:layout_gravity="center_vertical"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            tools:ignore="ContentDescription" />
-                    </LinearLayout>
+                        android:paddingStart="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:maxLines="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/load_attachment" />
                 </LinearLayout>
             </LinearLayout>
-
-
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/status_action_container"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="@dimen/drawer_padding"
+            android:layout_marginStart="@dimen/activity_vertical_margin"
+            android:layout_marginLeft="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:orientation="horizontal">
+            <TextView
+                android:drawablePadding="2dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:id="@+id/status_favorite_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:drawablePadding="2dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:id="@+id/status_reblog_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:id="@+id/status_reply"
+                android:layout_gravity="center_vertical"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_reply"
+                tools:ignore="ContentDescription" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="end"
+                android:gravity="end"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_marginRight="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:id="@+id/status_privacy"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    tools:ignore="ContentDescription" />
+                <ImageView
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:id="@+id/status_more"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_action_more"
+                    tools:ignore="ContentDescription" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
     </android.support.v7.widget.CardView>

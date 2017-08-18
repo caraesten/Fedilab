@@ -21,7 +21,13 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -113,6 +119,33 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveSearcA
                 startActivity(browserIntent);
             }
         });
+
+        TextView about_thanks = (TextView) findViewById(R.id.about_thanks_dev);
+        String currentText = about_thanks.getText().toString();
+        SpannableString spanned_thanks = new SpannableString(currentText);
+        int startPosition = spanned_thanks.toString().indexOf("@PhotonQyv");
+        int endPosition = startPosition + "@PhotonQyv".length();
+        spanned_thanks.setSpan(new ClickableSpan() {
+                @Override
+                public void onClick(View textView) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://mastodon.xyz/@PhotonQyv"));
+                    startActivity(browserIntent);
+                }
+                @Override
+                public void updateDrawState(TextPaint ds) {
+                    super.updateDrawState(ds);
+                }
+            }, startPosition, endPosition, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        about_thanks.setText(spanned_thanks, TextView.BufferType.SPANNABLE);
+        about_thanks.setMovementMethod(LinkMovementMethod.getInstance());
+
+        if( theme == Helper.THEME_LIGHT) {
+            about_developer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+            about_code.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+            about_thekinrar.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+            about_translation.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+            about_license.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+        }
     }
 
 

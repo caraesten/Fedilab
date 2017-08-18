@@ -14,7 +14,7 @@ package fr.gouv.etalab.mastodon.drawers;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,7 +25,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.text.Html;
 import android.text.util.Linkify;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,6 +114,7 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
         final Account account = accounts.get(position);
         final ViewHolder holder;
+
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.drawer_account, parent, false);
             holder = new ViewHolder();
@@ -154,9 +154,7 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
                 moreOptionDialog(account);
             }
         });
-
-
-
+        
         holder.account_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -249,7 +247,7 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
 
         String[] stringArrayConf = context.getResources().getStringArray(R.array.more_action_confirm_account);
         final API.StatusAction doAction;
-
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 
         if( action == RetrieveAccountsAsyncTask.Type.BLOCKED) {

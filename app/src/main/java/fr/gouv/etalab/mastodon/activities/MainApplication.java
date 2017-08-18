@@ -15,9 +15,7 @@ package fr.gouv.etalab.mastodon.activities;
  * see <http://www.gnu.org/licenses>. */
 import android.app.Application;
 import android.os.StrictMode;
-
 import com.evernote.android.job.JobManager;
-
 import fr.gouv.etalab.mastodon.jobs.ApplicationJob;
 import fr.gouv.etalab.mastodon.jobs.HomeTimelineSyncJob;
 import fr.gouv.etalab.mastodon.jobs.NotificationsSyncJob;
@@ -39,6 +37,5 @@ public class MainApplication extends Application{
         HomeTimelineSyncJob.schedule(false);
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
-
     }
 }

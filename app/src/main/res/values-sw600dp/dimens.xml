@@ -5,4 +5,5 @@
     <dimen name="fab_margin">20dp</dimen>
     <dimen name="activity_vertical_margin">30dp</dimen>
     <dimen name="activity_padding_top_header">16dp</dimen>
+    <bool name="isTablet">true</bool>
 </resources>

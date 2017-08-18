@@ -45,6 +45,9 @@
     <string name="speech_not_supported">Désolé ! Votre appareil ne supporte pas la commande vocale !</string>
     <string name="delete_all">Tout effacer</string>
     <string name="schedule">Programmer</string>
+    <string name="text_size">Taille du texte et des icônes</string>
+    <string name="text_size_change">Modifier la taille du texte :</string>
+    <string name="icon_size_change">Modifier la taille des icônes :</string>
     <string name="next">Suivant</string>
     <string name="previous">Précédent</string>
     <string name="open_with">Ouvrir avec</string>
@@ -119,6 +122,11 @@
         <item>null</item> <!-- Ugly hack to fix confirm box-->
         <item>null</item>
     </string-array>
+
+    <plurals name="preview_replies">
+        <item quantity="one">%d réponse</item>
+        <item quantity="other">%d réponses</item>
+    </plurals>
     <!-- Date -->
     <plurals name="date_seconds">
         <item quantity="one">Il y a %d seconde</item>
@@ -208,7 +216,7 @@
 
     <!-- Notifications -->
     <string name="no_notifications">Aucune notification à afficher</string>
-    <string name="notif_mention">a mentionné votre pouet</string>
+    <string name="notif_mention">vous a mentionné</string>
     <string name="notif_reblog">a partagé votre pouet</string>
     <string name="notif_favourite">a ajouté votre pouet à ses favoris</string>
     <string name="notif_follow">vous a suivi</string>
@@ -255,6 +263,7 @@
     <string name="toast_error_translate">Une erreur est survenue lors de la traduction !</string>
     <string name="toast_toot_saved">Brouillon enregistré !</string>
     <string name="toast_visibility_changed">La visibilité des pouets a été changée pour le compte %1$s</string>
+    <string name="toast_error_char_limit">Etes-vous sûr que cette instance autorise ce nombre de caractères ? Habituellement, cette valeur est proche de 500 caractères.</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimisation du chargement</string>
     <string name="set_toots_page">Nombre de pouets par chargement</string>
@@ -270,7 +279,7 @@
     <string name="set_display_reply">Afficher le message précédent lors d\'une réponse</string>
     <string name="set_folder_title">Destination : </string>
     <string name="set_auto_store_toot">Enregistrer les brouillons automatiquement</string>
-
+    <string name="set_auto_add_media_url">Ajouter l\'URL des médias dans les pouets</string>
     <string name="settings_title_notifications">Gestion des notifications</string>
     <string name="set_notif_follow">Notifier lorsque quelqu’un me suit</string>
     <string name="set_notif_follow_ask">Notifier lorsque quelqu\'un demande à me suivre</string>
@@ -287,6 +296,7 @@
     <string name="set_profile_description">Présentation…</string>
     <string name="set_save_changes">Enregistrer les modifications</string>
     <string name="set_header_picture_overlay">Choisissez une image d\'entête</string>
+    <string name="set_preview_reply">Afficher le nombre de réponses sur la page d\'accueil</string>
     <string name="note_no_space">Vous avez atteint les 160 caractères autorisés !</string>
     <string name="username_no_space">Vous avez atteint les 30 caractères autorisés !</string>
     <string name="settings_title_hour">Plage horaire pour les notifications :</string>
@@ -300,7 +310,12 @@
     <string name="embedded_browser">Utiliser le navigateur intégré</string>
     <string name="use_javascript">Activer Javascript</string>
     <string name="use_cookies">Autoriser les cookies tiers</string>
-
+    <string name="settings_ui_layout">Disposition des fils : </string>
+    <string-array name="settings_menu_tabs">
+        <item>Onglets</item>
+        <item>Menu</item>
+        <item>Onglets et menu</item>
+    </string-array>
     <string name="set_title_news">Actualités</string>
     <string name="set_notification_news">Notifier lors de nouveaux pouets sur la page d\'accueil</string>
     <string name="set_show_error_messages">Afficher les messages d\'erreur</string>
@@ -373,5 +388,11 @@
         Yandex a sa propre politique de confidentialité qui peut être consultée à l\'adresse suivante : https://yandex.ru/legal/confidential/?lang=en
     </string>
 
-    <string name="thanks_text">Merci à Stéphane pour le logo.</string>
+    <string name="thanks_text">
+        Merci à Stéphane pour le logo.
+    </string>
+
+    <string name="thanks_text_dev">
+        Merci à @PhotonQyv pour ses contributions.
+    </string>
 </resources>

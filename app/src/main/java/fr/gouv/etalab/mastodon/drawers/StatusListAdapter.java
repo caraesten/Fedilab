@@ -14,7 +14,7 @@ package fr.gouv.etalab.mastodon.drawers;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -30,11 +30,10 @@ import android.os.CountDownTimer;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.text.Html;
-import android.text.Selection;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
-import android.view.ContextMenu;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -195,10 +194,65 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_spoiler = (TextView) convertView.findViewById(R.id.status_spoiler);
             holder.status_spoiler_button = (Button) convertView.findViewById(R.id.status_spoiler_button);
             holder.yandex_translate = (TextView) convertView.findViewById(R.id.yandex_translate);
+            holder.status_replies = (LinearLayout) convertView.findViewById(R.id.status_replies);
+            holder.status_replies_profile_pictures = (LinearLayout) convertView.findViewById(R.id.status_replies_profile_pictures);
+            holder.status_replies_text = (TextView) convertView.findViewById(R.id.status_replies_text);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
+        //Display a preview for accounts that have replied *if enabled and only for home timeline*
+        if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
+            boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, true);
+            if ( !showPreview || status.getReplies() == null || status.getReplies().size() == 0){
+                holder.status_replies.setVisibility(View.GONE);
+            }else if(status.getReplies().size() > 0 ){
+                ArrayList<String> addedPictures = new ArrayList<>();
+                holder.status_replies_profile_pictures.removeAllViews();
+                int i = 0;
+                for(Status replies: status.getReplies()){
+                    if( i > 4 )
+                        break;
+                    if( !addedPictures.contains(replies.getAccount().getAcct())){
+                        ImageView imageView = new ImageView(context);
+                        imageView.setMaxHeight((int) Helper.convertDpToPixel(40, context));
+                        imageView.setMaxWidth((int) Helper.convertDpToPixel(40, context));
+                        imageLoader.displayImage(replies.getAccount().getAvatar(), imageView, options);
+                        LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                        imParams.setMargins(10, 5, 10, 5);
+                        imParams.height = (int) Helper.convertDpToPixel(40, context);
+                        imParams.width = (int) Helper.convertDpToPixel(40, context);
+                        holder.status_replies_profile_pictures.addView(imageView, imParams);
+                        i++;
+                        addedPictures.add(replies.getAccount().getAcct());
+                    }
+                }
+                holder.status_replies_text.setText(context.getResources().getQuantityString(R.plurals.preview_replies, status.getReplies().size(), status.getReplies().size()));
+                holder.status_replies.setVisibility(View.VISIBLE);
+                holder.status_replies_text.setVisibility(View.VISIBLE);
+            }
+        }
+        int iconSizePercent = sharedpreferences.getInt(Helper.SET_ICON_SIZE, 130);
+        int textSizePercent = sharedpreferences.getInt(Helper.SET_TEXT_SIZE, 110);
+        
+        holder.status_more.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
+        holder.status_more.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
+        holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
+        holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
+        holder.status_reply.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
+        holder.status_reply.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
+
+        holder.status_content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
+        holder.status_account_displayname.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
+        holder.status_account_username.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12*textSizePercent/100);
+        holder.status_reblog_user.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
+        holder.status_toot_date.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12*textSizePercent/100);
+        holder.status_spoiler.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
+        holder.status_content_translated.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
+
         if( status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()){
             holder.status_content_container.setVisibility(View.GONE);
             holder.status_spoiler_container.setVisibility(View.VISIBLE);
@@ -266,7 +320,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_action_container.setVisibility(View.GONE);
         }
         //Manages theme for icon colors
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_DARK){
             changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_text);
@@ -289,20 +342,20 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.black);
             changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.black);
             changeDrawableColor(context, R.drawable.ic_fav_black,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_photo,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_translate,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_photo,R.color.white);
+            changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.white);
+            changeDrawableColor(context, R.drawable.ic_translate,R.color.white);
         }
 
         //Redraws top icons (boost/reply)
         final float scale = context.getResources().getDisplayMetrics().density;
         if( !status.getIn_reply_to_account_id().equals("null") || !status.getIn_reply_to_id().equals("null") ){
             Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_reply);
-            img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (15 * scale + 0.5f));
+            img.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
             holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
         }else if( status.getReblog() != null){
             Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_retweet_black);
-            img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (15 * scale + 0.5f));
+            img.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
             holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
         }else{
             holder.status_account_displayname.setCompoundDrawables( null, null, null, null);
@@ -339,15 +392,15 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }else {
             if( theme == Helper.THEME_LIGHT){
                 if( position == ShowConversationActivity.position){
-                    holder.main_container.setBackgroundResource(R.color.blue_light);
+                    holder.main_container.setBackgroundResource(R.color.mastodonC3_);
                 }else {
-                    holder.main_container.setBackgroundResource(R.color.white);
+                    holder.main_container.setBackgroundResource(R.color.mastodonC3__);
                 }
             }else {
                 if( position == ShowConversationActivity.position){
-                    holder.main_container.setBackgroundResource(R.color.header2D);
+                    holder.main_container.setBackgroundResource(R.color.mastodonC1_);
                 }else {
-                    holder.main_container.setBackgroundResource(R.color.cardview_dark_background);
+                    holder.main_container.setBackgroundResource(R.color.mastodonC1);
                 }
             }
         }
@@ -536,11 +589,15 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         else
             imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_retweet_black);
 
-        imgFav.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (20 * scale + 0.5f));
-        imgReblog.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (20 * scale + 0.5f));
+        imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+        imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
         holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
         holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
 
+        if( theme == Helper.THEME_LIGHT) {
+            holder.status_show_more.setTextColor(ContextCompat.getColor(context, R.color.white));
+            holder.status_spoiler_button.setTextColor(ContextCompat.getColor(context, R.color.white));
+        }
         holder.status_show_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -842,6 +899,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         return aJsonString;
     }
 
+
     private class ViewHolder {
         LinearLayout status_content_container;
         LinearLayout status_spoiler_container;
@@ -880,6 +938,10 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         LinearLayout status_container3;
         LinearLayout main_container;
         TextView yandex_translate;
+
+        LinearLayout status_replies;
+        LinearLayout status_replies_profile_pictures;
+        TextView status_replies_text;
     }
 
 

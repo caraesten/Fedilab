@@ -15,7 +15,7 @@
 package fr.gouv.etalab.mastodon.activities;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -23,21 +23,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -118,7 +114,6 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostStatusActionInterface {
 
 
-    private int maxChar;
     private String visibility;
     private final int PICK_IMAGE = 56556;
     private ProgressBar loading_picture;
@@ -145,7 +140,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private LinearLayout drawer_layout;
     private HorizontalScrollView picture_scrollview;
     private int currentCursorPosition, searchLength;
-    private boolean canDisplayMessage;
+    private TextView toot_space_left;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,8 +175,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             pp_progress = (ProgressBar) actionBar.getCustomView().findViewById(R.id.pp_progress);
 
         }
-        canDisplayMessage = true;
-
 
         //By default the toot is not restored so the id -1 is defined
         currentToId = -1;
@@ -200,7 +193,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
         toot_it = (Button) findViewById(R.id.toot_it);
         Button toot_cw = (Button) findViewById(R.id.toot_cw);
-        final TextView toot_space_left = (TextView) findViewById(R.id.toot_space_left);
+        toot_space_left = (TextView) findViewById(R.id.toot_space_left);
         toot_visibility = (ImageButton) findViewById(R.id.toot_visibility);
         toot_picture = (ImageButton) findViewById(R.id.toot_picture);
         loading_picture = (ProgressBar) findViewById(R.id.loading_picture);
@@ -286,11 +279,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         attachments = new ArrayList<>();
         int charsInCw = 0;
         int charsInToot = 0;
-        maxChar = 500;
-
 
         boolean isAccountPrivate = account.isLocked();
-
 
         if(isAccountPrivate){
             visibility = "private";
@@ -322,7 +312,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             }
         });
 
-        toot_space_left.setText(String.valueOf((maxChar - (charsInToot + charsInCw))));
+        toot_space_left.setText(String.valueOf(charsInToot + charsInCw));
         toot_cw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -359,9 +349,24 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 if( toot_cw_content.getText().toString().trim().length() > 0)
                     toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
                 toot.setVisibility(visibility);
-                toot.setContent(toot_content.getText().toString().trim());
-                if( tootReply != null)
+
+                if( tootReply != null) {
                     toot.setIn_reply_to_id(tootReply.getId());
+
+                    /*
+                       Strip the first appearance of " . "
+                        that we added to get capitalisation,
+                        from toot before posting it. Makes
+                        the end toot cleaner.
+                     */
+                    String preToot = toot_content.getText().toString().trim();
+                    String postToot = preToot.replaceFirst(" \\. ", "");
+
+                    toot.setContent(postToot.trim());
+                }else {
+                    toot.setContent(toot_content.getText().toString().trim());
+                }
+
                 new PostStatusAsyncTask(getApplicationContext(), toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
             }
@@ -433,32 +438,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     new RetrieveSearchAccountsAsyncTask(getApplicationContext(),search,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }else{toot_content.dismissDropDown();}
                 int totalChar = toot_cw_content.length() + toot_content.length();
-                int remainChar = (maxChar - totalChar);
-                if( remainChar >= 0){
-                    toot_it.setEnabled(true);
-                    if( theme == Helper.THEME_LIGHT){
-                        toot_space_left.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
-                    }else {
-                        toot_space_left.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccentD));
-                    }
-                }else {
-                    toot_it.setEnabled(false);
-                    toot_space_left.setTextColor( Color.RED);
-                    //Delay the advertising message to avoid to flood the user
-                    if( canDisplayMessage ){
-                        canDisplayMessage = false;
-                        showAToast(getString(R.string.toot_no_space));
-                        final Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                canDisplayMessage = true;
-                            }
-                        }, 4000);
-                    }
-
-                }
-                toot_space_left.setText(String.valueOf(remainChar));
+                toot_space_left.setText(String.valueOf(totalChar));
             }
         });
         //Allow scroll of the EditText though it's embedded in a scrollview
@@ -484,21 +464,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             @Override
             public void afterTextChanged(Editable s) {
                 int totalChar = toot_cw_content.length() + toot_content.length();
-                int remainChar = (maxChar - totalChar);
-                if( remainChar >= 0){
-                    toot_it.setEnabled(true);
-                    if( theme == Helper.THEME_LIGHT){
-                        toot_space_left.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
-                    }else {
-                        toot_space_left.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccentD));
-                    }
-                }else {
-                    toot_it.setEnabled(false);
-                    showAToast(getString(R.string.toot_no_space));
-                    toot_space_left.setTextColor(Color.RED);
-
-                }
-                toot_space_left.setText(String.valueOf(remainChar));
+                toot_space_left.setText(String.valueOf(totalChar));
             }
         });
         if( restored != -1 ){
@@ -773,6 +739,16 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             imParams.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
             imageView.setAdjustViewBounds(true);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, true);
+            if( show_media_urls) {
+                //Adds the url at the end of the toot 
+                int selectionBefore = toot_content.getSelectionStart();
+                toot_content.setText(toot_content.getText().toString() + "\n" + attachment.getUrl());
+                //Moves the cursor
+                if (selectionBefore >= 0)
+                    toot_content.setSelection(selectionBefore);
+            }
             toot_picture_container.addView(imageView, attachments.size(), imParams);
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -811,6 +787,16 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 for(Attachment attachment: attachments){
                     if( Integer.valueOf(attachment.getId()) == viewId){
                         attachments.remove(attachment);
+                        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                        boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, true);
+                        if( show_media_urls) {
+                            //Adds the url at the end of the toot 
+                            int selectionBefore = toot_content.getSelectionStart();
+                            toot_content.setText(toot_content.getText().toString().replace(attachment.getUrl(), ""));
+                            //Moves the cursor
+                            if (selectionBefore >= 0)
+                                toot_content.setSelection(selectionBefore);
+                        }
                         ((ViewGroup) namebar.getParent()).removeView(namebar);
                         break;
                     }
@@ -883,10 +869,12 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     @Override
     public void onPostStatusAction(APIResponse apiResponse) {
         if( apiResponse.getError() != null){
-            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            toot_it.setEnabled(true);
+            if( apiResponse.getError().getError().contains("422")){
+                showAToast(getString(R.string.toast_error_char_limit));
+            }else {
+                showAToast(apiResponse.getError().getError());
+            }
             return;
         }
         //Clear the toot
@@ -1078,6 +1066,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             else
                 setTitle(R.string.toot_title);
         }
+        toot_space_left.setText(String.valueOf(toot_content.getText().length() + toot_cw_content.getText().length()));
     }
 
 
@@ -1154,8 +1143,12 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     }
                 }
             }
-            //Put a dot at the end of all mentioned account to force capitalization
-            toot_content.setText(String.format("%s. ",toot_content.getText().toString().trim()));
+
+            if (toot_content.getText().toString().startsWith("@")) {
+                //Put a "<space>dot<space>" at the end of all mentioned account to force capitalization
+                toot_content.append(" . ");
+            }
+
             toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
         }
     }
@@ -1199,28 +1192,27 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
 
     private void changeColor(){
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_DARK){
-            changeDrawableColor(TootActivity.this, R.drawable.ic_action_globe,R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_open,R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_closed,R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_local_post_office,R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_action_camera,R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_skip_previous,R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next,R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_check,R.color.dark_text);
+        if( theme == Helper.THEME_DARK) {
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_globe, R.color.dark_text);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_open, R.color.dark_text);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_closed, R.color.dark_text);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_local_post_office, R.color.dark_text);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_camera, R.color.dark_text);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_skip_previous, R.color.dark_text);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next, R.color.dark_text);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_check, R.color.dark_text);
         }else {
-            changeDrawableColor(TootActivity.this, R.drawable.ic_action_globe,R.color.black);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_open,R.color.black);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_closed,R.color.black);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_local_post_office,R.color.black);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_action_camera,R.color.black);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_skip_previous,R.color.black);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next,R.color.black);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_check,R.color.black);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_globe, R.color.white);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_open, R.color.white);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_closed, R.color.white);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_local_post_office, R.color.white);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_action_camera, R.color.white);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_skip_previous, R.color.white);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next, R.color.white);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_check, R.color.white);
         }
-
     }
 
 
