@@ -385,17 +385,12 @@ public class MainActivity extends AppCompatActivity
             }).show();
         }
         Helper.switchLayout(MainActivity.this);
-
     }
-
-
-
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         mamageNewIntent(intent);
-
     }
 
     /**
@@ -591,8 +586,8 @@ public class MainActivity extends AppCompatActivity
             set_text_size.setMax(20);
             set_icon_size.setMax(20);
 
-            set_text_size.setProgress(((textSize-50)/5));
-            set_icon_size.setProgress(((iconSize-50)/5));
+            set_text_size.setProgress(((textSize-80)/5));
+            set_icon_size.setProgress(((iconSize-80)/5));
 
             set_text_size.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
@@ -602,7 +597,7 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-                    int value = 50 + progress*5;
+                    int value = 80 + progress*5;
                     set_text_size_value.setText(String.format("%s%%",String.valueOf(value)));
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putInt(Helper.SET_TEXT_SIZE, value);
@@ -616,7 +611,7 @@ public class MainActivity extends AppCompatActivity
                 public void onStartTrackingTouch(SeekBar seekBar) {}
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    int value = 50 + progress*5;
+                    int value = 80 + progress*5;
                     set_icon_size_value.setText(String.format("%s%%",String.valueOf(value)));
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putInt(Helper.SET_ICON_SIZE, value);
