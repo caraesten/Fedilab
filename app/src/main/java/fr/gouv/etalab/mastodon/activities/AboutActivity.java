@@ -21,14 +21,13 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -139,6 +138,14 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveSearcA
             }, startPosition, endPosition, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         about_thanks.setText(spanned_thanks, TextView.BufferType.SPANNABLE);
         about_thanks.setMovementMethod(LinkMovementMethod.getInstance());
+
+        if( theme == Helper.THEME_LIGHT) {
+            about_developer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+            about_code.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+            about_thekinrar.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+            about_translation.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+            about_license.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+        }
     }
 
 
