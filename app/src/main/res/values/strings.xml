@@ -47,7 +47,9 @@
     <string name="delete_all">Delete all</string>
 
     <string name="schedule">Schedule</string>
-
+    <string name="text_size">Text and icon sizes</string>
+    <string name="text_size_change">Change the current text size:</string>
+    <string name="icon_size_change">Change the current icon size:</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="open_with">Open with</string>
@@ -122,6 +124,11 @@
         <item>null</item> <!-- Ugly hack to fix confirm box-->
         <item>null</item>
     </string-array>
+
+    <plurals name="preview_replies">
+        <item quantity="one">%d reply</item>
+        <item quantity="other">%d replies</item>
+    </plurals>
     <!-- Date -->
     <plurals name="date_seconds">
         <item quantity="one">%d second ago</item>
@@ -214,7 +221,7 @@
     <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
     <!-- Notifications -->
     <string name="no_notifications">No notification to display</string>
-    <string name="notif_mention">mentioned your status</string>
+    <string name="notif_mention">mentioned you</string>
     <string name="notif_reblog">boosted your status</string>
     <string name="notif_favourite">favourited your status</string>
     <string name="notif_follow">followed you</string>
@@ -260,6 +267,7 @@
     <string name="toast_saved">The media has been saved!</string>
     <string name="toast_error_translate">An error occurred while translating!</string>
     <string name="toast_toot_saved">Draft saved!</string>
+    <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
     <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimisation of loading</string>
@@ -276,6 +284,7 @@
     <string name="set_display_reply">Display previous message in responses</string>
     <string name="set_folder_title">Path: </string>
     <string name="set_auto_store_toot">Save drafts automatically</string>
+    <string name="set_auto_add_media_url">Add URL of media in toots</string>
     <string name="settings_title_notifications">Manage notifications</string>
     <string name="set_notif_follow">Notify when someone follows you</string>
     <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
@@ -292,6 +301,7 @@
     <string name="set_profile_description">Bio…</string>
     <string name="set_save_changes">Save changes</string>
     <string name="set_header_picture_overlay">Choose a header picture</string>
+    <string name="set_preview_reply">Display the number of replies in home timeline</string>
     <string name="note_no_space">You have reached the 160 characters allowed!</string>
     <string name="username_no_space">You have reached the 30 characters allowed!</string>
 
@@ -305,6 +315,14 @@
     <string name="embedded_browser">Use the built-in browser</string>
     <string name="use_javascript">Enable Javascript</string>
     <string name="use_cookies">Allow third-party cookies</string>
+    <string name="settings_ui_layout">Layout for timelines: </string>
+    <string-array name="settings_menu_tabs">
+        <item>Tabs</item>
+        <item>Menu</item>
+        <item>Tabs and menu</item>
+    </string-array>
+
+
 
     <string name="set_title_news">News</string>
     <string name="set_notification_news">Notify for new toots on the home timeline</string>
@@ -381,5 +399,11 @@
     </string>
 
 
-    <string name="thanks_text">Thank you to Stéphane for the logo.</string>
+    <string name="thanks_text">
+        Thank you to Stéphane for the logo.
+    </string>
+
+    <string name="thanks_text_dev">
+        Thank you to @PhotonQyv for his contributions.
+    </string>
 </resources>

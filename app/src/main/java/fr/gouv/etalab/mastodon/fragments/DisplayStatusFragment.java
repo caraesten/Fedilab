@@ -32,10 +32,13 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
+
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveRepliesAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -48,7 +51,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
  * Created by Thomas on 24/04/2017.
  * Fragment to display content related to status
  */
-public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsInterface {
+public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsInterface, OnRetrieveRepliesInterface {
 
 
     private boolean flag_loading;
@@ -208,15 +211,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 }
             });
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-            if( theme == Helper.THEME_LIGHT) {
-                swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,
-                        R.color.colorPrimary,
-                        R.color.colorPrimaryDark);
-            }else {
-                swipeRefreshLayout.setColorSchemeResources(R.color.colorAccentD,
-                        R.color.colorPrimaryD,
-                        R.color.colorPrimaryDarkD);
-            }
+            swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
+                    R.color.mastodonC2,
+                    R.color.mastodonC3);
 
 
             if( type == RetrieveFeedsAsyncTask.Type.USER)
@@ -312,6 +309,38 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
         }
         firstLoad = false;
+
+        //Retrieves replies
+        if(statuses != null && statuses.size()  > 0 && type == RetrieveFeedsAsyncTask.Type.HOME ) {
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, true);
+            //Retrieves attached replies to a toot
+            if (showPreview) {
+                new RetrieveRepliesAsyncTask(context, statuses, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        }
+
+    }
+
+    public void scrollToTop(){
+        if( lv_status != null)
+            lv_status.setAdapter(statusListAdapter);
+    }
+
+    @Override
+    public void onRetrieveReplies(APIResponse apiResponse) {
+
+        if( apiResponse.getError() != null || apiResponse.getStatuses() == null || apiResponse.getStatuses().size() == 0){
+            return;
+        }
+        List<Status> modifiedStatus = apiResponse.getStatuses();
+        for(Status stmp: modifiedStatus){
+            for(Status status: statuses){
+                if( status.getId().equals(stmp.getId()))
+                    statuses.set(0,stmp);
+            }
+        }
+        statusListAdapter.notifyDataSetChanged();
 
     }
 }

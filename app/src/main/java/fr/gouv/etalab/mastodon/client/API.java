@@ -1551,14 +1551,13 @@ public class API {
     
     private void get(String action, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         try {
-            client.setConnectTimeout(10000); //10s timeout
+            client.setConnectTimeout(20000); //20s timeout
             client.setUserAgent(USER_AGENT);
             client.addHeader("Authorization", "Bearer "+prefKeyOauthTokenT);
             MastalabSSLSocketFactory mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());
             mastalabSSLSocketFactory.setHostnameVerifier(MastalabSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
             client.setSSLSocketFactory(mastalabSSLSocketFactory);
             client.get(getAbsoluteUrl(action), params, responseHandler);
-
         } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
             Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();
             e.printStackTrace();
@@ -1582,7 +1581,7 @@ public class API {
 
     private void delete(String action, RequestParams params, AsyncHttpResponseHandler responseHandler){
         try {
-            client.setConnectTimeout(10000); //10s timeout
+            client.setConnectTimeout(20000); //20s timeout
             client.setUserAgent(USER_AGENT);
             client.addHeader("Authorization", "Bearer "+prefKeyOauthTokenT);
             MastalabSSLSocketFactory mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());
@@ -1597,7 +1596,7 @@ public class API {
 
     private void patch(String action, RequestParams params, AsyncHttpResponseHandler responseHandler){
         try {
-            client.setConnectTimeout(10000); //10s timeout
+            client.setConnectTimeout(60000); //60s timeout
             client.setUserAgent(USER_AGENT);
             client.addHeader("Authorization", "Bearer "+prefKeyOauthTokenT);
             MastalabSSLSocketFactory mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());

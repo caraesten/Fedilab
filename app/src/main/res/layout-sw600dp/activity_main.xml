@@ -47,6 +47,7 @@
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/toolbar_search_container"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:orientation="horizontal">
@@ -93,6 +94,12 @@
                             android:icon="@drawable/ic_action_home_tl"/>
 
                         <android.support.design.widget.TabItem
+                            android:id="@+id/tab_notification"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:icon="@drawable/ic_notifications_tl"/>
+
+                        <android.support.design.widget.TabItem
                             android:id="@+id/tab_local"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -104,11 +111,7 @@
                             android:layout_height="wrap_content"
                             android:icon="@drawable/ic_action_globe_tl"/>
 
-                        <android.support.design.widget.TabItem
-                            android:id="@+id/tab_notification"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:icon="@drawable/ic_notifications_tl"/>
+
                     </android.support.design.widget.TabLayout>
                 </LinearLayout>
             </android.support.v7.widget.Toolbar>
@@ -145,8 +148,8 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/toot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
             app:srcCompat="@drawable/ic_action_edit" />

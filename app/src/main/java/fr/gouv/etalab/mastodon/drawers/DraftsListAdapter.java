@@ -15,7 +15,7 @@ package fr.gouv.etalab.mastodon.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -88,7 +88,7 @@ public class DraftsListAdapter extends BaseAdapter  {
             holder = (ViewHolder) convertView.getTag();
         }
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_DARK){
             changeDrawableColor(context, R.drawable.ic_cancel,R.color.dark_text);
         }else {
@@ -105,6 +105,7 @@ public class DraftsListAdapter extends BaseAdapter  {
         holder.draft_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage(draft.getStatus().getContent() + '\n' + Helper.dateToString(context, draft.getCreation_date()));
                 builder.setIcon(android.R.drawable.ic_dialog_alert)

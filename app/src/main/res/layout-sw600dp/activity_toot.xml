@@ -108,8 +108,8 @@
                 <ImageButton
                     android:id="@+id/toot_picture"
                     android:padding="5dp"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:src="@drawable/ic_action_camera"
                     tools:ignore="ContentDescription" />
                 <ImageButton
@@ -117,8 +117,8 @@
                     android:layout_marginStart="5dp"
                     android:id="@+id/toot_visibility"
                     android:padding="5dp"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:src="@drawable/ic_action_globe"
                     tools:ignore="ContentDescription" />
                 <Button
@@ -126,16 +126,16 @@
                     android:padding="5dp"
                     android:text="@string/cw"
                     style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp" />
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
                 <TextView
                     android:id="@+id/toot_space_left"
                     android:layout_width="0dp"
-                    android:textColor="?attr/colorAccent"
+                    android:textColor="@color/mastodonC4"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:layout_gravity="center"
-                    android:layout_height="40dp" />
+                    android:layout_height="50dp" />
                 <Button
                     android:id="@+id/toot_it"
                     android:padding="5dp"

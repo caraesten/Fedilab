@@ -16,7 +16,7 @@ package fr.gouv.etalab.mastodon.fragments;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -32,15 +32,18 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,6 +70,7 @@ public class SettingsFragment extends Fragment {
     private Context context;
     private static final int ACTIVITY_CHOOSE_FILE = 411;
     private TextView set_folder;
+    int count = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,7 +79,7 @@ public class SettingsFragment extends Fragment {
         context = getContext();
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
-
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
         boolean auto_store = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
 
@@ -103,6 +107,31 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, true);
+        final CheckBox set_auto_add_media_url = (CheckBox) rootView.findViewById(R.id.set_auto_add_media_url);
+        set_auto_add_media_url.setChecked(show_media_urls);
+
+        set_auto_add_media_url.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_MEDIA_URLS, set_auto_add_media_url.isChecked());
+                editor.apply();
+            }
+        });
+
+        boolean preview_reply = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, true);
+        final CheckBox set_preview_reply = (CheckBox) rootView.findViewById(R.id.set_preview_reply);
+        set_preview_reply.setChecked(preview_reply);
+
+        set_preview_reply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_PREVIEW_REPLIES, set_preview_reply.isChecked());
+                editor.apply();
+            }
+        });
 
         boolean notif_validation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
         final CheckBox set_share_validation = (CheckBox) rootView.findViewById(R.id.set_share_validation);
@@ -189,7 +218,6 @@ public class SettingsFragment extends Fragment {
             file_chooser.setVisibility(View.GONE);
         }
 
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         final SwitchCompat set_night_mode = (SwitchCompat) rootView.findViewById(R.id.set_night_mode);
         set_night_mode.setChecked(theme == Helper.THEME_DARK);
         set_night_mode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -320,6 +348,36 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        final Spinner tabs_layout_spinner = (Spinner) rootView.findViewById(R.id.tabs_layout_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.settings_menu_tabs, android.R.layout.simple_spinner_item);
+        tabs_layout_spinner.setAdapter(adapter);
+
+        int positionSpinner = (sharedpreferences.getInt(Helper.SET_TABS, Helper.THEME_TABS) - 1);
+        tabs_layout_spinner.setSelection(positionSpinner);
+        tabs_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if( count > 0){
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putInt(Helper.SET_TABS, (position + 1));
+                    editor.apply();
+                    Helper.switchLayout(getActivity());
+                    getActivity().recreate();
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
+                    startActivity(intent);
+                }else {
+                    count++;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         return rootView;
     }
 
@@ -333,10 +391,10 @@ public class SettingsFragment extends Fragment {
             changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.dark_text);
         }else {
-            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.white);
+            changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.white);
+            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.white);
+            changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.white);
         }
 
     }

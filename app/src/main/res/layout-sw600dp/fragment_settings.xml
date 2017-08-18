@@ -46,12 +46,22 @@
             android:text="@string/set_show_error_messages"
             android:layout_height="wrap_content" />
 
+        <CheckBox
+            android:id="@+id/set_auto_add_media_url"
+            android:layout_width="wrap_content"
+            android:text="@string/set_auto_add_media_url"
+            android:layout_height="wrap_content" />
 
         <CheckBox
-            android:layout_marginTop="10dp"
             android:id="@+id/set_auto_store"
             android:layout_width="wrap_content"
             android:text="@string/set_auto_store_toot"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/set_preview_reply"
+            android:layout_width="wrap_content"
+            android:text="@string/set_preview_reply"
             android:layout_height="wrap_content" />
 
         <LinearLayout
@@ -207,6 +217,26 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content">
             </SeekBar>
+        </LinearLayout>
+
+        <!-- TABS Layout -->
+        <LinearLayout
+            android:id="@+id/tabs_layout_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_ui_layout"/>
+            <Spinner
+                android:id="@+id/tabs_layout_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

@@ -46,6 +46,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -83,7 +84,6 @@ import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
-import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeUser;
 import static fr.gouv.etalab.mastodon.helper.Helper.loadPPInActionBar;
 import static fr.gouv.etalab.mastodon.helper.Helper.menuAccounts;
@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity
     private ViewPager viewPager;
     private RelativeLayout main_app_container;
     private Stack<Integer> stackBack = new Stack<>();
+
     public MainActivity() {
     }
 
@@ -145,8 +146,9 @@ public class MainActivity extends AppCompatActivity
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         main_app_container = (RelativeLayout) findViewById(R.id.main_app_container);
-        viewPager.setAdapter(new PagerAdapter
-                (getSupportFragmentManager(), tabLayout.getTabCount()));
+        PagerAdapter adapter = new PagerAdapter
+                (getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -165,23 +167,23 @@ public class MainActivity extends AppCompatActivity
                 String fragmentTag = null;
                 main_app_container.setVisibility(View.GONE);
                 viewPager.setVisibility(View.VISIBLE);
-                tabLayout.setVisibility(View.VISIBLE);
+                Helper.switchLayout(MainActivity.this);
                 switch (tab.getPosition()){
                     case 0:
                         item = navigationView.getMenu().findItem(R.id.nav_home);
                         fragmentTag = "HOME_TIMELINE";
                         break;
                     case 1:
+                        fragmentTag = "NOTIFICATIONS";
+                        item = navigationView.getMenu().findItem(R.id.nav_notification);
+                        break;
+                    case 2:
                         fragmentTag = "LOCAL_TIMELINE";
                         item = navigationView.getMenu().findItem(R.id.nav_local);
                         break;
-                    case 2:
+                    case 3:
                         item = navigationView.getMenu().findItem(R.id.nav_global);
                         fragmentTag = "PUBLIC_TIMELINE";
-                        break;
-                    case 3:
-                        fragmentTag = "NOTIFICATIONS";
-                        item = navigationView.getMenu().findItem(R.id.nav_notification);
                         break;
                 }
                 if( item != null){
@@ -190,7 +192,7 @@ public class MainActivity extends AppCompatActivity
                     unCheckAllMenuItems(navigationView);
                     item.setChecked(true);
                 }
-                if( tab.getPosition() < 3 )
+                if( tab.getPosition() != 1 )
                     toot.setVisibility(View.VISIBLE);
                 else
                     toot.setVisibility(View.GONE);
@@ -207,27 +209,36 @@ public class MainActivity extends AppCompatActivity
             public void onTabReselected(TabLayout.Tab tab) {
                 if( viewPager.getVisibility() == View.GONE){
                     viewPager.setVisibility(View.VISIBLE);
-                    tabLayout.setVisibility(View.VISIBLE);
+                    Helper.switchLayout(MainActivity.this);
                     main_app_container.setVisibility(View.GONE);
                     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                     drawer.closeDrawer(GravityCompat.START);
                 }
-                if( tab.getPosition() <3 )
+                if( tab.getPosition() != 1 )
                     toot.setVisibility(View.VISIBLE);
                 else
                     toot.setVisibility(View.GONE);
-
+                Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
+                switch (tab.getPosition()){
+                    case 0:
+                    case 2:
+                    case 3:
+                        DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
+                        if( displayStatusFragment != null )
+                            displayStatusFragment.scrollToTop();
+                        break;
+                    case 1:
+                        DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
+                        if( displayNotificationsFragment != null )
+                            displayNotificationsFragment.scrollToTop();
+                        break;
+                }
             }
         });
-        if( theme == Helper.THEME_DARK){
-            for(int i = 0 ; i < 4 ; i++)
-                if( tabLayout.getTabAt(i) != null && tabLayout.getTabAt(i).getIcon() != null)
-                    tabLayout.getTabAt(i).getIcon().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-        }else {
-            for(int i = 0 ; i < 4 ; i++)
-                if( tabLayout.getTabAt(i) != null && tabLayout.getTabAt(i).getIcon() != null)
-                    tabLayout.getTabAt(i).getIcon().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.black), PorterDuff.Mode.SRC_IN);
-        }
+        for(int i = 0 ; i < 4 ; i++)
+            if( tabLayout.getTabAt(i) != null && tabLayout.getTabAt(i).getIcon() != null)
+                tabLayout.getTabAt(i).getIcon().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+
 
         toolbar_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -373,16 +384,13 @@ public class MainActivity extends AppCompatActivity
                 }
             }).show();
         }
+        Helper.switchLayout(MainActivity.this);
     }
-
-
-
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         mamageNewIntent(intent);
-
     }
 
     /**
@@ -404,7 +412,7 @@ public class MainActivity extends AppCompatActivity
             if (extras.getInt(INTENT_ACTION) == NOTIFICATION_INTENT){
                 changeUser(MainActivity.this, userIdIntent, false); //Connects the account which is related to the notification
                 unCheckAllMenuItems(navigationView);
-                tabLayout.getTabAt(3).select();
+                tabLayout.getTabAt(1).select();
                 matchingIntent = true;
             }else if( extras.getInt(INTENT_ACTION) == HOME_TIMELINE_INTENT){
                 changeUser(MainActivity.this, userIdIntent, true); //Connects the account which is related to the notification
@@ -460,8 +468,9 @@ public class MainActivity extends AppCompatActivity
                     super.onBackPressed();
                 }
             }else {
+
                 viewPager.setVisibility(View.VISIBLE);
-                tabLayout.setVisibility(View.VISIBLE);
+                Helper.switchLayout(MainActivity.this);
                 main_app_container.setVisibility(View.GONE);
                 final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                 unCheckAllMenuItems(navigationView);
@@ -473,16 +482,17 @@ public class MainActivity extends AppCompatActivity
                         navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
                         break;
                     case 1:
+                        toot.setVisibility(View.GONE);
+                        toolbarTitle.setText(R.string.notifications);
+                        navigationView.getMenu().findItem(R.id.nav_notification).setChecked(true);
+                        break;
+                    case 2:
                         toolbarTitle.setText(R.string.local_menu);
                         navigationView.getMenu().findItem(R.id.nav_local).setChecked(true);
                         break;
-                    case 2:
-                        toolbarTitle.setText(R.string.global_menu);
-                        navigationView.getMenu().findItem(R.id.nav_global).setChecked(true);
-                        break;
                     case 3:
-                        toolbarTitle.setText(R.string.notifications);
-                        navigationView.getMenu().findItem(R.id.nav_notification).setChecked(true);
+                       toolbarTitle.setText(R.string.global_menu);
+                        navigationView.getMenu().findItem(R.id.nav_global).setChecked(true);
                         break;
                 }
             }
@@ -555,6 +565,67 @@ public class MainActivity extends AppCompatActivity
                     })
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
+        }else if( id == R.id.action_size){
+            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            int textSize = sharedpreferences.getInt(Helper.SET_TEXT_SIZE,110);
+            int iconSize = sharedpreferences.getInt(Helper.SET_ICON_SIZE,130);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle(R.string.text_size);
+
+            View popup_quick_settings = getLayoutInflater().inflate( R.layout.popup_text_size, null );
+            builder.setView(popup_quick_settings);
+
+            SeekBar set_text_size = (SeekBar) popup_quick_settings.findViewById(R.id.set_text_size);
+            SeekBar set_icon_size = (SeekBar) popup_quick_settings.findViewById(R.id.set_icon_size);
+            final TextView set_text_size_value = (TextView) popup_quick_settings.findViewById(R.id.set_text_size_value);
+            final TextView set_icon_size_value = (TextView) popup_quick_settings.findViewById(R.id.set_icon_size_value);
+            set_text_size_value.setText(String.format("%s%%",String.valueOf(textSize)));
+            set_icon_size_value.setText(String.format("%s%%",String.valueOf(iconSize)));
+
+            set_text_size.setMax(20);
+            set_icon_size.setMax(20);
+
+            set_text_size.setProgress(((textSize-80)/5));
+            set_icon_size.setProgress(((iconSize-80)/5));
+
+            set_text_size.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {}
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {}
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                    int value = 80 + progress*5;
+                    set_text_size_value.setText(String.format("%s%%",String.valueOf(value)));
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putInt(Helper.SET_TEXT_SIZE, value);
+                    editor.apply();
+                }
+            });
+            set_icon_size.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {}
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {}
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    int value = 80 + progress*5;
+                    set_icon_size_value.setText(String.format("%s%%",String.valueOf(value)));
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putInt(Helper.SET_ICON_SIZE, value);
+                    editor.apply();
+                }
+            });
+            builder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        MainActivity.this.recreate();
+                        dialog.dismiss();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
         }
 
         return super.onOptionsItemSelected(item);
@@ -589,15 +660,15 @@ public class MainActivity extends AppCompatActivity
             //noinspection ConstantConditions
             tabLayout.getTabAt(0).select();
             return true;
-        } else if (id == R.id.nav_local) {
+        } else if( id == R.id.nav_notification){
             //noinspection ConstantConditions
             tabLayout.getTabAt(1).select();
             return true;
-        } else if (id == R.id.nav_global) {
+        }else if (id == R.id.nav_local) {
             //noinspection ConstantConditions
             tabLayout.getTabAt(2).select();
             return true;
-        } else if( id == R.id.nav_notification){
+        } else if (id == R.id.nav_global) {
             //noinspection ConstantConditions
             tabLayout.getTabAt(3).select();
             return true;
@@ -720,7 +791,6 @@ public class MainActivity extends AppCompatActivity
             //Selection comes from another menu, no action to do
             DisplayStatusFragment statusFragment;
             Bundle bundle = new Bundle();
-            toot.setVisibility(View.VISIBLE);
             switch (position) {
                 case 0:
                     statusFragment = new DisplayStatusFragment();
@@ -728,19 +798,17 @@ public class MainActivity extends AppCompatActivity
                     statusFragment.setArguments(bundle);
                     return statusFragment;
                 case 1:
+                    return new DisplayNotificationsFragment();
+                case 2:
                     statusFragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.LOCAL);
                     statusFragment.setArguments(bundle);
                     return statusFragment;
-                case 2:
-
+                case 3:
                     statusFragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
                     statusFragment.setArguments(bundle);
                     return statusFragment;
-                case 3:
-                    return new DisplayNotificationsFragment();
-
             }
             return null;
         }
