@@ -45,6 +45,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -360,6 +361,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                         Canvas canvas = new Canvas(mutableBitmap);
                         Paint p = new Paint(Color.BLACK);
                         ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);
+
                         p.setColorFilter(filter);
                         canvas.drawBitmap(mutableBitmap, new Matrix(), p);
                         BitmapDrawable background = new BitmapDrawable(getResources(), mutableBitmap);
