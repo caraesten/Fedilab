@@ -65,7 +65,7 @@
         <item name="android:background">@drawable/menu_selector</item>
     </style>
     <style name="ButtonColor" parent="Base.Widget.AppCompat.Button">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/mastodonC4</item>
         <item name="android:background">@drawable/button_selector</item>
     </style>
     <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
