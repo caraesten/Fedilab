@@ -23,15 +23,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -117,7 +114,6 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostStatusActionInterface {
 
 
-    private int maxChar;
     private String visibility;
     private final int PICK_IMAGE = 56556;
     private ProgressBar loading_picture;
@@ -144,7 +140,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private LinearLayout drawer_layout;
     private HorizontalScrollView picture_scrollview;
     private int currentCursorPosition, searchLength;
-    private boolean canDisplayMessage;
+    private TextView toot_space_left;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,8 +175,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             pp_progress = (ProgressBar) actionBar.getCustomView().findViewById(R.id.pp_progress);
 
         }
-        canDisplayMessage = true;
-
 
         //By default the toot is not restored so the id -1 is defined
         currentToId = -1;
@@ -199,7 +193,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
         toot_it = (Button) findViewById(R.id.toot_it);
         Button toot_cw = (Button) findViewById(R.id.toot_cw);
-        final TextView toot_space_left = (TextView) findViewById(R.id.toot_space_left);
+        toot_space_left = (TextView) findViewById(R.id.toot_space_left);
         toot_visibility = (ImageButton) findViewById(R.id.toot_visibility);
         toot_picture = (ImageButton) findViewById(R.id.toot_picture);
         loading_picture = (ProgressBar) findViewById(R.id.loading_picture);
@@ -285,11 +279,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         attachments = new ArrayList<>();
         int charsInCw = 0;
         int charsInToot = 0;
-        maxChar = 500;
-
 
         boolean isAccountPrivate = account.isLocked();
-
 
         if(isAccountPrivate){
             visibility = "private";
@@ -321,7 +312,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             }
         });
 
-        toot_space_left.setText(String.valueOf((maxChar - (charsInToot + charsInCw))));
+        toot_space_left.setText(String.valueOf(charsInToot + charsInCw));
         toot_cw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -447,28 +438,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     new RetrieveSearchAccountsAsyncTask(getApplicationContext(),search,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }else{toot_content.dismissDropDown();}
                 int totalChar = toot_cw_content.length() + toot_content.length();
-                int remainChar = (maxChar - totalChar);
-                if( remainChar >= 0){
-                    toot_it.setEnabled(true);
-                    toot_space_left.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4));
-                }else {
-                    toot_it.setEnabled(false);
-                    toot_space_left.setTextColor( Color.RED);
-                    //Delay the advertising message to avoid to flood the user
-                    if( canDisplayMessage ){
-                        canDisplayMessage = false;
-                        showAToast(getString(R.string.toot_no_space));
-                        final Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                canDisplayMessage = true;
-                            }
-                        }, 4000);
-                    }
-
-                }
-                toot_space_left.setText(String.valueOf(remainChar));
+                toot_space_left.setText(String.valueOf(totalChar));
             }
         });
         //Allow scroll of the EditText though it's embedded in a scrollview
@@ -494,17 +464,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             @Override
             public void afterTextChanged(Editable s) {
                 int totalChar = toot_cw_content.length() + toot_content.length();
-                int remainChar = (maxChar - totalChar);
-                if( remainChar >= 0){
-                    toot_it.setEnabled(true);
-                    toot_space_left.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4));
-                }else {
-                    toot_it.setEnabled(false);
-                    showAToast(getString(R.string.toot_no_space));
-                    toot_space_left.setTextColor(Color.RED);
-
-                }
-                toot_space_left.setText(String.valueOf(remainChar));
+                toot_space_left.setText(String.valueOf(totalChar));
             }
         });
         if( restored != -1 ){
@@ -909,10 +869,12 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     @Override
     public void onPostStatusAction(APIResponse apiResponse) {
         if( apiResponse.getError() != null){
-            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            toot_it.setEnabled(true);
+            if( apiResponse.getError().getError().contains("422")){
+                showAToast(getString(R.string.toast_error_char_limit));
+            }else {
+                showAToast(apiResponse.getError().getError());
+            }
             return;
         }
         //Clear the toot
@@ -1104,6 +1066,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             else
                 setTitle(R.string.toot_title);
         }
+        toot_space_left.setText(String.valueOf(toot_content.getText().length() + toot_cw_content.getText().length()));
     }
 
 

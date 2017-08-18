@@ -267,6 +267,7 @@
     <string name="toast_saved">The media has been saved!</string>
     <string name="toast_error_translate">An error occurred while translating!</string>
     <string name="toast_toot_saved">Draft saved!</string>
+    <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
     <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimisation of loading</string>

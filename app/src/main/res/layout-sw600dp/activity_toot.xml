@@ -131,7 +131,7 @@
                 <TextView
                     android:id="@+id/toot_space_left"
                     android:layout_width="0dp"
-                    android:textColor="?attr/colorAccent"
+                    android:textColor="@color/mastodonC4"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:layout_gravity="center"

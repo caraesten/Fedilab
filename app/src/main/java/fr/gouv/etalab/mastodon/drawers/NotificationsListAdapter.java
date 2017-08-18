@@ -30,7 +30,6 @@ import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -747,7 +746,6 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
      * @param status Status current status
      */
     private void moreOptionDialog(final Status status){
-
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
