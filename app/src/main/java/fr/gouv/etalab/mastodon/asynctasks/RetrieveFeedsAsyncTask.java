@@ -15,14 +15,9 @@
 package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-
-import java.util.List;
-
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
-import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 
 
@@ -84,18 +79,6 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         switch (action){
             case HOME:
                 apiResponse = api.getHomeTimeline(max_id);
-                final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);
-                //Retrieves attached replies to a toot
-                if( showPreview){
-                    List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = apiResponse.getStatuses();
-                    if( statuses != null && statuses.size() > 0){
-                        for(fr.gouv.etalab.mastodon.client.Entities.Status status : statuses){
-                            fr.gouv.etalab.mastodon.client.Entities.Context statusContext = api.getStatusContext((status.getReblog() != null) ? status.getReblog().getId() : status.getId());
-                            status.setReplies(statusContext.getDescendants());
-                        }
-                    }
-                }
                 break;
             case LOCAL:
                 apiResponse = api.getPublicTimeline(true, max_id);

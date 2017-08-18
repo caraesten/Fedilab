@@ -567,8 +567,8 @@ public class MainActivity extends AppCompatActivity
                     .show();
         }else if( id == R.id.action_size){
             final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            int textSize = sharedpreferences.getInt(Helper.SET_TEXT_SIZE,100);
-            int iconSize = sharedpreferences.getInt(Helper.SET_ICON_SIZE,100);
+            int textSize = sharedpreferences.getInt(Helper.SET_TEXT_SIZE,110);
+            int iconSize = sharedpreferences.getInt(Helper.SET_ICON_SIZE,130);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle(R.string.text_size);

@@ -163,8 +163,8 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
 
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
-        int iconSizePercent = sharedpreferences.getInt(Helper.SET_ICON_SIZE, 100);
-        int textSizePercent = sharedpreferences.getInt(Helper.SET_TEXT_SIZE, 100);
+        int iconSizePercent = sharedpreferences.getInt(Helper.SET_ICON_SIZE, 130);
+        int textSizePercent = sharedpreferences.getInt(Helper.SET_TEXT_SIZE, 110);
 
 
         final float scale = context.getResources().getDisplayMetrics().density;

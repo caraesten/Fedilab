@@ -206,7 +206,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
         //Display a preview for accounts that have replied *if enabled and only for home timeline*
         if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
-            boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);
+            boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, true);
             if ( !showPreview || status.getReplies() == null || status.getReplies().size() == 0){
                 holder.status_replies.setVisibility(View.GONE);
             }else if(status.getReplies().size() > 0 ){
@@ -235,8 +235,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 holder.status_replies_text.setVisibility(View.VISIBLE);
             }
         }
-        int iconSizePercent = sharedpreferences.getInt(Helper.SET_ICON_SIZE, 100);
-        int textSizePercent = sharedpreferences.getInt(Helper.SET_TEXT_SIZE, 100);
+        int iconSizePercent = sharedpreferences.getInt(Helper.SET_ICON_SIZE, 130);
+        int textSizePercent = sharedpreferences.getInt(Helper.SET_TEXT_SIZE, 110);
         
         holder.status_more.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
         holder.status_more.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);

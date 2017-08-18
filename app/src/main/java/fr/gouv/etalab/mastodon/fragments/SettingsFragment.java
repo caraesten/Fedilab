@@ -120,7 +120,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        boolean preview_reply = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);
+        boolean preview_reply = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, true);
         final CheckBox set_preview_reply = (CheckBox) rootView.findViewById(R.id.set_preview_reply);
         set_preview_reply.setChecked(preview_reply);
 
