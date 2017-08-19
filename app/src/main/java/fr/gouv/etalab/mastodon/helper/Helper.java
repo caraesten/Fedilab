@@ -17,8 +17,8 @@
 package fr.gouv.etalab.mastodon.helper;
 
 
-import android.annotation.TargetApi;
 import android.app.Activity;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.PendingIntent;
@@ -979,7 +979,7 @@ public class Helper {
                 DisplayImageOptions optionNew = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                         .cacheOnDisk(true).resetViewBeforeLoading(true).build();
                 imageLoader.loadImage(urlHeader, optionNew, new SimpleImageLoadingListener() {
-                    @TargetApi(16)
+                    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         super.onLoadingComplete(imageUri, view, loadedImage);

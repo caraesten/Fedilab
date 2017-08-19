@@ -32,6 +32,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -352,6 +353,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 DisplayImageOptions optionNew = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                         .cacheOnDisk(true).resetViewBeforeLoading(true).build();
                 imageLoader.loadImage(urlHeader, optionNew, new SimpleImageLoadingListener() {
+                    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         super.onLoadingComplete(imageUri, view, loadedImage);
