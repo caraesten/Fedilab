@@ -23,6 +23,7 @@ import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -329,7 +330,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
     @Override
     public void onRetrieveReplies(APIResponse apiResponse) {
-
         if( apiResponse.getError() != null || apiResponse.getStatuses() == null || apiResponse.getStatuses().size() == 0){
             return;
         }
@@ -337,7 +337,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         for(Status stmp: modifiedStatus){
             for(Status status: statuses){
                 if( status.getId().equals(stmp.getId()))
-                    statuses.set(0,stmp);
+                    status.setReplies(stmp.getReplies());
             }
         }
         statusListAdapter.notifyDataSetChanged();

@@ -157,6 +157,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.drawer_status, parent, false);
             holder = new ViewHolder();
+            holder.loader_replies = (LinearLayout) convertView.findViewById(R.id.loader_replies);
             holder.card_status_container = (CardView) convertView.findViewById(R.id.card_status_container);
             holder.status_document_container = (LinearLayout) convertView.findViewById(R.id.status_document_container);
             holder.status_content = (TextView) convertView.findViewById(R.id.status_content);
@@ -207,33 +208,43 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         //Display a preview for accounts that have replied *if enabled and only for home timeline*
         if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
             boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, true);
-            if ( !showPreview || status.getReplies() == null || status.getReplies().size() == 0){
-                holder.status_replies.setVisibility(View.GONE);
-            }else if(status.getReplies().size() > 0 ){
-                ArrayList<String> addedPictures = new ArrayList<>();
-                holder.status_replies_profile_pictures.removeAllViews();
-                int i = 0;
-                for(Status replies: status.getReplies()){
-                    if( i > 4 )
-                        break;
-                    if( !addedPictures.contains(replies.getAccount().getAcct())){
-                        ImageView imageView = new ImageView(context);
-                        imageView.setMaxHeight((int) Helper.convertDpToPixel(40, context));
-                        imageView.setMaxWidth((int) Helper.convertDpToPixel(40, context));
-                        imageLoader.displayImage(replies.getAccount().getAvatar(), imageView, options);
-                        LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                        imParams.setMargins(10, 5, 10, 5);
-                        imParams.height = (int) Helper.convertDpToPixel(40, context);
-                        imParams.width = (int) Helper.convertDpToPixel(40, context);
-                        holder.status_replies_profile_pictures.addView(imageView, imParams);
-                        i++;
-                        addedPictures.add(replies.getAccount().getAcct());
+            if( showPreview){
+                if(  status.getReplies() == null){
+                    holder.loader_replies.setVisibility(View.VISIBLE);
+                }else if(status.getReplies().size() == 0){
+                    holder.status_replies.setVisibility(View.GONE);
+                    holder.loader_replies.setVisibility(View.GONE);
+                }else if(status.getReplies().size() > 0 ){
+                    ArrayList<String> addedPictures = new ArrayList<>();
+                    holder.status_replies_profile_pictures.removeAllViews();
+                    int i = 0;
+                    for(Status replies: status.getReplies()){
+                        if( i > 4 )
+                            break;
+                        if( !addedPictures.contains(replies.getAccount().getAcct())){
+                            ImageView imageView = new ImageView(context);
+                            imageView.setMaxHeight((int) Helper.convertDpToPixel(40, context));
+                            imageView.setMaxWidth((int) Helper.convertDpToPixel(40, context));
+                            imageLoader.displayImage(replies.getAccount().getAvatar(), imageView, options);
+                            LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                            imParams.setMargins(10, 5, 10, 5);
+                            imParams.height = (int) Helper.convertDpToPixel(40, context);
+                            imParams.width = (int) Helper.convertDpToPixel(40, context);
+                            holder.status_replies_profile_pictures.addView(imageView, imParams);
+                            i++;
+                            addedPictures.add(replies.getAccount().getAcct());
+                        }
                     }
+                    holder.status_replies_text.setText(context.getResources().getQuantityString(R.plurals.preview_replies, status.getReplies().size(), status.getReplies().size()));
+                    holder.status_replies.setVisibility(View.VISIBLE);
+                    holder.status_replies_text.setVisibility(View.VISIBLE);
+                    holder.loader_replies.setVisibility(View.GONE);
                 }
-                holder.status_replies_text.setText(context.getResources().getQuantityString(R.plurals.preview_replies, status.getReplies().size(), status.getReplies().size()));
-                holder.status_replies.setVisibility(View.VISIBLE);
-                holder.status_replies_text.setVisibility(View.VISIBLE);
+            }else{
+                holder.loader_replies.setVisibility(View.GONE);
+                holder.status_replies.setVisibility(View.GONE);
             }
+
         }
         int iconSizePercent = sharedpreferences.getInt(Helper.SET_ICON_SIZE, 130);
         int textSizePercent = sharedpreferences.getInt(Helper.SET_TEXT_SIZE, 110);
@@ -942,6 +953,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         LinearLayout status_replies;
         LinearLayout status_replies_profile_pictures;
         TextView status_replies_text;
+        LinearLayout loader_replies;
     }
 
 
