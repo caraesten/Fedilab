@@ -17,10 +17,12 @@
 package fr.gouv.etalab.mastodon.helper;
 
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.support.v7.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.PendingIntent;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -130,7 +132,6 @@ import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
-import static android.app.Notification.DEFAULT_SOUND;
 import static android.app.Notification.DEFAULT_VIBRATE;
 import static android.content.Context.DOWNLOAD_SERVICE;
 
@@ -585,7 +586,9 @@ public class Helper {
         if( sharedpreferences.getBoolean(Helper.SET_NOTIF_SILENT,false) ) {
             notificationBuilder.setDefaults(DEFAULT_VIBRATE);
         }else {
-            notificationBuilder.setDefaults(DEFAULT_SOUND);
+            String soundUri = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() +"/";
+
+            notificationBuilder.setSound(Uri.parse(soundUri + R.raw.boop));
         }
         notificationBuilder.setContentTitle(title);
         notificationBuilder.setLargeIcon(icon);
@@ -978,6 +981,7 @@ public class Helper {
                 DisplayImageOptions optionNew = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                         .cacheOnDisk(true).resetViewBeforeLoading(true).build();
                 imageLoader.loadImage(urlHeader, optionNew, new SimpleImageLoadingListener() {
+                    @TargetApi(16)
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         super.onLoadingComplete(imageUri, view, loadedImage);
