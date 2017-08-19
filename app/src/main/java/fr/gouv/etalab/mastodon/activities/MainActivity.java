@@ -243,8 +243,7 @@ public class MainActivity extends AppCompatActivity
         toolbarTitle.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                // Not sure whether to only do something if the tabLayout is hidden.
-                //if (tabLayout.getVisibility() == View.GONE) {
+                if (tabLayout.getVisibility() == View.GONE) {
 
                     int pos = tabLayout.getSelectedTabPosition();
 
@@ -265,7 +264,7 @@ public class MainActivity extends AppCompatActivity
                             break;
                     }
                 }
-            //}
+            }
         });
 
         toolbar_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
