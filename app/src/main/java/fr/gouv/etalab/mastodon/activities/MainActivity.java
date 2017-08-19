@@ -237,30 +237,37 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        // TODO: Work out why I can't make this only work when tabLayout is hidden (GONE).
-        toolbarTitle.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        if (Helper.THEME_MENU == sharedpreferences.getInt(Helper.SET_TABS, Helper.THEME_TABS)) {
 
-                int pos = tabLayout.getSelectedTabPosition();
+            toolbarTitle.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
 
-                Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, pos);
+                    int pos = tabLayout.getSelectedTabPosition();
 
-                switch (pos) {
-                    case 0:
-                    case 2:
-                    case 3:
-                        DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
-                        if (displayStatusFragment != null)
-                            displayStatusFragment.scrollToTop();
-                        break;
-                    case 1:
-                        DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
-                        if (displayNotificationsFragment != null)
-                            displayNotificationsFragment.scrollToTop();
-                        break;
+                    Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, pos);
+
+                    switch (pos) {
+                        case 0:
+                        case 2:
+                        case 3:
+                            DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
+                            if (displayStatusFragment != null)
+                                displayStatusFragment.scrollToTop();
+                            break;
+                        case 1:
+                            DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
+                            if (displayNotificationsFragment != null)
+                                displayNotificationsFragment.scrollToTop();
+                            break;
+                    }
                 }
-            }
-        });
+            });
+        }
+
+        else {
+            toolbarTitle.setOnClickListener(null);
+            toolbar.setClickable(false);
+        }
 
         for(int i = 0 ; i < 4 ; i++)
             if( tabLayout.getTabAt(i) != null && tabLayout.getTabAt(i).getIcon() != null)
