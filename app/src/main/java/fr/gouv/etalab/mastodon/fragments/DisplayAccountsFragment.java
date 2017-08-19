@@ -22,6 +22,7 @@ import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -233,7 +234,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
 
     @Override
     public void onRetrieveAccounts(APIResponse apiResponse) {
-
+        flag_loading = (apiResponse.getMax_id() == null );
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         if( apiResponse.getError() != null){
@@ -241,7 +242,6 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
                 Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
-            flag_loading = false;
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
             return;
@@ -265,6 +265,5 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         }
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
-        flag_loading = accounts != null && accounts.size() < accountPerPage;
     }
 }

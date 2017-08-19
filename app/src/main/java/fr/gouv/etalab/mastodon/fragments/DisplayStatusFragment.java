@@ -260,7 +260,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
     @Override
     public void onRetrieveFeeds(APIResponse apiResponse) {
-
+        flag_loading = (apiResponse.getMax_id() == null );
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
@@ -269,13 +269,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
                 Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
-            flag_loading = false;
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
             return;
-        }else if( apiResponse.getError() != null && apiResponse.getError().getError().startsWith("404 -")) {
-            flag_loading = false;
         }
+
         List<Status> statuses = apiResponse.getStatuses();
         if( !swiped && firstLoad && (statuses == null || statuses.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
@@ -294,8 +292,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             statusListAdapter.notifyDataSetChanged();
         }
         swipeRefreshLayout.setRefreshing(false);
-        if( flag_loading )
-            flag_loading = statuses != null && statuses.size() < tootsPerPage;
+
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
         if(statuses != null && statuses.size()  > 0 && type == RetrieveFeedsAsyncTask.Type.HOME ){
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -341,6 +338,5 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
         }
         statusListAdapter.notifyDataSetChanged();
-
     }
 }
