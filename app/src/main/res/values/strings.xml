@@ -57,6 +57,7 @@
     <string name="media">Media</string>
     <string name="share_with">Share with</string>
     <string name="shared_via">Shared via Mastalab</string>
+    <string name="replies">Replies</string>
     <!--- Menu -->
     <string name="home_menu">Home</string>
     <string name="local_menu">Local timeline</string>
@@ -87,6 +88,7 @@
     <string name="reblog_added">The toot was boosted!</string>
     <string name="reblog_removed">The toot is no longer boosted!</string>
     <string name="reblog_by">Shared via %1$s</string>
+
 
     <string name="favourite_add">Add this toot to your favourites?</string>
     <string name="favourite_remove">Remove this toot from your favourites?</string>

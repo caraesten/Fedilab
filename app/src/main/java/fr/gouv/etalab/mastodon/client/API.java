@@ -1259,6 +1259,7 @@ public class API {
             status.setVisibility(resobj.get("visibility").toString());
             status.setLanguage(resobj.get("language").toString());
             status.setUrl(resobj.get("url").toString());
+            status.setReplies(null);
             //TODO: replace by the value
             status.setApplication(new Application());
 
