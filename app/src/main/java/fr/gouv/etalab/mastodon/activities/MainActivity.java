@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbarTitle  = (TextView) toolbar.findViewById(R.id.toolbar_title);
+
         pp_actionBar = (ImageView) toolbar.findViewById(R.id.pp_actionBar);
         toolbar_search = (SearchView) toolbar.findViewById(R.id.toolbar_search);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
@@ -239,6 +240,33 @@ public class MainActivity extends AppCompatActivity
             if( tabLayout.getTabAt(i) != null && tabLayout.getTabAt(i).getIcon() != null)
                 tabLayout.getTabAt(i).getIcon().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
 
+        toolbarTitle.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                // Not sure whether to only do something if the tabLayout is hidden.
+                //if (tabLayout.getVisibility() == View.GONE) {
+
+                    int pos = tabLayout.getSelectedTabPosition();
+
+                    Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, pos);
+
+                    switch (pos) {
+                        case 0:
+                        case 2:
+                        case 3:
+                            DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
+                            if (displayStatusFragment != null)
+                                displayStatusFragment.scrollToTop();
+                            break;
+                        case 1:
+                            DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
+                            if (displayNotificationsFragment != null)
+                                displayNotificationsFragment.scrollToTop();
+                            break;
+                    }
+                }
+            //}
+        });
 
         toolbar_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
