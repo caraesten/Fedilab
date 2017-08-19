@@ -236,36 +236,35 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
-        for(int i = 0 ; i < 4 ; i++)
-            if( tabLayout.getTabAt(i) != null && tabLayout.getTabAt(i).getIcon() != null)
-                tabLayout.getTabAt(i).getIcon().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
 
+        // TODO: Work out why I can't make this only work when tabLayout is hidden (GONE).
         toolbarTitle.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                if (tabLayout.getVisibility() == View.GONE) {
+                int pos = tabLayout.getSelectedTabPosition();
 
-                    int pos = tabLayout.getSelectedTabPosition();
+                Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, pos);
 
-                    Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, pos);
-
-                    switch (pos) {
-                        case 0:
-                        case 2:
-                        case 3:
-                            DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
-                            if (displayStatusFragment != null)
-                                displayStatusFragment.scrollToTop();
-                            break;
-                        case 1:
-                            DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
-                            if (displayNotificationsFragment != null)
-                                displayNotificationsFragment.scrollToTop();
-                            break;
-                    }
+                switch (pos) {
+                    case 0:
+                    case 2:
+                    case 3:
+                        DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
+                        if (displayStatusFragment != null)
+                            displayStatusFragment.scrollToTop();
+                        break;
+                    case 1:
+                        DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
+                        if (displayNotificationsFragment != null)
+                            displayNotificationsFragment.scrollToTop();
+                        break;
                 }
             }
         });
+
+        for(int i = 0 ; i < 4 ; i++)
+            if( tabLayout.getTabAt(i) != null && tabLayout.getTabAt(i).getIcon() != null)
+                tabLayout.getTabAt(i).getIcon().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
 
         toolbar_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
