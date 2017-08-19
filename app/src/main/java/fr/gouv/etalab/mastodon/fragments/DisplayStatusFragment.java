@@ -260,7 +260,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
     @Override
     public void onRetrieveFeeds(APIResponse apiResponse) {
-        flag_loading = (apiResponse.getMax_id() == null );
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
@@ -271,9 +270,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
+            flag_loading = false;
             return;
         }
-
+        flag_loading = (apiResponse.getMax_id() == null );
         List<Status> statuses = apiResponse.getStatuses();
         if( !swiped && firstLoad && (statuses == null || statuses.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);

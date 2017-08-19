@@ -234,7 +234,6 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
 
     @Override
     public void onRetrieveAccounts(APIResponse apiResponse) {
-        flag_loading = (apiResponse.getMax_id() == null );
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         if( apiResponse.getError() != null){
@@ -244,8 +243,10 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
                 Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
+            flag_loading = false;
             return;
         }
+        flag_loading = (apiResponse.getMax_id() == null );
         List<Account> accounts = apiResponse.getAccounts();
         if( !swiped && firstLoad && (accounts == null || accounts.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
