@@ -241,8 +241,7 @@ public class MainActivity extends AppCompatActivity
                 public void onClick(View v) {
                     TextView view = (TextView) v;
                     FragmentManager fragmentManager = getSupportFragmentManager();
-
-                    //TODO: Convert to switch() statement once we have it working...
+                    
                     if (view.getText().toString().equals(getString(R.string.favorites_menu))) {
                         DisplayStatusFragment faveFrag = (DisplayStatusFragment) fragmentManager.findFragmentByTag("FAVOURITES");
 
@@ -709,18 +708,22 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             //noinspection ConstantConditions
             tabLayout.getTabAt(0).select();
+            toolbarTitle.setText(getString(R.string.home_menu));
             return true;
         } else if( id == R.id.nav_notification){
             //noinspection ConstantConditions
             tabLayout.getTabAt(1).select();
+            toolbarTitle.setText(getString(R.string.notifications));
             return true;
         }else if (id == R.id.nav_local) {
             //noinspection ConstantConditions
             tabLayout.getTabAt(2).select();
+            toolbarTitle.setText(getString(R.string.local_menu));
             return true;
         } else if (id == R.id.nav_global) {
             //noinspection ConstantConditions
             tabLayout.getTabAt(3).select();
+            toolbarTitle.setText(getString(R.string.global_menu));
             return true;
         }
         DisplayStatusFragment statusFragment;
