@@ -705,25 +705,22 @@ public class MainActivity extends AppCompatActivity
             pp_actionBar.setVisibility(View.VISIBLE);
             toolbar_search.setIconified(true);
         }
+        toolbarTitle.setText(item.getTitle());
         if (id == R.id.nav_home) {
             //noinspection ConstantConditions
             tabLayout.getTabAt(0).select();
-            toolbarTitle.setText(getString(R.string.home_menu));
             return true;
         } else if( id == R.id.nav_notification){
             //noinspection ConstantConditions
             tabLayout.getTabAt(1).select();
-            toolbarTitle.setText(getString(R.string.notifications));
             return true;
         }else if (id == R.id.nav_local) {
             //noinspection ConstantConditions
             tabLayout.getTabAt(2).select();
-            toolbarTitle.setText(getString(R.string.local_menu));
             return true;
         } else if (id == R.id.nav_global) {
             //noinspection ConstantConditions
             tabLayout.getTabAt(3).select();
-            toolbarTitle.setText(getString(R.string.global_menu));
             return true;
         }
         DisplayStatusFragment statusFragment;
@@ -779,8 +776,7 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, followRequestSentFragment, fragmentTag).commit();
         }
-        //selectTabBar(fragmentTag);
-        toolbarTitle.setText(item.getTitle());
+
         populateTitleWithTag(fragmentTag, item.getTitle().toString(), item.getItemId());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
