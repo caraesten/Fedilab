@@ -235,10 +235,35 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
-        //Scroll to top when top bar is clicked (THEME_MENU only)
-        if (Helper.THEME_MENU == sharedpreferences.getInt(Helper.SET_TABS, Helper.THEME_TABS)) {
-            toolbarTitle.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
+
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+
+        //Scroll to top when top bar is clicked for favourites/blocked/muted
+        toolbarTitle.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+
+                if( navigationView.getMenu().findItem(R.id.nav_favorites).isChecked()){
+                    DisplayStatusFragment faveFrag = (DisplayStatusFragment) fragmentManager.findFragmentByTag("FAVOURITES");
+                    if (faveFrag != null && faveFrag.isVisible()) {
+                        faveFrag.scrollToTop();
+                    }
+                } else if (navigationView.getMenu().findItem(R.id.nav_blocked).isChecked()) {
+                    DisplayAccountsFragment blockFrag = (DisplayAccountsFragment) fragmentManager.findFragmentByTag("BLOCKS");
+
+                    if (blockFrag != null && blockFrag.isVisible()) {
+                        blockFrag.scrollToTop();
+                    }
+                } else if (navigationView.getMenu().findItem(R.id.nav_muted).isChecked()) {
+                    DisplayAccountsFragment muteFrag = (DisplayAccountsFragment) fragmentManager.findFragmentByTag("MUTED");
+
+                    if (muteFrag != null && muteFrag.isVisible()) {
+                        muteFrag.scrollToTop();
+                    }
+                //Scroll to top when top bar is clicked (THEME_MENU only)
+                } else if (Helper.THEME_MENU == sharedpreferences.getInt(Helper.SET_TABS, Helper.THEME_TABS)) {
                     int pos = tabLayout.getSelectedTabPosition();
                     Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, pos);
                     switch (pos) {
@@ -256,11 +281,9 @@ public class MainActivity extends AppCompatActivity
                             break;
                     }
                 }
-            });
-        } else {
-            toolbarTitle.setOnClickListener(null);
-            toolbar.setClickable(false);
-        }
+            }
+        });
+
 
         for(int i = 0 ; i < 4 ; i++)
             if( tabLayout.getTabAt(i) != null && tabLayout.getTabAt(i).getIcon() != null)
@@ -328,8 +351,7 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+
 
 
         //Image loader configuration
@@ -682,6 +704,7 @@ public class MainActivity extends AppCompatActivity
             pp_actionBar.setVisibility(View.VISIBLE);
             toolbar_search.setIconified(true);
         }
+        toolbarTitle.setText(item.getTitle());
         if (id == R.id.nav_home) {
             //noinspection ConstantConditions
             tabLayout.getTabAt(0).select();
@@ -752,8 +775,7 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, followRequestSentFragment, fragmentTag).commit();
         }
-        //selectTabBar(fragmentTag);
-        toolbarTitle.setText(item.getTitle());
+
         populateTitleWithTag(fragmentTag, item.getTitle().toString(), item.getItemId());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
