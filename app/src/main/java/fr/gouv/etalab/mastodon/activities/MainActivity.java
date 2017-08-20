@@ -235,16 +235,12 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
-
+        //Scroll to top when top bar is clicked (THEME_MENU only)
         if (Helper.THEME_MENU == sharedpreferences.getInt(Helper.SET_TABS, Helper.THEME_TABS)) {
-
             toolbarTitle.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-
                     int pos = tabLayout.getSelectedTabPosition();
-
                     Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, pos);
-
                     switch (pos) {
                         case 0:
                         case 2:
@@ -261,9 +257,7 @@ public class MainActivity extends AppCompatActivity
                     }
                 }
             });
-        }
-
-        else {
+        } else {
             toolbarTitle.setOnClickListener(null);
             toolbar.setClickable(false);
         }
