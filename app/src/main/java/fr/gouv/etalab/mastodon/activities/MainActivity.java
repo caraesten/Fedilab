@@ -235,55 +235,55 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
-        //Scroll to top when top bar is clicked (THEME_MENU only)
-        if (Helper.THEME_MENU == sharedpreferences.getInt(Helper.SET_TABS, Helper.THEME_TABS)) {
-            toolbarTitle.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    TextView view = (TextView) v;
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    
-                    if (view.getText().toString().equals(getString(R.string.favorites_menu))) {
-                        DisplayStatusFragment faveFrag = (DisplayStatusFragment) fragmentManager.findFragmentByTag("FAVOURITES");
 
-                        if (faveFrag != null && faveFrag.isVisible()) {
-                            faveFrag.scrollToTop();
-                        }
-                    } else if (view.getText().toString().equals(getString(R.string.blocked_menu))) {
-                        DisplayAccountsFragment blockFrag = (DisplayAccountsFragment) fragmentManager.findFragmentByTag("BLOCKS");
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
-                        if (blockFrag != null && blockFrag.isVisible()) {
-                            blockFrag.scrollToTop();
-                        }
-                    } else if (view.getText().toString().equals(getString(R.string.muted_menu))) {
-                        DisplayAccountsFragment muteFrag = (DisplayAccountsFragment) fragmentManager.findFragmentByTag("MUTED");
 
-                        if (muteFrag != null && muteFrag.isVisible()) {
-                            muteFrag.scrollToTop();
-                        }
-                    } else {
-                        int pos = tabLayout.getSelectedTabPosition();
-                        Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, pos);
-                        switch (pos) {
-                            case 0:
-                            case 2:
-                            case 3:
-                                DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
-                                if (displayStatusFragment != null)
-                                    displayStatusFragment.scrollToTop();
-                                break;
-                            case 1:
-                                DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
-                                if (displayNotificationsFragment != null)
-                                    displayNotificationsFragment.scrollToTop();
-                                break;
-                        }
+        //Scroll to top when top bar is clicked for favourites/blocked/muted
+        toolbarTitle.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+
+                if( navigationView.getMenu().findItem(R.id.nav_favorites).isChecked()){
+                    DisplayStatusFragment faveFrag = (DisplayStatusFragment) fragmentManager.findFragmentByTag("FAVOURITES");
+                    if (faveFrag != null && faveFrag.isVisible()) {
+                        faveFrag.scrollToTop();
+                    }
+                } else if (navigationView.getMenu().findItem(R.id.nav_blocked).isChecked()) {
+                    DisplayAccountsFragment blockFrag = (DisplayAccountsFragment) fragmentManager.findFragmentByTag("BLOCKS");
+
+                    if (blockFrag != null && blockFrag.isVisible()) {
+                        blockFrag.scrollToTop();
+                    }
+                } else if (navigationView.getMenu().findItem(R.id.nav_muted).isChecked()) {
+                    DisplayAccountsFragment muteFrag = (DisplayAccountsFragment) fragmentManager.findFragmentByTag("MUTED");
+
+                    if (muteFrag != null && muteFrag.isVisible()) {
+                        muteFrag.scrollToTop();
+                    }
+                //Scroll to top when top bar is clicked (THEME_MENU only)
+                } else if (Helper.THEME_MENU == sharedpreferences.getInt(Helper.SET_TABS, Helper.THEME_TABS)) {
+                    int pos = tabLayout.getSelectedTabPosition();
+                    Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, pos);
+                    switch (pos) {
+                        case 0:
+                        case 2:
+                        case 3:
+                            DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
+                            if (displayStatusFragment != null)
+                                displayStatusFragment.scrollToTop();
+                            break;
+                        case 1:
+                            DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
+                            if (displayNotificationsFragment != null)
+                                displayNotificationsFragment.scrollToTop();
+                            break;
                     }
                 }
-            });
-        } else {
-            toolbarTitle.setOnClickListener(null);
-            toolbar.setClickable(false);
-        }
+            }
+        });
+
 
         for(int i = 0 ; i < 4 ; i++)
             if( tabLayout.getTabAt(i) != null && tabLayout.getTabAt(i).getIcon() != null)
@@ -351,8 +351,7 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+
 
 
         //Image loader configuration
