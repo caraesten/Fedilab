@@ -239,21 +239,45 @@ public class MainActivity extends AppCompatActivity
         if (Helper.THEME_MENU == sharedpreferences.getInt(Helper.SET_TABS, Helper.THEME_TABS)) {
             toolbarTitle.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    int pos = tabLayout.getSelectedTabPosition();
-                    Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, pos);
-                    switch (pos) {
-                        case 0:
-                        case 2:
-                        case 3:
-                            DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
-                            if (displayStatusFragment != null)
-                                displayStatusFragment.scrollToTop();
-                            break;
-                        case 1:
-                            DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
-                            if (displayNotificationsFragment != null)
-                                displayNotificationsFragment.scrollToTop();
-                            break;
+                    TextView view = (TextView) v;
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+
+                    //TODO: Convert to switch() statement once we have it working...
+                    if (view.getText().toString().equals(getString(R.string.favorites_menu))) {
+                        DisplayStatusFragment faveFrag = (DisplayStatusFragment) fragmentManager.findFragmentByTag("FAVOURITES");
+
+                        if (faveFrag != null && faveFrag.isVisible()) {
+                            faveFrag.scrollToTop();
+                        }
+                    } else if (view.getText().toString().equals(getString(R.string.blocked_menu))) {
+                        DisplayAccountsFragment blockFrag = (DisplayAccountsFragment) fragmentManager.findFragmentByTag("BLOCKS");
+
+                        if (blockFrag != null && blockFrag.isVisible()) {
+                            blockFrag.scrollToTop();
+                        }
+                    } else if (view.getText().toString().equals(getString(R.string.muted_menu))) {
+                        DisplayAccountsFragment muteFrag = (DisplayAccountsFragment) fragmentManager.findFragmentByTag("MUTED");
+
+                        if (muteFrag != null && muteFrag.isVisible()) {
+                            muteFrag.scrollToTop();
+                        }
+                    } else {
+                        int pos = tabLayout.getSelectedTabPosition();
+                        Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, pos);
+                        switch (pos) {
+                            case 0:
+                            case 2:
+                            case 3:
+                                DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
+                                if (displayStatusFragment != null)
+                                    displayStatusFragment.scrollToTop();
+                                break;
+                            case 1:
+                                DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
+                                if (displayNotificationsFragment != null)
+                                    displayNotificationsFragment.scrollToTop();
+                                break;
+                        }
                     }
                 }
             });

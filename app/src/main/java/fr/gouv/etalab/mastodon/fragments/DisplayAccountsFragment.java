@@ -231,6 +231,10 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
             asyncTask.cancel(true);
     }
 
+    public void scrollToTop(){
+        if( lv_accounts != null)
+            lv_accounts.setAdapter(accountsListAdapter);
+    }
 
     @Override
     public void onRetrieveAccounts(APIResponse apiResponse) {
