@@ -15,6 +15,7 @@
 package fr.gouv.etalab.mastodon.activities;
 
 import android.app.Activity;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -471,7 +472,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             restoreToot(restored);
         }
         changeColor();
-
+        if( theme == Helper.THEME_LIGHT) {
+            toot_it.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+        }
     }
 
 

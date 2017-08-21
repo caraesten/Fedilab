@@ -84,6 +84,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
+import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeUser;
 import static fr.gouv.etalab.mastodon.helper.Helper.loadPPInActionBar;
 import static fr.gouv.etalab.mastodon.helper.Helper.menuAccounts;
@@ -523,7 +524,34 @@ public class MainActivity extends AppCompatActivity
                 final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                 unCheckAllMenuItems(navigationView);
                 toot.setVisibility(View.VISIBLE);
-
+                //Manages theme for icon colors
+                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                if( theme == Helper.THEME_DARK){
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_reply,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_more,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_globe,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_open,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_local_post_office,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_retweet_black,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_fav_black,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_photo,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_remove_red_eye,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.dark_text);
+                }else {
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_reply,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_more,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_globe,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_open,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_local_post_office,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_retweet_black,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_fav_black,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_photo,R.color.white);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_remove_red_eye,R.color.white);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.white);
+                }
                 switch (viewPager.getCurrentItem()){
                     case 0:
                         toolbarTitle.setText(R.string.home_menu);
