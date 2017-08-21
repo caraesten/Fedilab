@@ -247,11 +247,11 @@ public class Helper {
 
     private static final Pattern SHORTNAME_PATTERN = Pattern.compile(":([-+\\w]+):");
 
-    private static final Pattern urlPattern = Pattern.compile(
+    public static final Pattern urlPattern = Pattern.compile(
             "(?i)\\b((?:[a-z][\\w-]+:(?:/{1,3}|[a-z0-9%])|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,10}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))",
             Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 
-    private static final Pattern hashtagPattern = Pattern.compile("(#[\\w_À-ú-]{1,})");
+    public static final Pattern hashtagPattern = Pattern.compile("(#[\\w_À-ú-]{1,})");
     /**
      * Converts emojis in input to unicode
      * @param input String

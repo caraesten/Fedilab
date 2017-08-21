@@ -33,6 +33,7 @@ import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.util.Patterns;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -63,7 +64,11 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
 
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
@@ -104,6 +109,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     private final int FAVOURITE = 2;
     private RetrieveFeedsAsyncTask.Type type;
     private String targetedId;
+    private HashMap<String, String> urlConversion;
+    private HashMap<String, String> tagConversion;
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, List<Status> statuses){
         this.context = context;
@@ -301,8 +308,41 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             @Override
             public void onClick(View v) {
                 try {
+                    String text = status.getContent();
                     if( !status.isTranslated() ){
-                        new YandexQuery(StatusListAdapter.this).getYandexTextview(position, status.getContent(), currentLocale);
+                        tagConversion = new HashMap<>();
+                        urlConversion = new HashMap<>();
+                        Matcher matcher;
+                        //Extracts urls
+                        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
+                            matcher = Patterns.WEB_URL.matcher(text);
+                        else
+                            matcher = Helper.urlPattern.matcher(text);
+                        int i = 0;
+                        //replaces them by a kind of variable which shouldn't be translated ie: __u0__, __u1__, etc.
+                        while (matcher.find()){
+                            String key = "__u" + String.valueOf(i) + "__";
+                            String value = matcher.group(0);
+                            if( value != null) {
+                                urlConversion.put(key, value);
+                                text = text.replace(value, key);
+                            }
+                            i++;
+                        }
+                        i = 0;
+                        //Same for tags with __t0__, __t1__, etc.
+                        matcher = Helper.hashtagPattern.matcher(text);
+                        while (matcher.find()){
+                            String key = "__t" + String.valueOf(i) + "__";
+                            String value = matcher.group(0);
+                            tagConversion.put(key, value);
+                            if( value != null) {
+                                tagConversion.put(key, value);
+                                text = text.replace(value, key);
+                            }
+                            i++;
+                        }
+                        new YandexQuery(StatusListAdapter.this).getYandexTextview(position, text, currentLocale);
                     }else {
                         status.setTranslationShown(!status.isTranslationShown());
                         statusListAdapter.notifyDataSetChanged();
@@ -872,6 +912,18 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }else if( statuses.size() > position) {
             try {
                 String aJsonString = yandexTranslateToText(translatedResult);
+                Iterator itU = urlConversion.entrySet().iterator();
+                while (itU.hasNext()) {
+                    Map.Entry pair = (Map.Entry)itU.next();
+                    aJsonString = aJsonString.replace(pair.getKey().toString(), pair.getValue().toString());
+                    itU.remove();
+                }
+                Iterator itT = tagConversion.entrySet().iterator();
+                while (itT.hasNext()) {
+                    Map.Entry pair = (Map.Entry)itT.next();
+                    aJsonString = aJsonString.replace(pair.getKey().toString(), pair.getValue().toString());
+                    itT.remove();
+                }
                 statuses.get(position).setTranslated(true);
                 statuses.get(position).setTranslationShown(true);
                 statuses.get(position).setContent_translated(aJsonString);
