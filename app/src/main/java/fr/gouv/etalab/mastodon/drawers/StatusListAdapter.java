@@ -308,16 +308,22 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             @Override
             public void onClick(View v) {
                 try {
-                    String text = status.getContent();
+                    SpannableString spannableString;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                        spannableString = new SpannableString(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
+                    else
+                        //noinspection deprecation
+                        spannableString = new SpannableString(Html.fromHtml(status.getContent()));
+                    String text = spannableString.toString();
                     if( !status.isTranslated() ){
                         tagConversion = new HashMap<>();
                         urlConversion = new HashMap<>();
                         Matcher matcher;
                         //Extracts urls
                         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
-                            matcher = Patterns.WEB_URL.matcher(text);
+                            matcher = Patterns.WEB_URL.matcher(spannableString.toString());
                         else
-                            matcher = Helper.urlPattern.matcher(text);
+                            matcher = Helper.urlPattern.matcher(spannableString.toString());
                         int i = 0;
                         //replaces them by a kind of variable which shouldn't be translated ie: __u0__, __u1__, etc.
                         while (matcher.find()){
@@ -504,7 +510,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
         if( status.getContent_translated() != null && status.getContent_translated().length() > 0){
             SpannableString spannableStringTrans = Helper.clickableElements(context, status.getContent_translated(),
-                    status.getReblog() != null?status.getReblog().getMentions():status.getMentions());
+                    status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), false);
             holder.status_content_translated.setText(spannableStringTrans, TextView.BufferType.SPANNABLE);
             holder.status_content_translated.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -527,7 +533,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }
 
         final SpannableString spannableString = Helper.clickableElements(context,content,
-                status.getReblog() != null?status.getReblog().getMentions():status.getMentions());
+                status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), true);
         holder.status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
         holder.status_content.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

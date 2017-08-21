@@ -1066,14 +1066,18 @@ public class Helper {
      * @param mentions List<Mention>
      * @return TextView
      */
-    public static SpannableString clickableElements(final Context context, String fullContent, List<Mention> mentions) {
+    public static SpannableString clickableElements(final Context context, String fullContent, List<Mention> mentions, boolean useHTML) {
 
         SpannableString spannableString;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableString = new SpannableString(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_LEGACY));
-        else
-            //noinspection deprecation
-            spannableString = new SpannableString(Html.fromHtml(fullContent));
+        if( useHTML) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                spannableString = new SpannableString(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_LEGACY));
+            else
+                //noinspection deprecation
+                spannableString = new SpannableString(Html.fromHtml(fullContent));
+        }else{
+            spannableString = new SpannableString(fullContent);
+        }
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
         if( embedded_browser){
@@ -1082,6 +1086,7 @@ public class Helper {
                 matcher = Patterns.WEB_URL.matcher(spannableString);
             else
                 matcher = urlPattern.matcher(spannableString);
+
             while (matcher.find()){
                 int matchStart = matcher.start(1);
                 int matchEnd = matcher.end();
