@@ -85,6 +85,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
+import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeUser;
 import static fr.gouv.etalab.mastodon.helper.Helper.loadPPInActionBar;
 import static fr.gouv.etalab.mastodon.helper.Helper.menuAccounts;
@@ -236,10 +237,59 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
+
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+
+        //Scroll to top when top bar is clicked for favourites/blocked/muted
+        toolbarTitle.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+
+                if( navigationView.getMenu().findItem(R.id.nav_favorites).isChecked()){
+                    DisplayStatusFragment faveFrag = (DisplayStatusFragment) fragmentManager.findFragmentByTag("FAVOURITES");
+                    if (faveFrag != null && faveFrag.isVisible()) {
+                        faveFrag.scrollToTop();
+                    }
+                } else if (navigationView.getMenu().findItem(R.id.nav_blocked).isChecked()) {
+                    DisplayAccountsFragment blockFrag = (DisplayAccountsFragment) fragmentManager.findFragmentByTag("BLOCKS");
+
+                    if (blockFrag != null && blockFrag.isVisible()) {
+                        blockFrag.scrollToTop();
+                    }
+                } else if (navigationView.getMenu().findItem(R.id.nav_muted).isChecked()) {
+                    DisplayAccountsFragment muteFrag = (DisplayAccountsFragment) fragmentManager.findFragmentByTag("MUTED");
+
+                    if (muteFrag != null && muteFrag.isVisible()) {
+                        muteFrag.scrollToTop();
+                    }
+                //Scroll to top when top bar is clicked (THEME_MENU only)
+                } else if (Helper.THEME_MENU == sharedpreferences.getInt(Helper.SET_TABS, Helper.THEME_TABS)) {
+                    int pos = tabLayout.getSelectedTabPosition();
+                    Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, pos);
+                    switch (pos) {
+                        case 0:
+                        case 2:
+                        case 3:
+                            DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
+                            if (displayStatusFragment != null)
+                                displayStatusFragment.scrollToTop();
+                            break;
+                        case 1:
+                            DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
+                            if (displayNotificationsFragment != null)
+                                displayNotificationsFragment.scrollToTop();
+                            break;
+                    }
+                }
+            }
+        });
+
+
         for(int i = 0 ; i < 4 ; i++)
             if( tabLayout.getTabAt(i) != null && tabLayout.getTabAt(i).getIcon() != null)
                 tabLayout.getTabAt(i).getIcon().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-
 
         toolbar_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -303,8 +353,7 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+
 
 
         //Image loader configuration
@@ -491,7 +540,34 @@ public class MainActivity extends AppCompatActivity
                 final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                 unCheckAllMenuItems(navigationView);
                 toot.setVisibility(View.VISIBLE);
-
+                //Manages theme for icon colors
+                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                if( theme == Helper.THEME_DARK){
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_reply,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_more,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_globe,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_open,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_local_post_office,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_retweet_black,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_fav_black,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_photo,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_remove_red_eye,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.dark_text);
+                }else {
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_reply,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_more,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_globe,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_open,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_local_post_office,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_retweet_black,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_fav_black,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_photo,R.color.white);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_remove_red_eye,R.color.white);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.white);
+                }
                 switch (viewPager.getCurrentItem()){
                     case 0:
                         toolbarTitle.setText(R.string.home_menu);
@@ -672,6 +748,7 @@ public class MainActivity extends AppCompatActivity
             pp_actionBar.setVisibility(View.VISIBLE);
             toolbar_search.setIconified(true);
         }
+        toolbarTitle.setText(item.getTitle());
         if (id == R.id.nav_home) {
             //noinspection ConstantConditions
             tabLayout.getTabAt(0).select();
@@ -742,8 +819,7 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, followRequestSentFragment, fragmentTag).commit();
         }
-        //selectTabBar(fragmentTag);
-        toolbarTitle.setText(item.getTitle());
+
         populateTitleWithTag(fragmentTag, item.getTitle().toString(), item.getItemId());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

@@ -197,6 +197,7 @@ public class Helper {
     public static final String SET_TEXT_SIZE = "set_text_size";
     public static final String SET_ICON_SIZE = "set_icon_size";
     public static final String SET_PREVIEW_REPLIES = "set_preview_replies";
+    public static final String SET_PREVIEW_REPLIES_PP = "set_preview_replies_pp";
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;
@@ -246,11 +247,11 @@ public class Helper {
 
     private static final Pattern SHORTNAME_PATTERN = Pattern.compile(":([-+\\w]+):");
 
-    private static final Pattern urlPattern = Pattern.compile(
+    public static final Pattern urlPattern = Pattern.compile(
             "(?i)\\b((?:[a-z][\\w-]+:(?:/{1,3}|[a-z0-9%])|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,10}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))",
             Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 
-    private static final Pattern hashtagPattern = Pattern.compile("(#[\\w_À-ú-]{1,})");
+    public static final Pattern hashtagPattern = Pattern.compile("(#[\\w_À-ú-]{1,})");
     /**
      * Converts emojis in input to unicode
      * @param input String
@@ -1065,14 +1066,18 @@ public class Helper {
      * @param mentions List<Mention>
      * @return TextView
      */
-    public static SpannableString clickableElements(final Context context, String fullContent, List<Mention> mentions) {
+    public static SpannableString clickableElements(final Context context, String fullContent, List<Mention> mentions, boolean useHTML) {
 
         SpannableString spannableString;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableString = new SpannableString(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_LEGACY));
-        else
-            //noinspection deprecation
-            spannableString = new SpannableString(Html.fromHtml(fullContent));
+        if( useHTML) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                spannableString = new SpannableString(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_LEGACY));
+            else
+                //noinspection deprecation
+                spannableString = new SpannableString(Html.fromHtml(fullContent));
+        }else{
+            spannableString = new SpannableString(fullContent);
+        }
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
         if( embedded_browser){
@@ -1081,6 +1086,7 @@ public class Helper {
                 matcher = Patterns.WEB_URL.matcher(spannableString);
             else
                 matcher = urlPattern.matcher(spannableString);
+
             while (matcher.find()){
                 int matchStart = matcher.start(1);
                 int matchEnd = matcher.end();
