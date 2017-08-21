@@ -430,7 +430,7 @@ public class MainActivity extends AppCompatActivity
                 toolbarTitle.setText(R.string.home_menu);
                 matchingIntent = true;
             }
-        }else if(( Intent.ACTION_SEND.equals(action) && type != null )) {
+        }else if( Intent.ACTION_SEND.equals(action) && type != null ) {
             if ("text/plain".equals(type)) {
                 String sharedSubject = intent.getStringExtra(Intent.EXTRA_SUBJECT);
                 String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
