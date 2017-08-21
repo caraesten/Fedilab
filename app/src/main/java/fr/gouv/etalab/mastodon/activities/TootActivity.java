@@ -16,6 +16,8 @@ package fr.gouv.etalab.mastodon.activities;
 
 import android.app.Activity;
 import android.support.v4.content.ContextCompat;
+import android.net.Uri;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -142,6 +144,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private HorizontalScrollView picture_scrollview;
     private int currentCursorPosition, searchLength;
     private TextView toot_space_left;
+    private Uri sharedUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -232,6 +235,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             tootReply = b.getParcelable("tootReply");
             sharedContent = b.getString("sharedContent", null);
             sharedSubject = b.getString("sharedSubject", null);
+            sharedUri = b.getParcelable("sharedUri");
             restored = b.getLong("restored", -1);
         }
         if( restored != -1 ){
@@ -280,6 +284,12 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         attachments = new ArrayList<>();
         int charsInCw = 0;
         int charsInToot = 0;
+
+        // TODO: Sort out multiple images
+        if (sharedUri != null)
+        {
+            uploadSharedImage(sharedUri);
+        }
 
         boolean isAccountPrivate = account.isLocked();
 
@@ -484,6 +494,26 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         }
         mToast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
         mToast.show();
+    }
+
+    public void uploadSharedImage(Uri uri)
+    {
+        picture_scrollview.setVisibility(View.VISIBLE);
+
+        if (uri != null) {
+
+            try {
+                InputStream inputStream = getContentResolver().openInputStream(uri);
+                loading_picture.setVisibility(View.VISIBLE);
+                toot_picture.setEnabled(false);
+                new UploadActionAsyncTask(getApplicationContext(), inputStream, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            } catch (FileNotFoundException e) {
+                Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
+                loading_picture.setVisibility(View.GONE);
+                toot_picture.setEnabled(true);
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override

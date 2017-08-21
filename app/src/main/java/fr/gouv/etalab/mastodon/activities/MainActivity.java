@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -478,7 +479,7 @@ public class MainActivity extends AppCompatActivity
                 toolbarTitle.setText(R.string.home_menu);
                 matchingIntent = true;
             }
-        }else if( Intent.ACTION_SEND.equals(action) && type != null ){
+        }else if( Intent.ACTION_SEND.equals(action) && type != null ) {
             if ("text/plain".equals(type)) {
                 String sharedSubject = intent.getStringExtra(Intent.EXTRA_SUBJECT);
                 String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
@@ -487,6 +488,21 @@ public class MainActivity extends AppCompatActivity
                     Bundle b = new Bundle();
                     b.putString("sharedSubject", sharedSubject);
                     b.putString("sharedContent", sharedText);
+                    intentToot.putExtras(b);
+                    startActivity(intentToot);
+                }
+            }
+            // TODO: Sort out multiple images
+            else if (type.startsWith("image/"))
+            {
+                Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+
+                if (imageUri != null) {
+
+                    Intent intentToot = new Intent(getApplicationContext(), TootActivity.class);
+                    Bundle b = new Bundle();
+
+                    b.putParcelable("sharedUri", imageUri);
                     intentToot.putExtras(b);
                     startActivity(intentToot);
                 }
