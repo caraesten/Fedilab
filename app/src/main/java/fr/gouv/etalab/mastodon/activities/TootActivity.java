@@ -284,6 +284,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         int charsInCw = 0;
         int charsInToot = 0;
 
+        // TODO: Sort out multiple images
         if (sharedUri != null)
         {
             uploadSharedImage(sharedUri);

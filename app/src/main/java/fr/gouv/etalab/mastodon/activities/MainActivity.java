@@ -443,7 +443,7 @@ public class MainActivity extends AppCompatActivity
                     startActivity(intentToot);
                 }
             }
-
+            // TODO: Sort out multiple images
             else if (type.startsWith("image/"))
             {
                 Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
