@@ -177,7 +177,7 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
             }
             @Override
             public void afterTextChanged(Editable s) {
-                if( s.length() > 2 && !isLoadingInstance && 1 ==2){
+                if( s.length() > 2 && !isLoadingInstance){
                     String action = "/instances/search";
                     RequestParams parameters = new RequestParams();
                     parameters.add("q", s.toString().trim());
@@ -255,6 +255,7 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
     @Override
     public void onRetrieveRemoteAccount(boolean error, String name, String username, boolean locked, String avatar, String bio, int statusCount, int followingCount, int followersCount) {
         loader.setVisibility(View.GONE);
+        rf_search.setEnabled(true);
         if( error){
             rf_no_result.setVisibility(View.VISIBLE);
             Toast.makeText(getApplicationContext(), R.string.toast_error,Toast.LENGTH_LONG).show();
