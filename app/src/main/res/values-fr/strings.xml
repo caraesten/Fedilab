@@ -56,7 +56,7 @@
     <string name="share_with">Partager avec</string>
     <string name="shared_via">Partagé via Mastalab</string>
     <string name="replies">Réponses</string>
-    <string name="username">Screen name</string>
+    <string name="username">Nom d\'utilisateur</string>
     <!--- Menu -->
     <string name="home_menu">Accueil</string>
     <string name="local_menu">Fil public local</string>

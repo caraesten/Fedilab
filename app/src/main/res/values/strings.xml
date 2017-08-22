@@ -58,7 +58,7 @@
     <string name="share_with">Share with</string>
     <string name="shared_via">Shared via Mastalab</string>
     <string name="replies">Replies</string>
-    <string name="username">Nom d\'utilsateur</string>
+    <string name="username">User name</string>
     <!--- Menu -->
     <string name="home_menu">Home</string>
     <string name="local_menu">Local timeline</string>
