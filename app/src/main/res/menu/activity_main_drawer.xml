@@ -32,6 +32,10 @@
                         android:icon="@drawable/ic_schedule_black"
                         android:title="@string/scheduled_toots" />
                     <item
+                        android:id="@+id/nav_remote_follow"
+                        android:icon="@drawable/ic_remote_follow"
+                        android:title="@string/remote_follow_menu" />
+                    <item
                         android:id="@+id/nav_follow_request"
                         android:icon="@drawable/ic_group_add"
                         android:title="@string/follow_request" />
