@@ -56,6 +56,7 @@
     <string name="share_with">Partager avec</string>
     <string name="shared_via">Partagé via Mastalab</string>
     <string name="replies">Réponses</string>
+    <string name="username">Screen name</string>
     <!--- Menu -->
     <string name="home_menu">Accueil</string>
     <string name="local_menu">Fil public local</string>
@@ -266,6 +267,7 @@
     <string name="toast_toot_saved">Brouillon enregistré !</string>
     <string name="toast_visibility_changed">La visibilité des pouets a été changée pour le compte %1$s</string>
     <string name="toast_error_char_limit">Etes-vous sûr que cette instance autorise ce nombre de caractères ? Habituellement, cette valeur est proche de 500 caractères.</string>
+    <string name="toast_empty_search">Il faut renseigner une instance et un nom d\'utilisateur !</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimisation du chargement</string>
     <string name="set_toots_page">Nombre de pouets par chargement</string>

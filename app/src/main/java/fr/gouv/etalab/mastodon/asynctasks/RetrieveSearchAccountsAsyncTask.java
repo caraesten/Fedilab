@@ -32,18 +32,27 @@ public class RetrieveSearchAccountsAsyncTask extends AsyncTask<Void, Void, Void>
     private String query;
     private APIResponse apiResponse;
     private OnRetrieveSearcAccountshInterface listener;
+    private int limit;
 
     public RetrieveSearchAccountsAsyncTask(Context context, String query, OnRetrieveSearcAccountshInterface onRetrieveSearcAccountshInterface){
         this.context = context;
         this.query = query;
         this.listener = onRetrieveSearcAccountshInterface;
+        this.limit = 10;
+    }
+
+    public RetrieveSearchAccountsAsyncTask(Context context, String query, int  limit, OnRetrieveSearcAccountshInterface onRetrieveSearcAccountshInterface){
+        this.context = context;
+        this.query = query;
+        this.listener = onRetrieveSearcAccountshInterface;
+        this.limit = limit;
     }
 
 
     @Override
     protected Void doInBackground(Void... params) {
         API api = new API(context);
-        apiResponse = api.searchAccounts(query, 10);
+        apiResponse = api.searchAccounts(query, limit);
         return null;
     }
 
