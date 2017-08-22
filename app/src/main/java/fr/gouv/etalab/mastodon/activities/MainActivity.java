@@ -450,7 +450,7 @@ public class MainActivity extends AppCompatActivity
                                                                 PackageManager.PERMISSION_GRANTED) {
                 // Should we show an explanation?
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.READ_CONTACTS)) {
+                        Manifest.permission.READ_EXTERNAL_STORAGE)) {
 
                     // If we want to explain the reason for the permission it needs to be added here.
 
