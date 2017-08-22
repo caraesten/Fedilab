@@ -33,6 +33,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -503,7 +504,7 @@ public class MainActivity extends AppCompatActivity
                     Bundle b = new Bundle();
 
                     b.putParcelable("sharedUri", imageUri);
-                    b.putBoolean("singleUri", true);
+                    b.putInt("uriNumber", 1);
                     intentToot.putExtras(b);
                     startActivity(intentToot);
                 }
@@ -512,14 +513,12 @@ public class MainActivity extends AppCompatActivity
             if (type.startsWith("image/")) {
 
                 ArrayList<Uri> imageList = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
-
                 if (imageList != null) {
-
                     Intent intentToot = new Intent(getApplicationContext(), TootActivity.class);
                     Bundle b = new Bundle();
 
                     b.putParcelableArrayList("sharedUri", imageList);
-                    b.putBoolean("singleUri", false);
+                    b.putInt("uriNumber", imageList.size());
                     intentToot.putExtras(b);
                     startActivity(intentToot);
                 }

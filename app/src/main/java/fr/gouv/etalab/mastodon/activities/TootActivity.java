@@ -236,9 +236,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             tootReply = b.getParcelable("tootReply");
             sharedContent = b.getString("sharedContent", null);
             sharedSubject = b.getString("sharedSubject", null);
-
             // ACTION_SEND route
-            if (b.getBoolean("singleUri")) {
+            if (b.getInt("uriNumber", 0) == 1) {
 
                 Uri fileUri = b.getParcelable("sharedUri");
 
@@ -248,14 +247,13 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 }
             }
             // ACTION_SEND_MULTIPLE route
-            else {
+            else if( b.getInt("uriNumber", 0) > 1) {
                 ArrayList<Uri> fileUri = b.getParcelableArrayList("sharedUri");
 
                 if (fileUri != null) {
                     sharedUri.addAll(fileUri);
                 }
             }
-
             restored = b.getLong("restored", -1);
         }
         if( restored != -1 ){
@@ -544,24 +542,24 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 The first loads, the second (SEND_MULTIPLE) fails.
 
                  */
-                Uri fileUri = uri.get(0);
+                for(Uri fileUri: uri) {
+                    if (fileUri != null) {
+                        picture_scrollview.setVisibility(View.VISIBLE);
 
-                if (fileUri != null) {
-                    picture_scrollview.setVisibility(View.VISIBLE);
-
-                    try {
-                        InputStream inputStream = getContentResolver().openInputStream(fileUri);
-                        loading_picture.setVisibility(View.VISIBLE);
-                        toot_picture.setEnabled(false);
-                        new UploadActionAsyncTask(getApplicationContext(), inputStream, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    } catch (FileNotFoundException e) {
+                        try {
+                            InputStream inputStream = getContentResolver().openInputStream(fileUri);
+                            loading_picture.setVisibility(View.VISIBLE);
+                            toot_picture.setEnabled(false);
+                            new UploadActionAsyncTask(getApplicationContext(), inputStream, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        } catch (FileNotFoundException e) {
+                            Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
+                            loading_picture.setVisibility(View.GONE);
+                            toot_picture.setEnabled(true);
+                            e.printStackTrace();
+                        }
+                    } else {
                         Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
-                        loading_picture.setVisibility(View.GONE);
-                        toot_picture.setEnabled(true);
-                        e.printStackTrace();
                     }
-                } else  {
-                    Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
                 }
             }
     }
