@@ -521,27 +521,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     }
 
     // Handles uploading shared images
-    // TODO: Get it working for ACTION_SEND_MULTIPLE
     public void uploadSharedImage(ArrayList<Uri> uri)
     {
         if (!uri.isEmpty()) {
-
-                /*
-                This was so I could test get info about first Uri for both ACTION_SEND &
-                ACTION_SEND_MULTIPLE.
-
-                The ACTION_SEND works fine, ACTION_SEND_MULTIPLE doesn't.
-
-                Turns out the Uris are different if single image is shared, versus multiple images.
-
-                SINGLE Uri: content://external/images/media/some_number
-                MULTIPLE Uri: file:///sdcard/Pictures/Shader/Images/some_jpg
-
-                NB. Both Uris are for the same file.
-
-                The first loads, the second (SEND_MULTIPLE) fails.
-
-                 */
                 for(Uri fileUri: uri) {
                     if (fileUri != null) {
                         picture_scrollview.setVisibility(View.VISIBLE);
