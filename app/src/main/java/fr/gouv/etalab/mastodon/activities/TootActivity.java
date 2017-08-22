@@ -36,6 +36,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -305,16 +306,22 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         int charsInToot = 0;
 
         // TODO: Sort out multiple images
-        if (sharedUri != null)
-        {
+        if (sharedUri != null) {
             uploadSharedImage(sharedUri);
         }
 
         boolean isAccountPrivate = account.isLocked();
-
         if(isAccountPrivate){
-            visibility = "private";
-            toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
+            if( tootReply == null) {
+                visibility = "private";
+            }else {
+                if( visibility.equals("direct") ){
+                    toot_visibility.setImageResource(R.drawable.ic_local_post_office);
+                }else{
+                    visibility = "private";
+                    toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
+                }
+            }
         }else {
             if( tootReply == null){
                 visibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), "public");
