@@ -816,7 +816,7 @@ public class API {
                 action = String.format("/accounts/%s/follow", targetedId);
                 break;
             case REMOTE_FOLLOW:
-                action = "/accounts/follows";
+                action = "/follows";
                 params = new RequestParams();
                 params.put("uri", targetedId);
                 break;
