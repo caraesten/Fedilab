@@ -17,7 +17,6 @@ package fr.gouv.etalab.mastodon.activities;
 import android.app.Activity;
 import android.support.v4.content.ContextCompat;
 import android.net.Uri;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
