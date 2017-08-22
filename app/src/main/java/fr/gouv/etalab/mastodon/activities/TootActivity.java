@@ -144,7 +144,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private HorizontalScrollView picture_scrollview;
     private int currentCursorPosition, searchLength;
     private TextView toot_space_left;
-    private Uri sharedUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -230,12 +229,33 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         });
 
         Bundle b = getIntent().getExtras();
+        ArrayList<Uri> sharedUri = new ArrayList<Uri>();
+
         restored = -1;
         if(b != null) {
             tootReply = b.getParcelable("tootReply");
             sharedContent = b.getString("sharedContent", null);
             sharedSubject = b.getString("sharedSubject", null);
-            sharedUri = b.getParcelable("sharedUri");
+
+            // ACTION_SEND route
+            if (b.getBoolean("singleUri")) {
+
+                Uri fileUri = b.getParcelable("sharedUri");
+
+                if (fileUri != null)
+                {
+                    sharedUri.add(fileUri);
+                }
+            }
+            // ACTION_SEND_MULTIPLE route
+            else {
+                ArrayList<Uri> fileUri = b.getParcelableArrayList("sharedUri");
+
+                if (fileUri != null) {
+                    sharedUri.addAll(fileUri);
+                }
+            }
+
             restored = b.getLong("restored", -1);
         }
         if( restored != -1 ){
@@ -502,24 +522,48 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         mToast.show();
     }
 
-    public void uploadSharedImage(Uri uri)
+    // Handles uploading shared images
+    // TODO: Get it working for ACTION_SEND_MULTIPLE
+    public void uploadSharedImage(ArrayList<Uri> uri)
     {
-        picture_scrollview.setVisibility(View.VISIBLE);
+        if (!uri.isEmpty()) {
 
-        if (uri != null) {
+                /*
+                This was so I could test get info about first Uri for both ACTION_SEND &
+                ACTION_SEND_MULTIPLE.
 
-            try {
-                InputStream inputStream = getContentResolver().openInputStream(uri);
-                loading_picture.setVisibility(View.VISIBLE);
-                toot_picture.setEnabled(false);
-                new UploadActionAsyncTask(getApplicationContext(), inputStream, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            } catch (FileNotFoundException e) {
-                Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
-                loading_picture.setVisibility(View.GONE);
-                toot_picture.setEnabled(true);
-                e.printStackTrace();
+                The ACTION_SEND works fine, ACTION_SEND_MULTIPLE doesn't.
+
+                Turns out the Uris are different if single image is shared, versus multiple images.
+
+                SINGLE Uri: content://external/images/media/some_number
+                MULTIPLE Uri: file:///sdcard/Pictures/Shader/Images/some_jpg
+
+                NB. Both Uris are for the same file.
+
+                The first loads, the second (SEND_MULTIPLE) fails.
+
+                 */
+                Uri fileUri = uri.get(0);
+
+                if (fileUri != null) {
+                    picture_scrollview.setVisibility(View.VISIBLE);
+
+                    try {
+                        InputStream inputStream = getContentResolver().openInputStream(fileUri);
+                        loading_picture.setVisibility(View.VISIBLE);
+                        toot_picture.setEnabled(false);
+                        new UploadActionAsyncTask(getApplicationContext(), inputStream, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    } catch (FileNotFoundException e) {
+                        Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
+                        loading_picture.setVisibility(View.GONE);
+                        toot_picture.setEnabled(true);
+                        e.printStackTrace();
+                    }
+                } else  {
+                    Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
+                }
             }
-        }
     }
 
     @Override

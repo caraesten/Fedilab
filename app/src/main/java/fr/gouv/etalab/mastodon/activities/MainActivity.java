@@ -58,6 +58,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Stack;
@@ -491,10 +492,9 @@ public class MainActivity extends AppCompatActivity
                     intentToot.putExtras(b);
                     startActivity(intentToot);
                 }
-            }
-            // TODO: Sort out multiple images
-            else if (type.startsWith("image/"))
-            {
+
+            } else if (type.startsWith("image/")) {
+
                 Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
 
                 if (imageUri != null) {
@@ -503,6 +503,23 @@ public class MainActivity extends AppCompatActivity
                     Bundle b = new Bundle();
 
                     b.putParcelable("sharedUri", imageUri);
+                    b.putBoolean("singleUri", true);
+                    intentToot.putExtras(b);
+                    startActivity(intentToot);
+                }
+            }
+        } else if (Intent.ACTION_SEND_MULTIPLE.equals(action) && type != null ) {
+            if (type.startsWith("image/")) {
+
+                ArrayList<Uri> imageList = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
+
+                if (imageList != null) {
+
+                    Intent intentToot = new Intent(getApplicationContext(), TootActivity.class);
+                    Bundle b = new Bundle();
+
+                    b.putParcelableArrayList("sharedUri", imageList);
+                    b.putBoolean("singleUri", false);
                     intentToot.putExtras(b);
                     startActivity(intentToot);
                 }
