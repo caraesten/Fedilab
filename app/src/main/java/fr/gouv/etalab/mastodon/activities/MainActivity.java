@@ -452,7 +452,7 @@ public class MainActivity extends AppCompatActivity
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                         Manifest.permission.READ_CONTACTS)) {
 
-                    Toast.makeText(getApplicationContext(), "To display a rationale", Toast.LENGTH_LONG).show();
+                    // If we want to explain the reason for the permission it needs to be added here.
 
                 } else {
                     ActivityCompat.requestPermissions(this,
@@ -471,8 +471,8 @@ public class MainActivity extends AppCompatActivity
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // We have the permission.
                 } else {
-                    Toast.makeText(getApplicationContext(), "Denied", Toast.LENGTH_SHORT).show();
                 }
                 break;
             }
