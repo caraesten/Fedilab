@@ -755,6 +755,11 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        if( id == R.id.nav_remote_follow){
+            Intent remoteFollow = new Intent(getApplicationContext(), RemoteFollowActivity.class);
+            startActivity(remoteFollow);
+            return false;
+        }
         final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         unCheckAllMenuItems(navigationView);
         item.setChecked(true);

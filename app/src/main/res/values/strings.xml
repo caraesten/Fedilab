@@ -58,6 +58,7 @@
     <string name="share_with">Share with</string>
     <string name="shared_via">Shared via Mastalab</string>
     <string name="replies">Replies</string>
+    <string name="username">Nom d\'utilsateur</string>
     <!--- Menu -->
     <string name="home_menu">Home</string>
     <string name="local_menu">Local timeline</string>
@@ -67,6 +68,7 @@
     <string name="communication_menu_title">Communication</string>
     <string name="muted_menu">Muted users</string>
     <string name="blocked_menu">Blocked users</string>
+    <string name="remote_follow_menu">Remote follow</string>
     <string name="notifications">Notifications</string>
     <string name="follow_request">Follow requests</string>
     <string name="optimization">Optimization</string>
@@ -271,6 +273,7 @@
     <string name="toast_toot_saved">Draft saved!</string>
     <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
     <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
+    <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimisation of loading</string>
     <string name="set_toots_page">Number of toots per load</string>
