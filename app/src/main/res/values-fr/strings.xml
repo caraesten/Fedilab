@@ -65,6 +65,7 @@
     <string name="communication_menu_title">Communication</string>
     <string name="muted_menu">Utilisateurs muets</string>
     <string name="blocked_menu">Utilisateurs bloqués</string>
+    <string name="remote_follow_menu">Suivre à distance</string>
     <string name="notifications">Notifications</string>
     <string name="follow_request">Demandes d\'abonnements</string>
     <string name="optimization">Optimisation</string>
