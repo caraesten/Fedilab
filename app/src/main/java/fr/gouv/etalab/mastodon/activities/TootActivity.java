@@ -236,16 +236,18 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             sharedContent = b.getString("sharedContent", null);
             sharedSubject = b.getString("sharedSubject", null);
 
+            // ACTION_SEND route
             if (b.getBoolean("singleUri")) {
 
                 Uri fileUri = b.getParcelable("sharedUri");
 
                 if (fileUri != null)
                 {
-                    Toast.makeText(TootActivity.this, fileUri.toString(), Toast.LENGTH_LONG).show();
                     sharedUri.add(fileUri);
                 }
-            } else {
+            }
+            // ACTION_SEND_MULTIPLE route
+            else {
                 ArrayList<Uri> fileUri = b.getParcelableArrayList("sharedUri");
 
                 if (fileUri != null) {
@@ -513,17 +515,31 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         mToast.show();
     }
 
+    // Handles uploading shared images
+    // TODO: Get it working for ACTION_SEND_MULTIPLE
     public void uploadSharedImage(ArrayList<Uri> uri)
     {
-        Toast.makeText(getApplicationContext(), "uploadSharedImage", Toast.LENGTH_SHORT).show();
-
         if (!uri.isEmpty()) {
 
+                /*
+                This was so I could test get info about first Uri for both ACTION_SEND &
+                ACTION_SEND_MULTIPLE.
+
+                The ACTION_SEND works fine, ACTION_SEND_MULTIPLE doesn't.
+
+                Turns out the Uris are different if single image is shared, versus multiple images.
+
+                SINGLE Uri: content://external/images/media/some_number
+                MULTIPLE Uri: file:///sdcard/Pictures/Shader/Images/some_jpg
+
+                NB. Both Uris are for the same file.
+
+                The first loads, the second (SEND_MULTIPLE) fails.
+
+                 */
                 Uri fileUri = uri.get(0);
 
                 if (fileUri != null) {
-                    Toast.makeText(getApplicationContext(), "Here: " + fileUri.toString(), Toast.LENGTH_LONG).show();
-
                     picture_scrollview.setVisibility(View.VISIBLE);
 
                     try {

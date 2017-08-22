@@ -492,9 +492,9 @@ public class MainActivity extends AppCompatActivity
                     intentToot.putExtras(b);
                     startActivity(intentToot);
                 }
+
             } else if (type.startsWith("image/")) {
 
-                Toast.makeText(MainActivity.this, "ACTION_SEND_SINGLE", Toast.LENGTH_LONG).show();
                 Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
 
                 if (imageUri != null) {
@@ -510,6 +510,7 @@ public class MainActivity extends AppCompatActivity
             }
         } else if (Intent.ACTION_SEND_MULTIPLE.equals(action) && type != null ) {
             if (type.startsWith("image/")) {
+
                 ArrayList<Uri> imageList = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
 
                 if (imageList != null) {
