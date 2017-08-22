@@ -754,12 +754,11 @@ public class Helper {
             navigationView.inflateMenu(R.menu.menu_accounts);
             Menu mainMenu = navigationView.getMenu();
             SubMenu currentSubmenu = null;
-            int i = 0;
             for(final Account account: accounts) {
                 if( !currrentUserId.equals(account.getId()) ) {
-                    if( !lastInstance.equals(account.getInstance())){
-                        currentSubmenu = mainMenu.addSubMenu(0, i, i,account.getInstance().toUpperCase());
-                        i++;
+                    if( !lastInstance.trim().toUpperCase().equals(account.getInstance().trim().toUpperCase())){
+                        lastInstance = account.getInstance().toUpperCase();
+                        currentSubmenu = mainMenu.addSubMenu(account.getInstance().toUpperCase());
                     }
                     if( currentSubmenu  == null)
                         continue;
@@ -835,8 +834,7 @@ public class Helper {
 
                 }
             }
-            i++;
-            currentSubmenu = mainMenu.addSubMenu(0, i, i,"");
+            currentSubmenu = mainMenu.addSubMenu("");
             MenuItem addItem = currentSubmenu.add(R.string.add_account);
             addItem.setIcon(R.drawable.ic_person_add);
             addItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
