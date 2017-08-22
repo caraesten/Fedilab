@@ -852,17 +852,7 @@ public class Helper {
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.activity_main_drawer);
             arrow.setImageResource(R.drawable.ic_arrow_drop_down);
-            SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            Account account = new AccountDAO(activity, db).getAccountByID(userId);
-
-            if( account != null) {
-                if (account.isLocked()) {
-                    navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);
-                } else {
-                    navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
-                }
-            }
+            switchLayout(activity);
         }
         menuAccountsOpened = !menuAccountsOpened;
 
