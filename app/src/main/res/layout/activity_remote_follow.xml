@@ -73,6 +73,19 @@
             android:scrollbars="none"
             android:divider="@null"
             />
+        <TextView
+            android:visibility="gone"
+            android:layout_marginTop="30dp"
+            android:id="@+id/rf_no_result"
+            android:padding="10dp"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:layout_gravity="center"
+            android:textStyle="italic|bold"
+            android:typeface="serif"
+            android:text="@string/no_accounts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <!-- Main Loader -->
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/loader"

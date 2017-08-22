@@ -85,6 +85,11 @@
             android:launchMode="singleTask"
             android:noHistory="true"
             />
+        <activity android:name="fr.gouv.etalab.mastodon.activities.RemoteFollowActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            />
         <activity android:name="fr.gouv.etalab.mastodon.activities.SearchResultActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"

@@ -92,7 +92,8 @@ public class API {
         UNSTATUS,
         AUTHORIZE,
         REJECT,
-        REPORT
+        REPORT,
+        REMOTE_FOLLOW
     }
 
     public API(Context context) {

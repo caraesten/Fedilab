@@ -15,7 +15,7 @@
 package fr.gouv.etalab.mastodon.activities;
 
 
-import android.content.Context;
+
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -26,6 +26,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -55,18 +56,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAccountsAsyncTask;
-import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.KinrarClient;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
-import fr.gouv.etalab.mastodon.drawers.AccountsListAdapter;
+import fr.gouv.etalab.mastodon.drawers.AccountSearchWebAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -77,17 +77,18 @@ import mastodon.etalab.gouv.fr.mastodon.R;
  * Remote follow activity class
  */
 
-public class RemoteFollowActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface {
+public class RemoteFollowActivity extends AppCompatActivity implements OnRetrieveRemoteAccountInterface {
 
 
     private ImageView pp_actionBar;
     private AutoCompleteTextView rf_instance;
     private EditText rf_username;
+    private TextView rf_no_result;
     private Button rf_search;
     private ListView lv_account;
     private RelativeLayout loader;
     private boolean isLoadingInstance;
-
+    private String instance_name, screen_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +107,8 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
         rf_search = (Button) findViewById(R.id.rf_search);
         loader = (RelativeLayout) findViewById(R.id.loader);
         lv_account = (ListView) findViewById(R.id.lv_account);
+        rf_no_result = (TextView) findViewById(R.id.rf_no_result);
+
         isLoadingInstance = false;
         ActionBar actionBar = getSupportActionBar();
         if( actionBar != null) {
@@ -175,7 +178,7 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
             }
             @Override
             public void afterTextChanged(Editable s) {
-                if( s.length() > 2 && !isLoadingInstance){
+                if( s.length() > 2 && !isLoadingInstance && 1 ==2){
                     String action = "/instances/search";
                     RequestParams parameters = new RequestParams();
                     parameters.add("q", s.toString().trim());
@@ -220,15 +223,20 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
         rf_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if( rf_instance.getText().toString().trim().equals("") || rf_username.getText().toString().trim().equals("")){
                     Toast.makeText(getApplicationContext(),R.string.toast_empty_search,Toast.LENGTH_LONG).show();
                     return;
                 }
                 rf_search.setEnabled(false);
-                String screen_name = rf_username.getText().toString().trim();
-                String instance_name = rf_instance.getText().toString().trim();
+                screen_name = rf_username.getText().toString().trim();
+                instance_name = rf_instance.getText().toString().trim();
+                lv_account.setVisibility(View.GONE);
                 loader.setVisibility(View.VISIBLE);
-                new RetrieveSearchAccountsAsyncTask(getApplicationContext(), screen_name + "@" + instance_name, 1, RemoteFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                rf_no_result.setVisibility(View.GONE);
+                if( screen_name.startsWith("@"))
+                    screen_name = screen_name.substring(1);
+                new RetrieveRemoteAccountsAsyncTask(RemoteFollowActivity.this, screen_name, instance_name, RemoteFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
     }
@@ -244,7 +252,7 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
         }
     }
 
-
+/*
     @Override
     public void onRetrieveSearchAccounts(APIResponse apiResponse) {
         rf_search.setEnabled(true);
@@ -257,10 +265,52 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
             return;
         }
         final List<Account> accounts = apiResponse.getAccounts();
+        Log.v(Helper.TAG,"accounts: " + accounts);
         if( accounts != null && accounts.size() > 0 && accounts.get(0) != null) {
-            AccountsListAdapter accountsListAdapter = new AccountsListAdapter(getApplicationContext(), RetrieveAccountsAsyncTask.Type.FOLLOWERS, null, accounts);
-            lv_account.setAdapter(accountsListAdapter);
-            lv_account.setVisibility(View.VISIBLE);
+            List<Account> selectedAccount = new ArrayList<>();
+            for(Account account: accounts){
+                if(account.getAcct().contains("@" + instance_name) || (account.getUsername().equals(account.getAcct()) && account.getUsername().equals(screen_name)))
+                    selectedAccount.add(account);
+            }
+            if( selectedAccount.size() > 0) {
+                AccountsListAdapter accountsListAdapter = new AccountsListAdapter(RemoteFollowActivity.this, RetrieveAccountsAsyncTask.Type.FOLLOWERS, null, selectedAccount);
+                lv_account.setAdapter(accountsListAdapter);
+                lv_account.setVisibility(View.VISIBLE);
+            }else {
+                rf_no_result.setVisibility(View.VISIBLE);
+            }
+        }else if( firstSearch){
+            firstSearch = false;
+            new RetrieveSearchAccountsAsyncTask(RemoteFollowActivity.this, screen_name, 50, RemoteFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }else {
+            rf_no_result.setVisibility(View.VISIBLE);
         }
+    }*/
+
+
+    @Override
+    public void onRetrieveRemoteAccount(boolean error, String name, String avatar, String bio, int statusCount, int followingCount, int followersCount) {
+        if( error){
+            rf_no_result.setVisibility(View.VISIBLE);
+            Toast.makeText(getApplicationContext(), R.string.toast_error,Toast.LENGTH_LONG).show();
+            return;
+        }
+        loader.setVisibility(View.GONE);
+        Account account = new Account();
+        account.setInstance(instance_name);
+        account.setAcct(screen_name + "@" + instance_name);
+        account.setAvatar(avatar);
+        account.setDisplay_name(name);
+        account.setStatuses_count(statusCount);
+        account.setFollowers_count(followersCount);
+        account.setFollowing_count(followingCount);
+        account.setUsername(name);
+        account.setNote(bio);
+        List<Account> selectedAccount = new ArrayList<>();
+        selectedAccount.add(account);
+        AccountSearchWebAdapter accountSearchWebAdapter = new AccountSearchWebAdapter(RemoteFollowActivity.this, selectedAccount);
+        lv_account.setAdapter(accountSearchWebAdapter);
+        lv_account.setVisibility(View.VISIBLE);
+
     }
 }
