@@ -20,5 +20,5 @@ package fr.gouv.etalab.mastodon.interfaces;
  * Interface for retrieving a remote account
  */
 public interface OnRetrieveRemoteAccountInterface {
-    void onRetrieveRemoteAccount(boolean error, String name, String avatar, String bio, int statusCount, int followingCount, int followersCount);
+    void onRetrieveRemoteAccount(boolean error, String name, String username, boolean locked, String avatar, String bio, int statusCount, int followingCount, int followersCount);
 }

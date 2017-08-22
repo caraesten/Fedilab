@@ -26,7 +26,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -236,7 +235,7 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
                 rf_no_result.setVisibility(View.GONE);
                 if( screen_name.startsWith("@"))
                     screen_name = screen_name.substring(1);
-                new RetrieveRemoteAccountsAsyncTask(RemoteFollowActivity.this, screen_name, instance_name, RemoteFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new RetrieveRemoteAccountsAsyncTask(screen_name, instance_name, RemoteFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
     }
@@ -252,59 +251,25 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
         }
     }
 
-/*
+
     @Override
-    public void onRetrieveSearchAccounts(APIResponse apiResponse) {
-        rf_search.setEnabled(true);
+    public void onRetrieveRemoteAccount(boolean error, String name, String username, boolean locked, String avatar, String bio, int statusCount, int followingCount, int followersCount) {
         loader.setVisibility(View.GONE);
-        if( apiResponse.getError() != null){
-            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
-            return;
-        }
-        final List<Account> accounts = apiResponse.getAccounts();
-        Log.v(Helper.TAG,"accounts: " + accounts);
-        if( accounts != null && accounts.size() > 0 && accounts.get(0) != null) {
-            List<Account> selectedAccount = new ArrayList<>();
-            for(Account account: accounts){
-                if(account.getAcct().contains("@" + instance_name) || (account.getUsername().equals(account.getAcct()) && account.getUsername().equals(screen_name)))
-                    selectedAccount.add(account);
-            }
-            if( selectedAccount.size() > 0) {
-                AccountsListAdapter accountsListAdapter = new AccountsListAdapter(RemoteFollowActivity.this, RetrieveAccountsAsyncTask.Type.FOLLOWERS, null, selectedAccount);
-                lv_account.setAdapter(accountsListAdapter);
-                lv_account.setVisibility(View.VISIBLE);
-            }else {
-                rf_no_result.setVisibility(View.VISIBLE);
-            }
-        }else if( firstSearch){
-            firstSearch = false;
-            new RetrieveSearchAccountsAsyncTask(RemoteFollowActivity.this, screen_name, 50, RemoteFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }else {
-            rf_no_result.setVisibility(View.VISIBLE);
-        }
-    }*/
-
-
-    @Override
-    public void onRetrieveRemoteAccount(boolean error, String name, String avatar, String bio, int statusCount, int followingCount, int followersCount) {
         if( error){
             rf_no_result.setVisibility(View.VISIBLE);
             Toast.makeText(getApplicationContext(), R.string.toast_error,Toast.LENGTH_LONG).show();
             return;
         }
-        loader.setVisibility(View.GONE);
         Account account = new Account();
         account.setInstance(instance_name);
         account.setAcct(screen_name + "@" + instance_name);
         account.setAvatar(avatar);
-        account.setDisplay_name(name);
+        account.setDisplay_name(username);
         account.setStatuses_count(statusCount);
         account.setFollowers_count(followersCount);
         account.setFollowing_count(followingCount);
         account.setUsername(name);
+        account.setLocked(locked);
         account.setNote(bio);
         List<Account> selectedAccount = new ArrayList<>();
         selectedAccount.add(account);

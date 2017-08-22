@@ -16,9 +16,11 @@ package fr.gouv.etalab.mastodon.drawers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
@@ -46,6 +48,8 @@ import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
+
+import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
 /**
@@ -106,7 +110,7 @@ public class AccountSearchWebAdapter extends BaseAdapter implements OnPostAction
             holder = new ViewHolder();
             holder.account_pp = (ImageView) convertView.findViewById(R.id.account_pp);
             holder.account_dn = (TextView) convertView.findViewById(R.id.account_dn);
-
+            holder.account_un = (TextView) convertView.findViewById(R.id.account_un);
             holder.account_ds = (TextView) convertView.findViewById(R.id.account_ds);
             holder.account_sc = (TextView) convertView.findViewById(R.id.account_sc);
             holder.account_fgc = (TextView) convertView.findViewById(R.id.account_fgc);
@@ -116,18 +120,28 @@ public class AccountSearchWebAdapter extends BaseAdapter implements OnPostAction
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
-
+        //Redraws icon for locked accounts
+        final float scale = context.getResources().getDisplayMetrics().density;
+        if( account != null && account.isLocked()){
+            Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_action_lock_closed);
+            img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (20 * scale + 0.5f));
+            holder.account_dn.setCompoundDrawables( null, null, img, null);
+        }else{
+            holder.account_dn.setCompoundDrawables( null, null, null, null);
+        }
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             holder.account_ds.setText(Html.fromHtml(account.getNote(), Html.FROM_HTML_MODE_LEGACY));
             holder.account_dn.setText(Html.fromHtml(Helper.shortnameToUnicode(account.getDisplay_name(), true), Html.FROM_HTML_MODE_LEGACY));
+            holder.account_un.setText(Html.fromHtml(Helper.shortnameToUnicode(account.getUsername(), true), Html.FROM_HTML_MODE_LEGACY));
         }else {
             //noinspection deprecation
             holder.account_ds.setText(Html.fromHtml(account.getNote()));
             holder.account_dn.setText(Html.fromHtml(Helper.shortnameToUnicode(account.getDisplay_name(), true)));
+            holder.account_un.setText(Html.fromHtml(Helper.shortnameToUnicode(account.getUsername(), true)));
         }
+        changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.mastodonC4);
         holder.account_ds.setAutoLinkMask(Linkify.WEB_URLS);
         holder.account_sc.setText(String.valueOf(account.getStatuses_count()));
         holder.account_fgc.setText(String.valueOf(account.getFollowing_count()));
@@ -139,7 +153,7 @@ public class AccountSearchWebAdapter extends BaseAdapter implements OnPostAction
             @Override
             public void onClick(View v) {
                 holder.account_follow.setEnabled(false);
-                new PostActionAsyncTask(context, API.StatusAction.REMOTE_FOLLOW, null, AccountSearchWebAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new PostActionAsyncTask(context, API.StatusAction.REMOTE_FOLLOW, account.getAcct(), AccountSearchWebAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
 
@@ -164,6 +178,7 @@ public class AccountSearchWebAdapter extends BaseAdapter implements OnPostAction
     private class ViewHolder {
         ImageView account_pp;
         TextView account_dn;
+        TextView account_un;
         TextView account_ds;
         TextView account_sc;
         TextView account_fgc;

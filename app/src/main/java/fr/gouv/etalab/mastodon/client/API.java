@@ -815,6 +815,11 @@ public class API {
             case FOLLOW:
                 action = String.format("/accounts/%s/follow", targetedId);
                 break;
+            case REMOTE_FOLLOW:
+                action = "/accounts/follows";
+                params = new RequestParams();
+                params.put("uri", targetedId);
+                break;
             case UNFOLLOW:
                 action = String.format("/accounts/%s/unfollow", targetedId);
                 break;

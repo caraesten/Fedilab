@@ -39,21 +39,38 @@
             <ImageView
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/account_pp"
+                android:layout_margin="10dp"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 tools:ignore="ContentDescription" />
-            <TextView
-                android:id="@+id/account_dn"
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/account_dn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                <TextView
+                    android:id="@+id/account_un"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            </LinearLayout>
+
             <android.support.design.widget.FloatingActionButton
                 android:layout_gravity="center"
                 app:fabSize="mini"
                 android:id="@+id/account_follow"
                 android:textAllCaps="false"
+                android:src="@drawable/ic_user_plus"
                 android:gravity="center"
                 android:layout_marginRight="10dp"
                 android:layout_marginEnd="10dp"
