@@ -38,12 +38,13 @@
                 android:id="@+id/main_header_container"
                 android:background="@color/mastodonC1"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:gravity="center_horizontal"
+                android:layout_height="300dp"
                 android:orientation="vertical">
                 <LinearLayout
                     android:id="@+id/header_container"
                     android:layout_marginTop="5dp"
-                    android:layout_width="match_parent"
+                    android:layout_width="500dp"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:layout_height="wrap_content"
@@ -126,8 +127,7 @@
                     android:padding="10dp"
                     android:gravity="center"
                     android:textColor="?attr/color_in_account_header"
-                    android:layout_width="match_parent"
-                    android:maxLines="4"
+                    android:layout_width="500dp"
                     android:autoLink="web"
                     android:layout_height="wrap_content" />
             </LinearLayout>
