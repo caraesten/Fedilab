@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2017 Thomas Schneider
+
+    This file is a part of Mastalab
+
+    This program is free software; you can redistribute it and/or modify it under the terms of the
+    GNU General Public License as published by the Free Software Foundation; either version 3 of the
+    License, or (at your option) any later version.
+
+    Mastalab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+    the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+    Public License for more details.
+
+    You should have received a copy of the GNU General Public License along with Mastalab; if not,
+    see <http://www.gnu.org/licenses>.
+-->
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/fab_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/fab_margin"
+    android:paddingRight="@dimen/fab_margin"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        >
+        <AutoCompleteTextView
+            android:id="@+id/rf_instance"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:inputType="textWebEmailAddress"
+            android:hint="@string/instance_example"
+            />
+        <LinearLayout
+            android:layout_width="400dp"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/rf_username"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="@string/username"
+                />
+            <Button
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/rf_search"
+                android:textAllCaps="false"
+                android:drawableLeft="@drawable/ic_action_search"
+                android:drawableStart="@drawable/ic_action_search"
+                android:drawablePadding="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="15dp"
+                android:maxLines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="@string/action_search" />
+        </LinearLayout>
+
+        <ListView
+            android:visibility="gone"
+            android:layout_marginTop="30dp"
+            android:id="@+id/lv_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:divider="@null"
+            />
+        <TextView
+            android:visibility="gone"
+            android:layout_marginTop="30dp"
+            android:id="@+id/rf_no_result"
+            android:padding="10dp"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:layout_gravity="center"
+            android:textStyle="italic|bold"
+            android:typeface="serif"
+            android:text="@string/no_accounts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <!-- Main Loader -->
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/loader"
+            android:visibility="gone"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            >
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true" />
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>
