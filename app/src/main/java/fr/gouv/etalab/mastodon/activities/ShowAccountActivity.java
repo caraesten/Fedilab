@@ -28,6 +28,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -212,7 +213,20 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                Fragment fragment = (Fragment) mPager.getAdapter().instantiateItem(mPager, tab.getPosition());
+                switch (tab.getPosition()){
+                    case 0:
+                        DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
+                        if( displayStatusFragment != null )
+                            displayStatusFragment.scrollToTop();
+                        break;
+                    case 1:
+                    case 2:
+                        DisplayAccountsFragment displayAccountsFragment = ((DisplayAccountsFragment) fragment);
+                        if (displayAccountsFragment != null)
+                            displayAccountsFragment.scrollToTop();
+                        break;
+                }
             }
         });
 
@@ -310,6 +324,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 DisplayImageOptions optionNew = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                         .cacheOnDisk(true).resetViewBeforeLoading(true).build();
                 imageLoader.loadImage(urlHeader, optionNew, new SimpleImageLoadingListener() {
+                    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         super.onLoadingComplete(imageUri, view, loadedImage);
