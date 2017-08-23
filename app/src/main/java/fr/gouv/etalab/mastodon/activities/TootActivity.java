@@ -14,7 +14,11 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.activities;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
@@ -144,6 +148,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private HorizontalScrollView picture_scrollview;
     private int currentCursorPosition, searchLength;
     private TextView toot_space_left;
+    private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 754;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -303,10 +308,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         int charsInCw = 0;
         int charsInToot = 0;
 
-        // TODO: Sort out multiple images
-        if (sharedUri != null) {
-            uploadSharedImage(sharedUri);
-        }
+        uploadSharedImage(sharedUri);
 
         boolean isAccountPrivate = account.isLocked();
         if(isAccountPrivate){
@@ -411,6 +413,23 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             @Override
             public void onClick(View v) {
 
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+
+                    if (ContextCompat.checkSelfPermission(TootActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                            PackageManager.PERMISSION_GRANTED) {
+                        // Should we show an explanation?
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(TootActivity.this,
+                                Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                            // If we want to explain the reason for the permission it needs to be added here.
+
+                        } else {
+                            ActivityCompat.requestPermissions(TootActivity.this,
+                                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                            return;
+                        }
+                    }
+                }
                 Intent intent;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
                     intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
@@ -511,7 +530,21 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         }
     }
 
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // We have the permission.
+                    toot_picture.callOnClick();
+                }
+                break;
+            }
+        }
+    }
     public void showAToast (String message){
         if (mToast != null) {
             mToast.cancel();

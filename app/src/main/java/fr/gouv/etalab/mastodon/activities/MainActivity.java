@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity
     private RelativeLayout main_app_container;
     private Stack<Integer> stackBack = new Stack<>();
 
-    private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 0;
+
 
     public MainActivity() {
     }
@@ -444,40 +444,10 @@ public class MainActivity extends AppCompatActivity
         }
         Helper.switchLayout(MainActivity.this);
 
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
-                                                                PackageManager.PERMISSION_GRANTED) {
-                // Should we show an explanation?
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.READ_EXTERNAL_STORAGE)) {
-
-                    // If we want to explain the reason for the permission it needs to be added here.
-
-                } else {
-                    ActivityCompat.requestPermissions(this,
-                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                            MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-                }
-            }
-        }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // We have the permission.
-                } else {
-                }
-                break;
-            }
-        }
-    }
+
 
 
     @Override
