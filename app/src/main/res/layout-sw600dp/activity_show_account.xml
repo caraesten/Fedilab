@@ -15,125 +15,123 @@
     You should have received a copy of the GNU General Public License along with Mastalab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/drawer_layout"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
-    android:orientation="vertical">
-    <LinearLayout
-        android:id="@+id/main_header_container"
-        android:layout_marginTop="5dp"
+    android:fitsSystemWindows="true"
+    tools:context="fr.gouv.etalab.mastodon.activities.ShowAccountActivity">
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBar"
         android:layout_width="match_parent"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:background="@color/mastodonC1"
-        android:orientation="vertical"
-        android:layout_height="300dp"
-        >
-        <LinearLayout
-            android:id="@+id/header_container"
-            android:layout_marginTop="5dp"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
+        <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal"
             android:layout_height="wrap_content"
-            >
-            <ImageView
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:padding="10dp"
-                android:id="@+id/account_pp"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                tools:ignore="ContentDescription" />
+            android:fitsSystemWindows="true"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/account_dn"
-                    android:textColor="@color/mastodonC4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:textSize="18sp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-                <TextView
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
-                    android:textColor="?attr/color_in_account_header"
-                    android:id="@+id/account_un"
-                    android:maxLines="1"
-                    android:layout_width="wrap_content"
-                    android:textSize="16sp"
-                    android:layout_height="wrap_content"
-                    />
+                android:id="@+id/main_header_container"
+                android:background="@color/mastodonC1"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:orientation="vertical">
                 <LinearLayout
+                    android:id="@+id/header_container"
+                    android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_marginStart="10dp"
-                        android:layout_marginLeft="10dp"
+                    >
+                    <ImageView
+                        android:padding="10dp"
+                        android:id="@+id/account_pp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        tools:ignore="ContentDescription" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/account_dn"
+                            android:textColor="@color/mastodonC4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:textSize="16sp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                        <TextView
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
+                            android:textColor="?attr/color_in_account_header"
+                            android:id="@+id/account_un"
+                            android:maxLines="1"
+                            android:layout_width="wrap_content"
+                            android:textSize="14sp"
+                            android:layout_height="wrap_content"
+                            />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_marginStart="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:visibility="gone"
+                                android:id="@+id/account_followed_by"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center_vertical"
+                                android:textColor="?attr/colorAccent"
+                                android:text="@string/followed_by"
+                                android:maxLines="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:id="@+id/account_follow_request"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:visibility="gone"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center_vertical"
+                                android:textColor="?attr/colorAccent"
+                                android:text="@string/request_sent"
+                                android:maxLines="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                />
+                        </LinearLayout>
+                    </LinearLayout>
+                    <android.support.design.widget.FloatingActionButton
+                        android:layout_gravity="center"
                         android:visibility="gone"
-                        android:id="@+id/account_followed_by"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="center_vertical"
-                        android:textColor="?attr/colorAccent"
-                        android:text="@string/followed_by"
-                        android:maxLines="1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                    <TextView
-                        android:id="@+id/account_follow_request"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:visibility="gone"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="center_vertical"
-                        android:textColor="?attr/colorAccent"
-                        android:text="@string/request_sent"
-                        android:maxLines="1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        app:fabSize="mini"
+                        android:id="@+id/account_follow"
+                        android:textAllCaps="false"
+                        android:gravity="center"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         />
                 </LinearLayout>
+                <TextView
+                    android:id="@+id/account_note"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:textColor="?attr/color_in_account_header"
+                    android:layout_width="match_parent"
+                    android:maxLines="4"
+                    android:autoLink="web"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
-            <android.support.design.widget.FloatingActionButton
-                android:layout_gravity="center"
-                android:visibility="gone"
-                app:fabSize="mini"
-                android:id="@+id/account_follow"
-                android:textAllCaps="false"
-                android:gravity="center"
-                android:layout_marginRight="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                />
-        </LinearLayout>
-        <TextView
-            android:id="@+id/account_note"
-            android:padding="5dp"
-            android:textColor="?attr/color_in_account_header"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:maxLines="3"
-            android:autoLink="web"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <android.support.design.widget.AppBarLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:background="@null"
-        android:layout_height="wrap_content">
+        </android.support.design.widget.CollapsingToolbarLayout>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/account_tabLayout"
@@ -143,11 +141,12 @@
             app:tabMode="fixed"
             app:tabGravity="fill"
             />
-        <android.support.v4.view.ViewPager
-            android:id="@+id/account_viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-
     </android.support.design.widget.AppBarLayout>
-</LinearLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/account_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
+
+</android.support.design.widget.CoordinatorLayout>
