@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.SystemClock;
 
 import java.util.List;
 
@@ -50,6 +51,7 @@ public class RetrieveRepliesAsyncTask extends AsyncTask<Void, Void, Void> {
         API api = new API(context);
         for (fr.gouv.etalab.mastodon.client.Entities.Status status : statuses) {
             fr.gouv.etalab.mastodon.client.Entities.Context statusContext = api.getStatusContext((status.getReblog() != null) ? status.getReblog().getId() : status.getId());
+            SystemClock.sleep(25);
             status.setReplies(statusContext.getDescendants());
         }
         apiResponse = new APIResponse();

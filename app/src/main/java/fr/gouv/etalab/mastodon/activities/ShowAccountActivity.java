@@ -14,10 +14,7 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.activities;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -33,20 +30,19 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -112,15 +108,12 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     private ViewPager mPager;
     private String accountId;
     private TabLayout tabLayout;
-    private BroadcastReceiver hide_header;
     private TextView account_note, account_follow_request;
     private String userId;
-    private boolean isHiddingShowing = false;
     private static int instanceValue = 0;
     private Relationship relationship;
     private boolean showMediaOnly;
     private ImageView pp_actionBar;
-    private LinearLayout main_header_container;
 
     public enum action{
         FOLLOW,
@@ -147,8 +140,8 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         Bundle b = getIntent().getExtras();
         account_follow = (FloatingActionButton) findViewById(R.id.account_follow);
         account_follow_request = (TextView) findViewById(R.id.account_follow_request);
+
         account_follow.setEnabled(false);
-        main_header_container = (LinearLayout) findViewById(R.id.main_header_container);
         if(b != null){
             accountId = b.getString("accountId");
             new RetrieveRelationshipAsyncTask(getApplicationContext(), accountId,ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -225,41 +218,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
             }
         });
 
-
         account_note = (TextView) findViewById(R.id.account_note);
-        //Register LocalBroadcast to receive selected accounts after search
-        hide_header = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if( !isHiddingShowing ){
-                    isHiddingShowing = true;
-                    ImageView account_pp = (ImageView) findViewById(R.id.account_pp);
-                    boolean hide = intent.getBooleanExtra("hide", false);
-                    if( hide){
-                        main_header_container.setVisibility(View.GONE);
-                        if( pp_actionBar != null)
-                            pp_actionBar.setVisibility(View.VISIBLE);
-                        tabLayout.setVisibility(View.GONE);
-                    }else {
-                        manageButtonVisibility();
-                        tabLayout.setVisibility(View.VISIBLE);
-                        main_header_container.setVisibility(View.VISIBLE);
-                        if( pp_actionBar != null)
-                            pp_actionBar.setVisibility(View.GONE);
-                    }
-                    account_pp.requestLayout();
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            isHiddingShowing = false;
-                        }
-                    }, 700);
-                }
-
-            }
-        };
-        LocalBroadcastManager.getInstance(this).registerReceiver(hide_header, new IntentFilter(Helper.HEADER_ACCOUNT+String.valueOf(instanceValue)));
 
         //Follow button
         account_follow.setOnClickListener(new View.OnClickListener() {
@@ -388,7 +347,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
             account_dn.setCompoundDrawables( null, null, null, null);
         }
 
-        ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getSupportActionBar();
         LayoutInflater mInflater = LayoutInflater.from(ShowAccountActivity.this);
         if( actionBar != null && account != null){
             View show_account_actionbar = mInflater.inflate(R.layout.showaccount_actionbar, null);
@@ -417,6 +376,19 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
 
                 }});
+
+            AppBarLayout appBar = (AppBarLayout) findViewById(R.id.appBar);
+            appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+                @Override
+                public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                    if(verticalOffset == 0){
+                        pp_actionBar.setVisibility(View.GONE);
+                    }else {
+                        pp_actionBar.setVisibility(View.VISIBLE);
+                    }
+
+                }
+            });
         }else {
             if(  account != null && account.getAcct() != null)
                 setTitle(account.getAcct());
@@ -444,11 +416,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         }
     }
 
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(hide_header);
-    }
 
     @Override
     public void onRetrieveRelationship(Relationship relationship, Error error) {

@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-
-    <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_account_list"
-            android:visible="false"
-            android:title="@string/accounts">
-            <menu /></item>
-    </group>
     <group>
         <item
             android:title="@string/communication_menu_title"
@@ -39,6 +31,10 @@
                         android:id="@+id/nav_scheduled"
                         android:icon="@drawable/ic_schedule_black"
                         android:title="@string/scheduled_toots" />
+                    <item
+                        android:id="@+id/nav_remote_follow"
+                        android:icon="@drawable/ic_remote_follow"
+                        android:title="@string/remote_follow_menu" />
                     <item
                         android:id="@+id/nav_follow_request"
                         android:icon="@drawable/ic_group_add"
