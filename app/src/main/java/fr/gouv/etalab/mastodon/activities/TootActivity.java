@@ -524,26 +524,34 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     public void uploadSharedImage(ArrayList<Uri> uri)
     {
         if (!uri.isEmpty()) {
-                for(Uri fileUri: uri) {
-                    if (fileUri != null) {
-                        picture_scrollview.setVisibility(View.VISIBLE);
-
-                        try {
-                            InputStream inputStream = getContentResolver().openInputStream(fileUri);
-                            loading_picture.setVisibility(View.VISIBLE);
-                            toot_picture.setEnabled(false);
-                            new UploadActionAsyncTask(getApplicationContext(), inputStream, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        } catch (FileNotFoundException e) {
-                            Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
-                            loading_picture.setVisibility(View.GONE);
-                            toot_picture.setEnabled(true);
-                            e.printStackTrace();
-                        }
-                    } else {
-                        Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
+            int count = 0;
+            for(Uri fileUri: uri) {
+                if (fileUri != null) {
+                    if (count == 4)
+                    {
+                        break;
                     }
+
+                    picture_scrollview.setVisibility(View.VISIBLE);
+
+                    try {
+                        InputStream inputStream = getContentResolver().openInputStream(fileUri);
+                        loading_picture.setVisibility(View.VISIBLE);
+                        toot_picture.setEnabled(false);
+                        new UploadActionAsyncTask(getApplicationContext(), inputStream, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        count++;
+
+                    } catch (FileNotFoundException e) {
+                        Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
+                        loading_picture.setVisibility(View.GONE);
+                        toot_picture.setEnabled(true);
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
                 }
             }
+        }
     }
 
     @Override
