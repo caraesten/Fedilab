@@ -25,7 +25,6 @@ import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
 public class YandexQuery {
 
     private OnTranslatedInterface listener;
-
     public YandexQuery(OnTranslatedInterface listenner) {
         this.listener = listenner;
     }
@@ -35,6 +34,7 @@ public class YandexQuery {
         YandexClient.get(text, toLanguage, new AsyncHttpResponseHandler() {
             @Override
             public void onStart() {
+
             }
 
             @Override

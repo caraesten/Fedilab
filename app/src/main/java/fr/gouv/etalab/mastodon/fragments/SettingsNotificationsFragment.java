@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.SwitchCompat;
 
 import android.view.LayoutInflater;
@@ -225,6 +226,10 @@ public class SettingsNotificationsFragment extends Fragment {
                 editor.apply();
             }
         });
+        if( theme == Helper.THEME_LIGHT) {
+            settings_time_from.setTextColor(ContextCompat.getColor(context, R.color.white));
+            settings_time_to.setTextColor(ContextCompat.getColor(context, R.color.white));
+        }
         return rootView;
     }
 

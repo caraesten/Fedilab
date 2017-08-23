@@ -155,7 +155,7 @@ public class AccountDAO {
     public List<Account> getAllAccount(){
 
         try {
-            Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null, null, null, null, null, null, null);
+            Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null, null, null, null, null, Sqlite.COL_INSTANCE + " ASC", null);
             return cursorToListUser(c);
         } catch (Exception e) {
             return null;

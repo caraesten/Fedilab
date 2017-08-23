@@ -64,6 +64,31 @@
             android:text="@string/set_preview_reply"
             android:layout_height="wrap_content" />
 
+
+        <LinearLayout
+            android:id="@+id/set_preview_reply_pp_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_preview_reply_pp"/>
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/set_preview_reply_pp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
