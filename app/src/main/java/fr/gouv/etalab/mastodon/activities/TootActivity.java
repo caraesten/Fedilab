@@ -417,17 +417,10 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
                     if (ContextCompat.checkSelfPermission(TootActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
                             PackageManager.PERMISSION_GRANTED) {
-                        // Should we show an explanation?
-                        if (ActivityCompat.shouldShowRequestPermissionRationale(TootActivity.this,
-                                Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                            // If we want to explain the reason for the permission it needs to be added here.
-
-                        } else {
-                            ActivityCompat.requestPermissions(TootActivity.this,
-                                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-                            return;
-                        }
+                        ActivityCompat.requestPermissions(TootActivity.this,
+                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                                MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                        return;
                     }
                 }
                 Intent intent;
