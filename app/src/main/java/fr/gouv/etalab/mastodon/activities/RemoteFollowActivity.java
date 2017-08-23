@@ -23,6 +23,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -109,7 +110,9 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
         loader = (RelativeLayout) findViewById(R.id.loader);
         lv_account = (ListView) findViewById(R.id.lv_account);
         rf_no_result = (TextView) findViewById(R.id.rf_no_result);
-
+        if( theme == Helper.THEME_LIGHT) {
+            rf_search.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+        }
         isLoadingInstance = false;
         ActionBar actionBar = getSupportActionBar();
         if( actionBar != null) {
