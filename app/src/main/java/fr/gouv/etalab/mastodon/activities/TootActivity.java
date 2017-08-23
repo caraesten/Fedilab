@@ -14,7 +14,13 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.activities;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -34,6 +40,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -141,6 +148,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private HorizontalScrollView picture_scrollview;
     private int currentCursorPosition, searchLength;
     private TextView toot_space_left;
+    private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 754;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -226,11 +234,31 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         });
 
         Bundle b = getIntent().getExtras();
+        ArrayList<Uri> sharedUri = new ArrayList<Uri>();
+
         restored = -1;
         if(b != null) {
             tootReply = b.getParcelable("tootReply");
             sharedContent = b.getString("sharedContent", null);
             sharedSubject = b.getString("sharedSubject", null);
+            // ACTION_SEND route
+            if (b.getInt("uriNumber", 0) == 1) {
+
+                Uri fileUri = b.getParcelable("sharedUri");
+
+                if (fileUri != null)
+                {
+                    sharedUri.add(fileUri);
+                }
+            }
+            // ACTION_SEND_MULTIPLE route
+            else if( b.getInt("uriNumber", 0) > 1) {
+                ArrayList<Uri> fileUri = b.getParcelableArrayList("sharedUri");
+
+                if (fileUri != null) {
+                    sharedUri.addAll(fileUri);
+                }
+            }
             restored = b.getLong("restored", -1);
         }
         if( restored != -1 ){
@@ -280,11 +308,20 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         int charsInCw = 0;
         int charsInToot = 0;
 
-        boolean isAccountPrivate = account.isLocked();
+        uploadSharedImage(sharedUri);
 
+        boolean isAccountPrivate = account.isLocked();
         if(isAccountPrivate){
-            visibility = "private";
-            toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
+            if( tootReply == null) {
+                visibility = "private";
+            }else {
+                if( visibility.equals("direct") ){
+                    toot_visibility.setImageResource(R.drawable.ic_local_post_office);
+                }else{
+                    visibility = "private";
+                    toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
+                }
+            }
         }else {
             if( tootReply == null){
                 visibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), "public");
@@ -376,6 +413,16 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             @Override
             public void onClick(View v) {
 
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+
+                    if (ContextCompat.checkSelfPermission(TootActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                            PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(TootActivity.this,
+                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                                MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                        return;
+                    }
+                }
                 Intent intent;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
                     intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
@@ -471,16 +518,66 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             restoreToot(restored);
         }
         changeColor();
-
+        if( theme == Helper.THEME_LIGHT) {
+            toot_it.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+        }
     }
 
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // We have the permission.
+                    toot_picture.callOnClick();
+                }
+                break;
+            }
+        }
+    }
     public void showAToast (String message){
         if (mToast != null) {
             mToast.cancel();
         }
         mToast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
         mToast.show();
+    }
+
+    // Handles uploading shared images
+    public void uploadSharedImage(ArrayList<Uri> uri)
+    {
+        if (!uri.isEmpty()) {
+            int count = 0;
+            for(Uri fileUri: uri) {
+                if (fileUri != null) {
+                    if (count == 4)
+                    {
+                        break;
+                    }
+
+                    picture_scrollview.setVisibility(View.VISIBLE);
+
+                    try {
+                        InputStream inputStream = getContentResolver().openInputStream(fileUri);
+                        loading_picture.setVisibility(View.VISIBLE);
+                        toot_picture.setEnabled(false);
+                        new UploadActionAsyncTask(getApplicationContext(), inputStream, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        count++;
+
+                    } catch (FileNotFoundException e) {
+                        Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
+                        loading_picture.setVisibility(View.GONE);
+                        toot_picture.setEnabled(true);
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
+                }
+            }
+        }
     }
 
     @Override

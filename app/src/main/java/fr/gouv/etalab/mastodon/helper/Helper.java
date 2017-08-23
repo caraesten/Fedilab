@@ -198,6 +198,7 @@ public class Helper {
     public static final String SET_TEXT_SIZE = "set_text_size";
     public static final String SET_ICON_SIZE = "set_icon_size";
     public static final String SET_PREVIEW_REPLIES = "set_preview_replies";
+    public static final String SET_PREVIEW_REPLIES_PP = "set_preview_replies_pp";
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;
@@ -247,11 +248,11 @@ public class Helper {
 
     private static final Pattern SHORTNAME_PATTERN = Pattern.compile(":([-+\\w]+):");
 
-    private static final Pattern urlPattern = Pattern.compile(
+    public static final Pattern urlPattern = Pattern.compile(
             "(?i)\\b((?:[a-z][\\w-]+:(?:/{1,3}|[a-z0-9%])|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,10}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))",
             Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 
-    private static final Pattern hashtagPattern = Pattern.compile("(#[\\w_À-ú-]{1,})");
+    public static final Pattern hashtagPattern = Pattern.compile("(#[\\w_À-ú-]{1,})");
     /**
      * Converts emojis in input to unicode
      * @param input String
@@ -735,9 +736,6 @@ public class Helper {
         if( currrentUserId == null)
             return;
 
-        MenuItem menu_account = navigationView.getMenu().findItem(R.id.nav_account_list);
-        MenuItem nav_main_com = navigationView.getMenu().findItem(R.id.nav_main_com);
-        MenuItem nav_main_opt= navigationView.getMenu().findItem(R.id.nav_main_opt);
         final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_DARK){
@@ -751,19 +749,24 @@ public class Helper {
         }
 
         if( !menuAccountsOpened ){
-
             arrow.setImageResource(R.drawable.ic_arrow_drop_up);
-
             SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            menu_account.setVisible(true);
-            nav_main_com.setVisible(false);
-            nav_main_opt.setVisible(false);
             final List<Account> accounts = new AccountDAO(activity, db).getAllAccount();
-            SubMenu navigationViewSub = navigationView.getMenu().findItem(R.id.nav_account_list).getSubMenu();
-            navigationViewSub.clear();
+            String lastInstance = "";
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.menu_accounts);
+            Menu mainMenu = navigationView.getMenu();
+            SubMenu currentSubmenu = null;
             for(final Account account: accounts) {
                 if( !currrentUserId.equals(account.getId()) ) {
-                    final MenuItem item = navigationViewSub.add("@" + account.getAcct() + "@" + account.getInstance());
+                    if( !lastInstance.trim().toUpperCase().equals(account.getInstance().trim().toUpperCase())){
+                        lastInstance = account.getInstance().toUpperCase();
+                        currentSubmenu = mainMenu.addSubMenu(account.getInstance().toUpperCase());
+                    }
+                    if( currentSubmenu  == null)
+                        continue;
+                    final MenuItem item = currentSubmenu.add("@" + account.getAcct());
+                    //final MenuItem item = mainMenu.addSubMenu("@" + account.getAcct()).add("@" + account.getAcct());
                     ImageLoader imageLoader;
                     DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                             .cacheOnDisk(true).resetViewBeforeLoading(true).build();
@@ -834,7 +837,8 @@ public class Helper {
 
                 }
             }
-            MenuItem addItem = navigationViewSub.add(R.string.add_account);
+            currentSubmenu = mainMenu.addSubMenu("");
+            MenuItem addItem = currentSubmenu.add(R.string.add_account);
             addItem.setIcon(R.drawable.ic_person_add);
             addItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
@@ -846,21 +850,10 @@ public class Helper {
                 }
             });
         }else{
-            menu_account.setVisible(false);
-            nav_main_com.setVisible(true);
-            nav_main_opt.setVisible(true);
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.activity_main_drawer);
             arrow.setImageResource(R.drawable.ic_arrow_drop_down);
-            SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            Account account = new AccountDAO(activity, db).getAccountByID(userId);
-
-            if( account != null) {
-                if (account.isLocked()) {
-                    navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);
-                } else {
-                    navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
-                }
-            }
+            switchLayout(activity);
         }
         menuAccountsOpened = !menuAccountsOpened;
 
@@ -1069,14 +1062,18 @@ public class Helper {
      * @param mentions List<Mention>
      * @return TextView
      */
-    public static SpannableString clickableElements(final Context context, String fullContent, List<Mention> mentions) {
+    public static SpannableString clickableElements(final Context context, String fullContent, List<Mention> mentions, boolean useHTML) {
 
         SpannableString spannableString;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableString = new SpannableString(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_LEGACY));
-        else
-            //noinspection deprecation
-            spannableString = new SpannableString(Html.fromHtml(fullContent));
+        if( useHTML) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                spannableString = new SpannableString(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_LEGACY));
+            else
+                //noinspection deprecation
+                spannableString = new SpannableString(Html.fromHtml(fullContent));
+        }else{
+            spannableString = new SpannableString(fullContent);
+        }
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
         if( embedded_browser){
@@ -1085,6 +1082,7 @@ public class Helper {
                 matcher = Patterns.WEB_URL.matcher(spannableString);
             else
                 matcher = urlPattern.matcher(spannableString);
+
             while (matcher.find()){
                 int matchStart = matcher.start(1);
                 int matchEnd = matcher.end();
@@ -1492,39 +1490,43 @@ public class Helper {
         Account account = new AccountDAO(activity,db).getAccountByID(userID);
         if( account != null) {
             if (account.isLocked()) {
-                navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);
+                if( navigationView.getMenu().findItem(R.id.nav_follow_request) != null)
+                    navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);
             } else {
-                navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
+                if( navigationView.getMenu().findItem(R.id.nav_follow_request) != null)
+                    navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
             }
         }
-        switch (timelineLayout){
-            case Helper.THEME_TABS:
-                navigationView.getMenu().findItem(R.id.nav_home).setVisible(false);
-                navigationView.getMenu().findItem(R.id.nav_local).setVisible(false);
-                navigationView.getMenu().findItem(R.id.nav_global).setVisible(false);
-                navigationView.getMenu().findItem(R.id.nav_notification).setVisible(false);
-                params.height = (int) Helper.convertDpToPixel(heightSearchdp, activity);;
-                toolbar_search_container.setLayoutParams(params);
-                tableLayout.setVisibility(View.VISIBLE);
-                break;
-            case Helper.THEME_MENU:
-                navigationView.getMenu().findItem(R.id.nav_home).setVisible(true);
-                navigationView.getMenu().findItem(R.id.nav_local).setVisible(true);
-                navigationView.getMenu().findItem(R.id.nav_global).setVisible(true);
-                navigationView.getMenu().findItem(R.id.nav_notification).setVisible(true);
-                params.height = (int) Helper.convertDpToPixel(heightSearchdpAlone, activity);;
-                toolbar_search_container.setLayoutParams(params);
-                tableLayout.setVisibility(View.GONE);
-                break;
-            case Helper.THEME_MENU_TABS:
-                navigationView.getMenu().findItem(R.id.nav_home).setVisible(true);
-                navigationView.getMenu().findItem(R.id.nav_local).setVisible(true);
-                navigationView.getMenu().findItem(R.id.nav_global).setVisible(true);
-                navigationView.getMenu().findItem(R.id.nav_notification).setVisible(true);
-                params.height = (int) Helper.convertDpToPixel(heightSearchdp, activity);;
-                toolbar_search_container.setLayoutParams(params);
-                tableLayout.setVisibility(View.VISIBLE);
-                break;
+        if( navigationView.getMenu().findItem(R.id.nav_home) != null){
+            switch (timelineLayout){
+                case Helper.THEME_TABS:
+                    navigationView.getMenu().findItem(R.id.nav_home).setVisible(false);
+                    navigationView.getMenu().findItem(R.id.nav_local).setVisible(false);
+                    navigationView.getMenu().findItem(R.id.nav_global).setVisible(false);
+                    navigationView.getMenu().findItem(R.id.nav_notification).setVisible(false);
+                    params.height = (int) Helper.convertDpToPixel(heightSearchdp, activity);;
+                    toolbar_search_container.setLayoutParams(params);
+                    tableLayout.setVisibility(View.VISIBLE);
+                    break;
+                case Helper.THEME_MENU:
+                    navigationView.getMenu().findItem(R.id.nav_home).setVisible(true);
+                    navigationView.getMenu().findItem(R.id.nav_local).setVisible(true);
+                    navigationView.getMenu().findItem(R.id.nav_global).setVisible(true);
+                    navigationView.getMenu().findItem(R.id.nav_notification).setVisible(true);
+                    params.height = (int) Helper.convertDpToPixel(heightSearchdpAlone, activity);;
+                    toolbar_search_container.setLayoutParams(params);
+                    tableLayout.setVisibility(View.GONE);
+                    break;
+                case Helper.THEME_MENU_TABS:
+                    navigationView.getMenu().findItem(R.id.nav_home).setVisible(true);
+                    navigationView.getMenu().findItem(R.id.nav_local).setVisible(true);
+                    navigationView.getMenu().findItem(R.id.nav_global).setVisible(true);
+                    navigationView.getMenu().findItem(R.id.nav_notification).setVisible(true);
+                    params.height = (int) Helper.convertDpToPixel(heightSearchdp, activity);;
+                    toolbar_search_container.setLayoutParams(params);
+                    tableLayout.setVisibility(View.VISIBLE);
+                    break;
+            }
         }
     }
 }

@@ -92,7 +92,8 @@ public class API {
         UNSTATUS,
         AUTHORIZE,
         REJECT,
-        REPORT
+        REPORT,
+        REMOTE_FOLLOW
     }
 
     public API(Context context) {
@@ -813,6 +814,11 @@ public class API {
                 break;
             case FOLLOW:
                 action = String.format("/accounts/%s/follow", targetedId);
+                break;
+            case REMOTE_FOLLOW:
+                action = "/follows";
+                params = new RequestParams();
+                params.put("uri", targetedId);
                 break;
             case UNFOLLOW:
                 action = String.format("/accounts/%s/unfollow", targetedId);

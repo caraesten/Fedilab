@@ -14,6 +14,8 @@ package fr.gouv.etalab.mastodon.fragments;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -53,6 +55,7 @@ import fr.gouv.etalab.mastodon.asynctasks.UpdateCredentialAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateCredentialInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -101,6 +104,11 @@ public class SettingsProfileFragment extends Fragment implements OnRetrieveAccou
         options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
         new RetrieveAccountInfoAsyncTask(context, SettingsProfileFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if( theme == Helper.THEME_LIGHT) {
+            set_profile_save.setTextColor(ContextCompat.getColor(context, R.color.white));
+        }
         return rootView;
     }
 

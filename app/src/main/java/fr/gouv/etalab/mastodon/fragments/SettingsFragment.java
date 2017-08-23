@@ -122,6 +122,8 @@ public class SettingsFragment extends Fragment {
 
         boolean preview_reply = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, true);
         final CheckBox set_preview_reply = (CheckBox) rootView.findViewById(R.id.set_preview_reply);
+        final LinearLayout set_preview_reply_pp_container = (LinearLayout) rootView.findViewById(R.id.set_preview_reply_pp_container);
+        final SwitchCompat set_preview_reply_pp = (SwitchCompat) rootView.findViewById(R.id.set_preview_reply_pp);
         set_preview_reply.setChecked(preview_reply);
 
         set_preview_reply.setOnClickListener(new View.OnClickListener() {
@@ -130,9 +132,29 @@ public class SettingsFragment extends Fragment {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_PREVIEW_REPLIES, set_preview_reply.isChecked());
                 editor.apply();
+                if( !set_preview_reply.isChecked()){
+                    set_preview_reply_pp_container.setVisibility(View.GONE);
+                }else{
+                    set_preview_reply_pp_container.setVisibility(View.VISIBLE);
+                }
             }
         });
-
+        if( !preview_reply){
+            set_preview_reply_pp_container.setVisibility(View.GONE);
+        }else{
+            set_preview_reply_pp_container.setVisibility(View.VISIBLE);
+        }
+        boolean preview_reply_pp = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES_PP, true);
+        set_preview_reply_pp.setChecked(preview_reply_pp);
+        set_preview_reply_pp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_PREVIEW_REPLIES_PP, isChecked);
+                editor.apply();
+            }
+        });
+        
         boolean notif_validation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
         final CheckBox set_share_validation = (CheckBox) rootView.findViewById(R.id.set_share_validation);
         set_share_validation.setChecked(notif_validation);

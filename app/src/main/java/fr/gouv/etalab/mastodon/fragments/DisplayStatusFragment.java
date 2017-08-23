@@ -21,9 +21,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -125,50 +124,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
             //Hide account header when scrolling for ShowAccountActivity
             if(hideHeader) {
-                lv_status.setOnScrollListener(new AbsListView.OnScrollListener() {
-                    int lastFirstVisibleItem = 0;
-
-                    @Override
-                    public void onScrollStateChanged(AbsListView view, int scrollState) {
-                    }
-
-                    @Override
-                    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-                        if(firstVisibleItem == 0 && Helper.listIsAtTop(lv_status)){
-                            Intent intent = new Intent(Helper.HEADER_ACCOUNT+instanceValue);
-                            intent.putExtra("hide", false);
-                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-                        }else if (view.getId() == lv_status.getId() && totalItemCount > visibleItemCount) {
-                            final int currentFirstVisibleItem = lv_status.getFirstVisiblePosition();
-                            if (currentFirstVisibleItem > lastFirstVisibleItem) {
-                                Intent intent = new Intent(Helper.HEADER_ACCOUNT+instanceValue);
-                                intent.putExtra("hide", true);
-                                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-                            } else if (currentFirstVisibleItem < lastFirstVisibleItem) {
-                                Intent intent = new Intent(Helper.HEADER_ACCOUNT+instanceValue);
-                                intent.putExtra("hide", false);
-                                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-                            }
-                            lastFirstVisibleItem = currentFirstVisibleItem;
-                        }
-                        if(firstVisibleItem + visibleItemCount == totalItemCount ) {
-                            if(!flag_loading ) {
-                                flag_loading = true;
-                                if( type == RetrieveFeedsAsyncTask.Type.USER)
-                                    asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                else if( type == RetrieveFeedsAsyncTask.Type.TAG)
-                                    asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                else
-                                    asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
-                                nextElementLoader.setVisibility(View.VISIBLE);
-                            }
-                        } else {
-                            nextElementLoader.setVisibility(View.GONE);
-                        }
-                    }
-                });
+                ViewCompat.setNestedScrollingEnabled(lv_status,true);
             }else{
                 lv_status.setOnScrollListener(new AbsListView.OnScrollListener() {
                     @Override
@@ -260,7 +216,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
     @Override
     public void onRetrieveFeeds(APIResponse apiResponse) {
-
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
@@ -269,13 +224,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
                 Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
-            flag_loading = false;
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
-            return;
-        }else if( apiResponse.getError() != null && apiResponse.getError().getError().startsWith("404 -")) {
             flag_loading = false;
+            return;
         }
+        flag_loading = (apiResponse.getMax_id() == null );
         List<Status> statuses = apiResponse.getStatuses();
         if( !swiped && firstLoad && (statuses == null || statuses.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
@@ -294,8 +248,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             statusListAdapter.notifyDataSetChanged();
         }
         swipeRefreshLayout.setRefreshing(false);
-        if( flag_loading )
-            flag_loading = statuses != null && statuses.size() < tootsPerPage;
+
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
         if(statuses != null && statuses.size()  > 0 && type == RetrieveFeedsAsyncTask.Type.HOME ){
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -341,6 +294,5 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
         }
         statusListAdapter.notifyDataSetChanged();
-
     }
 }

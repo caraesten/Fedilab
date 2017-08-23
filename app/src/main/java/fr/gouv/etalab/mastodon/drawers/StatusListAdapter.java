@@ -33,6 +33,7 @@ import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.util.Patterns;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -63,7 +64,11 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
 
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
@@ -104,6 +109,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     private final int FAVOURITE = 2;
     private RetrieveFeedsAsyncTask.Type type;
     private String targetedId;
+    private HashMap<String, String> urlConversion;
+    private HashMap<String, String> tagConversion;
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, List<Status> statuses){
         this.context = context;
@@ -209,30 +216,33 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
             boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, true);
             if( showPreview){
+                boolean showPreviewPP = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES_PP, true);
                 if(  status.getReplies() == null){
                     holder.loader_replies.setVisibility(View.VISIBLE);
                 }else if(status.getReplies().size() == 0){
                     holder.status_replies.setVisibility(View.GONE);
                     holder.loader_replies.setVisibility(View.GONE);
                 }else if(status.getReplies().size() > 0 ){
-                    ArrayList<String> addedPictures = new ArrayList<>();
-                    holder.status_replies_profile_pictures.removeAllViews();
-                    int i = 0;
-                    for(Status replies: status.getReplies()){
-                        if( i > 4 )
-                            break;
-                        if( !addedPictures.contains(replies.getAccount().getAcct())){
-                            ImageView imageView = new ImageView(context);
-                            imageView.setMaxHeight((int) Helper.convertDpToPixel(40, context));
-                            imageView.setMaxWidth((int) Helper.convertDpToPixel(40, context));
-                            imageLoader.displayImage(replies.getAccount().getAvatar(), imageView, options);
-                            LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                            imParams.setMargins(10, 5, 10, 5);
-                            imParams.height = (int) Helper.convertDpToPixel(40, context);
-                            imParams.width = (int) Helper.convertDpToPixel(40, context);
-                            holder.status_replies_profile_pictures.addView(imageView, imParams);
-                            i++;
-                            addedPictures.add(replies.getAccount().getAcct());
+                    if(showPreviewPP) {
+                        ArrayList<String> addedPictures = new ArrayList<>();
+                        holder.status_replies_profile_pictures.removeAllViews();
+                        int i = 0;
+                        for (Status replies : status.getReplies()) {
+                            if (i > 4)
+                                break;
+                            if (!addedPictures.contains(replies.getAccount().getAcct())) {
+                                ImageView imageView = new ImageView(context);
+                                imageView.setMaxHeight((int) Helper.convertDpToPixel(40, context));
+                                imageView.setMaxWidth((int) Helper.convertDpToPixel(40, context));
+                                imageLoader.displayImage(replies.getAccount().getAvatar(), imageView, options);
+                                LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                                imParams.setMargins(10, 5, 10, 5);
+                                imParams.height = (int) Helper.convertDpToPixel(40, context);
+                                imParams.width = (int) Helper.convertDpToPixel(40, context);
+                                holder.status_replies_profile_pictures.addView(imageView, imParams);
+                                i++;
+                                addedPictures.add(replies.getAccount().getAcct());
+                            }
                         }
                     }
                     holder.status_replies_text.setText(context.getResources().getQuantityString(R.plurals.preview_replies, status.getReplies().size(), status.getReplies().size()));
@@ -298,8 +308,47 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             @Override
             public void onClick(View v) {
                 try {
+                    SpannableString spannableString;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                        spannableString = new SpannableString(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
+                    else
+                        //noinspection deprecation
+                        spannableString = new SpannableString(Html.fromHtml(status.getContent()));
+                    String text = spannableString.toString();
                     if( !status.isTranslated() ){
-                        new YandexQuery(StatusListAdapter.this).getYandexTextview(position, status.getContent(), currentLocale);
+                        tagConversion = new HashMap<>();
+                        urlConversion = new HashMap<>();
+                        Matcher matcher;
+                        //Extracts urls
+                        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
+                            matcher = Patterns.WEB_URL.matcher(spannableString.toString());
+                        else
+                            matcher = Helper.urlPattern.matcher(spannableString.toString());
+                        int i = 0;
+                        //replaces them by a kind of variable which shouldn't be translated ie: __u0__, __u1__, etc.
+                        while (matcher.find()){
+                            String key = "__u" + String.valueOf(i) + "__";
+                            String value = matcher.group(0);
+                            if( value != null) {
+                                urlConversion.put(key, value);
+                                text = text.replace(value, key);
+                            }
+                            i++;
+                        }
+                        i = 0;
+                        //Same for tags with __t0__, __t1__, etc.
+                        matcher = Helper.hashtagPattern.matcher(text);
+                        while (matcher.find()){
+                            String key = "__t" + String.valueOf(i) + "__";
+                            String value = matcher.group(0);
+                            tagConversion.put(key, value);
+                            if( value != null) {
+                                tagConversion.put(key, value);
+                                text = text.replace(value, key);
+                            }
+                            i++;
+                        }
+                        new YandexQuery(StatusListAdapter.this).getYandexTextview(position, text, currentLocale);
                     }else {
                         status.setTranslationShown(!status.isTranslationShown());
                         statusListAdapter.notifyDataSetChanged();
@@ -461,7 +510,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
         if( status.getContent_translated() != null && status.getContent_translated().length() > 0){
             SpannableString spannableStringTrans = Helper.clickableElements(context, status.getContent_translated(),
-                    status.getReblog() != null?status.getReblog().getMentions():status.getMentions());
+                    status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), false);
             holder.status_content_translated.setText(spannableStringTrans, TextView.BufferType.SPANNABLE);
             holder.status_content_translated.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -484,7 +533,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }
 
         final SpannableString spannableString = Helper.clickableElements(context,content,
-                status.getReblog() != null?status.getReblog().getMentions():status.getMentions());
+                status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), true);
         holder.status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
         holder.status_content.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -869,6 +918,18 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }else if( statuses.size() > position) {
             try {
                 String aJsonString = yandexTranslateToText(translatedResult);
+                Iterator itU = urlConversion.entrySet().iterator();
+                while (itU.hasNext()) {
+                    Map.Entry pair = (Map.Entry)itU.next();
+                    aJsonString = aJsonString.replace(pair.getKey().toString(), pair.getValue().toString());
+                    itU.remove();
+                }
+                Iterator itT = tagConversion.entrySet().iterator();
+                while (itT.hasNext()) {
+                    Map.Entry pair = (Map.Entry)itT.next();
+                    aJsonString = aJsonString.replace(pair.getKey().toString(), pair.getValue().toString());
+                    itT.remove();
+                }
                 statuses.get(position).setTranslated(true);
                 statuses.get(position).setTranslationShown(true);
                 statuses.get(position).setContent_translated(aJsonString);
