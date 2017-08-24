@@ -158,8 +158,12 @@ public class MainActivity extends AppCompatActivity
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         TabLayout.Tab tabHome = tabLayout.newTab();
         TabLayout.Tab tabNotif = tabLayout.newTab();
+        TabLayout.Tab tabLocal = tabLayout.newTab();
+        TabLayout.Tab tabPublic = tabLayout.newTab();
         tabHome.setCustomView(R.layout.tab_badge);
         tabNotif.setCustomView(R.layout.tab_badge);
+        tabLocal.setCustomView(R.layout.tab_badge);
+        tabPublic.setCustomView(R.layout.tab_badge);
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconHome = (ImageView) tabHome.getCustomView().findViewById(R.id.tab_icon);
@@ -169,13 +173,23 @@ public class MainActivity extends AppCompatActivity
         ImageView iconNotif = (ImageView) tabNotif.getCustomView().findViewById(R.id.tab_icon);
         iconNotif.setImageResource(R.drawable.ic_notifications_tl);
 
+
+        @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+        ImageView iconLocal = (ImageView) tabLocal.getCustomView().findViewById(R.id.tab_icon);
+        iconLocal.setImageResource(R.drawable.ic_action_users_tl);
+
+        @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+        ImageView iconGlobal = (ImageView) tabPublic.getCustomView().findViewById(R.id.tab_icon);
+        iconGlobal.setImageResource(R.drawable.ic_action_globe_tl);
+
         changeDrawableColor(getApplicationContext(), R.drawable.ic_action_home_tl,R.color.dark_text);
         changeDrawableColor(getApplicationContext(), R.drawable.ic_notifications_tl,R.color.dark_text);
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_action_users_tl,R.color.dark_text);
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_action_globe_tl,R.color.dark_text);
 
-        TabLayout.Tab tabLocal = tabLayout.newTab();
-        tabLocal.setIcon(R.drawable.ic_action_users_tl);
-        TabLayout.Tab tabPublic = tabLayout.newTab();
-        tabPublic.setIcon(R.drawable.ic_action_globe_tl);
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+
         tabLayout.addTab(tabHome);
         tabLayout.addTab(tabNotif);
         tabLayout.addTab(tabLocal);
