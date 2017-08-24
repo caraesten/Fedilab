@@ -15,6 +15,7 @@
 package fr.gouv.etalab.mastodon.activities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -91,6 +92,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeUser;
 import static fr.gouv.etalab.mastodon.helper.Helper.loadPPInActionBar;
@@ -154,6 +156,31 @@ public class MainActivity extends AppCompatActivity
         pp_actionBar = (ImageView) toolbar.findViewById(R.id.pp_actionBar);
         toolbar_search = (SearchView) toolbar.findViewById(R.id.toolbar_search);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        TabLayout.Tab tabHome = tabLayout.newTab();
+        TabLayout.Tab tabNotif = tabLayout.newTab();
+        tabHome.setCustomView(R.layout.tab_badge);
+        tabNotif.setCustomView(R.layout.tab_badge);
+
+        @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+        ImageView iconHome = (ImageView) tabHome.getCustomView().findViewById(R.id.tab_icon);
+        iconHome.setImageResource(R.drawable.ic_action_home_tl);
+
+        @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+        ImageView iconNotif = (ImageView) tabNotif.getCustomView().findViewById(R.id.tab_icon);
+        iconNotif.setImageResource(R.drawable.ic_notifications_tl);
+
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_action_home_tl,R.color.dark_text);
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_notifications_tl,R.color.dark_text);
+
+        TabLayout.Tab tabLocal = tabLayout.newTab();
+        tabLocal.setIcon(R.drawable.ic_action_users_tl);
+        TabLayout.Tab tabPublic = tabLayout.newTab();
+        tabPublic.setIcon(R.drawable.ic_action_globe_tl);
+        tabLayout.addTab(tabHome);
+        tabLayout.addTab(tabNotif);
+        tabLayout.addTab(tabLocal);
+        tabLayout.addTab(tabPublic);
+
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         main_app_container = (RelativeLayout) findViewById(R.id.main_app_container);
         PagerAdapter adapter = new PagerAdapter
