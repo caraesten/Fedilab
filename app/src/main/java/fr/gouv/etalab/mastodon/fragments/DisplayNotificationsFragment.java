@@ -211,6 +211,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 }
                 ((MainActivity)context).updateNotifCounter(countData);
             }
+            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, max_id);
+            editor.apply();
         }else {
             new_max_id = apiResponse.getMax_id();
             notificationsTemp = notifications;
@@ -219,6 +221,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     }
 
     private void manageNotifications(List<Notification> notifications, String max_id){
+        flag_loading = (max_id == null );
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( !swiped && firstLoad && (notifications == null || notifications.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
@@ -240,7 +243,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             notificationsListAdapter.notifyDataSetChanged();
         }
         swipeRefreshLayout.setRefreshing(false);
-        flag_loading = notifications != null && notifications.size() < notificationPerPage;
         //Store last notification id to avoid to notify for those that have been already seen
         if( notifications != null && notifications.size()  > 0) {
             //acct is null as userId when used in Fragment, data need to be retrieved via shared preferences and db

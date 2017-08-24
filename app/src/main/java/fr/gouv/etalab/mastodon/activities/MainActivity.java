@@ -223,10 +223,12 @@ public class MainActivity extends AppCompatActivity
                     case 0:
                         item = navigationView.getMenu().findItem(R.id.nav_home);
                         fragmentTag = "HOME_TIMELINE";
+                        updateHomeCounter(0);
                         break;
                     case 1:
                         fragmentTag = "NOTIFICATIONS";
                         item = navigationView.getMenu().findItem(R.id.nav_notification);
+                        updateNotifCounter(0);
                         break;
                     case 2:
                         fragmentTag = "LOCAL_TIMELINE";
@@ -995,8 +997,7 @@ public class MainActivity extends AppCompatActivity
         if( account != null){
             String last_refresh = sharedpreferences.getString(Helper.LAST_BUBBLE_REFRESH + account.getId(), null);
             Date last_refresh_date = Helper.stringToDate(getApplicationContext(), last_refresh);
-            //TODO: replace by TimeUnit.MINUTES.toMillis(5)
-            if (last_refresh_date == null || new Date().getTime() - last_refresh_date.getTime() >= TimeUnit.SECONDS.toMillis(30)) {
+            if (last_refresh_date == null || new Date().getTime() - last_refresh_date.getTime() >= TimeUnit.SECONDS.toMillis(120)) {
                 if( homeFragment != null && notificationsFragment != null){
                     homeFragment.update();
                     notificationsFragment.update();

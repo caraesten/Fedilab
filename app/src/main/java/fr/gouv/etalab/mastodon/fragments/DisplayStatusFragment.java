@@ -273,6 +273,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     }
                     ((MainActivity)context).updateHomeCounter(countData);
                 }
+                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID+ userId,max_id);
+                editor.apply();
             }else {
                 new_max_id = apiResponse.getMax_id();
                 statusesTemp = statuses;
