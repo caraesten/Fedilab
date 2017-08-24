@@ -23,12 +23,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
@@ -46,6 +44,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -118,7 +117,8 @@ public class MainActivity extends AppCompatActivity
     private ViewPager viewPager;
     private RelativeLayout main_app_container;
     private Stack<Integer> stackBack = new Stack<>();
-
+    private DisplayStatusFragment homeFragment;
+    private DisplayNotificationsFragment notificationsFragment;
 
 
     public MainActivity() {
@@ -943,12 +943,13 @@ public class MainActivity extends AppCompatActivity
             Bundle bundle = new Bundle();
             switch (position) {
                 case 0:
-                    statusFragment = new DisplayStatusFragment();
+                    homeFragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.HOME);
-                    statusFragment.setArguments(bundle);
-                    return statusFragment;
+                    homeFragment.setArguments(bundle);
+                    return homeFragment;
                 case 1:
-                    return new DisplayNotificationsFragment();
+                    notificationsFragment = new DisplayNotificationsFragment();
+                    return notificationsFragment;
                 case 2:
                     statusFragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.LOCAL);
@@ -969,7 +970,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void displayUnreadCounter(){
+    private void refreshData(){
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
 
         String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
@@ -979,10 +980,47 @@ public class MainActivity extends AppCompatActivity
             String last_refresh = sharedpreferences.getString(Helper.LAST_BUBBLE_REFRESH + account.getId(), null);
             Date last_refresh_date = Helper.stringToDate(getApplicationContext(), last_refresh);
             if (last_refresh_date == null || new Date().getTime() - last_refresh_date.getTime() >= TimeUnit.MINUTES.toMillis(5)) {
-                //Last read id for home
-                String since_id = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + account.getId(), null);
+                homeFragment.update();
+                notificationsFragment.update();
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(Helper.LAST_BUBBLE_REFRESH+ account.getId(),Helper.dateToString(getApplicationContext(), new Date()));
+                editor.apply();
             }
 
+        }
+    }
+
+    public void updateHomeCounter(int newHomeCount){
+        if( tabLayout.getTabAt(0) == null )
+            return;
+        View tabHome = tabLayout.getTabAt(0).getCustomView();
+        TextView tabCounterHome = (TextView) tabHome.findViewById(R.id.tab_counter);
+        tabCounterHome.setText(newHomeCount);
+        if( newHomeCount > 0){
+            //New data are available
+            //The fragment is not displayed, so the counter is displayed
+            if( tabLayout.getSelectedTabPosition() != 0)
+                tabCounterHome.setVisibility(View.VISIBLE);
+            else
+                tabCounterHome.setVisibility(View.GONE);
+        }else {
+            tabCounterHome.setVisibility(View.GONE);
+        }
+    }
+
+    public void updateNotifCounter(int newNotifCount){
+        if(tabLayout.getTabAt(1) == null)
+            return;
+        View tabNotif = tabLayout.getTabAt(1).getCustomView();
+        TextView tabCounterNotif = (TextView) tabNotif.findViewById(R.id.tab_counter);
+        tabCounterNotif.setText(newNotifCount);
+        if( newNotifCount > 0){
+            if( tabLayout.getSelectedTabPosition() != 1)
+                tabCounterNotif.setVisibility(View.VISIBLE);
+            else
+                tabCounterNotif.setVisibility(View.GONE);
+        }else {
+            tabCounterNotif.setVisibility(View.GONE);
         }
     }
 

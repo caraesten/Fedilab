@@ -33,6 +33,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRepliesAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -73,6 +74,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private int behaviorWithAttachments;
     private String instanceValue;
     private boolean showMediaOnly;
+    private int newElements;
+    private DisplayStatusFragment displayStatusFragment;
+    private List<Status> statusesTemp;
+    private String new_max_id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -104,6 +109,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         flag_loading = true;
         firstLoad = true;
         swiped = false;
+        newElements = 0;
+        displayStatusFragment = this;
 
         isOnWifi = Helper.isOnWIFI(context);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
@@ -215,7 +222,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
 
     @Override
-    public void onRetrieveFeeds(APIResponse apiResponse) {
+    public void onRetrieveFeeds(APIResponse apiResponse, boolean refreshData) {
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
@@ -229,8 +236,29 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             flag_loading = false;
             return;
         }
-        flag_loading = (apiResponse.getMax_id() == null );
         List<Status> statuses = apiResponse.getStatuses();
+        String old_max_id = max_id;
+        new_max_id = apiResponse.getMax_id();
+
+        if( refreshData || !displayStatusFragment.isVisible()) {
+            manageStatus(statuses, max_id);
+            if( !displayStatusFragment.isVisible()){
+                int countData = 0;
+                for(Status st : statuses){
+                    if( st.getId().equals(old_max_id))
+                        break;
+                    countData++;
+                }
+                ((MainActivity)getActivity()).updateNotifCounter(countData);
+            }
+        }else {
+            statusesTemp = statuses;
+        }
+
+    }
+
+    private void manageStatus(List<Status> statuses, String max_id){
+        flag_loading = (max_id == null );
         if( !swiped && firstLoad && (statuses == null || statuses.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
@@ -240,7 +268,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             lv_status.setAdapter(statusListAdapter);
             swiped = false;
         }
-        max_id = apiResponse.getMax_id();
         if( statuses != null && statuses.size() > 0) {
             for(Status tmpStatus: statuses){
                 this.statuses.add(tmpStatus);
@@ -273,7 +300,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 new RetrieveRepliesAsyncTask(context, statuses, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
-
     }
 
     public void scrollToTop(){
@@ -294,5 +320,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
         }
         statusListAdapter.notifyDataSetChanged();
+    }
+    public void update() {
+        asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, !displayStatusFragment.isVisible(), DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 }

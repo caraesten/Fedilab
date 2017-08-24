@@ -25,6 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
+        android:id="@+id/tab_counter"
         android:visibility="gone"
         android:textColor="@color/mastodonC1"
         android:background="@drawable/shape_counter"

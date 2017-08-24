@@ -36,6 +36,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     private String targetedID;
     private String tag;
     private boolean showMediaOnly = false;
+    private boolean refreshData;
 
     public enum Type{
         HOME,
@@ -54,6 +55,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.action = action;
         this.max_id = max_id;
         this.listener = onRetrieveFeedsInterface;
+        this.refreshData = true;
     }
 
     public RetrieveFeedsAsyncTask(Context context, Type action, String targetedID, String max_id, boolean showMediaOnly, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
@@ -63,6 +65,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.listener = onRetrieveFeedsInterface;
         this.targetedID = targetedID;
         this.showMediaOnly = showMediaOnly;
+        this.refreshData = true;
     }
     public RetrieveFeedsAsyncTask(Context context, Type action, String tag, String targetedID, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
         this.context = context;
@@ -71,7 +74,17 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.listener = onRetrieveFeedsInterface;
         this.targetedID = targetedID;
         this.tag = tag;
+        this.refreshData = true;
     }
+
+    public RetrieveFeedsAsyncTask(Context context, Type action, String max_id, boolean refreshData, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
+        this.context = context;
+        this.action = action;
+        this.max_id = max_id;
+        this.listener = onRetrieveFeedsInterface;
+        this.refreshData = refreshData;
+    }
+
     @Override
     protected Void doInBackground(Void... params) {
 
@@ -109,7 +122,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveFeeds(apiResponse);
+        listener.onRetrieveFeeds(apiResponse, refreshData);
     }
 
 }

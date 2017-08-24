@@ -31,8 +31,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -63,6 +65,10 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private int notificationPerPage;
     private boolean swiped;
     private ListView lv_notifications;
+    private int newElements;
+    private DisplayNotificationsFragment displayNotificationsFragment;
+    private List<Notification> notificationsTemp;
+    private String new_max_id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -74,7 +80,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         flag_loading = true;
         notifications = new ArrayList<>();
         swiped = false;
-
+        newElements = 0;
+        displayNotificationsFragment = this;
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         notificationPerPage = sharedpreferences.getInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 15);
@@ -153,7 +160,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
 
 
     @Override
-    public void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId) {
+    public void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId, boolean refreshData) {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
@@ -166,7 +173,28 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             swiped = false;
             return;
         }
+        String old_max_id = max_id;
+        new_max_id = apiResponse.getMax_id();
         List<Notification> notifications = apiResponse.getNotifications();
+        if( refreshData || !displayNotificationsFragment.isVisible()) {
+            manageNotifications(notifications, new_max_id);
+            if( !displayNotificationsFragment.isVisible()){
+                int countData = 0;
+                for(Notification nt : notifications){
+                    if( nt.getId().equals(old_max_id))
+                        break;
+                    countData++;
+                }
+                ((MainActivity)getActivity()).updateNotifCounter(countData);
+            }
+        }else {
+            notificationsTemp = notifications;
+        }
+
+    }
+
+    private void manageNotifications(List<Notification> notifications, String max_id){
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( !swiped && firstLoad && (notifications == null || notifications.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
@@ -178,7 +206,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             lv_notifications.setAdapter(notificationsListAdapter);
             swiped = false;
         }
-        max_id = apiResponse.getMax_id();
+
 
         if( notifications != null && notifications.size() > 0) {
             for(Notification tmpNotification: notifications){
@@ -191,7 +219,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         //Store last notification id to avoid to notify for those that have been already seen
         if( notifications != null && notifications.size()  > 0) {
             //acct is null as userId when used in Fragment, data need to be retrieved via shared preferences and db
-            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
             if( currentAccount != null && firstLoad){
@@ -206,5 +234,9 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     public void scrollToTop(){
         if( lv_notifications != null)
             lv_notifications.setAdapter(notificationsListAdapter);
+    }
+
+    public void update(){
+        asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, max_id, null, null, !displayNotificationsFragment.isVisible(), DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 }

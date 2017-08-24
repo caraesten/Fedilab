@@ -158,7 +158,7 @@ public class HashTagActivity extends AppCompatActivity implements OnRetrieveFeed
     }
 
     @Override
-    public void onRetrieveFeeds(APIResponse apiResponse) {
+    public void onRetrieveFeeds(APIResponse apiResponse, boolean refreshData) {
 
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);

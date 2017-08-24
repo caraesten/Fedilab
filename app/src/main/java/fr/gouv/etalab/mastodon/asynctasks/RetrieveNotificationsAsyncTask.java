@@ -35,7 +35,7 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
     private OnRetrieveNotificationsInterface listener;
     private String instance;
     private String token;
-
+    private boolean refreshData;
 
     public RetrieveNotificationsAsyncTask(Context context, String instance, String token, String max_id, String acct, String userId, OnRetrieveNotificationsInterface onRetrieveNotificationsInterface){
         this.context = context;
@@ -45,6 +45,18 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
         this.instance = instance;
         this.userId = userId;
         this.token = token;
+        this.refreshData = true;
+    }
+
+    public RetrieveNotificationsAsyncTask(Context context, String instance, String token, String max_id, String acct, String userId, boolean refreshData, OnRetrieveNotificationsInterface onRetrieveNotificationsInterface){
+        this.context = context;
+        this.max_id = max_id;
+        this.listener = onRetrieveNotificationsInterface;
+        this.acct = acct;
+        this.instance = instance;
+        this.userId = userId;
+        this.token = token;
+        this.refreshData = refreshData;
     }
 
     @Override
@@ -60,7 +72,7 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveNotifications(apiResponse, acct, userId);
+        listener.onRetrieveNotifications(apiResponse, acct, userId, refreshData);
     }
 
 }
