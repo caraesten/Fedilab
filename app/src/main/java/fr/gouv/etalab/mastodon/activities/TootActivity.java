@@ -839,9 +839,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, true);
             if( show_media_urls) {
-                //Adds the url at the end of the toot 
+                //Adds the shorter text_url of attachment at the end of the toot 
                 int selectionBefore = toot_content.getSelectionStart();
-                toot_content.setText(toot_content.getText().toString() + "\n" + attachment.getUrl());
+                toot_content.setText(toot_content.getText().toString() + "\n" + attachment.getText_url());
                 //Moves the cursor
                 if (selectionBefore >= 0)
                     toot_content.setSelection(selectionBefore);
