@@ -20,6 +20,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -196,19 +197,19 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         editor.putString(Helper.LAST_BUBBLE_REFRESH+ userId,Helper.dateToString(context, new Date()));
         editor.apply();
 
-        String old_max_id = max_id;
+        String old_max_id = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
         List<Notification> notifications = apiResponse.getNotifications();
-        if( refreshData || !displayNotificationsFragment.isVisible()) {
+        if( refreshData || !displayNotificationsFragment.getUserVisibleHint()) {
             max_id = apiResponse.getMax_id();
             manageNotifications(notifications, max_id);
-            if( !displayNotificationsFragment.isVisible()){
+            if( !displayNotificationsFragment.getUserVisibleHint()){
                 int countData = 0;
                 for(Notification nt : notifications){
                     if( nt.getId().equals(old_max_id))
                         break;
                     countData++;
                 }
-                ((MainActivity)getActivity()).updateNotifCounter(countData);
+                ((MainActivity)context).updateNotifCounter(countData);
             }
         }else {
             new_max_id = apiResponse.getMax_id();
@@ -261,6 +262,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     }
 
     public void update(){
-        asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, max_id, null, null, !displayNotificationsFragment.isVisible(), DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, max_id, null, null, !displayNotificationsFragment.getUserVisibleHint(), DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 }

@@ -260,18 +260,18 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             editor.putString(Helper.LAST_BUBBLE_REFRESH+ userId,Helper.dateToString(context, new Date()));
             editor.apply();
             List<Status> statuses = apiResponse.getStatuses();
-            String old_max_id = max_id;
-            if( refreshData || !displayStatusFragment.isVisible()) {
+            String old_max_id = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
+            if( refreshData || !displayStatusFragment.getUserVisibleHint()) {
                 max_id = apiResponse.getMax_id();
                 manageStatus(statuses, max_id);
-                if( !displayStatusFragment.isVisible()){
+                if( !displayStatusFragment.getUserVisibleHint()){
                     int countData = 0;
                     for(Status st : statuses){
                         if( st.getId().equals(old_max_id))
                             break;
                         countData++;
                     }
-                    ((MainActivity)getActivity()).updateHomeCounter(countData);
+                    ((MainActivity)context).updateHomeCounter(countData);
                 }
             }else {
                 new_max_id = apiResponse.getMax_id();
@@ -351,6 +351,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         statusListAdapter.notifyDataSetChanged();
     }
     public void update() {
-        asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, !displayStatusFragment.isVisible(), DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, !displayStatusFragment.getUserVisibleHint(), DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 }

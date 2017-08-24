@@ -34,6 +34,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -980,7 +981,8 @@ public class MainActivity extends AppCompatActivity
         if( account != null){
             String last_refresh = sharedpreferences.getString(Helper.LAST_BUBBLE_REFRESH + account.getId(), null);
             Date last_refresh_date = Helper.stringToDate(getApplicationContext(), last_refresh);
-            if (last_refresh_date == null || new Date().getTime() - last_refresh_date.getTime() >= TimeUnit.MINUTES.toMillis(5)) {
+            //TODO: replace by TimeUnit.MINUTES.toMillis(5)
+            if (last_refresh_date == null || new Date().getTime() - last_refresh_date.getTime() >= TimeUnit.SECONDS.toMillis(30)) {
                 if( homeFragment != null && notificationsFragment != null){
                     homeFragment.update();
                     notificationsFragment.update();
@@ -998,7 +1000,7 @@ public class MainActivity extends AppCompatActivity
             return;
         View tabHome = tabLayout.getTabAt(0).getCustomView();
         TextView tabCounterHome = (TextView) tabHome.findViewById(R.id.tab_counter);
-        tabCounterHome.setText(newHomeCount);
+        tabCounterHome.setText(String.valueOf(newHomeCount));
         if( newHomeCount > 0){
             //New data are available
             //The fragment is not displayed, so the counter is displayed
@@ -1016,7 +1018,7 @@ public class MainActivity extends AppCompatActivity
             return;
         View tabNotif = tabLayout.getTabAt(1).getCustomView();
         TextView tabCounterNotif = (TextView) tabNotif.findViewById(R.id.tab_counter);
-        tabCounterNotif.setText(newNotifCount);
+        tabCounterNotif.setText(String.valueOf(newNotifCount));
         if( newNotifCount > 0){
             if( tabLayout.getSelectedTabPosition() != 1)
                 tabCounterNotif.setVisibility(View.VISIBLE);
