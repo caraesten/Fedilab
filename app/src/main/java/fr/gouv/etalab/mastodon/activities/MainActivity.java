@@ -779,6 +779,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onResume(){
         super.onResume();
+        refreshData();
         //Proceeds to update of the authenticated account
         if(Helper.isLoggedIn(getApplicationContext()))
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -980,11 +981,13 @@ public class MainActivity extends AppCompatActivity
             String last_refresh = sharedpreferences.getString(Helper.LAST_BUBBLE_REFRESH + account.getId(), null);
             Date last_refresh_date = Helper.stringToDate(getApplicationContext(), last_refresh);
             if (last_refresh_date == null || new Date().getTime() - last_refresh_date.getTime() >= TimeUnit.MINUTES.toMillis(5)) {
-                homeFragment.update();
-                notificationsFragment.update();
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(Helper.LAST_BUBBLE_REFRESH+ account.getId(),Helper.dateToString(getApplicationContext(), new Date()));
-                editor.apply();
+                if( homeFragment != null && notificationsFragment != null){
+                    homeFragment.update();
+                    notificationsFragment.update();
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString(Helper.LAST_BUBBLE_REFRESH+ account.getId(),Helper.dateToString(getApplicationContext(), new Date()));
+                    editor.apply();
+                }
             }
 
         }

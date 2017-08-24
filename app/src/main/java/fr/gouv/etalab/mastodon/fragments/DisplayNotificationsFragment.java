@@ -26,9 +26,11 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
@@ -69,6 +71,12 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private DisplayNotificationsFragment displayNotificationsFragment;
     private List<Notification> notificationsTemp;
     private String new_max_id;
+    private TextView new_data;
+
+
+    public DisplayNotificationsFragment(){
+        displayNotificationsFragment = this;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -81,12 +89,12 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         notifications = new ArrayList<>();
         swiped = false;
         newElements = 0;
-        displayNotificationsFragment = this;
+
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         notificationPerPage = sharedpreferences.getInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 15);
         lv_notifications = (ListView) rootView.findViewById(R.id.lv_notifications);
-
+        new_data = (TextView) rootView.findViewById(R.id.new_data);
         mainLoader = (RelativeLayout) rootView.findViewById(R.id.loader);
         nextElementLoader = (RelativeLayout) rootView.findViewById(R.id.loading_next_notifications);
         textviewNoAction = (RelativeLayout) rootView.findViewById(R.id.no_action);
@@ -132,6 +140,17 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 R.color.mastodonC3);
 
         asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        new_data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( notificationsTemp != null && notificationsTemp.size() > 0 && new_max_id != null){
+                    new_data.setVisibility(View.GONE);
+                    manageNotifications(notificationsTemp, new_max_id);
+                }
+            }
+        });
+
         return rootView;
     }
 
@@ -173,11 +192,15 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             swiped = false;
             return;
         }
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(Helper.LAST_BUBBLE_REFRESH+ userId,Helper.dateToString(context, new Date()));
+        editor.apply();
+
         String old_max_id = max_id;
-        new_max_id = apiResponse.getMax_id();
         List<Notification> notifications = apiResponse.getNotifications();
         if( refreshData || !displayNotificationsFragment.isVisible()) {
-            manageNotifications(notifications, new_max_id);
+            max_id = apiResponse.getMax_id();
+            manageNotifications(notifications, max_id);
             if( !displayNotificationsFragment.isVisible()){
                 int countData = 0;
                 for(Notification nt : notifications){
@@ -188,6 +211,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 ((MainActivity)getActivity()).updateNotifCounter(countData);
             }
         }else {
+            new_max_id = apiResponse.getMax_id();
             notificationsTemp = notifications;
         }
 

@@ -29,8 +29,10 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
@@ -78,6 +80,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private DisplayStatusFragment displayStatusFragment;
     private List<Status> statusesTemp;
     private String new_max_id;
+    private TextView new_data;
+
+
+    public DisplayStatusFragment(){
+        displayStatusFragment = this;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -110,7 +118,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         firstLoad = true;
         swiped = false;
         newElements = 0;
-        displayStatusFragment = this;
+
 
         isOnWifi = Helper.isOnWIFI(context);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
@@ -126,7 +134,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         nextElementLoader.setVisibility(View.GONE);
         statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, this.statuses);
         lv_status.setAdapter(statusListAdapter);
-
+        new_data = (TextView) rootView.findViewById(R.id.new_data);
         if( !comesFromSearch){
 
             //Hide account header when scrolling for ShowAccountActivity
@@ -194,6 +202,16 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 textviewNoAction.setVisibility(View.VISIBLE);
         }
 
+        new_data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( statusesTemp != null && statusesTemp.size() > 0 && new_max_id != null){
+                    new_data.setVisibility(View.GONE);
+                    manageStatus(statusesTemp, new_max_id);
+                }
+            }
+        });
+
         return rootView;
     }
 
@@ -226,8 +244,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( apiResponse.getError() != null && !apiResponse.getError().getError().startsWith("404 -")){
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
                 Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
@@ -236,24 +254,35 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             flag_loading = false;
             return;
         }
-        List<Status> statuses = apiResponse.getStatuses();
-        String old_max_id = max_id;
-        new_max_id = apiResponse.getMax_id();
-
-        if( refreshData || !displayStatusFragment.isVisible()) {
-            manageStatus(statuses, max_id);
-            if( !displayStatusFragment.isVisible()){
-                int countData = 0;
-                for(Status st : statuses){
-                    if( st.getId().equals(old_max_id))
-                        break;
-                    countData++;
+        if( type == RetrieveFeedsAsyncTask.Type.HOME){
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            editor.putString(Helper.LAST_BUBBLE_REFRESH+ userId,Helper.dateToString(context, new Date()));
+            editor.apply();
+            List<Status> statuses = apiResponse.getStatuses();
+            String old_max_id = max_id;
+            if( refreshData || !displayStatusFragment.isVisible()) {
+                max_id = apiResponse.getMax_id();
+                manageStatus(statuses, max_id);
+                if( !displayStatusFragment.isVisible()){
+                    int countData = 0;
+                    for(Status st : statuses){
+                        if( st.getId().equals(old_max_id))
+                            break;
+                        countData++;
+                    }
+                    ((MainActivity)getActivity()).updateHomeCounter(countData);
                 }
-                ((MainActivity)getActivity()).updateNotifCounter(countData);
+            }else {
+                new_max_id = apiResponse.getMax_id();
+                statusesTemp = statuses;
             }
         }else {
-            statusesTemp = statuses;
+            max_id = apiResponse.getMax_id();
+            manageStatus(statuses, max_id);
         }
+
+
 
     }
 

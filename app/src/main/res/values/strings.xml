@@ -59,6 +59,8 @@
     <string name="shared_via">Shared via Mastalab</string>
     <string name="replies">Replies</string>
     <string name="username">User name</string>
+
+    <string name="new_data">New data are available! Do you want to display them?</string>
     <!--- Menu -->
     <string name="home_menu">Home</string>
     <string name="local_menu">Local timeline</string>

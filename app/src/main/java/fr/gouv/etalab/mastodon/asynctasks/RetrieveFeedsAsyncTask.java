@@ -15,9 +15,14 @@
 package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+
+import java.util.Date;
+
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 
 
@@ -56,6 +61,8 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.max_id = max_id;
         this.listener = onRetrieveFeedsInterface;
         this.refreshData = true;
+        updateTimeRefresh();
+
     }
 
     public RetrieveFeedsAsyncTask(Context context, Type action, String targetedID, String max_id, boolean showMediaOnly, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
@@ -66,6 +73,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.targetedID = targetedID;
         this.showMediaOnly = showMediaOnly;
         this.refreshData = true;
+        updateTimeRefresh();
     }
     public RetrieveFeedsAsyncTask(Context context, Type action, String tag, String targetedID, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
         this.context = context;
@@ -75,6 +83,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.targetedID = targetedID;
         this.tag = tag;
         this.refreshData = true;
+        updateTimeRefresh();
     }
 
     public RetrieveFeedsAsyncTask(Context context, Type action, String max_id, boolean refreshData, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
@@ -83,6 +92,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.max_id = max_id;
         this.listener = onRetrieveFeedsInterface;
         this.refreshData = refreshData;
+        updateTimeRefresh();
     }
 
     @Override
@@ -125,4 +135,13 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         listener.onRetrieveFeeds(apiResponse, refreshData);
     }
 
+    private void updateTimeRefresh(){
+        if( action == Type.HOME) {
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            editor.putString(Helper.LAST_BUBBLE_REFRESH + userId, Helper.dateToString(context, new Date()));
+            editor.apply();
+        }
+    }
 }

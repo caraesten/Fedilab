@@ -15,9 +15,14 @@
 package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+
+import java.util.Date;
+
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveNotificationsInterface;
 
 
@@ -46,6 +51,7 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
         this.userId = userId;
         this.token = token;
         this.refreshData = true;
+        updateTimeRefresh();
     }
 
     public RetrieveNotificationsAsyncTask(Context context, String instance, String token, String max_id, String acct, String userId, boolean refreshData, OnRetrieveNotificationsInterface onRetrieveNotificationsInterface){
@@ -57,6 +63,7 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
         this.userId = userId;
         this.token = token;
         this.refreshData = refreshData;
+        updateTimeRefresh();
     }
 
     @Override
@@ -75,4 +82,10 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
         listener.onRetrieveNotifications(apiResponse, acct, userId, refreshData);
     }
 
+    private void updateTimeRefresh(){
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(Helper.LAST_BUBBLE_REFRESH+ userId,Helper.dateToString(context, new Date()));
+        editor.apply();
+    }
 }
