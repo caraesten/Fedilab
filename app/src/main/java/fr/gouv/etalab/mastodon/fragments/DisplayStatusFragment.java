@@ -254,12 +254,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             flag_loading = false;
             return;
         }
+        List<Status> statuses = apiResponse.getStatuses();
         if( type == RetrieveFeedsAsyncTask.Type.HOME){
             SharedPreferences.Editor editor = sharedpreferences.edit();
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             editor.putString(Helper.LAST_BUBBLE_REFRESH+ userId,Helper.dateToString(context, new Date()));
             editor.apply();
-            List<Status> statuses = apiResponse.getStatuses();
             String old_max_id = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
             if( refreshData || !displayStatusFragment.getUserVisibleHint()) {
                 max_id = apiResponse.getMax_id();

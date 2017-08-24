@@ -25,13 +25,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
         android:id="@+id/tab_counter"
         android:visibility="gone"
         android:gravity="center"
         android:textSize="10sp"
+        android:minWidth="20dp"
+        android:minHeight="20dp"
         android:textColor="@color/mastodonC1"
         android:background="@drawable/shape_counter"
         android:layout_gravity="center"
-        android:layout_width="18dp"
-        android:layout_height="18dp"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </LinearLayout>
