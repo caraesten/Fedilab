@@ -137,6 +137,28 @@
             android:text="@string/embedded_browser"
             android:layout_height="wrap_content" />
 
+
+
+        <!-- Translation engine -->
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/translation_layout_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/about_yandex"/>
+            <Spinner
+                android:id="@+id/translation_layout_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/set_javascript_container"
             android:layout_width="match_parent"

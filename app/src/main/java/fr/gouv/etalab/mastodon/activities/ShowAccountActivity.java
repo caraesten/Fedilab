@@ -163,7 +163,9 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         statuses = new ArrayList<>();
         boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
         int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-        statusListAdapter = new StatusListAdapter(getApplicationContext(), RetrieveFeedsAsyncTask.Type.USER, accountId, isOnWifi, behaviorWithAttachments, this.statuses);
+        int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
+
+        statusListAdapter = new StatusListAdapter(getApplicationContext(), RetrieveFeedsAsyncTask.Type.USER, accountId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
         options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(80)).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 

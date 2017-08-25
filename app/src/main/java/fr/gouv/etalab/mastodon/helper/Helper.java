@@ -204,6 +204,8 @@ public class Helper {
     public static final String SET_PREVIEW_REPLIES = "set_preview_replies";
     public static final String SET_PREVIEW_REPLIES_PP = "set_preview_replies_pp";
     public static final String SET_BUBBLE_COUNTER = "set_bubble_counter";
+    public static final String SET_TRANSLATOR = "set_translator";
+
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;
@@ -212,6 +214,10 @@ public class Helper {
     public static final int THEME_TABS = 1;
     public static final int THEME_MENU = 2;
     public static final int THEME_MENU_TABS = 3;
+
+    public static final int TRANS_YANDEX = 0;
+    public static final int TRANS_GOOGLE = 1;
+    public static final int TRANS_NONE = 2;
 
     public static final String SET_NOTIF_FOLLOW = "set_notif_follow";
     public static final String SET_NOTIF_ADD = "set_notif_follow_add";

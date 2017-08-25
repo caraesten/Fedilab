@@ -101,7 +101,8 @@ public class HashTagActivity extends AppCompatActivity implements OnRetrieveFeed
         textviewNoAction = (RelativeLayout) findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
-        statusListAdapter = new StatusListAdapter(HashTagActivity.this, RetrieveFeedsAsyncTask.Type.TAG, null, isOnWifi, behaviorWithAttachments, this.statuses);
+        int positionSpinnerTrans = (sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX));
+        statusListAdapter = new StatusListAdapter(HashTagActivity.this, RetrieveFeedsAsyncTask.Type.TAG, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
         lv_status.setAdapter(statusListAdapter);
         setTitle(String.format("#%s", tag));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

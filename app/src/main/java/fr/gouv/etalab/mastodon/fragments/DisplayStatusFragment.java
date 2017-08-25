@@ -76,7 +76,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private boolean showMediaOnly;
     private DisplayStatusFragment displayStatusFragment;
     private TextView new_data;
-
+    private int positionSpinnerTrans;
 
     public DisplayStatusFragment(){
         displayStatusFragment = this;
@@ -112,10 +112,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         firstLoad = true;
         swiped = false;
 
-
-        isOnWifi = Helper.isOnWIFI(context);
-        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        isOnWifi = Helper.isOnWIFI(context);
+        positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
 
         lv_status = (ListView) rootView.findViewById(R.id.lv_status);
@@ -124,7 +124,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         textviewNoAction = (RelativeLayout) rootView.findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
-        statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, this.statuses);
+        statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
         lv_status.setAdapter(statusListAdapter);
         new_data = (TextView) rootView.findViewById(R.id.new_data);
         if( !comesFromSearch){
@@ -203,7 +203,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     for(Status status: statusesTmp){
                         statuses.add(status);
                     }
-                    statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, statuses);
+                    statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
                     lv_status.setAdapter(statusListAdapter);
                     statusesTmp = new ArrayList<>();
                 }
@@ -231,11 +231,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean isOnWifi = Helper.isOnWIFI(context);
             int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+            int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
             statuses = new ArrayList<>();
             for(Status status: statusesTmp){
                 statuses.add(status);
             }
-            statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, statuses);
+            statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
             lv_status.setAdapter(statusListAdapter);
             statusesTmp = new ArrayList<>();
         }
@@ -340,7 +341,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         else
             textviewNoAction.setVisibility(View.GONE);
         if( swiped ){
-            statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, this.statuses);
+            statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
             lv_status.setAdapter(statusListAdapter);
             swiped = false;
         }
@@ -408,11 +409,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean isOnWifi = Helper.isOnWIFI(context);
             int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+            int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
+
             statuses = new ArrayList<>();
             for(Status status: statusesTmp){
                 statuses.add(status);
             }
-            statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, statuses);
+            statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
             lv_status.setAdapter(statusListAdapter);
             statusesTmp = new ArrayList<>();
         }

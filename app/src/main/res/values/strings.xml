@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name" translatable="false">Mastalab</string>
-
     <string name="navigation_drawer_open">Open the menu</string>
     <string name="navigation_drawer_close">Close the menu</string>
 
@@ -331,7 +330,11 @@
         <item>Tabs and menu</item>
     </string-array>
 
-
+    <string-array name="settings_translation">
+        <item>Yandex</item>
+        <item>Google</item>
+        <item>No</item>
+    </string-array>
 
     <string name="set_title_news">News</string>
     <string name="set_notification_news">Notify for new toots on the home timeline</string>
