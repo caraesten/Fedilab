@@ -94,6 +94,19 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean bubble_counter = sharedpreferences.getBoolean(Helper.SET_BUBBLE_COUNTER, true);
+
+        final CheckBox set_bubble_counter = (CheckBox) rootView.findViewById(R.id.set_bubble_counter);
+        set_bubble_counter.setChecked(bubble_counter);
+        set_bubble_counter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_BUBBLE_COUNTER, set_bubble_counter.isChecked());
+                editor.apply();
+            }
+        });
+
         boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
         final CheckBox set_show_error_messages = (CheckBox) rootView.findViewById(R.id.set_show_error_messages);
         set_show_error_messages.setChecked(show_error_messages);

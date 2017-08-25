@@ -291,6 +291,7 @@
     <string name="set_display_reply">Display previous message in responses</string>
     <string name="set_folder_title">Path: </string>
     <string name="set_auto_store_toot">Save drafts automatically</string>
+    <string name="set_bubble_counter">Display counters</string>
     <string name="set_auto_add_media_url">Add URL of media in toots</string>
     <string name="settings_title_notifications">Manage notifications</string>
     <string name="set_notif_follow">Notify when someone follows you</string>
