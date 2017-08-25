@@ -22,6 +22,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.PendingIntent;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -131,7 +132,6 @@ import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
-import static android.app.Notification.DEFAULT_SOUND;
 import static android.app.Notification.DEFAULT_VIBRATE;
 import static android.app.Notification.FLAG_SHOW_LIGHTS;
 import static android.content.Context.DOWNLOAD_SERVICE;
@@ -606,7 +606,9 @@ public class Helper {
              */
             notificationBuilder.setLights(Color.BLUE, 250, 500);
         }else {
-            notificationBuilder.setDefaults(DEFAULT_SOUND);
+            String soundUri = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() +"/";
+
+            notificationBuilder.setSound(Uri.parse(soundUri + R.raw.boop));
         }
         notificationBuilder.setContentTitle(title);
         notificationBuilder.setLargeIcon(icon);
