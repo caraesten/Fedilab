@@ -275,7 +275,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
             if( currentAccount != null && firstLoad){
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + currentAccount.getId(), max_id);
+                editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + currentAccount.getId(), notifications.get(0).getId());
                 editor.apply();
             }
         }

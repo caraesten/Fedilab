@@ -202,6 +202,7 @@ public class MainActivity extends AppCompatActivity
                 (getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        final boolean bubbles = sharedpreferences.getBoolean(Helper.SET_BUBBLE_COUNTER, true);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -224,7 +225,7 @@ public class MainActivity extends AppCompatActivity
                     case 0:
                         item = navigationView.getMenu().findItem(R.id.nav_home);
                         fragmentTag = "HOME_TIMELINE";
-                        if( homeFragment != null)
+                        if( bubbles && homeFragment != null)
                             homeFragment.refreshData();
                         updateHomeCounter(0);
                         break;
@@ -232,7 +233,7 @@ public class MainActivity extends AppCompatActivity
                         fragmentTag = "NOTIFICATIONS";
                         item = navigationView.getMenu().findItem(R.id.nav_notification);
                         updateNotifCounter(0);
-                        if( notificationsFragment != null)
+                        if( bubbles && notificationsFragment != null)
                             notificationsFragment.refreshData();
                         break;
                     case 2:
@@ -801,14 +802,15 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onResume(){
         super.onResume();
-
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {refreshData();}
-        }, 500);
-
-
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean bubbles = sharedpreferences.getBoolean(Helper.SET_BUBBLE_COUNTER, true);
+        if( bubbles){
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {refreshData();}
+            }, 500);
+        }
         //Proceeds to update of the authenticated account
         if(Helper.isLoggedIn(getApplicationContext()))
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -1009,7 +1011,7 @@ public class MainActivity extends AppCompatActivity
         if( account != null){
             String last_refresh = sharedpreferences.getString(Helper.LAST_BUBBLE_REFRESH_NOTIF + account.getId(), null);
             Date last_refresh_date = Helper.stringToDate(getApplicationContext(), last_refresh);
-            if (last_refresh_date == null || (new Date().getTime() - last_refresh_date.getTime()) >= TimeUnit.SECONDS.toMillis(10)) {
+            if (last_refresh_date == null || (new Date().getTime() - last_refresh_date.getTime()) >= TimeUnit.SECONDS.toMillis(60)) {
 
                 if( notificationsFragment != null && notificationsFragment.isAdded()){
                     notificationsFragment.update();
@@ -1021,7 +1023,7 @@ public class MainActivity extends AppCompatActivity
 
             last_refresh = sharedpreferences.getString(Helper.LAST_BUBBLE_REFRESH_HOME + account.getId(), null);
             last_refresh_date = Helper.stringToDate(getApplicationContext(), last_refresh);
-            if (last_refresh_date == null || (new Date().getTime() - last_refresh_date.getTime()) >= TimeUnit.SECONDS.toMillis(10)) {
+            if (last_refresh_date == null || (new Date().getTime() - last_refresh_date.getTime()) >= TimeUnit.SECONDS.toMillis(60)) {
 
                 if( homeFragment != null && homeFragment.isAdded()){
                     homeFragment.update();

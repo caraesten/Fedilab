@@ -203,6 +203,7 @@ public class Helper {
     public static final String SET_ICON_SIZE = "set_icon_size";
     public static final String SET_PREVIEW_REPLIES = "set_preview_replies";
     public static final String SET_PREVIEW_REPLIES_PP = "set_preview_replies_pp";
+    public static final String SET_BUBBLE_COUNTER = "set_bubble_counter";
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;
