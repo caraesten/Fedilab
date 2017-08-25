@@ -103,6 +103,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
     private boolean isOnWifi;
+    private int translator;
     private int behaviorWithAttachments;
     private StatusListAdapter statusListAdapter;
     private final int REBLOG = 1;
@@ -112,7 +113,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     private HashMap<String, String> urlConversion;
     private HashMap<String, String> tagConversion;
 
-    public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, List<Status> statuses){
+    public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
         this.context = context;
         this.statuses = statuses;
         this.isOnWifi = isOnWifi;
@@ -121,6 +122,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         statusListAdapter = this;
         this.type = type;
         this.targetedId = targetedId;
+        this.translator = translator;
     }
 
 
