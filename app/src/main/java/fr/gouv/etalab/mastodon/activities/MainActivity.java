@@ -24,6 +24,7 @@ import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -229,6 +230,7 @@ public class MainActivity extends AppCompatActivity
                         fragmentTag = "NOTIFICATIONS";
                         item = navigationView.getMenu().findItem(R.id.nav_notification);
                         updateNotifCounter(0);
+                        notificationsFragment.refreshData();
                         break;
                     case 2:
                         fragmentTag = "LOCAL_TIMELINE";
@@ -796,7 +798,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onResume(){
         super.onResume();
-        refreshData();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {refreshData();}
+        }, 500);
+
+
         //Proceeds to update of the authenticated account
         if(Helper.isLoggedIn(getApplicationContext()))
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -995,18 +1004,29 @@ public class MainActivity extends AppCompatActivity
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(prefKeyOauthTokenT);
         if( account != null){
-            String last_refresh = sharedpreferences.getString(Helper.LAST_BUBBLE_REFRESH + account.getId(), null);
+            String last_refresh = sharedpreferences.getString(Helper.LAST_BUBBLE_REFRESH_NOTIF + account.getId(), null);
             Date last_refresh_date = Helper.stringToDate(getApplicationContext(), last_refresh);
-            if (last_refresh_date == null || new Date().getTime() - last_refresh_date.getTime() >= TimeUnit.SECONDS.toMillis(120)) {
-                if( homeFragment != null && notificationsFragment != null){
-                    homeFragment.update();
+            if (last_refresh_date == null || (new Date().getTime() - last_refresh_date.getTime()) >= TimeUnit.SECONDS.toMillis(120)) {
+
+                if( notificationsFragment != null && notificationsFragment.isAdded()){
                     notificationsFragment.update();
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(Helper.LAST_BUBBLE_REFRESH+ account.getId(),Helper.dateToString(getApplicationContext(), new Date()));
+                    editor.putString(Helper.LAST_BUBBLE_REFRESH_NOTIF+ account.getId(),Helper.dateToString(getApplicationContext(), new Date()));
                     editor.apply();
                 }
             }
 
+            last_refresh = sharedpreferences.getString(Helper.LAST_BUBBLE_REFRESH_HOME + account.getId(), null);
+            last_refresh_date = Helper.stringToDate(getApplicationContext(), last_refresh);
+            if (last_refresh_date == null || (new Date().getTime() - last_refresh_date.getTime()) >= TimeUnit.SECONDS.toMillis(120)) {
+
+                if( homeFragment != null && homeFragment.isAdded()){
+                    homeFragment.update();
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString(Helper.LAST_BUBBLE_REFRESH_HOME+ account.getId(),Helper.dateToString(getApplicationContext(), new Date()));
+                    editor.apply();
+                }
+            }
         }
     }
 

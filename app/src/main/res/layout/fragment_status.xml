@@ -81,6 +81,9 @@
 
     <TextView
         android:visibility="gone"
+        android:background="@color/mastodonC3"
+        android:textColor="@color/mastodonC1"
+        android:clickable="true"
         android:padding="10dp"
         android:gravity="center"
         android:text="@string/new_data"

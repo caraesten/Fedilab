@@ -85,7 +85,7 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
     private void updateTimeRefresh(){
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putString(Helper.LAST_BUBBLE_REFRESH+ userId,Helper.dateToString(context, new Date()));
+        editor.putString(Helper.LAST_BUBBLE_REFRESH_NOTIF+ userId,Helper.dateToString(context, new Date()));
         editor.apply();
     }
 }

@@ -16,7 +16,7 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
+
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;

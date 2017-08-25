@@ -140,7 +140,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedpreferences.edit();
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            editor.putString(Helper.LAST_BUBBLE_REFRESH + userId, Helper.dateToString(context, new Date()));
+            editor.putString(Helper.LAST_BUBBLE_REFRESH_HOME + userId, Helper.dateToString(context, new Date()));
             editor.apply();
         }
     }

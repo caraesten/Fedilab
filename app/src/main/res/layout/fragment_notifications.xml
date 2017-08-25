@@ -81,6 +81,9 @@
     </RelativeLayout>
 
     <TextView
+        android:background="@color/mastodonC3"
+        android:textColor="@color/mastodonC1"
+        android:clickable="true"
         android:visibility="gone"
         android:padding="10dp"
         android:gravity="center"

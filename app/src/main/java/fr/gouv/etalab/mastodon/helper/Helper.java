@@ -176,7 +176,10 @@ public class Helper {
     public static final String SHOW_BATTERY_SAVER_MESSAGE = "show_battery_saver_message";
     public static final String LAST_NOTIFICATION_MAX_ID = "last_notification_max_id";
     public static final String LAST_HOMETIMELINE_MAX_ID = "last_hometimeline_max_id";
-    public static final String LAST_BUBBLE_REFRESH = "last_bubble_refresh";
+    public static final String LAST_BUBBLE_REFRESH_NOTIF = "last_bubble_refresh_notif";
+    public static final String LAST_BUBBLE_REFRESH_HOME = "last_bubble_refresh_home";
+    public static final String LAST_MAX_ID_BUBBLE_NOTIF = "last_max_id_bubble_notif";
+    public static final String LAST_MAX_ID_BUBBLE_HOME = "last_max_id_bubble_home";
     public static final String CLIP_BOARD = "clipboard";
     //Notifications
     public static final int NOTIFICATION_INTENT = 1;
