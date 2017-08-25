@@ -932,7 +932,13 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
         }else if( statuses.size() > position) {
             try {
-                String aJsonString = yandexTranslateToText(translatedResult);
+                String aJsonString = null;
+                if (translator == Helper.TRANS_YANDEX)
+                    aJsonString = yandexTranslateToText(translatedResult);
+                else if( translator == Helper.TRANS_GOOGLE)
+                    aJsonString = googleTranslateToText(translatedResult);
+                if( aJsonString == null)
+                    return;
                 Iterator itU = urlConversion.entrySet().iterator();
                 while (itU.hasNext()) {
                     Map.Entry pair = (Map.Entry)itU.next();
