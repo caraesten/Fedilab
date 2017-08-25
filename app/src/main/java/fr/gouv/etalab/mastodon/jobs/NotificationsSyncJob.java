@@ -257,11 +257,9 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
             }
 
         }
-        if(apiResponse.getMax_id() != null) {
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, apiResponse.getMax_id());
-            editor.apply();
-        }
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, apiResponse.getMax_id());
+        editor.apply();
 
     }
 

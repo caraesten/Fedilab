@@ -361,7 +361,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
             if( currentAccount != null && firstLoad){
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + currentAccount.getId(), statuses.get(0).getId());
+                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + currentAccount.getId(), max_id);
                 editor.apply();
             }
         }

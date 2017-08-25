@@ -809,7 +809,7 @@ public class MainActivity extends AppCompatActivity
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {refreshData();}
-            }, 500);
+            }, 1000);
         }
         //Proceeds to update of the authenticated account
         if(Helper.isLoggedIn(getApplicationContext()))
@@ -1011,9 +1011,9 @@ public class MainActivity extends AppCompatActivity
         if( account != null){
             String last_refresh = sharedpreferences.getString(Helper.LAST_BUBBLE_REFRESH_NOTIF + account.getId(), null);
             Date last_refresh_date = Helper.stringToDate(getApplicationContext(), last_refresh);
-            if (last_refresh_date == null || (new Date().getTime() - last_refresh_date.getTime()) >= TimeUnit.SECONDS.toMillis(60)) {
+            if (last_refresh_date == null || (new Date().getTime() - last_refresh_date.getTime()) >= TimeUnit.SECONDS.toMillis(5)) {
 
-                if( notificationsFragment != null && notificationsFragment.isAdded()){
+                if( notificationsFragment != null ){
                     notificationsFragment.update();
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putString(Helper.LAST_BUBBLE_REFRESH_NOTIF+ account.getId(),Helper.dateToString(getApplicationContext(), new Date()));
@@ -1023,9 +1023,8 @@ public class MainActivity extends AppCompatActivity
 
             last_refresh = sharedpreferences.getString(Helper.LAST_BUBBLE_REFRESH_HOME + account.getId(), null);
             last_refresh_date = Helper.stringToDate(getApplicationContext(), last_refresh);
-            if (last_refresh_date == null || (new Date().getTime() - last_refresh_date.getTime()) >= TimeUnit.SECONDS.toMillis(60)) {
-
-                if( homeFragment != null && homeFragment.isAdded()){
+            if (last_refresh_date == null || (new Date().getTime() - last_refresh_date.getTime()) >= TimeUnit.SECONDS.toMillis(5)) {
+                if( homeFragment != null ){
                     homeFragment.update();
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putString(Helper.LAST_BUBBLE_REFRESH_HOME+ account.getId(),Helper.dateToString(getApplicationContext(), new Date()));
