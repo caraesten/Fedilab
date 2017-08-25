@@ -1011,7 +1011,7 @@ public class MainActivity extends AppCompatActivity
         if( account != null){
             String last_refresh = sharedpreferences.getString(Helper.LAST_BUBBLE_REFRESH_NOTIF + account.getId(), null);
             Date last_refresh_date = Helper.stringToDate(getApplicationContext(), last_refresh);
-            if (last_refresh_date == null || (new Date().getTime() - last_refresh_date.getTime()) >= TimeUnit.SECONDS.toMillis(5)) {
+            if (last_refresh_date == null || (new Date().getTime() - last_refresh_date.getTime()) >= TimeUnit.SECONDS.toMillis(60)) {
 
                 if( notificationsFragment != null ){
                     notificationsFragment.update();
@@ -1023,7 +1023,8 @@ public class MainActivity extends AppCompatActivity
 
             last_refresh = sharedpreferences.getString(Helper.LAST_BUBBLE_REFRESH_HOME + account.getId(), null);
             last_refresh_date = Helper.stringToDate(getApplicationContext(), last_refresh);
-            if (last_refresh_date == null || (new Date().getTime() - last_refresh_date.getTime()) >= TimeUnit.SECONDS.toMillis(5)) {
+
+            if (last_refresh_date == null || (new Date().getTime() - last_refresh_date.getTime()) >= TimeUnit.SECONDS.toMillis(60)) {
                 if( homeFragment != null ){
                     homeFragment.update();
                     SharedPreferences.Editor editor = sharedpreferences.edit();

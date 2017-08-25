@@ -146,6 +146,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                     }
                     notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments, notifications);
                     lv_notifications.setAdapter(notificationsListAdapter);
+                    if( notificationsTmp.size() > 0 && textviewNoAction.getVisibility() == View.VISIBLE)
+                        textviewNoAction.setVisibility(View.GONE);
                 }
                 new_data.setVisibility(View.GONE);
                 notificationsTmp = new ArrayList<>();
@@ -180,7 +182,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
 
     @Override
     public void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId, boolean refreshData) {
-
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
@@ -299,6 +300,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
            for(Notification notification: this.notificationsTmp){
                notifications.add(notification);
            }
+           if( notificationsTmp.size() > 0 && textviewNoAction.getVisibility() == View.VISIBLE)
+               textviewNoAction.setVisibility(View.GONE);
            notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments, notifications);
            lv_notifications.setAdapter(notificationsListAdapter);
            this.notificationsTmp = new ArrayList<>();

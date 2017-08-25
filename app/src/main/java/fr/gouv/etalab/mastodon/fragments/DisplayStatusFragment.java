@@ -203,6 +203,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     for(Status status: statusesTmp){
                         statuses.add(status);
                     }
+                    if( statusesTmp.size() > 0 && textviewNoAction.getVisibility() == View.VISIBLE)
+                        textviewNoAction.setVisibility(View.GONE);
                     statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
                     lv_status.setAdapter(statusListAdapter);
                     statusesTmp = new ArrayList<>();
@@ -415,6 +417,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             for(Status status: statusesTmp){
                 statuses.add(status);
             }
+            if( statusesTmp.size() > 0 && textviewNoAction.getVisibility() == View.VISIBLE)
+                textviewNoAction.setVisibility(View.GONE);
             statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
             lv_status.setAdapter(statusListAdapter);
             statusesTmp = new ArrayList<>();
