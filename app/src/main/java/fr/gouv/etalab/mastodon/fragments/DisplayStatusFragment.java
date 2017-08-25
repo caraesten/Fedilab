@@ -280,39 +280,49 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             editor.apply();
             String bubble_max_id = sharedpreferences.getString(Helper.LAST_MAX_ID_BUBBLE_HOME + userId, null);
 
-            if( refreshData || !displayStatusFragment.getUserVisibleHint()) {
+            if( refreshData ) {
                 max_id = apiResponse.getMax_id();
-                if( !displayStatusFragment.getUserVisibleHint() && bubble_max_id != null){
-                    int countData = 0;
-                    for(Status st : statuses){
-                        if( st.getId().trim().equals(bubble_max_id.trim()) )
-                            break;
-                        countData++;
-                    }
-                    ((MainActivity)context).updateHomeCounter(countData);
-                    max_id = null;
-                    firstLoad = true;
-                    statusesTmp = new ArrayList<>();
-                    for(Status tmpStatus: statuses){
-                        this.statusesTmp.add(tmpStatus);
-                    }
-                }else {
-                    manageStatus(statuses, max_id);
-                }
+                manageStatus(statuses, max_id);
                 if( apiResponse.getSince_id() != null) {
                     editor.putString(Helper.LAST_MAX_ID_BUBBLE_HOME + userId,  apiResponse.getSince_id());
                     editor.apply();
                 }
             }else {
-                if( statuses != null && statuses.size() > 0) {
-                    max_id = null;
-                    firstLoad = true;
-                    statusesTmp = new ArrayList<>();
-                    for(Status tmpStatus: statuses){
-                        this.statusesTmp.add(tmpStatus);
+                int countData = 0;
+                if( bubble_max_id != null) {
+                    for (Status st : statuses) {
+                        if (st.getId().trim().equals(bubble_max_id.trim()))
+                            break;
+                        countData++;
                     }
                 }
-                new_data.setVisibility(View.VISIBLE);
+                if( !displayStatusFragment.getUserVisibleHint()){
+
+                    ((MainActivity)context).updateHomeCounter(countData);
+                    if( countData > 0){
+                        max_id = null;
+                        firstLoad = true;
+                        statusesTmp = new ArrayList<>();
+                        for(Status tmpStatus: statuses){
+                            this.statusesTmp.add(tmpStatus);
+                        }
+                    }
+                    if( apiResponse.getSince_id() != null) {
+                        editor.putString(Helper.LAST_MAX_ID_BUBBLE_HOME + userId,  apiResponse.getSince_id());
+                        editor.apply();
+                    }
+                }else {
+                    if( statuses != null && statuses.size() > 0 && countData > 0) {
+                        max_id = null;
+                        firstLoad = true;
+                        statusesTmp = new ArrayList<>();
+                        for(Status tmpStatus: statuses){
+                            this.statusesTmp.add(tmpStatus);
+                        }
+                        new_data.setVisibility(View.VISIBLE);
+                    }
+                }
+
             }
         }else {
             max_id = apiResponse.getMax_id();
@@ -351,7 +361,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
             if( currentAccount != null && firstLoad){
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + currentAccount.getId(), statuses.get(0).getId());
+                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + currentAccount.getId(), max_id);
                 editor.apply();
             }
         }
@@ -389,12 +399,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     }
     public void update() {
         if( context != null) {
-            asyncTask = new RetrieveFeedsAsyncTask(context, type, null, !displayStatusFragment.getUserVisibleHint(), DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            asyncTask = new RetrieveFeedsAsyncTask(context, type, null, false, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
     public void refreshData(){
-        if(context != null && this.statusesTmp != null){
+        if(context != null && this.statusesTmp != null && this.statusesTmp.size() > 0){
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean isOnWifi = Helper.isOnWIFI(context);
             int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);

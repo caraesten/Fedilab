@@ -154,10 +154,11 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
             intent.putExtra(PREF_KEY_ID, userId);
             long notif_id = Long.parseLong(userId);
             final int notificationId = ((notif_id + 2) > 2147483647) ? (int) (2147483647 - notif_id - 2) : (int) (notif_id + 2);
-
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, apiResponse.getMax_id());
-            editor.apply();
+            if( apiResponse.getMax_id() != null) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, apiResponse.getMax_id());
+                editor.apply();
+            }
 
             if( notificationUrl != null){
                 ImageLoader imageLoaderNoty = ImageLoader.getInstance();

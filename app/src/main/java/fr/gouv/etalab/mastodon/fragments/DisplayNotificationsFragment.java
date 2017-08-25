@@ -180,6 +180,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
 
     @Override
     public void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId, boolean refreshData) {
+
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
@@ -197,17 +198,26 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         editor.apply();
 
         String bubble_max_id = sharedpreferences.getString(Helper.LAST_MAX_ID_BUBBLE_NOTIF + userId, null);
+
         List<Notification> notifications = apiResponse.getNotifications();
         max_id = apiResponse.getMax_id();
-        if( refreshData || !displayNotificationsFragment.getUserVisibleHint()) {
-
-            if( !displayNotificationsFragment.getUserVisibleHint() && bubble_max_id != null){
-                int countData = 0;
-                for(Notification nt : notifications){
-                    if( nt.getId().trim().equals(bubble_max_id.trim()) )
+        if( refreshData ) {
+            manageNotifications(notifications, max_id);
+            if( apiResponse.getSince_id() != null) {
+                editor.putString(Helper.LAST_MAX_ID_BUBBLE_NOTIF + userId, apiResponse.getSince_id());
+                editor.apply();
+            }
+        }else {
+            int countData = 0;
+            if( bubble_max_id != null) {
+                for (Notification nt : notifications) {
+                    if (nt.getId().trim().equals(bubble_max_id.trim()))
                         break;
                     countData++;
                 }
+            }
+            if( !displayNotificationsFragment.getUserVisibleHint() ){
+
                 ((MainActivity)context).updateNotifCounter(countData);
                 max_id = null;
                 firstLoad = true;
@@ -215,23 +225,23 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 for(Notification tmpNotification: notifications){
                     this.notificationsTmp.add(tmpNotification);
                 }
-            }else{
-                manageNotifications(notifications, max_id);
-            }
-            if( apiResponse.getSince_id() != null) {
-                editor.putString(Helper.LAST_MAX_ID_BUBBLE_NOTIF + userId, apiResponse.getSince_id());
-                editor.apply();
-            }
-        }else {
-            if( notifications != null && notifications.size() > 0) {
-                max_id = null;
-                firstLoad = true;
-                notificationsTmp = new ArrayList<>();
-                for(Notification tmpNotification: notifications){
-                    this.notificationsTmp.add(tmpNotification);
+                if( apiResponse.getSince_id() != null) {
+                    editor.putString(Helper.LAST_MAX_ID_BUBBLE_NOTIF + userId, apiResponse.getSince_id());
+                    editor.apply();
                 }
+            }else {
+                if( notifications != null && notifications.size() > 0 && countData > 0) {
+                    max_id = null;
+                    firstLoad = true;
+                    notificationsTmp = new ArrayList<>();
+                    for(Notification tmpNotification: notifications){
+                        this.notificationsTmp.add(tmpNotification);
+                    }
+                    new_data.setVisibility(View.VISIBLE);
+                }
+
             }
-            new_data.setVisibility(View.VISIBLE);
+
         }
 
     }
@@ -265,7 +275,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
             if( currentAccount != null && firstLoad){
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + currentAccount.getId(), notifications.get(0).getId());
+                editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + currentAccount.getId(), max_id);
                 editor.apply();
             }
         }
@@ -279,12 +289,12 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
 
     public void update(){
         if( context != null){
-            asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, null, null, null, !displayNotificationsFragment.getUserVisibleHint(), DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, null, null, null, false, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
    }
 
    public void refreshData(){
-       if(context != null && this.notificationsTmp != null){
+       if(context != null && this.notificationsTmp != null && this.notificationsTmp.size() > 0){
            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
            boolean isOnWifi = Helper.isOnWIFI(context);
            int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
