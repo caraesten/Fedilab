@@ -84,6 +84,7 @@ import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
+import fr.gouv.etalab.mastodon.translation.GoogleTranslateQuery;
 import fr.gouv.etalab.mastodon.translation.YandexQuery;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
@@ -301,10 +302,18 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             }
         });
         if( currentLocale != null && status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale) && !status.getLanguage().trim().equals("null")){
-            holder.status_translate.setVisibility(View.VISIBLE);
+            if (translator != Helper.TRANS_NONE)
+                holder.status_translate.setVisibility(View.VISIBLE);
+            else
+                holder.status_translate.setVisibility(View.GONE);
         }else {
             holder.status_translate.setVisibility(View.GONE);
         }
+
+        if( translator == Helper.TRANS_YANDEX)
+            holder.yandex_translate.setVisibility(View.VISIBLE);
+        else
+            holder.yandex_translate.setVisibility(View.GONE);
 
         holder.status_translate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -350,7 +359,11 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                             }
                             i++;
                         }
-                        new YandexQuery(StatusListAdapter.this).getYandexTextview(position, text, currentLocale);
+                        if (translator == Helper.TRANS_YANDEX)
+                            new YandexQuery(StatusListAdapter.this).getYandexTextview(position, text, currentLocale);
+                        else if( translator == Helper.TRANS_GOOGLE)
+                            new GoogleTranslateQuery(StatusListAdapter.this).getGoogleTextview(position, text, currentLocale);
+
                     }else {
                         status.setTranslationShown(!status.isTranslationShown());
                         statusListAdapter.notifyDataSetChanged();
