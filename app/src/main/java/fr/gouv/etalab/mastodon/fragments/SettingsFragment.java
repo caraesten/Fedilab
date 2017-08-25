@@ -32,7 +32,6 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,6 +89,19 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_AUTO_STORE, set_auto_store.isChecked());
+                editor.apply();
+            }
+        });
+
+        boolean bubble_counter = sharedpreferences.getBoolean(Helper.SET_BUBBLE_COUNTER, true);
+
+        final CheckBox set_bubble_counter = (CheckBox) rootView.findViewById(R.id.set_bubble_counter);
+        set_bubble_counter.setChecked(bubble_counter);
+        set_bubble_counter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_BUBBLE_COUNTER, set_bubble_counter.isChecked());
                 editor.apply();
             }
         });

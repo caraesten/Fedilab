@@ -14,22 +14,20 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.activities;
 
-import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
@@ -48,6 +46,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -64,9 +63,11 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Stack;
+import java.util.concurrent.TimeUnit;
 
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -91,6 +92,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeUser;
 import static fr.gouv.etalab.mastodon.helper.Helper.loadPPInActionBar;
@@ -117,7 +119,8 @@ public class MainActivity extends AppCompatActivity
     private ViewPager viewPager;
     private RelativeLayout main_app_container;
     private Stack<Integer> stackBack = new Stack<>();
-
+    private DisplayStatusFragment homeFragment;
+    private DisplayNotificationsFragment notificationsFragment;
 
 
     public MainActivity() {
@@ -154,12 +157,52 @@ public class MainActivity extends AppCompatActivity
         pp_actionBar = (ImageView) toolbar.findViewById(R.id.pp_actionBar);
         toolbar_search = (SearchView) toolbar.findViewById(R.id.toolbar_search);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        TabLayout.Tab tabHome = tabLayout.newTab();
+        TabLayout.Tab tabNotif = tabLayout.newTab();
+        TabLayout.Tab tabLocal = tabLayout.newTab();
+        TabLayout.Tab tabPublic = tabLayout.newTab();
+        tabHome.setCustomView(R.layout.tab_badge);
+        tabNotif.setCustomView(R.layout.tab_badge);
+        tabLocal.setCustomView(R.layout.tab_badge);
+        tabPublic.setCustomView(R.layout.tab_badge);
+
+        @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+        ImageView iconHome = (ImageView) tabHome.getCustomView().findViewById(R.id.tab_icon);
+        iconHome.setImageResource(R.drawable.ic_action_home_tl);
+
+        @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+        ImageView iconNotif = (ImageView) tabNotif.getCustomView().findViewById(R.id.tab_icon);
+        iconNotif.setImageResource(R.drawable.ic_notifications_tl);
+
+
+        @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+        ImageView iconLocal = (ImageView) tabLocal.getCustomView().findViewById(R.id.tab_icon);
+        iconLocal.setImageResource(R.drawable.ic_action_users_tl);
+
+        @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+        ImageView iconGlobal = (ImageView) tabPublic.getCustomView().findViewById(R.id.tab_icon);
+        iconGlobal.setImageResource(R.drawable.ic_action_globe_tl);
+
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_action_home_tl,R.color.dark_text);
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_notifications_tl,R.color.dark_text);
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_action_users_tl,R.color.dark_text);
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_action_globe_tl,R.color.dark_text);
+
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+
+        tabLayout.addTab(tabHome);
+        tabLayout.addTab(tabNotif);
+        tabLayout.addTab(tabLocal);
+        tabLayout.addTab(tabPublic);
+
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         main_app_container = (RelativeLayout) findViewById(R.id.main_app_container);
         PagerAdapter adapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        final boolean bubbles = sharedpreferences.getBoolean(Helper.SET_BUBBLE_COUNTER, true);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -182,10 +225,16 @@ public class MainActivity extends AppCompatActivity
                     case 0:
                         item = navigationView.getMenu().findItem(R.id.nav_home);
                         fragmentTag = "HOME_TIMELINE";
+                        if( bubbles && homeFragment != null)
+                            homeFragment.refreshData();
+                        updateHomeCounter(0);
                         break;
                     case 1:
                         fragmentTag = "NOTIFICATIONS";
                         item = navigationView.getMenu().findItem(R.id.nav_notification);
+                        updateNotifCounter(0);
+                        if( bubbles && notificationsFragment != null)
+                            notificationsFragment.refreshData();
                         break;
                     case 2:
                         fragmentTag = "LOCAL_TIMELINE";
@@ -753,6 +802,15 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onResume(){
         super.onResume();
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean bubbles = sharedpreferences.getBoolean(Helper.SET_BUBBLE_COUNTER, true);
+        if( bubbles){
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {refreshData();}
+            }, 1000);
+        }
         //Proceeds to update of the authenticated account
         if(Helper.isLoggedIn(getApplicationContext()))
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -917,12 +975,13 @@ public class MainActivity extends AppCompatActivity
             Bundle bundle = new Bundle();
             switch (position) {
                 case 0:
-                    statusFragment = new DisplayStatusFragment();
+                    homeFragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.HOME);
-                    statusFragment.setArguments(bundle);
-                    return statusFragment;
+                    homeFragment.setArguments(bundle);
+                    return homeFragment;
                 case 1:
-                    return new DisplayNotificationsFragment();
+                    notificationsFragment = new DisplayNotificationsFragment();
+                    return notificationsFragment;
                 case 2:
                     statusFragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.LOCAL);
@@ -940,6 +999,72 @@ public class MainActivity extends AppCompatActivity
         @Override
         public int getCount() {
             return mNumOfTabs;
+        }
+    }
+
+    private void refreshData(){
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+
+        String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(prefKeyOauthTokenT);
+        if( account != null){
+            String last_refresh = sharedpreferences.getString(Helper.LAST_BUBBLE_REFRESH_NOTIF + account.getId(), null);
+            Date last_refresh_date = Helper.stringToDate(getApplicationContext(), last_refresh);
+            if (last_refresh_date == null || (new Date().getTime() - last_refresh_date.getTime()) >= TimeUnit.SECONDS.toMillis(5)) {
+
+                if( notificationsFragment != null ){
+                    notificationsFragment.update();
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString(Helper.LAST_BUBBLE_REFRESH_NOTIF+ account.getId(),Helper.dateToString(getApplicationContext(), new Date()));
+                    editor.apply();
+                }
+            }
+
+            last_refresh = sharedpreferences.getString(Helper.LAST_BUBBLE_REFRESH_HOME + account.getId(), null);
+            last_refresh_date = Helper.stringToDate(getApplicationContext(), last_refresh);
+            if (last_refresh_date == null || (new Date().getTime() - last_refresh_date.getTime()) >= TimeUnit.SECONDS.toMillis(5)) {
+                if( homeFragment != null ){
+                    homeFragment.update();
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString(Helper.LAST_BUBBLE_REFRESH_HOME+ account.getId(),Helper.dateToString(getApplicationContext(), new Date()));
+                    editor.apply();
+                }
+            }
+        }
+    }
+
+    public void updateHomeCounter(int newHomeCount){
+        if( tabLayout.getTabAt(0) == null )
+            return;
+        View tabHome = tabLayout.getTabAt(0).getCustomView();
+        TextView tabCounterHome = (TextView) tabHome.findViewById(R.id.tab_counter);
+        tabCounterHome.setText(String.valueOf(newHomeCount));
+        if( newHomeCount > 0){
+            //New data are available
+            //The fragment is not displayed, so the counter is displayed
+            if( tabLayout.getSelectedTabPosition() != 0)
+                tabCounterHome.setVisibility(View.VISIBLE);
+            else
+                tabCounterHome.setVisibility(View.GONE);
+        }else {
+            tabCounterHome.setVisibility(View.GONE);
+        }
+    }
+
+    public void updateNotifCounter(int newNotifCount){
+        if(tabLayout.getTabAt(1) == null)
+            return;
+        View tabNotif = tabLayout.getTabAt(1).getCustomView();
+        TextView tabCounterNotif = (TextView) tabNotif.findViewById(R.id.tab_counter);
+        tabCounterNotif.setText(String.valueOf(newNotifCount));
+        if( newNotifCount > 0){
+            if( tabLayout.getSelectedTabPosition() != 1)
+                tabCounterNotif.setVisibility(View.VISIBLE);
+            else
+                tabCounterNotif.setVisibility(View.GONE);
+        }else {
+            tabCounterNotif.setVisibility(View.GONE);
         }
     }
 

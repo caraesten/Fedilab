@@ -21,5 +21,5 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
  * Interface when notifications have been retrieved
  */
 public interface OnRetrieveNotificationsInterface {
-    void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId);
+    void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId, boolean refreshData);
 }
