@@ -324,6 +324,11 @@
         <item>Menu</item>
         <item>Onglets et menu</item>
     </string-array>
+    <string-array name="settings_translation">
+        <item>Yandex</item>
+        <item>Google</item>
+        <item>Non</item>
+    </string-array>
     <string name="set_title_news">Actualités</string>
     <string name="set_notification_news">Notifier lors de nouveaux pouets sur la page d\'accueil</string>
     <string name="set_show_error_messages">Afficher les messages d\'erreur</string>

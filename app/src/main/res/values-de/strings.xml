@@ -329,6 +329,11 @@
     </string-array>
 
 
+    <string-array name="settings_translation">
+        <item>Yandex</item>
+        <item>Google</item>
+        <item>Nein</item>
+    </string-array>
 
     <string name="action_block">Blockiere</string>
     <string name="action_unblock">Nicht mehr blockieren</string>
