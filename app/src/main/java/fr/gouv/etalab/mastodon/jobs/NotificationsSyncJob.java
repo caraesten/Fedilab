@@ -133,7 +133,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
 
 
     @Override
-    public void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId) {
+    public void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId, boolean refreshData) {
 
         List<Notification> notifications = apiResponse.getNotifications();
         if( apiResponse.getError() != null || notifications == null || notifications.size() == 0)
@@ -257,7 +257,6 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
             }
 
         }
-
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, apiResponse.getMax_id());
         editor.apply();

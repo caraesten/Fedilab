@@ -32,7 +32,6 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +70,7 @@ public class SettingsFragment extends Fragment {
     private static final int ACTIVITY_CHOOSE_FILE = 411;
     private TextView set_folder;
     int count = 0;
+    int count2 = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -90,6 +90,19 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_AUTO_STORE, set_auto_store.isChecked());
+                editor.apply();
+            }
+        });
+
+        boolean bubble_counter = sharedpreferences.getBoolean(Helper.SET_BUBBLE_COUNTER, true);
+
+        final CheckBox set_bubble_counter = (CheckBox) rootView.findViewById(R.id.set_bubble_counter);
+        set_bubble_counter.setChecked(bubble_counter);
+        set_bubble_counter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_BUBBLE_COUNTER, set_bubble_counter.isChecked());
                 editor.apply();
             }
         });
@@ -394,6 +407,30 @@ public class SettingsFragment extends Fragment {
                 }
             }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        final Spinner translation_layout_spinner = (Spinner) rootView.findViewById(R.id.translation_layout_spinner);
+        ArrayAdapter<CharSequence> adapterTrans = ArrayAdapter.createFromResource(getActivity(),
+                R.array.settings_translation, android.R.layout.simple_spinner_item);
+        translation_layout_spinner.setAdapter(adapterTrans);
+
+        int positionSpinnerTrans = (sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX));
+        translation_layout_spinner.setSelection(positionSpinnerTrans);
+        translation_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if( count2 > 0){
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putInt(Helper.SET_TRANSLATOR, position );
+                    editor.apply();
+                }else {
+                    count2++;
+                }
+            }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 

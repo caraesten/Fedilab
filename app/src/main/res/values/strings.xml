@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name" translatable="false">Mastalab</string>
-
     <string name="navigation_drawer_open">Open the menu</string>
     <string name="navigation_drawer_close">Close the menu</string>
 
@@ -59,6 +58,8 @@
     <string name="shared_via">Shared via Mastalab</string>
     <string name="replies">Replies</string>
     <string name="username">User name</string>
+
+    <string name="new_data">New data are available! Do you want to display them?</string>
     <!--- Menu -->
     <string name="home_menu">Home</string>
     <string name="local_menu">Local timeline</string>
@@ -289,6 +290,7 @@
     <string name="set_display_reply">Display previous message in responses</string>
     <string name="set_folder_title">Path: </string>
     <string name="set_auto_store_toot">Save drafts automatically</string>
+    <string name="set_bubble_counter">Display counters</string>
     <string name="set_auto_add_media_url">Add URL of media in toots</string>
     <string name="settings_title_notifications">Manage notifications</string>
     <string name="set_notif_follow">Notify when someone follows you</string>
@@ -328,7 +330,11 @@
         <item>Tabs and menu</item>
     </string-array>
 
-
+    <string-array name="settings_translation">
+        <item>Yandex</item>
+        <item>Google</item>
+        <item>No</item>
+    </string-array>
 
     <string name="set_title_news">News</string>
     <string name="set_notification_news">Notify for new toots on the home timeline</string>

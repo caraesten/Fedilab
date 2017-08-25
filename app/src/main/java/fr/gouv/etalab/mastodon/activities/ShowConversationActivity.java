@@ -216,7 +216,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
     }
 
     @Override
-    public void onRetrieveFeeds(APIResponse apiResponse) {
+    public void onRetrieveFeeds(APIResponse apiResponse, boolean refreshData) {
         if( apiResponse.getError() != null){
             final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
@@ -244,6 +244,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
         boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+        int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
         position = 0;
         List<Status> statuses = new ArrayList<>();
         if( context.getAncestors() != null && context.getAncestors().size() > 0){
@@ -259,7 +260,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
             }
         }
         RelativeLayout loader = (RelativeLayout) findViewById(R.id.loader);
-        StatusListAdapter statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, RetrieveFeedsAsyncTask.Type.CONTEXT, null, isOnWifi, behaviorWithAttachments, statuses);
+        StatusListAdapter statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, RetrieveFeedsAsyncTask.Type.CONTEXT, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
         lv_status.setAdapter(statusListAdapter);
         statusListAdapter.notifyDataSetChanged();
         loader.setVisibility(View.GONE);

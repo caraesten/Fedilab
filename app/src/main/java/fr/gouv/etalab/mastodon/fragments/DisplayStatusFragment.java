@@ -14,7 +14,6 @@ package fr.gouv.etalab.mastodon.fragments;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -23,16 +22,20 @@ import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRepliesAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -59,20 +62,25 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private AsyncTask<Void, Void, Void> asyncTask;
     private StatusListAdapter statusListAdapter;
     private String max_id;
-    private List<Status> statuses;
+    private List<Status> statuses, statusesTmp;
     private RetrieveFeedsAsyncTask.Type type;
     private RelativeLayout mainLoader, nextElementLoader, textviewNoAction;
     private boolean firstLoad;
     private SwipeRefreshLayout swipeRefreshLayout;
     private String targetedId;
     private String tag;
-    private int tootsPerPage;
     private boolean swiped;
     private ListView lv_status;
     private boolean isOnWifi;
     private int behaviorWithAttachments;
-    private String instanceValue;
     private boolean showMediaOnly;
+    private DisplayStatusFragment displayStatusFragment;
+    private TextView new_data;
+    private int positionSpinnerTrans;
+
+    public DisplayStatusFragment(){
+        displayStatusFragment = this;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -90,7 +98,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             tag = bundle.getString("tag", null);
             hideHeader = bundle.getBoolean("hideHeader", false);
             showMediaOnly = bundle.getBoolean("showMediaOnly",false);
-            instanceValue = bundle.getString("hideHeaderValue", null);
             if( bundle.containsKey("statuses")){
                 ArrayList<Parcelable> statusesReceived = bundle.getParcelableArrayList("statuses");
                 assert statusesReceived != null;
@@ -105,21 +112,21 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         firstLoad = true;
         swiped = false;
 
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         isOnWifi = Helper.isOnWIFI(context);
+        positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
 
         lv_status = (ListView) rootView.findViewById(R.id.lv_status);
-        tootsPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
         mainLoader = (RelativeLayout) rootView.findViewById(R.id.loader);
         nextElementLoader = (RelativeLayout) rootView.findViewById(R.id.loading_next_status);
         textviewNoAction = (RelativeLayout) rootView.findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
-        statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, this.statuses);
+        statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
         lv_status.setAdapter(statusListAdapter);
-
+        new_data = (TextView) rootView.findViewById(R.id.new_data);
         if( !comesFromSearch){
 
             //Hide account header when scrolling for ShowAccountActivity
@@ -167,7 +174,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             });
-            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
             swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
                     R.color.mastodonC2,
                     R.color.mastodonC3);
@@ -187,6 +193,26 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 textviewNoAction.setVisibility(View.VISIBLE);
         }
 
+        new_data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( statusesTmp != null){
+                    boolean isOnWifi = Helper.isOnWIFI(context);
+                    int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+                    statuses = new ArrayList<>();
+                    for(Status status: statusesTmp){
+                        statuses.add(status);
+                    }
+                    if( statusesTmp.size() > 0 && textviewNoAction.getVisibility() == View.VISIBLE)
+                        textviewNoAction.setVisibility(View.GONE);
+                    statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
+                    lv_status.setAdapter(statusListAdapter);
+                    statusesTmp = new ArrayList<>();
+                }
+                new_data.setVisibility(View.GONE);
+            }
+        });
+
         return rootView;
     }
 
@@ -198,6 +224,25 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     }
 
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //New data are available
+        if (getUserVisibleHint() && statusesTmp != null && statusesTmp.size() > 0 ) {
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean isOnWifi = Helper.isOnWIFI(context);
+            int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+            int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
+            statuses = new ArrayList<>();
+            for(Status status: statusesTmp){
+                statuses.add(status);
+            }
+            statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
+            lv_status.setAdapter(statusListAdapter);
+            statusesTmp = new ArrayList<>();
+        }
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -215,12 +260,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
 
     @Override
-    public void onRetrieveFeeds(APIResponse apiResponse) {
+    public void onRetrieveFeeds(APIResponse apiResponse, boolean refreshData) {
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( apiResponse.getError() != null && !apiResponse.getError().getError().startsWith("404 -")){
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
                 Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
@@ -229,18 +274,79 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             flag_loading = false;
             return;
         }
-        flag_loading = (apiResponse.getMax_id() == null );
         List<Status> statuses = apiResponse.getStatuses();
+        if( type == RetrieveFeedsAsyncTask.Type.HOME){
+
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            editor.putString(Helper.LAST_BUBBLE_REFRESH_HOME+ userId,Helper.dateToString(context, new Date()));
+            editor.apply();
+            String bubble_max_id = sharedpreferences.getString(Helper.LAST_MAX_ID_BUBBLE_HOME + userId, null);
+
+            if( refreshData ) {
+                max_id = apiResponse.getMax_id();
+                manageStatus(statuses, max_id);
+                if( apiResponse.getSince_id() != null) {
+                    editor.putString(Helper.LAST_MAX_ID_BUBBLE_HOME + userId,  apiResponse.getSince_id());
+                    editor.apply();
+                }
+            }else {
+                int countData = 0;
+                if( bubble_max_id != null) {
+                    for (Status st : statuses) {
+                        if (st.getId().trim().equals(bubble_max_id.trim()))
+                            break;
+                        countData++;
+                    }
+                }
+                if( !displayStatusFragment.getUserVisibleHint()){
+
+                    ((MainActivity)context).updateHomeCounter(countData);
+                    if( countData > 0){
+                        max_id = null;
+                        firstLoad = true;
+                        statusesTmp = new ArrayList<>();
+                        for(Status tmpStatus: statuses){
+                            this.statusesTmp.add(tmpStatus);
+                        }
+                    }
+                    if( apiResponse.getSince_id() != null) {
+                        editor.putString(Helper.LAST_MAX_ID_BUBBLE_HOME + userId,  apiResponse.getSince_id());
+                        editor.apply();
+                    }
+                }else {
+                    if( statuses != null && statuses.size() > 0 && countData > 0) {
+                        max_id = null;
+                        firstLoad = true;
+                        statusesTmp = new ArrayList<>();
+                        for(Status tmpStatus: statuses){
+                            this.statusesTmp.add(tmpStatus);
+                        }
+                        new_data.setVisibility(View.VISIBLE);
+                    }
+                }
+
+            }
+        }else {
+            max_id = apiResponse.getMax_id();
+            manageStatus(statuses, max_id);
+        }
+
+
+
+    }
+
+    private void manageStatus(List<Status> statuses, String max_id){
+        flag_loading = (max_id == null );
         if( !swiped && firstLoad && (statuses == null || statuses.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
             textviewNoAction.setVisibility(View.GONE);
         if( swiped ){
-            statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, this.statuses);
+            statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
             lv_status.setAdapter(statusListAdapter);
             swiped = false;
         }
-        max_id = apiResponse.getMax_id();
         if( statuses != null && statuses.size() > 0) {
             for(Status tmpStatus: statuses){
                 this.statuses.add(tmpStatus);
@@ -258,7 +364,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
             if( currentAccount != null && firstLoad){
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + currentAccount.getId(), statuses.get(0).getId());
+                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + currentAccount.getId(), max_id);
                 editor.apply();
             }
         }
@@ -273,7 +379,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 new RetrieveRepliesAsyncTask(context, statuses, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
-
     }
 
     public void scrollToTop(){
@@ -294,5 +399,29 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
         }
         statusListAdapter.notifyDataSetChanged();
+    }
+    public void update() {
+        if( context != null) {
+            asyncTask = new RetrieveFeedsAsyncTask(context, type, null, false, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+    }
+
+    public void refreshData(){
+        if(context != null && this.statusesTmp != null && this.statusesTmp.size() > 0){
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean isOnWifi = Helper.isOnWIFI(context);
+            int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+            int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
+
+            statuses = new ArrayList<>();
+            for(Status status: statusesTmp){
+                statuses.add(status);
+            }
+            if( statusesTmp.size() > 0 && textviewNoAction.getVisibility() == View.VISIBLE)
+                textviewNoAction.setVisibility(View.GONE);
+            statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
+            lv_status.setAdapter(statusListAdapter);
+            statusesTmp = new ArrayList<>();
+        }
     }
 }
