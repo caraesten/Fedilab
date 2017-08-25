@@ -133,6 +133,7 @@ import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static android.app.Notification.DEFAULT_SOUND;
 import static android.app.Notification.DEFAULT_VIBRATE;
+import static android.app.Notification.FLAG_SHOW_LIGHTS;
 import static android.content.Context.DOWNLOAD_SERVICE;
 
 
@@ -596,7 +597,14 @@ public class Helper {
                 .setContentIntent(pIntent)
                 .setContentText(message);
         if( sharedpreferences.getBoolean(Helper.SET_NOTIF_SILENT,false) ) {
-            notificationBuilder.setDefaults(DEFAULT_VIBRATE);
+            notificationBuilder.setDefaults(DEFAULT_VIBRATE|FLAG_SHOW_LIGHTS);
+            /* My phone's LED can only do a RED colour, so someone else will need to see how
+                it looks, and perhaps tweak it to a nicer BLUE, or whatever colour.
+
+                Could as angryTux suggested add some sort of option for user to choose the colour,
+                but not really sure that wouldn't just add another extra setting for no real reason.
+             */
+            notificationBuilder.setLights(Color.BLUE, 250, 500);
         }else {
             notificationBuilder.setDefaults(DEFAULT_SOUND);
         }
