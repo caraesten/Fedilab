@@ -604,7 +604,7 @@ public class Helper {
                 Could as angryTux suggested add some sort of option for user to choose the colour,
                 but not really sure that wouldn't just add another extra setting for no real reason.
              */
-            notificationBuilder.setLights(Color.BLUE, 250, 500);
+            notificationBuilder.setLights(Color.BLUE, 500, 1000);
         }else {
             notificationBuilder.setDefaults(DEFAULT_SOUND);
         }
