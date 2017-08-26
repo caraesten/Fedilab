@@ -596,14 +596,11 @@ public class Helper {
                 .setAutoCancel(true)
                 .setContentIntent(pIntent)
                 .setContentText(message);
-        if( sharedpreferences.getBoolean(Helper.SET_NOTIF_SILENT,false) ) {
-            notificationBuilder.setDefaults(DEFAULT_VIBRATE|FLAG_SHOW_LIGHTS);
-            /* My phone's LED can only do a RED colour, so someone else will need to see how
-                it looks, and perhaps tweak it to a nicer BLUE, or whatever colour.
 
-                Could as angryTux suggested add some sort of option for user to choose the colour,
-                but not really sure that wouldn't just add another extra setting for no real reason.
-             */
+        int notifDefaults = FLAG_SHOW_LIGHTS;
+        notificationBuilder.setDefaults(notifDefaults);
+        if( sharedpreferences.getBoolean(Helper.SET_NOTIF_SILENT,false) ) {
+            notificationBuilder.setDefaults(notifDefaults|DEFAULT_VIBRATE);
         }else {
             String soundUri = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() +"/";
             notificationBuilder.setSound(Uri.parse(soundUri + R.raw.boop));
