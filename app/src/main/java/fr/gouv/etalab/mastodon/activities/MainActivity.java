@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity
     private ViewPager viewPager;
     private RelativeLayout main_app_container;
     private Stack<Integer> stackBack = new Stack<>();
+
     private DisplayStatusFragment homeFragment;
     private DisplayNotificationsFragment notificationsFragment;
 
@@ -126,7 +127,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
 
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -610,7 +610,6 @@ public class MainActivity extends AppCompatActivity
                     super.onBackPressed();
                 }
             }else {
-
                 viewPager.setVisibility(View.VISIBLE);
                 Helper.switchLayout(MainActivity.this);
                 main_app_container.setVisibility(View.GONE);
@@ -660,7 +659,7 @@ public class MainActivity extends AppCompatActivity
                         navigationView.getMenu().findItem(R.id.nav_local).setChecked(true);
                         break;
                     case 3:
-                       toolbarTitle.setText(R.string.global_menu);
+                        toolbarTitle.setText(R.string.global_menu);
                         navigationView.getMenu().findItem(R.id.nav_global).setChecked(true);
                         break;
                 }
@@ -952,6 +951,8 @@ public class MainActivity extends AppCompatActivity
 
 
 
+
+
     /**
      * Page Adapter for settings
      */
@@ -974,6 +975,7 @@ public class MainActivity extends AppCompatActivity
             //Selection comes from another menu, no action to do
             DisplayStatusFragment statusFragment;
             Bundle bundle = new Bundle();
+            toot.setVisibility(View.VISIBLE);
             switch (position) {
                 case 0:
                     homeFragment = new DisplayStatusFragment();
@@ -993,6 +995,7 @@ public class MainActivity extends AppCompatActivity
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
                     statusFragment.setArguments(bundle);
                     return statusFragment;
+
             }
             return null;
         }
