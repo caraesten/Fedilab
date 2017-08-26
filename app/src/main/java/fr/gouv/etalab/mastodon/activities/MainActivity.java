@@ -165,19 +165,23 @@ public class MainActivity extends AppCompatActivity
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconHome = (ImageView) tabHome.getCustomView().findViewById(R.id.tab_icon);
+        iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
         iconHome.setImageResource(R.drawable.ic_action_home_tl);
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconNotif = (ImageView) tabNotif.getCustomView().findViewById(R.id.tab_icon);
+        iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
         iconNotif.setImageResource(R.drawable.ic_notifications_tl);
 
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconLocal = (ImageView) tabLocal.getCustomView().findViewById(R.id.tab_icon);
+        iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
         iconLocal.setImageResource(R.drawable.ic_action_users_tl);
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconGlobal = (ImageView) tabPublic.getCustomView().findViewById(R.id.tab_icon);
+        iconGlobal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
         iconGlobal.setImageResource(R.drawable.ic_action_globe_tl);
 
         changeDrawableColor(getApplicationContext(), R.drawable.ic_action_home_tl,R.color.dark_text);
@@ -340,12 +344,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
-        for(int i = 0 ; i < 4 ; i++)
-            //noinspection ConstantConditions
-            if( tabLayout.getTabAt(i) != null && tabLayout.getTabAt(i).getIcon() != null)
-                //noinspection ConstantConditions
-                tabLayout.getTabAt(i).getIcon().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
 
         toolbar_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
