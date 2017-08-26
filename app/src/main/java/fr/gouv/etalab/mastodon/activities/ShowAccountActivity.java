@@ -444,19 +444,20 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
 
                 }});
+            if( Build.VERSION.SDK_INT >= 21) {
+                AppBarLayout appBar = (AppBarLayout) findViewById(R.id.appBar);
+                appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+                    @Override
+                    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                        if (verticalOffset > 10 ) {
+                            pp_actionBar.setVisibility(View.GONE);
+                        } else {
+                            pp_actionBar.setVisibility(View.VISIBLE);
+                        }
 
-            AppBarLayout appBar = (AppBarLayout) findViewById(R.id.appBar);
-            appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-                @Override
-                public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                    if(verticalOffset == 0){
-                        pp_actionBar.setVisibility(View.GONE);
-                    }else {
-                        pp_actionBar.setVisibility(View.VISIBLE);
                     }
-
-                }
-            });
+                });
+            }
         }else {
             if(  account != null && account.getAcct() != null)
                 setTitle(account.getAcct());
