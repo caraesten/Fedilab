@@ -613,6 +613,7 @@ public class MainActivity extends AppCompatActivity
                 main_app_container.setVisibility(View.GONE);
                 final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                 unCheckAllMenuItems(navigationView);
+                toot.setVisibility(View.VISIBLE);
                 //Manages theme for icon colors
                 SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
                 int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -972,7 +973,6 @@ public class MainActivity extends AppCompatActivity
             //Selection comes from another menu, no action to do
             DisplayStatusFragment statusFragment;
             Bundle bundle = new Bundle();
-            toot.setVisibility(View.VISIBLE);
             switch (position) {
                 case 0:
                     homeFragment = new DisplayStatusFragment();
