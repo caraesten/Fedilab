@@ -203,7 +203,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         List<Notification> notifications = apiResponse.getNotifications();
         max_id = apiResponse.getMax_id();
         if( refreshData ) {
-            manageNotifications(notifications, max_id);
+            manageNotifications(notifications, max_id, apiResponse.getSince_id());
             if( apiResponse.getSince_id() != null) {
                 editor.putString(Helper.LAST_MAX_ID_BUBBLE_NOTIF + userId, apiResponse.getSince_id());
                 editor.apply();
@@ -244,7 +244,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         }
     }
 
-    private void manageNotifications(List<Notification> notifications, String max_id){
+    private void manageNotifications(List<Notification> notifications, String max_id, String since_id){
         flag_loading = (max_id == null );
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( !swiped && firstLoad && (notifications == null || notifications.size() == 0))
@@ -271,9 +271,9 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
-            if( currentAccount != null && firstLoad){
+            if( currentAccount != null && firstLoad && since_id != null){
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + currentAccount.getId(), max_id);
+                editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + currentAccount.getId(), since_id);
                 editor.apply();
             }
         }

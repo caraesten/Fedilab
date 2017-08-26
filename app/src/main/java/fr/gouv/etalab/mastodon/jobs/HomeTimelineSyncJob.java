@@ -22,6 +22,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 
 import com.evernote.android.job.Job;
@@ -134,13 +135,19 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         final String max_id = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
+        if( max_id == null){
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, apiResponse.getSince_id());
+            editor.apply();
+            return;
+        }
         //No previous notifications in cache, so no notification will be sent
         String message;
 
         for(Status status: statuses){
             //The notification associated to max_id is discarded as it is supposed to have already been sent
             //Also, if the toot comes from the owner, we will avoid to warn him/her...
-            if( (max_id != null && status.getId().equals(max_id)) || (acct != null && status.getAccount().getAcct().trim().equals(acct.trim()) ))
+            if( (status.getId().equals(max_id)) || (acct != null && status.getAccount().getAcct().trim().equals(acct.trim()) ))
                 continue;
             String notificationUrl = status.getAccount().getAvatar();
 
@@ -154,10 +161,6 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
             intent.putExtra(PREF_KEY_ID, userId);
             long notif_id = Long.parseLong(userId);
             final int notificationId = ((notif_id + 2) > 2147483647) ? (int) (2147483647 - notif_id - 2) : (int) (notif_id + 2);
-
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, apiResponse.getMax_id());
-            editor.apply();
 
             if( notificationUrl != null){
                 ImageLoader imageLoaderNoty = ImageLoader.getInstance();
@@ -184,13 +187,11 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         super.onLoadingComplete(imageUri, view, loadedImage);
-                        if( max_id != null)
-                            notify_user(getContext(), intent, notificationId, loadedImage, finalTitle, finalMessage);
+                        notify_user(getContext(), intent, notificationId, loadedImage, finalTitle, finalMessage);
                     }
                     @Override
                     public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
-                        if( max_id != null)
-                            notify_user(getContext(), intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
+                        notify_user(getContext(), intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
                                     R.drawable.mastodonlogo), finalTitle, finalMessage);
                     }});
 

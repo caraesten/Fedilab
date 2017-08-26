@@ -22,6 +22,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 
 import com.evernote.android.job.Job;
@@ -145,6 +146,13 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
         boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
         boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
         final String max_id = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
+        if( max_id == null){
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, apiResponse.getSince_id());
+            editor.apply();
+            return;
+        }
+
         //No previous notifications in cache, so no notification will be sent
         int newFollows = 0;
         int newAdds = 0;
@@ -257,10 +265,6 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
             }
 
         }
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, apiResponse.getMax_id());
-        editor.apply();
-
     }
 
 }

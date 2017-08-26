@@ -285,7 +285,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
             if( refreshData ) {
                 max_id = apiResponse.getMax_id();
-                manageStatus(statuses, max_id);
+                manageStatus(statuses, max_id, apiResponse.getSince_id());
                 if( apiResponse.getSince_id() != null) {
                     editor.putString(Helper.LAST_MAX_ID_BUBBLE_HOME + userId,  apiResponse.getSince_id());
                     editor.apply();
@@ -329,14 +329,14 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
         }else {
             max_id = apiResponse.getMax_id();
-            manageStatus(statuses, max_id);
+            manageStatus(statuses, max_id, apiResponse.getSince_id());
         }
 
 
 
     }
 
-    private void manageStatus(List<Status> statuses, String max_id){
+    private void manageStatus(List<Status> statuses, String max_id, String since_id){
         flag_loading = (max_id == null );
         if( !swiped && firstLoad && (statuses == null || statuses.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
@@ -362,9 +362,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
-            if( currentAccount != null && firstLoad){
+            if( currentAccount != null && firstLoad && since_id != null){
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + currentAccount.getId(), max_id);
+                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + currentAccount.getId(), since_id);
                 editor.apply();
             }
         }
