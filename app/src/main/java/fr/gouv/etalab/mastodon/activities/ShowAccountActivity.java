@@ -15,7 +15,10 @@
 package fr.gouv.etalab.mastodon.activities;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -29,6 +32,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -37,6 +41,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -114,6 +119,9 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     private Relationship relationship;
     private boolean showMediaOnly;
     private ImageView pp_actionBar;
+    private BroadcastReceiver hide_header;
+    private boolean isHiddingShowing = false;
+    private LinearLayout main_header_container;
 
     public enum action{
         FOLLOW,
@@ -140,7 +148,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         Bundle b = getIntent().getExtras();
         account_follow = (FloatingActionButton) findViewById(R.id.account_follow);
         account_follow_request = (TextView) findViewById(R.id.account_follow_request);
-
+        main_header_container = (LinearLayout) findViewById(R.id.main_header_container);
         account_follow.setEnabled(false);
         if(b != null){
             accountId = b.getString("accountId");
@@ -253,6 +261,43 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 }
             }
         });
+        
+        if( Build.VERSION.SDK_INT < 21) {
+            //Register LocalBroadcast to receive selected accounts after search
+            hide_header = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    if (!isHiddingShowing) {
+                        isHiddingShowing = true;
+                        ImageView account_pp = (ImageView) findViewById(R.id.account_pp);
+                        boolean hide = intent.getBooleanExtra("hide", false);
+                        if (hide) {
+                            main_header_container.setVisibility(View.GONE);
+                            if (pp_actionBar != null)
+                                pp_actionBar.setVisibility(View.VISIBLE);
+                            tabLayout.setVisibility(View.GONE);
+                        } else {
+                            manageButtonVisibility();
+                            tabLayout.setVisibility(View.VISIBLE);
+                            main_header_container.setVisibility(View.VISIBLE);
+                            if (pp_actionBar != null)
+                                pp_actionBar.setVisibility(View.GONE);
+                        }
+                        account_pp.requestLayout();
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                isHiddingShowing = false;
+                            }
+                        }, 700);
+                    }
+
+                }
+            };
+
+            LocalBroadcastManager.getInstance(this).registerReceiver(hide_header, new IntentFilter(Helper.HEADER_ACCOUNT + String.valueOf(instanceValue)));
+        }
     }
 
 
@@ -297,6 +342,12 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(hide_header);
     }
 
     @Override
@@ -393,19 +444,20 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
 
                 }});
+            if( Build.VERSION.SDK_INT >= 21) {
+                AppBarLayout appBar = (AppBarLayout) findViewById(R.id.appBar);
+                appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+                    @Override
+                    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                        if (verticalOffset > 10 ) {
+                            pp_actionBar.setVisibility(View.GONE);
+                        } else {
+                            pp_actionBar.setVisibility(View.VISIBLE);
+                        }
 
-            AppBarLayout appBar = (AppBarLayout) findViewById(R.id.appBar);
-            appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-                @Override
-                public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                    if(verticalOffset == 0){
-                        pp_actionBar.setVisibility(View.GONE);
-                    }else {
-                        pp_actionBar.setVisibility(View.VISIBLE);
                     }
-
-                }
-            });
+                });
+            }
         }else {
             if(  account != null && account.getAcct() != null)
                 setTitle(account.getAcct());

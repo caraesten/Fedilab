@@ -17,9 +17,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -62,6 +64,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
     private boolean swiped;
     private ListView lv_accounts;
     private String instanceValue;
+    boolean hideHeader;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,7 +73,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
 
         context = getContext();
         boolean comesFromSearch = false;
-        boolean hideHeader = false;
+        hideHeader = false;
         Bundle bundle = this.getArguments();
         accounts = new ArrayList<>();
         if (bundle != null) {
@@ -107,33 +110,48 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
 
         if( !comesFromSearch) {
             //Hide account header when scrolling for ShowAccountActivity
-            if (hideHeader) {
-                ViewCompat.setNestedScrollingEnabled(lv_accounts,true);
-            }else{
-                lv_accounts.setOnScrollListener(new AbsListView.OnScrollListener() {
-                    @Override
-                    public void onScrollStateChanged(AbsListView view, int scrollState) {
+            if (hideHeader && Build.VERSION.SDK_INT >= 21)
+                ViewCompat.setNestedScrollingEnabled(lv_accounts, true);
+            lv_accounts.setOnScrollListener(new AbsListView.OnScrollListener() {
+                int lastFirstVisibleItem = 0;
+                @Override
+                public void onScrollStateChanged(AbsListView view, int scrollState) {
 
-                    }
-
-                    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-                        if (firstVisibleItem + visibleItemCount == totalItemCount) {
-                            if (!flag_loading) {
-                                flag_loading = true;
-                                if (type != RetrieveAccountsAsyncTask.Type.FOLLOWERS && type != RetrieveAccountsAsyncTask.Type.FOLLOWING)
-                                    asyncTask = new RetrieveAccountsAsyncTask(context, type, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                else
-                                    asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                nextElementLoader.setVisibility(View.VISIBLE);
+                }
+                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                    if (hideHeader && Build.VERSION.SDK_INT < 21) {
+                        if(firstVisibleItem == 0 && Helper.listIsAtTop(lv_accounts)){
+                            Intent intent = new Intent(Helper.HEADER_ACCOUNT+instanceValue);
+                            intent.putExtra("hide", false);
+                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                        }else if (view.getId() == lv_accounts.getId() && totalItemCount > visibleItemCount) {
+                            final int currentFirstVisibleItem = lv_accounts.getFirstVisiblePosition();
+                            if (currentFirstVisibleItem > lastFirstVisibleItem) {
+                                Intent intent = new Intent(Helper.HEADER_ACCOUNT + instanceValue);
+                                intent.putExtra("hide", true);
+                                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                            } else if (currentFirstVisibleItem < lastFirstVisibleItem) {
+                                Intent intent = new Intent(Helper.HEADER_ACCOUNT + instanceValue);
+                                intent.putExtra("hide", false);
+                                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                             }
-                        } else {
-                            nextElementLoader.setVisibility(View.GONE);
+                            lastFirstVisibleItem = currentFirstVisibleItem;
                         }
                     }
-                });
-            }
-
+                    if (firstVisibleItem + visibleItemCount == totalItemCount) {
+                        if (!flag_loading) {
+                            flag_loading = true;
+                            if (type != RetrieveAccountsAsyncTask.Type.FOLLOWERS && type != RetrieveAccountsAsyncTask.Type.FOLLOWING)
+                                asyncTask = new RetrieveAccountsAsyncTask(context, type, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            else
+                                asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            nextElementLoader.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+                        nextElementLoader.setVisibility(View.GONE);
+                    }
+                }
+            });
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
