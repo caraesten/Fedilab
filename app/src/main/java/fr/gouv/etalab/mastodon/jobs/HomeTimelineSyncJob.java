@@ -143,7 +143,9 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
         }
         //No previous notifications in cache, so no notification will be sent
         String message;
-
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, apiResponse.getSince_id());
+        editor.apply();
         for(Status status: statuses){
             //The notification associated to max_id is discarded as it is supposed to have already been sent
             //Also, if the toot comes from the owner, we will avoid to warn him/her...

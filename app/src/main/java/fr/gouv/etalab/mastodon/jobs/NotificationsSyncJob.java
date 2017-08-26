@@ -219,6 +219,9 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                 default:
             }
         }
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, apiResponse.getSince_id());
+        editor.apply();
         int allNotifCount = newFollows + newAdds + newAsks + newMentions + newShare;
         if( allNotifCount > 0){
             //Some others notification
