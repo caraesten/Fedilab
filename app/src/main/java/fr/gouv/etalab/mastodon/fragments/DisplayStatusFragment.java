@@ -14,12 +14,15 @@ package fr.gouv.etalab.mastodon.fragments;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -76,6 +79,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private TextView new_data;
     private int positionSpinnerTrans;
     private String since_id;
+    private boolean hideHeader;
+    private String instanceValue;
 
     public DisplayStatusFragment(){
         displayStatusFragment = this;
@@ -89,12 +94,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         context = getContext();
         Bundle bundle = this.getArguments();
         boolean comesFromSearch = false;
-        boolean hideHeader = false;
+        hideHeader = false;
         showMediaOnly = false;
         if (bundle != null) {
             type = (RetrieveFeedsAsyncTask.Type) bundle.get("type");
             targetedId = bundle.getString("targetedId", null);
             tag = bundle.getString("tag", null);
+            instanceValue = bundle.getString("hideHeaderValue", null);
             hideHeader = bundle.getBoolean("hideHeader", false);
             showMediaOnly = bundle.getBoolean("showMediaOnly",false);
             if( bundle.containsKey("statuses")){
@@ -129,33 +135,53 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         if( !comesFromSearch){
 
             //Hide account header when scrolling for ShowAccountActivity
-            if(hideHeader) {
-                ViewCompat.setNestedScrollingEnabled(lv_status,true);
-            }else{
-                lv_status.setOnScrollListener(new AbsListView.OnScrollListener() {
-                    @Override
-                    public void onScrollStateChanged(AbsListView view, int scrollState) {
+            if (hideHeader && Build.VERSION.SDK_INT >= 21)
+                ViewCompat.setNestedScrollingEnabled(lv_status, true);
 
-                    }
-                    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                        if(firstVisibleItem + visibleItemCount == totalItemCount ) {
-                            if(!flag_loading ) {
-                                flag_loading = true;
-                                if( type == RetrieveFeedsAsyncTask.Type.USER)
-                                    asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                else if( type == RetrieveFeedsAsyncTask.Type.TAG)
-                                    asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                else
-                                    asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            lv_status.setOnScrollListener(new AbsListView.OnScrollListener() {
+                int lastFirstVisibleItem = 0;
+                @Override
+                public void onScrollStateChanged(AbsListView view, int scrollState) {
 
-                                nextElementLoader.setVisibility(View.VISIBLE);
+                }
+                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                    if (hideHeader && Build.VERSION.SDK_INT < 21) {
+                        if(firstVisibleItem == 0 && Helper.listIsAtTop(lv_status)){
+                            Intent intent = new Intent(Helper.HEADER_ACCOUNT+instanceValue);
+                            intent.putExtra("hide", false);
+                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                        }else if (view.getId() == lv_status.getId() && totalItemCount > visibleItemCount) {
+                            final int currentFirstVisibleItem = lv_status.getFirstVisiblePosition();
+                            if (currentFirstVisibleItem > lastFirstVisibleItem) {
+                                Intent intent = new Intent(Helper.HEADER_ACCOUNT + instanceValue);
+                                intent.putExtra("hide", true);
+                                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                            } else if (currentFirstVisibleItem < lastFirstVisibleItem) {
+                                Intent intent = new Intent(Helper.HEADER_ACCOUNT + instanceValue);
+                                intent.putExtra("hide", false);
+                                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                             }
-                        } else {
-                            nextElementLoader.setVisibility(View.GONE);
+                            lastFirstVisibleItem = currentFirstVisibleItem;
                         }
                     }
-                });
-            }
+                    if(firstVisibleItem + visibleItemCount == totalItemCount ) {
+                        if(!flag_loading ) {
+                            flag_loading = true;
+                            if( type == RetrieveFeedsAsyncTask.Type.USER)
+                                asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            else if( type == RetrieveFeedsAsyncTask.Type.TAG)
+                                asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            else
+                                asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+                            nextElementLoader.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+                        nextElementLoader.setVisibility(View.GONE);
+                    }
+                }
+            });
+
 
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
