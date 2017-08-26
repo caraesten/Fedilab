@@ -53,6 +53,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.security.ProviderInstaller;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -100,7 +102,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface {
+        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, ProviderInstaller.ProviderInstallListener {
 
     private FloatingActionButton toot;
     private HashMap<String, String> tagTile = new HashMap<>();
@@ -119,7 +121,7 @@ public class MainActivity extends AppCompatActivity
 
     private DisplayStatusFragment homeFragment;
     private DisplayNotificationsFragment notificationsFragment;
-
+    private static final int ERROR_DIALOG_REQUEST_CODE = 97;
 
     public MainActivity() {
     }
@@ -127,7 +129,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        ProviderInstaller.installIfNeededAsync(this, this);
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
@@ -613,8 +616,9 @@ public class MainActivity extends AppCompatActivity
                 main_app_container.setVisibility(View.GONE);
                 final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                 unCheckAllMenuItems(navigationView);
+                toot.setVisibility(View.VISIBLE);
                 //Manages theme for icon colors
-                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
                 if( theme == Helper.THEME_DARK){
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_reply,R.color.dark_text);
@@ -948,6 +952,51 @@ public class MainActivity extends AppCompatActivity
 
 
 
+    @Override
+    public void onProviderInstalled() {
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ERROR_DIALOG_REQUEST_CODE) {
+            // Adding a fragment via GooglePlayServicesUtil.showErrorDialogFragment
+            // before the instance state is restored throws an error. So instead,
+            // set a flag here, which will cause the fragment to delay until
+            // onPostResume.
+        }
+    }
+
+
+    @Override
+    public void onProviderInstallFailed(int errorCode, Intent recoveryIntent) {
+        if (GooglePlayServicesUtil.isUserRecoverableError(errorCode)) {
+            // Recoverable error. Show a dialog prompting the user to
+            // install/update/enable Google Play services.
+            GooglePlayServicesUtil.showErrorDialogFragment(
+                    errorCode,
+                    this,
+                    ERROR_DIALOG_REQUEST_CODE,
+                    new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            // The user chose not to take the recovery action
+                            onProviderInstallerNotAvailable();
+                        }
+                    });
+        } else {
+            // Google Play services is not available.
+            onProviderInstallerNotAvailable();
+        }
+    }
+    private void onProviderInstallerNotAvailable() {
+        // This is reached if the provider cannot be updated for some reason.
+        // App should consider all HTTP communication to be vulnerable, and take
+        // appropriate action.
+    }
+
 
 
     /**
@@ -972,7 +1021,6 @@ public class MainActivity extends AppCompatActivity
             //Selection comes from another menu, no action to do
             DisplayStatusFragment statusFragment;
             Bundle bundle = new Bundle();
-            toot.setVisibility(View.VISIBLE);
             switch (position) {
                 case 0:
                     homeFragment = new DisplayStatusFragment();
@@ -1004,7 +1052,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void refreshData(){
-        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
