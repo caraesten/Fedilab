@@ -16,6 +16,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    productFlavors {
+        free {
+        }
+        proprietary {
+        }
+    }
 }
 allprojects {
     repositories {
@@ -34,4 +41,5 @@ dependencies {
     compile 'com.github.chrisbanes:PhotoView:2.0.0'
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'org.jsoup:jsoup:1.10.3'
+    proprietaryCompile 'com.google.android.gms:play-services-safetynet:11.0.4'
 }
