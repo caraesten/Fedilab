@@ -135,7 +135,6 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
 
     @Override
     public void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId, boolean refreshData) {
-
         List<Notification> notifications = apiResponse.getNotifications();
         if( apiResponse.getError() != null || notifications == null || notifications.size() == 0)
             return;

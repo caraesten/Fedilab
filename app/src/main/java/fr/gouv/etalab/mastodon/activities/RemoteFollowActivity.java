@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.activities;
 
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -117,7 +118,7 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
         ActionBar actionBar = getSupportActionBar();
         if( actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(android.content.Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.conversation_action_bar, null);
+            @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.conversation_action_bar, null);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             TextView title = (TextView) actionBar.getCustomView().findViewById(R.id.toolbar_title);

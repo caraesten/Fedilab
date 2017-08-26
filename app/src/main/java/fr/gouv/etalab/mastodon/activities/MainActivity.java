@@ -35,7 +35,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -46,7 +45,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -92,7 +90,6 @@ import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
-import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeUser;
 import static fr.gouv.etalab.mastodon.helper.Helper.loadPPInActionBar;
@@ -345,7 +342,9 @@ public class MainActivity extends AppCompatActivity
 
 
         for(int i = 0 ; i < 4 ; i++)
+            //noinspection ConstantConditions
             if( tabLayout.getTabAt(i) != null && tabLayout.getTabAt(i).getIcon() != null)
+                //noinspection ConstantConditions
                 tabLayout.getTabAt(i).getIcon().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
 
         toolbar_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -460,7 +459,7 @@ public class MainActivity extends AppCompatActivity
         if(!popupShown){
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MainActivity.this);
             LayoutInflater inflater = getLayoutInflater();
-            View dialogView = inflater.inflate(R.layout.popup_quick_settings, null);
+            @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.popup_quick_settings, null);
             dialogBuilder.setView(dialogView);
 
             final SwitchCompat set_push_hometimeline = (SwitchCompat) dialogView.findViewById(R.id.set_push_hometimeline);
@@ -524,7 +523,9 @@ public class MainActivity extends AppCompatActivity
             if (extras.getInt(INTENT_ACTION) == NOTIFICATION_INTENT){
                 changeUser(MainActivity.this, userIdIntent, false); //Connects the account which is related to the notification
                 unCheckAllMenuItems(navigationView);
-                tabLayout.getTabAt(1).select();
+                if( tabLayout.getTabAt(1) != null)
+                    //noinspection ConstantConditions
+                    tabLayout.getTabAt(1).select();
                 matchingIntent = true;
             }else if( extras.getInt(INTENT_ACTION) == HOME_TIMELINE_INTENT){
                 changeUser(MainActivity.this, userIdIntent, true); //Connects the account which is related to the notification
@@ -556,7 +557,7 @@ public class MainActivity extends AppCompatActivity
 
             } else if (type.startsWith("image/")) {
 
-                Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+                Uri imageUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
 
                 if (imageUri != null) {
 
@@ -741,7 +742,7 @@ public class MainActivity extends AppCompatActivity
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle(R.string.text_size);
 
-            View popup_quick_settings = getLayoutInflater().inflate( R.layout.popup_text_size, null );
+            @SuppressLint("InflateParams") View popup_quick_settings = getLayoutInflater().inflate( R.layout.popup_text_size, null );
             builder.setView(popup_quick_settings);
 
             SeekBar set_text_size = (SeekBar) popup_quick_settings.findViewById(R.id.set_text_size);
@@ -1038,7 +1039,10 @@ public class MainActivity extends AppCompatActivity
     public void updateHomeCounter(int newHomeCount){
         if( tabLayout.getTabAt(0) == null )
             return;
+        //noinspection ConstantConditions
         View tabHome = tabLayout.getTabAt(0).getCustomView();
+        if( tabHome == null)
+            return;
         TextView tabCounterHome = (TextView) tabHome.findViewById(R.id.tab_counter);
         tabCounterHome.setText(String.valueOf(newHomeCount));
         if( newHomeCount > 0){
@@ -1056,7 +1060,10 @@ public class MainActivity extends AppCompatActivity
     public void updateNotifCounter(int newNotifCount){
         if(tabLayout.getTabAt(1) == null)
             return;
+        //noinspection ConstantConditions
         View tabNotif = tabLayout.getTabAt(1).getCustomView();
+        if( tabNotif == null)
+            return;
         TextView tabCounterNotif = (TextView) tabNotif.findViewById(R.id.tab_counter);
         tabCounterNotif.setText(String.valueOf(newNotifCount));
         if( newNotifCount > 0){

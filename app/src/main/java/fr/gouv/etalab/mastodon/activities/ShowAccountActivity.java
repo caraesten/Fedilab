@@ -14,6 +14,7 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -287,7 +288,9 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                     item.setIcon(R.drawable.ic_clear_all);
                 else
                     item.setIcon(R.drawable.ic_perm_media);
-                tabLayout.getTabAt(0).select();
+                if( tabLayout.getTabAt(0) != null)
+                    //noinspection ConstantConditions
+                    tabLayout.getTabAt(0).select();
                 PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
                 mPager.setAdapter(mPagerAdapter);
                 return true;
@@ -364,7 +367,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         final ActionBar actionBar = getSupportActionBar();
         LayoutInflater mInflater = LayoutInflater.from(ShowAccountActivity.this);
         if( actionBar != null && account != null){
-            View show_account_actionbar = mInflater.inflate(R.layout.showaccount_actionbar, null);
+            @SuppressLint("InflateParams") View show_account_actionbar = mInflater.inflate(R.layout.showaccount_actionbar, null);
             TextView actionbar_title = (TextView) show_account_actionbar.findViewById(R.id.show_account_title);
             if( account.getAcct() != null)
                 actionbar_title.setText(account.getAcct());
@@ -413,9 +416,14 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
             SpannableString spannableString = Helper.clickableElementsDescription(ShowAccountActivity.this, account.getNote());
             account_note.setText(spannableString, TextView.BufferType.SPANNABLE);
             account_note.setMovementMethod(LinkMovementMethod.getInstance());
-            tabLayout.getTabAt(0).setText(getString(R.string.status_cnt, account.getStatuses_count()));
-            tabLayout.getTabAt(1).setText(getString(R.string.following_cnt, account.getFollowing_count()));
-            tabLayout.getTabAt(2).setText(getString(R.string.followers_cnt, account.getFollowers_count()));
+            if (tabLayout.getTabAt(0) != null && tabLayout.getTabAt(1) != null && tabLayout.getTabAt(2) != null) {
+                //noinspection ConstantConditions
+                tabLayout.getTabAt(0).setText(getString(R.string.status_cnt, account.getStatuses_count()));
+                //noinspection ConstantConditions
+                tabLayout.getTabAt(1).setText(getString(R.string.following_cnt, account.getFollowing_count()));
+                //noinspection ConstantConditions
+                tabLayout.getTabAt(2).setText(getString(R.string.followers_cnt, account.getFollowers_count()));
+            }
             imageLoader.displayImage(account.getAvatar(), account_pp, options);
         }
     }

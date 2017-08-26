@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.activities;
 
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -337,7 +338,7 @@ public class MediaActivity extends AppCompatActivity  {
                             @Override
                             public void onProgress(long bytesWritten, long totalSize) {
                                 long progressPercentage = (long)100*bytesWritten/totalSize;
-                                progress.setText(String.valueOf(progressPercentage) + " %");
+                                progress.setText(String.format("%s%%",String.valueOf(progressPercentage)));
                             }
 
                             @Override
@@ -346,6 +347,7 @@ public class MediaActivity extends AppCompatActivity  {
                                 File from = new File(dir, response.getName());
                                 File to = new File(dir, Helper.md5(url) + ".mp4");
                                 if (from.exists())
+                                    //noinspection ResultOfMethodCallIgnored
                                     from.renameTo(to);
                                 fileVideo = to;
                                 downloadedImage = null;
@@ -382,7 +384,7 @@ public class MediaActivity extends AppCompatActivity  {
         LayoutInflater mInflater = LayoutInflater.from(MediaActivity.this);
         ActionBar actionBar = getSupportActionBar();
         if( actionBar != null){
-            View picture_actionbar = mInflater.inflate(R.layout.picture_actionbar, null);
+            @SuppressLint("InflateParams") View picture_actionbar = mInflater.inflate(R.layout.picture_actionbar, null);
             TextView picture_actionbar_title = (TextView) picture_actionbar.findViewById(R.id.picture_actionbar);
             picture_actionbar_title.setText(filename);
             actionBar.setCustomView(picture_actionbar);

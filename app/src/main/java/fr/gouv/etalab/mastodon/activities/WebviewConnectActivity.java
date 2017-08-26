@@ -56,7 +56,6 @@ public class WebviewConnectActivity extends AppCompatActivity {
     private AlertDialog alert;
     private String clientId, clientSecret;
     private String instance;
-    private int retry;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +72,6 @@ public class WebviewConnectActivity extends AppCompatActivity {
             instance = b.getString("instance");
         if( instance == null)
             finish();
-        retry = 0;
         clientId = sharedpreferences.getString(Helper.CLIENT_ID, null);
         clientSecret = sharedpreferences.getString(Helper.CLIENT_SECRET, null);
 
