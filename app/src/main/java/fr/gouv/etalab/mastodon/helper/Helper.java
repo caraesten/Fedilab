@@ -604,12 +604,11 @@ public class Helper {
                 Could as angryTux suggested add some sort of option for user to choose the colour,
                 but not really sure that wouldn't just add another extra setting for no real reason.
              */
-            notificationBuilder.setLights(Color.BLUE, 500, 1000);
         }else {
             String soundUri = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() +"/";
-
             notificationBuilder.setSound(Uri.parse(soundUri + R.raw.boop));
         }
+        notificationBuilder.setLights(Color.BLUE, 500, 1000);
         notificationBuilder.setContentTitle(title);
         notificationBuilder.setLargeIcon(icon);
         notificationManager.notify(notificationId, notificationBuilder.build());
