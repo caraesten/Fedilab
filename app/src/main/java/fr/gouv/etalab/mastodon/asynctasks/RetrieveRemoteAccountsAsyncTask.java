@@ -59,7 +59,7 @@ public class RetrieveRemoteAccountsAsyncTask extends AsyncTask<Void, Void, Void>
             islocked = nameElement.get(0).getElementsByClass("fa-lock") != null;
 
             Elements bioElement = document.getElementsByClass("bio");
-            bio = bioElement.get(0).html();;
+            bio = bioElement.get(0).html();
             Elements countElement = document.getElementsByClass("counter-number");
             statusCount = Integer.parseInt(countElement.get(0).html());
             followingCount = Integer.parseInt(countElement.get(1).html());

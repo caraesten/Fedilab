@@ -37,6 +37,7 @@ public class ApplicationJob implements JobCreator {
         }
     }
 
+    @SuppressWarnings("unused")
     public static void cancelAllJob(String TAG){
         JobManager.instance().cancelAllForTag(TAG);
     }
