@@ -7,13 +7,20 @@ android {
         applicationId "fr.gouv.etalab.mastodon"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 47
-        versionName "1.4.7"
+        versionCode 48
+        versionName "1.4.8"
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    productFlavors {
+        fdroid {
+        }
+        safetynet {
         }
     }
 }
@@ -34,4 +41,5 @@ dependencies {
     compile 'com.github.chrisbanes:PhotoView:2.0.0'
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'org.jsoup:jsoup:1.10.3'
+    safetynetCompile 'com.google.android.gms:play-services-safetynet:11.0.4'
 }

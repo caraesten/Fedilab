@@ -319,7 +319,4 @@ public class LoginActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-
-
 }

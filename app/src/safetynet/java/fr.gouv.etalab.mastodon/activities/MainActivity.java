@@ -53,6 +53,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.security.ProviderInstaller;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -100,7 +102,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface {
+        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, ProviderInstaller.ProviderInstallListener {
 
     private FloatingActionButton toot;
     private HashMap<String, String> tagTile = new HashMap<>();
@@ -116,9 +118,10 @@ public class MainActivity extends AppCompatActivity
     private ViewPager viewPager;
     private RelativeLayout main_app_container;
     private Stack<Integer> stackBack = new Stack<>();
+
     private DisplayStatusFragment homeFragment;
     private DisplayNotificationsFragment notificationsFragment;
-
+    private static final int ERROR_DIALOG_REQUEST_CODE = 97;
 
     public MainActivity() {
     }
@@ -126,8 +129,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        ProviderInstaller.installIfNeededAsync(this, this);
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
@@ -165,19 +168,23 @@ public class MainActivity extends AppCompatActivity
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconHome = (ImageView) tabHome.getCustomView().findViewById(R.id.tab_icon);
+        iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
         iconHome.setImageResource(R.drawable.ic_action_home_tl);
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconNotif = (ImageView) tabNotif.getCustomView().findViewById(R.id.tab_icon);
+        iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
         iconNotif.setImageResource(R.drawable.ic_notifications_tl);
 
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconLocal = (ImageView) tabLocal.getCustomView().findViewById(R.id.tab_icon);
+        iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
         iconLocal.setImageResource(R.drawable.ic_action_users_tl);
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconGlobal = (ImageView) tabPublic.getCustomView().findViewById(R.id.tab_icon);
+        iconGlobal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
         iconGlobal.setImageResource(R.drawable.ic_action_globe_tl);
 
         changeDrawableColor(getApplicationContext(), R.drawable.ic_action_home_tl,R.color.dark_text);
@@ -340,12 +347,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
-        for(int i = 0 ; i < 4 ; i++)
-            //noinspection ConstantConditions
-            if( tabLayout.getTabAt(i) != null && tabLayout.getTabAt(i).getIcon() != null)
-                //noinspection ConstantConditions
-                tabLayout.getTabAt(i).getIcon().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
 
         toolbar_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -610,7 +611,6 @@ public class MainActivity extends AppCompatActivity
                     super.onBackPressed();
                 }
             }else {
-
                 viewPager.setVisibility(View.VISIBLE);
                 Helper.switchLayout(MainActivity.this);
                 main_app_container.setVisibility(View.GONE);
@@ -618,7 +618,7 @@ public class MainActivity extends AppCompatActivity
                 unCheckAllMenuItems(navigationView);
                 toot.setVisibility(View.VISIBLE);
                 //Manages theme for icon colors
-                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
                 if( theme == Helper.THEME_DARK){
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_reply,R.color.dark_text);
@@ -660,7 +660,7 @@ public class MainActivity extends AppCompatActivity
                         navigationView.getMenu().findItem(R.id.nav_local).setChecked(true);
                         break;
                     case 3:
-                       toolbarTitle.setText(R.string.global_menu);
+                        toolbarTitle.setText(R.string.global_menu);
                         navigationView.getMenu().findItem(R.id.nav_global).setChecked(true);
                         break;
                 }
@@ -952,6 +952,53 @@ public class MainActivity extends AppCompatActivity
 
 
 
+    @Override
+    public void onProviderInstalled() {
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ERROR_DIALOG_REQUEST_CODE) {
+            // Adding a fragment via GooglePlayServicesUtil.showErrorDialogFragment
+            // before the instance state is restored throws an error. So instead,
+            // set a flag here, which will cause the fragment to delay until
+            // onPostResume.
+        }
+    }
+
+
+    @Override
+    public void onProviderInstallFailed(int errorCode, Intent recoveryIntent) {
+        if (GooglePlayServicesUtil.isUserRecoverableError(errorCode)) {
+            // Recoverable error. Show a dialog prompting the user to
+            // install/update/enable Google Play services.
+            GooglePlayServicesUtil.showErrorDialogFragment(
+                    errorCode,
+                    this,
+                    ERROR_DIALOG_REQUEST_CODE,
+                    new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            // The user chose not to take the recovery action
+                            onProviderInstallerNotAvailable();
+                        }
+                    });
+        } else {
+            // Google Play services is not available.
+            onProviderInstallerNotAvailable();
+        }
+    }
+    private void onProviderInstallerNotAvailable() {
+        // This is reached if the provider cannot be updated for some reason.
+        // App should consider all HTTP communication to be vulnerable, and take
+        // appropriate action.
+    }
+
+
+
     /**
      * Page Adapter for settings
      */
@@ -993,6 +1040,7 @@ public class MainActivity extends AppCompatActivity
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
                     statusFragment.setArguments(bundle);
                     return statusFragment;
+
             }
             return null;
         }
@@ -1004,7 +1052,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void refreshData(){
-        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
