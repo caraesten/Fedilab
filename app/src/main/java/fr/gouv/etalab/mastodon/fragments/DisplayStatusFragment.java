@@ -327,7 +327,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
                 manageStatus(statuses, max_id, since_id);
                 //The current tab is displayed, so user is supposed to have seen status
-                if( since_id != null && displayStatusFragment.getUserVisibleHint()) {
+                if( since_id != null && displayStatusFragment.getUserVisibleHint() && firstLoad) {
                     editor.putString(Helper.LAST_MAX_ID_BUBBLE_HOME + userId,  since_id);
                     editor.apply();
                 }else if(!displayStatusFragment.getUserVisibleHint()){

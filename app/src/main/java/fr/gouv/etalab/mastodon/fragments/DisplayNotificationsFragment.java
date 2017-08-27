@@ -215,7 +215,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         if( refreshData ) {
             manageNotifications(notifications, max_id, since_id);
             //The current tab is displayed, so user is supposed to have seen the notifications
-            if( since_id != null && displayNotificationsFragment.getUserVisibleHint()) {
+            if( since_id != null && displayNotificationsFragment.getUserVisibleHint() && firstLoad) {
                 editor.putString(Helper.LAST_MAX_ID_BUBBLE_NOTIF + userId, since_id);
                 editor.apply();
             }else if(!displayNotificationsFragment.getUserVisibleHint()){
