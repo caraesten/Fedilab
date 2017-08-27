@@ -88,7 +88,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
     private NotificationsListAdapter notificationsListAdapter;
     private int behaviorWithAttachments;
     private boolean isOnWifi;
-    private String targetedId;
+
 
     public NotificationsListAdapter(Context context, boolean isOnWifi, int behaviorWithAttachments, List<Notification> notifications){
         this.context = context;
@@ -170,6 +170,8 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
         final float scale = context.getResources().getDisplayMetrics().density;
         String type = notification.getType();
         String typeString = "";
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        Drawable imgH = null;
         switch (type){
             case "mention":
                 holder.status_action_container.setVisibility(View.VISIBLE);
@@ -177,6 +179,12 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                     typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_mention));
                 else
                     typeString = String.format("@%s %s", notification.getAccount().getAcct(),context.getString(R.string.notif_mention));
+                if( theme == Helper.THEME_DARK){
+                    holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_1));
+                }else {
+                    holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_1));
+                }
+                imgH = null;
                 break;
             case "reblog":
                 holder.status_action_container.setVisibility(View.GONE);
@@ -184,6 +192,12 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                     typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_reblog));
                 else
                     typeString = String.format("@%s %s", notification.getAccount().getAcct(),context.getString(R.string.notif_reblog));
+                if( theme == Helper.THEME_DARK){
+                    holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_2));
+                }else {
+                    holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_2));
+                }
+                imgH = ContextCompat.getDrawable(context, R.drawable.ic_retweet_notif_header);
                 break;
             case "favourite":
                 holder.status_action_container.setVisibility(View.GONE);
@@ -191,6 +205,12 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                     typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_favourite));
                 else
                     typeString = String.format("@%s %s", notification.getAccount().getAcct(),context.getString(R.string.notif_favourite));
+                if( theme == Helper.THEME_DARK){
+                    holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_3));
+                }else {
+                    holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_3));
+                }
+                imgH = ContextCompat.getDrawable(context, R.drawable.ic_fav_notif_header);
                 break;
             case "follow":
                 holder.status_action_container.setVisibility(View.GONE);
@@ -198,10 +218,24 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                     typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_follow));
                 else
                     typeString = String.format("@%s %s", notification.getAccount().getAcct(),context.getString(R.string.notif_follow));
+                if( theme == Helper.THEME_DARK){
+                    holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_4));
+                }else {
+                    holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_4));
+                }
+                imgH = ContextCompat.getDrawable(context, R.drawable.ic_follow_notif_header);
                 break;
         }
-
+        changeDrawableColor(context, R.drawable.ic_retweet_notif_header,R.color.mastodonC4);
+        changeDrawableColor(context, R.drawable.ic_fav_notif_header,R.color.mastodonC4);
+        changeDrawableColor(context, R.drawable.ic_follow_notif_header,R.color.mastodonC4);
         holder.notification_type.setText(typeString);
+        if( imgH != null) {
+            holder.notification_type.setCompoundDrawablePadding((int)Helper.convertDpToPixel(5, context));
+            imgH.setBounds(0, 0, (int) (20 * iconSizePercent / 100 * scale + 0.5f), (int) (20 * iconSizePercent / 100 * scale + 0.5f));
+        }
+        holder.notification_type.setCompoundDrawables( imgH, null, null, null);
+
         holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
         holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
         holder.status_reply.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
@@ -214,7 +248,6 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
 
 
         //Manages theme for icon colors
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_DARK){
             changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_action_more,R.color.dark_text);
@@ -522,7 +555,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
      */
     private void displayConfirmationNotificationDialog(final Notification notification){
         final ArrayList seletedItems = new ArrayList();
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
         AlertDialog dialog = new AlertDialog.Builder(context)
                 .setTitle(R.string.delete_notification_ask)
                 .setMultiChoiceItems(new String[]{context.getString(R.string.delete_notification_ask_all)}, null, new DialogInterface.OnMultiChoiceClickListener() {

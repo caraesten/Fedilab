@@ -35,7 +35,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/main_container"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            card_view:ignore="DisableBaselineAlignment">
             <LinearLayout
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
