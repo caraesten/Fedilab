@@ -43,72 +43,41 @@
                 android:theme="@style/AppThemeDark_NoActionBar"
                 app:popupTheme="?attr/popupOverlay">
                 <LinearLayout
+                    android:id="@+id/toolbar_search_container"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:id="@+id/toolbar_search_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:orientation="horizontal">
-                        <ImageView
-                            android:id="@+id/pp_actionBar"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center_vertical"
-                            android:gravity="center_vertical"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginRight="10dp"
-                            tools:ignore="ContentDescription" />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_gravity="center_vertical"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:id="@+id/toolbar_title" />
-                        <android.support.v7.widget.SearchView
-                            android:background="@null"
-                            android:id="@+id/toolbar_search"
-                            android:gravity="end"
-                            android:layout_gravity="center_vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-                    <android.support.design.widget.TabLayout
-                        android:id="@+id/tabLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="25dp"
-                        app:tabSelectedTextColor="?attr/colorAccent"
-                        >
-                        <android.support.design.widget.TabItem
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/tab_home"
-                            android:icon="@drawable/ic_action_home_tl"/>
-
-                        <android.support.design.widget.TabItem
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/tab_notification"
-                            android:icon="@drawable/ic_notifications_tl"/>
-
-                        <android.support.design.widget.TabItem
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/tab_local"
-                            android:icon="@drawable/ic_action_users_tl"/>
-
-                        <android.support.design.widget.TabItem
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/tab_global"
-                            android:icon="@drawable/ic_action_globe_tl"/>
-
-                    </android.support.design.widget.TabLayout>
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/pp_actionBar"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        tools:ignore="ContentDescription" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:id="@+id/toolbar_title" />
+                    <android.support.v7.widget.SearchView
+                        android:background="@null"
+                        android:id="@+id/toolbar_search"
+                        android:gravity="end"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </android.support.v7.widget.Toolbar>
-
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                app:tabSelectedTextColor="?attr/colorAccent"
+                />
         </android.support.design.widget.AppBarLayout>
 
 

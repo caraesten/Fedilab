@@ -15,6 +15,7 @@
 package fr.gouv.etalab.mastodon.activities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -40,7 +41,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -165,7 +165,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         ActionBar actionBar = getSupportActionBar();
         if( actionBar != null ){
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.toot_action_bar, null);
+            @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.toot_action_bar, null);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 
@@ -234,7 +234,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         });
 
         Bundle b = getIntent().getExtras();
-        ArrayList<Uri> sharedUri = new ArrayList<Uri>();
+        ArrayList<Uri> sharedUri = new ArrayList<>();
 
         restored = -1;
         if(b != null) {
@@ -702,7 +702,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 }
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TootActivity.this);
                 LayoutInflater inflater = this.getLayoutInflater();
-                View dialogView = inflater.inflate(R.layout.datetime_picker, null);
+                @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.datetime_picker, null);
                 dialogBuilder.setView(dialogView);
                 final AlertDialog alertDialog = dialogBuilder.create();
 
@@ -839,9 +839,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, true);
             if( show_media_urls) {
-                //Adds the url at the end of the toot 
+                //Adds the shorter text_url of attachment at the end of the toot 
                 int selectionBefore = toot_content.getSelectionStart();
-                toot_content.setText(toot_content.getText().toString() + "\n" + attachment.getUrl());
+                toot_content.setText(toot_content.getText().toString() + "\n" + attachment.getText_url());
                 //Moves the cursor
                 if (selectionBefore >= 0)
                     toot_content.setSelection(selectionBefore);
@@ -887,9 +887,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                         boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, true);
                         if( show_media_urls) {
-                            //Adds the url at the end of the toot 
+                            //Clears the text_url at the end of the toot  for this attachment
                             int selectionBefore = toot_content.getSelectionStart();
-                            toot_content.setText(toot_content.getText().toString().replace(attachment.getUrl(), ""));
+                            toot_content.setText(toot_content.getText().toString().replace(attachment.getText_url(), ""));
                             //Moves the cursor
                             if (selectionBefore >= 0)
                                 toot_content.setSelection(selectionBefore);

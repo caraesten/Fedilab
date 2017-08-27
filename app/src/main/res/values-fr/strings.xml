@@ -57,6 +57,8 @@
     <string name="shared_via">Partagé via Mastalab</string>
     <string name="replies">Réponses</string>
     <string name="username">Nom d\'utilisateur</string>
+
+    <string name="new_data">De nouvelles données sont disponibles ! Souhaitez-vous les afficher ?</string>
     <!--- Menu -->
     <string name="home_menu">Accueil</string>
     <string name="local_menu">Fil public local</string>
@@ -283,6 +285,7 @@
     <string name="set_display_reply">Afficher le message précédent lors d\'une réponse</string>
     <string name="set_folder_title">Destination : </string>
     <string name="set_auto_store_toot">Enregistrer les brouillons automatiquement</string>
+    <string name="set_bubble_counter">Afficher les compteurs</string>
     <string name="set_auto_add_media_url">Ajouter l\'URL des médias dans les pouets</string>
     <string name="settings_title_notifications">Gestion des notifications</string>
     <string name="set_notif_follow">Notifier lorsque quelqu’un me suit</string>
@@ -320,6 +323,11 @@
         <item>Onglets</item>
         <item>Menu</item>
         <item>Onglets et menu</item>
+    </string-array>
+    <string-array name="settings_translation">
+        <item>Yandex</item>
+        <item>Google</item>
+        <item>Non</item>
     </string-array>
     <string name="set_title_news">Actualités</string>
     <string name="set_notification_news">Notifier lors de nouveaux pouets sur la page d\'accueil</string>

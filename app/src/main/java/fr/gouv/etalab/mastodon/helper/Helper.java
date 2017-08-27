@@ -18,9 +18,11 @@ package fr.gouv.etalab.mastodon.helper;
 
 
 import android.app.Activity;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.PendingIntent;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -130,8 +132,8 @@ import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
-import static android.app.Notification.DEFAULT_SOUND;
 import static android.app.Notification.DEFAULT_VIBRATE;
+import static android.app.Notification.FLAG_SHOW_LIGHTS;
 import static android.content.Context.DOWNLOAD_SERVICE;
 
 
@@ -175,6 +177,10 @@ public class Helper {
     public static final String SHOW_BATTERY_SAVER_MESSAGE = "show_battery_saver_message";
     public static final String LAST_NOTIFICATION_MAX_ID = "last_notification_max_id";
     public static final String LAST_HOMETIMELINE_MAX_ID = "last_hometimeline_max_id";
+    public static final String LAST_BUBBLE_REFRESH_NOTIF = "last_bubble_refresh_notif";
+    public static final String LAST_BUBBLE_REFRESH_HOME = "last_bubble_refresh_home";
+    public static final String LAST_MAX_ID_BUBBLE_NOTIF = "last_max_id_bubble_notif";
+    public static final String LAST_MAX_ID_BUBBLE_HOME = "last_max_id_bubble_home";
     public static final String CLIP_BOARD = "clipboard";
     //Notifications
     public static final int NOTIFICATION_INTENT = 1;
@@ -198,6 +204,9 @@ public class Helper {
     public static final String SET_ICON_SIZE = "set_icon_size";
     public static final String SET_PREVIEW_REPLIES = "set_preview_replies";
     public static final String SET_PREVIEW_REPLIES_PP = "set_preview_replies_pp";
+    public static final String SET_BUBBLE_COUNTER = "set_bubble_counter";
+    public static final String SET_TRANSLATOR = "set_translator";
+
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;
@@ -206,6 +215,10 @@ public class Helper {
     public static final int THEME_TABS = 1;
     public static final int THEME_MENU = 2;
     public static final int THEME_MENU_TABS = 3;
+
+    public static final int TRANS_YANDEX = 0;
+    public static final int TRANS_GOOGLE = 1;
+    public static final int TRANS_NONE = 2;
 
     public static final String SET_NOTIF_FOLLOW = "set_notif_follow";
     public static final String SET_NOTIF_ADD = "set_notif_follow_add";
@@ -583,11 +596,16 @@ public class Helper {
                 .setAutoCancel(true)
                 .setContentIntent(pIntent)
                 .setContentText(message);
+
+        int notifDefaults = FLAG_SHOW_LIGHTS;
+        notificationBuilder.setDefaults(notifDefaults);
         if( sharedpreferences.getBoolean(Helper.SET_NOTIF_SILENT,false) ) {
-            notificationBuilder.setDefaults(DEFAULT_VIBRATE);
+            notificationBuilder.setDefaults(notifDefaults|DEFAULT_VIBRATE);
         }else {
-            notificationBuilder.setDefaults(DEFAULT_SOUND);
+            String soundUri = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() +"/";
+            notificationBuilder.setSound(Uri.parse(soundUri + R.raw.boop));
         }
+        notificationBuilder.setLights(Color.BLUE, 500, 1000);
         notificationBuilder.setContentTitle(title);
         notificationBuilder.setLargeIcon(icon);
         notificationManager.notify(notificationId, notificationBuilder.build());
@@ -971,6 +989,7 @@ public class Helper {
                 DisplayImageOptions optionNew = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                         .cacheOnDisk(true).resetViewBeforeLoading(true).build();
                 imageLoader.loadImage(urlHeader, optionNew, new SimpleImageLoadingListener() {
+                    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         super.onLoadingComplete(imageUri, view, loadedImage);

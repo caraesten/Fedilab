@@ -14,7 +14,11 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.activities;
 
+import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -28,6 +32,8 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -35,6 +41,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -112,6 +119,9 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     private Relationship relationship;
     private boolean showMediaOnly;
     private ImageView pp_actionBar;
+    private BroadcastReceiver hide_header;
+    private boolean isHiddingShowing = false;
+    private LinearLayout main_header_container;
 
     public enum action{
         FOLLOW,
@@ -138,7 +148,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         Bundle b = getIntent().getExtras();
         account_follow = (FloatingActionButton) findViewById(R.id.account_follow);
         account_follow_request = (TextView) findViewById(R.id.account_follow_request);
-
+        main_header_container = (LinearLayout) findViewById(R.id.main_header_container);
         account_follow.setEnabled(false);
         if(b != null){
             accountId = b.getString("accountId");
@@ -162,7 +172,9 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         statuses = new ArrayList<>();
         boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
         int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-        statusListAdapter = new StatusListAdapter(getApplicationContext(), RetrieveFeedsAsyncTask.Type.USER, accountId, isOnWifi, behaviorWithAttachments, this.statuses);
+        int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
+
+        statusListAdapter = new StatusListAdapter(getApplicationContext(), RetrieveFeedsAsyncTask.Type.USER, accountId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
         options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(80)).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 
@@ -212,7 +224,20 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                Fragment fragment = (Fragment) mPager.getAdapter().instantiateItem(mPager, tab.getPosition());
+                switch (tab.getPosition()){
+                    case 0:
+                        DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
+                        if( displayStatusFragment != null )
+                            displayStatusFragment.scrollToTop();
+                        break;
+                    case 1:
+                    case 2:
+                        DisplayAccountsFragment displayAccountsFragment = ((DisplayAccountsFragment) fragment);
+                        if (displayAccountsFragment != null)
+                            displayAccountsFragment.scrollToTop();
+                        break;
+                }
             }
         });
 
@@ -236,6 +261,43 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 }
             }
         });
+        
+        if( Build.VERSION.SDK_INT < 21) {
+            //Register LocalBroadcast to receive selected accounts after search
+            hide_header = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    if (!isHiddingShowing) {
+                        isHiddingShowing = true;
+                        ImageView account_pp = (ImageView) findViewById(R.id.account_pp);
+                        boolean hide = intent.getBooleanExtra("hide", false);
+                        if (hide) {
+                            main_header_container.setVisibility(View.GONE);
+                            if (pp_actionBar != null)
+                                pp_actionBar.setVisibility(View.VISIBLE);
+                            tabLayout.setVisibility(View.GONE);
+                        } else {
+                            manageButtonVisibility();
+                            tabLayout.setVisibility(View.VISIBLE);
+                            main_header_container.setVisibility(View.VISIBLE);
+                            if (pp_actionBar != null)
+                                pp_actionBar.setVisibility(View.GONE);
+                        }
+                        account_pp.requestLayout();
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                isHiddingShowing = false;
+                            }
+                        }, 700);
+                    }
+
+                }
+            };
+
+            LocalBroadcastManager.getInstance(this).registerReceiver(hide_header, new IntentFilter(Helper.HEADER_ACCOUNT + String.valueOf(instanceValue)));
+        }
     }
 
 
@@ -271,13 +333,21 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                     item.setIcon(R.drawable.ic_clear_all);
                 else
                     item.setIcon(R.drawable.ic_perm_media);
-                tabLayout.getTabAt(0).select();
+                if( tabLayout.getTabAt(0) != null)
+                    //noinspection ConstantConditions
+                    tabLayout.getTabAt(0).select();
                 PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
                 mPager.setAdapter(mPagerAdapter);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(hide_header);
     }
 
     @Override
@@ -310,6 +380,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 DisplayImageOptions optionNew = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                         .cacheOnDisk(true).resetViewBeforeLoading(true).build();
                 imageLoader.loadImage(urlHeader, optionNew, new SimpleImageLoadingListener() {
+                    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         super.onLoadingComplete(imageUri, view, loadedImage);
@@ -347,7 +418,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         final ActionBar actionBar = getSupportActionBar();
         LayoutInflater mInflater = LayoutInflater.from(ShowAccountActivity.this);
         if( actionBar != null && account != null){
-            View show_account_actionbar = mInflater.inflate(R.layout.showaccount_actionbar, null);
+            @SuppressLint("InflateParams") View show_account_actionbar = mInflater.inflate(R.layout.showaccount_actionbar, null);
             TextView actionbar_title = (TextView) show_account_actionbar.findViewById(R.id.show_account_title);
             if( account.getAcct() != null)
                 actionbar_title.setText(account.getAcct());
@@ -373,19 +444,20 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
 
                 }});
+            if( Build.VERSION.SDK_INT >= 21) {
+                AppBarLayout appBar = (AppBarLayout) findViewById(R.id.appBar);
+                appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+                    @Override
+                    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                        if (verticalOffset > 10 ) {
+                            pp_actionBar.setVisibility(View.GONE);
+                        } else {
+                            pp_actionBar.setVisibility(View.VISIBLE);
+                        }
 
-            AppBarLayout appBar = (AppBarLayout) findViewById(R.id.appBar);
-            appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-                @Override
-                public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                    if(verticalOffset == 0){
-                        pp_actionBar.setVisibility(View.GONE);
-                    }else {
-                        pp_actionBar.setVisibility(View.VISIBLE);
                     }
-
-                }
-            });
+                });
+            }
         }else {
             if(  account != null && account.getAcct() != null)
                 setTitle(account.getAcct());
@@ -396,9 +468,14 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
             SpannableString spannableString = Helper.clickableElementsDescription(ShowAccountActivity.this, account.getNote());
             account_note.setText(spannableString, TextView.BufferType.SPANNABLE);
             account_note.setMovementMethod(LinkMovementMethod.getInstance());
-            tabLayout.getTabAt(0).setText(getString(R.string.status_cnt, account.getStatuses_count()));
-            tabLayout.getTabAt(1).setText(getString(R.string.following_cnt, account.getFollowing_count()));
-            tabLayout.getTabAt(2).setText(getString(R.string.followers_cnt, account.getFollowers_count()));
+            if (tabLayout.getTabAt(0) != null && tabLayout.getTabAt(1) != null && tabLayout.getTabAt(2) != null) {
+                //noinspection ConstantConditions
+                tabLayout.getTabAt(0).setText(getString(R.string.status_cnt, account.getStatuses_count()));
+                //noinspection ConstantConditions
+                tabLayout.getTabAt(1).setText(getString(R.string.following_cnt, account.getFollowing_count()));
+                //noinspection ConstantConditions
+                tabLayout.getTabAt(2).setText(getString(R.string.followers_cnt, account.getFollowers_count()));
+            }
             imageLoader.displayImage(account.getAvatar(), account_pp, options);
         }
     }

@@ -14,22 +14,20 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.activities;
 
-import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
@@ -37,7 +35,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -56,6 +53,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.security.ProviderInstaller;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -64,9 +63,11 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Stack;
+import java.util.concurrent.TimeUnit;
 
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -101,7 +102,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface {
+        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, ProviderInstaller.ProviderInstallListener {
 
     private FloatingActionButton toot;
     private HashMap<String, String> tagTile = new HashMap<>();
@@ -118,7 +119,9 @@ public class MainActivity extends AppCompatActivity
     private RelativeLayout main_app_container;
     private Stack<Integer> stackBack = new Stack<>();
 
-
+    private DisplayStatusFragment homeFragment;
+    private DisplayNotificationsFragment notificationsFragment;
+    private static final int ERROR_DIALOG_REQUEST_CODE = 97;
 
     public MainActivity() {
     }
@@ -126,8 +129,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        ProviderInstaller.installIfNeededAsync(this, this);
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
@@ -154,12 +157,56 @@ public class MainActivity extends AppCompatActivity
         pp_actionBar = (ImageView) toolbar.findViewById(R.id.pp_actionBar);
         toolbar_search = (SearchView) toolbar.findViewById(R.id.toolbar_search);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        TabLayout.Tab tabHome = tabLayout.newTab();
+        TabLayout.Tab tabNotif = tabLayout.newTab();
+        TabLayout.Tab tabLocal = tabLayout.newTab();
+        TabLayout.Tab tabPublic = tabLayout.newTab();
+        tabHome.setCustomView(R.layout.tab_badge);
+        tabNotif.setCustomView(R.layout.tab_badge);
+        tabLocal.setCustomView(R.layout.tab_badge);
+        tabPublic.setCustomView(R.layout.tab_badge);
+
+        @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+        ImageView iconHome = (ImageView) tabHome.getCustomView().findViewById(R.id.tab_icon);
+        iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+        iconHome.setImageResource(R.drawable.ic_action_home_tl);
+
+        @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+        ImageView iconNotif = (ImageView) tabNotif.getCustomView().findViewById(R.id.tab_icon);
+        iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+        iconNotif.setImageResource(R.drawable.ic_notifications_tl);
+
+
+        @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+        ImageView iconLocal = (ImageView) tabLocal.getCustomView().findViewById(R.id.tab_icon);
+        iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+        iconLocal.setImageResource(R.drawable.ic_action_users_tl);
+
+        @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+        ImageView iconGlobal = (ImageView) tabPublic.getCustomView().findViewById(R.id.tab_icon);
+        iconGlobal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+        iconGlobal.setImageResource(R.drawable.ic_action_globe_tl);
+
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_action_home_tl,R.color.dark_text);
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_notifications_tl,R.color.dark_text);
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_action_users_tl,R.color.dark_text);
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_action_globe_tl,R.color.dark_text);
+
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+
+        tabLayout.addTab(tabHome);
+        tabLayout.addTab(tabNotif);
+        tabLayout.addTab(tabLocal);
+        tabLayout.addTab(tabPublic);
+
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         main_app_container = (RelativeLayout) findViewById(R.id.main_app_container);
         PagerAdapter adapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        final boolean bubbles = sharedpreferences.getBoolean(Helper.SET_BUBBLE_COUNTER, true);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -182,10 +229,16 @@ public class MainActivity extends AppCompatActivity
                     case 0:
                         item = navigationView.getMenu().findItem(R.id.nav_home);
                         fragmentTag = "HOME_TIMELINE";
+                        if( bubbles && homeFragment != null)
+                            homeFragment.refreshData();
+                        updateHomeCounter(0);
                         break;
                     case 1:
                         fragmentTag = "NOTIFICATIONS";
                         item = navigationView.getMenu().findItem(R.id.nav_notification);
+                        updateNotifCounter(0);
+                        if( bubbles && notificationsFragment != null)
+                            notificationsFragment.refreshData();
                         break;
                     case 2:
                         fragmentTag = "LOCAL_TIMELINE";
@@ -294,10 +347,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
-        for(int i = 0 ; i < 4 ; i++)
-            if( tabLayout.getTabAt(i) != null && tabLayout.getTabAt(i).getIcon() != null)
-                tabLayout.getTabAt(i).getIcon().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
 
         toolbar_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -411,7 +460,7 @@ public class MainActivity extends AppCompatActivity
         if(!popupShown){
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MainActivity.this);
             LayoutInflater inflater = getLayoutInflater();
-            View dialogView = inflater.inflate(R.layout.popup_quick_settings, null);
+            @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.popup_quick_settings, null);
             dialogBuilder.setView(dialogView);
 
             final SwitchCompat set_push_hometimeline = (SwitchCompat) dialogView.findViewById(R.id.set_push_hometimeline);
@@ -475,7 +524,9 @@ public class MainActivity extends AppCompatActivity
             if (extras.getInt(INTENT_ACTION) == NOTIFICATION_INTENT){
                 changeUser(MainActivity.this, userIdIntent, false); //Connects the account which is related to the notification
                 unCheckAllMenuItems(navigationView);
-                tabLayout.getTabAt(1).select();
+                if( tabLayout.getTabAt(1) != null)
+                    //noinspection ConstantConditions
+                    tabLayout.getTabAt(1).select();
                 matchingIntent = true;
             }else if( extras.getInt(INTENT_ACTION) == HOME_TIMELINE_INTENT){
                 changeUser(MainActivity.this, userIdIntent, true); //Connects the account which is related to the notification
@@ -507,7 +558,7 @@ public class MainActivity extends AppCompatActivity
 
             } else if (type.startsWith("image/")) {
 
-                Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+                Uri imageUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
 
                 if (imageUri != null) {
 
@@ -560,7 +611,6 @@ public class MainActivity extends AppCompatActivity
                     super.onBackPressed();
                 }
             }else {
-
                 viewPager.setVisibility(View.VISIBLE);
                 Helper.switchLayout(MainActivity.this);
                 main_app_container.setVisibility(View.GONE);
@@ -568,7 +618,7 @@ public class MainActivity extends AppCompatActivity
                 unCheckAllMenuItems(navigationView);
                 toot.setVisibility(View.VISIBLE);
                 //Manages theme for icon colors
-                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
                 if( theme == Helper.THEME_DARK){
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_reply,R.color.dark_text);
@@ -610,7 +660,7 @@ public class MainActivity extends AppCompatActivity
                         navigationView.getMenu().findItem(R.id.nav_local).setChecked(true);
                         break;
                     case 3:
-                       toolbarTitle.setText(R.string.global_menu);
+                        toolbarTitle.setText(R.string.global_menu);
                         navigationView.getMenu().findItem(R.id.nav_global).setChecked(true);
                         break;
                 }
@@ -692,7 +742,7 @@ public class MainActivity extends AppCompatActivity
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle(R.string.text_size);
 
-            View popup_quick_settings = getLayoutInflater().inflate( R.layout.popup_text_size, null );
+            @SuppressLint("InflateParams") View popup_quick_settings = getLayoutInflater().inflate( R.layout.popup_text_size, null );
             builder.setView(popup_quick_settings);
 
             SeekBar set_text_size = (SeekBar) popup_quick_settings.findViewById(R.id.set_text_size);
@@ -753,6 +803,15 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onResume(){
         super.onResume();
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean bubbles = sharedpreferences.getBoolean(Helper.SET_BUBBLE_COUNTER, true);
+        if( bubbles){
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {refreshData();}
+            }, 1000);
+        }
         //Proceeds to update of the authenticated account
         if(Helper.isLoggedIn(getApplicationContext()))
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -893,6 +952,53 @@ public class MainActivity extends AppCompatActivity
 
 
 
+    @Override
+    public void onProviderInstalled() {
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ERROR_DIALOG_REQUEST_CODE) {
+            // Adding a fragment via GooglePlayServicesUtil.showErrorDialogFragment
+            // before the instance state is restored throws an error. So instead,
+            // set a flag here, which will cause the fragment to delay until
+            // onPostResume.
+        }
+    }
+
+
+    @Override
+    public void onProviderInstallFailed(int errorCode, Intent recoveryIntent) {
+        if (GooglePlayServicesUtil.isUserRecoverableError(errorCode)) {
+            // Recoverable error. Show a dialog prompting the user to
+            // install/update/enable Google Play services.
+            GooglePlayServicesUtil.showErrorDialogFragment(
+                    errorCode,
+                    this,
+                    ERROR_DIALOG_REQUEST_CODE,
+                    new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            // The user chose not to take the recovery action
+                            onProviderInstallerNotAvailable();
+                        }
+                    });
+        } else {
+            // Google Play services is not available.
+            onProviderInstallerNotAvailable();
+        }
+    }
+    private void onProviderInstallerNotAvailable() {
+        // This is reached if the provider cannot be updated for some reason.
+        // App should consider all HTTP communication to be vulnerable, and take
+        // appropriate action.
+    }
+
+
+
     /**
      * Page Adapter for settings
      */
@@ -917,12 +1023,13 @@ public class MainActivity extends AppCompatActivity
             Bundle bundle = new Bundle();
             switch (position) {
                 case 0:
-                    statusFragment = new DisplayStatusFragment();
+                    homeFragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.HOME);
-                    statusFragment.setArguments(bundle);
-                    return statusFragment;
+                    homeFragment.setArguments(bundle);
+                    return homeFragment;
                 case 1:
-                    return new DisplayNotificationsFragment();
+                    notificationsFragment = new DisplayNotificationsFragment();
+                    return notificationsFragment;
                 case 2:
                     statusFragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.LOCAL);
@@ -933,6 +1040,7 @@ public class MainActivity extends AppCompatActivity
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
                     statusFragment.setArguments(bundle);
                     return statusFragment;
+
             }
             return null;
         }
@@ -940,6 +1048,79 @@ public class MainActivity extends AppCompatActivity
         @Override
         public int getCount() {
             return mNumOfTabs;
+        }
+    }
+
+    private void refreshData(){
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
+        String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(prefKeyOauthTokenT);
+        if( account != null){
+            String last_refresh = sharedpreferences.getString(Helper.LAST_BUBBLE_REFRESH_NOTIF + account.getId(), null);
+            Date last_refresh_date = Helper.stringToDate(getApplicationContext(), last_refresh);
+            if (last_refresh_date == null || (new Date().getTime() - last_refresh_date.getTime()) >= TimeUnit.SECONDS.toMillis(60)) {
+
+                if( notificationsFragment != null ){
+                    notificationsFragment.update();
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString(Helper.LAST_BUBBLE_REFRESH_NOTIF+ account.getId(),Helper.dateToString(getApplicationContext(), new Date()));
+                    editor.apply();
+                }
+            }
+
+            last_refresh = sharedpreferences.getString(Helper.LAST_BUBBLE_REFRESH_HOME + account.getId(), null);
+            last_refresh_date = Helper.stringToDate(getApplicationContext(), last_refresh);
+
+            if (last_refresh_date == null || (new Date().getTime() - last_refresh_date.getTime()) >= TimeUnit.SECONDS.toMillis(60)) {
+                if( homeFragment != null ){
+                    homeFragment.update();
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString(Helper.LAST_BUBBLE_REFRESH_HOME+ account.getId(),Helper.dateToString(getApplicationContext(), new Date()));
+                    editor.apply();
+                }
+            }
+        }
+    }
+
+    public void updateHomeCounter(int newHomeCount){
+        if( tabLayout.getTabAt(0) == null )
+            return;
+        //noinspection ConstantConditions
+        View tabHome = tabLayout.getTabAt(0).getCustomView();
+        if( tabHome == null)
+            return;
+        TextView tabCounterHome = (TextView) tabHome.findViewById(R.id.tab_counter);
+        tabCounterHome.setText(String.valueOf(newHomeCount));
+        if( newHomeCount > 0){
+            //New data are available
+            //The fragment is not displayed, so the counter is displayed
+            if( tabLayout.getSelectedTabPosition() != 0)
+                tabCounterHome.setVisibility(View.VISIBLE);
+            else
+                tabCounterHome.setVisibility(View.GONE);
+        }else {
+            tabCounterHome.setVisibility(View.GONE);
+        }
+    }
+
+    public void updateNotifCounter(int newNotifCount){
+        if(tabLayout.getTabAt(1) == null)
+            return;
+        //noinspection ConstantConditions
+        View tabNotif = tabLayout.getTabAt(1).getCustomView();
+        if( tabNotif == null)
+            return;
+        TextView tabCounterNotif = (TextView) tabNotif.findViewById(R.id.tab_counter);
+        tabCounterNotif.setText(String.valueOf(newNotifCount));
+        if( newNotifCount > 0){
+            if( tabLayout.getSelectedTabPosition() != 1)
+                tabCounterNotif.setVisibility(View.VISIBLE);
+            else
+                tabCounterNotif.setVisibility(View.GONE);
+        }else {
+            tabCounterNotif.setVisibility(View.GONE);
         }
     }
 

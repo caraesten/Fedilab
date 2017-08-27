@@ -24,5 +24,6 @@ import fr.gouv.etalab.mastodon.client.Entities.Status;
  * Interface when status have been retrieved for an account
  */
 public interface OnRetrieveFeedsAccountInterface {
+    @SuppressWarnings("unused")
     void onRetrieveFeedsAccount(List<Status> statuses);
 }

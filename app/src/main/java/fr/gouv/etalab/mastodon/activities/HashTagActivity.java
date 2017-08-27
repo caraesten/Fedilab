@@ -21,7 +21,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
@@ -101,7 +100,8 @@ public class HashTagActivity extends AppCompatActivity implements OnRetrieveFeed
         textviewNoAction = (RelativeLayout) findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
-        statusListAdapter = new StatusListAdapter(HashTagActivity.this, RetrieveFeedsAsyncTask.Type.TAG, null, isOnWifi, behaviorWithAttachments, this.statuses);
+        int positionSpinnerTrans = (sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX));
+        statusListAdapter = new StatusListAdapter(HashTagActivity.this, RetrieveFeedsAsyncTask.Type.TAG, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
         lv_status.setAdapter(statusListAdapter);
         setTitle(String.format("#%s", tag));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -158,7 +158,7 @@ public class HashTagActivity extends AppCompatActivity implements OnRetrieveFeed
     }
 
     @Override
-    public void onRetrieveFeeds(APIResponse apiResponse) {
+    public void onRetrieveFeeds(APIResponse apiResponse, boolean refreshData) {
 
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);

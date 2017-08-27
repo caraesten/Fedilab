@@ -84,6 +84,7 @@ import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
+import fr.gouv.etalab.mastodon.translation.GoogleTranslateQuery;
 import fr.gouv.etalab.mastodon.translation.YandexQuery;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
@@ -103,6 +104,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
     private boolean isOnWifi;
+    private int translator;
     private int behaviorWithAttachments;
     private StatusListAdapter statusListAdapter;
     private final int REBLOG = 1;
@@ -112,7 +114,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     private HashMap<String, String> urlConversion;
     private HashMap<String, String> tagConversion;
 
-    public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, List<Status> statuses){
+    public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
         this.context = context;
         this.statuses = statuses;
         this.isOnWifi = isOnWifi;
@@ -121,6 +123,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         statusListAdapter = this;
         this.type = type;
         this.targetedId = targetedId;
+        this.translator = translator;
     }
 
 
@@ -299,10 +302,18 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             }
         });
         if( currentLocale != null && status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale) && !status.getLanguage().trim().equals("null")){
-            holder.status_translate.setVisibility(View.VISIBLE);
+            if (translator != Helper.TRANS_NONE)
+                holder.status_translate.setVisibility(View.VISIBLE);
+            else
+                holder.status_translate.setVisibility(View.GONE);
         }else {
             holder.status_translate.setVisibility(View.GONE);
         }
+
+        if( translator == Helper.TRANS_YANDEX)
+            holder.yandex_translate.setVisibility(View.VISIBLE);
+        else
+            holder.yandex_translate.setVisibility(View.GONE);
 
         holder.status_translate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -348,7 +359,11 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                             }
                             i++;
                         }
-                        new YandexQuery(StatusListAdapter.this).getYandexTextview(position, text, currentLocale);
+                        if (translator == Helper.TRANS_YANDEX)
+                            new YandexQuery(StatusListAdapter.this).getYandexTextview(position, text, currentLocale);
+                        else if( translator == Helper.TRANS_GOOGLE)
+                            new GoogleTranslateQuery(StatusListAdapter.this).getGoogleTextview(position, text, currentLocale);
+
                     }else {
                         status.setTranslationShown(!status.isTranslationShown());
                         statusListAdapter.notifyDataSetChanged();
@@ -917,7 +932,13 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
         }else if( statuses.size() > position) {
             try {
-                String aJsonString = yandexTranslateToText(translatedResult);
+                String aJsonString = null;
+                if (translator == Helper.TRANS_YANDEX)
+                    aJsonString = yandexTranslateToText(translatedResult);
+                else if( translator == Helper.TRANS_GOOGLE)
+                    aJsonString = googleTranslateToText(translatedResult);
+                if( aJsonString == null)
+                    return;
                 Iterator itU = urlConversion.entrySet().iterator();
                 while (itU.hasNext()) {
                     Map.Entry pair = (Map.Entry)itU.next();

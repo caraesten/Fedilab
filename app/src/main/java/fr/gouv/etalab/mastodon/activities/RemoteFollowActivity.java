@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.activities;
 
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -23,6 +24,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -109,12 +111,14 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
         loader = (RelativeLayout) findViewById(R.id.loader);
         lv_account = (ListView) findViewById(R.id.lv_account);
         rf_no_result = (TextView) findViewById(R.id.rf_no_result);
-
+        if( theme == Helper.THEME_LIGHT) {
+            rf_search.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+        }
         isLoadingInstance = false;
         ActionBar actionBar = getSupportActionBar();
         if( actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(android.content.Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.conversation_action_bar, null);
+            @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.conversation_action_bar, null);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             TextView title = (TextView) actionBar.getCustomView().findViewById(R.id.toolbar_title);

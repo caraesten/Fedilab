@@ -20,17 +20,21 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
@@ -56,13 +60,19 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private AsyncTask<Void, Void, Void> asyncTask;
     private NotificationsListAdapter notificationsListAdapter;
     private String max_id;
-    private List<Notification> notifications;
+    private List<Notification> notifications, notificationsTmp;
     private RelativeLayout mainLoader, nextElementLoader, textviewNoAction;
     private boolean firstLoad;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private int notificationPerPage;
     private boolean swiped;
     private ListView lv_notifications;
+    private DisplayNotificationsFragment displayNotificationsFragment;
+    private TextView new_data;
+    private String since_id;
+
+    public DisplayNotificationsFragment(){
+        displayNotificationsFragment = this;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,10 +86,9 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         swiped = false;
 
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        notificationPerPage = sharedpreferences.getInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 15);
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         lv_notifications = (ListView) rootView.findViewById(R.id.lv_notifications);
-
+        new_data = (TextView) rootView.findViewById(R.id.new_data);
         mainLoader = (RelativeLayout) rootView.findViewById(R.id.loader);
         nextElementLoader = (RelativeLayout) rootView.findViewById(R.id.loading_next_notifications);
         textviewNoAction = (RelativeLayout) rootView.findViewById(R.id.no_action);
@@ -116,15 +125,43 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 firstLoad = true;
                 flag_loading = true;
                 swiped = true;
+                new_data.setVisibility(View.GONE);
                 asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
                 R.color.mastodonC2,
                 R.color.mastodonC3);
 
         asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        new_data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( notificationsTmp != null){
+                    boolean isOnWifi = Helper.isOnWIFI(context);
+                    int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+                    notifications = new ArrayList<>();
+                    for(Notification notification: notificationsTmp){
+                        notifications.add(notification);
+                    }
+                    //The user clicked on the banner to refresh values so, the pointer is changed
+                    if( notificationsTmp.size() > 0 ) {
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                        editor.putString(Helper.LAST_MAX_ID_BUBBLE_NOTIF + userId, notificationsTmp.get(0).getId());
+                        editor.apply();
+                    }
+                    notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments, notifications);
+                    lv_notifications.setAdapter(notificationsListAdapter);
+                    if( notificationsTmp.size() > 0 && textviewNoAction.getVisibility() == View.VISIBLE)
+                        textviewNoAction.setVisibility(View.GONE);
+                }
+                new_data.setVisibility(View.GONE);
+                notificationsTmp = new ArrayList<>();
+            }
+        });
+
         return rootView;
     }
 
@@ -151,10 +188,11 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     }
 
 
-
     @Override
-    public void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId) {
+    public void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId, boolean refreshData) {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        //UserId will be null here, so it needs to be retrieved from shared preferences
+        userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         if( apiResponse.getError() != null){
@@ -166,7 +204,65 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             swiped = false;
             return;
         }
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(Helper.LAST_BUBBLE_REFRESH_NOTIF+ userId,Helper.dateToString(context, new Date()));
+        editor.apply();
+        String bubble_max_id = sharedpreferences.getString(Helper.LAST_MAX_ID_BUBBLE_NOTIF + userId, null);
         List<Notification> notifications = apiResponse.getNotifications();
+        since_id = apiResponse.getSince_id();
+        max_id = apiResponse.getMax_id();
+        //The initial call comes from a classic tab refresh
+        if( refreshData ) {
+            manageNotifications(notifications, max_id, since_id);
+            //The current tab is displayed, so user is supposed to have seen the notifications
+            if( since_id != null && displayNotificationsFragment.getUserVisibleHint()) {
+                editor.putString(Helper.LAST_MAX_ID_BUBBLE_NOTIF + userId, since_id);
+                editor.apply();
+            }else if(!displayNotificationsFragment.getUserVisibleHint()){
+                //The refresh was done automatically, but the fragment was not displayed in viewpager
+                //So the bubble counter will be displayed
+                int countData = 0;
+                //Retrieves new notification count
+                if( bubble_max_id != null) {
+                    for (Notification nt : notifications) {
+                        if (nt.getId().trim().equals(bubble_max_id.trim()))
+                            break;
+                        countData++;
+                    }
+                }
+                ((MainActivity)context).updateNotifCounter(countData);
+            }
+        }else { //Here, new values have been retrieved on the onResume call (forced mode)
+            int countData = 0;
+            if( bubble_max_id != null) {
+                for (Notification nt : notifications) {
+                    if (nt.getId().trim().equals(bubble_max_id.trim()))
+                        break;
+                    countData++;
+                }
+            }
+            if( notifications != null && notifications.size() > 0 && countData > 0) {
+                max_id = null;
+                firstLoad = true;
+                notificationsTmp = new ArrayList<>();
+                for (Notification tmpNotification : notifications) {
+                    this.notificationsTmp.add(tmpNotification);
+                }
+                //New notifications will be counted
+                //The fragment is not displayed, so the bubble counter should be shown
+                if (!displayNotificationsFragment.getUserVisibleHint()) {
+                    ((MainActivity) context).updateNotifCounter(countData);
+                } else { //The current fragment is visible, but for avoiding to populate with new values
+                    // a message will be displayed at the bottom requiring a click to display these new values
+                    new_data.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+    }
+
+    private void manageNotifications(List<Notification> notifications, String max_id, String since_id){
+        flag_loading = (max_id == null );
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( !swiped && firstLoad && (notifications == null || notifications.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
@@ -178,8 +274,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             lv_notifications.setAdapter(notificationsListAdapter);
             swiped = false;
         }
-        max_id = apiResponse.getMax_id();
-
         if( notifications != null && notifications.size() > 0) {
             for(Notification tmpNotification: notifications){
                 this.notifications.add(tmpNotification);
@@ -187,16 +281,15 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             notificationsListAdapter.notifyDataSetChanged();
         }
         swipeRefreshLayout.setRefreshing(false);
-        flag_loading = notifications != null && notifications.size() < notificationPerPage;
         //Store last notification id to avoid to notify for those that have been already seen
         if( notifications != null && notifications.size()  > 0) {
             //acct is null as userId when used in Fragment, data need to be retrieved via shared preferences and db
-            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
-            if( currentAccount != null && firstLoad){
+            if( currentAccount != null && firstLoad && since_id != null){
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + currentAccount.getId(), notifications.get(0).getId());
+                editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + currentAccount.getId(), since_id);
                 editor.apply();
             }
         }
@@ -207,4 +300,36 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         if( lv_notifications != null)
             lv_notifications.setAdapter(notificationsListAdapter);
     }
+
+    public void update(){
+        if( context != null){
+            asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, null, null, null, false, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+   }
+
+   public void refreshData(){
+
+       final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
+       if(context != null && this.notificationsTmp != null && this.notificationsTmp.size() > 0){
+           boolean isOnWifi = Helper.isOnWIFI(context);
+           int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+           notifications = new ArrayList<>();
+           for(Notification notification: this.notificationsTmp){
+               notifications.add(notification);
+           }
+           if( textviewNoAction.getVisibility() == View.VISIBLE)
+               textviewNoAction.setVisibility(View.GONE);
+           notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments, notifications);
+           lv_notifications.setAdapter(notificationsListAdapter);
+           this.notificationsTmp = new ArrayList<>();
+       }
+       if( since_id != null){
+           //The user clicked on the tab to refresh values so, the pointer is changed
+           SharedPreferences.Editor editor = sharedpreferences.edit();
+           String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+           editor.putString(Helper.LAST_MAX_ID_BUBBLE_NOTIF + userId, since_id);
+           editor.apply();
+       }
+   }
 }

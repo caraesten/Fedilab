@@ -133,8 +133,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
 
 
     @Override
-    public void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId) {
-
+    public void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId, boolean refreshData) {
         List<Notification> notifications = apiResponse.getNotifications();
         if( apiResponse.getError() != null || notifications == null || notifications.size() == 0)
             return;
@@ -145,6 +144,13 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
         boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
         boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
         final String max_id = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
+        if( max_id == null){
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, apiResponse.getSince_id());
+            editor.apply();
+            return;
+        }
+
         //No previous notifications in cache, so no notification will be sent
         int newFollows = 0;
         int newAdds = 0;
@@ -211,6 +217,9 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                 default:
             }
         }
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, apiResponse.getSince_id());
+        editor.apply();
         int allNotifCount = newFollows + newAdds + newAsks + newMentions + newShare;
         if( allNotifCount > 0){
             //Some others notification
@@ -257,11 +266,6 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
             }
 
         }
-
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, apiResponse.getMax_id());
-        editor.apply();
-
     }
 
 }
