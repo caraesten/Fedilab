@@ -133,6 +133,16 @@
     <color name="secondary_text_disabled_material_dark">@color/mastodonC3</color>
 
     <!-- Primary & accent colors -->
+    <color name="notif_dark_1">#282c37</color>
+    <color name="notif_dark_2">#313543</color>
+    <color name="notif_dark_3">#393f4f</color>
+    <color name="notif_dark_4">#595f6f</color>
+
+    <color name="notif_light_1">#efefef</color>
+    <color name="notif_light_2">#ebf3fa</color>
+    <color name="notif_light_3">#d9e1e8</color>
+    <color name="notif_light_4">#c9d1d8</color>
+
     <eat-comment />
 
 
