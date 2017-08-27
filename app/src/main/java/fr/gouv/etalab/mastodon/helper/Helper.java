@@ -596,11 +596,8 @@ public class Helper {
                 .setAutoCancel(true)
                 .setContentIntent(pIntent)
                 .setContentText(message);
-
-        int notifDefaults = FLAG_SHOW_LIGHTS;
-        notificationBuilder.setDefaults(notifDefaults);
         if( sharedpreferences.getBoolean(Helper.SET_NOTIF_SILENT,false) ) {
-            notificationBuilder.setDefaults(notifDefaults|DEFAULT_VIBRATE);
+            notificationBuilder.setVibrate(new long[] { 500, 500, 500});
         }else {
             String soundUri = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() +"/";
             notificationBuilder.setSound(Uri.parse(soundUri + R.raw.boop));
