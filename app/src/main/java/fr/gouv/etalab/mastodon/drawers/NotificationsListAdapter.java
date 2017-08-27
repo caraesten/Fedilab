@@ -171,7 +171,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
         String type = notification.getType();
         String typeString = "";
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-
+        Drawable imgH = null;
         switch (type){
             case "mention":
                 holder.status_action_container.setVisibility(View.VISIBLE);
@@ -184,6 +184,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 }else {
                     holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_1));
                 }
+                imgH = null;
                 break;
             case "reblog":
                 holder.status_action_container.setVisibility(View.GONE);
@@ -196,6 +197,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 }else {
                     holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_2));
                 }
+                imgH = ContextCompat.getDrawable(context, R.drawable.ic_retweet_notif_header);
                 break;
             case "favourite":
                 holder.status_action_container.setVisibility(View.GONE);
@@ -208,6 +210,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 }else {
                     holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_3));
                 }
+                imgH = ContextCompat.getDrawable(context, R.drawable.ic_fav_notif_header);
                 break;
             case "follow":
                 holder.status_action_container.setVisibility(View.GONE);
@@ -220,10 +223,19 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 }else {
                     holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_4));
                 }
+                imgH = ContextCompat.getDrawable(context, R.drawable.ic_follow_notif_header);
                 break;
         }
-
+        changeDrawableColor(context, R.drawable.ic_retweet_notif_header,R.color.mastodonC4);
+        changeDrawableColor(context, R.drawable.ic_fav_notif_header,R.color.mastodonC4);
+        changeDrawableColor(context, R.drawable.ic_follow_notif_header,R.color.mastodonC4);
         holder.notification_type.setText(typeString);
+        if( imgH != null) {
+            holder.notification_type.setCompoundDrawablePadding((int)Helper.convertDpToPixel(5, context));
+            imgH.setBounds(0, 0, (int) (20 * iconSizePercent / 100 * scale + 0.5f), (int) (20 * iconSizePercent / 100 * scale + 0.5f));
+        }
+        holder.notification_type.setCompoundDrawables( imgH, null, null, null);
+
         holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
         holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
         holder.status_reply.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
