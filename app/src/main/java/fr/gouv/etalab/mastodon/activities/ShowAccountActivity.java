@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -89,6 +90,8 @@ import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRelationshipInterface;
+import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
 
@@ -122,6 +125,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     private BroadcastReceiver hide_header;
     private boolean isHiddingShowing = false;
     private LinearLayout main_header_container;
+    private ImageView header_edit_profile;
 
     public enum action{
         FOLLOW,
@@ -149,6 +153,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         account_follow = (FloatingActionButton) findViewById(R.id.account_follow);
         account_follow_request = (TextView) findViewById(R.id.account_follow_request);
         main_header_container = (LinearLayout) findViewById(R.id.main_header_container);
+        header_edit_profile = (ImageView) findViewById(R.id.header_edit_profile);
         account_follow.setEnabled(false);
         if(b != null){
             accountId = b.getString("accountId");
@@ -298,6 +303,14 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
             LocalBroadcastManager.getInstance(this).registerReceiver(hide_header, new IntentFilter(Helper.HEADER_ACCOUNT + String.valueOf(instanceValue)));
         }
+
+        header_edit_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ShowAccountActivity.this, EditProfileActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -520,6 +533,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         account_follow.setEnabled(true);
         if( accountId != null && accountId.equals(userId)){
             account_follow.setVisibility(View.GONE);
+            header_edit_profile.setVisibility(View.VISIBLE);
         }else if( relationship.isBlocking()){
             account_follow.setImageResource(R.drawable.ic_unlock_alt);
             doAction = action.UNBLOCK;
