@@ -379,6 +379,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                             new YandexQuery(StatusListAdapter.this).getYandexTextview(position, text, currentLocale);
                         else if( translator == Helper.TRANS_GOOGLE)
                             new GoogleTranslateQuery(StatusListAdapter.this).getGoogleTextview(position, text, currentLocale);
+
                     }else {
                         status.setTranslationShown(!status.isTranslationShown());
                         statusListAdapter.notifyDataSetChanged();
