@@ -26,10 +26,8 @@ public class ApplicationJob implements JobCreator {
     @Override
     public Job create(String tag) {
         switch (tag) {
-            case NotificationsSyncJob.NOTIFICATION_REFRESH:
-                return new NotificationsSyncJob();
-            case HomeTimelineSyncJob.HOME_TIMELINE:
-                return new HomeTimelineSyncJob();
+            case StreamingSyncJob.STREAMING:
+                return new StreamingSyncJob();
             case ScheduledTootsSyncJob.SCHEDULED_TOOT:
                 return new ScheduledTootsSyncJob();
             default:
