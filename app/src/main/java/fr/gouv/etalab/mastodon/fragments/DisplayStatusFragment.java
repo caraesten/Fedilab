@@ -359,6 +359,24 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         new_data.setVisibility(View.VISIBLE);
     }
 
+    public void refresh(){
+        if( statusesTmp != null){
+            boolean isOnWifi = Helper.isOnWIFI(context);
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+            statuses = new ArrayList<>();
+            for(Status status: statusesTmp){
+                statuses.add(status);
+            }
+            if( statusesTmp.size() > 0 && textviewNoAction.getVisibility() == View.VISIBLE)
+                textviewNoAction.setVisibility(View.GONE);
+            statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
+            lv_status.setAdapter(statusListAdapter);
+            statusesTmp = new ArrayList<>();
+        }
+        new_data.setVisibility(View.GONE);
+    }
+
     public void scrollToTop(){
         if( lv_status != null)
             lv_status.setAdapter(statusListAdapter);

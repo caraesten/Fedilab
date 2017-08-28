@@ -156,6 +156,7 @@ public class MainActivity extends AppCompatActivity
                     }else{
                         newNotif++;
                         updateNotifCounter();
+                        notificationsFragment.updateData(notification);
                     }
                 }else if(eventStreaming == StreamingUserAsyncTask.EventStreaming.UPDATE){
                     Status status = b.getParcelable("data");
@@ -164,6 +165,7 @@ public class MainActivity extends AppCompatActivity
                     }else{
                         newHome++;
                         updateHomeCounter();
+                        homeFragment.updateData(status);
                     }
                 }else if(eventStreaming == StreamingUserAsyncTask.EventStreaming.DELETE){
                     String id = b.getString("id");
@@ -278,12 +280,16 @@ public class MainActivity extends AppCompatActivity
                         item = navigationView.getMenu().findItem(R.id.nav_home);
                         fragmentTag = "HOME_TIMELINE";
                         newHome = 0;
+                        if( homeFragment != null)
+                            homeFragment.refresh();
                         updateHomeCounter();
                         break;
                     case 1:
                         fragmentTag = "NOTIFICATIONS";
                         item = navigationView.getMenu().findItem(R.id.nav_notification);
                         newNotif = 0;
+                        if( notificationsFragment != null)
+                            notificationsFragment.refresh();
                         updateNotifCounter();
                         break;
                     case 2:

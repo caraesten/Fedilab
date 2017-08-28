@@ -255,4 +255,21 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         }
         new_data.setVisibility(View.VISIBLE);
     }
+    public void refresh(){
+        if( notificationsTmp != null){
+            boolean isOnWifi = Helper.isOnWIFI(context);
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+            notifications = new ArrayList<>();
+            for(Notification notification: notificationsTmp){
+                notifications.add(notification);
+            }
+            notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments, notifications);
+            lv_notifications.setAdapter(notificationsListAdapter);
+            if( notificationsTmp.size() > 0 && textviewNoAction.getVisibility() == View.VISIBLE)
+                textviewNoAction.setVisibility(View.GONE);
+        }
+        new_data.setVisibility(View.GONE);
+        notificationsTmp = new ArrayList<>();
+    }
 }
