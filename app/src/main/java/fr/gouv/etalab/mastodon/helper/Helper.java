@@ -178,10 +178,6 @@ public class Helper {
     public static final String SHOW_BATTERY_SAVER_MESSAGE = "show_battery_saver_message";
     public static final String LAST_NOTIFICATION_MAX_ID = "last_notification_max_id";
     public static final String LAST_HOMETIMELINE_MAX_ID = "last_hometimeline_max_id";
-    public static final String LAST_BUBBLE_REFRESH_NOTIF = "last_bubble_refresh_notif";
-    public static final String LAST_BUBBLE_REFRESH_HOME = "last_bubble_refresh_home";
-    public static final String LAST_MAX_ID_BUBBLE_NOTIF = "last_max_id_bubble_notif";
-    public static final String LAST_MAX_ID_BUBBLE_HOME = "last_max_id_bubble_home";
     public static final String CLIP_BOARD = "clipboard";
     //Notifications
     public static final int NOTIFICATION_INTENT = 1;
@@ -205,7 +201,6 @@ public class Helper {
     public static final String SET_ICON_SIZE = "set_icon_size";
     public static final String SET_PREVIEW_REPLIES = "set_preview_replies";
     public static final String SET_PREVIEW_REPLIES_PP = "set_preview_replies_pp";
-    public static final String SET_BUBBLE_COUNTER = "set_bubble_counter";
     public static final String SET_TRANSLATOR = "set_translator";
 
     public static final int ATTACHMENT_ALWAYS = 1;

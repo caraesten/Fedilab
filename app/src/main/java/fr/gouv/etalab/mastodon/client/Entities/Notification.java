@@ -39,6 +39,8 @@ public class Notification implements Parcelable {
         status = in.readParcelable(Status.class.getClassLoader());
     }
 
+    public Notification(){};
+
     public static final Creator<Notification> CREATOR = new Creator<Notification>() {
         @Override
         public Notification createFromParcel(Parcel in) {

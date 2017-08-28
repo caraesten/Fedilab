@@ -37,6 +37,7 @@ import java.util.List;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -145,13 +146,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                     for(Notification notification: notificationsTmp){
                         notifications.add(notification);
                     }
-                    //The user clicked on the banner to refresh values so, the pointer is changed
-                    if( notificationsTmp.size() > 0 ) {
-                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                        editor.putString(Helper.LAST_MAX_ID_BUBBLE_NOTIF + userId, notificationsTmp.get(0).getId());
-                        editor.apply();
-                    }
                     notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments, notifications);
                     lv_notifications.setAdapter(notificationsListAdapter);
                     if( notificationsTmp.size() > 0 && textviewNoAction.getVisibility() == View.VISIBLE)
@@ -205,64 +199,11 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             return;
         }
         SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putString(Helper.LAST_BUBBLE_REFRESH_NOTIF+ userId,Helper.dateToString(context, new Date()));
-        editor.apply();
-        String bubble_max_id = sharedpreferences.getString(Helper.LAST_MAX_ID_BUBBLE_NOTIF + userId, null);
         List<Notification> notifications = apiResponse.getNotifications();
         since_id = apiResponse.getSince_id();
         max_id = apiResponse.getMax_id();
         //The initial call comes from a classic tab refresh
-        if( refreshData ) {
-            manageNotifications(notifications, max_id, since_id);
-            //The current tab is displayed, so user is supposed to have seen the notifications
-            if( since_id != null && displayNotificationsFragment.getUserVisibleHint() && firstLoad) {
-                editor.putString(Helper.LAST_MAX_ID_BUBBLE_NOTIF + userId, since_id);
-                editor.apply();
-            }else if(!displayNotificationsFragment.getUserVisibleHint()){
-                //The refresh was done automatically, but the fragment was not displayed in viewpager
-                //So the bubble counter will be displayed
-                int countData = 0;
-                //Retrieves new notification count
-                if( bubble_max_id != null) {
-                    for (Notification nt : notifications) {
-                        if (nt.getId().trim().equals(bubble_max_id.trim()))
-                            break;
-                        countData++;
-                    }
-                }
-                ((MainActivity)context).updateNotifCounter(countData);
-            }
-        }else { //Here, new values have been retrieved on the onResume call (forced mode)
-            int countData = 0;
-            if( bubble_max_id != null) {
-                for (Notification nt : notifications) {
-                    if (nt.getId().trim().equals(bubble_max_id.trim()))
-                        break;
-                    countData++;
-                }
-            }
-            if( notifications != null && notifications.size() > 0 && countData > 0) {
-                max_id = null;
-                firstLoad = true;
-                notificationsTmp = new ArrayList<>();
-                for (Notification tmpNotification : notifications) {
-                    this.notificationsTmp.add(tmpNotification);
-                }
-                //New notifications will be counted
-                //The fragment is not displayed, so the bubble counter should be shown
-                if (!displayNotificationsFragment.getUserVisibleHint()) {
-                    ((MainActivity) context).updateNotifCounter(countData);
-                } else { //The current fragment is visible, but for avoiding to populate with new values
-                    // a message will be displayed at the bottom requiring a click to display these new values
-                    new_data.setVisibility(View.VISIBLE);
-                }
-            }
-        }
-    }
-
-    private void manageNotifications(List<Notification> notifications, String max_id, String since_id){
         flag_loading = (max_id == null );
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( !swiped && firstLoad && (notifications == null || notifications.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
@@ -284,11 +225,10 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         //Store last notification id to avoid to notify for those that have been already seen
         if( notifications != null && notifications.size()  > 0) {
             //acct is null as userId when used in Fragment, data need to be retrieved via shared preferences and db
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
             if( currentAccount != null && firstLoad && since_id != null){
-                SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + currentAccount.getId(), since_id);
                 editor.apply();
             }
@@ -296,40 +236,23 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         firstLoad = false;
     }
 
+
     public void scrollToTop(){
         if( lv_notifications != null)
             lv_notifications.setAdapter(notificationsListAdapter);
     }
 
-    public void update(){
-        if( context != null){
-            asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, null, null, null, false, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+    public void updateData(Notification notification){
+        if( notificationsTmp != null && notificationsTmp.size() > 0){
+            notificationsTmp.add(0,notification);
+        }else {
+            notificationsTmp = new ArrayList<>();
+            for(Notification notificationTmp: this.notifications){
+                notificationsTmp.add(notificationTmp);
+            }
+            notificationsTmp.add(0,notification);
         }
-   }
-
-   public void refreshData(){
-
-       final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-
-       if(context != null && this.notificationsTmp != null && this.notificationsTmp.size() > 0){
-           boolean isOnWifi = Helper.isOnWIFI(context);
-           int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-           notifications = new ArrayList<>();
-           for(Notification notification: this.notificationsTmp){
-               notifications.add(notification);
-           }
-           if( textviewNoAction.getVisibility() == View.VISIBLE)
-               textviewNoAction.setVisibility(View.GONE);
-           notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments, notifications);
-           lv_notifications.setAdapter(notificationsListAdapter);
-           this.notificationsTmp = new ArrayList<>();
-       }
-       if( since_id != null){
-           //The user clicked on the tab to refresh values so, the pointer is changed
-           SharedPreferences.Editor editor = sharedpreferences.edit();
-           String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-           editor.putString(Helper.LAST_MAX_ID_BUBBLE_NOTIF + userId, since_id);
-           editor.apply();
-       }
-   }
+        new_data.setVisibility(View.VISIBLE);
+    }
 }

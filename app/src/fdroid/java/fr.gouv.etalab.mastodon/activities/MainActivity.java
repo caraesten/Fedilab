@@ -120,15 +120,17 @@ public class MainActivity extends AppCompatActivity
     private DisplayStatusFragment homeFragment;
     private DisplayNotificationsFragment notificationsFragment;
     private BroadcastReceiver receive_data;
-
+    private int newNotif, newHome;
     public MainActivity() {
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
+        newNotif = 0;
+        newHome = 0;
+
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
 
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -205,7 +207,6 @@ public class MainActivity extends AppCompatActivity
                 (getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        final boolean bubbles = sharedpreferences.getBoolean(Helper.SET_BUBBLE_COUNTER, true);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -230,12 +231,14 @@ public class MainActivity extends AppCompatActivity
                         fragmentTag = "HOME_TIMELINE";
                         if( bubbles && homeFragment != null)
                             homeFragment.refreshData();
-                        updateHomeCounter(0);
+                        newHome = 0;
+                        updateHomeCounter();
                         break;
                     case 1:
                         fragmentTag = "NOTIFICATIONS";
                         item = navigationView.getMenu().findItem(R.id.nav_notification);
-                        updateNotifCounter(0);
+                        newNotif = 0;
+                        updateNotifCounter();
                         if( bubbles && notificationsFragment != null)
                             notificationsFragment.refreshData();
                         break;
@@ -1043,7 +1046,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public void updateHomeCounter(int newHomeCount){
+    public void updateHomeCounter(){
         if( tabLayout.getTabAt(0) == null )
             return;
         //noinspection ConstantConditions
@@ -1051,8 +1054,8 @@ public class MainActivity extends AppCompatActivity
         if( tabHome == null)
             return;
         TextView tabCounterHome = (TextView) tabHome.findViewById(R.id.tab_counter);
-        tabCounterHome.setText(String.valueOf(newHomeCount));
-        if( newHomeCount > 0){
+        tabCounterHome.setText(String.valueOf(newHome));
+        if( newHome > 0){
             //New data are available
             //The fragment is not displayed, so the counter is displayed
             if( tabLayout.getSelectedTabPosition() != 0)
@@ -1064,8 +1067,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
-    public void updateNotifCounter(int newNotifCount){
+    public void updateNotifCounter(){
         if(tabLayout.getTabAt(1) == null)
             return;
         //noinspection ConstantConditions
@@ -1073,8 +1075,8 @@ public class MainActivity extends AppCompatActivity
         if( tabNotif == null)
             return;
         TextView tabCounterNotif = (TextView) tabNotif.findViewById(R.id.tab_counter);
-        tabCounterNotif.setText(String.valueOf(newNotifCount));
-        if( newNotifCount > 0){
+        tabCounterNotif.setText(String.valueOf(newNotif));
+        if( newNotif > 0){
             if( tabLayout.getSelectedTabPosition() != 1)
                 tabCounterNotif.setVisibility(View.VISIBLE);
             else
