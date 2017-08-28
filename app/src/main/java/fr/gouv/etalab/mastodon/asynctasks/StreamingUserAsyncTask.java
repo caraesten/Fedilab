@@ -136,7 +136,7 @@ public class StreamingUserAsyncTask extends AsyncTask {
                 }
 
             }
-        }catch (IOException e){
+        }catch (Exception e){
             e.printStackTrace();
         }finally {
             if(reader != null){

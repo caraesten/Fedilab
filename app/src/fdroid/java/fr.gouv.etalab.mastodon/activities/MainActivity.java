@@ -15,9 +15,11 @@
 package fr.gouv.etalab.mastodon.activities;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
@@ -31,6 +33,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
@@ -67,8 +70,11 @@ import java.util.Locale;
 import java.util.Stack;
 import java.util.concurrent.TimeUnit;
 
+import fr.gouv.etalab.mastodon.asynctasks.StreamingUserAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Notification;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayFollowRequestSentFragment;
@@ -76,6 +82,7 @@ import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayScheduledTootsFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
+import fr.gouv.etalab.mastodon.services.StreamingService;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
@@ -127,7 +134,42 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        receive_data = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Bundle b = intent.getExtras();
+                StreamingUserAsyncTask.EventStreaming eventStreaming = (StreamingUserAsyncTask.EventStreaming) intent.getSerializableExtra("eventStreaming");
+
+                if( eventStreaming == StreamingUserAsyncTask.EventStreaming.NOTIFICATION){
+                    Notification notification = b.getParcelable("data");
+                    if(notificationsFragment != null && notificationsFragment.getUserVisibleHint()){
+                        notificationsFragment.updateData(notification);
+                    }else{
+                        newNotif++;
+                        updateNotifCounter();
+                        notificationsFragment.updateData(notification);
+                    }
+                }else if(eventStreaming == StreamingUserAsyncTask.EventStreaming.UPDATE){
+                    Status status = b.getParcelable("data");
+                    if(homeFragment != null && homeFragment.getUserVisibleHint()){
+                        homeFragment.updateData(status);
+                    }else{
+                        newHome++;
+                        updateHomeCounter();
+                        homeFragment.updateData(status);
+                    }
+                }else if(eventStreaming == StreamingUserAsyncTask.EventStreaming.DELETE){
+                    String id = b.getString("id");
+                    if(notificationsFragment != null && notificationsFragment.getUserVisibleHint()){
+
+                    }else{
+
+                    }
+                }
+            }
+        };
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
+
         newNotif = 0;
         newHome = 0;
 
@@ -149,7 +191,7 @@ public class MainActivity extends AppCompatActivity
             finish();
             return;
         }
-
+        startService(new Intent(getApplicationContext(), StreamingService.class));
         Helper.fillMapEmoji(getApplicationContext());
         //Here, the user is authenticated
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -229,18 +271,19 @@ public class MainActivity extends AppCompatActivity
                     case 0:
                         item = navigationView.getMenu().findItem(R.id.nav_home);
                         fragmentTag = "HOME_TIMELINE";
-                        if( bubbles && homeFragment != null)
-                            homeFragment.refreshData();
                         newHome = 0;
+                        if( homeFragment != null)
+                            homeFragment.refresh();
                         updateHomeCounter();
                         break;
                     case 1:
                         fragmentTag = "NOTIFICATIONS";
                         item = navigationView.getMenu().findItem(R.id.nav_notification);
                         newNotif = 0;
+
+                        if( notificationsFragment != null)
+                            notificationsFragment.refresh();
                         updateNotifCounter();
-                        if( bubbles && notificationsFragment != null)
-                            notificationsFragment.refreshData();
                         break;
                     case 2:
                         fragmentTag = "LOCAL_TIMELINE";
@@ -810,6 +853,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onResume(){
         super.onResume();
+        MainActivity.activityResumed();
         //Proceeds to update of the authenticated account
         if(Helper.isLoggedIn(getApplicationContext()))
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -1013,38 +1057,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void refreshData(){
-        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-
-        String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(prefKeyOauthTokenT);
-        if( account != null){
-            String last_refresh = sharedpreferences.getString(Helper.LAST_BUBBLE_REFRESH_NOTIF + account.getId(), null);
-            Date last_refresh_date = Helper.stringToDate(getApplicationContext(), last_refresh);
-            if (last_refresh_date == null || (new Date().getTime() - last_refresh_date.getTime()) >= TimeUnit.SECONDS.toMillis(60)) {
-
-                if( notificationsFragment != null ){
-                    notificationsFragment.update();
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(Helper.LAST_BUBBLE_REFRESH_NOTIF+ account.getId(),Helper.dateToString(getApplicationContext(), new Date()));
-                    editor.apply();
-                }
-            }
-
-            last_refresh = sharedpreferences.getString(Helper.LAST_BUBBLE_REFRESH_HOME + account.getId(), null);
-            last_refresh_date = Helper.stringToDate(getApplicationContext(), last_refresh);
-
-            if (last_refresh_date == null || (new Date().getTime() - last_refresh_date.getTime()) >= TimeUnit.SECONDS.toMillis(60)) {
-                if( homeFragment != null ){
-                    homeFragment.update();
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(Helper.LAST_BUBBLE_REFRESH_HOME+ account.getId(),Helper.dateToString(getApplicationContext(), new Date()));
-                    editor.apply();
-                }
-            }
-        }
-    }
 
     public void updateHomeCounter(){
         if( tabLayout.getTabAt(0) == null )

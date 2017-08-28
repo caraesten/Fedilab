@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity
                     }
                 }else if(eventStreaming == StreamingUserAsyncTask.EventStreaming.DELETE){
                     String id = b.getString("id");
-                    if(notificationsFragment.getUserVisibleHint()){
+                    if(notificationsFragment != null && notificationsFragment.getUserVisibleHint()){
 
                     }else{
 
