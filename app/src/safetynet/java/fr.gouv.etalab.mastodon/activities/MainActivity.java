@@ -71,6 +71,7 @@ import java.util.Locale;
 import java.util.Stack;
 import java.util.concurrent.TimeUnit;
 
+import fr.gouv.etalab.mastodon.asynctasks.StreamingUserAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
@@ -447,6 +448,8 @@ public class MainActivity extends AppCompatActivity
         } else {
             navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
         }
+
+
 
         LinearLayout owner_container = (LinearLayout) headerLayout.findViewById(R.id.owner_container);
         owner_container.setOnClickListener(new View.OnClickListener() {
