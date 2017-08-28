@@ -251,6 +251,7 @@ public class Helper {
     //Receiver
     public static final String SEARCH_VALIDATE_ACCOUNT = "search_validate_account";
     public static final String HEADER_ACCOUNT = "header_account";
+    public static final String RECEIVE_DATA = "receive_data";
 
     //User agent
     public static final String USER_AGENT = "Mastalab/"+ BuildConfig.VERSION_NAME + " Android/"+ Build.VERSION.RELEASE;

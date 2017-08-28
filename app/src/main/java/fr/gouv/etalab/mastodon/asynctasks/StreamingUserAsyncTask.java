@@ -99,7 +99,7 @@ public class StreamingUserAsyncTask extends AsyncTask {
                         eventStreaming = EventStreaming.NOTIFICATION;
                         break;
                     case "delete":
-                        event = reader.readLine();
+                        event = "{\"id\":" + reader.readLine() + "}";
                         eventStreaming = EventStreaming.DELETE;
                         break;
                     default:

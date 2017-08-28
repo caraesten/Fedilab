@@ -1253,7 +1253,7 @@ public class API {
      * @return Status
      */
     @SuppressWarnings("InfiniteRecursion")
-    private static Status parseStatuses(Context context, JSONObject resobj){
+    public static Status parseStatuses(Context context, JSONObject resobj){
         Status status = new Status();
         try {
             status.setId(resobj.get("id").toString());

@@ -15,9 +15,11 @@
 package fr.gouv.etalab.mastodon.activities;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
@@ -31,6 +33,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
@@ -74,6 +77,8 @@ import java.util.concurrent.TimeUnit;
 import fr.gouv.etalab.mastodon.asynctasks.StreamingUserAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Notification;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayFollowRequestSentFragment;
@@ -125,6 +130,7 @@ public class MainActivity extends AppCompatActivity
     private DisplayStatusFragment homeFragment;
     private DisplayNotificationsFragment notificationsFragment;
     private static final int ERROR_DIALOG_REQUEST_CODE = 97;
+    private BroadcastReceiver receive_data;
 
     public MainActivity() {
     }
@@ -132,6 +138,42 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
+
+        receive_data = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Bundle b = getIntent().getExtras();
+                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                boolean bubbles = sharedpreferences.getBoolean(Helper.SET_BUBBLE_COUNTER, true);
+                StreamingUserAsyncTask.EventStreaming eventStreaming = (StreamingUserAsyncTask.EventStreaming) intent.getSerializableExtra("eventStreaming");
+                if( eventStreaming == StreamingUserAsyncTask.EventStreaming.NOTIFICATION){
+                    Notification notification = b.getParcelable("data");
+                    if( notificationsFragment.getUserVisibleHint() == true){
+
+                    }else{
+
+                    }
+                }else if(eventStreaming == StreamingUserAsyncTask.EventStreaming.UPDATE){
+                    Status status = b.getParcelable("data");
+                    if( notificationsFragment.getUserVisibleHint() == true){
+
+                    }else{
+
+                    }
+                }else if(eventStreaming == StreamingUserAsyncTask.EventStreaming.DELETE){
+                    String id = b.getString("id");
+                    if( notificationsFragment.getUserVisibleHint() == true){
+
+                    }else{
+
+                    }
+                }
+            }
+        };
+
+
+
         ProviderInstaller.installIfNeededAsync(this, this);
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
@@ -813,23 +855,23 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onResume(){
         super.onResume();
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean bubbles = sharedpreferences.getBoolean(Helper.SET_BUBBLE_COUNTER, true);
-        if( bubbles){
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {refreshData();}
-            }, 1000);
-        }
-
+        MainActivity.activityResumed();
         //Proceeds to update of the authenticated account
         if(Helper.isLoggedIn(getApplicationContext()))
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MainActivity.activityPaused();
+    }
 
-
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
+    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -1136,4 +1178,21 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
+
+
+
+    public static boolean isActivityVisible() {
+        return activityVisible;
+    }
+
+    private static void activityResumed() {
+        activityVisible = true;
+    }
+
+    private static void activityPaused() {
+        activityVisible = false;
+    }
+
+    private static boolean activityVisible;
 }

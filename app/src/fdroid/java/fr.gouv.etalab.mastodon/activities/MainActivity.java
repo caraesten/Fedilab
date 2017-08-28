@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity
 
     private DisplayStatusFragment homeFragment;
     private DisplayNotificationsFragment notificationsFragment;
-
+    private BroadcastReceiver receive_data;
 
     public MainActivity() {
     }
@@ -127,6 +127,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
 
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -805,22 +807,22 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onResume(){
         super.onResume();
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean bubbles = sharedpreferences.getBoolean(Helper.SET_BUBBLE_COUNTER, true);
-        if( bubbles){
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {refreshData();}
-            }, 1000);
-        }
         //Proceeds to update of the authenticated account
         if(Helper.isLoggedIn(getApplicationContext()))
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MainActivity.activityPaused();
+    }
 
-
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
+    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -1062,6 +1064,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
     public void updateNotifCounter(int newNotifCount){
         if(tabLayout.getTabAt(1) == null)
             return;
@@ -1080,5 +1083,19 @@ public class MainActivity extends AppCompatActivity
             tabCounterNotif.setVisibility(View.GONE);
         }
     }
+
+    public static boolean isActivityVisible() {
+        return activityVisible;
+    }
+
+    private static void activityResumed() {
+        activityVisible = true;
+    }
+
+    private static void activityPaused() {
+        activityVisible = false;
+    }
+
+    private static boolean activityVisible;
 
 }

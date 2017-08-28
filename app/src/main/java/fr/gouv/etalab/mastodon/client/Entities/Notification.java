@@ -15,19 +15,41 @@
 package fr.gouv.etalab.mastodon.client.Entities;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
 /**
  * Created by Thomas on 23/04/2017.
  */
 
-public class Notification {
+public class Notification implements Parcelable {
 
     private String id;
     private String type;
     private Date created_at;
     private Account account;
     private Status status;
+
+    protected Notification(Parcel in) {
+        id = in.readString();
+        type = in.readString();
+        account = in.readParcelable(Account.class.getClassLoader());
+        status = in.readParcelable(Status.class.getClassLoader());
+    }
+
+    public static final Creator<Notification> CREATOR = new Creator<Notification>() {
+        @Override
+        public Notification createFromParcel(Parcel in) {
+            return new Notification(in);
+        }
+
+        @Override
+        public Notification[] newArray(int size) {
+            return new Notification[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -67,5 +89,18 @@ public class Notification {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(type);
+        dest.writeParcelable(account, flags);
+        dest.writeParcelable(status, flags);
     }
 }
