@@ -205,6 +205,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_spoiler = (TextView) convertView.findViewById(R.id.status_spoiler);
             holder.status_spoiler_button = (Button) convertView.findViewById(R.id.status_spoiler_button);
             holder.yandex_translate = (TextView) convertView.findViewById(R.id.yandex_translate);
+            holder.google_translate = (TextView) convertView.findViewById(R.id.google_translate);
             holder.status_replies = (LinearLayout) convertView.findViewById(R.id.status_replies);
             holder.status_replies_profile_pictures = (LinearLayout) convertView.findViewById(R.id.status_replies_profile_pictures);
             holder.status_replies_text = (TextView) convertView.findViewById(R.id.status_replies_text);
@@ -310,10 +311,25 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_translate.setVisibility(View.GONE);
         }
 
-        if( translator == Helper.TRANS_YANDEX)
-            holder.yandex_translate.setVisibility(View.VISIBLE);
-        else
-            holder.yandex_translate.setVisibility(View.GONE);
+        switch (translator)
+        {
+            case Helper.TRANS_NONE:
+                holder.yandex_translate.setVisibility(View.GONE);
+                holder.google_translate.setVisibility(View.GONE);
+                break;
+            case Helper.TRANS_YANDEX:
+                holder.google_translate.setVisibility(View.GONE);
+                holder.yandex_translate.setVisibility(View.VISIBLE);
+                break;
+            case Helper.TRANS_GOOGLE:
+                holder.yandex_translate.setVisibility(View.GONE);
+                holder.google_translate.setVisibility(View.VISIBLE);
+                break;
+            default:
+                holder.yandex_translate.setVisibility(View.GONE);
+                holder.google_translate.setVisibility(View.GONE);
+                break;
+        }
 
         holder.status_translate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -363,7 +379,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                             new YandexQuery(StatusListAdapter.this).getYandexTextview(position, text, currentLocale);
                         else if( translator == Helper.TRANS_GOOGLE)
                             new GoogleTranslateQuery(StatusListAdapter.this).getGoogleTextview(position, text, currentLocale);
-
                     }else {
                         status.setTranslationShown(!status.isTranslationShown());
                         statusListAdapter.notifyDataSetChanged();
@@ -378,6 +393,13 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             @Override
             public void onClick(View v) {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://translate.yandex.com/"));
+                context.startActivity(browserIntent);
+            }
+        });
+        holder.google_translate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://translate.google.com/"));
                 context.startActivity(browserIntent);
             }
         });
@@ -1031,6 +1053,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         LinearLayout status_container3;
         LinearLayout main_container;
         TextView yandex_translate;
+        TextView google_translate;
 
         LinearLayout status_replies;
         LinearLayout status_replies_profile_pictures;
