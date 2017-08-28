@@ -354,7 +354,11 @@ public class MainActivity extends AppCompatActivity
                 Intent intent = new Intent(MainActivity.this, SearchResultActivity.class);
                 intent.putExtra("search", query);
                 startActivity(intent);
-                return true;
+                toolbar_search.setQuery("", false);
+                toolbar_search.setIconified(true);
+                toolbarTitle.setVisibility(View.VISIBLE);
+                pp_actionBar.setVisibility(View.VISIBLE);
+                return false;
             }
             @Override
             public boolean onQueryTextChange(String newText) {
@@ -599,6 +603,7 @@ public class MainActivity extends AppCompatActivity
             //Hide search bar on back pressed
             if( !toolbar_search.isIconified()){
                 toolbar_search.setIconified(true);
+                return;
             }
             if( viewPager.getVisibility() == View.VISIBLE){
                 if (stackBack.size() > 1) {

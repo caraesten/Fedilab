@@ -35,6 +35,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -357,7 +359,11 @@ public class MainActivity extends AppCompatActivity
                 Intent intent = new Intent(MainActivity.this, SearchResultActivity.class);
                 intent.putExtra("search", query);
                 startActivity(intent);
-                return true;
+                toolbar_search.setQuery("", false);
+                toolbar_search.setIconified(true);
+                toolbarTitle.setVisibility(View.VISIBLE);
+                pp_actionBar.setVisibility(View.VISIBLE);
+                return false;
             }
             @Override
             public boolean onQueryTextChange(String newText) {
@@ -602,6 +608,7 @@ public class MainActivity extends AppCompatActivity
             //Hide search bar on back pressed
             if( !toolbar_search.isIconified()){
                 toolbar_search.setIconified(true);
+                return;
             }
             if( viewPager.getVisibility() == View.VISIBLE){
                 if (stackBack.size() > 1) {
@@ -812,6 +819,7 @@ public class MainActivity extends AppCompatActivity
                 public void run() {refreshData();}
             }, 1000);
         }
+
         //Proceeds to update of the authenticated account
         if(Helper.isLoggedIn(getApplicationContext()))
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -833,6 +841,7 @@ public class MainActivity extends AppCompatActivity
         final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         unCheckAllMenuItems(navigationView);
         item.setChecked(true);
+
         //Remove the search bar
         if( !toolbar_search.isIconified() ) {
             toolbarTitle.setVisibility(View.VISIBLE);
