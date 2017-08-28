@@ -32,7 +32,7 @@ public class MainApplication extends Application{
         super.onCreate();
         JobManager.create(this).addJobCreator(new ApplicationJob());
         JobManager.instance().getConfig().setVerbose(false);
-        StreamingSyncJob.schedule(false);
+        StreamingSyncJob.schedule(true);
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
     }

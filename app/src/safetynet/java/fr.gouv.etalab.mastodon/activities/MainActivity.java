@@ -86,6 +86,7 @@ import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayScheduledTootsFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
+import fr.gouv.etalab.mastodon.services.StreamingService;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
@@ -139,18 +140,18 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
         newNotif = 0;
         newHome = 0;
+
         receive_data = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                Bundle b = getIntent().getExtras();
-                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                Bundle b = intent.getExtras();
                 StreamingUserAsyncTask.EventStreaming eventStreaming = (StreamingUserAsyncTask.EventStreaming) intent.getSerializableExtra("eventStreaming");
+
                 if( eventStreaming == StreamingUserAsyncTask.EventStreaming.NOTIFICATION){
                     Notification notification = b.getParcelable("data");
-                    if(notificationsFragment.getUserVisibleHint()){
+                    if(notificationsFragment != null && notificationsFragment.getUserVisibleHint()){
                         notificationsFragment.updateData(notification);
                     }else{
                         newNotif++;
@@ -158,7 +159,7 @@ public class MainActivity extends AppCompatActivity
                     }
                 }else if(eventStreaming == StreamingUserAsyncTask.EventStreaming.UPDATE){
                     Status status = b.getParcelable("data");
-                    if(homeFragment.getUserVisibleHint()){
+                    if(homeFragment != null && homeFragment.getUserVisibleHint()){
                         homeFragment.updateData(status);
                     }else{
                         newHome++;
@@ -174,7 +175,7 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         };
-
+        LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
 
 
         ProviderInstaller.installIfNeededAsync(this, this);
@@ -196,7 +197,7 @@ public class MainActivity extends AppCompatActivity
             finish();
             return;
         }
-
+        startService(new Intent(getApplicationContext(), StreamingService.class));
         Helper.fillMapEmoji(getApplicationContext());
         //Here, the user is authenticated
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

@@ -237,8 +237,7 @@ public class Helper {
 
 
     //Refresh job
-    public static final int MINUTES_BETWEEN_NOTIFICATIONS_REFRESH = 15;
-    public static final int MINUTES_BETWEEN_HOME_TIMELINE = 30;
+    public static final int MINUTES_BETWEEN_STREAMING_CHECK_ALIVE = 15;
 
     //Intent
     public static final String INTENT_ACTION = "intent_action";

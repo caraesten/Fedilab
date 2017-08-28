@@ -27,8 +27,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveStreamingInterface;
@@ -43,6 +43,9 @@ public class StreamingUserAsyncTask extends AsyncTask {
 
     private String instance, token, acct, userId;
     private OnRetrieveStreamingInterface listener;
+    private static HashMap<String, HttpURLConnection> connectionHashMap;
+    private EventStreaming lastEvent;
+
 
     public StreamingUserAsyncTask(String instance, String token, String acct, String userId, OnRetrieveStreamingInterface onRetrieveStreamingInterface){
         this.instance = instance;
@@ -54,58 +57,76 @@ public class StreamingUserAsyncTask extends AsyncTask {
     public enum EventStreaming{
         UPDATE,
         NOTIFICATION,
-        DELETE
+        DELETE,
+        NONE
     }
+
 
     @Override
     protected Object doInBackground(Object[] params){
-        try {
-            URL url = new URL("https://" + this.instance + "/api/v1/streaming/user");
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestProperty("Content-Type", "application/json");
-            urlConnection.setRequestProperty("Authorization", "Bearer "+this.token);
-            urlConnection.setRequestProperty("Connection", "Keep-Alive");
-            urlConnection.setRequestProperty("Keep-Alive", "header");
-            Log.v(Helper.TAG, "http response: " + urlConnection.getResponseCode());
+        if( connectionHashMap == null)
+            connectionHashMap = new HashMap<>();
 
-            //Object inputStream = urlConnection.getContent();
-            InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
-            Log.v(Helper.TAG, readStrem(inputStream)+"");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            Log.v(Helper.TAG, "Error on url openConnection: "+e.getMessage());
-            e.printStackTrace();
+        boolean connectionAlive = false;
+        if( connectionHashMap.get(acct+userId) != null) {
+            try {
+                connectionAlive = (connectionHashMap.get(acct + userId).getResponseCode() == 200);
+            } catch (IOException e) {
+                connectionAlive = false;
+            }
         }
 
+        if( !connectionAlive) {
+            try {
+                URL url = new URL("https://" + this.instance + "/api/v1/streaming/user");
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestProperty("Content-Type", "application/json");
+                urlConnection.setRequestProperty("Authorization", "Bearer " + this.token);
+                urlConnection.setRequestProperty("Connection", "Keep-Alive");
+                urlConnection.setRequestProperty("Keep-Alive", "header");
+                connectionHashMap.put(acct+userId, urlConnection);
+
+                InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
+                readStream(inputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         return null;
     }
 
-    private String readStrem(InputStream inputStream) {
+    private String readStream(InputStream inputStream) {
         BufferedReader reader = null;
         try{
             reader = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
             String event;
             EventStreaming eventStreaming = null;
-            while((line = reader.readLine()) != null){
-                switch (line.trim()){
-                    case "update":
-                        event = reader.readLine();
+            while((event = reader.readLine()) != null){
+                if( lastEvent == EventStreaming.NONE || lastEvent == null) {
+                    switch (event.trim()) {
+                        case "event: update":
+                            lastEvent = EventStreaming.UPDATE;
+                            break;
+                        case "event: notification":
+                            lastEvent = EventStreaming.NOTIFICATION;
+                            break;
+                        case "event: delete":
+                            lastEvent = EventStreaming.DELETE;
+                            break;
+                        default:
+                            lastEvent = EventStreaming.NONE;
+                    }
+                }else{
+                    event = event.replace("data: ","");
+                    if(lastEvent == EventStreaming.UPDATE) {
                         eventStreaming = EventStreaming.UPDATE;
-                        break;
-                    case "notification":
-                        event = reader.readLine();
+                    }else if(lastEvent == EventStreaming.NOTIFICATION) {
                         eventStreaming = EventStreaming.NOTIFICATION;
-                        break;
-                    case "delete":
-                        event = "{\"id\":" + reader.readLine() + "}";
+                    }else if( lastEvent == EventStreaming.DELETE) {
                         eventStreaming = EventStreaming.DELETE;
-                        break;
-                    default:
-                        event = null;
-                }
-                if( event != null){
+                        event = "{id:" + event + "}";
+                    }
+                    lastEvent = EventStreaming.NONE;
                     try {
                         JSONObject eventJson = new JSONObject(event);
                         listener.onRetrieveStreaming(eventStreaming, eventJson, acct, userId);
@@ -113,6 +134,7 @@ public class StreamingUserAsyncTask extends AsyncTask {
                         e.printStackTrace();
                     }
                 }
+
             }
         }catch (IOException e){
             e.printStackTrace();
