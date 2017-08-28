@@ -70,7 +70,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
  * Notifications refresh job
  */
 
-public class SteamingSyncJob extends Job implements OnRetrieveStreamingInterface {
+public class StreamingSyncJob extends Job implements OnRetrieveStreamingInterface {
 
     static final String STREAMING = "job_streaming";
     private String message;
@@ -93,7 +93,7 @@ public class SteamingSyncJob extends Job implements OnRetrieveStreamingInterface
             return jobRequests.iterator().next().getJobId();
         }
 
-        return new JobRequest.Builder(SteamingSyncJob.STREAMING)
+        return new JobRequest.Builder(StreamingSyncJob.STREAMING)
                 .setPeriodic(TimeUnit.MINUTES.toMillis(Helper.MINUTES_BETWEEN_NOTIFICATIONS_REFRESH), TimeUnit.MINUTES.toMillis(5))
                 .setPersisted(true)
                 .setUpdateCurrent(updateCurrent)
@@ -133,7 +133,7 @@ public class SteamingSyncJob extends Job implements OnRetrieveStreamingInterface
                 return;
             //Retrieve users in db that owner has.
             for (Account account: accounts) {
-                new StreamingUserAsyncTask(account.getInstance(), account.getToken(), account.getAcct(), account.getId(), SteamingSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new StreamingUserAsyncTask(account.getInstance(), account.getToken(), account.getAcct(), account.getId(), StreamingSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
     }
