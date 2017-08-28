@@ -127,6 +127,11 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme_NoActionBar"
             />
+        <activity android:name="fr.gouv.etalab.mastodon.activities.EditProfileActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            />
         <activity
             android:name="fr.gouv.etalab.mastodon.activities.SplashActivity"
             android:windowSoftInputMode="stateAlwaysHidden"

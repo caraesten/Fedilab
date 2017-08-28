@@ -116,6 +116,7 @@ import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import fr.gouv.etalab.mastodon.activities.EditProfileActivity;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.LoginActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
@@ -961,6 +962,8 @@ public class Helper {
         TextView ownerStatus = (TextView) headerLayout.findViewById(R.id.owner_status);
         TextView ownerFollowing = (TextView) headerLayout.findViewById(R.id.owner_following);
         TextView ownerFollowers = (TextView) headerLayout.findViewById(R.id.owner_followers);
+        ImageView header_edit_profile = (ImageView) headerLayout.findViewById(R.id.header_edit_profile);
+        header_edit_profile.setOnClickListener(null);
         if( account == null ) {
             Helper.logout(activity);
             Intent myIntent = new Intent(activity, LoginActivity.class);
@@ -1010,6 +1013,13 @@ public class Helper {
                     }
                 });
             }
+            header_edit_profile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(activity, EditProfileActivity.class);
+                    activity.startActivity(intent);
+                }
+            });
         }
         profilePicture.setOnClickListener(null);
         profilePicture.setOnClickListener(new View.OnClickListener() {
