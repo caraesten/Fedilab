@@ -22,7 +22,7 @@
     >
     <!-- About app name -->
     <TextView
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:textSize="20sp"
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
@@ -41,146 +41,160 @@
 
     <!-- About developer -->
     <LinearLayout
-        android:orientation="horizontal"
-        android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
         <TextView
-            android:textSize="16sp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:clickable="true"
-            android:layout_weight="2"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:clickable="true"
+            android:gravity="center"
             android:text="@string/about_developer"
-            android:layout_height="wrap_content" />
+            android:textSize="16sp"/>
+
         <Button
             android:id="@+id/about_developer"
-            android:text="@string/about_developer_action"
-            android:layout_weight="3"
-            android:layout_width="0dp"
             style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:layout_height="wrap_content" />
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@string/about_developer_action"/>
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
         <TextView
             android:id="@+id/about_thanks_dev"
-            android:text="@string/thanks_text_dev"
-            android:layout_marginTop="20dp"
-            android:gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/thanks_text_dev"/>
     </LinearLayout>
 
     <!-- About license -->
     <LinearLayout
-        android:orientation="horizontal"
-        android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
         <TextView
-            android:text="@string/about_license"
-            android:textSize="16sp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_weight="2"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="@string/about_license"
+            android:textSize="16sp"/>
+
         <Button
             android:id="@+id/about_license"
-            android:text="@string/about_license_action"
             style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:layout_weight="3"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@string/about_license_action"/>
     </LinearLayout>
 
     <!-- About license -->
     <LinearLayout
-        android:orientation="horizontal"
-        android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
         <TextView
-            android:text="@string/about_code"
-            android:textSize="16sp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_weight="2"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="@string/about_code"
+            android:textSize="16sp"/>
+
         <Button
             android:id="@+id/about_code"
-            android:text="@string/about_code_action"
             style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:layout_weight="3"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@string/about_code_action"/>
     </LinearLayout>
 
 
     <!-- About The Kinrar's API -->
     <LinearLayout
-        android:orientation="horizontal"
-        android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
         <TextView
-            android:textSize="16sp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:clickable="true"
-            android:layout_weight="2"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:clickable="true"
+            android:gravity="center"
             android:text="@string/about_thekinrar"
-            android:layout_height="wrap_content" />
+            android:textSize="16sp"/>
+
         <Button
             android:id="@+id/about_thekinrar"
-            android:text="@string/about_thekinrar_action"
-            android:layout_weight="3"
-            android:layout_width="0dp"
             style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:layout_height="wrap_content" />
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@string/about_thekinrar_action"/>
     </LinearLayout>
 
     <!-- About translation -->
     <LinearLayout
-        android:orientation="horizontal"
-        android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
         <TextView
-            android:text="@string/about_yandex"
-            android:textSize="16sp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_weight="2"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="@string/about_yandex"
+            android:textSize="16sp"/>
+
         <Button
             android:id="@+id/about_translation"
-            android:text="@string/about_yandex_action"
             style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:layout_weight="3"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@string/about_yandex_action"/>
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
         <TextView
-            android:text="@string/thanks_text"
-            android:layout_marginTop="20dp"
-            android:gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/thanks_text"/>
     </LinearLayout>
 </LinearLayout>
