@@ -133,8 +133,6 @@ import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
-import static android.app.Notification.DEFAULT_VIBRATE;
-import static android.app.Notification.FLAG_SHOW_LIGHTS;
 import static android.content.Context.DOWNLOAD_SERVICE;
 
 
