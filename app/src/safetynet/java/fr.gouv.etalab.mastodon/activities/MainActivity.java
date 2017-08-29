@@ -151,25 +151,35 @@ public class MainActivity extends AppCompatActivity
 
                 if( eventStreaming == StreamingUserAsyncTask.EventStreaming.NOTIFICATION){
                     Notification notification = b.getParcelable("data");
-                    if(notificationsFragment != null && notificationsFragment.getUserVisibleHint()){
-                        notificationsFragment.updateData(notification);
-                    }else{
+                    if(notificationsFragment != null){
+                        if(notificationsFragment.getUserVisibleHint()){
+                            notificationsFragment.updateData(notification);
+                        }else{
+                            newNotif++;
+                            updateNotifCounter();
+                            notificationsFragment.updateData(notification);
+                        }
+                    }else {
                         newNotif++;
                         updateNotifCounter();
-                        notificationsFragment.updateData(notification);
                     }
                 }else if(eventStreaming == StreamingUserAsyncTask.EventStreaming.UPDATE){
                     Status status = b.getParcelable("data");
-                    if(homeFragment != null && homeFragment.getUserVisibleHint()){
-                        homeFragment.updateData(status);
+                    if( homeFragment != null){
+                        if(homeFragment.getUserVisibleHint()){
+                            homeFragment.updateData(status);
+                        }else{
+                            newHome++;
+                            updateHomeCounter();
+                            homeFragment.updateData(status);
+                        }
                     }else{
                         newHome++;
                         updateHomeCounter();
-                        homeFragment.updateData(status);
                     }
                 }else if(eventStreaming == StreamingUserAsyncTask.EventStreaming.DELETE){
                     String id = b.getString("id");
-                    if(notificationsFragment != null && notificationsFragment.getUserVisibleHint()){
+                    if(notificationsFragment.getUserVisibleHint()){
 
                     }else{
 

@@ -73,7 +73,7 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
     private String message;
     private int notificationId;
     private Intent intent;
-
+    private String lastePreviousContent;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -147,6 +147,7 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
             switch (notification.getType()){
                 case "mention":
                     if(notif_mention){
+                        lastePreviousContent = notification.getStatus().getContent();
                         notify = true;
                         notificationUrl = notification.getAccount().getAvatar();
                         if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
@@ -202,6 +203,7 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
             }else{
                 message = "";
             }
+
         }else if ( event ==  StreamingUserAsyncTask.EventStreaming.UPDATE){
             status = API.parseStatuses(getApplicationContext(), response);
             max_id_home = status.getId();
@@ -248,11 +250,11 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
         Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userconnected);
         //User receiving the notification is connected and application is to front, notification won't be pushed
         //Instead, the interaction is done in the activity
-        if( activityVisible &&
-                (
-                event == StreamingUserAsyncTask.EventStreaming.NOTIFICATION ||
-                ( event == StreamingUserAsyncTask.EventStreaming.UPDATE && account != null &&  !account.getAcct().trim().equals(acct.trim()) && !account.getId().trim().equals(userId.trim())
-                ))){
+        if( activityVisible && isCurrentAccountLoggedIn(acct, userId)){
+            //If the owner published the toot we stop
+            if( event == StreamingUserAsyncTask.EventStreaming.UPDATE && account != null &&
+                    status.getAccount().getAcct().trim().equals(acct.trim()) && status.getAccount().getId().trim().equals(userId.trim()))
+                return;
             notify = false;
             Intent intentBC = new Intent(Helper.RECEIVE_DATA);
             intentBC.putExtra("eventStreaming", event);
@@ -276,7 +278,8 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
 
 
         }else if(event == StreamingUserAsyncTask.EventStreaming.UPDATE ){
-            if( account == null ) { //troubles when getting the account
+            //lastePreviousContent contains the content of the last notification, if it was a mention it will avoid to push two notifications
+            if( account == null || lastePreviousContent.equals(status.getContent())) { //troubles when getting the account
                 notify = false;
             }else if(account.getAcct().trim().equals(acct.trim()) && account.getId().trim().equals(userId.trim())){
                 //Same account, no notification
@@ -321,5 +324,13 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
                     }});
             }
         }
+    }
+
+    private boolean isCurrentAccountLoggedIn(String acct, String userId){
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userconnected = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userconnected);
+        return acct.trim().equals(account.getAcct().trim()) && userId.trim().equals(account.getId().trim());
     }
 }
