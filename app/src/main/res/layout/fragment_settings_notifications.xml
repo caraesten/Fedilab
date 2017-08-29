@@ -173,6 +173,25 @@
                 android:layout_height="wrap_content"
                 />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/set_led_colour_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:text="@string/set_led_colour"/>
+            <Spinner
+                android:id="@+id/led_colour_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/led_colours"/>
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
 

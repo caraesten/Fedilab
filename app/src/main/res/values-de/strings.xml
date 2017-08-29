@@ -335,6 +335,18 @@
         <item>Nein</item>
     </string-array>
 
+    <string name="set_led_colour">Set LED colour:</string>
+
+    <string-array name="led_colours">
+        <item>Blue</item>
+        <item>Cyan</item>
+        <item>Magenta</item>
+        <item>Green</item>
+        <item>Red</item>
+        <item>Yellow</item>
+        <item>White</item>
+    </string-array>
+
     <string name="action_block">Blockiere</string>
     <string name="action_unblock">Nicht mehr blockieren</string>
     <string name="action_mute">Stummschalten</string>

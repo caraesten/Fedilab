@@ -26,10 +26,14 @@ import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -49,6 +53,9 @@ public class SettingsNotificationsFragment extends Fragment {
 
     private Context context;
     private int style;
+
+    int count = 0;
+
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 
@@ -217,6 +224,10 @@ public class SettingsNotificationsFragment extends Fragment {
 
             }
         });
+
+        final Spinner led_colour_spinner = (Spinner) rootView.findViewById(R.id.led_colour_spinner);
+        final TextView ledLabel = (TextView) rootView.findViewById(R.id.set_led_colour_label);
+
         switchCompatSilent.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -224,8 +235,55 @@ public class SettingsNotificationsFragment extends Fragment {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_NOTIF_SILENT, isChecked);
                 editor.apply();
+
+                if (isChecked) {
+                    ledLabel.setEnabled(true);
+                    led_colour_spinner.setEnabled(true);
+                } else {
+                    ledLabel.setEnabled(false);
+                    for (View lol : led_colour_spinner.getTouchables()) {
+                        lol.setEnabled(false);
+                    }
+                }
             }
         });
+
+        if (sharedpreferences.getBoolean(Helper.SET_NOTIF_SILENT, false)) {
+
+            ledLabel.setEnabled(true);
+            led_colour_spinner.setEnabled(true);
+
+            ArrayAdapter<CharSequence> adapterLEDColour = ArrayAdapter.createFromResource(getActivity(),
+                    R.array.led_colours, android.R.layout.simple_spinner_item);
+            led_colour_spinner.setAdapter(adapterLEDColour);
+            int positionSpinnerLEDColour = (sharedpreferences.getInt(Helper.SET_LED_COLOUR, Helper.LED_COLOUR));
+            led_colour_spinner.setSelection(positionSpinnerLEDColour);
+
+            led_colour_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    if (count > 0) {
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putInt(Helper.SET_LED_COLOUR, position);
+                        editor.apply();
+                    } else {
+                        count++;
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
+            });
+        }
+
+        else {
+            ledLabel.setEnabled(false);
+            for (View lol : led_colour_spinner.getTouchables()) {
+                lol.setEnabled(false);
+            }
+        }
+
         if( theme == Helper.THEME_LIGHT) {
             settings_time_from.setTextColor(ContextCompat.getColor(context, R.color.white));
             settings_time_to.setTextColor(ContextCompat.getColor(context, R.color.white));

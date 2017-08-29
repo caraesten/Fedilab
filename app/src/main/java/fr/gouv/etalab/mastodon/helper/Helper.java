@@ -200,6 +200,7 @@ public class Helper {
     public static final String SET_PREVIEW_REPLIES = "set_preview_replies";
     public static final String SET_PREVIEW_REPLIES_PP = "set_preview_replies_pp";
     public static final String SET_TRANSLATOR = "set_translator";
+    public static final String SET_LED_COLOUR = "set_led_colour";
 
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
@@ -209,6 +210,8 @@ public class Helper {
     public static final int THEME_TABS = 1;
     public static final int THEME_MENU = 2;
     public static final int THEME_MENU_TABS = 3;
+
+    public static final int LED_COLOUR = 0;
 
     public static final int TRANS_YANDEX = 0;
     public static final int TRANS_GOOGLE = 1;
@@ -234,7 +237,6 @@ public class Helper {
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 
 
-    //Refresh job
     //Refresh job
     public static final int MINUTES_BETWEEN_NOTIFICATIONS_REFRESH = 15;
     public static final int MINUTES_BETWEEN_HOME_TIMELINE = 30;
@@ -599,7 +601,34 @@ public class Helper {
             String soundUri = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() +"/";
             notificationBuilder.setSound(Uri.parse(soundUri + R.raw.boop));
         }
-        notificationBuilder.setLights(Color.BLUE, 500, 1000);
+
+        int ledColour = Color.BLUE;
+
+        switch (sharedpreferences.getInt(Helper.SET_LED_COLOUR, Helper.LED_COLOUR)) {
+            case 0: // BLUE
+                ledColour = Color.BLUE;
+                break;
+            case 1: // CYAN
+                ledColour = Color.CYAN;
+                break;
+            case 2: // MAGENTA
+                ledColour = Color.MAGENTA;
+                break;
+            case 3: // GREEN
+                ledColour = Color.GREEN;
+                break;
+            case 4: // RED
+                ledColour = Color.RED;
+                break;
+            case 5: // YELLOW
+                ledColour = Color.YELLOW;
+                break;
+            case 6: // WHITE
+                ledColour = Color.WHITE;
+                break;
+        }
+
+        notificationBuilder.setLights(ledColour, 500, 1000);
         notificationBuilder.setContentTitle(title);
         notificationBuilder.setLargeIcon(icon);
         notificationManager.notify(notificationId, notificationBuilder.build());
