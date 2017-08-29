@@ -14,6 +14,8 @@ package fr.gouv.etalab.mastodon.jobs;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import com.evernote.android.job.Job;
@@ -39,7 +41,8 @@ public class StreamingSyncJob extends Job  {
     @Override
     protected Result onRunJob(Params params) {
         //Code refresh here
-        getContext().startService(new Intent(getContext(), StreamingService.class));
+        if( !isServiceRunnning(StreamingService.class))
+            getContext().startService(new Intent(getContext(), StreamingService.class));
         return Result.SUCCESS;
     }
 
@@ -58,6 +61,17 @@ public class StreamingSyncJob extends Job  {
                 .setRequirementsEnforced(false)
                 .build()
                 .schedule();
+    }
+
+
+    private boolean isServiceRunnning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getContext().getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

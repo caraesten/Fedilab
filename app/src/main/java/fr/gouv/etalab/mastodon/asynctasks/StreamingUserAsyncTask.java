@@ -28,8 +28,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
+import javax.net.ssl.HttpsURLConnection;
+
+import fr.gouv.etalab.mastodon.client.TLSSocketFactory;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveStreamingInterface;
 
@@ -79,16 +84,16 @@ public class StreamingUserAsyncTask extends AsyncTask {
         if( !connectionAlive) {
             try {
                 URL url = new URL("https://" + this.instance + "/api/v1/streaming/user");
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
                 urlConnection.setRequestProperty("Content-Type", "application/json");
                 urlConnection.setRequestProperty("Authorization", "Bearer " + this.token);
                 urlConnection.setRequestProperty("Connection", "Keep-Alive");
                 urlConnection.setRequestProperty("Keep-Alive", "header");
+                urlConnection.setSSLSocketFactory(new TLSSocketFactory());
                 connectionHashMap.put(acct+userId, urlConnection);
-
                 InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
                 readStream(inputStream);
-            } catch (IOException e) {
+            } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
                 e.printStackTrace();
             }
         }
