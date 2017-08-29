@@ -279,7 +279,7 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
 
         }else if(event == StreamingUserAsyncTask.EventStreaming.UPDATE ){
             //lastePreviousContent contains the content of the last notification, if it was a mention it will avoid to push two notifications
-            if( account == null || lastePreviousContent.equals(status.getContent())) { //troubles when getting the account
+            if( account == null || (lastePreviousContent != null && lastePreviousContent.equals(status.getContent()))) { //troubles when getting the account
                 notify = false;
             }else if(account.getAcct().trim().equals(acct.trim()) && account.getId().trim().equals(userId.trim())){
                 //Same account, no notification
