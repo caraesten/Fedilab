@@ -255,18 +255,36 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         }
         new_data.setVisibility(View.VISIBLE);
     }
-    public void refresh(){
-        if( notificationsTmp != null){
+
+    public void refresh(Notification notification){
+
+        if( notification != null){
+            if( notificationsTmp != null && notificationsTmp.size() > 0){
+                notificationsTmp.add(0,notification);
+            }else {
+                notificationsTmp = new ArrayList<>();
+                for(Notification notificationTmp: this.notifications){
+                    notificationsTmp.add(notificationTmp);
+                }
+                notificationsTmp.add(0,notification);
+            }
+        }else{
+            notificationsTmp = new ArrayList<>();
+            for(Notification notificationTmp: this.notifications){
+                notificationsTmp.add(notificationTmp);
+            }
+        }
+        if( notificationsTmp.size() > 0){
             boolean isOnWifi = Helper.isOnWIFI(context);
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
             notifications = new ArrayList<>();
-            for(Notification notification: notificationsTmp){
-                notifications.add(notification);
+            for(Notification not_tmp: notificationsTmp){
+                notifications.add(not_tmp);
             }
             notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments, notifications);
             lv_notifications.setAdapter(notificationsListAdapter);
-            if( notificationsTmp.size() > 0 && textviewNoAction.getVisibility() == View.VISIBLE)
+            if( textviewNoAction.getVisibility() == View.VISIBLE)
                 textviewNoAction.setVisibility(View.GONE);
         }
         new_data.setVisibility(View.GONE);

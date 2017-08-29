@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity
                         }else{
                             newNotif++;
                             updateNotifCounter();
-                            notificationsFragment.updateData(notification);
+                            notificationsFragment.refresh(notification);
                         }
                     }else {
                         newNotif++;
@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity
                         }else{
                             newHome++;
                             updateHomeCounter();
-                            homeFragment.updateData(status);
+                            homeFragment.refresh(status);
                         }
                     }else{
                         newHome++;
@@ -173,10 +173,12 @@ public class MainActivity extends AppCompatActivity
                     }
                 }else if(eventStreaming == StreamingUserAsyncTask.EventStreaming.DELETE){
                     String id = b.getString("id");
-                    if(notificationsFragment.getUserVisibleHint()){
+                    if(notificationsFragment != null) {
+                        if (notificationsFragment.getUserVisibleHint()) {
 
-                    }else{
+                        } else {
 
+                        }
                     }
                 }
             }
@@ -282,19 +284,19 @@ public class MainActivity extends AppCompatActivity
                         item = navigationView.getMenu().findItem(R.id.nav_home);
                         fragmentTag = "HOME_TIMELINE";
                         if( homeFragment != null && newHome > 0) {
-                            newHome = 0;
-                            updateHomeCounter();
-                            homeFragment.refresh();
+                            homeFragment.refresh(null);
                         }
+                        newHome = 0;
+                        updateHomeCounter();
                         break;
                     case 1:
                         fragmentTag = "NOTIFICATIONS";
                         item = navigationView.getMenu().findItem(R.id.nav_notification);
                         if( notificationsFragment != null && newNotif > 0) {
-                            newNotif = 0;
-                            updateNotifCounter();
-                            notificationsFragment.refresh();
+                            notificationsFragment.refresh(null);
                         }
+                        newNotif = 0;
+                        updateNotifCounter();
                         break;
                     case 2:
                         fragmentTag = "LOCAL_TIMELINE";
