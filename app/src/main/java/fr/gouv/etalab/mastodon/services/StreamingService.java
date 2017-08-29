@@ -292,6 +292,11 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
             editor.apply();
 
         }else if(event == StreamingUserAsyncTask.EventStreaming.UPDATE ){
+            List<Account> accounts = new AccountDAO(getApplicationContext(),db).getAllAccount();
+            //It means there is no user in DB.
+            if( accounts == null )
+                return;
+
             //lastePreviousContent contains the content of the last notification, if it was a mention it will avoid to push two notifications
             if( account == null || (lastePreviousContent != null && lastePreviousContent.equals(status.getContent()))) { //troubles when getting the account
                 notify = false;
@@ -300,15 +305,26 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
                 notify = false;
             }else {
                 notify = true;
-                intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra(INTENT_ACTION, HOME_TIMELINE_INTENT);
-                intent.putExtra(PREF_KEY_ID, userId);
-                long notif_id = Long.parseLong(userId);
-                notificationId = ((notif_id + 2) > 2147483647) ? (int) (2147483647 - notif_id - 2) : (int) (notif_id + 2);
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, status.getId());
-                editor.apply();
+                //Retrieve users in db that owner has, and if the toot matches one of them we don't notify
+                for (Account act_tmp: accounts) {
+                    String acct_from = status.getAccount().getAcct().trim();
+                    String userid_from = status.getAccount().getId().trim();
+                    if( isCurrentAccountLoggedIn(acct_from, userid_from)) {
+                        notify = false;
+                        break;
+                    }
+                }
+                if( notify) {
+                    intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra(INTENT_ACTION, HOME_TIMELINE_INTENT);
+                    intent.putExtra(PREF_KEY_ID, userId);
+                    long notif_id = Long.parseLong(userId);
+                    notificationId = ((notif_id + 2) > 2147483647) ? (int) (2147483647 - notif_id - 2) : (int) (notif_id + 2);
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, status.getId());
+                    editor.apply();
+                }
             }
         }
         if( notify){
