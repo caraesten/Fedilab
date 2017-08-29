@@ -263,10 +263,6 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
         //User receiving the notification is connected and application is to front, notification won't be pushed
         //Instead, the interaction is done in the activity
         if( activityVisible && isCurrentAccountLoggedIn(acct, userId)){
-            //If the owner published the toot we stop
-            if( event == StreamingUserAsyncTask.EventStreaming.UPDATE && account != null &&
-                    status.getAccount().getAcct().trim().equals(acct.trim()) && status.getAccount().getId().trim().equals(userId.trim()))
-                return;
             notify = false;
             Intent intentBC = new Intent(Helper.RECEIVE_DATA);
             intentBC.putExtra("eventStreaming", event);

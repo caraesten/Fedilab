@@ -314,6 +314,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         if(isAccountPrivate){
             if( tootReply == null) {
                 visibility = "private";
+                toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
             }else {
                 if( visibility.equals("direct") ){
                     toot_visibility.setImageResource(R.drawable.ic_local_post_office);

@@ -76,7 +76,7 @@ public class StreamingUserAsyncTask extends AsyncTask {
         if( connectionHashMap.get(acct+userId) != null) {
             try {
                 connectionAlive = (connectionHashMap.get(acct + userId).getResponseCode() == 200);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 connectionAlive = false;
             }
         }
