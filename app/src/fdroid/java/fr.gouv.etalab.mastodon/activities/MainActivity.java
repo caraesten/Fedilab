@@ -134,6 +134,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        newNotif = 0;
+        newHome = 0;
+
         receive_data = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -169,9 +172,6 @@ public class MainActivity extends AppCompatActivity
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
-
-        newNotif = 0;
-        newHome = 0;
 
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
 
@@ -271,19 +271,20 @@ public class MainActivity extends AppCompatActivity
                     case 0:
                         item = navigationView.getMenu().findItem(R.id.nav_home);
                         fragmentTag = "HOME_TIMELINE";
-                        newHome = 0;
-                        if( homeFragment != null)
+                        if( homeFragment != null && newHome > 0) {
+                            newHome = 0;
+                            updateHomeCounter();
                             homeFragment.refresh();
-                        updateHomeCounter();
+                        }
                         break;
                     case 1:
                         fragmentTag = "NOTIFICATIONS";
                         item = navigationView.getMenu().findItem(R.id.nav_notification);
-                        newNotif = 0;
-
-                        if( notificationsFragment != null)
+                        if( notificationsFragment != null && newNotif > 0) {
+                            newNotif = 0;
+                            updateNotifCounter();
                             notificationsFragment.refresh();
-                        updateNotifCounter();
+                        }
                         break;
                     case 2:
                         fragmentTag = "LOCAL_TIMELINE";

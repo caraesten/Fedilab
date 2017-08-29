@@ -27,6 +27,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -52,7 +53,6 @@ import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveStreamingInterface;
-import fr.gouv.etalab.mastodon.jobs.StreamingSyncJob;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -65,6 +65,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
 
 /**
  * Created by Thomas on 28/08/2017.
+ * Manage service for streaming api and new notifications
  */
 
 public class StreamingService extends Service implements OnRetrieveStreamingInterface {
@@ -124,7 +125,8 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
     public void onRetrieveStreaming(StreamingUserAsyncTask.EventStreaming event, JSONObject response, String acct, String userId) {
         if(  response == null )
             return;
-        String max_id = null;
+        String max_id_notif = null;
+        String max_id_home = null;
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
         boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
@@ -141,16 +143,16 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
         String dataId = null;
         if( event == StreamingUserAsyncTask.EventStreaming.NOTIFICATION){
             notification = API.parseNotificationResponse(getApplicationContext(), response);
-            max_id = notification.getId();
+            max_id_notif = notification.getId();
             switch (notification.getType()){
                 case "mention":
                     if(notif_mention){
                         notify = true;
                         notificationUrl = notification.getAccount().getAvatar();
                         if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
-                            title = String.format("@%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_mention));
+                            title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_mention));
                         else
-                            title = String.format("@%s %s", notification.getAccount().getUsername(),getString(R.string.notif_mention));
+                            title = String.format("%s %s", notification.getAccount().getUsername(),getString(R.string.notif_mention));
                     }
                     break;
                 case "reblog":
@@ -158,9 +160,9 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
                         notify = true;
                         notificationUrl = notification.getAccount().getAvatar();
                         if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
-                            title = String.format("@%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_reblog));
+                            title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_reblog));
                         else
-                            title = String.format("@%s %s", notification.getAccount().getUsername(),getString(R.string.notif_reblog));
+                            title = String.format("%s %s", notification.getAccount().getUsername(),getString(R.string.notif_reblog));
                     }
                     break;
                 case "favourite":
@@ -168,9 +170,9 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
                         notify = true;
                         notificationUrl = notification.getAccount().getAvatar();
                         if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
-                            title = String.format("@%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_favourite));
+                            title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_favourite));
                         else
-                            title = String.format("@%s %s", notification.getAccount().getUsername(),getString(R.string.notif_favourite));
+                            title = String.format("%s %s", notification.getAccount().getUsername(),getString(R.string.notif_favourite));
                     }
                     break;
                 case "follow":
@@ -178,9 +180,9 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
                         notify = true;
                         notificationUrl = notification.getAccount().getAvatar();
                         if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
-                            title = String.format("@%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_follow));
+                            title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_follow));
                         else
-                            title = String.format("@%s %s", notification.getAccount().getUsername(),getString(R.string.notif_follow));
+                            title = String.format("%s %s", notification.getAccount().getUsername(),getString(R.string.notif_follow));
                     }
                     break;
                 default:
@@ -202,9 +204,7 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
             }
         }else if ( event ==  StreamingUserAsyncTask.EventStreaming.UPDATE){
             status = API.parseStatuses(getApplicationContext(), response);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, status.getId());
-            editor.apply();
+            max_id_home = status.getId();
             if( status.getContent() != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                     message = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
@@ -227,11 +227,15 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
             }
 
         }
-        if( max_id != null){
+        if( max_id_notif != null){
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, max_id);
+            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, max_id_notif);
             editor.apply();
-            return;
+        }
+        if( max_id_home != null){
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, max_id_home);
+            editor.apply();
         }
 
         //Check which user is connected and if activity is to front
@@ -244,7 +248,11 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
         Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userconnected);
         //User receiving the notification is connected and application is to front, notification won't be pushed
         //Instead, the interaction is done in the activity
-        if(  activityVisible && account != null &&  !account.getAcct().trim().equals(acct.trim()) && !account.getId().trim().equals(userId.trim())){
+        if( activityVisible &&
+                (
+                event == StreamingUserAsyncTask.EventStreaming.NOTIFICATION ||
+                ( event == StreamingUserAsyncTask.EventStreaming.UPDATE && account != null &&  !account.getAcct().trim().equals(acct.trim()) && !account.getId().trim().equals(userId.trim())
+                ))){
             notify = false;
             Intent intentBC = new Intent(Helper.RECEIVE_DATA);
             intentBC.putExtra("eventStreaming", event);
@@ -268,7 +276,10 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
 
 
         }else if(event == StreamingUserAsyncTask.EventStreaming.UPDATE ){
-            if(account.getAcct().trim().equals(acct.trim()) && account.getId().trim().equals(userId.trim())){
+            if( account == null ) { //troubles when getting the account
+                notify = false;
+            }else if(account.getAcct().trim().equals(acct.trim()) && account.getId().trim().equals(userId.trim())){
+                //Same account, no notification
                 notify = false;
             }else {
                 notify = true;

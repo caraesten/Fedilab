@@ -279,18 +279,20 @@ public class MainActivity extends AppCompatActivity
                     case 0:
                         item = navigationView.getMenu().findItem(R.id.nav_home);
                         fragmentTag = "HOME_TIMELINE";
-                        newHome = 0;
-                        if( homeFragment != null)
+                        if( homeFragment != null && newHome > 0) {
+                            newHome = 0;
+                            updateHomeCounter();
                             homeFragment.refresh();
-                        updateHomeCounter();
+                        }
                         break;
                     case 1:
                         fragmentTag = "NOTIFICATIONS";
                         item = navigationView.getMenu().findItem(R.id.nav_notification);
-                        newNotif = 0;
-                        if( notificationsFragment != null)
+                        if( notificationsFragment != null && newNotif > 0) {
+                            newNotif = 0;
+                            updateNotifCounter();
                             notificationsFragment.refresh();
-                        updateNotifCounter();
+                        }
                         break;
                     case 2:
                         fragmentTag = "LOCAL_TIMELINE";
