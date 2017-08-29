@@ -13,6 +13,8 @@ package fr.gouv.etalab.mastodon.services;
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +26,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.Html;
@@ -78,7 +81,7 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         callAsynchronousTask();
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
     @Nullable
@@ -118,6 +121,15 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
                 new StreamingUserAsyncTask(account.getInstance(), account.getToken(), account.getAcct(), account.getId(), StreamingService.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
+    }
+
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        Intent intent = new Intent(getApplicationContext(), StreamingService.class);
+        PendingIntent pendingIntent = PendingIntent.getService(this, 1, intent, PendingIntent.FLAG_ONE_SHOT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, SystemClock.elapsedRealtime() + 5000, pendingIntent);
+        super.onTaskRemoved(rootIntent);
     }
 
 
