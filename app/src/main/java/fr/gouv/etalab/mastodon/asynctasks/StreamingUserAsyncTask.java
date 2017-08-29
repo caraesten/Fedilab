@@ -106,6 +106,7 @@ public class StreamingUserAsyncTask extends AsyncTask {
             reader = new BufferedReader(new InputStreamReader(inputStream));
             String event;
             EventStreaming eventStreaming = null;
+
             while((event = reader.readLine()) != null){
                 if( lastEvent == EventStreaming.NONE || lastEvent == null) {
                     switch (event.trim()) {

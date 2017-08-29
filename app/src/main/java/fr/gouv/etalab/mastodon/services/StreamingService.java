@@ -262,6 +262,7 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
         Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userconnected);
         //User receiving the notification is connected and application is to front, notification won't be pushed
         //Instead, the interaction is done in the activity
+
         if( activityVisible && isCurrentAccountLoggedIn(acct, userId)){
             notify = false;
             Intent intentBC = new Intent(Helper.RECEIVE_DATA);
@@ -288,24 +289,17 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
             editor.apply();
 
         }else if(event == StreamingUserAsyncTask.EventStreaming.UPDATE ){
-            List<Account> accounts = new AccountDAO(getApplicationContext(),db).getAllAccount();
-            //It means there is no user in DB.
-            if( accounts == null )
-                return;
 
             //lastePreviousContent contains the content of the last notification, if it was a mention it will avoid to push two notifications
             if( account == null || (lastePreviousContent != null && lastePreviousContent.equals(status.getContent()))) { //troubles when getting the account
                 notify = false;
-            }else if(account.getAcct().trim().equals(acct.trim()) && account.getId().trim().equals(userId.trim())){
-                //Same account, no notification
-                notify = false;
             }else {
                 notify = true;
                 //Retrieve users in db that owner has, and if the toot matches one of them we don't notify
-                for (Account act_tmp: accounts) {
-                    String acct_from = status.getAccount().getAcct().trim();
-                    String userid_from = status.getAccount().getId().trim();
-                    if( isCurrentAccountLoggedIn(acct_from, userid_from)) {
+                List<Account> accounts = new AccountDAO(getApplicationContext(),db).getAllAccount();
+
+                for(Account act_tmp: accounts) {
+                    if(act_tmp.getAcct().trim().equals(status.getAccount().getAcct()) && act_tmp.getId().trim().equals(status.getAccount().getId().trim())){
                         notify = false;
                         break;
                     }

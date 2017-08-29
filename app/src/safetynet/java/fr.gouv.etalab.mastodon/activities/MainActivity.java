@@ -148,7 +148,6 @@ public class MainActivity extends AppCompatActivity
             public void onReceive(Context context, Intent intent) {
                 Bundle b = intent.getExtras();
                 StreamingUserAsyncTask.EventStreaming eventStreaming = (StreamingUserAsyncTask.EventStreaming) intent.getSerializableExtra("eventStreaming");
-
                 if( eventStreaming == StreamingUserAsyncTask.EventStreaming.NOTIFICATION){
                     Notification notification = b.getParcelable("data");
                     if(notificationsFragment != null){
