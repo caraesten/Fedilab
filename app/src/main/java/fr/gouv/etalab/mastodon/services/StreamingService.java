@@ -287,7 +287,9 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
             intent.putExtra(PREF_KEY_ID, userId);
             long notif_id = Long.parseLong(userId);
             notificationId = ((notif_id + 1) > 2147483647) ? (int) (2147483647 - notif_id - 1) : (int) (notif_id + 1);
-
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notification.getId());
+            editor.apply();
 
         }else if(event == StreamingUserAsyncTask.EventStreaming.UPDATE ){
             //lastePreviousContent contains the content of the last notification, if it was a mention it will avoid to push two notifications
@@ -304,6 +306,9 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
                 intent.putExtra(PREF_KEY_ID, userId);
                 long notif_id = Long.parseLong(userId);
                 notificationId = ((notif_id + 2) > 2147483647) ? (int) (2147483647 - notif_id - 2) : (int) (notif_id + 2);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, status.getId());
+                editor.apply();
             }
         }
         if( notify){
