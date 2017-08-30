@@ -330,16 +330,16 @@
         <item>Non</item>
     </string-array>
 
-    <string name="set_led_colour">Set LED colour:</string>
+    <string name="set_led_colour">Couleur de la LED :</string>
 
     <string-array name="led_colours">
-        <item>Blue</item>
+        <item>Bleu</item>
         <item>Cyan</item>
         <item>Magenta</item>
-        <item>Green</item>
-        <item>Red</item>
-        <item>Yellow</item>
-        <item>White</item>
+        <item>Vert</item>
+        <item>Rouge</item>
+        <item>Jaune</item>
+        <item>Blanc</item>
     </string-array>
 
     <string name="set_title_news">Actualités</string>
