@@ -22,7 +22,6 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -44,18 +43,29 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.List;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import fr.gouv.etalab.mastodon.activities.MainActivity;
-import fr.gouv.etalab.mastodon.asynctasks.StreamingUserAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
+import fr.gouv.etalab.mastodon.client.TLSSocketFactory;
 import fr.gouv.etalab.mastodon.helper.Helper;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveStreamingInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -64,6 +74,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
+import static fr.gouv.etalab.mastodon.helper.Helper.canNotify;
 import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
 
 /**
@@ -71,7 +82,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
  * Manage service for streaming api and new notifications
  */
 
-public class StreamingService extends Service implements OnRetrieveStreamingInterface {
+public class StreamingService extends Service {
 
     private String message;
     private int notificationId;
@@ -117,10 +128,118 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
             if( accounts == null )
                 return;
             //Retrieve users in db that owner has.
-            for (Account account: accounts) {
-                new StreamingUserAsyncTask(account.getInstance(), account.getToken(), account.getAcct(), account.getId(), StreamingService.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            for (final Account account: accounts) {
+                //new StreamingUserAsyncTask(account.getInstance(), account.getToken(), account.getAcct(), account.getId(), StreamingService.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+                Thread readThread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            proceeds(account);
+                        } catch (Exception ignored) {
+                        }
+                    }
+                });
+                readThread.start();
             }
         }
+    }
+
+
+    private static HashMap<String, HttpURLConnection> connectionHashMap;
+    private EventStreaming lastEvent;
+
+    public enum EventStreaming{
+        UPDATE,
+        NOTIFICATION,
+        DELETE,
+        NONE
+    }
+    private void proceeds(Account account){
+        if( connectionHashMap == null)
+            connectionHashMap = new HashMap<>();
+
+        boolean connectionAlive = false;
+        if( connectionHashMap.get(account.getAcct()+account.getId()) != null) {
+            try {
+                connectionAlive = (connectionHashMap.get(account.getAcct()+account.getId()).getResponseCode() == 200);
+            } catch (Exception e) {
+                connectionAlive = false;
+            }
+        }
+
+        if( !connectionAlive) {
+            try {
+                URL url = new URL("https://" + account.getInstance() + "/api/v1/streaming/user");
+                HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+                urlConnection.setRequestProperty("Content-Type", "application/json");
+                urlConnection.setRequestProperty("Authorization", "Bearer " + account.getToken());
+                urlConnection.setRequestProperty("Connection", "Keep-Alive");
+                urlConnection.setRequestProperty("Keep-Alive", "header");
+                urlConnection.setSSLSocketFactory(new TLSSocketFactory());
+                connectionHashMap.put(account.getAcct()+account.getId(), urlConnection);
+                InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
+                readStream(inputStream, account);
+            } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private String readStream(InputStream inputStream, Account account) {
+        BufferedReader reader = null;
+        try{
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+            String event;
+            EventStreaming eventStreaming = null;
+
+            while((event = reader.readLine()) != null){
+                if( lastEvent == EventStreaming.NONE || lastEvent == null) {
+                    switch (event.trim()) {
+                        case "event: update":
+                            lastEvent = EventStreaming.UPDATE;
+                            break;
+                        case "event: notification":
+                            lastEvent = EventStreaming.NOTIFICATION;
+                            break;
+                        case "event: delete":
+                            lastEvent = EventStreaming.DELETE;
+                            break;
+                        default:
+                            lastEvent = EventStreaming.NONE;
+                    }
+                }else{
+                    event = event.replace("data: ","");
+                    if(lastEvent == EventStreaming.UPDATE) {
+                        eventStreaming = EventStreaming.UPDATE;
+                    }else if(lastEvent == EventStreaming.NOTIFICATION) {
+                        eventStreaming = EventStreaming.NOTIFICATION;
+                    }else if( lastEvent == EventStreaming.DELETE) {
+                        eventStreaming = EventStreaming.DELETE;
+                        event = "{id:" + event + "}";
+                    }
+                    lastEvent = EventStreaming.NONE;
+                    try {
+                        JSONObject eventJson = new JSONObject(event);
+                        onRetrieveStreaming(eventStreaming, eventJson, account.getAcct(), account.getId());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if(reader != null){
+                try{
+                    reader.close();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
     }
 
     @Override
@@ -133,8 +252,7 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
     }
 
 
-    @Override
-    public void onRetrieveStreaming(StreamingUserAsyncTask.EventStreaming event, JSONObject response, String acct, String userId) {
+    public void onRetrieveStreaming(EventStreaming event, JSONObject response, String acct, String userId) {
         if(  response == null )
             return;
         String max_id_notif = null;
@@ -153,7 +271,7 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
         Status status = null;
         Notification notification = null;
         String dataId = null;
-        if( event == StreamingUserAsyncTask.EventStreaming.NOTIFICATION){
+        if( event == EventStreaming.NOTIFICATION){
             notification = API.parseNotificationResponse(getApplicationContext(), response);
             max_id_notif = notification.getId();
             switch (notification.getType()){
@@ -216,7 +334,7 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
                 message = "";
             }
 
-        }else if ( event ==  StreamingUserAsyncTask.EventStreaming.UPDATE){
+        }else if ( event ==  EventStreaming.UPDATE){
             status = API.parseStatuses(getApplicationContext(), response);
             max_id_home = status.getId();
             if( status.getContent() != null) {
@@ -232,7 +350,7 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
             }
             title = getString(R.string.notif_pouet, status.getAccount().getUsername());
             notificationUrl = status.getAccount().getAvatar();
-        }else if( event == StreamingUserAsyncTask.EventStreaming.DELETE){
+        }else if( event == EventStreaming.DELETE){
             try {
                 dataId = response.getString("id");
 
@@ -268,15 +386,15 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
             Intent intentBC = new Intent(Helper.RECEIVE_DATA);
             intentBC.putExtra("eventStreaming", event);
             Bundle b = new Bundle();
-            if( event == StreamingUserAsyncTask.EventStreaming.UPDATE)
+            if( event == EventStreaming.UPDATE)
                 b.putParcelable("data", status);
-            else if(event == StreamingUserAsyncTask.EventStreaming.NOTIFICATION)
+            else if(event == EventStreaming.NOTIFICATION)
                 b.putParcelable("data", notification);
-            else if(event == StreamingUserAsyncTask.EventStreaming.DELETE)
+            else if(event == EventStreaming.DELETE)
                 b.putString("id", dataId);
             intentBC.putExtras(b);
             LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentBC);
-        }else if(event == StreamingUserAsyncTask.EventStreaming.NOTIFICATION ){
+        }else if(event == EventStreaming.NOTIFICATION ){
             notify = true;
             intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
@@ -288,7 +406,7 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
             editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notification.getId());
             editor.apply();
 
-        }else if(event == StreamingUserAsyncTask.EventStreaming.UPDATE ){
+        }else if(event == EventStreaming.UPDATE ){
 
             //lastePreviousContent contains the content of the last notification, if it was a mention it will avoid to push two notifications
             if( account == null || (lastePreviousContent != null && lastePreviousContent.equals(status.getContent()))) { //troubles when getting the account
@@ -304,6 +422,9 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
                         break;
                     }
                 }
+                //Here we check if the user wants home timeline notifications
+                notify = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, true);
+
                 if( notify) {
                     intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -317,6 +438,9 @@ public class StreamingService extends Service implements OnRetrieveStreamingInte
                 }
             }
         }
+        //All is good here for a notification, we will know check if it can be done depending of the hour
+        if( notify)
+            notify = canNotify(getApplicationContext());
         if( notify){
             if( notificationUrl != null){
                 ImageLoader imageLoaderNoty = ImageLoader.getInstance();

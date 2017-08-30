@@ -26,7 +26,6 @@ import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -38,8 +37,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -68,13 +65,10 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Stack;
-import java.util.concurrent.TimeUnit;
 
-import fr.gouv.etalab.mastodon.asynctasks.StreamingUserAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
@@ -147,8 +141,8 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onReceive(Context context, Intent intent) {
                 Bundle b = intent.getExtras();
-                StreamingUserAsyncTask.EventStreaming eventStreaming = (StreamingUserAsyncTask.EventStreaming) intent.getSerializableExtra("eventStreaming");
-                if( eventStreaming == StreamingUserAsyncTask.EventStreaming.NOTIFICATION){
+                StreamingService.EventStreaming eventStreaming = (StreamingService.EventStreaming) intent.getSerializableExtra("eventStreaming");
+                if( eventStreaming == StreamingService.EventStreaming.NOTIFICATION){
                     Notification notification = b.getParcelable("data");
                     if(notificationsFragment != null){
                         if(notificationsFragment.getUserVisibleHint()){
@@ -162,7 +156,7 @@ public class MainActivity extends AppCompatActivity
                         newNotif++;
                         updateNotifCounter();
                     }
-                }else if(eventStreaming == StreamingUserAsyncTask.EventStreaming.UPDATE){
+                }else if(eventStreaming == StreamingService.EventStreaming.UPDATE){
                     Status status = b.getParcelable("data");
                     if( homeFragment != null){
                         if(homeFragment.getUserVisibleHint()){
@@ -176,7 +170,7 @@ public class MainActivity extends AppCompatActivity
                         newHome++;
                         updateHomeCounter();
                     }
-                }else if(eventStreaming == StreamingUserAsyncTask.EventStreaming.DELETE){
+                }else if(eventStreaming == StreamingService.EventStreaming.DELETE){
                     String id = b.getString("id");
                     if(notificationsFragment != null) {
                         if (notificationsFragment.getUserVisibleHint()) {
@@ -210,6 +204,7 @@ public class MainActivity extends AppCompatActivity
             finish();
             return;
         }
+
         startService(new Intent(getApplicationContext(), StreamingService.class));
         Helper.fillMapEmoji(getApplicationContext());
         //Here, the user is authenticated
