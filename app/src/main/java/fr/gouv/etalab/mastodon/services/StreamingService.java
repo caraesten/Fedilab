@@ -29,7 +29,6 @@ import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -54,7 +53,9 @@ import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -88,10 +89,15 @@ public class StreamingService extends Service {
     private int notificationId;
     private Intent intent;
     private String lastPreviousContent;
+    private static HashMap<String, HttpURLConnection> connectionHashMap;
+
+    @Override
+    public void onCreate(){
+        callAsynchronousTask();
+    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        callAsynchronousTask();
         return START_STICKY;
     }
 
@@ -146,7 +152,6 @@ public class StreamingService extends Service {
     }
 
 
-    private static HashMap<String, HttpURLConnection> connectionHashMap;
     private EventStreaming lastEvent;
 
     public enum EventStreaming{
@@ -158,7 +163,6 @@ public class StreamingService extends Service {
     private void proceeds(Account account){
         if( connectionHashMap == null)
             connectionHashMap = new HashMap<>();
-
         boolean connectionAlive = false;
         if( connectionHashMap.get(account.getAcct()+account.getId()) != null) {
             try {
@@ -167,26 +171,28 @@ public class StreamingService extends Service {
                 connectionAlive = false;
             }
         }
-
-        if( !connectionAlive) {
-            try {
-                URL url = new URL("https://" + account.getInstance() + "/api/v1/streaming/user");
-                HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-                urlConnection.setRequestProperty("Content-Type", "application/json");
-                urlConnection.setRequestProperty("Authorization", "Bearer " + account.getToken());
-                urlConnection.setRequestProperty("Connection", "Keep-Alive");
-                urlConnection.setRequestProperty("Keep-Alive", "header");
-                urlConnection.setSSLSocketFactory(new TLSSocketFactory());
-                connectionHashMap.put(account.getAcct()+account.getId(), urlConnection);
-                InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
-                readStream(inputStream, account);
-            } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
-                e.printStackTrace();
-            }
+        if( connectionAlive)
+            connectionHashMap.get(account.getAcct()+account.getId()).disconnect();
+        try {
+            URL url = new URL("https://" + account.getInstance() + "/api/v1/streaming/user");
+            HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+            urlConnection.setRequestProperty("Content-Type", "application/json");
+            urlConnection.setRequestProperty("Authorization", "Bearer " + account.getToken());
+            urlConnection.setRequestProperty("Connection", "Keep-Alive");
+            urlConnection.setRequestProperty("Keep-Alive", "header");
+            urlConnection.setSSLSocketFactory(new TLSSocketFactory());
+            connectionHashMap.put(account.getAcct()+account.getId(), urlConnection);
+            InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
+            readStream(inputStream, account);
+        } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
+            e.printStackTrace();
+            forceRestart();
         }
     }
 
-    private String readStream(InputStream inputStream, Account account) {
+
+
+    private String readStream(InputStream inputStream, final Account account) {
         BufferedReader reader = null;
         try{
             reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -195,6 +201,7 @@ public class StreamingService extends Service {
 
             while((event = reader.readLine()) != null){
                 if( lastEvent == EventStreaming.NONE || lastEvent == null) {
+
                     switch (event.trim()) {
                         case "event: update":
                             lastEvent = EventStreaming.UPDATE;
@@ -243,8 +250,24 @@ public class StreamingService extends Service {
                     e.printStackTrace();
                 }
             }
+            forceRestart();
         }
         return null;
+    }
+
+    private void forceRestart(){
+        Iterator it = connectionHashMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            HttpsURLConnection httpsURLConnection = (HttpsURLConnection) pair.getValue();
+            if( httpsURLConnection != null)
+                httpsURLConnection.disconnect();
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+        SystemClock.sleep(1000);
+        Intent intent = new Intent(getApplicationContext(), StreamingService.class);
+        startService(intent);
+        StreamingService.this.stopSelf();
     }
 
     @Override
@@ -423,7 +446,6 @@ public class StreamingService extends Service {
         //All is good here for a notification, we will know check if it can be done depending of the hour
         if( notify)
             notify = canNotify(getApplicationContext());
-
         if( notify && event == EventStreaming.NOTIFICATION){
             intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
