@@ -87,7 +87,7 @@ public class StreamingService extends Service {
     private String message;
     private int notificationId;
     private Intent intent;
-    private String lastePreviousContent;
+    private String lastPreviousContent;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -209,7 +209,12 @@ public class StreamingService extends Service {
                             lastEvent = EventStreaming.NONE;
                     }
                 }else{
-                    event = event.replace("data: ","");
+                    //event = event.replace("data: ","");
+                    if( !event.startsWith("data: ")){
+                        lastEvent = EventStreaming.NONE;
+                        continue;
+                    }
+                    event = event.substring(6);
                     if(lastEvent == EventStreaming.UPDATE) {
                         eventStreaming = EventStreaming.UPDATE;
                     }else if(lastEvent == EventStreaming.NOTIFICATION) {
@@ -277,7 +282,7 @@ public class StreamingService extends Service {
             switch (notification.getType()){
                 case "mention":
                     if(notif_mention){
-                        lastePreviousContent = notification.getStatus().getContent();
+                        lastPreviousContent = notification.getStatus().getContent();
                         notify = true;
                         notificationUrl = notification.getAccount().getAvatar();
                         if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
@@ -396,6 +401,30 @@ public class StreamingService extends Service {
             LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentBC);
         }else if(event == EventStreaming.NOTIFICATION ){
             notify = true;
+
+        }else if(event == EventStreaming.UPDATE ){
+            //lastPreviousContent contains the content of the last notification, if it was a mention it will avoid to push two notifications
+            if( account == null || (lastPreviousContent != null && lastPreviousContent.equals(status.getContent()))) {
+                notify = false;
+            }else {
+                notify = true;
+                //Retrieve users in db that owner has, and if the toot matches one of them we don't notify
+                List<Account> accounts = new AccountDAO(getApplicationContext(),db).getAllAccount();
+                for(Account act_tmp: accounts) {
+                    if(notify && act_tmp.getAcct().trim().equals(status.getAccount().getAcct()) && act_tmp.getId().trim().equals(status.getAccount().getId().trim())){
+                        notify = false;
+                    }
+                }
+                //Here we check if the user wants home timeline notifications
+                if( notify )
+                    notify = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, true);
+            }
+        }
+        //All is good here for a notification, we will know check if it can be done depending of the hour
+        if( notify)
+            notify = canNotify(getApplicationContext());
+
+        if( notify && event == EventStreaming.NOTIFICATION){
             intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
             intent.putExtra(INTENT_ACTION, NOTIFICATION_INTENT);
@@ -405,42 +434,19 @@ public class StreamingService extends Service {
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notification.getId());
             editor.apply();
-
-        }else if(event == EventStreaming.UPDATE ){
-
-            //lastePreviousContent contains the content of the last notification, if it was a mention it will avoid to push two notifications
-            if( account == null || (lastePreviousContent != null && lastePreviousContent.equals(status.getContent()))) { //troubles when getting the account
-                notify = false;
-            }else {
-                notify = true;
-                //Retrieve users in db that owner has, and if the toot matches one of them we don't notify
-                List<Account> accounts = new AccountDAO(getApplicationContext(),db).getAllAccount();
-
-                for(Account act_tmp: accounts) {
-                    if(act_tmp.getAcct().trim().equals(status.getAccount().getAcct()) && act_tmp.getId().trim().equals(status.getAccount().getId().trim())){
-                        notify = false;
-                        break;
-                    }
-                }
-                //Here we check if the user wants home timeline notifications
-                notify = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, true);
-
-                if( notify) {
-                    intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra(INTENT_ACTION, HOME_TIMELINE_INTENT);
-                    intent.putExtra(PREF_KEY_ID, userId);
-                    long notif_id = Long.parseLong(userId);
-                    notificationId = ((notif_id + 2) > 2147483647) ? (int) (2147483647 - notif_id - 2) : (int) (notif_id + 2);
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, status.getId());
-                    editor.apply();
-                }
-            }
         }
-        //All is good here for a notification, we will know check if it can be done depending of the hour
-        if( notify)
-            notify = canNotify(getApplicationContext());
+        if( notify && event == EventStreaming.UPDATE) {
+            intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra(INTENT_ACTION, HOME_TIMELINE_INTENT);
+            intent.putExtra(PREF_KEY_ID, userId);
+            long notif_id = Long.parseLong(userId);
+            notificationId = ((notif_id + 2) > 2147483647) ? (int) (2147483647 - notif_id - 2) : (int) (notif_id + 2);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, status.getId());
+            editor.apply();
+        }
+
         if( notify){
             if( notificationUrl != null){
                 ImageLoader imageLoaderNoty = ImageLoader.getInstance();
