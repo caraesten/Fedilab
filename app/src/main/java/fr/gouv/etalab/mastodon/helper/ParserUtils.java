@@ -19,7 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 
-import static com.keylesspalace.tusky.util.StringUtils.QUOTE;
+
+// TODO: Borrowed wholesale from Tusky
 
 /**
  * Inspect and get the information from a URL.
@@ -35,7 +36,7 @@ public class ParserUtils {
         this.parserListener = parserListener;
     }
 
-    // ComposeActivity : EditText inside the onTextChanged
+    // TootActivity : EditText inside the onTextChanged
     public String getPastedURLText(Context context) {
         ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         String pasteData;

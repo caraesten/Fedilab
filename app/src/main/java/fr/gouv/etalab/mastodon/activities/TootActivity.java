@@ -40,6 +40,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -243,13 +244,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             sharedContent = b.getString("sharedContent", null);
             sharedSubject = b.getString("sharedSubject", null);
 
-            // ACTION_SEND_TEXT route
-            if (sharedContent != null)
-            {
-                // Do Extract from URL here
-                final ParserUtils parser = new ParserUtils(this);
-            }
-
             // ACTION_SEND route
             if (b.getInt("uriNumber", 0) == 1) {
 
@@ -307,7 +301,15 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
             }});
 
+        //TODO: In here is where I've grafted on the code from Tusky.
         if( sharedContent != null ){ //Shared content
+
+            // ParserUtils is a class I borrowed from Tusky.
+            final ParserUtils parser = new ParserUtils(this);
+
+            parser.putInClipboardManager(TootActivity.this, sharedContent);
+            String urlString = parser.getPastedURLText(TootActivity.this);
+
             if( sharedSubject != null){
                 sharedContent = sharedSubject + "\n\n" + sharedContent;
             }
@@ -317,7 +319,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         int charsInCw = 0;
         int charsInToot = 0;
 
-        uploadSharedImage(sharedUri);
+        if (!sharedUri.isEmpty()) {
+            uploadSharedImage(sharedUri);
+        }
 
         boolean isAccountPrivate = account.isLocked();
         if(isAccountPrivate){
@@ -556,6 +560,16 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         mToast.show();
     }
 
+    //TODO: This overload takes care of the single URL coming from a text share.
+    public void uploadSharedImage(Uri image)
+    {
+        if (image != null) {
+            ArrayList<Uri> uri = new ArrayList<>();
+            uri.add(image);
+            uploadSharedImage(uri);
+        }
+    }
+
     // Handles uploading shared images
     public void uploadSharedImage(ArrayList<Uri> uri)
     {
@@ -567,6 +581,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     {
                         break;
                     }
+
+                    // TODO: Work out what needs to be done to the URL from a text URL share to allow upload.
+                    Toast.makeText(getApplicationContext(), "in upload: " + fileUri.toString(), Toast.LENGTH_SHORT).show();
 
                     picture_scrollview.setVisibility(View.VISIBLE);
 
@@ -1322,8 +1339,23 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         }
     }
 
+    // TODO: These two methods are part of the interface for ParserUtils
+    /*
+        These two methods are added to handle the grafted on code from Tusky,
+        they are part of its interface.
+     */
     @Override
     public void onReceiveHeaderInfo(ParserUtils.HeaderInfo headerInfo) {
+        if (!TextUtils.isEmpty(headerInfo.title)) {
+            Toast.makeText(getApplicationContext(), headerInfo.title, Toast.LENGTH_SHORT).show();
+
+            if (!TextUtils.isEmpty(headerInfo.image)) {
+                Toast.makeText(getApplicationContext(), "We have an image", Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(getApplicationContext(), headerInfo.image, Toast.LENGTH_SHORT).show();
+                uploadSharedImage(Uri.parse(headerInfo.image));
+            }
+        }
     }
 
     @Override
