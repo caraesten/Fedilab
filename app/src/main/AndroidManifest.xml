@@ -79,7 +79,6 @@
         <activity android:name="fr.gouv.etalab.mastodon.activities.HashTagActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:noHistory="true"
             android:label="@string/app_name"
             />
         <activity android:name="fr.gouv.etalab.mastodon.activities.WebviewConnectActivity"
