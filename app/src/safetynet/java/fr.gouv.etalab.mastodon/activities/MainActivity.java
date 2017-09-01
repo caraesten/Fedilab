@@ -26,6 +26,7 @@ import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -37,6 +38,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -619,11 +621,17 @@ public class MainActivity extends AppCompatActivity
             if ("text/plain".equals(type)) {
                 String sharedSubject = intent.getStringExtra(Intent.EXTRA_SUBJECT);
                 String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+                Uri uri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+                String sharedStream = null;
+                if( uri!= null)
+                    sharedStream = uri.toString();
+                Log.v(Helper.TAG,"sharedStream1: " + sharedStream);
                 if (sharedText != null) {
                     Intent intentToot = new Intent(getApplicationContext(), TootActivity.class);
                     Bundle b = new Bundle();
                     b.putString("sharedSubject", sharedSubject);
                     b.putString("sharedContent", sharedText);
+                    b.putString("sharedStream", sharedStream);
                     intentToot.putExtras(b);
                     startActivity(intentToot);
                 }

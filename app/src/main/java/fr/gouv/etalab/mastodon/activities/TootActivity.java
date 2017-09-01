@@ -41,6 +41,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -66,6 +67,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.BinaryHttpResponseHandler;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -74,9 +77,13 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -86,6 +93,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import cz.msebera.android.httpclient.Header;
 import fr.gouv.etalab.mastodon.asynctasks.PostStatusAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UploadActionAsyncTask;
@@ -109,6 +117,7 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.EXTERNAL_STORAGE_REQUEST_CODE;
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
@@ -136,7 +145,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private EditText toot_cw_content;
     private LinearLayout toot_reply_content_container;
     private Status tootReply = null;
-    private String sharedContent, sharedSubject;
+    private String sharedContent, sharedSubject, sharedStream;
     private CheckBox toot_sensitive;
     public long currentToId;
     private long restored;
@@ -241,6 +250,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             tootReply = b.getParcelable("tootReply");
             sharedContent = b.getString("sharedContent", null);
             sharedSubject = b.getString("sharedSubject", null);
+            sharedStream = b.getString("sharedStream", null);
             // ACTION_SEND route
             if (b.getInt("uriNumber", 0) == 1) {
 
@@ -301,6 +311,34 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         if( sharedContent != null ){ //Shared content
             if( sharedSubject != null){
                 sharedContent = sharedSubject + "\n\n" + sharedContent;
+            }
+            if( sharedStream != null){
+                AsyncHttpClient client = new AsyncHttpClient();
+                String[] allowedTypes = new String[] { "image/png" };
+                client.get(url, new BinaryHttpResponseHandler(allowedTypes) {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, byte[] binaryData) {
+                        OutputStream f;
+                        try {
+                            f = new FileOutputStream(getCacheDir());
+                            picture_scrollview.setVisibility(View.VISIBLE);
+                            ByteArrayInputStream bis = new ByteArrayInputStream(binaryData);
+                            loading_picture.setVisibility(View.VISIBLE);
+                            toot_picture.setEnabled(false);
+                            new UploadActionAsyncTask(getApplicationContext(),bis,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            f.write(binaryData); //your bytes
+                            f.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] binaryData, Throwable error) {
+
+                    }
+
+                });
             }
             toot_content.setText( String.format("\n%s", sharedContent));
         }

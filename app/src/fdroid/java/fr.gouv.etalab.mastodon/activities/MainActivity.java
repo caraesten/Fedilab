@@ -611,11 +611,13 @@ public class MainActivity extends AppCompatActivity
             if ("text/plain".equals(type)) {
                 String sharedSubject = intent.getStringExtra(Intent.EXTRA_SUBJECT);
                 String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+                String sharedStream = intent.getStringExtra(Intent.EXTRA_STREAM);
                 if (sharedText != null) {
                     Intent intentToot = new Intent(getApplicationContext(), TootActivity.class);
                     Bundle b = new Bundle();
                     b.putString("sharedSubject", sharedSubject);
                     b.putString("sharedContent", sharedText);
+                    b.putString("sharedStream", sharedStream);
                     intentToot.putExtras(b);
                     startActivity(intentToot);
                 }
