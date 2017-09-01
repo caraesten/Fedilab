@@ -503,7 +503,10 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             }
         }
 
-        final String content, displayName, username, ppurl;
+        String content;
+        final String displayName;
+        final String username;
+        final String ppurl;
         if( status.getReblog() != null){
             content = status.getReblog().getContent();
             displayName = Helper.shortnameToUnicode(status.getReblog().getAccount().getDisplay_name(), true);
@@ -569,7 +572,10 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             });
             holder.status_content_translated.setMovementMethod(LinkMovementMethod.getInstance());
         }
-
+        content = content.replaceAll("</p>","<br/>");
+        content = content.replaceAll("<p>","");
+        if( content.endsWith("<br/>") )
+            content = content.substring(0,content.length() -5);
         final SpannableString spannableString = Helper.clickableElements(context,content,
                 status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), true);
         holder.status_content.setText(spannableString, TextView.BufferType.SPANNABLE);

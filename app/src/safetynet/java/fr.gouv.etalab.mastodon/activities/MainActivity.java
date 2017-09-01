@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity
                 if( eventStreaming == StreamingService.EventStreaming.NOTIFICATION){
                     Notification notification = b.getParcelable("data");
                     if(notificationsFragment != null){
-                        if(notificationsFragment.getUserVisibleHint()){
+                        if(notificationsFragment.getUserVisibleHint() && isActivityVisible()){
                             notificationsFragment.updateData(notification);
                         }else{
                             newNotif++;
@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity
                 }else if(eventStreaming == StreamingService.EventStreaming.UPDATE){
                     Status status = b.getParcelable("data");
                     if( homeFragment != null){
-                        if(homeFragment.getUserVisibleHint()){
+                        if(homeFragment.getUserVisibleHint() && isActivityVisible()){
                             homeFragment.updateData(status);
                         }else{
                             newHome++;
