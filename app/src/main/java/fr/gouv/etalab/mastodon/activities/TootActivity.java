@@ -100,6 +100,7 @@ import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.drawers.AccountsSearchAdapter;
 import fr.gouv.etalab.mastodon.drawers.DraftsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.helper.ParserUtils;
 import fr.gouv.etalab.mastodon.interfaces.OnPostStatusActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
@@ -118,7 +119,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Toot activity class
  */
 
-public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostStatusActionInterface {
+public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostStatusActionInterface, ParserUtils.ParserListener {
 
 
     private String visibility;
@@ -241,6 +242,14 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             tootReply = b.getParcelable("tootReply");
             sharedContent = b.getString("sharedContent", null);
             sharedSubject = b.getString("sharedSubject", null);
+
+            // ACTION_SEND_TEXT route
+            if (sharedContent != null)
+            {
+                // Do Extract from URL here
+                final ParserUtils parser = new ParserUtils(this);
+            }
+
             // ACTION_SEND route
             if (b.getInt("uriNumber", 0) == 1) {
 
@@ -1313,5 +1322,12 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         }
     }
 
+    @Override
+    public void onReceiveHeaderInfo(ParserUtils.HeaderInfo headerInfo) {
+    }
 
+    @Override
+    public void onErrorHeaderInfo() {
+        Toast.makeText(this.getApplicationContext(), "An error has occurred.", Toast.LENGTH_SHORT).show();
+    }
 }
