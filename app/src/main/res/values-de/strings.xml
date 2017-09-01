@@ -337,7 +337,7 @@
         <item>Nein</item>
     </string-array>
 
-    <string name="set_led_colour">Set LED colour:</string>
+    <string name="set_led_colour">LED Farbe auswählen:</string>
 
     <string-array name="led_colours">
         <item>Blue</item>
