@@ -283,6 +283,8 @@
     <string name="load_attachment_spoiler">Afficher le contenu ?</string>
     <string name="load_sensitive_attachment">Charger les images sensibles</string>
     <string name="set_display_reply">Afficher le message précédent lors d\'une réponse</string>
+    <string name="set_display_local">Afficher le fil local</string>
+    <string name="set_display_global">Afficher le fil public</string>
     <string name="set_folder_title">Destination : </string>
     <string name="set_auto_store_toot">Enregistrer les brouillons automatiquement</string>
     <string name="set_bubble_counter">Afficher les compteurs</string>

@@ -65,6 +65,17 @@
             android:text="@string/set_preview_reply"
             android:layout_height="wrap_content" />
 
+        <CheckBox
+            android:id="@+id/set_display_local"
+            android:layout_width="wrap_content"
+            android:text="@string/set_display_local"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/set_display_global"
+            android:layout_width="wrap_content"
+            android:text="@string/set_display_global"
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:id="@+id/set_preview_reply_pp_container"

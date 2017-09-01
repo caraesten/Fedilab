@@ -139,6 +139,7 @@ public class SettingsFragment extends Fragment {
                 }
             }
         });
+
         if( !preview_reply){
             set_preview_reply_pp_container.setVisibility(View.GONE);
         }else{
@@ -168,6 +169,41 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+
+        boolean display_local = sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true);
+        final CheckBox set_display_local = (CheckBox) rootView.findViewById(R.id.set_display_local);
+        set_display_local.setChecked(display_local);
+
+        set_display_local.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_DISPLAY_LOCAL, set_display_local.isChecked());
+                editor.apply();
+                getActivity().recreate();
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
+                startActivity(intent);
+            }
+        });
+
+
+        boolean display_global = sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true);
+        final CheckBox set_display_global = (CheckBox) rootView.findViewById(R.id.set_display_global);
+        set_display_global.setChecked(display_global);
+
+        set_display_global.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_DISPLAY_GLOBAL, set_display_global.isChecked());
+                editor.apply();
+                getActivity().recreate();
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
+                startActivity(intent);
+            }
+        });
 
         final CheckBox set_embedded_browser = (CheckBox) rootView.findViewById(R.id.set_embedded_browser);
         final LinearLayout set_javascript_container = (LinearLayout) rootView.findViewById(R.id.set_javascript_container);

@@ -127,6 +127,7 @@ public class MainActivity extends AppCompatActivity
     private static final int ERROR_DIALOG_REQUEST_CODE = 97;
     private BroadcastReceiver receive_data;
     private int newNotif, newHome;
+    private boolean display_local, display_global;
 
     public MainActivity() {
     }
@@ -196,6 +197,9 @@ public class MainActivity extends AppCompatActivity
         }
         setContentView(R.layout.activity_main);
 
+        display_local = sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true);
+        display_global = sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true);
+
         //Test if user is still log in
         if( ! Helper.isLoggedIn(getApplicationContext())) {
             //It is not, the user is redirected to the login page
@@ -254,8 +258,10 @@ public class MainActivity extends AppCompatActivity
 
         tabLayout.addTab(tabHome);
         tabLayout.addTab(tabNotif);
-        tabLayout.addTab(tabLocal);
-        tabLayout.addTab(tabPublic);
+        if( display_local)
+            tabLayout.addTab(tabLocal);
+        if( display_global)
+            tabLayout.addTab(tabPublic);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         main_app_container = (RelativeLayout) findViewById(R.id.main_app_container);
@@ -281,33 +287,33 @@ public class MainActivity extends AppCompatActivity
                 main_app_container.setVisibility(View.GONE);
                 viewPager.setVisibility(View.VISIBLE);
                 Helper.switchLayout(MainActivity.this);
-                switch (tab.getPosition()){
-                    case 0:
-                        item = navigationView.getMenu().findItem(R.id.nav_home);
-                        fragmentTag = "HOME_TIMELINE";
-                        if( homeFragment != null && newHome > 0) {
-                            homeFragment.refresh(null);
-                        }
-                        newHome = 0;
-                        updateHomeCounter();
-                        break;
-                    case 1:
-                        fragmentTag = "NOTIFICATIONS";
-                        item = navigationView.getMenu().findItem(R.id.nav_notification);
-                        if( notificationsFragment != null && newNotif > 0) {
-                            notificationsFragment.refresh(null);
-                        }
-                        newNotif = 0;
-                        updateNotifCounter();
-                        break;
-                    case 2:
-                        fragmentTag = "LOCAL_TIMELINE";
-                        item = navigationView.getMenu().findItem(R.id.nav_local);
-                        break;
-                    case 3:
+                if( tab.getPosition() == 0) {
+                    item = navigationView.getMenu().findItem(R.id.nav_home);
+                    fragmentTag = "HOME_TIMELINE";
+                    if (homeFragment != null && newHome > 0) {
+                        homeFragment.refresh(null);
+                    }
+                    newHome = 0;
+                    updateHomeCounter();
+                }else if( tab.getPosition() == 1) {
+
+                    fragmentTag = "NOTIFICATIONS";
+                    item = navigationView.getMenu().findItem(R.id.nav_notification);
+                    if (notificationsFragment != null && newNotif > 0) {
+                        notificationsFragment.refresh(null);
+                    }
+                    newNotif = 0;
+                    updateNotifCounter();
+                }else if( tab.getPosition() == 2 && display_local) {
+
+                    fragmentTag = "LOCAL_TIMELINE";
+                    item = navigationView.getMenu().findItem(R.id.nav_local);
+                }else if( tab.getPosition() == 2 && !display_local) {
                         item = navigationView.getMenu().findItem(R.id.nav_global);
                         fragmentTag = "PUBLIC_TIMELINE";
-                        break;
+                }else if( tab.getPosition() == 3){
+                    item = navigationView.getMenu().findItem(R.id.nav_global);
+                    fragmentTag = "PUBLIC_TIMELINE";
                 }
                 if( item != null){
                     toolbarTitle.setText(item.getTitle());
@@ -1090,26 +1096,29 @@ public class MainActivity extends AppCompatActivity
             //Selection comes from another menu, no action to do
             DisplayStatusFragment statusFragment;
             Bundle bundle = new Bundle();
-            switch (position) {
-                case 0:
-                    homeFragment = new DisplayStatusFragment();
-                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.HOME);
-                    homeFragment.setArguments(bundle);
-                    return homeFragment;
-                case 1:
-                    notificationsFragment = new DisplayNotificationsFragment();
-                    return notificationsFragment;
-                case 2:
+            if (position == 0) {
+                homeFragment = new DisplayStatusFragment();
+                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.HOME);
+                homeFragment.setArguments(bundle);
+                return homeFragment;
+            }else if( position == 1) {
+                notificationsFragment = new DisplayNotificationsFragment();
+                return notificationsFragment;
+            }else if( position == 2 && display_local) {
                     statusFragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.LOCAL);
                     statusFragment.setArguments(bundle);
                     return statusFragment;
-                case 3:
+            }else if( position == 2 && !display_local){
                     statusFragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
                     statusFragment.setArguments(bundle);
                     return statusFragment;
-
+            }else if (position == 3){
+                statusFragment = new DisplayStatusFragment();
+                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
+                statusFragment.setArguments(bundle);
+                return statusFragment;
             }
             return null;
         }
