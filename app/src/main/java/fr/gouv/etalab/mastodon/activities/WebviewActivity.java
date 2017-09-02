@@ -148,6 +148,20 @@ public class WebviewActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onPause(){
+        super.onPause();
+        if( webView != null)
+            webView.onPause();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if( webView != null)
+            webView.onResume();
+    }
+
+    @Override
     public void onBackPressed() {
         if (webView.canGoBack()){
             webView.goBack();
@@ -159,6 +173,7 @@ public class WebviewActivity extends AppCompatActivity {
     @Override
     public void onDestroy(){
         super.onDestroy();
-
+        if( webView != null)
+            webView.destroy();
     }
 }
