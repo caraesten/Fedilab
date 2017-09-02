@@ -374,6 +374,7 @@ public class StreamingService extends Service {
                 default:
                     break;
             }
+            Helper.increaseUnreadNotifications(getApplicationContext(), userId);
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notification.getId());
             editor.apply();
@@ -393,6 +394,7 @@ public class StreamingService extends Service {
             status = API.parseStatuses(getApplicationContext(), response);
             status.setReplies(new ArrayList<Status>()); //Force to don't display replies.
             max_id_home = status.getId();
+            Helper.increaseUnreadToots(getApplicationContext(), userId);
             if( status.getContent() != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                     message = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();

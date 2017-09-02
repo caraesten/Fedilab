@@ -152,6 +152,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 }
                 new_data.setVisibility(View.GONE);
                 notificationsTmp = new ArrayList<>();
+                Helper.clearUnreadNotifications(context, null);
             }
         });
 

@@ -234,6 +234,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     lv_status.setAdapter(statusListAdapter);
                     statusesTmp = new ArrayList<>();
                 }
+                Helper.clearUnreadToots(context, null);
                 new_data.setVisibility(View.GONE);
             }
         });
