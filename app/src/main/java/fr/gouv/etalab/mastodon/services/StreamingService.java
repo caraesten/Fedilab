@@ -52,6 +52,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -373,6 +374,7 @@ public class StreamingService extends Service {
                 default:
                     break;
             }
+            Helper.increaseUnreadNotifications(getApplicationContext(), userId);
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notification.getId());
             editor.apply();
@@ -390,7 +392,9 @@ public class StreamingService extends Service {
 
         }else if ( event ==  EventStreaming.UPDATE){
             status = API.parseStatuses(getApplicationContext(), response);
+            status.setReplies(new ArrayList<Status>()); //Force to don't display replies.
             max_id_home = status.getId();
+            Helper.increaseUnreadToots(getApplicationContext(), userId);
             if( status.getContent() != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                     message = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
@@ -473,6 +477,7 @@ public class StreamingService extends Service {
                 if( notify )
                     notify = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, true);
             }
+            lastPreviousContent = status.getContent();
         }
         //All is good here for a notification, we will know check if it can be done depending of the hour
         if( notify)

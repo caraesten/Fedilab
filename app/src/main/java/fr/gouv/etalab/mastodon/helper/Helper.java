@@ -203,6 +203,8 @@ public class Helper {
     public static final String SET_PREVIEW_REPLIES_PP = "set_preview_replies_pp";
     public static final String SET_TRANSLATOR = "set_translator";
     public static final String SET_LED_COLOUR = "set_led_colour";
+    public static final String SET_UNREAD_NOTIFICATIONS = "set_unread_notifications";
+    public static final String SET_UNREAD_TOOTS = "set_unread_toots";
 
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
@@ -1578,6 +1580,96 @@ public class Helper {
                     tableLayout.setVisibility(View.VISIBLE);
                     break;
             }
+        }
+    }
+
+
+    public static int getUnreadNotifications(Context context,  String userId){
+        if( userId == null){
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            return sharedpreferences.getInt(Helper.SET_UNREAD_NOTIFICATIONS + userId, 0);
+        }else {
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            return sharedpreferences.getInt(Helper.SET_UNREAD_NOTIFICATIONS + userId, 0);
+        }
+    }
+    public static void increaseUnreadNotifications(Context context,  String userId){
+        if( userId == null){
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            int unreadNotifications = sharedpreferences.getInt(Helper.SET_UNREAD_NOTIFICATIONS + userId, 0);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            unreadNotifications = unreadNotifications + 1;
+            editor.putInt(Helper.SET_UNREAD_NOTIFICATIONS + userId, unreadNotifications);
+            editor.apply();
+        }else {
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            int unreadNotifications = sharedpreferences.getInt(Helper.SET_UNREAD_NOTIFICATIONS + userId, 0);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            unreadNotifications = unreadNotifications + 1;
+            editor.putInt(Helper.SET_UNREAD_NOTIFICATIONS + userId, unreadNotifications);
+            editor.apply();
+        }
+    }
+
+    public static void clearUnreadNotifications(Context context, String userId){
+        if( userId == null){
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putInt(Helper.SET_UNREAD_NOTIFICATIONS + userId, 0);
+            editor.apply();
+        }else {
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putInt(Helper.SET_UNREAD_NOTIFICATIONS + userId, 0);
+            editor.apply();
+        }
+    }
+
+    public static int getUnreadToots(Context context,  String userId){
+        if( userId == null){
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            return sharedpreferences.getInt(Helper.SET_UNREAD_NOTIFICATIONS + userId, 0);
+        }else {
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            return sharedpreferences.getInt(Helper.SET_UNREAD_NOTIFICATIONS + userId, 0);
+        }
+    }
+
+    public static void increaseUnreadToots(Context context,  String userId){
+        if( userId == null){
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            int unreadNotifications = sharedpreferences.getInt(Helper.SET_UNREAD_TOOTS + userId, 0);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            unreadNotifications = unreadNotifications + 1;
+            editor.putInt(Helper.SET_UNREAD_TOOTS + userId, unreadNotifications);
+            editor.apply();
+        }else {
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            int unreadNotifications = sharedpreferences.getInt(Helper.SET_UNREAD_TOOTS + userId, 0);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            unreadNotifications = unreadNotifications + 1;
+            editor.putInt(Helper.SET_UNREAD_TOOTS + userId, unreadNotifications);
+            editor.apply();
+        }
+    }
+
+    public static void clearUnreadToots(Context context,  String userId){
+        if( userId == null){
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putInt(Helper.SET_UNREAD_TOOTS + userId, 0);
+            editor.apply();
+        }else {
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putInt(Helper.SET_UNREAD_TOOTS + userId, 0);
+            editor.apply();
         }
     }
 }

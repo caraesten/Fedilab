@@ -120,7 +120,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        boolean preview_reply = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, true);
+        boolean preview_reply = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);
         final CheckBox set_preview_reply = (CheckBox) rootView.findViewById(R.id.set_preview_reply);
         final LinearLayout set_preview_reply_pp_container = (LinearLayout) rootView.findViewById(R.id.set_preview_reply_pp_container);
         final SwitchCompat set_preview_reply_pp = (SwitchCompat) rootView.findViewById(R.id.set_preview_reply_pp);

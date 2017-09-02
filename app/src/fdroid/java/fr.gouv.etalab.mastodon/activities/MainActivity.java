@@ -125,7 +125,6 @@ public class MainActivity extends AppCompatActivity
     private DisplayStatusFragment homeFragment;
     private DisplayNotificationsFragment notificationsFragment;
     private BroadcastReceiver receive_data;
-    private int newNotif, newHome;
     private boolean display_local, display_global;
 
     public MainActivity() {
@@ -134,9 +133,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        newNotif = 0;
-        newHome = 0;
 
+
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         receive_data = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -149,12 +148,10 @@ public class MainActivity extends AppCompatActivity
                         if(notificationsFragment.getUserVisibleHint() && isActivityVisible()){
                             notificationsFragment.updateData(notification);
                         }else{
-                            newNotif++;
                             updateNotifCounter();
                             notificationsFragment.refresh(notification);
                         }
                     }else {
-                        newNotif++;
                         updateNotifCounter();
                     }
                 }else if(eventStreaming == StreamingService.EventStreaming.UPDATE){
@@ -163,12 +160,10 @@ public class MainActivity extends AppCompatActivity
                         if(homeFragment.getUserVisibleHint() && isActivityVisible()){
                             homeFragment.updateData(status);
                         }else{
-                            newHome++;
                             updateHomeCounter();
                             homeFragment.refresh(status);
                         }
                     }else{
-                        newHome++;
                         updateHomeCounter();
                     }
                 }else if(eventStreaming == StreamingService.EventStreaming.DELETE){
@@ -185,7 +180,7 @@ public class MainActivity extends AppCompatActivity
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
 
-        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+
 
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
@@ -287,19 +282,19 @@ public class MainActivity extends AppCompatActivity
                 if( tab.getPosition() == 0) {
                     item = navigationView.getMenu().findItem(R.id.nav_home);
                     fragmentTag = "HOME_TIMELINE";
-                    if (homeFragment != null && newHome > 0) {
+                    if (homeFragment != null && Helper.getUnreadToots(getApplicationContext(), null) > 0) {
                         homeFragment.refresh(null);
                     }
-                    newHome = 0;
+                    Helper.clearUnreadToots(getApplicationContext(), null);
                     updateHomeCounter();
                 }else if( tab.getPosition() == 1) {
 
                     fragmentTag = "NOTIFICATIONS";
                     item = navigationView.getMenu().findItem(R.id.nav_notification);
-                    if (notificationsFragment != null && newNotif > 0) {
+                    if (notificationsFragment != null && Helper.getUnreadNotifications(getApplicationContext(), null) > 0) {
                         notificationsFragment.refresh(null);
                     }
-                    newNotif = 0;
+                    Helper.clearUnreadNotifications(getApplicationContext(), null);
                     updateNotifCounter();
                 }else if( tab.getPosition() == 2 && display_local) {
 
@@ -1097,8 +1092,8 @@ public class MainActivity extends AppCompatActivity
         if( tabHome == null)
             return;
         TextView tabCounterHome = (TextView) tabHome.findViewById(R.id.tab_counter);
-        tabCounterHome.setText(String.valueOf(newHome));
-        if( newHome > 0){
+        tabCounterHome.setText(String.valueOf(Helper.getUnreadToots(getApplicationContext(), null)));
+        if( Helper.getUnreadToots(getApplicationContext(), null) > 0){
             //New data are available
             //The fragment is not displayed, so the counter is displayed
             if( tabLayout.getSelectedTabPosition() != 0)
@@ -1118,8 +1113,8 @@ public class MainActivity extends AppCompatActivity
         if( tabNotif == null)
             return;
         TextView tabCounterNotif = (TextView) tabNotif.findViewById(R.id.tab_counter);
-        tabCounterNotif.setText(String.valueOf(newNotif));
-        if( newNotif > 0){
+        tabCounterNotif.setText(String.valueOf(Helper.getUnreadNotifications(getApplicationContext(), null)));
+        if( Helper.getUnreadNotifications(getApplicationContext(), null) > 0){
             if( tabLayout.getSelectedTabPosition() != 1)
                 tabCounterNotif.setVisibility(View.VISIBLE);
             else
