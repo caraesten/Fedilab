@@ -159,6 +159,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private HorizontalScrollView picture_scrollview;
     private int currentCursorPosition, searchLength;
     private TextView toot_space_left;
+    private String initialContent;
     private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 754;
     private BroadcastReceiver receive_picture;
 
@@ -274,6 +275,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             }
             restored = b.getLong("restored", -1);
         }
+        initialContent = toot_content.getText().toString();
         if( restored != -1 ){
             toot_it.setVisibility(View.GONE);
             invalidateOptionsMenu();
@@ -325,10 +327,13 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     if( description != null && description.length() > 20 ){
                         if( description.length() > 200 )
                             description = description.substring(0,199) + "…";
-                        if( title != null )
-                            sharedContent = title + "\n\n" + description + "\n\n" + sharedContentIni;
+                        if( title != null)
+                            sharedContent = title + "\r\n\r\n\r\n" + description + "\r\n\r\n\r\n" + sharedContentIni;
+                        else
+                            sharedContent = description + "\r\n\r\n\r\n" + sharedContentIni;
                         toot_content.setText(sharedContent);
                         toot_space_left.setText(String.valueOf(toot_content.length()));
+                        toot_content.setSelection(toot_content.getText().length());
                     }
                     if( image != null){
                         AsyncHttpClient client = new AsyncHttpClient();
@@ -1245,6 +1250,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             else
                 setTitle(R.string.toot_title);
         }
+        initialContent = toot_content.getText().toString();
         toot_space_left.setText(String.valueOf(toot_content.getText().length() + toot_cw_content.getText().length()));
     }
 
@@ -1330,6 +1336,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             toot_space_left.setText(String.valueOf(toot_content.length()));
             toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
         }
+        initialContent = toot_content.getText().toString();
     }
 
 
@@ -1338,7 +1345,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         //Nothing to store here....
         if(toot_content.getText().toString().trim().length() == 0 && (attachments == null || attachments.size() <1) && toot_cw_content.getText().toString().trim().length() == 0)
             return;
-
+        if( initialContent.equals(toot_content.getText().toString()))
+            return;
         Status toot = new Status();
         toot.setSensitive(isSensitive);
         toot.setMedia_attachments(attachments);
