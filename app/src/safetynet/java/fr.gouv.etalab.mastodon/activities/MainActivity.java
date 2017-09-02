@@ -26,7 +26,6 @@ import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -38,7 +37,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -71,6 +69,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Stack;
 
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveMetaDataAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
@@ -81,6 +80,7 @@ import fr.gouv.etalab.mastodon.fragments.DisplayFollowRequestSentFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayScheduledTootsFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMetaDataInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
 import fr.gouv.etalab.mastodon.services.StreamingService;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -107,7 +107,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, ProviderInstaller.ProviderInstallListener {
+        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, ProviderInstaller.ProviderInstallListener, OnRetrieveMetaDataInterface {
 
     private FloatingActionButton toot;
     private HashMap<String, String> tagTile = new HashMap<>();
@@ -621,17 +621,13 @@ public class MainActivity extends AppCompatActivity
             if ("text/plain".equals(type)) {
                 String sharedSubject = intent.getStringExtra(Intent.EXTRA_SUBJECT);
                 String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
-                Uri uri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
-                String sharedStream = null;
-                if( uri!= null)
-                    sharedStream = uri.toString();
-                Log.v(Helper.TAG,"sharedStream1: " + sharedStream);
+                // ParserUtils is a class I borrowed from Tusky.
                 if (sharedText != null) {
+                    new RetrieveMetaDataAsyncTask(sharedText, MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     Intent intentToot = new Intent(getApplicationContext(), TootActivity.class);
                     Bundle b = new Bundle();
                     b.putString("sharedSubject", sharedSubject);
                     b.putString("sharedContent", sharedText);
-                    b.putString("sharedStream", sharedStream);
                     intentToot.putExtras(b);
                     startActivity(intentToot);
                 }
@@ -1080,6 +1076,14 @@ public class MainActivity extends AppCompatActivity
         // appropriate action.
     }
 
+    @Override
+    public void onRetrieveRemoteAccount(boolean error, String pictureUrl, String content) {
+        if( !error && pictureUrl != null) {
+            Intent intentSendImage = new Intent(Helper.RECEIVE_PICTURE);
+            intentSendImage.putExtra("pictureURL", pictureUrl);
+            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentSendImage);
+        }
+    }
 
 
     /**

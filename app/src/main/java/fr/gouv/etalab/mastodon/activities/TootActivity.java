@@ -17,11 +17,14 @@ package fr.gouv.etalab.mastodon.activities;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.net.Uri;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -40,7 +43,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -50,6 +52,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.URLUtil;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -108,7 +111,6 @@ import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.drawers.AccountsSearchAdapter;
 import fr.gouv.etalab.mastodon.drawers.DraftsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
-import fr.gouv.etalab.mastodon.helper.ParserUtils;
 import fr.gouv.etalab.mastodon.interfaces.OnPostStatusActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
@@ -118,7 +120,6 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
-import static fr.gouv.etalab.mastodon.helper.Helper.EXTERNAL_STORAGE_REQUEST_CODE;
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
@@ -128,7 +129,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Toot activity class
  */
 
-public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostStatusActionInterface, ParserUtils.ParserListener {
+public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostStatusActionInterface {
 
 
     private String visibility;
@@ -146,7 +147,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private EditText toot_cw_content;
     private LinearLayout toot_reply_content_container;
     private Status tootReply = null;
-    private String sharedContent, sharedSubject, sharedStream;
+    private String sharedContent, sharedSubject;
     private CheckBox toot_sensitive;
     public long currentToId;
     private long restored;
@@ -159,6 +160,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private int currentCursorPosition, searchLength;
     private TextView toot_space_left;
     private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 754;
+    private BroadcastReceiver receive_picture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -251,7 +253,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             tootReply = b.getParcelable("tootReply");
             sharedContent = b.getString("sharedContent", null);
             sharedSubject = b.getString("sharedSubject", null);
-            sharedStream = b.getString("sharedStream", null);
             // ACTION_SEND route
             if (b.getInt("uriNumber", 0) == 1) {
 
@@ -311,43 +312,45 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
         if( sharedContent != null ){ //Shared content
 
-            // ParserUtils is a class I borrowed from Tusky.
-            final ParserUtils parser = new ParserUtils(this);
-
-            parser.putInClipboardManager(TootActivity.this, sharedContent);
-            String urlString = parser.getPastedURLText(TootActivity.this);
-
             if( sharedSubject != null){
                 sharedContent = sharedSubject + "\n\n" + sharedContent;
             }
-            if( sharedStream != null){
-                AsyncHttpClient client = new AsyncHttpClient();
-                String[] allowedTypes = new String[] { "image/png" };
-                client.get(url, new BinaryHttpResponseHandler(allowedTypes) {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, byte[] binaryData) {
-                        OutputStream f;
-                        try {
-                            f = new FileOutputStream(getCacheDir());
-                            picture_scrollview.setVisibility(View.VISIBLE);
-                            ByteArrayInputStream bis = new ByteArrayInputStream(binaryData);
-                            loading_picture.setVisibility(View.VISIBLE);
-                            toot_picture.setEnabled(false);
-                            new UploadActionAsyncTask(getApplicationContext(),bis,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            f.write(binaryData); //your bytes
-                            f.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+            receive_picture = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    final String url = intent.getStringExtra("pictureURL");
+                    if( url != null){
+                        AsyncHttpClient client = new AsyncHttpClient();
+                        String[] allowedTypes = new String[] { "image/png","image/jpeg" };
+                        client.get(url, new BinaryHttpResponseHandler(allowedTypes) {
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, byte[] binaryData) {
+                                OutputStream f;
+                                try {
+                                    f = new FileOutputStream(getCacheDir() + URLUtil.guessFileName(url, null, null));
+                                    picture_scrollview.setVisibility(View.VISIBLE);
+                                    InputStream bis = new ByteArrayInputStream(binaryData);
+                                    loading_picture.setVisibility(View.VISIBLE);
+                                    toot_picture.setEnabled(false);
+                                    new UploadActionAsyncTask(getApplicationContext(),bis,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    f.write(binaryData); 
+                                    f.close();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, byte[] binaryData, Throwable error) {
+                                error.printStackTrace();
+                            }
+
+                        });
                     }
 
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, byte[] binaryData, Throwable error) {
-
-                    }
-
-                });
-            }
+                }
+            };
+            LocalBroadcastManager.getInstance(this).registerReceiver(receive_picture, new IntentFilter(Helper.RECEIVE_PICTURE));
             toot_content.setText( String.format("\n%s", sharedContent));
         }
         attachments = new ArrayList<>();
@@ -573,6 +576,14 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     }
 
     @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if( receive_picture != null)
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_picture);
+    }
+
+
+    @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -595,15 +606,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         mToast.show();
     }
 
-    //TODO: This overload takes care of the single URL coming from a text share.
-    public void uploadSharedImage(Uri image)
-    {
-        if (image != null) {
-            ArrayList<Uri> uri = new ArrayList<>();
-            uri.add(image);
-            uploadSharedImage(uri);
-        }
-    }
 
     // Handles uploading shared images
     public void uploadSharedImage(ArrayList<Uri> uri)
@@ -1372,29 +1374,5 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_check, R.color.white);
         }
-    }
-
-    // TODO: These two methods are part of the interface for ParserUtils
-    /*
-        These two methods are added to handle the grafted on code from Tusky,
-        they are part of its interface.
-     */
-    @Override
-    public void onReceiveHeaderInfo(ParserUtils.HeaderInfo headerInfo) {
-        if (!TextUtils.isEmpty(headerInfo.title)) {
-            Toast.makeText(getApplicationContext(), headerInfo.title, Toast.LENGTH_SHORT).show();
-
-            if (!TextUtils.isEmpty(headerInfo.image)) {
-                Toast.makeText(getApplicationContext(), "We have an image", Toast.LENGTH_SHORT).show();
-
-                Toast.makeText(getApplicationContext(), headerInfo.image, Toast.LENGTH_SHORT).show();
-                uploadSharedImage(Uri.parse(headerInfo.image));
-            }
-        }
-    }
-
-    @Override
-    public void onErrorHeaderInfo() {
-        Toast.makeText(this.getApplicationContext(), "An error has occurred.", Toast.LENGTH_SHORT).show();
     }
 }
