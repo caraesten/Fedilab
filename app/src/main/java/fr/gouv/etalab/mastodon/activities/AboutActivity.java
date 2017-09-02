@@ -28,6 +28,7 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -58,8 +59,10 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
 
     private ListView lv_developers;
     private ListView lv_contributors;
+    private List<Account> developers = new ArrayList<>();
     private List<Account> contributors = new ArrayList<>();
-    private AccountSearchWebAdapter accountSearchWebAdapter;
+    private AccountSearchWebAdapter accountSearchWebAdapterDeveloper;
+    private AccountSearchWebAdapter accountSearchWebAdapterContributors;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -128,8 +131,11 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
             about_license.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
         }
 
-        accountSearchWebAdapter = new AccountSearchWebAdapter(AboutActivity.this, contributors);
-        lv_contributors.setAdapter(accountSearchWebAdapter);
+        accountSearchWebAdapterContributors = new AccountSearchWebAdapter(AboutActivity.this, contributors);
+        lv_contributors.setAdapter(accountSearchWebAdapterContributors);
+        accountSearchWebAdapterDeveloper = new AccountSearchWebAdapter(AboutActivity.this, developers);
+        lv_developers.setAdapter(accountSearchWebAdapterDeveloper);
+        Log.v(Helper.TAG,"here");
         new RetrieveRemoteAccountsAsyncTask("tschneider", "mastodon.etalab.gouv.fr", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new RetrieveRemoteAccountsAsyncTask("PhotonQyv", "mastodon.xyz", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new RetrieveRemoteAccountsAsyncTask("angrytux", "social.tchncs.de", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -167,13 +173,11 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
 
 
         if( username.equals("tschneider")) {
-            List<Account> selectedAccount = new ArrayList<>();
-            selectedAccount.add(account);
-            AccountSearchWebAdapter accountSearchWebAdapter = new AccountSearchWebAdapter(AboutActivity.this, selectedAccount);
-            lv_developers.setAdapter(accountSearchWebAdapter);
+            developers.add(account);
+            accountSearchWebAdapterDeveloper.notifyDataSetChanged();
         }else {
             contributors.add(account);
-            accountSearchWebAdapter.notifyDataSetChanged();
+            accountSearchWebAdapterContributors.notifyDataSetChanged();
         }
 
     }

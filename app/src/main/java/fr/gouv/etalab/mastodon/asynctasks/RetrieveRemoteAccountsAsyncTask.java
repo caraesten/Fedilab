@@ -21,6 +21,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import java.io.IOException;
+
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
 
 
@@ -43,12 +45,14 @@ public class RetrieveRemoteAccountsAsyncTask extends AsyncTask<Void, Void, Void>
         this.url = "https://" + instance  + "/@" + username;
         this.listener = onRetrieveRemoteAccountInterface;
         this.instance = instance;
+        Log.v(Helper.TAG,"RetrieveRemoteAccountsAsyncTask");
     }
 
 
 
     @Override
     protected Void doInBackground(Void... params) {
+        Log.v(Helper.TAG,"doInBackground");
         String userAgent = "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36";
         try {
             Document document = Jsoup.connect(url).userAgent(userAgent).get();
@@ -63,10 +67,10 @@ public class RetrieveRemoteAccountsAsyncTask extends AsyncTask<Void, Void, Void>
             Elements bioElement = document.getElementsByClass("bio");
             bio = bioElement.get(0).html();
             Elements countElement = document.getElementsByClass("counter-number");
-            statusCount = Integer.parseInt(countElement.get(0).html());
-            followingCount = Integer.parseInt(countElement.get(1).html());
-            followersCount = Integer.parseInt(countElement.get(2).html());
-        } catch (IOException | IndexOutOfBoundsException e) {
+            statusCount = Integer.parseInt(countElement.get(0).html().replace(",",""));
+            followingCount = Integer.parseInt(countElement.get(1).html().replace(",",""));
+            followersCount = Integer.parseInt(countElement.get(2).html().replace(",",""));
+        } catch (Exception e) {
             error = true;
             e.printStackTrace();
         }
@@ -75,6 +79,7 @@ public class RetrieveRemoteAccountsAsyncTask extends AsyncTask<Void, Void, Void>
 
     @Override
     protected void onPostExecute(Void result) {
+        Log.v(Helper.TAG,"onPostExecute");
         listener.onRetrieveRemoteAccount(error, name, username, instance, islocked, avatar, bio, statusCount, followingCount, followersCount);
     }
 
