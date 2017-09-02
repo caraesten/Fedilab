@@ -33,7 +33,7 @@ public class RetrieveMetaDataAsyncTask extends AsyncTask<Void, Void, Void> {
     private OnRetrieveMetaDataInterface listener;
     private String url;
     private boolean error = false;
-    private String imageUrl, content;
+    private String image, title, description;
 
     public RetrieveMetaDataAsyncTask(String url, OnRetrieveMetaDataInterface onRetrieveRemoteAccountInterface){
         this.url = url;
@@ -47,13 +47,19 @@ public class RetrieveMetaDataAsyncTask extends AsyncTask<Void, Void, Void> {
             Document document = Jsoup.connect(url).userAgent(userAgent).get();
             Elements metaOgTitle = document.select("meta[property=og:title]");
             if (metaOgTitle != null) {
-                content = metaOgTitle.attr("content");
+                title = metaOgTitle.attr("content");
             } else {
-                content = document.title();
+                title = document.title();
+            }
+            Elements metaOgDescription = document.select("meta[property=og:description]");
+            if (metaOgDescription != null) {
+                description = metaOgDescription.attr("content");
+            } else {
+                description = "";
             }
             Elements metaOgImage = document.select("meta[property=og:image]");
             if (metaOgImage != null) {
-                imageUrl = metaOgImage.attr("content");
+                image = metaOgImage.attr("content");
             }
         } catch (IOException | IndexOutOfBoundsException e) {
             error = true;
@@ -63,7 +69,7 @@ public class RetrieveMetaDataAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveRemoteAccount(error, imageUrl, content);
+        listener.onRetrieveMetaData(error, image, title, description);
     }
 
 }

@@ -66,6 +66,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Stack;
+
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveMetaDataAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
@@ -76,6 +78,7 @@ import fr.gouv.etalab.mastodon.fragments.DisplayFollowRequestSentFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayScheduledTootsFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMetaDataInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
 import fr.gouv.etalab.mastodon.services.StreamingService;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -102,7 +105,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface {
+        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface  {
 
     private FloatingActionButton toot;
     private HashMap<String, String> tagTile = new HashMap<>();
@@ -495,8 +498,8 @@ public class MainActivity extends AppCompatActivity
 
         headerLayout = navigationView.getHeaderView(0);
 
-        String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-        Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(prefKeyOauthTokenT);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
         updateHeaderAccountInfo(MainActivity.this, account, headerLayout, imageLoader, options);
         loadPPInActionBar(MainActivity.this, account.getAvatar());
         //Locked account can see follow request
@@ -611,13 +614,12 @@ public class MainActivity extends AppCompatActivity
             if ("text/plain".equals(type)) {
                 String sharedSubject = intent.getStringExtra(Intent.EXTRA_SUBJECT);
                 String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
-                String sharedStream = intent.getStringExtra(Intent.EXTRA_STREAM);
                 if (sharedText != null) {
+                    new RetrieveMetaDataAsyncTask(sharedText, MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     Intent intentToot = new Intent(getApplicationContext(), TootActivity.class);
                     Bundle b = new Bundle();
                     b.putString("sharedSubject", sharedSubject);
                     b.putString("sharedContent", sharedText);
-                    b.putString("sharedStream", sharedStream);
                     intentToot.putExtras(b);
                     startActivity(intentToot);
                 }
@@ -1019,7 +1021,16 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
+    @Override
+    public void onRetrieveMetaData(boolean error, String image, String title, String description) {
+        if( !error) {
+            Intent intentSendImage = new Intent(Helper.RECEIVE_PICTURE);
+            intentSendImage.putExtra("image", image);
+            intentSendImage.putExtra("title", title);
+            intentSendImage.putExtra("description", description);
+            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentSendImage);
+        }
+    }
 
 
     /**

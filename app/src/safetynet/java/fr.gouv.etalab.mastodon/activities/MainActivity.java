@@ -503,8 +503,8 @@ public class MainActivity extends AppCompatActivity
 
         headerLayout = navigationView.getHeaderView(0);
 
-        String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-        Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(prefKeyOauthTokenT);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
         updateHeaderAccountInfo(MainActivity.this, account, headerLayout, imageLoader, options);
         loadPPInActionBar(MainActivity.this, account.getAvatar());
         //Locked account can see follow request
@@ -621,7 +621,6 @@ public class MainActivity extends AppCompatActivity
             if ("text/plain".equals(type)) {
                 String sharedSubject = intent.getStringExtra(Intent.EXTRA_SUBJECT);
                 String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
-                // ParserUtils is a class I borrowed from Tusky.
                 if (sharedText != null) {
                     new RetrieveMetaDataAsyncTask(sharedText, MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     Intent intentToot = new Intent(getApplicationContext(), TootActivity.class);
@@ -1076,11 +1075,14 @@ public class MainActivity extends AppCompatActivity
         // appropriate action.
     }
 
+
     @Override
-    public void onRetrieveRemoteAccount(boolean error, String pictureUrl, String content) {
-        if( !error && pictureUrl != null) {
+    public void onRetrieveMetaData(boolean error, String image, String title, String description) {
+        if( !error) {
             Intent intentSendImage = new Intent(Helper.RECEIVE_PICTURE);
-            intentSendImage.putExtra("pictureURL", pictureUrl);
+            intentSendImage.putExtra("image", image);
+            intentSendImage.putExtra("title", title);
+            intentSendImage.putExtra("description", description);
             LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentSendImage);
         }
     }
