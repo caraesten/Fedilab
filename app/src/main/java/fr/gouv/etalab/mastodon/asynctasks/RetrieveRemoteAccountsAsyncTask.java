@@ -15,6 +15,8 @@
 package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.os.AsyncTask;
+import android.util.Log;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -66,13 +68,14 @@ public class RetrieveRemoteAccountsAsyncTask extends AsyncTask<Void, Void, Void>
             followersCount = Integer.parseInt(countElement.get(2).html());
         } catch (IOException | IndexOutOfBoundsException e) {
             error = true;
+            e.printStackTrace();
         }
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveRemoteAccount(error, name, username, islocked, avatar, bio, statusCount, followingCount, followersCount);
+        listener.onRetrieveRemoteAccount(error, name, username, instance, islocked, avatar, bio, statusCount, followingCount, followersCount);
     }
 
 }
