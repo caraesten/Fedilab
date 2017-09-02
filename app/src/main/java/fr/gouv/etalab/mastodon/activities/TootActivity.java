@@ -328,9 +328,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                         if( description.length() > 200 )
                             description = description.substring(0,199) + "…";
                         if( title != null)
-                            sharedContent = title + "\r\n\r\n\r\n" + description + "\r\n\r\n\r\n" + sharedContentIni;
+                            sharedContent = title + "\n\n" + description + "\n\n" + sharedContentIni;
                         else
-                            sharedContent = description + "\r\n\r\n\r\n" + sharedContentIni;
+                            sharedContent = description + "\n\n" + sharedContentIni;
                         toot_content.setText(sharedContent);
                         toot_space_left.setText(String.valueOf(toot_content.length()));
                         toot_content.setSelection(toot_content.getText().length());

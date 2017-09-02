@@ -293,8 +293,13 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             }else{
                 holder.notification_account_username.setCompoundDrawables( null, null, null, null);
             }
+            String content = status.getContent();
+            content = content.replaceAll("</p>","<br/><br/>");
+            content = content.replaceAll("<p>","");
+            if( content.endsWith("<br/><br/>") )
+                content = content.substring(0,content.length() -10);
 
-            SpannableString spannableString = Helper.clickableElements(context, status.getContent(),
+            SpannableString spannableString = Helper.clickableElements(context, content,
                     status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), true);
             holder.notification_status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
             holder.notification_status_content.setMovementMethod(null);
