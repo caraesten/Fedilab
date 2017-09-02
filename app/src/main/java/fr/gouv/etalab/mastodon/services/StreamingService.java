@@ -52,6 +52,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -390,6 +391,7 @@ public class StreamingService extends Service {
 
         }else if ( event ==  EventStreaming.UPDATE){
             status = API.parseStatuses(getApplicationContext(), response);
+            status.setReplies(new ArrayList<Status>()); //Force to don't display replies.
             max_id_home = status.getId();
             if( status.getContent() != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -473,6 +475,7 @@ public class StreamingService extends Service {
                 if( notify )
                     notify = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, true);
             }
+            lastPreviousContent = status.getContent();
         }
         //All is good here for a notification, we will know check if it can be done depending of the hour
         if( notify)

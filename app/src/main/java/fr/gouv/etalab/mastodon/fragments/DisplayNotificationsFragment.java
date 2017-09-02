@@ -20,7 +20,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,13 +30,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -67,12 +63,9 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean swiped;
     private ListView lv_notifications;
-    private DisplayNotificationsFragment displayNotificationsFragment;
     private TextView new_data;
-    private String since_id;
 
     public DisplayNotificationsFragment(){
-        displayNotificationsFragment = this;
     }
 
     @Override
@@ -148,6 +141,12 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                     }
                     notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments, notifications);
                     lv_notifications.setAdapter(notificationsListAdapter);
+                    if( notificationsTmp.size() > 0){
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                        editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notificationsTmp.get(0).getId());
+                        editor.apply();
+                    }
                     if( notificationsTmp.size() > 0 && textviewNoAction.getVisibility() == View.VISIBLE)
                         textviewNoAction.setVisibility(View.GONE);
                 }
@@ -185,8 +184,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     @Override
     public void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId, boolean refreshData) {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        //UserId will be null here, so it needs to be retrieved from shared preferences
-        userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         if( apiResponse.getError() != null){
@@ -200,7 +197,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         }
         SharedPreferences.Editor editor = sharedpreferences.edit();
         List<Notification> notifications = apiResponse.getNotifications();
-        since_id = apiResponse.getSince_id();
+        String since_id = apiResponse.getSince_id();
         max_id = apiResponse.getMax_id();
         //The initial call comes from a classic tab refresh
         flag_loading = (max_id == null );
@@ -282,6 +279,11 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             for(Notification not_tmp: notificationsTmp){
                 notifications.add(not_tmp);
             }
+
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notificationsTmp.get(0).getId());
+            editor.apply();
             notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments, notifications);
             lv_notifications.setAdapter(notificationsListAdapter);
             if( textviewNoAction.getVisibility() == View.VISIBLE)

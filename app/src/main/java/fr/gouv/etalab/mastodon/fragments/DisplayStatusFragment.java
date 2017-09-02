@@ -25,7 +25,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,8 +35,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
-
-import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRepliesAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -76,15 +73,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private boolean isOnWifi;
     private int behaviorWithAttachments;
     private boolean showMediaOnly;
-    private DisplayStatusFragment displayStatusFragment;
     private TextView new_data;
     private int positionSpinnerTrans;
-    private String since_id;
     private boolean hideHeader;
     private String instanceValue;
 
     public DisplayStatusFragment(){
-        displayStatusFragment = this;
     }
 
     @Override
@@ -228,6 +222,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     for(Status status: statusesTmp){
                         statuses.add(status);
                     }
+                    if( statusesTmp.size() > 0){
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                        editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, statusesTmp.get(0).getId());
+                        editor.apply();
+                    }
                     if( statusesTmp.size() > 0 && textviewNoAction.getVisibility() == View.VISIBLE)
                         textviewNoAction.setVisibility(View.GONE);
                     statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
@@ -300,7 +300,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             return;
         }
         List<Status> statuses = apiResponse.getStatuses();
-        since_id = apiResponse.getSince_id();
+        String since_id = apiResponse.getSince_id();
         max_id = apiResponse.getMax_id();
 
         flag_loading = (max_id == null );
@@ -385,6 +385,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
             if( textviewNoAction.getVisibility() == View.VISIBLE)
                 textviewNoAction.setVisibility(View.GONE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, statusesTmp.get(0).getId());
+            editor.apply();
             statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
             lv_status.setAdapter(statusListAdapter);
             statusesTmp = new ArrayList<>();
