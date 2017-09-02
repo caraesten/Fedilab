@@ -636,9 +636,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                         break;
                     }
 
-                    // TODO: Work out what needs to be done to the URL from a text URL share to allow upload.
-                    Toast.makeText(getApplicationContext(), "in upload: " + fileUri.toString(), Toast.LENGTH_SHORT).show();
-
                     picture_scrollview.setVisibility(View.VISIBLE);
 
                     try {
