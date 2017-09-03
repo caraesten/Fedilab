@@ -15,10 +15,12 @@ package fr.gouv.etalab.mastodon.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
@@ -27,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +42,7 @@ import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import java.io.File;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -111,6 +115,7 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
             holder.account_dn = (TextView) convertView.findViewById(R.id.account_dn);
             holder.account_un = (TextView) convertView.findViewById(R.id.account_un);
             holder.account_follow = (FloatingActionButton) convertView.findViewById(R.id.account_follow);
+            holder.acccount_container = (LinearLayout) convertView.findViewById(R.id.acccount_container);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -160,6 +165,16 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
                     new PostActionAsyncTask(context, API.StatusAction.FOLLOW, account.getId(), AccountSearchDevAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             });
+            holder.acccount_container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ShowAccountActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("accountId", account.getId());
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+            });
         }
 
         return convertView;
@@ -181,6 +196,7 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
 
 
     private class ViewHolder {
+        LinearLayout acccount_container;
         ImageView account_pp;
         TextView account_dn;
         TextView account_un;
