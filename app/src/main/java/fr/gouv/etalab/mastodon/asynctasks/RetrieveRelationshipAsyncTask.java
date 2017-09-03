@@ -40,12 +40,10 @@ public class RetrieveRelationshipAsyncTask extends AsyncTask<Void, Void, Void> {
         this.context = context;
         this.listener = onRetrieveRelationshipInterface;
         this.accountId = accountId;
-        Log.v(Helper.TAG,"RetrieveRelationshipAsyncTask");
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        Log.v(Helper.TAG,"doInBackground");
         api = new API(context);
         relationship = api.getRelationship(accountId);
         return null;

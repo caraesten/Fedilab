@@ -36,6 +36,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
+
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRepliesAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -311,6 +313,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         else
             textviewNoAction.setVisibility(View.GONE);
         if( swiped ){
+            if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
+                Helper.clearUnreadToots(context,null);
+                ((MainActivity) context).updateHomeCounter();
+            }
             statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
             lv_status.setAdapter(statusListAdapter);
             swiped = false;
@@ -361,11 +367,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     }
 
     public void refresh(Status status){
-        Log.v(Helper.TAG,"status: " + status);
         if( status != null){
-            Log.v(Helper.TAG,"statusesTmp: " + statusesTmp);
             if( statusesTmp != null && statusesTmp.size() > 0){
-                Log.v(Helper.TAG,"size: " + statusesTmp.size());
                 statusesTmp.add(0,status);
             }else {
                 statusesTmp = new ArrayList<>();

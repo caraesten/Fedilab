@@ -61,6 +61,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.nostra13.universalimageloader.utils.L;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -142,13 +143,9 @@ public class MainActivity extends AppCompatActivity
             public void onReceive(Context context, Intent intent) {
                 Bundle b = intent.getExtras();
                 StreamingService.EventStreaming eventStreaming = (StreamingService.EventStreaming) intent.getSerializableExtra("eventStreaming");
-                Log.v(Helper.TAG,"eventStreaming= " + eventStreaming);
                 if( eventStreaming == StreamingService.EventStreaming.NOTIFICATION){
                     Notification notification = b.getParcelable("data");
-                    Log.v(Helper.TAG,"notificationsFragment= " + notificationsFragment);
                     if(notificationsFragment != null){
-                        Log.v(Helper.TAG,"getUserVisibleHint= " + notificationsFragment.getUserVisibleHint());
-                        Log.v(Helper.TAG,"isActivityVisible= " + isActivityVisible());
                         if(notificationsFragment.getUserVisibleHint() && isActivityVisible()){
 
                             notificationsFragment.updateData(notification);
@@ -158,10 +155,7 @@ public class MainActivity extends AppCompatActivity
                     }
                 }else if(eventStreaming == StreamingService.EventStreaming.UPDATE){
                     Status status = b.getParcelable("data");
-                    Log.v(Helper.TAG,"homeFragment= " + homeFragment);
                     if( homeFragment != null){
-                        Log.v(Helper.TAG,"getUserVisibleHint= " + homeFragment.getUserVisibleHint());
-                        Log.v(Helper.TAG,"isActivityVisible= " + isActivityVisible());
                         if(homeFragment.getUserVisibleHint() && isActivityVisible()){
                             homeFragment.updateData(status);
                         }else{
@@ -289,14 +283,15 @@ public class MainActivity extends AppCompatActivity
                     if (homeFragment != null && Helper.getUnreadToots(getApplicationContext(), null) > 0) {
                         homeFragment.refresh(null);
                     }
+                    Helper.clearUnreadToots(getApplicationContext(), null);
                     updateHomeCounter();
                 }else if( tab.getPosition() == 1) {
-
                     fragmentTag = "NOTIFICATIONS";
                     item = navigationView.getMenu().findItem(R.id.nav_notification);
                     if (notificationsFragment != null && Helper.getUnreadNotifications(getApplicationContext(), null) > 0) {
                         notificationsFragment.refresh(null);
                     }
+                    Helper.clearUnreadNotifications(getApplicationContext(), null);
                     updateNotifCounter();
                 }else if( tab.getPosition() == 2 && display_local) {
 
@@ -918,20 +913,25 @@ public class MainActivity extends AppCompatActivity
         }
         toolbarTitle.setText(item.getTitle());
         if (id == R.id.nav_home) {
-            //noinspection ConstantConditions
-            tabLayout.getTabAt(0).select();
+            if( tabLayout.getSelectedTabPosition() != 0)
+                //noinspection ConstantConditions
+                tabLayout.getTabAt(0).select();
             return true;
         } else if( id == R.id.nav_notification){
-            //noinspection ConstantConditions
-            tabLayout.getTabAt(1).select();
+            if( tabLayout.getSelectedTabPosition() != 1)
+                //noinspection ConstantConditions
+                tabLayout.getTabAt(1).select();
             return true;
         }else if (id == R.id.nav_local) {
-            //noinspection ConstantConditions
-            tabLayout.getTabAt(2).select();
+
+            if( tabLayout.getSelectedTabPosition() != 2)
+                //noinspection ConstantConditions
+                tabLayout.getTabAt(2).select();
             return true;
         } else if (id == R.id.nav_global) {
-            //noinspection ConstantConditions
-            tabLayout.getTabAt(3).select();
+            if( tabLayout.getSelectedTabPosition() != 3)
+                //noinspection ConstantConditions
+                tabLayout.getTabAt(3).select();
             return true;
         }
         DisplayStatusFragment statusFragment;
@@ -1108,10 +1108,7 @@ public class MainActivity extends AppCompatActivity
         if( Helper.getUnreadToots(getApplicationContext(), null) > 0){
             //New data are available
             //The fragment is not displayed, so the counter is displayed
-            if( tabLayout.getSelectedTabPosition() != 0)
-                tabCounterHome.setVisibility(View.VISIBLE);
-            else
-                tabCounterHome.setVisibility(View.GONE);
+            tabCounterHome.setVisibility(View.VISIBLE);
         }else {
             tabCounterHome.setVisibility(View.GONE);
         }
@@ -1127,10 +1124,7 @@ public class MainActivity extends AppCompatActivity
         TextView tabCounterNotif = (TextView) tabNotif.findViewById(R.id.tab_counter);
         tabCounterNotif.setText(String.valueOf(Helper.getUnreadNotifications(getApplicationContext(), null)));
         if( Helper.getUnreadNotifications(getApplicationContext(), null) > 0){
-            if( tabLayout.getSelectedTabPosition() != 1)
-                tabCounterNotif.setVisibility(View.VISIBLE);
-            else
-                tabCounterNotif.setVisibility(View.GONE);
+            tabCounterNotif.setVisibility(View.VISIBLE);
         }else {
             tabCounterNotif.setVisibility(View.GONE);
         }

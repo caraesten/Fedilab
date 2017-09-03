@@ -148,11 +148,8 @@ public class MainActivity extends AppCompatActivity
                         if(notificationsFragment.getUserVisibleHint() && isActivityVisible()){
                             notificationsFragment.updateData(notification);
                         }else{
-                            updateNotifCounter();
                             notificationsFragment.refresh(notification);
                         }
-                    }else {
-                        updateNotifCounter();
                     }
                 }else if(eventStreaming == StreamingService.EventStreaming.UPDATE){
                     Status status = b.getParcelable("data");
@@ -160,11 +157,8 @@ public class MainActivity extends AppCompatActivity
                         if(homeFragment.getUserVisibleHint() && isActivityVisible()){
                             homeFragment.updateData(status);
                         }else{
-                            updateHomeCounter();
                             homeFragment.refresh(status);
                         }
-                    }else{
-                        updateHomeCounter();
                     }
                 }else if(eventStreaming == StreamingService.EventStreaming.DELETE){
                     String id = b.getString("id");
@@ -176,6 +170,8 @@ public class MainActivity extends AppCompatActivity
                         }
                     }
                 }
+                updateNotifCounter();
+                updateHomeCounter();
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
@@ -291,7 +287,6 @@ public class MainActivity extends AppCompatActivity
                     Helper.clearUnreadToots(getApplicationContext(), null);
                     updateHomeCounter();
                 }else if( tab.getPosition() == 1) {
-
                     fragmentTag = "NOTIFICATIONS";
                     item = navigationView.getMenu().findItem(R.id.nav_notification);
                     if (notificationsFragment != null && Helper.getUnreadNotifications(getApplicationContext(), null) > 0) {
@@ -345,9 +340,15 @@ public class MainActivity extends AppCompatActivity
                 Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
                 switch (tab.getPosition()){
                     case 0:
+                        DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
+                        if( displayStatusFragment != null )
+                            displayStatusFragment.scrollToTop();
+                        Helper.clearUnreadToots(getApplicationContext(), null);
+                        updateHomeCounter();
+                        break;
                     case 2:
                     case 3:
-                        DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
+                        displayStatusFragment = ((DisplayStatusFragment) fragment);
                         if( displayStatusFragment != null )
                             displayStatusFragment.scrollToTop();
                         break;
@@ -355,6 +356,8 @@ public class MainActivity extends AppCompatActivity
                         DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
                         if( displayNotificationsFragment != null )
                             displayNotificationsFragment.scrollToTop();
+                        Helper.clearUnreadNotifications(getApplicationContext(), null);
+                        updateNotifCounter();
                         break;
                 }
             }
@@ -873,6 +876,8 @@ public class MainActivity extends AppCompatActivity
     public void onResume(){
         super.onResume();
         MainActivity.activityResumed();
+        updateNotifCounter();
+        updateHomeCounter();
         //Proceeds to update of the authenticated account
         if(Helper.isLoggedIn(getApplicationContext()))
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -912,20 +917,25 @@ public class MainActivity extends AppCompatActivity
         }
         toolbarTitle.setText(item.getTitle());
         if (id == R.id.nav_home) {
-            //noinspection ConstantConditions
-            tabLayout.getTabAt(0).select();
+            if( tabLayout.getSelectedTabPosition() != 0)
+                //noinspection ConstantConditions
+                tabLayout.getTabAt(0).select();
             return true;
         } else if( id == R.id.nav_notification){
-            //noinspection ConstantConditions
-            tabLayout.getTabAt(1).select();
+            if( tabLayout.getSelectedTabPosition() != 1)
+                //noinspection ConstantConditions
+                tabLayout.getTabAt(1).select();
             return true;
         }else if (id == R.id.nav_local) {
-            //noinspection ConstantConditions
-            tabLayout.getTabAt(2).select();
+
+            if( tabLayout.getSelectedTabPosition() != 2)
+                //noinspection ConstantConditions
+                tabLayout.getTabAt(2).select();
             return true;
         } else if (id == R.id.nav_global) {
-            //noinspection ConstantConditions
-            tabLayout.getTabAt(3).select();
+            if( tabLayout.getSelectedTabPosition() != 3)
+                //noinspection ConstantConditions
+                tabLayout.getTabAt(3).select();
             return true;
         }
         DisplayStatusFragment statusFragment;
@@ -1149,10 +1159,7 @@ public class MainActivity extends AppCompatActivity
         if( Helper.getUnreadToots(getApplicationContext(), null) > 0){
             //New data are available
             //The fragment is not displayed, so the counter is displayed
-            if( tabLayout.getSelectedTabPosition() != 0)
-                tabCounterHome.setVisibility(View.VISIBLE);
-            else
-                tabCounterHome.setVisibility(View.GONE);
+            tabCounterHome.setVisibility(View.VISIBLE);
         }else {
             tabCounterHome.setVisibility(View.GONE);
         }
@@ -1168,10 +1175,7 @@ public class MainActivity extends AppCompatActivity
         TextView tabCounterNotif = (TextView) tabNotif.findViewById(R.id.tab_counter);
         tabCounterNotif.setText(String.valueOf(Helper.getUnreadNotifications(getApplicationContext(), null)));
         if( Helper.getUnreadNotifications(getApplicationContext(), null) > 0){
-            if( tabLayout.getSelectedTabPosition() != 1)
-                tabCounterNotif.setVisibility(View.VISIBLE);
-            else
-                tabCounterNotif.setVisibility(View.GONE);
+            tabCounterNotif.setVisibility(View.VISIBLE);
         }else {
             tabCounterNotif.setVisibility(View.GONE);
         }

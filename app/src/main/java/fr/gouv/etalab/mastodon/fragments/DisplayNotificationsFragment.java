@@ -33,6 +33,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
@@ -208,6 +209,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         else
             textviewNoAction.setVisibility(View.GONE);
         if( swiped ){
+            Helper.clearUnreadNotifications(context,null);
+            ((MainActivity) context).updateNotifCounter();
             boolean isOnWifi = Helper.isOnWIFI(context);
             int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
             notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments, this.notifications);
@@ -256,11 +259,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     }
 
     public void refresh(Notification notification){
-        Log.v(Helper.TAG,"notification: " + notification);
         if( notification != null){
-            Log.v(Helper.TAG,"notificationsTmp: " + notificationsTmp);
             if( notificationsTmp != null && notificationsTmp.size() > 0){
-                Log.v(Helper.TAG,"size: " + notificationsTmp.size());
                 notificationsTmp.add(0,notification);
             }else {
                 notificationsTmp = new ArrayList<>();

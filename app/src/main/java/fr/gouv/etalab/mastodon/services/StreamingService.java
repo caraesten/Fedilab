@@ -321,7 +321,6 @@ public class StreamingService extends Service {
 
         //No previous notifications in cache, so no notification will be sent
         boolean notify = false;
-
         String notificationUrl = null;
         String title = null;
         Status status = null;
@@ -329,7 +328,6 @@ public class StreamingService extends Service {
         String dataId = null;
         if( event == EventStreaming.NOTIFICATION){
             notification = API.parseNotificationResponse(getApplicationContext(), response);
-            max_id_notif = notification.getId();
             switch (notification.getType()){
                 case "mention":
                     if(notif_mention){
@@ -376,9 +374,6 @@ public class StreamingService extends Service {
                     break;
             }
             Helper.increaseUnreadNotifications(getApplicationContext(), userId);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notification.getId());
-            editor.apply();
             if( notification.getStatus().getContent()!= null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                     message = Html.fromHtml(notification.getStatus().getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
@@ -394,7 +389,7 @@ public class StreamingService extends Service {
         }else if ( event ==  EventStreaming.UPDATE){
             status = API.parseStatuses(getApplicationContext(), response);
             status.setReplies(new ArrayList<Status>()); //Force to don't display replies.
-            max_id_home = status.getId();
+
             Helper.increaseUnreadToots(getApplicationContext(), userId);
             if( status.getContent() != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -412,21 +407,9 @@ public class StreamingService extends Service {
         }else if( event == EventStreaming.DELETE){
             try {
                 dataId = response.getString("id");
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-        }
-        if( max_id_notif != null){
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, max_id_notif);
-            editor.apply();
-        }
-        if( max_id_home != null){
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, max_id_home);
-            editor.apply();
         }
 
         //Check which user is connected and if activity is to front
@@ -434,13 +417,10 @@ public class StreamingService extends Service {
         try{
             activityVisible = MainActivity.isActivityVisible();
         }catch (Exception ignored){}
-        String userconnected = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String connectedUser = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userconnected);
-        //User receiving the notification is connected and application is to front, notification won't be pushed
-        //Instead, the interaction is done in the activity
-
-
+        Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(connectedUser);
+        //User receiving the notification is connected
         if( isCurrentAccountLoggedIn(acct, userId)){
             notify = false;
             Intent intentBC = new Intent(Helper.RECEIVE_DATA);
@@ -455,12 +435,12 @@ public class StreamingService extends Service {
             intentBC.putExtras(b);
             LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentBC);
         }
-
+        //User receiving the notification is connected and application is to front, notification won't be pushed
+        //Instead, the interaction is done in the activity
         if( activityVisible && isCurrentAccountLoggedIn(acct, userId)){
             notify = false;
         }else if(event == EventStreaming.NOTIFICATION ){
             notify = true;
-
         }else if(event == EventStreaming.UPDATE ){
             //lastPreviousContent contains the content of the last notification, if it was a mention it will avoid to push two notifications
             if( account == null || (lastPreviousContent != null && lastPreviousContent.equals(status.getContent()))) {
