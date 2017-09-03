@@ -30,8 +30,6 @@ public class ApplicationJob implements JobCreator {
                 return new NotificationsSyncJob();
             case HomeTimelineSyncJob.HOME_TIMELINE:
                 return new HomeTimelineSyncJob();
-            case StreamingSyncJob.STREAMING:
-                return new StreamingSyncJob();
             case ScheduledTootsSyncJob.SCHEDULED_TOOT:
                 return new ScheduledTootsSyncJob();
             default:

@@ -19,7 +19,6 @@ import com.evernote.android.job.JobManager;
 import fr.gouv.etalab.mastodon.jobs.ApplicationJob;
 import fr.gouv.etalab.mastodon.jobs.HomeTimelineSyncJob;
 import fr.gouv.etalab.mastodon.jobs.NotificationsSyncJob;
-import fr.gouv.etalab.mastodon.jobs.StreamingSyncJob;
 
 /**
  * Created by Thomas on 29/04/2017.
@@ -36,7 +35,6 @@ public class MainApplication extends Application{
         JobManager.instance().getConfig().setVerbose(false);
         NotificationsSyncJob.schedule(false);
         HomeTimelineSyncJob.schedule(false);
-        StreamingSyncJob.schedule(false);
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
     }

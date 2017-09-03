@@ -238,6 +238,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 new_data.setVisibility(View.GONE);
                 statusesTmp = new ArrayList<>();
                 Helper.clearUnreadToots(context, null);
+                ((MainActivity) context).updateHomeCounter();
 
             }
         });
