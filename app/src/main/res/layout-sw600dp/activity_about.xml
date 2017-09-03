@@ -16,9 +16,9 @@
     see <http://www.gnu.org/licenses>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
     >
     <!-- About app name -->
     <TextView
@@ -41,41 +41,48 @@
 
     <!-- About developer -->
     <TextView
-        android:padding="5dp"
-        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_marginTop="10dp"
         android:clickable="true"
-        android:textColor="@color/mastodonC4"
         android:gravity="center_vertical"
+        android:padding="5dp"
         android:text="@string/about_developer"
+        android:textColor="@color/mastodonC4"
         android:textSize="16sp"/>
+
     <fr.gouv.etalab.mastodon.helper.ExpandableHeightListView
         android:id="@+id/lv_developers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none"
-        android:divider="@null"/>
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_marginLeft="150dp"
+        android:layout_marginRight="150dp"
+        android:divider="@null"
+        android:scrollbars="none"/>
 
     <TextView
-        android:padding="5dp"
-        android:layout_marginTop="10dp"
         android:id="@+id/about_thanks_dev"
-        android:layout_width="match_parent"
-        android:textColor="@color/mastodonC4"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_marginTop="10dp"
         android:gravity="center_vertical"
-        android:textSize="16sp"
-        android:text="@string/thanks_text_dev"/>
+        android:padding="5dp"
+        android:text="@string/thanks_text_dev"
+        android:textColor="@color/mastodonC4"
+        android:textSize="16sp"/>
 
     <fr.gouv.etalab.mastodon.helper.ExpandableHeightListView
         android:id="@+id/lv_contributors"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none"
-        android:divider="@null"/>
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_marginLeft="150dp"
+        android:layout_marginRight="150dp"
+        android:divider="@null"
+        android:scrollbars="none"/>
 
     <!-- About license -->
     <LinearLayout
