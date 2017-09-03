@@ -127,24 +127,17 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
 
 
     @Override
-    public void onRetrieveHomeTimelineService(APIResponse apiResponse, String acct, String userId) {
-        List<Status> statuses = apiResponse.getStatuses();
+    public void onRetrieveHomeTimelineService(APIResponse apiResponse, String acct, final String userId) {
+        final List<Status> statuses = apiResponse.getStatuses();
         if( apiResponse.getError() != null || statuses == null || statuses.size() == 0)
             return;
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         final String max_id = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
-        if( max_id == null){
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, apiResponse.getSince_id());
-            editor.apply();
-            return;
-        }
+
         //No previous notifications in cache, so no notification will be sent
         String message;
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, apiResponse.getSince_id());
-        editor.apply();
+
         for(Status status: statuses){
             //The notification associated to max_id is discarded as it is supposed to have already been sent
             //Also, if the toot comes from the owner, we will avoid to warn him/her...
@@ -189,11 +182,17 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         super.onLoadingComplete(imageUri, view, loadedImage);
                         notify_user(getContext(), intent, notificationId, loadedImage, finalTitle, finalMessage);
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, statuses.get(0).getId());
+                        editor.apply();
                     }
                     @Override
                     public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
                         notify_user(getContext(), intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
                                 R.drawable.mastodonlogo), finalTitle, finalMessage);
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, statuses.get(0).getId());
+                        editor.apply();
                     }});
 
             }

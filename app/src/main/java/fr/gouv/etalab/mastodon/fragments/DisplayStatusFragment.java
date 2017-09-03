@@ -25,6 +25,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -330,7 +331,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
             if( currentAccount != null && firstLoad && since_id != null){
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + currentAccount.getId(), since_id);
+                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + currentAccount.getId(), statuses.get(0).getId());
                 editor.apply();
             }
         }
@@ -360,8 +361,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     }
 
     public void refresh(Status status){
+        Log.v(Helper.TAG,"status: " + status);
         if( status != null){
+            Log.v(Helper.TAG,"statusesTmp: " + statusesTmp);
             if( statusesTmp != null && statusesTmp.size() > 0){
+                Log.v(Helper.TAG,"size: " + statusesTmp.size());
                 statusesTmp.add(0,status);
             }else {
                 statusesTmp = new ArrayList<>();

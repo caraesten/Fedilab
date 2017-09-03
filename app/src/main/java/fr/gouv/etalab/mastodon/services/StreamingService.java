@@ -29,6 +29,7 @@ import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;

@@ -37,6 +37,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -141,11 +142,15 @@ public class MainActivity extends AppCompatActivity
             public void onReceive(Context context, Intent intent) {
                 Bundle b = intent.getExtras();
                 StreamingService.EventStreaming eventStreaming = (StreamingService.EventStreaming) intent.getSerializableExtra("eventStreaming");
-
+                Log.v(Helper.TAG,"eventStreaming= " + eventStreaming);
                 if( eventStreaming == StreamingService.EventStreaming.NOTIFICATION){
                     Notification notification = b.getParcelable("data");
+                    Log.v(Helper.TAG,"notificationsFragment= " + notificationsFragment);
                     if(notificationsFragment != null){
+                        Log.v(Helper.TAG,"getUserVisibleHint= " + notificationsFragment.getUserVisibleHint());
+                        Log.v(Helper.TAG,"isActivityVisible= " + isActivityVisible());
                         if(notificationsFragment.getUserVisibleHint() && isActivityVisible()){
+
                             notificationsFragment.updateData(notification);
                         }else{
                             notificationsFragment.refresh(notification);
@@ -153,7 +158,10 @@ public class MainActivity extends AppCompatActivity
                     }
                 }else if(eventStreaming == StreamingService.EventStreaming.UPDATE){
                     Status status = b.getParcelable("data");
+                    Log.v(Helper.TAG,"homeFragment= " + homeFragment);
                     if( homeFragment != null){
+                        Log.v(Helper.TAG,"getUserVisibleHint= " + homeFragment.getUserVisibleHint());
+                        Log.v(Helper.TAG,"isActivityVisible= " + isActivityVisible());
                         if(homeFragment.getUserVisibleHint() && isActivityVisible()){
                             homeFragment.updateData(status);
                         }else{
@@ -281,7 +289,6 @@ public class MainActivity extends AppCompatActivity
                     if (homeFragment != null && Helper.getUnreadToots(getApplicationContext(), null) > 0) {
                         homeFragment.refresh(null);
                     }
-                    Helper.clearUnreadToots(getApplicationContext(), null);
                     updateHomeCounter();
                 }else if( tab.getPosition() == 1) {
 
@@ -290,7 +297,6 @@ public class MainActivity extends AppCompatActivity
                     if (notificationsFragment != null && Helper.getUnreadNotifications(getApplicationContext(), null) > 0) {
                         notificationsFragment.refresh(null);
                     }
-                    Helper.clearUnreadNotifications(getApplicationContext(), null);
                     updateNotifCounter();
                 }else if( tab.getPosition() == 2 && display_local) {
 
@@ -338,9 +344,15 @@ public class MainActivity extends AppCompatActivity
                 Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
                 switch (tab.getPosition()){
                     case 0:
+                        DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
+                        if( displayStatusFragment != null )
+                            displayStatusFragment.scrollToTop();
+                        Helper.clearUnreadToots(getApplicationContext(), null);
+                        updateHomeCounter();
+                        break;
                     case 2:
                     case 3:
-                        DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
+                        displayStatusFragment = ((DisplayStatusFragment) fragment);
                         if( displayStatusFragment != null )
                             displayStatusFragment.scrollToTop();
                         break;
@@ -348,6 +360,8 @@ public class MainActivity extends AppCompatActivity
                         DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
                         if( displayNotificationsFragment != null )
                             displayNotificationsFragment.scrollToTop();
+                        Helper.clearUnreadNotifications(getApplicationContext(), null);
+                        updateNotifCounter();
                         break;
                 }
             }

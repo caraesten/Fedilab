@@ -1638,10 +1638,10 @@ public class Helper {
         if( userId == null){
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            return sharedpreferences.getInt(Helper.SET_UNREAD_NOTIFICATIONS + userId, 0);
+            return sharedpreferences.getInt(Helper.SET_UNREAD_TOOTS + userId, 0);
         }else {
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            return sharedpreferences.getInt(Helper.SET_UNREAD_NOTIFICATIONS + userId, 0);
+            return sharedpreferences.getInt(Helper.SET_UNREAD_TOOTS + userId, 0);
         }
     }
 

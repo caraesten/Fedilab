@@ -20,6 +20,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -227,7 +228,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
             if( currentAccount != null && firstLoad && since_id != null){
-                editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + currentAccount.getId(), since_id);
+                editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + currentAccount.getId(), notifications.get(0).getId());
                 editor.apply();
             }
         }
@@ -255,9 +256,11 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     }
 
     public void refresh(Notification notification){
-
+        Log.v(Helper.TAG,"notification: " + notification);
         if( notification != null){
+            Log.v(Helper.TAG,"notificationsTmp: " + notificationsTmp);
             if( notificationsTmp != null && notificationsTmp.size() > 0){
+                Log.v(Helper.TAG,"size: " + notificationsTmp.size());
                 notificationsTmp.add(0,notification);
             }else {
                 notificationsTmp = new ArrayList<>();
