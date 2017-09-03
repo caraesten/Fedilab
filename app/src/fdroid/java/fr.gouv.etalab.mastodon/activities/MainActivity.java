@@ -608,6 +608,16 @@ public class MainActivity extends AppCompatActivity
                 String sharedSubject = intent.getStringExtra(Intent.EXTRA_SUBJECT);
                 String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
                 if (sharedText != null) {
+                    /* Some apps don't send the URL as the first part of the EXTRA_TEXT,
+                        the BBC News app being one such, in this case find where the URL
+                        is and strip that out into sharedText.
+
+                        TODO: ASSUMES that URL is at end of sharedText!
+                     */
+                    if (!sharedText.startsWith("http")) {
+                        int index = sharedText.indexOf("http");
+                        sharedText= sharedText.substring(index);
+                    }
                     new RetrieveMetaDataAsyncTask(sharedText, MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     Intent intentToot = new Intent(getApplicationContext(), TootActivity.class);
                     Bundle b = new Bundle();
