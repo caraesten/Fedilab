@@ -23,9 +23,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -189,6 +187,7 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
         boolean tschneider = false;
         boolean PhotonQyv = false;
         boolean angrytux = false;
+
         for(Account account: accounts){
             if( account.getUsername().equals("tschneider")){
                 account.setFollowing(false);
@@ -224,6 +223,20 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        if( developers != null && developers.size() > 0){
+            for(Account account: developers){
+                new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        }
+        if( contributors != null && contributors.size() > 0){
+            for(Account account: contributors){
+                new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        }
+    }
+    @Override
     public void onRetrieveRelationship(Relationship relationship, Error error) {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, "");
@@ -231,15 +244,17 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
             return;
         }
         for( int i = 0 ; i < developers.size() ; i++){
-            if( developers.get(i).getId().equals(relationship.getId()) && relationship.isFollowing() || userId.trim().equals(relationship.getId())){
-                developers.get(i).setFollowing(true);
+            if( developers.get(i).getId().equals(relationship.getId())){
+                developers.get(i).setFollowing(relationship.isFollowing() || userId.trim().equals(relationship.getId()));
                 accountSearchWebAdapterDeveloper.notifyDataSetChanged();
+                break;
             }
         }
         for( int i = 0 ; i < contributors.size() ; i++){
-            if( contributors.get(i).getId().equals(relationship.getId()) && relationship.isFollowing() || userId.trim().equals(relationship.getId())){
-                contributors.get(i).setFollowing(true);
+            if( contributors.get(i).getId().equals(relationship.getId())){
+                contributors.get(i).setFollowing(relationship.isFollowing() || userId.trim().equals(relationship.getId()));
                 accountSearchWebAdapterContributors.notifyDataSetChanged();
+                break;
             }
         }
     }

@@ -190,6 +190,13 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
             holder.account_follow.setEnabled(true);
             return;
         }
+        for( Account account: accounts){
+            if(account.getId().equals(userId)) {
+                account.setFollowing(true);
+                notifyDataSetChanged();
+                break;
+            }
+        }
         holder.account_follow.setVisibility(View.GONE);
         Toast.makeText(context, R.string.toast_follow, Toast.LENGTH_LONG).show();
     }
