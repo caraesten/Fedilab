@@ -14,11 +14,15 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.interfaces;
 
+import java.util.ArrayList;
+
+import fr.gouv.etalab.mastodon.client.Entities.Account;
+
 
 /**
- * Created by Thomas on 22/08/2017.
- * Interface for retrieving a remote account
+ * Created by Thomas on 03/09/2017.
+ * Interface for search dev accounts
  */
-public interface OnRetrieveRemoteAccountInterface {
-    void onRetrieveRemoteAccount(boolean error, String name, String username, String instance, boolean locked, String avatar, String bio, int statusCount, int followingCount, int followersCount);
+public interface OnRetrieveSearchDevelopersAccountshInterface {
+    void onRetrieveSearchDevelopersAccounts(ArrayList<Account> accounts);
 }

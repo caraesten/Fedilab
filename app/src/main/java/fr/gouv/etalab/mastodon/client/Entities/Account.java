@@ -43,6 +43,8 @@ public class Account implements Parcelable {
     private String header_static;
     private String token;
     private String instance;
+    private boolean isFollowing;
+    private boolean isRemote;
 
     protected Account(Parcel in) {
         id = in.readString();
@@ -236,5 +238,21 @@ public class Account implements Parcelable {
         dest.writeString(header_static);
         dest.writeString(token);
         dest.writeString(instance);
+    }
+
+    public boolean isFollowing() {
+        return isFollowing;
+    }
+
+    public void setFollowing(boolean following) {
+        isFollowing = following;
+    }
+
+    public boolean isRemote() {
+        return isRemote;
+    }
+
+    public void setRemote(boolean remote) {
+        isRemote = remote;
     }
 }

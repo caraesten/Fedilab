@@ -18,6 +18,7 @@ package fr.gouv.etalab.mastodon.helper;
 
 
 import android.app.Activity;
+import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.app.DownloadManager;
@@ -81,6 +82,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.BuildConfig;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -102,11 +104,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.lang.reflect.Type;
 import java.net.InetAddress;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -203,8 +207,10 @@ public class Helper {
     public static final String SET_PREVIEW_REPLIES_PP = "set_preview_replies_pp";
     public static final String SET_TRANSLATOR = "set_translator";
     public static final String SET_LED_COLOUR = "set_led_colour";
-    public static final String SET_UNREAD_NOTIFICATIONS = "set_unread_notifications";
-    public static final String SET_UNREAD_TOOTS = "set_unread_toots";
+    private static final String SET_UNREAD_NOTIFICATIONS = "set_unread_notifications";
+    private static final String SET_UNREAD_TOOTS = "set_unread_toots";
+    private static final String SET_DEVELOPERS = "set_developers";
+    private static final String SET_DEVELOPERS_CACHE_DATE = "set_developers_cache_date";
 
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
@@ -1672,4 +1678,31 @@ public class Helper {
             editor.apply();
         }
     }
+
+
+    public static String[] developers = {
+        "https://mastodon.etalab.gouv.fr/@tschneider",
+        "https://mastodon.xyz/@PhotonQyv",
+        "https://social.tchncs.de/@angrytux"
+    };
+
+    public static void cacheDevelopers(Context context, ArrayList<Account> accounts){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        Gson gson = new Gson();
+        String serializedAccounts = gson.toJson(accounts);
+        editor.putString(Helper.SET_DEVELOPERS, serializedAccounts);
+        editor.putString(Helper.SET_DEVELOPERS_CACHE_DATE, dateToString(context, new Date()));
+        editor.apply();
+    }
+
+
+    public static ArrayList<Account> getDevelopers(Context context){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedpreferences.getString(Helper.SET_DEVELOPERS, null);
+        Type type = new TypeToken<ArrayList<Account>>() {}.getType();
+        return gson.fromJson(json, type);
+    }
+
 }

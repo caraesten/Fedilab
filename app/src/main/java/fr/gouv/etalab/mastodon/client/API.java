@@ -1119,37 +1119,6 @@ public class API {
     }
 
     /**
-     * Retrieves Developer account when searching (ie: via @...) *synchronously*
-     *
-     * @return APIResponse
-     */
-    public APIResponse searchDeveloper() {
-        RequestParams params = new RequestParams();
-        params.add("q", "tschneider");
-        get("/accounts/search", params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                accounts = new ArrayList<>();
-                account = parseAccountResponse(context, response);
-                accounts.add(account);
-                apiResponse.setSince_id(findSinceId(headers));
-                apiResponse.setMax_id(findMaxId(headers));
-            }
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                accounts = parseDeveloperResponse(response);
-                apiResponse.setSince_id(findSinceId(headers));
-                apiResponse.setMax_id(findMaxId(headers));
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-                setError(statusCode, error);
-            }
-        });
-        apiResponse.setAccounts(accounts);
-        return apiResponse;
-    }
-    /**
      * Retrieves Accounts when searching (ie: via @...) *synchronously*
      *
      * @param query  String search

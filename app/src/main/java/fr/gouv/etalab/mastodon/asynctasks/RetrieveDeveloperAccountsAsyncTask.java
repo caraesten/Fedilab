@@ -16,9 +16,13 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+
+import java.util.ArrayList;
+
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchDevelopersAccountshInterface;
 
 
 /**
@@ -29,23 +33,32 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
 public class RetrieveDeveloperAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     private Context context;
-    private APIResponse apiResponse;
-    private OnRetrieveSearcAccountshInterface listener;
+    private OnRetrieveSearchDevelopersAccountshInterface listener;
+    private ArrayList<Account> accounts;
 
-    public RetrieveDeveloperAccountsAsyncTask(Context context, OnRetrieveSearcAccountshInterface onRetrieveSearcAccountshInterface){
+    public RetrieveDeveloperAccountsAsyncTask(Context context, OnRetrieveSearchDevelopersAccountshInterface onRetrieveSearchDevelopersAccountshInterface){
         this.context = context;
-        this.listener = onRetrieveSearcAccountshInterface;
+        this.listener = onRetrieveSearchDevelopersAccountshInterface;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
         API api = new API(context);
-        apiResponse = api.searchDeveloper();
+        accounts = new ArrayList<>();
+        APIResponse apiResponse = api.searchAccounts("@tschneider@mastodon.etalab.gouv.fr", 1);
+        if( apiResponse.getAccounts() != null && apiResponse.getAccounts().size() > 0)
+            accounts.add(apiResponse.getAccounts().get(0));
+        apiResponse = api.searchAccounts("@PhotonQyv@mastodon.xyz",1);
+        if( apiResponse.getAccounts() != null && apiResponse.getAccounts().size() > 0)
+            accounts.add(apiResponse.getAccounts().get(0));
+        apiResponse = api.searchAccounts("@angrytux@social.tchncs.de",1);
+        if( apiResponse.getAccounts() != null && apiResponse.getAccounts().size() > 0)
+            accounts.add(apiResponse.getAccounts().get(0));
         return null;
     }
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveSearchAccounts(apiResponse);
+        listener.onRetrieveSearchDevelopersAccounts(accounts);
     }
 
 }

@@ -261,7 +261,7 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
 
 
     @Override
-    public void onRetrieveRemoteAccount(boolean error, String name, String username, boolean locked, String avatar, String bio, int statusCount, int followingCount, int followersCount) {
+    public void onRetrieveRemoteAccount(boolean error, String name, String username, String instance_name, boolean locked, String avatar, String bio, int statusCount, int followingCount, int followersCount) {
         loader.setVisibility(View.GONE);
         rf_search.setEnabled(true);
         if( error){
