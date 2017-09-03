@@ -15,14 +15,11 @@
 package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import java.io.IOException;
 
-import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
 
 
@@ -45,14 +42,12 @@ public class RetrieveRemoteAccountsAsyncTask extends AsyncTask<Void, Void, Void>
         this.url = "https://" + instance  + "/@" + username;
         this.listener = onRetrieveRemoteAccountInterface;
         this.instance = instance;
-        Log.v(Helper.TAG,"RetrieveRemoteAccountsAsyncTask");
     }
 
 
 
     @Override
     protected Void doInBackground(Void... params) {
-        Log.v(Helper.TAG,"doInBackground");
         String userAgent = "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36";
         try {
             Document document = Jsoup.connect(url).userAgent(userAgent).get();
@@ -62,7 +57,7 @@ public class RetrieveRemoteAccountsAsyncTask extends AsyncTask<Void, Void, Void>
             Elements nameElement = document.getElementsByClass("name");
             name = nameElement.get(0).getElementsByClass("p-name").get(0).html();
             username = nameElement.get(0).getElementsByTag("span").get(1).html();
-            islocked = nameElement.get(0).getElementsByClass("fa-lock") != null;
+            islocked = (nameElement.get(0).getElementsByClass("fa-lock") != null && nameElement.get(0).getElementsByClass("fa-lock").size() > 0);
 
             Elements bioElement = document.getElementsByClass("bio");
             bio = bioElement.get(0).html();
@@ -79,7 +74,6 @@ public class RetrieveRemoteAccountsAsyncTask extends AsyncTask<Void, Void, Void>
 
     @Override
     protected void onPostExecute(Void result) {
-        Log.v(Helper.TAG,"onPostExecute");
         listener.onRetrieveRemoteAccount(error, name, username, instance, islocked, avatar, bio, statusCount, followingCount, followersCount);
     }
 

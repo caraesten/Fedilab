@@ -148,11 +148,8 @@ public class MainActivity extends AppCompatActivity
                         if(notificationsFragment.getUserVisibleHint() && isActivityVisible()){
                             notificationsFragment.updateData(notification);
                         }else{
-                            updateNotifCounter();
                             notificationsFragment.refresh(notification);
                         }
-                    }else {
-                        updateNotifCounter();
                     }
                 }else if(eventStreaming == StreamingService.EventStreaming.UPDATE){
                     Status status = b.getParcelable("data");
@@ -160,11 +157,8 @@ public class MainActivity extends AppCompatActivity
                         if(homeFragment.getUserVisibleHint() && isActivityVisible()){
                             homeFragment.updateData(status);
                         }else{
-                            updateHomeCounter();
                             homeFragment.refresh(status);
                         }
-                    }else{
-                        updateHomeCounter();
                     }
                 }else if(eventStreaming == StreamingService.EventStreaming.DELETE){
                     String id = b.getString("id");
@@ -176,6 +170,8 @@ public class MainActivity extends AppCompatActivity
                         }
                     }
                 }
+                updateNotifCounter();
+                updateHomeCounter();
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
@@ -868,6 +864,8 @@ public class MainActivity extends AppCompatActivity
     public void onResume(){
         super.onResume();
         MainActivity.activityResumed();
+        updateNotifCounter();
+        updateHomeCounter();
         //Proceeds to update of the authenticated account
         if(Helper.isLoggedIn(getApplicationContext()))
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
