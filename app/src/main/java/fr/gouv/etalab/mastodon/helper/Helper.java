@@ -133,6 +133,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
+import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -209,8 +210,8 @@ public class Helper {
     public static final String SET_LED_COLOUR = "set_led_colour";
     private static final String SET_UNREAD_NOTIFICATIONS = "set_unread_notifications";
     private static final String SET_UNREAD_TOOTS = "set_unread_toots";
-    private static final String SET_DEVELOPERS = "set_developers";
-    private static final String SET_DEVELOPERS_CACHE_DATE = "set_developers_cache_date";
+    private static final String SET_TEMP_STATUS = "set_temp_status";
+    private static final String SET_TEMP_NOTIFICATIONS = "set_temp_notifications";
 
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
@@ -1686,22 +1687,79 @@ public class Helper {
         "https://social.tchncs.de/@angrytux"
     };
 
-    public static void cacheDevelopers(Context context, ArrayList<Account> accounts){
+    public static void cacheStatus(Context context, Status status, String userId){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        if( userId == null)
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         SharedPreferences.Editor editor = sharedpreferences.edit();
+        ArrayList<Status> statuses = getTempStatus(context, userId);
+        if( statuses == null)
+            statuses = new ArrayList<>();
+        if( status != null)
+            statuses.add(0,status);
         Gson gson = new Gson();
-        String serializedAccounts = gson.toJson(accounts);
-        editor.putString(Helper.SET_DEVELOPERS, serializedAccounts);
-        editor.putString(Helper.SET_DEVELOPERS_CACHE_DATE, dateToString(context, new Date()));
+        String serializedAccounts = gson.toJson(statuses);
+        editor.putString(Helper.SET_TEMP_STATUS + userId, serializedAccounts);
         editor.apply();
     }
 
-
-    public static ArrayList<Account> getDevelopers(Context context){
+    public static void cacheStatusClear(Context context, String userId){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        if( userId == null)
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        ArrayList<Status> statuses = new ArrayList<>();
         Gson gson = new Gson();
-        String json = sharedpreferences.getString(Helper.SET_DEVELOPERS, null);
-        Type type = new TypeToken<ArrayList<Account>>() {}.getType();
+        String serializedAccounts = gson.toJson(statuses);
+        editor.putString(Helper.SET_TEMP_STATUS + userId, serializedAccounts);
+        editor.apply();
+    }
+
+    public static ArrayList<Status> getTempStatus(Context context, String userId){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        if( userId == null)
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        Gson gson = new Gson();
+        String json = sharedpreferences.getString(Helper.SET_TEMP_STATUS + userId, null);
+        Type type = new TypeToken<ArrayList<Status>>() {}.getType();
+        return gson.fromJson(json, type);
+    }
+
+    public static void cacheNotifications(Context context, Notification notification, String userId){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        if( userId == null)
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        ArrayList<Notification> notifications = getTempNotification(context, userId);
+        if( notifications == null)
+            notifications = new ArrayList<>();
+        if( notification != null)
+            notifications.add(0,notification);
+        Gson gson = new Gson();
+        String serializedAccounts = gson.toJson(notifications);
+        editor.putString(Helper.SET_TEMP_NOTIFICATIONS + userId, serializedAccounts);
+        editor.apply();
+    }
+
+    public static void cacheNotificationsClear(Context context, String userId){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        if( userId == null)
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        ArrayList<Notification> notifications = new ArrayList<>();
+        Gson gson = new Gson();
+        String serializedAccounts = gson.toJson(notifications);
+        editor.putString(Helper.SET_TEMP_NOTIFICATIONS + userId, serializedAccounts);
+        editor.apply();
+    }
+
+    public static ArrayList<Notification> getTempNotification(Context context, String userId){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        if( userId == null)
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        Gson gson = new Gson();
+        String json = sharedpreferences.getString(Helper.SET_TEMP_NOTIFICATIONS + userId, null);
+        Type type = new TypeToken<ArrayList<Notification>>() {}.getType();
         return gson.fromJson(json, type);
     }
 

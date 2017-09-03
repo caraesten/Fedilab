@@ -37,7 +37,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -61,7 +60,6 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.nostra13.universalimageloader.utils.L;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -72,8 +70,6 @@ import java.util.Stack;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMetaDataAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.client.Entities.Notification;
-import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayFollowRequestSentFragment;
@@ -144,22 +140,19 @@ public class MainActivity extends AppCompatActivity
                 Bundle b = intent.getExtras();
                 StreamingService.EventStreaming eventStreaming = (StreamingService.EventStreaming) intent.getSerializableExtra("eventStreaming");
                 if( eventStreaming == StreamingService.EventStreaming.NOTIFICATION){
-                    Notification notification = b.getParcelable("data");
                     if(notificationsFragment != null){
                         if(notificationsFragment.getUserVisibleHint() && isActivityVisible()){
-
-                            notificationsFragment.updateData(notification);
+                            notificationsFragment.showNewContent();
                         }else{
-                            notificationsFragment.refresh(notification);
+                            notificationsFragment.refresh();
                         }
                     }
                 }else if(eventStreaming == StreamingService.EventStreaming.UPDATE){
-                    Status status = b.getParcelable("data");
                     if( homeFragment != null){
                         if(homeFragment.getUserVisibleHint() && isActivityVisible()){
-                            homeFragment.updateData(status);
+                            homeFragment.showNewContent();
                         }else{
-                            homeFragment.refresh(status);
+                            homeFragment.refresh();
                         }
                     }
                 }else if(eventStreaming == StreamingService.EventStreaming.DELETE){
@@ -281,7 +274,7 @@ public class MainActivity extends AppCompatActivity
                     item = navigationView.getMenu().findItem(R.id.nav_home);
                     fragmentTag = "HOME_TIMELINE";
                     if (homeFragment != null && Helper.getUnreadToots(getApplicationContext(), null) > 0) {
-                        homeFragment.refresh(null);
+                        homeFragment.refresh();
                     }
                     Helper.clearUnreadToots(getApplicationContext(), null);
                     updateHomeCounter();
@@ -289,7 +282,7 @@ public class MainActivity extends AppCompatActivity
                     fragmentTag = "NOTIFICATIONS";
                     item = navigationView.getMenu().findItem(R.id.nav_notification);
                     if (notificationsFragment != null && Helper.getUnreadNotifications(getApplicationContext(), null) > 0) {
-                        notificationsFragment.refresh(null);
+                        notificationsFragment.refresh();
                     }
                     Helper.clearUnreadNotifications(getApplicationContext(), null);
                     updateNotifCounter();

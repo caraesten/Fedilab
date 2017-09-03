@@ -143,21 +143,19 @@ public class MainActivity extends AppCompatActivity
                 Bundle b = intent.getExtras();
                 StreamingService.EventStreaming eventStreaming = (StreamingService.EventStreaming) intent.getSerializableExtra("eventStreaming");
                 if( eventStreaming == StreamingService.EventStreaming.NOTIFICATION){
-                    Notification notification = b.getParcelable("data");
                     if(notificationsFragment != null){
                         if(notificationsFragment.getUserVisibleHint() && isActivityVisible()){
-                            notificationsFragment.updateData(notification);
+                            notificationsFragment.showNewContent();
                         }else{
-                            notificationsFragment.refresh(notification);
+                            notificationsFragment.refresh();
                         }
                     }
                 }else if(eventStreaming == StreamingService.EventStreaming.UPDATE){
-                    Status status = b.getParcelable("data");
                     if( homeFragment != null){
                         if(homeFragment.getUserVisibleHint() && isActivityVisible()){
-                            homeFragment.updateData(status);
+                            homeFragment.showNewContent();
                         }else{
-                            homeFragment.refresh(status);
+                            homeFragment.refresh();
                         }
                     }
                 }else if(eventStreaming == StreamingService.EventStreaming.DELETE){
@@ -282,7 +280,7 @@ public class MainActivity extends AppCompatActivity
                     item = navigationView.getMenu().findItem(R.id.nav_home);
                     fragmentTag = "HOME_TIMELINE";
                     if (homeFragment != null && Helper.getUnreadToots(getApplicationContext(), null) > 0) {
-                        homeFragment.refresh(null);
+                        homeFragment.refresh();
                     }
                     Helper.clearUnreadToots(getApplicationContext(), null);
                     updateHomeCounter();
@@ -290,7 +288,7 @@ public class MainActivity extends AppCompatActivity
                     fragmentTag = "NOTIFICATIONS";
                     item = navigationView.getMenu().findItem(R.id.nav_notification);
                     if (notificationsFragment != null && Helper.getUnreadNotifications(getApplicationContext(), null) > 0) {
-                        notificationsFragment.refresh(null);
+                        notificationsFragment.refresh();
                     }
                     Helper.clearUnreadNotifications(getApplicationContext(), null);
                     updateNotifCounter();

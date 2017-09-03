@@ -20,7 +20,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -134,13 +133,13 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         new_data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                notificationsTmp = Helper.getTempNotification(context, null);
                 if( notificationsTmp != null){
+                    for(int i = notificationsTmp.size() -1 ; i >= 0 ; i--){
+                        notifications.add(0,notificationsTmp.get(i));
+                    }
                     boolean isOnWifi = Helper.isOnWIFI(context);
                     int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-                    notifications = new ArrayList<>();
-                    for(Notification notification: notificationsTmp){
-                        notifications.add(notification);
-                    }
                     notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments, notifications);
                     lv_notifications.setAdapter(notificationsListAdapter);
                     if( notificationsTmp.size() > 0){
@@ -245,45 +244,19 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     }
 
 
-    public void updateData(Notification notification){
-        if( notificationsTmp != null && notificationsTmp.size() > 0){
-            notificationsTmp.add(0,notification);
-        }else {
-            notificationsTmp = new ArrayList<>();
-            for(Notification notificationTmp: this.notifications){
-                notificationsTmp.add(notificationTmp);
-            }
-            notificationsTmp.add(0,notification);
-        }
+    public void showNewContent(){
         new_data.setVisibility(View.VISIBLE);
     }
 
-    public void refresh(Notification notification){
-        if( notification != null){
-            if( notificationsTmp != null && notificationsTmp.size() > 0){
-                notificationsTmp.add(0,notification);
-            }else {
-                notificationsTmp = new ArrayList<>();
-                for(Notification notificationTmp: this.notifications){
-                    notificationsTmp.add(notificationTmp);
-                }
-                notificationsTmp.add(0,notification);
-            }
-        }else{
-            notificationsTmp = new ArrayList<>();
-            for(Notification notificationTmp: this.notifications){
-                notificationsTmp.add(notificationTmp);
-            }
-        }
+    public void refresh(){
+        notificationsTmp = Helper.getTempNotification(context, null);
         if( notificationsTmp.size() > 0){
+            for(int i = notificationsTmp.size() -1 ; i >= 0 ; i--){
+               this.notifications.add(0,notificationsTmp.get(i));
+            }
             boolean isOnWifi = Helper.isOnWIFI(context);
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-            notifications = new ArrayList<>();
-            for(Notification not_tmp: notificationsTmp){
-                notifications.add(not_tmp);
-            }
-
             SharedPreferences.Editor editor = sharedpreferences.edit();
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notificationsTmp.get(0).getId());
@@ -292,8 +265,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             lv_notifications.setAdapter(notificationsListAdapter);
             if( textviewNoAction.getVisibility() == View.VISIBLE)
                 textviewNoAction.setVisibility(View.GONE);
+            Helper.cacheNotificationsClear(context, null);
         }
         new_data.setVisibility(View.GONE);
-        notificationsTmp = new ArrayList<>();
     }
 }

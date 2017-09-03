@@ -29,7 +29,6 @@ import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -311,8 +310,6 @@ public class StreamingService extends Service {
     public void onRetrieveStreaming(EventStreaming event, JSONObject response, String acct, String userId) {
         if(  response == null )
             return;
-        String max_id_notif = null;
-        String max_id_home = null;
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
         boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
@@ -374,6 +371,7 @@ public class StreamingService extends Service {
                     break;
             }
             Helper.increaseUnreadNotifications(getApplicationContext(), userId);
+            Helper.cacheNotifications(getApplicationContext(), notification, userId);
             if( notification.getStatus().getContent()!= null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                     message = Html.fromHtml(notification.getStatus().getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
@@ -391,6 +389,7 @@ public class StreamingService extends Service {
             status.setReplies(new ArrayList<Status>()); //Force to don't display replies.
 
             Helper.increaseUnreadToots(getApplicationContext(), userId);
+            Helper.cacheStatus(getApplicationContext(), status, userId);
             if( status.getContent() != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                     message = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
