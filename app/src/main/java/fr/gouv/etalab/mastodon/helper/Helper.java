@@ -208,8 +208,6 @@ public class Helper {
     public static final String SET_PREVIEW_REPLIES_PP = "set_preview_replies_pp";
     public static final String SET_TRANSLATOR = "set_translator";
     public static final String SET_LED_COLOUR = "set_led_colour";
-    private static final String SET_UNREAD_NOTIFICATIONS = "set_unread_notifications";
-    private static final String SET_UNREAD_TOOTS = "set_unread_toots";
     private static final String SET_TEMP_STATUS = "set_temp_status";
     private static final String SET_TEMP_NOTIFICATIONS = "set_temp_notifications";
 
@@ -253,7 +251,6 @@ public class Helper {
     //Refresh job
     public static final int MINUTES_BETWEEN_NOTIFICATIONS_REFRESH = 15;
     public static final int MINUTES_BETWEEN_HOME_TIMELINE = 30;
-    public static final int MINUTES_BETWEEN_STREAMING_CHECK_ALIVE = 15;
 
     //Intent
     public static final String INTENT_ACTION = "intent_action";
@@ -1592,100 +1589,29 @@ public class Helper {
 
 
     public static int getUnreadNotifications(Context context,  String userId){
-        if( userId == null){
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        if( userId == null)
             userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            return sharedpreferences.getInt(Helper.SET_UNREAD_NOTIFICATIONS + userId, 0);
-        }else {
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            return sharedpreferences.getInt(Helper.SET_UNREAD_NOTIFICATIONS + userId, 0);
-        }
-    }
-    public static void increaseUnreadNotifications(Context context,  String userId){
-        if( userId == null){
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            int unreadNotifications = sharedpreferences.getInt(Helper.SET_UNREAD_NOTIFICATIONS + userId, 0);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            unreadNotifications = unreadNotifications + 1;
-            editor.putInt(Helper.SET_UNREAD_NOTIFICATIONS + userId, unreadNotifications);
-            editor.apply();
-        }else {
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            int unreadNotifications = sharedpreferences.getInt(Helper.SET_UNREAD_NOTIFICATIONS + userId, 0);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            unreadNotifications = unreadNotifications + 1;
-            editor.putInt(Helper.SET_UNREAD_NOTIFICATIONS + userId, unreadNotifications);
-            editor.apply();
-        }
+        Gson gson = new Gson();
+        String json = sharedpreferences.getString(Helper.SET_TEMP_NOTIFICATIONS + userId, null);
+        Type type = new TypeToken<ArrayList<Notification>>() {}.getType();
+        ArrayList<Notification> notifications =  gson.fromJson(json, type);
+        return (notifications == null)?0:notifications.size();
     }
 
-    public static void clearUnreadNotifications(Context context, String userId){
-        if( userId == null){
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putInt(Helper.SET_UNREAD_NOTIFICATIONS + userId, 0);
-            editor.apply();
-        }else {
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putInt(Helper.SET_UNREAD_NOTIFICATIONS + userId, 0);
-            editor.apply();
-        }
-    }
+
 
     public static int getUnreadToots(Context context,  String userId){
-        if( userId == null){
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        if( userId == null)
             userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            return sharedpreferences.getInt(Helper.SET_UNREAD_TOOTS + userId, 0);
-        }else {
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            return sharedpreferences.getInt(Helper.SET_UNREAD_TOOTS + userId, 0);
-        }
+        Gson gson = new Gson();
+        String json = sharedpreferences.getString(Helper.SET_TEMP_STATUS + userId, null);
+        Type type = new TypeToken<ArrayList<Status>>() {}.getType();
+        ArrayList<Status> statuses = gson.fromJson(json, type);
+        return (statuses == null)?0:statuses.size();
     }
 
-    public static void increaseUnreadToots(Context context,  String userId){
-        if( userId == null){
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            int unreadNotifications = sharedpreferences.getInt(Helper.SET_UNREAD_TOOTS + userId, 0);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            unreadNotifications = unreadNotifications + 1;
-            editor.putInt(Helper.SET_UNREAD_TOOTS + userId, unreadNotifications);
-            editor.apply();
-        }else {
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            int unreadNotifications = sharedpreferences.getInt(Helper.SET_UNREAD_TOOTS + userId, 0);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            unreadNotifications = unreadNotifications + 1;
-            editor.putInt(Helper.SET_UNREAD_TOOTS + userId, unreadNotifications);
-            editor.apply();
-        }
-    }
-
-    public static void clearUnreadToots(Context context,  String userId){
-        if( userId == null){
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putInt(Helper.SET_UNREAD_TOOTS + userId, 0);
-            editor.apply();
-        }else {
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putInt(Helper.SET_UNREAD_TOOTS + userId, 0);
-            editor.apply();
-        }
-    }
-
-
-    public static String[] developers = {
-        "https://mastodon.etalab.gouv.fr/@tschneider",
-        "https://mastodon.xyz/@PhotonQyv",
-        "https://social.tchncs.de/@angrytux"
-    };
 
     public static void cacheStatus(Context context, Status status, String userId){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -1725,6 +1651,7 @@ public class Helper {
         return gson.fromJson(json, type);
     }
 
+
     public static void cacheNotifications(Context context, Notification notification, String userId){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( userId == null)
@@ -1742,6 +1669,7 @@ public class Helper {
     }
 
     public static void cacheNotificationsClear(Context context, String userId){
+
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( userId == null)
             userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);

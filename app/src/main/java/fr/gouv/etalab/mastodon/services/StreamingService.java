@@ -23,7 +23,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
@@ -195,6 +194,7 @@ public class StreamingService extends Service {
 
 
 
+    @SuppressWarnings("ConstantConditions")
     private String readStream(InputStream inputStream, HttpsURLConnection urlConnection, final Account account) {
         BufferedReader reader = null;
         try{
@@ -370,7 +370,6 @@ public class StreamingService extends Service {
                 default:
                     break;
             }
-            Helper.increaseUnreadNotifications(getApplicationContext(), userId);
             Helper.cacheNotifications(getApplicationContext(), notification, userId);
             if( notification.getStatus().getContent()!= null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -386,9 +385,7 @@ public class StreamingService extends Service {
 
         }else if ( event ==  EventStreaming.UPDATE){
             status = API.parseStatuses(getApplicationContext(), response);
-            status.setReplies(new ArrayList<Status>()); //Force to don't display replies.
-
-            Helper.increaseUnreadToots(getApplicationContext(), userId);
+            status.setReplies(new ArrayList<Status>()); //Force to don't display replies
             Helper.cacheStatus(getApplicationContext(), status, userId);
             if( status.getContent() != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -424,14 +421,6 @@ public class StreamingService extends Service {
             notify = false;
             Intent intentBC = new Intent(Helper.RECEIVE_DATA);
             intentBC.putExtra("eventStreaming", event);
-            Bundle b = new Bundle();
-            if( event == EventStreaming.UPDATE)
-                b.putParcelable("data", status);
-            else if(event == EventStreaming.NOTIFICATION)
-                b.putParcelable("data", notification);
-            else if(event == EventStreaming.DELETE)
-                b.putString("id", dataId);
-            intentBC.putExtras(b);
             LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentBC);
         }
         //User receiving the notification is connected and application is to front, notification won't be pushed

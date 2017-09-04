@@ -237,7 +237,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 }
                 new_data.setVisibility(View.GONE);
                 statusesTmp = new ArrayList<>();
-                Helper.clearUnreadToots(context, null);
+                Helper.cacheStatusClear(context, null);
                 ((MainActivity) context).updateHomeCounter();
 
             }
@@ -315,7 +315,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             textviewNoAction.setVisibility(View.GONE);
         if( swiped ){
             if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
-                Helper.clearUnreadToots(context,null);
+                Helper.cacheStatusClear(context,null);
                 ((MainActivity) context).updateHomeCounter();
             }
             statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
@@ -362,7 +362,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         statusesTmp = Helper.getTempStatus(context, null);
         if( statusesTmp.size() > 0){
             for(int i = statusesTmp.size() -1 ; i >= 0 ; i--){
-                this.statuses.add(0,statusesTmp.get(i));
+                if( !this.statuses.contains(statusesTmp.get(i)))
+                    this.statuses.add(0,statusesTmp.get(i));
             }
             boolean isOnWifi = Helper.isOnWIFI(context);
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);

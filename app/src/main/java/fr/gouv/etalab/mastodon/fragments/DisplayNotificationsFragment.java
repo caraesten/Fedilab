@@ -153,7 +153,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 }
                 new_data.setVisibility(View.GONE);
                 notificationsTmp = new ArrayList<>();
-                Helper.clearUnreadNotifications(context, null);
+                Helper.cacheNotificationsClear(context, null);
                 ((MainActivity) context).updateNotifCounter();
             }
         });
@@ -209,7 +209,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         else
             textviewNoAction.setVisibility(View.GONE);
         if( swiped ){
-            Helper.clearUnreadNotifications(context,null);
+            Helper.cacheNotificationsClear(context,null);
             ((MainActivity) context).updateNotifCounter();
             boolean isOnWifi = Helper.isOnWIFI(context);
             int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
@@ -253,7 +253,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         notificationsTmp = Helper.getTempNotification(context, null);
         if( notificationsTmp.size() > 0){
             for(int i = notificationsTmp.size() -1 ; i >= 0 ; i--){
-               this.notifications.add(0,notificationsTmp.get(i));
+                if( !this.notifications.contains(notificationsTmp.get(i)))
+                    this.notifications.add(0,notificationsTmp.get(i));
             }
             boolean isOnWifi = Helper.isOnWIFI(context);
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);

@@ -279,7 +279,7 @@ public class MainActivity extends AppCompatActivity
                     if (homeFragment != null && Helper.getUnreadToots(getApplicationContext(), null) > 0) {
                         homeFragment.refresh();
                     }
-                    Helper.clearUnreadToots(getApplicationContext(), null);
+                    Helper.cacheStatusClear(getApplicationContext(), null);
                     updateHomeCounter();
                 }else if( tab.getPosition() == 1) {
                     fragmentTag = "NOTIFICATIONS";
@@ -287,7 +287,7 @@ public class MainActivity extends AppCompatActivity
                     if (notificationsFragment != null && Helper.getUnreadNotifications(getApplicationContext(), null) > 0) {
                         notificationsFragment.refresh();
                     }
-                    Helper.clearUnreadNotifications(getApplicationContext(), null);
+                    Helper.cacheNotificationsClear(getApplicationContext(), null);
                     updateNotifCounter();
                 }else if( tab.getPosition() == 2 && display_local) {
 
@@ -338,7 +338,7 @@ public class MainActivity extends AppCompatActivity
                         DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
                         if( displayStatusFragment != null )
                             displayStatusFragment.scrollToTop();
-                        Helper.clearUnreadToots(getApplicationContext(), null);
+                        Helper.cacheStatusClear(getApplicationContext(), null);
                         updateHomeCounter();
                         break;
                     case 2:
@@ -351,7 +351,7 @@ public class MainActivity extends AppCompatActivity
                         DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
                         if( displayNotificationsFragment != null )
                             displayNotificationsFragment.scrollToTop();
-                        Helper.clearUnreadNotifications(getApplicationContext(), null);
+                        Helper.cacheNotificationsClear(getApplicationContext(), null);
                         updateNotifCounter();
                         break;
                 }
