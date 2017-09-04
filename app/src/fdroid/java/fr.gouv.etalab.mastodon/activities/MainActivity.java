@@ -25,6 +25,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -37,6 +38,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -66,6 +68,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Stack;
+import java.util.regex.Matcher;
 
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMetaDataAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
@@ -612,15 +615,15 @@ public class MainActivity extends AppCompatActivity
                         the BBC News app being one such, in this case find where the URL
                         is and strip that out into sharedText.
                      */
-                    if (!sharedText.startsWith("http")) {
-                        int index = sharedText.indexOf("http");
-                        if (index > -1)
-                            sharedText = sharedText.substring(index);
-
-                        index = sharedText.indexOf(' ');
-
-                        if (index > -1)
-                            sharedText = sharedText.substring(0, index -1);
+                    Matcher matcher;
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
+                        matcher = Patterns.WEB_URL.matcher(sharedText);
+                    else
+                        matcher = Helper.urlPattern.matcher(sharedText);
+                    while (matcher.find()){
+                        int matchStart = matcher.start(1);
+                        int matchEnd = matcher.end();
+                        sharedText = sharedText.substring(matchStart, matchEnd);
                     }
                     new RetrieveMetaDataAsyncTask(sharedText, MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     Intent intentToot = new Intent(getApplicationContext(), TootActivity.class);
