@@ -358,7 +358,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                             String value = matcher.group(0);
                             int end = matcher.end();
                             if (spannableString.charAt(end) == '/') {
-                                text = spannableString.toString().substring(0, end).concat(spannableString.toString().substring(end+1, spannableString.length()));
+                                text = spannableString.toString().substring(0, end).
+                                        concat(spannableString.toString().substring(end+1, spannableString.length()));
                             }
                             if( value != null) {
                                 urlConversion.put(key, value);
