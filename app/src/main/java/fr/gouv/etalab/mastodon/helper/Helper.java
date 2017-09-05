@@ -18,6 +18,7 @@ package fr.gouv.etalab.mastodon.helper;
 
 
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
@@ -1639,6 +1640,13 @@ public class Helper {
         String serializedAccounts = gson.toJson(statuses);
         editor.putString(Helper.SET_TEMP_STATUS + userId, serializedAccounts);
         editor.apply();
+        //noinspection EmptyTryBlock
+        try {
+            NotificationManager notificationManager = (NotificationManager) context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+            long notif_id = Long.parseLong(userId);
+            int notificationId = ((notif_id + 2) > 2147483647) ? (int) (2147483647 - notif_id - 2) : (int) (notif_id + 2);
+            notificationManager.cancel(notificationId);
+        }catch (Exception ignored){}
     }
 
     public static ArrayList<Status> getTempStatus(Context context, String userId){
@@ -1679,6 +1687,14 @@ public class Helper {
         String serializedAccounts = gson.toJson(notifications);
         editor.putString(Helper.SET_TEMP_NOTIFICATIONS + userId, serializedAccounts);
         editor.apply();
+        //noinspection EmptyTryBlock
+        try {
+            NotificationManager notificationManager = (NotificationManager) context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+            long notif_id = Long.parseLong(userId);
+            int notificationId = ((notif_id + 1) > 2147483647) ? (int) (2147483647 - notif_id - 1) : (int) (notif_id + 1);
+            notificationManager.cancel(notificationId);
+        }catch (Exception ignored){}
+
     }
 
     public static ArrayList<Notification> getTempNotification(Context context, String userId){
