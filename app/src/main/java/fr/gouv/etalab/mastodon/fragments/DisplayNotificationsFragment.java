@@ -35,7 +35,9 @@ import java.util.List;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
+import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -185,6 +187,31 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
 
 
     @Override
+    public void onResume() {
+        super.onResume();
+        //New data are available
+        notificationsTmp = Helper.getTempNotification(context, null);
+        if (getUserVisibleHint() && notificationsTmp != null && notificationsTmp.size() > 0 && notifications.size() > 0) {
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean isOnWifi = Helper.isOnWIFI(context);
+            int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+            int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
+            for(int i = notificationsTmp.size() -1 ; i >= 0 ; i--){
+                if( !this.notifications.contains(notificationsTmp.get(i)))
+                    this.notifications.add(0,notificationsTmp.get(i));
+            }
+            if( this.notifications.size() > 0 )
+                max_id = this.notifications.get(this.notifications.size()-1).getId();
+            notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments, notifications);
+            lv_notifications.setAdapter(notificationsListAdapter);
+            notificationsTmp = new ArrayList<>();
+            Helper.cacheNotificationsClear(context, null);
+        }
+    }
+
+
+
+    @Override
     public void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId, boolean refreshData) {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         mainLoader.setVisibility(View.GONE);
@@ -256,6 +283,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 if( !this.notifications.contains(notificationsTmp.get(i)))
                     this.notifications.add(0,notificationsTmp.get(i));
             }
+            if( this.notifications.size() > 0 )
+                max_id = this.notifications.get(this.notifications.size()-1).getId();
             boolean isOnWifi = Helper.isOnWIFI(context);
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);

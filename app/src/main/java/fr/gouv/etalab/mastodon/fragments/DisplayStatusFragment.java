@@ -259,18 +259,22 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     public void onResume() {
         super.onResume();
         //New data are available
-        if (getUserVisibleHint() && statusesTmp != null && statusesTmp.size() > 0 ) {
+        statusesTmp = Helper.getTempStatus(context, null);
+        if (getUserVisibleHint() && statusesTmp != null && statusesTmp.size() > 0 && statuses.size() > 0) {
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean isOnWifi = Helper.isOnWIFI(context);
             int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
             int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
-            statuses = new ArrayList<>();
-            for(Status status: statusesTmp){
-                statuses.add(status);
+            for(int i = statusesTmp.size() -1 ; i >= 0 ; i--){
+                if( !this.statuses.contains(statusesTmp.get(i)))
+                    this.statuses.add(0,statusesTmp.get(i));
             }
+            if( this.statuses.size() > 0 )
+                max_id = this.statuses.get(this.statuses.size()-1).getId();
             statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
             lv_status.setAdapter(statusListAdapter);
             statusesTmp = new ArrayList<>();
+            Helper.cacheStatusClear(context, null);
         }
     }
 
@@ -365,6 +369,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 if( !this.statuses.contains(statusesTmp.get(i)))
                     this.statuses.add(0,statusesTmp.get(i));
             }
+            if( this.statuses.size() > 0 )
+                max_id = this.statuses.get(this.statuses.size()-1).getId();
             boolean isOnWifi = Helper.isOnWIFI(context);
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
