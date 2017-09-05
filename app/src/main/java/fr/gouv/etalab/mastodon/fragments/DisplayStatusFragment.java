@@ -273,8 +273,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 max_id = this.statuses.get(this.statuses.size()-1).getId();
             statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
             lv_status.setAdapter(statusListAdapter);
-            statusesTmp = new ArrayList<>();
-            Helper.cacheStatusClear(context, null);
         }
     }
 

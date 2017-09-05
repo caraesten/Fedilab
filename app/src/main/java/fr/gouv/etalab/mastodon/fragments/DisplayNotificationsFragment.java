@@ -204,8 +204,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 max_id = this.notifications.get(this.notifications.size()-1).getId();
             notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments, notifications);
             lv_notifications.setAdapter(notificationsListAdapter);
-            notificationsTmp = new ArrayList<>();
-            Helper.cacheNotificationsClear(context, null);
         }
     }
 
