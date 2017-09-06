@@ -268,7 +268,7 @@ public class Helper {
     private static boolean menuAccountsOpened = false;
 
 
-    private static final Pattern SHORTNAME_PATTERN = Pattern.compile(":([-+\\w]+):");
+    private static final Pattern SHORTNAME_PATTERN = Pattern.compile(":( |)([-+\\w]+):");
 
     public static final Pattern urlPattern = Pattern.compile(
             "(?i)\\b((?:[a-z][\\w-]+:(?:/{1,3}|[a-z0-9%])|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,10}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))",
@@ -283,18 +283,26 @@ public class Helper {
      */
     public static String shortnameToUnicode(String input, boolean removeIfUnsupported) {
         Matcher matcher = SHORTNAME_PATTERN.matcher(input);
+
         boolean supported = Build.VERSION.SDK_INT >= 16;
         while (matcher.find()) {
-            String unicode = emoji.get(matcher.group(1));
+            String unicode = emoji.get(matcher.group(2));
             if (unicode == null) {
                 continue;
             }
             if (supported) {
-                input = input.replace(":" + matcher.group(1) + ":", unicode);
+                if (matcher.group(1).equals(" "))
+                    input = input.replace(": " + matcher.group(2) + ":", unicode);
+                else
+                    input = input.replace(":" + matcher.group(2) + ":", unicode);
             } else if (removeIfUnsupported) {
-                input = input.replace(":" + matcher.group(1) + ":", "");
+                if (matcher.group(1).equals(" "))
+                    input = input.replace(": " + matcher.group(2) + ":", unicode);
+                else
+                    input = input.replace(":" + matcher.group(2) + ":", "");
             }
         }
+
         return input;
     }
     //Emoji manager
