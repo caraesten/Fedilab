@@ -20,6 +20,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -212,7 +213,12 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         }
     }
 
-
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if( isVisibleToUser )
+            refresh();
+    }
 
     @Override
     public void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId, boolean refreshData) {
@@ -280,6 +286,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     }
 
     public void refresh(){
+        if( context == null)
+            return;
         notificationsTmp = Helper.getTempNotification(context, null);
         if( notificationsTmp.size() > 0){
             ArrayList<String> added = new ArrayList<>();

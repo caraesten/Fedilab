@@ -25,6 +25,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -366,8 +367,17 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         new_data.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if( isVisibleToUser )
+            refresh();
+    }
+
     public void refresh(){
         //New data are available
+        if( context == null)
+            return;
         statusesTmp = Helper.getTempStatus(context, null);
         if( statusesTmp.size() > 0){
             ArrayList<String> added = new ArrayList<>();
