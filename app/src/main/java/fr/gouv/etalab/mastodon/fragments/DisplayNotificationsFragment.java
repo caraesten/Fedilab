@@ -305,7 +305,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             lv_notifications.setAdapter(notificationsListAdapter);
             if( textviewNoAction.getVisibility() == View.VISIBLE)
                 textviewNoAction.setVisibility(View.GONE);
-            Helper.cacheNotificationsClear(context, null);
         }
         new_data.setVisibility(View.GONE);
     }

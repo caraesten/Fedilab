@@ -367,6 +367,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     }
 
     public void refresh(){
+        //New data are available
         statusesTmp = Helper.getTempStatus(context, null);
         if( statusesTmp.size() > 0){
             ArrayList<String> added = new ArrayList<>();
@@ -392,7 +393,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             lv_status.setAdapter(statusListAdapter);
             if( textviewNoAction.getVisibility() == View.VISIBLE)
                 textviewNoAction.setVisibility(View.GONE);
-            Helper.cacheStatusClear(context, null);
         }
         new_data.setVisibility(View.GONE);
     }
