@@ -55,6 +55,8 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.vdurmont.emoji.EmojiManager;
+import com.vdurmont.emoji.EmojiParser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -90,6 +92,7 @@ import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
+import static fr.gouv.etalab.mastodon.helper.Helper.shortnameToUnicode;
 
 
 /**
@@ -382,9 +385,10 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         }
                         if (translator == Helper.TRANS_YANDEX)
                             new YandexQuery(StatusListAdapter.this).getYandexTextview(position, text, currentLocale);
-                        else if( translator == Helper.TRANS_GOOGLE)
+                        else if( translator == Helper.TRANS_GOOGLE) {
+                            text = EmojiParser.parseToAliases(text);
                             new GoogleTranslateQuery(StatusListAdapter.this).getGoogleTextview(position, text, currentLocale);
-
+                        }
                     }else {
                         status.setTranslationShown(!status.isTranslationShown());
                         statusListAdapter.notifyDataSetChanged();
@@ -970,7 +974,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 if (translator == Helper.TRANS_YANDEX)
                     aJsonString = yandexTranslateToText(translatedResult);
                 else if( translator == Helper.TRANS_GOOGLE)
-                    aJsonString = googleTranslateToText(translatedResult);
+                    aJsonString = shortnameToUnicode(googleTranslateToText(translatedResult), true);
                 if( aJsonString == null)
                     return;
                 Iterator itU = urlConversion.entrySet().iterator();
