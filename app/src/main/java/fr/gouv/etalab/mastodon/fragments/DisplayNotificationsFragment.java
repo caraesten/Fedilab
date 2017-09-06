@@ -192,13 +192,18 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         //New data are available
         notificationsTmp = Helper.getTempNotification(context, null);
         if (getUserVisibleHint() && notificationsTmp != null && notificationsTmp.size() > 0 && notifications.size() > 0) {
+            ArrayList<String> added = new ArrayList<>();
+            for(Notification notification : notifications){
+                added.add(notification.getId());
+            }
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean isOnWifi = Helper.isOnWIFI(context);
             int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-            int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
             for(int i = notificationsTmp.size() -1 ; i >= 0 ; i--){
-                if( !this.notifications.contains(notificationsTmp.get(i)))
-                    this.notifications.add(0,notificationsTmp.get(i));
+                if( !added.contains(notificationsTmp.get(i).getId())) {
+                    this.notifications.add(0, notificationsTmp.get(i));
+                    added.add(notificationsTmp.get(i).getId());
+                }
             }
             if( this.notifications.size() > 0 )
                 max_id = this.notifications.get(this.notifications.size()-1).getId();
@@ -277,9 +282,15 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     public void refresh(){
         notificationsTmp = Helper.getTempNotification(context, null);
         if( notificationsTmp.size() > 0){
+            ArrayList<String> added = new ArrayList<>();
+            for(Notification notification : notifications){
+                added.add(notification.getId());
+            }
             for(int i = notificationsTmp.size() -1 ; i >= 0 ; i--){
-                if( !this.notifications.contains(notificationsTmp.get(i)))
-                    this.notifications.add(0,notificationsTmp.get(i));
+                if( !added.contains(notificationsTmp.get(i).getId())) {
+                    this.notifications.add(0, notificationsTmp.get(i));
+                    added.add(notificationsTmp.get(i).getId());
+                }
             }
             if( this.notifications.size() > 0 )
                 max_id = this.notifications.get(this.notifications.size()-1).getId();
