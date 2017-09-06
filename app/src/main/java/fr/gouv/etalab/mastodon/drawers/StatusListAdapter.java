@@ -55,8 +55,6 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import com.vdurmont.emoji.EmojiManager;
-import com.vdurmont.emoji.EmojiParser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -386,8 +384,11 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         if (translator == Helper.TRANS_YANDEX)
                             new YandexQuery(StatusListAdapter.this).getYandexTextview(position, text, currentLocale);
                         else if( translator == Helper.TRANS_GOOGLE) {
-                            text = EmojiParser.parseToAliases(text);
-                            new GoogleTranslateQuery(StatusListAdapter.this).getGoogleTextview(position, text, currentLocale);
+
+                            while( text.charAt(text.length() -1) == '\n' && text.length() > 0)
+                                text = text.substring(0, text.length() -1);
+                            text += ".";
+                            new GoogleTranslateQuery(StatusListAdapter.this).getGoogleTextview(position, text.trim(), currentLocale);
                         }
                     }else {
                         status.setTranslationShown(!status.isTranslationShown());
