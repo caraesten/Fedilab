@@ -1033,9 +1033,11 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
         /*
             Noticed that sometimes the special tags were getting messed up by Google,
-             might be other variants, only caught this one so far.
+             might be other variants, only caught one so far.
+
+            But, pre-planning might save some time later...
          */
-        aJsonString = aJsonString.replaceAll("__ (u|t)(\\d+)__", "__$1$2__");
+        aJsonString = aJsonString.replaceAll("__ (u|t)(\\d+)__", "__$1$2__").replaceAll("__(u|t)(\\d+) __", "__$1$2__");
 
         aJsonString = URLDecoder.decode(aJsonString, "UTF-8");
         return aJsonString;
