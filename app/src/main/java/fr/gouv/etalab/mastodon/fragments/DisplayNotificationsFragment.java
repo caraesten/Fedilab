@@ -253,9 +253,16 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             lv_notifications.setAdapter(notificationsListAdapter);
             swiped = false;
         }
+        ArrayList<String> added = new ArrayList<>();
+        for(Notification notification : this.notifications){
+            added.add(notification.getId());
+        }
         if( notifications != null && notifications.size() > 0) {
             for(Notification tmpNotification: notifications){
-                this.notifications.add(tmpNotification);
+                if( !added.contains(tmpNotification.getId())) {
+                    this.notifications.add(tmpNotification);
+                    added.add(tmpNotification.getId());
+                }
             }
             notificationsListAdapter.notifyDataSetChanged();
         }

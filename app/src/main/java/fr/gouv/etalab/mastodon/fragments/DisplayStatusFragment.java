@@ -25,7 +25,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -331,9 +330,16 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             lv_status.setAdapter(statusListAdapter);
             swiped = false;
         }
+        ArrayList<String> added = new ArrayList<>();
+        for(Status status : this.statuses){
+            added.add(status.getId());
+        }
         if( statuses != null && statuses.size() > 0) {
             for(Status tmpStatus: statuses){
-                this.statuses.add(tmpStatus);
+                if( !added.contains(tmpStatus.getId())) {
+                    this.statuses.add(tmpStatus);
+                    added.add(tmpStatus.getId());
+                }
             }
             statusListAdapter.notifyDataSetChanged();
         }
