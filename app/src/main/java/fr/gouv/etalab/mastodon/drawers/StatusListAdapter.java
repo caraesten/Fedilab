@@ -14,6 +14,7 @@ package fr.gouv.etalab.mastodon.drawers;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
+import android.graphics.Paint;
 import android.support.v7.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -198,7 +199,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_prev4_container = (RelativeLayout) convertView.findViewById(R.id.status_prev4_container);
             holder.status_reply = (ImageView) convertView.findViewById(R.id.status_reply);
             holder.status_privacy = (ImageView) convertView.findViewById(R.id.status_privacy);
-            holder.status_translate = (Button) convertView.findViewById(R.id.status_translate);
+            holder.status_translate = (TextView) convertView.findViewById(R.id.status_translate);
             holder.status_content_translated_container = (LinearLayout) convertView.findViewById(R.id.status_content_translated_container);
             holder.main_container = (LinearLayout) convertView.findViewById(R.id.main_container);
             holder.status_spoiler_container = (LinearLayout) convertView.findViewById(R.id.status_spoiler_container);
@@ -303,6 +304,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 statusListAdapter.notifyDataSetChanged();
             }
         });
+        holder.status_translate.setPaintFlags(holder.status_translate.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         if( currentLocale != null && status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale) && !status.getLanguage().trim().equals("null")){
             if (translator != Helper.TRANS_NONE)
                 holder.status_translate.setVisibility(View.VISIBLE);
@@ -995,6 +997,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 statuses.get(position).setContent_translated(aJsonString);
                 statusListAdapter.notifyDataSetChanged();
             } catch (JSONException | UnsupportedEncodingException | IllegalArgumentException e) {
+                e.printStackTrace();
                 Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
             }
         }
@@ -1038,7 +1041,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             But, pre-planning might save some time later...
          */
         aJsonString = aJsonString.replaceAll("__ (u|t)(\\d+)__", "__$1$2__").replaceAll("__(u|t)(\\d+) __", "__$1$2__");
-
+        aJsonString = aJsonString.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
+        aJsonString = aJsonString.replaceAll("\\+", "%2B");
         aJsonString = URLDecoder.decode(aJsonString, "UTF-8");
         return aJsonString;
     }
@@ -1077,7 +1081,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         RelativeLayout status_prev4_container;
         ImageView status_reply;
         ImageView status_privacy;
-        Button status_translate;
+        TextView status_translate;
         LinearLayout status_container2;
         LinearLayout status_container3;
         LinearLayout main_container;
