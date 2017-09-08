@@ -975,7 +975,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 if (translator == Helper.TRANS_YANDEX)
                     aJsonString = yandexTranslateToText(translatedResult);
                 else if( translator == Helper.TRANS_GOOGLE)
-                    aJsonString = shortnameToUnicode(googleTranslateToText(translatedResult), true);
+                    aJsonString = googleTranslateToText(translatedResult);
                 if( aJsonString == null)
                     return;
                 Iterator itU = urlConversion.entrySet().iterator();
@@ -1027,6 +1027,18 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         aJsonString = aJsonString.replace(" //","//");
         aJsonString = aJsonString.replace(" www .","www.");
         aJsonString = aJsonString.replace("www .","www.");
+
+        // This one might cause more trouble than it's worth
+        aJsonString = aJsonString.replaceAll("\\* \\.", "*.");
+
+        /*
+            Noticed that sometimes the special tags were getting messed up by Google,
+             might be other variants, only caught one so far.
+
+            But, pre-planning might save some time later...
+         */
+        aJsonString = aJsonString.replaceAll("__ (u|t)(\\d+)__", "__$1$2__").replaceAll("__(u|t)(\\d+) __", "__$1$2__");
+
         aJsonString = URLDecoder.decode(aJsonString, "UTF-8");
         return aJsonString;
     }
