@@ -71,6 +71,16 @@
                     style="?attr/shapeBorder"
                     android:visibility="gone"
                     tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/new_element"
+                    android:visibility="gone"
+                    android:src="@drawable/ic_fiber_new"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="ContentDescription" />
             </RelativeLayout>
             <LinearLayout
                 android:layout_marginStart="5dp"

@@ -386,6 +386,7 @@ public class StreamingService extends Service {
         }else if ( event ==  EventStreaming.UPDATE){
             status = API.parseStatuses(getApplicationContext(), response);
             status.setReplies(new ArrayList<Status>()); //Force to don't display replies
+            status.setNew(true);
             Helper.cacheStatus(getApplicationContext(), status, userId);
             if( status.getContent() != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)

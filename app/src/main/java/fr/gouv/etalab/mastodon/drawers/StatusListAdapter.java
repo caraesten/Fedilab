@@ -211,6 +211,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_replies = (LinearLayout) convertView.findViewById(R.id.status_replies);
             holder.status_replies_profile_pictures = (LinearLayout) convertView.findViewById(R.id.status_replies_profile_pictures);
             holder.status_replies_text = (TextView) convertView.findViewById(R.id.status_replies_text);
+            holder.new_element = (ImageView) convertView.findViewById(R.id.new_element);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -262,6 +263,11 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             }
 
         }
+        changeDrawableColor(context, R.drawable.ic_fiber_new,R.color.mastodonC4);
+        if( status.isNew())
+            holder.new_element.setVisibility(View.VISIBLE);
+        else
+            holder.new_element.setVisibility(View.GONE);
         int iconSizePercent = sharedpreferences.getInt(Helper.SET_ICON_SIZE, 130);
         int textSizePercent = sharedpreferences.getInt(Helper.SET_TEXT_SIZE, 110);
         
@@ -1092,6 +1098,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         LinearLayout status_replies_profile_pictures;
         TextView status_replies_text;
         LinearLayout loader_replies;
+
+        ImageView new_element;
     }
 
 

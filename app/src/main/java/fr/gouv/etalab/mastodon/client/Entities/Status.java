@@ -55,6 +55,7 @@ public class Status implements Parcelable {
     private String language;
     private boolean isTranslated = false;
     private boolean isTranslationShown = false;
+    private boolean isNew = false;
 
     protected Status(Parcel in) {
         id = in.readString();
@@ -79,6 +80,7 @@ public class Status implements Parcelable {
         spoilerShown = in.readByte() != 0;
         isTranslated = in.readByte() != 0;
         isTranslationShown = in.readByte() != 0;
+        isNew = in.readByte() != 0;
     }
 
     public Status(){}
@@ -294,6 +296,7 @@ public class Status implements Parcelable {
         dest.writeByte((byte) (spoilerShown ? 1 : 0));
         dest.writeByte((byte) (isTranslated ? 1 : 0));
         dest.writeByte((byte) (isTranslationShown ? 1 : 0));
+        dest.writeByte((byte) (isNew ? 1 : 0));
     }
 
     public boolean isSpoilerShown() {
@@ -342,5 +345,13 @@ public class Status implements Parcelable {
 
     public void setReplies(List<Status> replies) {
         this.replies = replies;
+    }
+
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setNew(boolean aNew) {
+        isNew = aNew;
     }
 }
