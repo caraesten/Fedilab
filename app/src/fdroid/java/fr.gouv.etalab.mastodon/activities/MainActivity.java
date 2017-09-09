@@ -66,6 +66,7 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -195,7 +196,16 @@ public class MainActivity extends AppCompatActivity
             finish();
             return;
         }
-        startService(new Intent(getApplicationContext(), StreamingService.class));
+        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        List<Account> accounts = new AccountDAO(getApplicationContext(), db).getAllAccount();
+        if( accounts != null){
+            for (Account account: accounts) {
+                Intent intent = new Intent(getApplicationContext(), StreamingService.class);
+                intent.putExtra("acccountId", account.getId());
+                intent.putExtra("accountAcct", account.getAcct());
+                startService(intent);
+            }
+        }
         Helper.fillMapEmoji(getApplicationContext());
         //Here, the user is authenticated
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -487,7 +497,6 @@ public class MainActivity extends AppCompatActivity
                 .diskCache(new UnlimitedDiskCache(cacheDir))
                 .build();
         imageLoader.init(configImg);
-        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(90)).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 

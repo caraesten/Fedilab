@@ -14,8 +14,8 @@ package fr.gouv.etalab.mastodon.services;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 import android.app.AlarmManager;
+import android.app.IntentService;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,11 +23,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
-import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -47,15 +47,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -83,28 +79,48 @@ import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
  * Manage service for streaming api and new notifications
  */
 
-public class StreamingService extends Service {
+public class StreamingService extends IntentService {
 
     private String message;
     private int notificationId;
     private Intent intent;
     private String lastPreviousContent;
-    private static HashMap<String, HttpURLConnection> connectionHashMap;
+    private HttpsURLConnection httpsURLConnection;
+    private Account account;
 
-    @Override
-    public void onCreate(){
-        callAsynchronousTask();
+    /**
+     * Creates an IntentService.  Invoked by your subclass's constructor.
+     *
+     * @param name Used to name the worker thread, important only for debugging.
+     */
+    @SuppressWarnings("unused")
+    public StreamingService(String name) {
+        super(name);
     }
+    @SuppressWarnings("unused")
+    public StreamingService() {
+        super("StreamingService");
+    }
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         return START_STICKY;
     }
 
-    @Nullable
     @Override
-    public IBinder onBind(Intent intent) {
-        return null;
+    protected void onHandleIntent(@Nullable Intent intent) {
+        if( intent != null){
+            String accountId = intent.getStringExtra("accountId");
+            String accountAcct = intent.getStringExtra("accountAcct");
+            if( accountId != null && accountAcct != null){
+                SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                account = new AccountDAO(getApplicationContext(),db).getAccountByIDAcct(accountId, accountAcct);
+                if( account != null)
+                    callAsynchronousTask();
+            }
+        }
+
     }
 
 
@@ -112,7 +128,6 @@ public class StreamingService extends Service {
      * Task in background starts here.
      */
     private void callAsynchronousTask() {
-        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         //If an Internet connection and user agrees with notification refresh
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         //Check which notifications the user wants to see
@@ -129,25 +144,7 @@ public class StreamingService extends Service {
             return;
         //If WIFI only and on WIFI OR user defined any connections to use the service.
         if(!sharedpreferences.getBoolean(Helper.SET_WIFI_ONLY, false) || Helper.isOnWIFI(getApplicationContext())) {
-            List<Account> accounts = new AccountDAO(getApplicationContext(),db).getAllAccount();
-            //It means there is no user in DB.
-            if( accounts == null )
-                return;
-            //Retrieve users in db that owner has.
-            for (final Account account: accounts) {
-                //new StreamingUserAsyncTask(account.getInstance(), account.getToken(), account.getAcct(), account.getId(), StreamingService.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
-                Thread readThread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            proceeds(account);
-                        } catch (Exception ignored) {
-                        }
-                    }
-                });
-                readThread.start();
-            }
+            proceeds();
         }
     }
 
@@ -160,31 +157,28 @@ public class StreamingService extends Service {
         DELETE,
         NONE
     }
-    private void proceeds(Account account){
-        if( connectionHashMap == null)
-            connectionHashMap = new HashMap<>();
+    private void proceeds(){
         boolean connectionAlive = false;
-        if( connectionHashMap.get(account.getAcct()+account.getId()) != null) {
+        if( httpsURLConnection != null) {
             try {
-                connectionAlive = (connectionHashMap.get(account.getAcct()+account.getId()).getResponseCode() == 200);
+                connectionAlive = (httpsURLConnection.getResponseCode() == 200);
             } catch (Exception e) {
                 connectionAlive = false;
             }
         }
         if( connectionAlive)
-            connectionHashMap.get(account.getAcct()+account.getId()).disconnect();
+            httpsURLConnection.disconnect();
         try {
             URL url = new URL("https://" + account.getInstance() + "/api/v1/streaming/user");
-            HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-            urlConnection.setRequestProperty("Content-Type", "application/json");
-            urlConnection.setRequestProperty("Authorization", "Bearer " + account.getToken());
-            urlConnection.setRequestProperty("Connection", "Keep-Alive");
-            urlConnection.setRequestProperty("Keep-Alive", "header");
-            urlConnection.setRequestProperty("Connection", "close");
-            urlConnection.setSSLSocketFactory(new TLSSocketFactory());
-            connectionHashMap.put(account.getAcct()+account.getId(), urlConnection);
-            InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
-            readStream(inputStream, urlConnection, account);
+            httpsURLConnection = (HttpsURLConnection) url.openConnection();
+            httpsURLConnection.setRequestProperty("Content-Type", "application/json");
+            httpsURLConnection.setRequestProperty("Authorization", "Bearer " + account.getToken());
+            httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
+            httpsURLConnection.setRequestProperty("Keep-Alive", "header");
+            httpsURLConnection.setRequestProperty("Connection", "close");
+            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+            InputStream inputStream = new BufferedInputStream(httpsURLConnection.getInputStream());
+            readStream(inputStream);
         } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
             e.printStackTrace();
             forceRestart();
@@ -195,7 +189,7 @@ public class StreamingService extends Service {
 
 
     @SuppressWarnings("ConstantConditions")
-    private String readStream(InputStream inputStream, HttpsURLConnection urlConnection, final Account account) {
+    private String readStream(InputStream inputStream) {
         BufferedReader reader = null;
         try{
             reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -207,19 +201,18 @@ public class StreamingService extends Service {
                     event = reader.readLine();
                 }catch (Exception e){
                     e.printStackTrace();
-                    urlConnection.disconnect();
+                    httpsURLConnection.disconnect();
                     URL url;
                     try {
                         url = new URL("https://" + account.getInstance() + "/api/v1/streaming/user");
-                        urlConnection = (HttpsURLConnection) url.openConnection();
-                        urlConnection.setRequestProperty("Content-Type", "application/json");
-                        urlConnection.setRequestProperty("Authorization", "Bearer " + account.getToken());
-                        urlConnection.setRequestProperty("Connection", "Keep-Alive");
-                        urlConnection.setRequestProperty("Keep-Alive", "header");
-                        urlConnection.setRequestProperty("Connection", "close");
-                        urlConnection.setSSLSocketFactory(new TLSSocketFactory());
-                        connectionHashMap.put(account.getAcct()+account.getId(), urlConnection);
-                        inputStream = new BufferedInputStream(urlConnection.getInputStream());
+                        httpsURLConnection = (HttpsURLConnection) url.openConnection();
+                        httpsURLConnection.setRequestProperty("Content-Type", "application/json");
+                        httpsURLConnection.setRequestProperty("Authorization", "Bearer " + account.getToken());
+                        httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
+                        httpsURLConnection.setRequestProperty("Keep-Alive", "header");
+                        httpsURLConnection.setRequestProperty("Connection", "close");
+                        httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+                        inputStream = new BufferedInputStream(httpsURLConnection.getInputStream());
                         reader = new BufferedReader(new InputStreamReader(inputStream));
                     } catch (NoSuchAlgorithmException | KeyManagementException | IOException ee) {
                         ee.printStackTrace();
@@ -227,6 +220,7 @@ public class StreamingService extends Service {
                     SystemClock.sleep(5000);
                     event = null;
                 }
+                Log.v(Helper.TAG,account.getAcct() + " - " + event);
                 if (event !=null){
                     if( lastEvent == EventStreaming.NONE || lastEvent == null) {
 
@@ -260,7 +254,7 @@ public class StreamingService extends Service {
                         lastEvent = EventStreaming.NONE;
                         try {
                             JSONObject eventJson = new JSONObject(event);
-                            onRetrieveStreaming(eventStreaming, eventJson, account.getAcct(), account.getId());
+                            onRetrieveStreaming(eventStreaming, eventJson);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -283,14 +277,8 @@ public class StreamingService extends Service {
     }
 
     private void forceRestart(){
-        Iterator it = connectionHashMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            HttpsURLConnection httpsURLConnection = (HttpsURLConnection) pair.getValue();
-            if( httpsURLConnection != null)
-                httpsURLConnection.disconnect();
-            it.remove(); // avoids a ConcurrentModificationException
-        }
+        if( httpsURLConnection != null)
+            httpsURLConnection.disconnect();
         SystemClock.sleep(1000);
         Intent intent = new Intent(getApplicationContext(), StreamingService.class);
         startService(intent);
@@ -307,7 +295,7 @@ public class StreamingService extends Service {
     }
 
 
-    public void onRetrieveStreaming(EventStreaming event, JSONObject response, String acct, String userId) {
+    public void onRetrieveStreaming(EventStreaming event, JSONObject response) {
         if(  response == null )
             return;
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -370,7 +358,7 @@ public class StreamingService extends Service {
                 default:
                     break;
             }
-            Helper.cacheNotifications(getApplicationContext(), notification, userId);
+            Helper.cacheNotifications(getApplicationContext(), notification, account.getId());
             if( notification.getStatus().getContent()!= null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                     message = Html.fromHtml(notification.getStatus().getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
@@ -387,7 +375,7 @@ public class StreamingService extends Service {
             status = API.parseStatuses(getApplicationContext(), response);
             status.setReplies(new ArrayList<Status>()); //Force to don't display replies
             status.setNew(true);
-            Helper.cacheStatus(getApplicationContext(), status, userId);
+            Helper.cacheStatus(getApplicationContext(), status, account.getId());
             if( status.getContent() != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                     message = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
@@ -418,7 +406,7 @@ public class StreamingService extends Service {
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(connectedUser);
         //User receiving the notification is connected
-        if( isCurrentAccountLoggedIn(acct, userId)){
+        if( isCurrentAccountLoggedIn(account.getAcct(), account.getId())){
             notify = false;
             Intent intentBC = new Intent(Helper.RECEIVE_DATA);
             intentBC.putExtra("eventStreaming", event);
@@ -426,13 +414,13 @@ public class StreamingService extends Service {
         }
         //User receiving the notification is connected and application is to front, notification won't be pushed
         //Instead, the interaction is done in the activity
-        if( activityVisible && isCurrentAccountLoggedIn(acct, userId)){
+        if( activityVisible && isCurrentAccountLoggedIn(account.getAcct(), account.getAcct())){
             notify = false;
         }else if(event == EventStreaming.NOTIFICATION ){
             notify = true;
         }else if(event == EventStreaming.UPDATE ){
             //lastPreviousContent contains the content of the last notification, if it was a mention it will avoid to push two notifications
-            if( account == null || (lastPreviousContent != null && lastPreviousContent.equals(status.getContent()))) {
+            if( lastPreviousContent != null && lastPreviousContent.equals(status.getContent())) {
                 notify = false;
             }else {
                 notify = true;
@@ -456,22 +444,22 @@ public class StreamingService extends Service {
             intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
             intent.putExtra(INTENT_ACTION, NOTIFICATION_INTENT);
-            intent.putExtra(PREF_KEY_ID, userId);
-            long notif_id = Long.parseLong(userId);
+            intent.putExtra(PREF_KEY_ID, account.getId());
+            long notif_id = Long.parseLong(account.getId());
             notificationId = ((notif_id + 1) > 2147483647) ? (int) (2147483647 - notif_id - 1) : (int) (notif_id + 1);
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notification.getId());
+            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId(), notification.getId());
             editor.apply();
         }
         if( notify && event == EventStreaming.UPDATE) {
             intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra(INTENT_ACTION, HOME_TIMELINE_INTENT);
-            intent.putExtra(PREF_KEY_ID, userId);
-            long notif_id = Long.parseLong(userId);
+            intent.putExtra(PREF_KEY_ID, account.getId());
+            long notif_id = Long.parseLong(account.getId());
             notificationId = ((notif_id + 2) > 2147483647) ? (int) (2147483647 - notif_id - 2) : (int) (notif_id + 2);
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, status.getId());
+            editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + account.getId(), status.getId());
             editor.apply();
         }
 
