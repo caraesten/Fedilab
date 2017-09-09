@@ -44,7 +44,7 @@
     <string name="speech_prompt">Please, say something</string>
     <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
     <string name="delete_all">Delete all</string>
-
+    <string name="translate_toot">Translate this toot.</string>
     <string name="schedule">Schedule</string>
     <string name="text_size">Text and icon sizes</string>
     <string name="text_size_change">Change the current text size:</string>
