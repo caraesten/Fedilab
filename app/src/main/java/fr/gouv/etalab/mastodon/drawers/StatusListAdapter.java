@@ -1004,6 +1004,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         JSONObject translationJson = new JSONObject(text);
         JSONArray aJsonArray = translationJson.getJSONArray("text");
         String aJsonString = aJsonArray.get(0).toString();
+        aJsonString = aJsonString.replaceAll("__q(\\d+) - __", "__t$1__");
+        aJsonString = aJsonString.replace("&amp;", "&");
         aJsonString = URLDecoder.decode(aJsonString, "UTF-8");
         return aJsonString;
     }
