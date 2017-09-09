@@ -1005,7 +1005,10 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         JSONArray aJsonArray = translationJson.getJSONArray("text");
         String aJsonString = aJsonArray.get(0).toString();
 
-        // The one instance where I've seen this happen, the special tag was originally a hashtag.
+        /* The one instance where I've seen this happen,
+            the special tag was originally a hashtag ("__t1__"),
+            that Yandex decided to change to a "__q1 - __".
+         */
         aJsonString = aJsonString.replaceAll("__q(\\d+) - __", "__t$1__");
 
         // Noticed this in the very same toot
