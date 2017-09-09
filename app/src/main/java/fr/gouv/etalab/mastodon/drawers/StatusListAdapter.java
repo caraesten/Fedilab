@@ -1004,8 +1004,13 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         JSONObject translationJson = new JSONObject(text);
         JSONArray aJsonArray = translationJson.getJSONArray("text");
         String aJsonString = aJsonArray.get(0).toString();
+
+        // The one instance where I've seen this happen, the special tag was originally a hashtag.
         aJsonString = aJsonString.replaceAll("__q(\\d+) - __", "__t$1__");
+
+        // Noticed this in the very same toot
         aJsonString = aJsonString.replace("&amp;", "&");
+
         aJsonString = URLDecoder.decode(aJsonString, "UTF-8");
         return aJsonString;
     }
