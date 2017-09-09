@@ -44,7 +44,7 @@
     <string name="speech_prompt">Bitte sag etwas</string>
     <string name="speech_not_supported">Sorry! Dein Gerät unterstützt keine Spracheingabe!</string>
     <string name="delete_all">Alles löschen</string>
-
+    <string name="translate_toot">Übersetzen toot.</string>
     <string name="schedule">Planen</string>
 
     <string name="text_size">Text- und Symbolgröße</string>
