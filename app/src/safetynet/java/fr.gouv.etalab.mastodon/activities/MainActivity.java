@@ -68,6 +68,7 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -75,8 +76,6 @@ import java.util.regex.Matcher;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMetaDataAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.client.Entities.Notification;
-import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayFollowRequestSentFragment;
@@ -140,6 +139,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         receive_data = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -179,7 +180,6 @@ public class MainActivity extends AppCompatActivity
 
 
         ProviderInstaller.installIfNeededAsync(this, this);
-        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
@@ -200,8 +200,16 @@ public class MainActivity extends AppCompatActivity
             finish();
             return;
         }
-
-        startService(new Intent(getApplicationContext(), StreamingService.class));
+        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        List<Account> accounts = new AccountDAO(getApplicationContext(), db).getAllAccount();
+        if( accounts != null){
+            for (Account account: accounts) {
+                Intent intent = new Intent(getApplicationContext(), StreamingService.class);
+                intent.putExtra("accountId", account.getId());
+                intent.putExtra("accountAcct", account.getAcct());
+                startService(intent);
+            }
+        }
         Helper.fillMapEmoji(getApplicationContext());
         //Here, the user is authenticated
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -285,7 +293,7 @@ public class MainActivity extends AppCompatActivity
                     if (homeFragment != null && Helper.getUnreadToots(getApplicationContext(), null) > 0) {
                         homeFragment.refresh();
                     }
-                    Helper.clearUnreadToots(getApplicationContext(), null);
+                    Helper.cacheStatusClear(getApplicationContext(), null);
                     updateHomeCounter();
                 }else if( tab.getPosition() == 1) {
                     fragmentTag = "NOTIFICATIONS";
@@ -293,7 +301,7 @@ public class MainActivity extends AppCompatActivity
                     if (notificationsFragment != null && Helper.getUnreadNotifications(getApplicationContext(), null) > 0) {
                         notificationsFragment.refresh();
                     }
-                    Helper.clearUnreadNotifications(getApplicationContext(), null);
+                    Helper.cacheNotificationsClear(getApplicationContext(), null);
                     updateNotifCounter();
                 }else if( tab.getPosition() == 2 && display_local) {
 
@@ -344,7 +352,7 @@ public class MainActivity extends AppCompatActivity
                         DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
                         if( displayStatusFragment != null )
                             displayStatusFragment.scrollToTop();
-                        Helper.clearUnreadToots(getApplicationContext(), null);
+                        Helper.cacheStatusClear(getApplicationContext(), null);
                         updateHomeCounter();
                         break;
                     case 2:
@@ -357,7 +365,7 @@ public class MainActivity extends AppCompatActivity
                         DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
                         if( displayNotificationsFragment != null )
                             displayNotificationsFragment.scrollToTop();
-                        Helper.clearUnreadNotifications(getApplicationContext(), null);
+                        Helper.cacheNotificationsClear(getApplicationContext(), null);
                         updateNotifCounter();
                         break;
                 }
@@ -493,7 +501,6 @@ public class MainActivity extends AppCompatActivity
                 .diskCache(new UnlimitedDiskCache(cacheDir))
                 .build();
         imageLoader.init(configImg);
-        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(90)).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 
@@ -510,8 +517,6 @@ public class MainActivity extends AppCompatActivity
         } else {
             navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
         }
-
-
 
         LinearLayout owner_container = (LinearLayout) headerLayout.findViewById(R.id.owner_container);
         owner_container.setOnClickListener(new View.OnClickListener() {
@@ -923,7 +928,6 @@ public class MainActivity extends AppCompatActivity
         final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         unCheckAllMenuItems(navigationView);
         item.setChecked(true);
-
         //Remove the search bar
         if( !toolbar_search.isIconified() ) {
             toolbarTitle.setVisibility(View.VISIBLE);
@@ -1195,10 +1199,6 @@ public class MainActivity extends AppCompatActivity
             tabCounterNotif.setVisibility(View.GONE);
         }
     }
-
-
-
-
 
     public static boolean isActivityVisible() {
         return activityVisible;
