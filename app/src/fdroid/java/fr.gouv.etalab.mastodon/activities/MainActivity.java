@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity
         if( accounts != null){
             for (Account account: accounts) {
                 Intent intent = new Intent(getApplicationContext(), StreamingService.class);
-                intent.putExtra("acccountId", account.getId());
+                intent.putExtra("accountId", account.getId());
                 intent.putExtra("accountAcct", account.getAcct());
                 startService(intent);
             }
