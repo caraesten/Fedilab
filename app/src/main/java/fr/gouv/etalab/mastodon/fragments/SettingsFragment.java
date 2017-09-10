@@ -94,19 +94,6 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        boolean bubble_counter = sharedpreferences.getBoolean(Helper.SET_BUBBLE_COUNTER, true);
-
-        final CheckBox set_bubble_counter = (CheckBox) rootView.findViewById(R.id.set_bubble_counter);
-        set_bubble_counter.setChecked(bubble_counter);
-        set_bubble_counter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_BUBBLE_COUNTER, set_bubble_counter.isChecked());
-                editor.apply();
-            }
-        });
-
         boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
         final CheckBox set_show_error_messages = (CheckBox) rootView.findViewById(R.id.set_show_error_messages);
         set_show_error_messages.setChecked(show_error_messages);
@@ -133,7 +120,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        boolean preview_reply = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, true);
+        boolean preview_reply = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);
         final CheckBox set_preview_reply = (CheckBox) rootView.findViewById(R.id.set_preview_reply);
         final LinearLayout set_preview_reply_pp_container = (LinearLayout) rootView.findViewById(R.id.set_preview_reply_pp_container);
         final SwitchCompat set_preview_reply_pp = (SwitchCompat) rootView.findViewById(R.id.set_preview_reply_pp);
@@ -152,6 +139,7 @@ public class SettingsFragment extends Fragment {
                 }
             }
         });
+
         if( !preview_reply){
             set_preview_reply_pp_container.setVisibility(View.GONE);
         }else{
@@ -181,6 +169,53 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean notif_validation_fav = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
+        final CheckBox set_share_validation_fav = (CheckBox) rootView.findViewById(R.id.set_share_validation_fav);
+        set_share_validation_fav.setChecked(notif_validation_fav);
+
+        set_share_validation_fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_NOTIF_VALIDATION_FAV, set_share_validation_fav.isChecked());
+                editor.apply();
+            }
+        });
+
+        boolean display_local = sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true);
+        final CheckBox set_display_local = (CheckBox) rootView.findViewById(R.id.set_display_local);
+        set_display_local.setChecked(display_local);
+
+        set_display_local.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_DISPLAY_LOCAL, set_display_local.isChecked());
+                editor.apply();
+                getActivity().recreate();
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
+                startActivity(intent);
+            }
+        });
+
+
+        boolean display_global = sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true);
+        final CheckBox set_display_global = (CheckBox) rootView.findViewById(R.id.set_display_global);
+        set_display_global.setChecked(display_global);
+
+        set_display_global.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_DISPLAY_GLOBAL, set_display_global.isChecked());
+                editor.apply();
+                getActivity().recreate();
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
+                startActivity(intent);
+            }
+        });
 
         final CheckBox set_embedded_browser = (CheckBox) rootView.findViewById(R.id.set_embedded_browser);
         final LinearLayout set_javascript_container = (LinearLayout) rootView.findViewById(R.id.set_javascript_container);

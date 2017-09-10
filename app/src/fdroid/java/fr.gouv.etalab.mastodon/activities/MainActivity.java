@@ -15,26 +15,31 @@
 package fr.gouv.etalab.mastodon.activities;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -61,12 +66,13 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Stack;
-import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
 
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveMetaDataAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
@@ -75,7 +81,9 @@ import fr.gouv.etalab.mastodon.fragments.DisplayFollowRequestSentFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayScheduledTootsFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMetaDataInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
+import fr.gouv.etalab.mastodon.services.StreamingService;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
@@ -100,7 +108,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface {
+        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface  {
 
     private FloatingActionButton toot;
     private HashMap<String, String> tagTile = new HashMap<>();
@@ -119,7 +127,8 @@ public class MainActivity extends AppCompatActivity
 
     private DisplayStatusFragment homeFragment;
     private DisplayNotificationsFragment notificationsFragment;
-
+    private BroadcastReceiver receive_data;
+    private boolean display_local, display_global;
 
     public MainActivity() {
     }
@@ -127,7 +136,47 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        receive_data = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Bundle b = intent.getExtras();
+                StreamingService.EventStreaming eventStreaming = (StreamingService.EventStreaming) intent.getSerializableExtra("eventStreaming");
+                if( eventStreaming == StreamingService.EventStreaming.NOTIFICATION){
+                    if(notificationsFragment != null){
+                        if(notificationsFragment.getUserVisibleHint() && isActivityVisible()){
+                            notificationsFragment.showNewContent();
+                        }else{
+                            notificationsFragment.refresh();
+                        }
+                    }
+                }else if(eventStreaming == StreamingService.EventStreaming.UPDATE){
+                    if( homeFragment != null){
+                        if(homeFragment.getUserVisibleHint() && isActivityVisible()){
+                            homeFragment.showNewContent();
+                        }else{
+                            homeFragment.refresh();
+                        }
+                    }
+                }else if(eventStreaming == StreamingService.EventStreaming.DELETE){
+                    String id = b.getString("id");
+                    if(notificationsFragment != null) {
+                        if (notificationsFragment.getUserVisibleHint()) {
+
+                        } else {
+
+                        }
+                    }
+                }
+                updateNotifCounter();
+                updateHomeCounter();
+            }
+        };
+        LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
+
+
 
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
@@ -137,6 +186,9 @@ public class MainActivity extends AppCompatActivity
         }
         setContentView(R.layout.activity_main);
 
+        display_local = sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true);
+        display_global = sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true);
+
         //Test if user is still log in
         if( ! Helper.isLoggedIn(getApplicationContext())) {
             //It is not, the user is redirected to the login page
@@ -145,7 +197,16 @@ public class MainActivity extends AppCompatActivity
             finish();
             return;
         }
-
+        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        List<Account> accounts = new AccountDAO(getApplicationContext(), db).getAllAccount();
+        if( accounts != null){
+            for (Account account: accounts) {
+                Intent intent = new Intent(getApplicationContext(), StreamingService.class);
+                intent.putExtra("accountId", account.getId());
+                intent.putExtra("accountAcct", account.getAcct());
+                startService(intent);
+            }
+        }
         Helper.fillMapEmoji(getApplicationContext());
         //Here, the user is authenticated
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -194,8 +255,10 @@ public class MainActivity extends AppCompatActivity
 
         tabLayout.addTab(tabHome);
         tabLayout.addTab(tabNotif);
-        tabLayout.addTab(tabLocal);
-        tabLayout.addTab(tabPublic);
+        if( display_local)
+            tabLayout.addTab(tabLocal);
+        if( display_global)
+            tabLayout.addTab(tabPublic);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         main_app_container = (RelativeLayout) findViewById(R.id.main_app_container);
@@ -203,7 +266,6 @@ public class MainActivity extends AppCompatActivity
                 (getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        final boolean bubbles = sharedpreferences.getBoolean(Helper.SET_BUBBLE_COUNTER, true);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -222,29 +284,32 @@ public class MainActivity extends AppCompatActivity
                 main_app_container.setVisibility(View.GONE);
                 viewPager.setVisibility(View.VISIBLE);
                 Helper.switchLayout(MainActivity.this);
-                switch (tab.getPosition()){
-                    case 0:
-                        item = navigationView.getMenu().findItem(R.id.nav_home);
-                        fragmentTag = "HOME_TIMELINE";
-                        if( bubbles && homeFragment != null)
-                            homeFragment.refreshData();
-                        updateHomeCounter(0);
-                        break;
-                    case 1:
-                        fragmentTag = "NOTIFICATIONS";
-                        item = navigationView.getMenu().findItem(R.id.nav_notification);
-                        updateNotifCounter(0);
-                        if( bubbles && notificationsFragment != null)
-                            notificationsFragment.refreshData();
-                        break;
-                    case 2:
-                        fragmentTag = "LOCAL_TIMELINE";
-                        item = navigationView.getMenu().findItem(R.id.nav_local);
-                        break;
-                    case 3:
+                if( tab.getPosition() == 0) {
+                    item = navigationView.getMenu().findItem(R.id.nav_home);
+                    fragmentTag = "HOME_TIMELINE";
+                    if (homeFragment != null && Helper.getUnreadToots(getApplicationContext(), null) > 0) {
+                        homeFragment.refresh();
+                    }
+                    Helper.cacheStatusClear(getApplicationContext(), null);
+                    updateHomeCounter();
+                }else if( tab.getPosition() == 1) {
+                    fragmentTag = "NOTIFICATIONS";
+                    item = navigationView.getMenu().findItem(R.id.nav_notification);
+                    if (notificationsFragment != null && Helper.getUnreadNotifications(getApplicationContext(), null) > 0) {
+                        notificationsFragment.refresh();
+                    }
+                    Helper.cacheNotificationsClear(getApplicationContext(), null);
+                    updateNotifCounter();
+                }else if( tab.getPosition() == 2 && display_local) {
+
+                    fragmentTag = "LOCAL_TIMELINE";
+                    item = navigationView.getMenu().findItem(R.id.nav_local);
+                }else if( tab.getPosition() == 2 && !display_local) {
                         item = navigationView.getMenu().findItem(R.id.nav_global);
                         fragmentTag = "PUBLIC_TIMELINE";
-                        break;
+                }else if( tab.getPosition() == 3){
+                    item = navigationView.getMenu().findItem(R.id.nav_global);
+                    fragmentTag = "PUBLIC_TIMELINE";
                 }
                 if( item != null){
                     toolbarTitle.setText(item.getTitle());
@@ -281,9 +346,15 @@ public class MainActivity extends AppCompatActivity
                 Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
                 switch (tab.getPosition()){
                     case 0:
+                        DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
+                        if( displayStatusFragment != null )
+                            displayStatusFragment.scrollToTop();
+                        Helper.cacheStatusClear(getApplicationContext(), null);
+                        updateHomeCounter();
+                        break;
                     case 2:
                     case 3:
-                        DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
+                        displayStatusFragment = ((DisplayStatusFragment) fragment);
                         if( displayStatusFragment != null )
                             displayStatusFragment.scrollToTop();
                         break;
@@ -291,6 +362,8 @@ public class MainActivity extends AppCompatActivity
                         DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
                         if( displayNotificationsFragment != null )
                             displayNotificationsFragment.scrollToTop();
+                        Helper.cacheNotificationsClear(getApplicationContext(), null);
+                        updateNotifCounter();
                         break;
                 }
             }
@@ -354,7 +427,11 @@ public class MainActivity extends AppCompatActivity
                 Intent intent = new Intent(MainActivity.this, SearchResultActivity.class);
                 intent.putExtra("search", query);
                 startActivity(intent);
-                return true;
+                toolbar_search.setQuery("", false);
+                toolbar_search.setIconified(true);
+                toolbarTitle.setVisibility(View.VISIBLE);
+                pp_actionBar.setVisibility(View.VISIBLE);
+                return false;
             }
             @Override
             public boolean onQueryTextChange(String newText) {
@@ -421,15 +498,14 @@ public class MainActivity extends AppCompatActivity
                 .diskCache(new UnlimitedDiskCache(cacheDir))
                 .build();
         imageLoader.init(configImg);
-        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(90)).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 
 
         headerLayout = navigationView.getHeaderView(0);
 
-        String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-        Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(prefKeyOauthTokenT);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
         updateHeaderAccountInfo(MainActivity.this, account, headerLayout, imageLoader, options);
         loadPPInActionBar(MainActivity.this, account.getAvatar());
         //Locked account can see follow request
@@ -545,6 +621,21 @@ public class MainActivity extends AppCompatActivity
                 String sharedSubject = intent.getStringExtra(Intent.EXTRA_SUBJECT);
                 String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
                 if (sharedText != null) {
+                    /* Some apps don't send the URL as the first part of the EXTRA_TEXT,
+                        the BBC News app being one such, in this case find where the URL
+                        is and strip that out into sharedText.
+                     */
+                    Matcher matcher;
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
+                        matcher = Patterns.WEB_URL.matcher(sharedText);
+                    else
+                        matcher = Helper.urlPattern.matcher(sharedText);
+                    while (matcher.find()){
+                        int matchStart = matcher.start(1);
+                        int matchEnd = matcher.end();
+                        sharedText = sharedText.substring(matchStart, matchEnd);
+                    }
+                    new RetrieveMetaDataAsyncTask(sharedText, MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     Intent intentToot = new Intent(getApplicationContext(), TootActivity.class);
                     Bundle b = new Bundle();
                     b.putString("sharedSubject", sharedSubject);
@@ -599,6 +690,7 @@ public class MainActivity extends AppCompatActivity
             //Hide search bar on back pressed
             if( !toolbar_search.isIconified()){
                 toolbar_search.setIconified(true);
+                return;
             }
             if( viewPager.getVisibility() == View.VISIBLE){
                 if (stackBack.size() > 1) {
@@ -615,7 +707,7 @@ public class MainActivity extends AppCompatActivity
                 unCheckAllMenuItems(navigationView);
                 toot.setVisibility(View.VISIBLE);
                 //Manages theme for icon colors
-                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
                 if( theme == Helper.THEME_DARK){
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_reply,R.color.dark_text);
@@ -800,22 +892,25 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onResume(){
         super.onResume();
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean bubbles = sharedpreferences.getBoolean(Helper.SET_BUBBLE_COUNTER, true);
-        if( bubbles){
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {refreshData();}
-            }, 1000);
-        }
+        MainActivity.activityResumed();
+        updateNotifCounter();
+        updateHomeCounter();
         //Proceeds to update of the authenticated account
         if(Helper.isLoggedIn(getApplicationContext()))
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MainActivity.activityPaused();
+    }
 
-
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
+    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -838,20 +933,25 @@ public class MainActivity extends AppCompatActivity
         }
         toolbarTitle.setText(item.getTitle());
         if (id == R.id.nav_home) {
-            //noinspection ConstantConditions
-            tabLayout.getTabAt(0).select();
+            if( tabLayout.getSelectedTabPosition() != 0)
+                //noinspection ConstantConditions
+                tabLayout.getTabAt(0).select();
             return true;
         } else if( id == R.id.nav_notification){
-            //noinspection ConstantConditions
-            tabLayout.getTabAt(1).select();
+            if( tabLayout.getSelectedTabPosition() != 1)
+                //noinspection ConstantConditions
+                tabLayout.getTabAt(1).select();
             return true;
         }else if (id == R.id.nav_local) {
-            //noinspection ConstantConditions
-            tabLayout.getTabAt(2).select();
+
+            if( tabLayout.getSelectedTabPosition() != 2)
+                //noinspection ConstantConditions
+                tabLayout.getTabAt(2).select();
             return true;
         } else if (id == R.id.nav_global) {
-            //noinspection ConstantConditions
-            tabLayout.getTabAt(3).select();
+            if( tabLayout.getSelectedTabPosition() != 3)
+                //noinspection ConstantConditions
+                tabLayout.getTabAt(3).select();
             return true;
         }
         DisplayStatusFragment statusFragment;
@@ -948,7 +1048,16 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
+    @Override
+    public void onRetrieveMetaData(boolean error, String image, String title, String description) {
+        if( !error) {
+            Intent intentSendImage = new Intent(Helper.RECEIVE_PICTURE);
+            intentSendImage.putExtra("image", image);
+            intentSendImage.putExtra("title", title);
+            intentSendImage.putExtra("description", description);
+            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentSendImage);
+        }
+    }
 
 
     /**
@@ -973,26 +1082,29 @@ public class MainActivity extends AppCompatActivity
             //Selection comes from another menu, no action to do
             DisplayStatusFragment statusFragment;
             Bundle bundle = new Bundle();
-            switch (position) {
-                case 0:
-                    homeFragment = new DisplayStatusFragment();
-                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.HOME);
-                    homeFragment.setArguments(bundle);
-                    return homeFragment;
-                case 1:
-                    notificationsFragment = new DisplayNotificationsFragment();
-                    return notificationsFragment;
-                case 2:
+            if (position == 0) {
+                homeFragment = new DisplayStatusFragment();
+                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.HOME);
+                homeFragment.setArguments(bundle);
+                return homeFragment;
+            }else if( position == 1) {
+                notificationsFragment = new DisplayNotificationsFragment();
+                return notificationsFragment;
+            }else if( position == 2 && display_local) {
                     statusFragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.LOCAL);
                     statusFragment.setArguments(bundle);
                     return statusFragment;
-                case 3:
+            }else if( position == 2 && !display_local){
                     statusFragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
                     statusFragment.setArguments(bundle);
                     return statusFragment;
-
+            }else if (position == 3){
+                statusFragment = new DisplayStatusFragment();
+                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
+                statusFragment.setArguments(bundle);
+                return statusFragment;
             }
             return null;
         }
@@ -1003,40 +1115,8 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void refreshData(){
-        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
 
-        String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(prefKeyOauthTokenT);
-        if( account != null){
-            String last_refresh = sharedpreferences.getString(Helper.LAST_BUBBLE_REFRESH_NOTIF + account.getId(), null);
-            Date last_refresh_date = Helper.stringToDate(getApplicationContext(), last_refresh);
-            if (last_refresh_date == null || (new Date().getTime() - last_refresh_date.getTime()) >= TimeUnit.SECONDS.toMillis(60)) {
-
-                if( notificationsFragment != null ){
-                    notificationsFragment.update();
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(Helper.LAST_BUBBLE_REFRESH_NOTIF+ account.getId(),Helper.dateToString(getApplicationContext(), new Date()));
-                    editor.apply();
-                }
-            }
-
-            last_refresh = sharedpreferences.getString(Helper.LAST_BUBBLE_REFRESH_HOME + account.getId(), null);
-            last_refresh_date = Helper.stringToDate(getApplicationContext(), last_refresh);
-
-            if (last_refresh_date == null || (new Date().getTime() - last_refresh_date.getTime()) >= TimeUnit.SECONDS.toMillis(60)) {
-                if( homeFragment != null ){
-                    homeFragment.update();
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(Helper.LAST_BUBBLE_REFRESH_HOME+ account.getId(),Helper.dateToString(getApplicationContext(), new Date()));
-                    editor.apply();
-                }
-            }
-        }
-    }
-
-    public void updateHomeCounter(int newHomeCount){
+    public void updateHomeCounter(){
         if( tabLayout.getTabAt(0) == null )
             return;
         //noinspection ConstantConditions
@@ -1044,20 +1124,17 @@ public class MainActivity extends AppCompatActivity
         if( tabHome == null)
             return;
         TextView tabCounterHome = (TextView) tabHome.findViewById(R.id.tab_counter);
-        tabCounterHome.setText(String.valueOf(newHomeCount));
-        if( newHomeCount > 0){
+        tabCounterHome.setText(String.valueOf(Helper.getUnreadToots(getApplicationContext(), null)));
+        if( Helper.getUnreadToots(getApplicationContext(), null) > 0){
             //New data are available
             //The fragment is not displayed, so the counter is displayed
-            if( tabLayout.getSelectedTabPosition() != 0)
-                tabCounterHome.setVisibility(View.VISIBLE);
-            else
-                tabCounterHome.setVisibility(View.GONE);
+            tabCounterHome.setVisibility(View.VISIBLE);
         }else {
             tabCounterHome.setVisibility(View.GONE);
         }
     }
 
-    public void updateNotifCounter(int newNotifCount){
+    public void updateNotifCounter(){
         if(tabLayout.getTabAt(1) == null)
             return;
         //noinspection ConstantConditions
@@ -1065,15 +1142,25 @@ public class MainActivity extends AppCompatActivity
         if( tabNotif == null)
             return;
         TextView tabCounterNotif = (TextView) tabNotif.findViewById(R.id.tab_counter);
-        tabCounterNotif.setText(String.valueOf(newNotifCount));
-        if( newNotifCount > 0){
-            if( tabLayout.getSelectedTabPosition() != 1)
-                tabCounterNotif.setVisibility(View.VISIBLE);
-            else
-                tabCounterNotif.setVisibility(View.GONE);
+        tabCounterNotif.setText(String.valueOf(Helper.getUnreadNotifications(getApplicationContext(), null)));
+        if( Helper.getUnreadNotifications(getApplicationContext(), null) > 0){
+            tabCounterNotif.setVisibility(View.VISIBLE);
         }else {
             tabCounterNotif.setVisibility(View.GONE);
         }
     }
 
+    public static boolean isActivityVisible() {
+        return activityVisible;
+    }
+
+    private static void activityResumed() {
+        activityVisible = true;
+    }
+
+    private static void activityPaused() {
+        activityVisible = false;
+    }
+
+    private static boolean activityVisible;
 }

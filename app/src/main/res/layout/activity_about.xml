@@ -15,172 +15,188 @@
     You should have received a copy of the GNU General Public License along with Mastalab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-    <!-- About app name -->
-    <TextView
-        android:layout_marginTop="20dp"
-        android:textSize="20sp"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
-        android:text="@string/app_name"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <!-- About version -->
-    <TextView
-        android:layout_marginTop="10dp"
-        android:id="@+id/about_version"
-        android:textSize="16sp"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <!-- About developer -->
-    <LinearLayout
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <!-- About app name -->
         <TextView
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:text="@string/app_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <!-- About version -->
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/about_version"
             android:textSize="16sp"
-            android:layout_gravity="center"
-            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- About developer -->
+        <TextView
+            android:padding="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:clickable="true"
-            android:layout_weight="2"
-            android:layout_width="0dp"
+            android:textColor="@color/mastodonC4"
+            android:gravity="center_vertical"
             android:text="@string/about_developer"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/about_developer"
-            android:text="@string/about_developer_action"
-            android:layout_weight="3"
-            android:layout_width="0dp"
-            style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:textSize="16sp"/>
+        <fr.gouv.etalab.mastodon.helper.ExpandableHeightListView
+            android:id="@+id/lv_developers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:divider="@null"/>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <TextView
+            android:padding="5dp"
+            android:layout_marginTop="10dp"
             android:id="@+id/about_thanks_dev"
-            android:text="@string/thanks_text_dev"
-            android:layout_marginTop="20dp"
-            android:gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <!-- About license -->
-    <LinearLayout
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:text="@string/about_license"
+            android:textColor="@color/mastodonC4"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
             android:textSize="16sp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_weight="2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/about_license"
-            android:text="@string/about_license_action"
-            style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:layout_weight="3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:text="@string/thanks_text_dev"/>
 
-    <!-- About license -->
-    <LinearLayout
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:text="@string/about_code"
-            android:textSize="16sp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_weight="2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/about_code"
-            android:text="@string/about_code_action"
-            style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:layout_weight="3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-
-    <!-- About The Kinrar's API -->
-    <LinearLayout
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:textSize="16sp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:clickable="true"
-            android:layout_weight="2"
-            android:layout_width="0dp"
-            android:text="@string/about_thekinrar"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/about_thekinrar"
-            android:text="@string/about_thekinrar_action"
-            android:layout_weight="3"
-            android:layout_width="0dp"
-            style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <!-- About translation -->
-    <LinearLayout
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:text="@string/about_yandex"
-            android:textSize="16sp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_weight="2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/about_translation"
-            android:text="@string/about_yandex_action"
-            style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:layout_weight="3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:text="@string/thanks_text"
-            android:layout_marginTop="20dp"
-            android:gravity="center_horizontal"
+        <fr.gouv.etalab.mastodon.helper.ExpandableHeightListView
+            android:id="@+id/lv_contributors"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:divider="@null"/>
+
+        <!-- About license -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="@string/about_license"
+                android:textSize="16sp"/>
+
+            <Button
+                android:id="@+id/about_license"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="@string/about_license_action"/>
+        </LinearLayout>
+
+        <!-- About license -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="@string/about_code"
+                android:textSize="16sp"/>
+
+            <Button
+                android:id="@+id/about_code"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="@string/about_code_action"/>
+        </LinearLayout>
+
+
+        <!-- About The Kinrar's API -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="@string/about_thekinrar"
+                android:textSize="16sp"/>
+
+            <Button
+                android:id="@+id/about_thekinrar"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="@string/about_thekinrar_action"/>
+        </LinearLayout>
+
+        <!-- About translation -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="@string/about_yandex"
+                android:textSize="16sp"/>
+
+            <Button
+                android:id="@+id/about_translation"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="@string/about_yandex_action"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/thanks_text"/>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</ScrollView>

@@ -18,6 +18,8 @@ package fr.gouv.etalab.mastodon.helper;
 
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.app.DownloadManager;
@@ -81,6 +83,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.BuildConfig;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -92,19 +95,23 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.lang.reflect.Type;
 import java.net.InetAddress;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -116,6 +123,7 @@ import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import fr.gouv.etalab.mastodon.activities.EditProfileActivity;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.LoginActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
@@ -126,14 +134,13 @@ import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
+import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
-import static android.app.Notification.DEFAULT_VIBRATE;
-import static android.app.Notification.FLAG_SHOW_LIGHTS;
 import static android.content.Context.DOWNLOAD_SERVICE;
 
 
@@ -177,10 +184,6 @@ public class Helper {
     public static final String SHOW_BATTERY_SAVER_MESSAGE = "show_battery_saver_message";
     public static final String LAST_NOTIFICATION_MAX_ID = "last_notification_max_id";
     public static final String LAST_HOMETIMELINE_MAX_ID = "last_hometimeline_max_id";
-    public static final String LAST_BUBBLE_REFRESH_NOTIF = "last_bubble_refresh_notif";
-    public static final String LAST_BUBBLE_REFRESH_HOME = "last_bubble_refresh_home";
-    public static final String LAST_MAX_ID_BUBBLE_NOTIF = "last_max_id_bubble_notif";
-    public static final String LAST_MAX_ID_BUBBLE_HOME = "last_max_id_bubble_home";
     public static final String CLIP_BOARD = "clipboard";
     //Notifications
     public static final int NOTIFICATION_INTENT = 1;
@@ -204,8 +207,10 @@ public class Helper {
     public static final String SET_ICON_SIZE = "set_icon_size";
     public static final String SET_PREVIEW_REPLIES = "set_preview_replies";
     public static final String SET_PREVIEW_REPLIES_PP = "set_preview_replies_pp";
-    public static final String SET_BUBBLE_COUNTER = "set_bubble_counter";
     public static final String SET_TRANSLATOR = "set_translator";
+    public static final String SET_LED_COLOUR = "set_led_colour";
+    private static final String SET_TEMP_STATUS = "set_temp_status";
+    private static final String SET_TEMP_NOTIFICATIONS = "set_temp_notifications";
 
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
@@ -215,6 +220,8 @@ public class Helper {
     public static final int THEME_TABS = 1;
     public static final int THEME_MENU = 2;
     public static final int THEME_MENU_TABS = 3;
+
+    public static final int LED_COLOUR = 0;
 
     public static final int TRANS_YANDEX = 0;
     public static final int TRANS_GOOGLE = 1;
@@ -226,6 +233,7 @@ public class Helper {
     public static final String SET_NOTIF_MENTION = "set_notif_follow_mention";
     public static final String SET_NOTIF_SHARE = "set_notif_follow_share";
     public static final String SET_NOTIF_VALIDATION = "set_share_validation";
+    public static final String SET_NOTIF_VALIDATION_FAV = "set_share_validation_fav";
     public static final String SET_WIFI_ONLY = "set_wifi_only";
     public static final String SET_NOTIF_HOMETIMELINE = "set_notif_hometimeline";
     public static final String SET_NOTIF_SILENT = "set_notif_silent";
@@ -235,6 +243,8 @@ public class Helper {
     public static final String SET_COOKIES = "set_cookies";
     public static final String SET_FOLDER_RECORD = "set_folder_record";
     public static final String SET_TOOT_VISIBILITY = "set_toot_visibility";
+    public static final String SET_DISPLAY_LOCAL = "set_display_local";
+    public static final String SET_DISPLAY_GLOBAL = "set_display_global";
 
     //End points
     public static final String EP_AUTHORIZE = "/oauth/authorize";
@@ -250,7 +260,8 @@ public class Helper {
     //Receiver
     public static final String SEARCH_VALIDATE_ACCOUNT = "search_validate_account";
     public static final String HEADER_ACCOUNT = "header_account";
-
+    public static final String RECEIVE_DATA = "receive_data";
+    public static final String RECEIVE_PICTURE = "receive_picture";
     //User agent
     public static final String USER_AGENT = "Mastalab/"+ BuildConfig.VERSION_NAME + " Android/"+ Build.VERSION.RELEASE;
 
@@ -258,7 +269,7 @@ public class Helper {
     private static boolean menuAccountsOpened = false;
 
 
-    private static final Pattern SHORTNAME_PATTERN = Pattern.compile(":([-+\\w]+):");
+    private static final Pattern SHORTNAME_PATTERN = Pattern.compile(":( |)([-+\\w]+):");
 
     public static final Pattern urlPattern = Pattern.compile(
             "(?i)\\b((?:[a-z][\\w-]+:(?:/{1,3}|[a-z0-9%])|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,10}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))",
@@ -273,18 +284,26 @@ public class Helper {
      */
     public static String shortnameToUnicode(String input, boolean removeIfUnsupported) {
         Matcher matcher = SHORTNAME_PATTERN.matcher(input);
+
         boolean supported = Build.VERSION.SDK_INT >= 16;
         while (matcher.find()) {
-            String unicode = emoji.get(matcher.group(1));
+            String unicode = emoji.get(matcher.group(2));
             if (unicode == null) {
                 continue;
             }
             if (supported) {
-                input = input.replace(":" + matcher.group(1) + ":", unicode);
+                if (matcher.group(1).equals(" "))
+                    input = input.replace(": " + matcher.group(2) + ":", unicode);
+                else
+                    input = input.replace(":" + matcher.group(2) + ":", unicode);
             } else if (removeIfUnsupported) {
-                input = input.replace(":" + matcher.group(1) + ":", "");
+                if (matcher.group(1).equals(" "))
+                    input = input.replace(": " + matcher.group(2) + ":", unicode);
+                else
+                    input = input.replace(":" + matcher.group(2) + ":", "");
             }
         }
+
         return input;
     }
     //Emoji manager
@@ -596,16 +615,40 @@ public class Helper {
                 .setAutoCancel(true)
                 .setContentIntent(pIntent)
                 .setContentText(message);
-
-        int notifDefaults = FLAG_SHOW_LIGHTS;
-        notificationBuilder.setDefaults(notifDefaults);
         if( sharedpreferences.getBoolean(Helper.SET_NOTIF_SILENT,false) ) {
-            notificationBuilder.setDefaults(notifDefaults|DEFAULT_VIBRATE);
+            notificationBuilder.setVibrate(new long[] { 500, 500, 500});
         }else {
             String soundUri = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() +"/";
             notificationBuilder.setSound(Uri.parse(soundUri + R.raw.boop));
         }
-        notificationBuilder.setLights(Color.BLUE, 500, 1000);
+
+        int ledColour = Color.BLUE;
+
+        switch (sharedpreferences.getInt(Helper.SET_LED_COLOUR, Helper.LED_COLOUR)) {
+            case 0: // BLUE
+                ledColour = Color.BLUE;
+                break;
+            case 1: // CYAN
+                ledColour = Color.CYAN;
+                break;
+            case 2: // MAGENTA
+                ledColour = Color.MAGENTA;
+                break;
+            case 3: // GREEN
+                ledColour = Color.GREEN;
+                break;
+            case 4: // RED
+                ledColour = Color.RED;
+                break;
+            case 5: // YELLOW
+                ledColour = Color.YELLOW;
+                break;
+            case 6: // WHITE
+                ledColour = Color.WHITE;
+                break;
+        }
+
+        notificationBuilder.setLights(ledColour, 500, 1000);
         notificationBuilder.setContentTitle(title);
         notificationBuilder.setLargeIcon(icon);
         notificationManager.notify(notificationId, notificationBuilder.build());
@@ -964,6 +1007,8 @@ public class Helper {
         TextView ownerStatus = (TextView) headerLayout.findViewById(R.id.owner_status);
         TextView ownerFollowing = (TextView) headerLayout.findViewById(R.id.owner_following);
         TextView ownerFollowers = (TextView) headerLayout.findViewById(R.id.owner_followers);
+        ImageView header_edit_profile = (ImageView) headerLayout.findViewById(R.id.header_edit_profile);
+        header_edit_profile.setOnClickListener(null);
         if( account == null ) {
             Helper.logout(activity);
             Intent myIntent = new Intent(activity, LoginActivity.class);
@@ -1013,6 +1058,13 @@ public class Helper {
                     }
                 });
             }
+            header_edit_profile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(activity, EditProfileActivity.class);
+                    activity.startActivity(intent);
+                }
+            });
         }
         profilePicture.setOnClickListener(null);
         profilePicture.setOnClickListener(new View.OnClickListener() {
@@ -1544,4 +1596,124 @@ public class Helper {
             }
         }
     }
+
+
+    public static int getUnreadNotifications(Context context,  String userId){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        if( userId == null)
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        Gson gson = new Gson();
+        String json = sharedpreferences.getString(Helper.SET_TEMP_NOTIFICATIONS + userId, null);
+        Type type = new TypeToken<ArrayList<Notification>>() {}.getType();
+        ArrayList<Notification> notifications =  gson.fromJson(json, type);
+        return (notifications == null)?0:notifications.size();
+    }
+
+
+
+    public static int getUnreadToots(Context context,  String userId){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        if( userId == null)
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        Gson gson = new Gson();
+        String json = sharedpreferences.getString(Helper.SET_TEMP_STATUS + userId, null);
+        Type type = new TypeToken<ArrayList<Status>>() {}.getType();
+        ArrayList<Status> statuses = gson.fromJson(json, type);
+        return (statuses == null)?0:statuses.size();
+    }
+
+
+    public static void cacheStatus(Context context, Status status, String userId){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        if( userId == null)
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        ArrayList<Status> statuses = getTempStatus(context, userId);
+        if( statuses == null)
+            statuses = new ArrayList<>();
+        if( status != null)
+            statuses.add(0,status);
+        Gson gson = new Gson();
+        String serializedAccounts = gson.toJson(statuses);
+        editor.putString(Helper.SET_TEMP_STATUS + userId, serializedAccounts);
+        editor.apply();
+    }
+
+    public static void cacheStatusClear(Context context, String userId){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        if( userId == null)
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        ArrayList<Status> statuses = new ArrayList<>();
+        Gson gson = new Gson();
+        String serializedAccounts = gson.toJson(statuses);
+        editor.putString(Helper.SET_TEMP_STATUS + userId, serializedAccounts);
+        editor.apply();
+        //noinspection EmptyTryBlock
+        try {
+            NotificationManager notificationManager = (NotificationManager) context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+            long notif_id = Long.parseLong(userId);
+            int notificationId = ((notif_id + 2) > 2147483647) ? (int) (2147483647 - notif_id - 2) : (int) (notif_id + 2);
+            notificationManager.cancel(notificationId);
+        }catch (Exception ignored){}
+    }
+
+    public static ArrayList<Status> getTempStatus(Context context, String userId){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        if( userId == null)
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        Gson gson = new Gson();
+        String json = sharedpreferences.getString(Helper.SET_TEMP_STATUS + userId, null);
+        Type type = new TypeToken<ArrayList<Status>>() {}.getType();
+        return gson.fromJson(json, type);
+    }
+
+
+    public static void cacheNotifications(Context context, Notification notification, String userId){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        if( userId == null)
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        ArrayList<Notification> notifications = getTempNotification(context, userId);
+        if( notifications == null)
+            notifications = new ArrayList<>();
+        if( notification != null)
+            notifications.add(0,notification);
+        Gson gson = new Gson();
+        String serializedAccounts = gson.toJson(notifications);
+        editor.putString(Helper.SET_TEMP_NOTIFICATIONS + userId, serializedAccounts);
+        editor.apply();
+    }
+
+    public static void cacheNotificationsClear(Context context, String userId){
+
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        if( userId == null)
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        ArrayList<Notification> notifications = new ArrayList<>();
+        Gson gson = new Gson();
+        String serializedAccounts = gson.toJson(notifications);
+        editor.putString(Helper.SET_TEMP_NOTIFICATIONS + userId, serializedAccounts);
+        editor.apply();
+        //noinspection EmptyTryBlock
+        try {
+            NotificationManager notificationManager = (NotificationManager) context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+            long notif_id = Long.parseLong(userId);
+            int notificationId = ((notif_id + 1) > 2147483647) ? (int) (2147483647 - notif_id - 1) : (int) (notif_id + 1);
+            notificationManager.cancel(notificationId);
+        }catch (Exception ignored){}
+
+    }
+
+    public static ArrayList<Notification> getTempNotification(Context context, String userId){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        if( userId == null)
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        Gson gson = new Gson();
+        String json = sharedpreferences.getString(Helper.SET_TEMP_NOTIFICATIONS + userId, null);
+        Type type = new TypeToken<ArrayList<Notification>>() {}.getType();
+        return gson.fromJson(json, type);
+    }
+
 }

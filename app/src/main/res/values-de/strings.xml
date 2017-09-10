@@ -44,7 +44,7 @@
     <string name="speech_prompt">Bitte sag etwas</string>
     <string name="speech_not_supported">Sorry! Dein Gerät unterstützt keine Spracheingabe!</string>
     <string name="delete_all">Alles löschen</string>
-
+    <string name="translate_toot">Übersetzen toot.</string>
     <string name="schedule">Planen</string>
 
     <string name="text_size">Text- und Symbolgröße</string>
@@ -281,6 +281,8 @@
     <string name="load_attachment_spoiler">Mehr anzeigen…</string>
     <string name="load_sensitive_attachment">Sensibler Inhalt</string>
     <string name="set_display_reply">Zeige vorherige Nachricht beim Antworten</string>
+    <string name="set_display_local">Lokale Zeitleiste anzeigen</string>
+    <string name="set_display_global">Öffentliche Zeitlinie anzeigen</string>
     <string name="set_folder_title">Pfad: </string>
     <string name="set_auto_store_toot">Speichere Entwürfe automatisch</string>
     <string name="settings_title_notifications">Benachrichtigen wenn …</string>
@@ -291,6 +293,7 @@
     <string name="set_notif_follow_mention">ich erwähnt werde</string>
     <string name="set_auto_add_media_url">Füge die URL bei Anhängen in toots hinzu</string>
     <string name="set_share_validation">Zeige Bestätigungsdialog vor dem Teilen</string>
+    <string name="set_share_validation_fav">Zeige Bestätigungsdialog vor dem zu favoriten hinzufügen</string>
     <string name="settings_title_more_options">Erweiterte Einstellungen</string>
     <string name="set_wifi_only">Nur bei WLAN benachrichtigen</string>
     <string name="set_notif_silent">Leise Benachrichtigungen</string>
@@ -333,6 +336,18 @@
         <item>Yandex</item>
         <item>Google</item>
         <item>Nein</item>
+    </string-array>
+
+    <string name="set_led_colour">LED Farbe auswählen:</string>
+
+    <string-array name="led_colours">
+        <item>Blue</item>
+        <item>Cyan</item>
+        <item>Magenta</item>
+        <item>Green</item>
+        <item>Red</item>
+        <item>Yellow</item>
+        <item>White</item>
     </string-array>
 
     <string name="action_block">Blockiere</string>
@@ -408,7 +423,7 @@
     <string name="thanks_text">Danke an Stéphane für das Logo.</string>
 
     <string name="thanks_text_dev">
-        Danke an @PhotonQyv für seine Beiträge.
+        Danke an:
     </string>
     <string name="new_data">Neue Daten verfügbar sind! Wollen Sie Sie anzeigen?</string>
     <string name="set_bubble_counter">Display-Zähler</string>

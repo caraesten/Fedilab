@@ -25,6 +25,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,20 +76,16 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private boolean isOnWifi;
     private int behaviorWithAttachments;
     private boolean showMediaOnly;
-    private DisplayStatusFragment displayStatusFragment;
     private TextView new_data;
     private int positionSpinnerTrans;
-    private String since_id;
     private boolean hideHeader;
     private String instanceValue;
 
     public DisplayStatusFragment(){
-        displayStatusFragment = this;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View rootView = inflater.inflate(R.layout.fragment_status, container, false);
         statuses = new ArrayList<>();
         context = getContext();
@@ -204,7 +201,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     R.color.mastodonC2,
                     R.color.mastodonC3);
 
-
             if( type == RetrieveFeedsAsyncTask.Type.USER)
                 asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             else if( type == RetrieveFeedsAsyncTask.Type.TAG)
@@ -222,27 +218,29 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         new_data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                statusesTmp = Helper.getTempStatus(context, null);
                 if( statusesTmp != null){
+                    for(int i = statusesTmp.size() -1 ; i >= 0 ; i--){
+                        statuses.add(0,statusesTmp.get(i));
+                    }
                     boolean isOnWifi = Helper.isOnWIFI(context);
                     int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-                    statuses = new ArrayList<>();
-                    for(Status status: statusesTmp){
-                        statuses.add(status);
-                    }
-                    //The user clicked on the banner to refresh values so, the pointer is changed
-                    if( statusesTmp.size() > 0 ) {
+                    statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
+                    lv_status.setAdapter(statusListAdapter);
+                    if( statusesTmp.size() > 0){
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                        editor.putString(Helper.LAST_MAX_ID_BUBBLE_HOME + userId, statusesTmp.get(0).getId());
+                        editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, statusesTmp.get(0).getId());
                         editor.apply();
                     }
                     if( statusesTmp.size() > 0 && textviewNoAction.getVisibility() == View.VISIBLE)
                         textviewNoAction.setVisibility(View.GONE);
-                    statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
-                    lv_status.setAdapter(statusListAdapter);
-                    statusesTmp = new ArrayList<>();
                 }
                 new_data.setVisibility(View.GONE);
+                statusesTmp = new ArrayList<>();
+                Helper.cacheStatusClear(context, null);
+                ((MainActivity) context).updateHomeCounter();
+
             }
         });
 
@@ -261,24 +259,29 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     @Override
     public void onResume() {
         super.onResume();
-        //New data are available
-        if (getUserVisibleHint() && statusesTmp != null && statusesTmp.size() > 0 ) {
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean isOnWifi = Helper.isOnWIFI(context);
-            int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-            int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
-            statuses = new ArrayList<>();
-            for(Status status: statusesTmp){
-                statuses.add(status);
+        if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
+            //New data are available
+            statusesTmp = Helper.getTempStatus(context, null);
+            if (getUserVisibleHint() && statusesTmp != null && statusesTmp.size() > 0 && statuses.size() > 0) {
+                ArrayList<String> added = new ArrayList<>();
+                for (Status status : statuses) {
+                    added.add(status.getId());
+                }
+                final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                boolean isOnWifi = Helper.isOnWIFI(context);
+                int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+                int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
+                for (int i = statusesTmp.size() - 1; i >= 0; i--) {
+                    if (!added.contains(statusesTmp.get(i).getId())) {
+                        this.statuses.add(0, statusesTmp.get(i));
+                        added.add(statusesTmp.get(i).getId());
+                    }
+                }
+                if (this.statuses.size() > 0)
+                    max_id = this.statuses.get(this.statuses.size() - 1).getId();
+                statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
+                lv_status.setAdapter(statusListAdapter);
             }
-            //The user clicked on the tab to refresh values so, the pointer is changed
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            editor.putString(Helper.LAST_MAX_ID_BUBBLE_HOME + userId, statusesTmp.get(0).getId());
-            editor.apply();
-            statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
-            lv_status.setAdapter(statusListAdapter);
-            statusesTmp = new ArrayList<>();
         }
     }
 
@@ -313,87 +316,33 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             return;
         }
         List<Status> statuses = apiResponse.getStatuses();
-        since_id = apiResponse.getSince_id();
+        String since_id = apiResponse.getSince_id();
         max_id = apiResponse.getMax_id();
-        //Special case for home timeline
-        if( type == RetrieveFeedsAsyncTask.Type.HOME){
-            //Retrieves some values
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            String bubble_max_id = sharedpreferences.getString(Helper.LAST_MAX_ID_BUBBLE_HOME + userId, null);
-            //The initial call comes from a classic tab refresh
 
-            if( refreshData ) {
-
-                manageStatus(statuses, max_id, since_id);
-                //The current tab is displayed, so user is supposed to have seen status
-                if( since_id != null && displayStatusFragment.getUserVisibleHint()) {
-                    editor.putString(Helper.LAST_MAX_ID_BUBBLE_HOME + userId,  since_id);
-                    editor.apply();
-                }else if(!displayStatusFragment.getUserVisibleHint()){
-                    //Current fragment was loaded but not displayed to the user.
-                    //So the bubble counter will be displayed
-                    int countData = 0;
-                    //Retrieves new status count
-                    if( bubble_max_id != null) {
-                        for (Status st : statuses) {
-                            if (st.getId().trim().equals(bubble_max_id.trim()))
-                                break;
-                            countData++;
-                        }
-                    }
-                    ((MainActivity)context).updateHomeCounter(countData);
-                }
-            }else { //Here, new values have been retrieved on the onResume call (forced mode)
-                int countData = 0;
-                if( bubble_max_id != null) {
-                    for (Status st : statuses) {
-                        if (st.getId().trim().equals(bubble_max_id.trim()))
-                            break;
-                        countData++;
-                    }
-                }
-
-                if( statuses != null && statuses.size() > 0 && countData > 0) {
-                    max_id = null;
-                    firstLoad = true;
-                    statusesTmp = new ArrayList<>();
-                    for (Status tmpStatus : statuses) {
-                        this.statusesTmp.add(tmpStatus);
-                    }
-                    //New status will be counted
-                    //The fragment is not displayed, so the bubble counter should be shown
-                    if (!displayStatusFragment.getUserVisibleHint()) {
-                        ((MainActivity) context).updateHomeCounter(countData);
-                    } else {
-                        //The current fragment is visible, but for avoiding to populate with new values
-                        //Values are put in temp and the banned is displayed
-                        new_data.setVisibility(View.VISIBLE);
-                    }
-                }
-            }
-        }else {
-            manageStatus(statuses, max_id, since_id);
-        }
-
-
-
-    }
-
-    private void manageStatus(List<Status> statuses, String max_id, String since_id){
         flag_loading = (max_id == null );
         if( !swiped && firstLoad && (statuses == null || statuses.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
             textviewNoAction.setVisibility(View.GONE);
         if( swiped ){
+            if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
+                Helper.cacheStatusClear(context,null);
+                ((MainActivity) context).updateHomeCounter();
+            }
             statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
             lv_status.setAdapter(statusListAdapter);
             swiped = false;
         }
+        ArrayList<String> added = new ArrayList<>();
+        for(Status status : this.statuses){
+            added.add(status.getId());
+        }
         if( statuses != null && statuses.size() > 0) {
             for(Status tmpStatus: statuses){
-                this.statuses.add(tmpStatus);
+                if( !added.contains(tmpStatus.getId())) {
+                    this.statuses.add(tmpStatus);
+                    added.add(tmpStatus.getId());
+                }
             }
             statusListAdapter.notifyDataSetChanged();
         }
@@ -401,14 +350,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
         if(statuses != null && statuses.size()  > 0 && type == RetrieveFeedsAsyncTask.Type.HOME ){
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             //acct is null when used in Fragment, data need to be retrieved via shared preferences and db
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
             if( currentAccount != null && firstLoad && since_id != null){
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + currentAccount.getId(), since_id);
+                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + currentAccount.getId(), statuses.get(0).getId());
                 editor.apply();
             }
         }
@@ -416,12 +364,57 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
         //Retrieves replies
         if(statuses != null && statuses.size()  > 0 && type == RetrieveFeedsAsyncTask.Type.HOME ) {
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, true);
+            boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);
             //Retrieves attached replies to a toot
             if (showPreview) {
                 new RetrieveRepliesAsyncTask(context, statuses, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
+        }
+    }
+
+    public void showNewContent(){
+        new_data.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if( isVisibleToUser )
+            refresh();
+    }
+
+    public void refresh(){
+        //New data are available
+        if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
+            if (context == null)
+                return;
+            statusesTmp = Helper.getTempStatus(context, null);
+            if (statusesTmp.size() > 0) {
+                ArrayList<String> added = new ArrayList<>();
+                for (Status status : statuses) {
+                    added.add(status.getId());
+                }
+                for (int i = statusesTmp.size() - 1; i >= 0; i--) {
+                    if (!added.contains(statusesTmp.get(i).getId())) {
+                        this.statuses.add(0, statusesTmp.get(i));
+                        added.add(statusesTmp.get(i).getId());
+                    }
+                }
+                if (this.statuses.size() > 0)
+                    max_id = this.statuses.get(this.statuses.size() - 1).getId();
+                boolean isOnWifi = Helper.isOnWIFI(context);
+                final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, statusesTmp.get(0).getId());
+                editor.apply();
+                statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
+                lv_status.setAdapter(statusListAdapter);
+                if (textviewNoAction.getVisibility() == View.VISIBLE)
+                    textviewNoAction.setVisibility(View.GONE);
+            }
+            new_data.setVisibility(View.GONE);
         }
     }
 
@@ -443,37 +436,5 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
         }
         statusListAdapter.notifyDataSetChanged();
-    }
-    public void update() {
-        if( context != null) {
-            asyncTask = new RetrieveFeedsAsyncTask(context, type, null, false, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }
-    }
-
-    public void refreshData(){
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        if(context != null && this.statusesTmp != null && this.statusesTmp.size() > 0){
-
-            boolean isOnWifi = Helper.isOnWIFI(context);
-            int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-            int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
-
-            statuses = new ArrayList<>();
-            for(Status status: statusesTmp){
-                statuses.add(status);
-            }
-            if( textviewNoAction.getVisibility() == View.VISIBLE)
-                textviewNoAction.setVisibility(View.GONE);
-            statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
-            lv_status.setAdapter(statusListAdapter);
-            statusesTmp = new ArrayList<>();
-        }
-        if( since_id != null){
-            //The user clicked on the tab to refresh values so, the pointer is changed
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            editor.putString(Helper.LAST_MAX_ID_BUBBLE_HOME + userId, since_id);
-            editor.apply();
-        }
     }
 }
