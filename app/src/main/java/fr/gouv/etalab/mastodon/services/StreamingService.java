@@ -220,7 +220,6 @@ public class StreamingService extends Service {
                 }
                 if (event !=null){
                     if( (lastEvent == EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
-
                         switch (event.trim()) {
                             case "event: update":
                                 lastEvent = EventStreaming.UPDATE;

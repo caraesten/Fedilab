@@ -149,7 +149,7 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
 
 
     @Override
-    public void onRetrieveRemoteAccount(boolean error, String name, String username, String instance_name, boolean locked, String avatar, String bio, int statusCount, int followingCount, int followersCount) {
+    public void onRetrieveRemoteAccount(boolean error, String name, String username, String instance_name, boolean locked, String avatar, String bio, String statusCount, String followingCount, String followersCount) {
         if( error){
             return;
         }
@@ -158,9 +158,9 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
         account.setAcct(username + "@" + instance_name);
         account.setAvatar(avatar);
         account.setDisplay_name(username);
-        account.setStatuses_count(statusCount);
-        account.setFollowers_count(followersCount);
-        account.setFollowing_count(followingCount);
+        account.setStatuses_count_str(statusCount);
+        account.setFollowers_count_str(followersCount);
+        account.setFollowing_count_str(followingCount);
         account.setUsername(name);
         account.setLocked(locked);
         account.setNote(bio);

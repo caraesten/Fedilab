@@ -33,7 +33,7 @@ public class RetrieveRemoteAccountsAsyncTask extends AsyncTask<Void, Void, Void>
     private OnRetrieveRemoteAccountInterface listener;
     private String url;
     private String avatar, name, username, bio;
-    private int statusCount, followingCount, followersCount;
+    private String statusCount, followingCount, followersCount;
     private boolean islocked;
     private boolean error = false;
     private String instance;
@@ -62,9 +62,9 @@ public class RetrieveRemoteAccountsAsyncTask extends AsyncTask<Void, Void, Void>
             Elements bioElement = document.getElementsByClass("bio");
             bio = bioElement.get(0).html();
             Elements countElement = document.getElementsByClass("counter-number");
-            statusCount = Integer.parseInt(countElement.get(0).html().replace(",",""));
-            followingCount = Integer.parseInt(countElement.get(1).html().replace(",",""));
-            followersCount = Integer.parseInt(countElement.get(2).html().replace(",",""));
+            statusCount = countElement.get(0).html();
+            followingCount = countElement.get(1).html();
+            followersCount = countElement.get(2).html();
         } catch (Exception e) {
             error = true;
             e.printStackTrace();
