@@ -23,6 +23,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -244,14 +245,14 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
             return;
         }
         for( int i = 0 ; i < developers.size() ; i++){
-            if( developers.get(i).getId().equals(relationship.getId())){
+            if( contributors.get(i).getId() != null && developers.get(i).getId().equals(relationship.getId())){
                 developers.get(i).setFollowing(relationship.isFollowing() || userId.trim().equals(relationship.getId()));
                 accountSearchWebAdapterDeveloper.notifyDataSetChanged();
                 break;
             }
         }
         for( int i = 0 ; i < contributors.size() ; i++){
-            if( contributors.get(i).getId().equals(relationship.getId())){
+            if( contributors.get(i).getId() != null && contributors.get(i).getId().equals(relationship.getId())){
                 contributors.get(i).setFollowing(relationship.isFollowing() || userId.trim().equals(relationship.getId()));
                 accountSearchWebAdapterContributors.notifyDataSetChanged();
                 break;
