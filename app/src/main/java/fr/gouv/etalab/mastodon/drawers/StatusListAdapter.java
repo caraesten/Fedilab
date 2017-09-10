@@ -1056,7 +1056,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
             But, pre-planning might save some time later...
          */
-        aJsonString = aJsonString.replaceAll("__ (u|t)(\\d+)__", "__$1$2__").replaceAll("__(u|t)(\\d+) __", "__$1$2__");
+        aJsonString = aJsonString.replaceAll("__\\s?(u|t)\\s?(\\d+)\\s?__", "__$1$2__");
         aJsonString = aJsonString.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
         aJsonString = aJsonString.replaceAll("\\+", "%2B");
         aJsonString = URLDecoder.decode(aJsonString, "UTF-8");
