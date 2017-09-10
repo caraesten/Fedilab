@@ -41,6 +41,12 @@
             android:layout_height="wrap_content" />
 
         <CheckBox
+            android:id="@+id/set_share_validation_fav"
+            android:layout_width="wrap_content"
+            android:text="@string/set_share_validation_fav"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
             android:id="@+id/set_show_error_messages"
             android:layout_width="wrap_content"
             android:text="@string/set_show_error_messages"

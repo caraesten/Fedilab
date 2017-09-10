@@ -301,6 +301,7 @@
     <string name="set_notif_follow_add">Notify when someone favourites your status</string>
     <string name="set_notif_follow_mention">Notify when someone mentions you</string>
     <string name="set_share_validation">Show confirmation dialog before boosting</string>
+    <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
     <string name="settings_title_more_options">Advanced settings</string>
     <string name="set_wifi_only">Notify in WIFI only</string>
     <string name="set_notif_silent">Silent Notifications</string>

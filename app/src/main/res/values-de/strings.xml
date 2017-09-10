@@ -293,6 +293,7 @@
     <string name="set_notif_follow_mention">ich erwähnt werde</string>
     <string name="set_auto_add_media_url">Füge die URL bei Anhängen in toots hinzu</string>
     <string name="set_share_validation">Zeige Bestätigungsdialog vor dem Teilen</string>
+    <string name="set_share_validation_fav">Zeige Bestätigungsdialog vor dem zu favoriten hinzufügen</string>
     <string name="settings_title_more_options">Erweiterte Einstellungen</string>
     <string name="set_wifi_only">Nur bei WLAN benachrichtigen</string>
     <string name="set_notif_silent">Leise Benachrichtigungen</string>

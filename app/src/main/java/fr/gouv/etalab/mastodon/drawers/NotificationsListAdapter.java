@@ -440,7 +440,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             @Override
             public void onClick(View v) {
 
-                boolean confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
+                boolean confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
                 if( confirmation )
                     displayConfirmationDialog(FAVOURITE,status);
                 else

@@ -169,6 +169,18 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean notif_validation_fav = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
+        final CheckBox set_share_validation_fav = (CheckBox) rootView.findViewById(R.id.set_share_validation_fav);
+        set_share_validation_fav.setChecked(notif_validation_fav);
+
+        set_share_validation_fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_NOTIF_VALIDATION_FAV, set_share_validation_fav.isChecked());
+                editor.apply();
+            }
+        });
 
         boolean display_local = sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true);
         final CheckBox set_display_local = (CheckBox) rootView.findViewById(R.id.set_display_local);

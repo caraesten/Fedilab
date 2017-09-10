@@ -297,6 +297,7 @@
     <string name="set_notif_follow_add">Notifier lorsque quelqu’un ajoute mes pouets à ses favoris</string>
     <string name="set_notif_follow_mention">Notifier lorsque quelqu’un me mentionne</string>
     <string name="set_share_validation">Confirmer avant de partager</string>
+    <string name="set_share_validation_fav">Confirmer avant d\'ajouter aux favoris</string>
     <string name="settings_title_more_options">Options avancées</string>
     <string name="set_wifi_only">Notifier en WIFI seulement</string>
     <string name="set_notif_silent">Utiliser le vibreur</string>
