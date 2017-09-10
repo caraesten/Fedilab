@@ -44,6 +44,7 @@
     <string name="speech_prompt">Veuillez dire quelque chose</string>
     <string name="speech_not_supported">Désolé ! Votre appareil ne supporte pas la commande vocale !</string>
     <string name="delete_all">Tout effacer</string>
+    <string name="translate_toot">Traduire ce pouet.</string>
     <string name="schedule">Programmer</string>
     <string name="text_size">Taille du texte et des icônes</string>
     <string name="text_size_change">Modifier la taille du texte :</string>
@@ -283,6 +284,8 @@
     <string name="load_attachment_spoiler">Afficher le contenu ?</string>
     <string name="load_sensitive_attachment">Charger les images sensibles</string>
     <string name="set_display_reply">Afficher le message précédent lors d\'une réponse</string>
+    <string name="set_display_local">Afficher le fil local</string>
+    <string name="set_display_global">Afficher le fil public</string>
     <string name="set_folder_title">Destination : </string>
     <string name="set_auto_store_toot">Enregistrer les brouillons automatiquement</string>
     <string name="set_bubble_counter">Afficher les compteurs</string>
@@ -294,6 +297,7 @@
     <string name="set_notif_follow_add">Notifier lorsque quelqu’un ajoute mes pouets à ses favoris</string>
     <string name="set_notif_follow_mention">Notifier lorsque quelqu’un me mentionne</string>
     <string name="set_share_validation">Confirmer avant de partager</string>
+    <string name="set_share_validation_fav">Confirmer avant d\'ajouter aux favoris</string>
     <string name="settings_title_more_options">Options avancées</string>
     <string name="set_wifi_only">Notifier en WIFI seulement</string>
     <string name="set_notif_silent">Utiliser le vibreur</string>
@@ -329,6 +333,19 @@
         <item>Google</item>
         <item>Non</item>
     </string-array>
+
+    <string name="set_led_colour">Couleur de la LED :</string>
+
+    <string-array name="led_colours">
+        <item>Bleu</item>
+        <item>Cyan</item>
+        <item>Magenta</item>
+        <item>Vert</item>
+        <item>Rouge</item>
+        <item>Jaune</item>
+        <item>Blanc</item>
+    </string-array>
+
     <string name="set_title_news">Actualités</string>
     <string name="set_notification_news">Notifier lors de nouveaux pouets sur la page d\'accueil</string>
     <string name="set_show_error_messages">Afficher les messages d\'erreur</string>
@@ -406,6 +423,6 @@
     </string>
 
     <string name="thanks_text_dev">
-        Merci à @PhotonQyv pour ses contributions.
+        Merci à :
     </string>
 </resources>

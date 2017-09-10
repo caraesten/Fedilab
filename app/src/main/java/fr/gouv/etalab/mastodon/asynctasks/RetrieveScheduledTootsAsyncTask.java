@@ -18,6 +18,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.SystemClock;
+import android.util.Log;
 
 import com.evernote.android.job.JobManager;
 import com.evernote.android.job.JobRequest;
@@ -68,6 +69,7 @@ public class RetrieveScheduledTootsAsyncTask extends AsyncTask<Void, Void, Void>
         }else{
             jobIds = new int[]{};
         }
+
         if( storedStatuses != null && storedStatuses.size() > 0 ){
             for(StoredStatus ss: storedStatuses){
                 if (!Helper.isJobPresent(jobIds, ss.getJobId())){

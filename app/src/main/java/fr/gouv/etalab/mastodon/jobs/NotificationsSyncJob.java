@@ -133,8 +133,8 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
 
 
     @Override
-    public void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId, boolean refreshData) {
-        List<Notification> notifications = apiResponse.getNotifications();
+    public void onRetrieveNotifications(APIResponse apiResponse, String acct, final String userId, boolean refreshData) {
+        final List<Notification> notifications = apiResponse.getNotifications();
         if( apiResponse.getError() != null || notifications == null || notifications.size() == 0)
             return;
         Bitmap icon_notification = null;
@@ -144,12 +144,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
         boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
         boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
         final String max_id = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
-        if( max_id == null){
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, apiResponse.getSince_id());
-            editor.apply();
-            return;
-        }
+
 
         //No previous notifications in cache, so no notification will be sent
         int newFollows = 0;
@@ -176,7 +171,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                                 title = String.format("@%s %s", notification.getAccount().getUsername(),getContext().getString(R.string.notif_mention));
                         }
                     }
-                break;
+                    break;
                 case "reblog":
                     if(notif_share){
                         newShare++;
@@ -217,9 +212,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                 default:
             }
         }
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, apiResponse.getSince_id());
-        editor.apply();
+
         int allNotifCount = newFollows + newAdds + newAsks + newMentions + newShare;
         if( allNotifCount > 0){
             //Some others notification
@@ -254,14 +247,22 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         super.onLoadingComplete(imageUri, view, loadedImage);
-                        if( max_id != null)
+                        if( max_id != null) {
                             notify_user(getContext(), intent, notificationId, loadedImage, finalTitle, message);
+                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notifications.get(0).getId());
+                            editor.apply();
+                        }
                     }
                     @Override
                     public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
-                        if( max_id != null)
+                        if( max_id != null) {
                             notify_user(getContext(), intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
                                     R.drawable.mastodonlogo), finalTitle, message);
+                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notifications.get(0).getId());
+                            editor.apply();
+                        }
                     }});
             }
 

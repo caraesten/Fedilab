@@ -188,12 +188,12 @@ public class API {
         get("/accounts/verify_credentials", null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                account = parseAccountResponse(response);
+                account = parseAccountResponse(context, response);
             }
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 try {
-                    account = parseAccountResponse(response.getJSONObject(0));
+                    account = parseAccountResponse(context, response.getJSONObject(0));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -217,12 +217,12 @@ public class API {
         get(String.format("/accounts/%s",accountId), null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                account = parseAccountResponse(response);
+                account = parseAccountResponse(context, response);
             }
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 try {
-                    account = parseAccountResponse(response.getJSONObject(0));
+                    account = parseAccountResponse(context, response.getJSONObject(0));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -330,7 +330,7 @@ public class API {
         get(String.format("/accounts/%s/statuses", accountId), params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Status status = parseStatuses(response);
+                Status status = parseStatuses(context, response);
                 statuses.add(status);
                 apiResponse.setSince_id(findSinceId(headers));
                 apiResponse.setMax_id(findMaxId(headers));
@@ -365,7 +365,7 @@ public class API {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 apiResponse.setSince_id(findSinceId(headers));
                 apiResponse.setMax_id(findMaxId(headers));
-                Status status = parseStatuses(response);
+                Status status = parseStatuses(context, response);
                 statuses.add(status);
             }
             @Override
@@ -445,7 +445,7 @@ public class API {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Status status = parseStatuses(response);
+                Status status = parseStatuses(context, response);
                 statuses.add(status);
                 apiResponse.setSince_id(findSinceId(headers));
                 apiResponse.setMax_id(findMaxId(headers));
@@ -500,7 +500,7 @@ public class API {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Status status = parseStatuses(response);
+                Status status = parseStatuses(context, response);
                 statuses.add(status);
                 apiResponse.setSince_id(findSinceId(headers));
                 apiResponse.setMax_id(findMaxId(headers));
@@ -557,7 +557,7 @@ public class API {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Status status = parseStatuses(response);
+                Status status = parseStatuses(context, response);
                 statuses.add(status);
                 apiResponse.setSince_id(findSinceId(headers));
                 apiResponse.setMax_id(findMaxId(headers));
@@ -641,7 +641,7 @@ public class API {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 apiResponse.setSince_id(findSinceId(headers));
                 apiResponse.setMax_id(findMaxId(headers));
-                Account account = parseAccountResponse(response);
+                Account account = parseAccountResponse(context, response);
                 accounts.add(account);
             }
             @Override
@@ -692,7 +692,7 @@ public class API {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 apiResponse.setSince_id(findSinceId(headers));
                 apiResponse.setMax_id(findMaxId(headers));
-                Account account = parseAccountResponse(response);
+                Account account = parseAccountResponse(context, response);
                 accounts.add(account);
             }
             @Override
@@ -741,7 +741,7 @@ public class API {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Status status = parseStatuses(response);
+                Status status = parseStatuses(context, response);
                 statuses.add(status);
                 apiResponse.setSince_id(findSinceId(headers));
                 apiResponse.setMax_id(findMaxId(headers));
@@ -945,7 +945,7 @@ public class API {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Status statusreturned = parseStatuses(response);
+                Status statusreturned = parseStatuses(context, response);
                 statuses.add(statusreturned);
                 apiResponse.setSince_id(findSinceId(headers));
                 apiResponse.setMax_id(findMaxId(headers));
@@ -1041,7 +1041,7 @@ public class API {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Notification notification = parseNotificationResponse(response);
+                Notification notification = parseNotificationResponse(context, response);
                 notifications.add(notification);
                 apiResponse.setSince_id(findSinceId(headers));
                 apiResponse.setMax_id(findMaxId(headers));
@@ -1119,37 +1119,6 @@ public class API {
     }
 
     /**
-     * Retrieves Developer account when searching (ie: via @...) *synchronously*
-     *
-     * @return APIResponse
-     */
-    public APIResponse searchDeveloper() {
-        RequestParams params = new RequestParams();
-        params.add("q", "tschneider");
-        get("/accounts/search", params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                accounts = new ArrayList<>();
-                account = parseAccountResponse(response);
-                accounts.add(account);
-                apiResponse.setSince_id(findSinceId(headers));
-                apiResponse.setMax_id(findMaxId(headers));
-            }
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                accounts = parseDeveloperResponse(response);
-                apiResponse.setSince_id(findSinceId(headers));
-                apiResponse.setMax_id(findMaxId(headers));
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-                setError(statusCode, error);
-            }
-        });
-        apiResponse.setAccounts(accounts);
-        return apiResponse;
-    }
-    /**
      * Retrieves Accounts when searching (ie: via @...) *synchronously*
      *
      * @param query  String search
@@ -1170,7 +1139,7 @@ public class API {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 accounts = new ArrayList<>();
-                account = parseAccountResponse(response);
+                account = parseAccountResponse(context, response);
                 accounts.add(account);
                 apiResponse.setSince_id(findSinceId(headers));
                 apiResponse.setMax_id(findMaxId(headers));
@@ -1236,7 +1205,7 @@ public class API {
             while (i < jsonArray.length() ){
 
                 JSONObject resobj = jsonArray.getJSONObject(i);
-                Status status = parseStatuses(resobj);
+                Status status = parseStatuses(context, resobj);
                 i++;
                 statuses.add(status);
             }
@@ -1253,7 +1222,7 @@ public class API {
      * @return Status
      */
     @SuppressWarnings("InfiniteRecursion")
-    private Status parseStatuses(JSONObject resobj){
+    public static Status parseStatuses(Context context, JSONObject resobj){
         Status status = new Status();
         try {
             status.setId(resobj.get("id").toString());
@@ -1315,14 +1284,14 @@ public class API {
             }
             status.setTags(tags);
 
-            status.setAccount(parseAccountResponse(resobj.getJSONObject("account")));
+            status.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
             status.setContent(resobj.get("content").toString());
             status.setFavourites_count(Integer.valueOf(resobj.get("favourites_count").toString()));
             status.setReblogs_count(Integer.valueOf(resobj.get("reblogs_count").toString()));
             status.setReblogged(Boolean.valueOf(resobj.get("reblogged").toString()));
             status.setFavourited(Boolean.valueOf(resobj.get("favourited").toString()));
             try{
-                status.setReblog(parseStatuses(resobj.getJSONObject("reblog")));
+                status.setReblog(parseStatuses(context, resobj.getJSONObject("reblog")));
             }catch (Exception ignored){}
         } catch (JSONException e) {
             e.printStackTrace();
@@ -1355,7 +1324,7 @@ public class API {
      * @param resobj JSONObject
      * @return Account
      */
-    private Account parseAccountResponse(JSONObject resobj){
+    private static Account parseAccountResponse(Context context, JSONObject resobj){
 
         Account account = new Account();
         try {
@@ -1392,7 +1361,7 @@ public class API {
             int i = 0;
             while (i < jsonArray.length() ) {
                 JSONObject resobj = jsonArray.getJSONObject(i);
-                Account account = parseAccountResponse(resobj);
+                Account account = parseAccountResponse(context, resobj);
                 accounts.add(account);
                 i++;
             }
@@ -1416,7 +1385,7 @@ public class API {
             Account account = null;
             while (i < jsonArray.length() ) {
                 JSONObject resobj = jsonArray.getJSONObject(i);
-                account = parseAccountResponse(resobj);
+                account = parseAccountResponse(context, resobj);
                 if( account.getAcct().contains(Helper.DEVELOPER_INSTANCE))
                     accounts.add(account);
                 i++;
@@ -1500,16 +1469,16 @@ public class API {
      * @param resobj JSONObject
      * @return Account
      */
-    private Notification parseNotificationResponse(JSONObject resobj){
+    public static Notification parseNotificationResponse(Context context, JSONObject resobj){
 
         Notification notification = new Notification();
         try {
             notification.setId(resobj.get("id").toString());
             notification.setType(resobj.get("type").toString());
             notification.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
-            notification.setAccount(parseAccountResponse(resobj.getJSONObject("account")));
+            notification.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
             try{
-                notification.setStatus(parseStatuses(resobj.getJSONObject("status")));
+                notification.setStatus(parseStatuses(context, resobj.getJSONObject("status")));
             }catch (Exception ignored){}
             notification.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
         } catch (JSONException e) {
@@ -1531,7 +1500,7 @@ public class API {
             while (i < jsonArray.length() ) {
 
                 JSONObject resobj = jsonArray.getJSONObject(i);
-                Notification notification = parseNotificationResponse(resobj);
+                Notification notification = parseNotificationResponse(context, resobj);
                 notifications.add(notification);
                 i++;
             }

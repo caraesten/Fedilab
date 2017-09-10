@@ -23,23 +23,27 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.TextPaint;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveDeveloperAccountsAsyncTask;
-import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveRelationshipAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.Entities.Relationship;
+import fr.gouv.etalab.mastodon.drawers.AccountSearchDevAdapter;
+import fr.gouv.etalab.mastodon.helper.ExpandableHeightListView;
 import fr.gouv.etalab.mastodon.helper.Helper;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRelationshipInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchDevelopersAccountshInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
 
@@ -48,9 +52,12 @@ import mastodon.etalab.gouv.fr.mastodon.R;
  * About activity
  */
 
-public class AboutActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface {
+public class AboutActivity extends AppCompatActivity implements OnRetrieveRemoteAccountInterface, OnRetrieveSearchDevelopersAccountshInterface, OnRetrieveRelationshipInterface {
 
-    private Button about_developer;
+    private List<Account> developers = new ArrayList<>();
+    private List<Account> contributors = new ArrayList<>();
+    private AccountSearchDevAdapter accountSearchWebAdapterDeveloper;
+    private AccountSearchDevAdapter accountSearchWebAdapterContributors;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -73,7 +80,8 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveSearcA
             about_version.setText(getResources().getString(R.string.about_vesrion, version));
         } catch (PackageManager.NameNotFoundException ignored) {}
 
-        about_developer = (Button) findViewById(R.id.about_developer);
+        ExpandableHeightListView lv_developers = (ExpandableHeightListView) findViewById(R.id.lv_developers);
+        ExpandableHeightListView lv_contributors = (ExpandableHeightListView) findViewById(R.id.lv_contributors);
         Button about_code = (Button) findViewById(R.id.about_code);
         Button about_license = (Button) findViewById(R.id.about_license);
         Button about_thekinrar = (Button) findViewById(R.id.about_thekinrar);
@@ -93,17 +101,7 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveSearcA
                 startActivity(browserIntent);
             }
         });
-        if(Helper.isLoggedIn(getApplicationContext())) {
-            about_developer.setEnabled(false);
-            new RetrieveDeveloperAccountsAsyncTask(getApplicationContext(),AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }
-        about_developer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://mastodon.etalab.gouv.fr/@tschneider"));
-                startActivity(browserIntent);
-            }
-        });
+
         about_license.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,32 +118,21 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveSearcA
             }
         });
 
-        TextView about_thanks = (TextView) findViewById(R.id.about_thanks_dev);
-        String currentText = about_thanks.getText().toString();
-        SpannableString spanned_thanks = new SpannableString(currentText);
-        int startPosition = spanned_thanks.toString().indexOf("@PhotonQyv");
-        int endPosition = startPosition + "@PhotonQyv".length();
-        spanned_thanks.setSpan(new ClickableSpan() {
-                @Override
-                public void onClick(View textView) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://mastodon.xyz/@PhotonQyv"));
-                    startActivity(browserIntent);
-                }
-                @Override
-                public void updateDrawState(TextPaint ds) {
-                    super.updateDrawState(ds);
-                }
-            }, startPosition, endPosition, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        about_thanks.setText(spanned_thanks, TextView.BufferType.SPANNABLE);
-        about_thanks.setMovementMethod(LinkMovementMethod.getInstance());
 
         if( theme == Helper.THEME_LIGHT) {
-            about_developer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
             about_code.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
             about_thekinrar.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
             about_translation.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
             about_license.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
         }
+
+        lv_contributors.setExpanded(true);
+        lv_developers.setExpanded(true);
+        accountSearchWebAdapterContributors = new AccountSearchDevAdapter(AboutActivity.this, contributors);
+        lv_contributors.setAdapter(accountSearchWebAdapterContributors);
+        accountSearchWebAdapterDeveloper = new AccountSearchDevAdapter(AboutActivity.this, developers);
+        lv_developers.setAdapter(accountSearchWebAdapterDeveloper);
+        new RetrieveDeveloperAccountsAsyncTask(getApplicationContext(), AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 
@@ -160,22 +147,116 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveSearcA
         }
     }
 
+
     @Override
-    public void onRetrieveSearchAccounts(APIResponse apiResponse) {
-        about_developer.setEnabled(true);
-        final List<Account> accounts = apiResponse.getAccounts();
-        if( accounts != null && accounts.size() > 0 && accounts.get(0) != null) {
-            about_developer.setOnClickListener(null);
-            about_developer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(AboutActivity.this, ShowAccountActivity.class);
-                    Bundle b = new Bundle();
-                    b.putString("accountId", accounts.get(0).getId());
-                    intent.putExtras(b);
-                    startActivity(intent);
-                }
-            });
+    public void onRetrieveRemoteAccount(boolean error, String name, String username, String instance_name, boolean locked, String avatar, String bio, String statusCount, String followingCount, String followersCount) {
+        if( error){
+            return;
+        }
+        Account account = new Account();
+        account.setInstance(instance_name);
+        account.setAcct(username + "@" + instance_name);
+        account.setAvatar(avatar);
+        account.setDisplay_name(username);
+        account.setStatuses_count_str(statusCount);
+        account.setFollowers_count_str(followersCount);
+        account.setFollowing_count_str(followingCount);
+        account.setUsername(name);
+        account.setLocked(locked);
+        account.setNote(bio);
+        account.setFollowing(false);
+        account.setRemote(true);
+
+        if( username.equals("@tschneider")) {
+            developers.add(account);
+            accountSearchWebAdapterDeveloper.notifyDataSetChanged();
+        }else {
+            contributors.add(account);
+            accountSearchWebAdapterContributors.notifyDataSetChanged();
+        }
+
+    }
+
+    @Override
+    public void onRetrieveSearchDevelopersAccounts(ArrayList<Account> accounts) {
+        if( accounts == null || accounts.size() == 0) {
+            new RetrieveRemoteAccountsAsyncTask("tschneider", "mastodon.etalab.gouv.fr", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new RetrieveRemoteAccountsAsyncTask("PhotonQyv", "mastodon.xyz", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new RetrieveRemoteAccountsAsyncTask("angrytux", "social.tchncs.de", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            return;
+        }
+        boolean tschneider = false;
+        boolean PhotonQyv = false;
+        boolean angrytux = false;
+
+        for(Account account: accounts){
+            if( account.getUsername().equals("tschneider")){
+                account.setFollowing(false);
+                account.setRemote(false);
+                developers.add(account);
+                accountSearchWebAdapterDeveloper.notifyDataSetChanged();
+                tschneider = true;
+                new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+            if( account.getUsername().equals("PhotonQyv")){
+                account.setFollowing(false);
+                account.setRemote(false);
+                contributors.add(account);
+                accountSearchWebAdapterContributors.notifyDataSetChanged();
+                PhotonQyv = true;
+                new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+            if( account.getUsername().equals("angrytux")){
+                account.setFollowing(false);
+                account.setRemote(false);
+                contributors.add(account);
+                accountSearchWebAdapterContributors.notifyDataSetChanged();
+                angrytux = true;
+                new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        }
+        if( !tschneider)
+            new RetrieveRemoteAccountsAsyncTask("tschneider", "mastodon.etalab.gouv.fr", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if( !PhotonQyv)
+            new RetrieveRemoteAccountsAsyncTask("PhotonQyv", "mastodon.xyz", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if( !angrytux)
+            new RetrieveRemoteAccountsAsyncTask("angrytux", "social.tchncs.de", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if( developers != null && developers.size() > 0){
+            for(Account account: developers){
+                new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        }
+        if( contributors != null && contributors.size() > 0){
+            for(Account account: contributors){
+                new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        }
+    }
+    @Override
+    public void onRetrieveRelationship(Relationship relationship, Error error) {
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, "");
+        if( error != null){
+            return;
+        }
+        for( int i = 0 ; i < developers.size() ; i++){
+            if( contributors.get(i).getId() != null && developers.get(i).getId().equals(relationship.getId())){
+                developers.get(i).setFollowing(relationship.isFollowing() || userId.trim().equals(relationship.getId()));
+                accountSearchWebAdapterDeveloper.notifyDataSetChanged();
+                break;
+            }
+        }
+        for( int i = 0 ; i < contributors.size() ; i++){
+            if( contributors.get(i).getId() != null && contributors.get(i).getId().equals(relationship.getId())){
+                contributors.get(i).setFollowing(relationship.isFollowing() || userId.trim().equals(relationship.getId()));
+                accountSearchWebAdapterContributors.notifyDataSetChanged();
+                break;
+            }
         }
     }
 }

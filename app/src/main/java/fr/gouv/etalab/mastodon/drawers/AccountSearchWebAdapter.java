@@ -143,9 +143,9 @@ public class AccountSearchWebAdapter extends BaseAdapter implements OnPostAction
         }
         changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.mastodonC4);
         holder.account_ds.setAutoLinkMask(Linkify.WEB_URLS);
-        holder.account_sc.setText(String.valueOf(account.getStatuses_count()));
-        holder.account_fgc.setText(String.valueOf(account.getFollowing_count()));
-        holder.account_frc.setText(String.valueOf(account.getFollowers_count()));
+        holder.account_sc.setText(String.valueOf(account.getStatuses_count_str()));
+        holder.account_fgc.setText(String.valueOf(account.getFollowing_count_str()));
+        holder.account_frc.setText(String.valueOf(account.getFollowers_count_str()));
         //Profile picture
         imageLoader.displayImage(account.getAvatar(), holder.account_pp, options);
 

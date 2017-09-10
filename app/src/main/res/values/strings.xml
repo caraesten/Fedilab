@@ -44,7 +44,7 @@
     <string name="speech_prompt">Please, say something</string>
     <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
     <string name="delete_all">Delete all</string>
-
+    <string name="translate_toot">Translate this toot.</string>
     <string name="schedule">Schedule</string>
     <string name="text_size">Text and icon sizes</string>
     <string name="text_size_change">Change the current text size:</string>
@@ -288,6 +288,8 @@
     <string name="load_attachment_spoiler">Show more…</string>
     <string name="load_sensitive_attachment">Sensitive content</string>
     <string name="set_display_reply">Display previous message in responses</string>
+    <string name="set_display_local">Display local timeline</string>
+    <string name="set_display_global">Display federated timeline</string>
     <string name="set_folder_title">Path: </string>
     <string name="set_auto_store_toot">Save drafts automatically</string>
     <string name="set_bubble_counter">Display counters</string>
@@ -299,6 +301,7 @@
     <string name="set_notif_follow_add">Notify when someone favourites your status</string>
     <string name="set_notif_follow_mention">Notify when someone mentions you</string>
     <string name="set_share_validation">Show confirmation dialog before boosting</string>
+    <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
     <string name="settings_title_more_options">Advanced settings</string>
     <string name="set_wifi_only">Notify in WIFI only</string>
     <string name="set_notif_silent">Silent Notifications</string>
@@ -334,6 +337,18 @@
         <item>Yandex</item>
         <item>Google</item>
         <item>No</item>
+    </string-array>
+
+    <string name="set_led_colour">Set LED colour:</string>
+
+    <string-array name="led_colours">
+        <item>Blue</item>
+        <item>Cyan</item>
+        <item>Magenta</item>
+        <item>Green</item>
+        <item>Red</item>
+        <item>Yellow</item>
+        <item>White</item>
     </string-array>
 
     <string name="set_title_news">News</string>
@@ -416,6 +431,6 @@
     </string>
 
     <string name="thanks_text_dev">
-        Thank you to @PhotonQyv for his contributions.
+        Thank you to:
     </string>
 </resources>

@@ -14,6 +14,7 @@ package fr.gouv.etalab.mastodon.drawers;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
+import android.graphics.Paint;
 import android.support.v7.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -90,6 +91,7 @@ import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
+import static fr.gouv.etalab.mastodon.helper.Helper.shortnameToUnicode;
 
 
 /**
@@ -197,7 +199,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_prev4_container = (RelativeLayout) convertView.findViewById(R.id.status_prev4_container);
             holder.status_reply = (ImageView) convertView.findViewById(R.id.status_reply);
             holder.status_privacy = (ImageView) convertView.findViewById(R.id.status_privacy);
-            holder.status_translate = (Button) convertView.findViewById(R.id.status_translate);
+            holder.status_translate = (TextView) convertView.findViewById(R.id.status_translate);
             holder.status_content_translated_container = (LinearLayout) convertView.findViewById(R.id.status_content_translated_container);
             holder.main_container = (LinearLayout) convertView.findViewById(R.id.main_container);
             holder.status_spoiler_container = (LinearLayout) convertView.findViewById(R.id.status_spoiler_container);
@@ -205,9 +207,11 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_spoiler = (TextView) convertView.findViewById(R.id.status_spoiler);
             holder.status_spoiler_button = (Button) convertView.findViewById(R.id.status_spoiler_button);
             holder.yandex_translate = (TextView) convertView.findViewById(R.id.yandex_translate);
+            holder.google_translate = (TextView) convertView.findViewById(R.id.google_translate);
             holder.status_replies = (LinearLayout) convertView.findViewById(R.id.status_replies);
             holder.status_replies_profile_pictures = (LinearLayout) convertView.findViewById(R.id.status_replies_profile_pictures);
             holder.status_replies_text = (TextView) convertView.findViewById(R.id.status_replies_text);
+            holder.new_element = (ImageView) convertView.findViewById(R.id.new_element);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -217,7 +221,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
         //Display a preview for accounts that have replied *if enabled and only for home timeline*
         if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
-            boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, true);
+            boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);
             if( showPreview){
                 boolean showPreviewPP = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES_PP, true);
                 if(  status.getReplies() == null){
@@ -259,6 +263,11 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             }
 
         }
+        changeDrawableColor(context, R.drawable.ic_fiber_new,R.color.mastodonC4);
+        if( status.isNew())
+            holder.new_element.setVisibility(View.VISIBLE);
+        else
+            holder.new_element.setVisibility(View.GONE);
         int iconSizePercent = sharedpreferences.getInt(Helper.SET_ICON_SIZE, 130);
         int textSizePercent = sharedpreferences.getInt(Helper.SET_TEXT_SIZE, 110);
         
@@ -301,6 +310,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 statusListAdapter.notifyDataSetChanged();
             }
         });
+        holder.status_translate.setPaintFlags(holder.status_translate.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         if( currentLocale != null && status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale) && !status.getLanguage().trim().equals("null")){
             if (translator != Helper.TRANS_NONE)
                 holder.status_translate.setVisibility(View.VISIBLE);
@@ -310,10 +320,25 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_translate.setVisibility(View.GONE);
         }
 
-        if( translator == Helper.TRANS_YANDEX)
-            holder.yandex_translate.setVisibility(View.VISIBLE);
-        else
-            holder.yandex_translate.setVisibility(View.GONE);
+        switch (translator)
+        {
+            case Helper.TRANS_NONE:
+                holder.yandex_translate.setVisibility(View.GONE);
+                holder.google_translate.setVisibility(View.GONE);
+                break;
+            case Helper.TRANS_YANDEX:
+                holder.google_translate.setVisibility(View.GONE);
+                holder.yandex_translate.setVisibility(View.VISIBLE);
+                break;
+            case Helper.TRANS_GOOGLE:
+                holder.yandex_translate.setVisibility(View.GONE);
+                holder.google_translate.setVisibility(View.VISIBLE);
+                break;
+            default:
+                holder.yandex_translate.setVisibility(View.GONE);
+                holder.google_translate.setVisibility(View.GONE);
+                break;
+        }
 
         holder.status_translate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -340,6 +365,11 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         while (matcher.find()){
                             String key = "__u" + String.valueOf(i) + "__";
                             String value = matcher.group(0);
+                            int end = matcher.end();
+                            if (spannableString.charAt(end) == '/') {
+                                text = spannableString.toString().substring(0, end).
+                                        concat(spannableString.toString().substring(end+1, spannableString.length()));
+                            }
                             if( value != null) {
                                 urlConversion.put(key, value);
                                 text = text.replace(value, key);
@@ -361,9 +391,13 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         }
                         if (translator == Helper.TRANS_YANDEX)
                             new YandexQuery(StatusListAdapter.this).getYandexTextview(position, text, currentLocale);
-                        else if( translator == Helper.TRANS_GOOGLE)
-                            new GoogleTranslateQuery(StatusListAdapter.this).getGoogleTextview(position, text, currentLocale);
+                        else if( translator == Helper.TRANS_GOOGLE) {
 
+                            while( text.charAt(text.length() -1) == '\n' && text.length() > 0)
+                                text = text.substring(0, text.length() -1);
+                            text += ".";
+                            new GoogleTranslateQuery(StatusListAdapter.this).getGoogleTextview(position, text.trim(), currentLocale);
+                        }
                     }else {
                         status.setTranslationShown(!status.isTranslationShown());
                         statusListAdapter.notifyDataSetChanged();
@@ -378,6 +412,13 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             @Override
             public void onClick(View v) {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://translate.yandex.com/"));
+                context.startActivity(browserIntent);
+            }
+        });
+        holder.google_translate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://translate.google.com/"));
                 context.startActivity(browserIntent);
             }
         });
@@ -480,7 +521,10 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             }
         }
 
-        final String content, displayName, username, ppurl;
+        String content;
+        final String displayName;
+        final String username;
+        final String ppurl;
         if( status.getReblog() != null){
             content = status.getReblog().getContent();
             displayName = Helper.shortnameToUnicode(status.getReblog().getAccount().getDisplay_name(), true);
@@ -546,7 +590,10 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             });
             holder.status_content_translated.setMovementMethod(LinkMovementMethod.getInstance());
         }
-
+        content = content.replaceAll("</p>","<br/><br/>");
+        content = content.replaceAll("<p>","");
+        if( content.endsWith("<br/><br/>") )
+            content = content.substring(0,content.length() -10);
         final SpannableString spannableString = Helper.clickableElements(context,content,
                 status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), true);
         holder.status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
@@ -712,7 +759,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             @Override
             public void onClick(View v) {
 
-                boolean confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
+                boolean confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
                 if( confirmation )
                     displayConfirmationDialog(FAVOURITE,status);
                 else
@@ -956,6 +1003,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 statuses.get(position).setContent_translated(aJsonString);
                 statusListAdapter.notifyDataSetChanged();
             } catch (JSONException | UnsupportedEncodingException | IllegalArgumentException e) {
+                e.printStackTrace();
                 Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
             }
         }
@@ -965,6 +1013,16 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         JSONObject translationJson = new JSONObject(text);
         JSONArray aJsonArray = translationJson.getJSONArray("text");
         String aJsonString = aJsonArray.get(0).toString();
+
+        /* The one instance where I've seen this happen,
+            the special tag was originally a hashtag ("__t1__"),
+            that Yandex decided to change to a "__q1 - __".
+         */
+        aJsonString = aJsonString.replaceAll("__q(\\d+) - __", "__t$1__");
+
+        // Noticed this in the very same toot
+        aJsonString = aJsonString.replace("&amp;", "&");
+
         aJsonString = URLDecoder.decode(aJsonString, "UTF-8");
         return aJsonString;
     }
@@ -988,6 +1046,19 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         aJsonString = aJsonString.replace(" //","//");
         aJsonString = aJsonString.replace(" www .","www.");
         aJsonString = aJsonString.replace("www .","www.");
+
+        // This one might cause more trouble than it's worth
+        aJsonString = aJsonString.replaceAll("\\* \\.", "*.");
+
+        /*
+            Noticed that sometimes the special tags were getting messed up by Google,
+             might be other variants, only caught one so far.
+
+            But, pre-planning might save some time later...
+         */
+        aJsonString = aJsonString.replaceAll("__\\s?(u|t)\\s?(\\d+)\\s?__", "__$1$2__");
+        aJsonString = aJsonString.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
+        aJsonString = aJsonString.replaceAll("\\+", "%2B");
         aJsonString = URLDecoder.decode(aJsonString, "UTF-8");
         return aJsonString;
     }
@@ -1026,16 +1097,19 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         RelativeLayout status_prev4_container;
         ImageView status_reply;
         ImageView status_privacy;
-        Button status_translate;
+        TextView status_translate;
         LinearLayout status_container2;
         LinearLayout status_container3;
         LinearLayout main_container;
         TextView yandex_translate;
+        TextView google_translate;
 
         LinearLayout status_replies;
         LinearLayout status_replies_profile_pictures;
         TextView status_replies_text;
         LinearLayout loader_replies;
+
+        ImageView new_element;
     }
 
 

@@ -24,6 +24,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name="fr.gouv.etalab.mastodon.activities.MainApplication"
@@ -34,10 +35,18 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppThemeDark">
+        <service
+            android:name="fr.gouv.etalab.mastodon.services.StreamingService"
+            android:exported="false"/>
+        <receiver android:name="fr.gouv.etalab.mastodon.services.BootService" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
         <activity
             android:name="fr.gouv.etalab.mastodon.activities.MainActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:windowSoftInputMode = "adjustResize"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/AppThemeDark_NoActionBar">
@@ -70,7 +79,6 @@
         <activity android:name="fr.gouv.etalab.mastodon.activities.HashTagActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
-            android:noHistory="true"
             android:label="@string/app_name"
             />
         <activity android:name="fr.gouv.etalab.mastodon.activities.WebviewConnectActivity"
@@ -82,7 +90,6 @@
             android:label="@string/app_name"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
-            android:noHistory="true"
             />
         <activity android:name="fr.gouv.etalab.mastodon.activities.MediaActivity"
             android:label="@string/app_name"
@@ -126,6 +133,11 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme_NoActionBar"
+            />
+        <activity android:name="fr.gouv.etalab.mastodon.activities.EditProfileActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
             />
         <activity
             android:name="fr.gouv.etalab.mastodon.activities.SplashActivity"

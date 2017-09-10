@@ -134,6 +134,21 @@ public class AccountDAO {
     }
 
     /**
+     * Returns an Account by its id and acct
+     * @param accountId String
+     * @param accountAcct String
+     * @return Account
+     */
+    public Account getAccountByIDAcct(String accountId, String accountAcct){
+        try {
+            Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null, Sqlite.COL_USER_ID + " = '" + accountId + "' AND " + Sqlite.COL_ACCT + " = '" + accountAcct + "'", null, null, null, null, "1");
+            return cursorToUser(c);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
      * Returns an Account by id and instance
      * @param accountId String
      * @param instance String

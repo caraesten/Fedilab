@@ -15,10 +15,11 @@
 package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.os.AsyncTask;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import java.io.IOException;
+
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
 
 
@@ -32,7 +33,7 @@ public class RetrieveRemoteAccountsAsyncTask extends AsyncTask<Void, Void, Void>
     private OnRetrieveRemoteAccountInterface listener;
     private String url;
     private String avatar, name, username, bio;
-    private int statusCount, followingCount, followersCount;
+    private String statusCount, followingCount, followersCount;
     private boolean islocked;
     private boolean error = false;
     private String instance;
@@ -56,23 +57,24 @@ public class RetrieveRemoteAccountsAsyncTask extends AsyncTask<Void, Void, Void>
             Elements nameElement = document.getElementsByClass("name");
             name = nameElement.get(0).getElementsByClass("p-name").get(0).html();
             username = nameElement.get(0).getElementsByTag("span").get(1).html();
-            islocked = nameElement.get(0).getElementsByClass("fa-lock") != null;
+            islocked = (nameElement.get(0).getElementsByClass("fa-lock") != null && nameElement.get(0).getElementsByClass("fa-lock").size() > 0);
 
             Elements bioElement = document.getElementsByClass("bio");
             bio = bioElement.get(0).html();
             Elements countElement = document.getElementsByClass("counter-number");
-            statusCount = Integer.parseInt(countElement.get(0).html());
-            followingCount = Integer.parseInt(countElement.get(1).html());
-            followersCount = Integer.parseInt(countElement.get(2).html());
-        } catch (IOException | IndexOutOfBoundsException e) {
+            statusCount = countElement.get(0).html();
+            followingCount = countElement.get(1).html();
+            followersCount = countElement.get(2).html();
+        } catch (Exception e) {
             error = true;
+            e.printStackTrace();
         }
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveRemoteAccount(error, name, username, islocked, avatar, bio, statusCount, followingCount, followersCount);
+        listener.onRetrieveRemoteAccount(error, name, username, instance, islocked, avatar, bio, statusCount, followingCount, followersCount);
     }
 
 }

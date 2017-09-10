@@ -35,6 +35,9 @@ public class Account implements Parcelable {
     private int followers_count;
     private int following_count;
     private int statuses_count;
+    private String followers_count_str;
+    private String following_count_str;
+    private String statuses_count_str;
     private String note;
     private String url;
     private String avatar;
@@ -43,6 +46,8 @@ public class Account implements Parcelable {
     private String header_static;
     private String token;
     private String instance;
+    private boolean isFollowing;
+    private boolean isRemote;
 
     protected Account(Parcel in) {
         id = in.readString();
@@ -236,5 +241,45 @@ public class Account implements Parcelable {
         dest.writeString(header_static);
         dest.writeString(token);
         dest.writeString(instance);
+    }
+
+    public boolean isFollowing() {
+        return isFollowing;
+    }
+
+    public void setFollowing(boolean following) {
+        isFollowing = following;
+    }
+
+    public boolean isRemote() {
+        return isRemote;
+    }
+
+    public void setRemote(boolean remote) {
+        isRemote = remote;
+    }
+
+    public String getFollowers_count_str() {
+        return followers_count_str;
+    }
+
+    public void setFollowers_count_str(String followers_count_str) {
+        this.followers_count_str = followers_count_str;
+    }
+
+    public String getFollowing_count_str() {
+        return following_count_str;
+    }
+
+    public void setFollowing_count_str(String following_count_str) {
+        this.following_count_str = following_count_str;
+    }
+
+    public String getStatuses_count_str() {
+        return statuses_count_str;
+    }
+
+    public void setStatuses_count_str(String statuses_count_str) {
+        this.statuses_count_str = statuses_count_str;
     }
 }
