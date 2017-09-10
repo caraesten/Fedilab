@@ -219,7 +219,7 @@ public class StreamingService extends Service {
                     break;
                 }
                 if (event !=null){
-                    if( lastEvent == EventStreaming.NONE || lastEvent == null) {
+                    if( (lastEvent == EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
 
                         switch (event.trim()) {
                             case "event: update":
@@ -247,6 +247,8 @@ public class StreamingService extends Service {
                         }else if( lastEvent == EventStreaming.DELETE) {
                             eventStreaming = EventStreaming.DELETE;
                             event = "{id:" + event + "}";
+                        }else {
+                            eventStreaming = EventStreaming.UPDATE;
                         }
                         lastEvent = EventStreaming.NONE;
                         try {

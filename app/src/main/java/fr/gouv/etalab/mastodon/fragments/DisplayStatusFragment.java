@@ -25,6 +25,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -258,27 +259,29 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     @Override
     public void onResume() {
         super.onResume();
-        //New data are available
-        statusesTmp = Helper.getTempStatus(context, null);
-        if (getUserVisibleHint() && statusesTmp != null && statusesTmp.size() > 0 && statuses.size() > 0) {
-            ArrayList<String> added = new ArrayList<>();
-            for(Status status : statuses){
-                added.add(status.getId());
-            }
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean isOnWifi = Helper.isOnWIFI(context);
-            int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-            int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
-            for(int i = statusesTmp.size() -1 ; i >= 0 ; i--){
-                if( !added.contains(statusesTmp.get(i).getId())) {
-                    this.statuses.add(0, statusesTmp.get(i));
-                    added.add(statusesTmp.get(i).getId());
+        if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
+            //New data are available
+            statusesTmp = Helper.getTempStatus(context, null);
+            if (getUserVisibleHint() && statusesTmp != null && statusesTmp.size() > 0 && statuses.size() > 0) {
+                ArrayList<String> added = new ArrayList<>();
+                for (Status status : statuses) {
+                    added.add(status.getId());
                 }
+                final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                boolean isOnWifi = Helper.isOnWIFI(context);
+                int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+                int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
+                for (int i = statusesTmp.size() - 1; i >= 0; i--) {
+                    if (!added.contains(statusesTmp.get(i).getId())) {
+                        this.statuses.add(0, statusesTmp.get(i));
+                        added.add(statusesTmp.get(i).getId());
+                    }
+                }
+                if (this.statuses.size() > 0)
+                    max_id = this.statuses.get(this.statuses.size() - 1).getId();
+                statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
+                lv_status.setAdapter(statusListAdapter);
             }
-            if( this.statuses.size() > 0 )
-                max_id = this.statuses.get(this.statuses.size()-1).getId();
-            statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
-            lv_status.setAdapter(statusListAdapter);
         }
     }
 
@@ -382,35 +385,37 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
     public void refresh(){
         //New data are available
-        if( context == null)
-            return;
-        statusesTmp = Helper.getTempStatus(context, null);
-        if( statusesTmp.size() > 0){
-            ArrayList<String> added = new ArrayList<>();
-            for(Status status : statuses){
-                added.add(status.getId());
-            }
-            for(int i = statusesTmp.size() -1 ; i >= 0 ; i--){
-                if( !added.contains(statusesTmp.get(i).getId())) {
-                    this.statuses.add(0, statusesTmp.get(i));
-                    added.add(statusesTmp.get(i).getId());
+        if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
+            if (context == null)
+                return;
+            statusesTmp = Helper.getTempStatus(context, null);
+            if (statusesTmp.size() > 0) {
+                ArrayList<String> added = new ArrayList<>();
+                for (Status status : statuses) {
+                    added.add(status.getId());
                 }
+                for (int i = statusesTmp.size() - 1; i >= 0; i--) {
+                    if (!added.contains(statusesTmp.get(i).getId())) {
+                        this.statuses.add(0, statusesTmp.get(i));
+                        added.add(statusesTmp.get(i).getId());
+                    }
+                }
+                if (this.statuses.size() > 0)
+                    max_id = this.statuses.get(this.statuses.size() - 1).getId();
+                boolean isOnWifi = Helper.isOnWIFI(context);
+                final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, statusesTmp.get(0).getId());
+                editor.apply();
+                statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
+                lv_status.setAdapter(statusListAdapter);
+                if (textviewNoAction.getVisibility() == View.VISIBLE)
+                    textviewNoAction.setVisibility(View.GONE);
             }
-            if( this.statuses.size() > 0 )
-                max_id = this.statuses.get(this.statuses.size()-1).getId();
-            boolean isOnWifi = Helper.isOnWIFI(context);
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, statusesTmp.get(0).getId());
-            editor.apply();
-            statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
-            lv_status.setAdapter(statusListAdapter);
-            if( textviewNoAction.getVisibility() == View.VISIBLE)
-                textviewNoAction.setVisibility(View.GONE);
+            new_data.setVisibility(View.GONE);
         }
-        new_data.setVisibility(View.GONE);
     }
 
     public void scrollToTop(){

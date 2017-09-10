@@ -38,6 +38,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -706,7 +707,7 @@ public class MainActivity extends AppCompatActivity
                 unCheckAllMenuItems(navigationView);
                 toot.setVisibility(View.VISIBLE);
                 //Manages theme for icon colors
-                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
                 if( theme == Helper.THEME_DARK){
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_reply,R.color.dark_text);
@@ -1162,5 +1163,4 @@ public class MainActivity extends AppCompatActivity
     }
 
     private static boolean activityVisible;
-
 }
