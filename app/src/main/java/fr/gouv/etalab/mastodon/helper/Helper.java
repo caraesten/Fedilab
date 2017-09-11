@@ -1714,7 +1714,8 @@ public class Helper {
         Gson gson = new Gson();
         String json = sharedpreferences.getString(Helper.SET_TEMP_NOTIFICATIONS + userId, null);
         Type type = new TypeToken<ArrayList<Notification>>() {}.getType();
-        return gson.fromJson(json, type);
+        ArrayList<Notification> notifications = gson.fromJson(json, type);
+        return (notifications != null)?notifications:new ArrayList<Notification>();
     }
 
 }
