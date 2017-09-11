@@ -23,7 +23,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -58,8 +57,9 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
     private List<Account> contributors = new ArrayList<>();
     private AccountSearchDevAdapter accountSearchWebAdapterDeveloper;
     private AccountSearchDevAdapter accountSearchWebAdapterContributors;
+    @SuppressWarnings("FieldCanBeLocal")
+    private int DEV_COUNT = 1, CONTRIBUTOR_COUNT = 2;
 
-    @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -226,12 +226,12 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
     @Override
     public void onResume(){
         super.onResume();
-        if( developers != null && developers.size() > 0){
+        if( developers != null && developers.size() == DEV_COUNT){
             for(Account account: developers){
                 new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
-        if( contributors != null && contributors.size() > 0){
+        if( contributors != null && contributors.size() == CONTRIBUTOR_COUNT){
             for(Account account: contributors){
                 new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
