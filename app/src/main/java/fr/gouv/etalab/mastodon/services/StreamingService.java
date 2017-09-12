@@ -24,6 +24,8 @@ import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedInputStream;
@@ -78,8 +80,14 @@ public class StreamingService extends Service {
 
 
     public void disconnect(){
-        if( httpsURLConnection != null)
-            httpsURLConnection.disconnect();
+        Thread readThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if( httpsURLConnection != null){
+                    httpsURLConnection.disconnect();
+            }
+        }});
+        readThread.start();
     }
 
 
@@ -165,6 +173,7 @@ public class StreamingService extends Service {
                     break;
                 }
                 if (event !=null){
+
                     if( (lastEvent == EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
                         switch (event.trim()) {
                             case "event: update":

@@ -67,7 +67,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean swiped;
     private ListView lv_notifications;
-    private TextView new_data;
 
     public DisplayNotificationsFragment(){
     }
@@ -86,7 +85,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         lv_notifications = (ListView) rootView.findViewById(R.id.lv_notifications);
-        new_data = (TextView) rootView.findViewById(R.id.new_data);
         mainLoader = (RelativeLayout) rootView.findViewById(R.id.loader);
         nextElementLoader = (RelativeLayout) rootView.findViewById(R.id.loading_next_notifications);
         textviewNoAction = (RelativeLayout) rootView.findViewById(R.id.no_action);
@@ -123,7 +121,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 firstLoad = true;
                 flag_loading = true;
                 swiped = true;
-                new_data.setVisibility(View.GONE);
                 asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
@@ -133,33 +130,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
 
         asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
-        new_data.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                notificationsTmp = Helper.getTempNotification(context, null);
-                if( notificationsTmp != null){
-                    for(int i = notificationsTmp.size() -1 ; i >= 0 ; i--){
-                        notifications.add(0,notificationsTmp.get(i));
-                    }
-                    boolean isOnWifi = Helper.isOnWIFI(context);
-                    int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-                    notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments, notifications);
-                    lv_notifications.setAdapter(notificationsListAdapter);
-                    if( notificationsTmp.size() > 0){
-                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                        editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notificationsTmp.get(0).getId());
-                        editor.apply();
-                    }
-                    if( notificationsTmp.size() > 0 && textviewNoAction.getVisibility() == View.VISIBLE)
-                        textviewNoAction.setVisibility(View.GONE);
-                }
-                new_data.setVisibility(View.GONE);
-                notificationsTmp = new ArrayList<>();
-                Helper.cacheNotificationsClear(context, null);
-                ((MainActivity) context).updateNotifCounter();
-            }
-        });
 
         return rootView;
     }
@@ -190,27 +160,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     @Override
     public void onResume() {
         super.onResume();
-        //New data are available
-        notificationsTmp = Helper.getTempNotification(context, null);
-        if (getUserVisibleHint() && notificationsTmp != null && notificationsTmp.size() > 0 && notifications.size() > 0) {
-            ArrayList<String> added = new ArrayList<>();
-            for(Notification notification : notifications){
-                added.add(notification.getId());
-            }
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean isOnWifi = Helper.isOnWIFI(context);
-            int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-            for(int i = notificationsTmp.size() -1 ; i >= 0 ; i--){
-                if( !added.contains(notificationsTmp.get(i).getId())) {
-                    this.notifications.add(0, notificationsTmp.get(i));
-                    added.add(notificationsTmp.get(i).getId());
-                }
-            }
-            if( this.notifications.size() > 0 )
-                max_id = this.notifications.get(this.notifications.size()-1).getId();
-            notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments, notifications);
-            lv_notifications.setAdapter(notificationsListAdapter);
-        }
+        refresh();
     }
 
     @Override
@@ -288,10 +238,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     }
 
 
-    public void showNewContent(){
-        new_data.setVisibility(View.VISIBLE);
-    }
-
     public void refresh(){
         if( context == null)
             return;
@@ -321,6 +267,5 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             if( textviewNoAction.getVisibility() == View.VISIBLE)
                 textviewNoAction.setVisibility(View.GONE);
         }
-        new_data.setVisibility(View.GONE);
     }
 }

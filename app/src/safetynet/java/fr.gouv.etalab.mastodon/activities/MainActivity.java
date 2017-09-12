@@ -30,7 +30,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.Messenger;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -152,19 +151,11 @@ public class MainActivity extends AppCompatActivity
                 StreamingService.EventStreaming eventStreaming = (StreamingService.EventStreaming) intent.getSerializableExtra("eventStreaming");
                 if( eventStreaming == StreamingService.EventStreaming.NOTIFICATION){
                     if(notificationsFragment != null){
-                        if(notificationsFragment.getUserVisibleHint() && isActivityVisible()){
-                            notificationsFragment.showNewContent();
-                        }else{
-                            notificationsFragment.refresh();
-                        }
+                        notificationsFragment.refresh();
                     }
                 }else if(eventStreaming == StreamingService.EventStreaming.UPDATE){
                     if( homeFragment != null){
-                        if(homeFragment.getUserVisibleHint() && isActivityVisible()){
-                            homeFragment.showNewContent();
-                        }else{
-                            homeFragment.refresh();
-                        }
+                        homeFragment.refresh();
                     }
                 }else if(eventStreaming == StreamingService.EventStreaming.DELETE){
                     String id = b.getString("id");
@@ -180,6 +171,8 @@ public class MainActivity extends AppCompatActivity
                 updateHomeCounter();
             }
         };
+        Intent intentService = new Intent(this, StreamingService.class);
+        bindService(intentService, serviceConnection, Context.BIND_AUTO_CREATE);
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
 
 
@@ -931,29 +924,28 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        Intent intent = new Intent(this, StreamingService.class);
-        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
     @Override
     protected void onStop() {
         super.onStop();
-        if (mBound) {
-            unbindService(serviceConnection);
-            mBound = false;
-        }
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         MainActivity.activityPaused();
-        if( streamingService != null)
-            streamingService.disconnect();
     }
 
     @Override
     public void onDestroy(){
         super.onDestroy();
+        if( streamingService != null)
+            streamingService.disconnect();
+        if (mBound) {
+            unbindService(serviceConnection);
+            mBound = false;
+        }
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
     }
 

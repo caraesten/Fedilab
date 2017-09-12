@@ -16,10 +16,12 @@ package fr.gouv.etalab.mastodon.activities;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
@@ -27,6 +29,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -38,7 +41,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -146,19 +148,11 @@ public class MainActivity extends AppCompatActivity
                 StreamingService.EventStreaming eventStreaming = (StreamingService.EventStreaming) intent.getSerializableExtra("eventStreaming");
                 if( eventStreaming == StreamingService.EventStreaming.NOTIFICATION){
                     if(notificationsFragment != null){
-                        if(notificationsFragment.getUserVisibleHint() && isActivityVisible()){
-                            notificationsFragment.showNewContent();
-                        }else{
-                            notificationsFragment.refresh();
-                        }
+                        notificationsFragment.refresh();
                     }
                 }else if(eventStreaming == StreamingService.EventStreaming.UPDATE){
                     if( homeFragment != null){
-                        if(homeFragment.getUserVisibleHint() && isActivityVisible()){
-                            homeFragment.showNewContent();
-                        }else{
-                            homeFragment.refresh();
-                        }
+                        homeFragment.refresh();
                     }
                 }else if(eventStreaming == StreamingService.EventStreaming.DELETE){
                     String id = b.getString("id");
@@ -174,6 +168,8 @@ public class MainActivity extends AppCompatActivity
                 updateHomeCounter();
             }
         };
+        Intent intentService = new Intent(this, StreamingService.class);
+        bindService(intentService, serviceConnection, Context.BIND_AUTO_CREATE);
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
 
 
@@ -900,6 +896,37 @@ public class MainActivity extends AppCompatActivity
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
+
+    StreamingService streamingService = null;
+    boolean mBound = false;
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            StreamingService.StreamingServiceBinder binder = (StreamingService.StreamingServiceBinder) service;
+            streamingService = binder.getService();
+            mBound = true;
+            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            SQLiteDatabase db = Sqlite.getInstance(MainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
+            streamingService.connect(account);
+        }
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -909,6 +936,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onDestroy(){
         super.onDestroy();
+        if( streamingService != null)
+            streamingService.disconnect();
+        if (mBound) {
+            unbindService(serviceConnection);
+            mBound = false;
+        }
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
     }
 
