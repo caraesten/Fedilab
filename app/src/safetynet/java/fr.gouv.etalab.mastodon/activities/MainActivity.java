@@ -16,10 +16,12 @@ package fr.gouv.etalab.mastodon.activities;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
@@ -27,6 +29,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.Messenger;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -901,6 +905,36 @@ public class MainActivity extends AppCompatActivity
         //Proceeds to update of the authenticated account
         if(Helper.isLoggedIn(getApplicationContext()))
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+
+    StreamingService streamingService = null;
+    boolean mBound = false;
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            StreamingService.StreamingServiceBinder binder = (StreamingService.StreamingServiceBinder) service;
+            streamingService = binder.getService();
+            mBound = true;
+        }
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent intent = new Intent(this, StreamingService.class);
+        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mBound) {
+            unbindService(serviceConnection);
+            mBound = false;
+        }
     }
 
     @Override

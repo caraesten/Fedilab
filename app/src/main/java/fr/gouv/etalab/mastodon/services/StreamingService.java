@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.StrictMode;
@@ -97,38 +98,18 @@ public class StreamingService extends Service {
         DELETE,
         NONE
     }
+    private final IBinder iBinder = new StreamingServiceBinder();
 
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        if( intent != null){
-            String accountId = intent.getStringExtra("accountId");
-            String accountAcct = intent.getStringExtra("accountAcct");
-            if( accountId != null && accountAcct != null){
-                SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                Account account = new AccountDAO(getApplicationContext(), db).getAccountByIDAcct(accountId, accountAcct);
-                if( account != null)
-                    callAsynchronousTask(account);
-            }else {
-                SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                List<Account> accounts = new AccountDAO(getApplicationContext(), db).getAllAccount();
-                if( accounts != null){
-                    for (Account account: accounts) {
-                        intent = new Intent(getApplicationContext(), StreamingService.class);
-                        intent.putExtra("accountId", account.getId());
-                        intent.putExtra("accountAcct", account.getAcct());
-                        startService(intent);
-                    }
-                }
-            }
+    public class StreamingServiceBinder extends Binder {
+        public StreamingService getService() {
+            return StreamingService.this;
         }
-        return START_STICKY;
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return iBinder;
     }
 
 
