@@ -379,6 +379,14 @@
                 android:layout_height="20dp"
                 android:src="@drawable/ic_reply"
                 tools:ignore="ContentDescription" />
+            <ImageView
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:id="@+id/status_pin"
+                android:layout_gravity="center_vertical"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_action_pin"/>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
