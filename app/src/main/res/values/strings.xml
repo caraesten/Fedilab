@@ -97,6 +97,8 @@
     <string name="favourite_remove">Remove this toot from your favourites?</string>
     <string name="reblog_add">Boost this toot?</string>
     <string name="reblog_remove">Unboost this toot?</string>
+    <string name="pin_add">Pin this toot?</string>
+    <string name="pin_remove">Unpin this toot?</string>
     <string-array name="more_action">
         <item>Mute</item>
         <item>Block</item>

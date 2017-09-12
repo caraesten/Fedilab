@@ -110,6 +110,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     private StatusListAdapter statusListAdapter;
     private final int REBLOG = 1;
     private final int FAVOURITE = 2;
+    private final int PIN = 3;
     private RetrieveFeedsAsyncTask.Type type;
     private String targetedId;
     private HashMap<String, String> urlConversion;
@@ -180,6 +181,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_account_profile_boost_by = (ImageView) convertView.findViewById(R.id.status_account_profile_boost_by);
             holder.status_favorite_count = (TextView) convertView.findViewById(R.id.status_favorite_count);
             holder.status_reblog_count = (TextView) convertView.findViewById(R.id.status_reblog_count);
+            holder.status_pin = (ImageView) convertView.findViewById(R.id.status_pin);
             holder.status_toot_date = (TextView) convertView.findViewById(R.id.status_toot_date);
             holder.status_show_more = (Button) convertView.findViewById(R.id.status_show_more);
             holder.status_more = (ImageView) convertView.findViewById(R.id.status_more);
@@ -445,6 +447,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_fav_black,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_action_pin, R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_translate,R.color.dark_text);
@@ -457,6 +460,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.black);
             changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.black);
             changeDrawableColor(context, R.drawable.ic_fav_black,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_action_pin, R.color.black);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.white);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.white);
             changeDrawableColor(context, R.drawable.ic_translate,R.color.white);
@@ -699,7 +703,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 holder.status_privacy.setImageResource(R.drawable.ic_local_post_office);
                 break;
         }
-        Drawable imgFav, imgReblog;
+        Drawable imgFav, imgReblog, imgPinToot;
         if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited()))
             imgFav = ContextCompat.getDrawable(context, R.drawable.ic_fav_yellow);
         else
@@ -710,8 +714,12 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         else
             imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_retweet_black);
 
+        imgPinToot = ContextCompat.getDrawable(context, R.drawable.ic_action_pin);
+
         imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
         imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+        imgPinToot.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+
         holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
         holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
 
@@ -774,6 +782,15 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     displayConfirmationDialog(REBLOG,status);
                 else
                     reblogAction(status);
+            }
+        });
+
+        holder.status_pin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "Clicked on Pin", Toast.LENGTH_SHORT).show();
+                //displayConfirmationDialog(PIN,status);
+                pinAction(status);
             }
         });
         switch (status.getVisibility()){
@@ -857,7 +874,14 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         statusListAdapter.notifyDataSetChanged();
     }
 
-
+    /**
+     * Pin or unpin a status
+     * @param status Status
+     */
+    private void pinAction(Status status) {
+        // Checks for if status is already pinned & owned (Though maybe we can do this prior to getting here?
+       // new PostActionAsyncTask()
+    }
 
     private void loadAttachments(final Status status, ViewHolder holder){
         List<Attachment> attachments = status.getMedia_attachments();
@@ -1095,6 +1119,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         ImageView status_prev4_play;
         RelativeLayout status_prev4_container;
         ImageView status_reply;
+        ImageView status_pin;
         ImageView status_privacy;
         TextView status_translate;
         LinearLayout status_container2;
@@ -1131,6 +1156,13 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             else
                 title = context.getString(R.string.reblog_add);
         }
+        else if ( action == PIN){
+            //Checks for pinned toot to be done
+            // If not already pinned...
+            title = context.getString(R.string.pin_add);
+            // else
+            // title = context.getString(R.string.pin_remove);
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -1147,6 +1179,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         reblogAction(status);
                     else if( action == FAVOURITE)
                         favouriteAction(status);
+                    else if ( action == PIN)
+                        pinAction(status);
                     dialog.dismiss();
                 }
             })
