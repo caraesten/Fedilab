@@ -880,7 +880,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
      */
     private void pinAction(Status status) {
         // Checks for if status is already pinned & owned (Though maybe we can do this prior to getting here?
-       // new PostActionAsyncTask()
+        new PostActionAsyncTask(context, API.StatusAction.PIN, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        statusListAdapter.notifyDataSetChanged();
     }
 
     private void loadAttachments(final Status status, ViewHolder holder){
