@@ -916,12 +916,18 @@ public class MainActivity extends AppCompatActivity
             StreamingService.StreamingServiceBinder binder = (StreamingService.StreamingServiceBinder) service;
             streamingService = binder.getService();
             mBound = true;
+            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            SQLiteDatabase db = Sqlite.getInstance(MainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
+            streamingService.connect(account);
         }
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
             mBound = false;
         }
     };
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -941,6 +947,8 @@ public class MainActivity extends AppCompatActivity
     protected void onPause() {
         super.onPause();
         MainActivity.activityPaused();
+        if( streamingService != null)
+            streamingService.disconnect();
     }
 
     @Override
