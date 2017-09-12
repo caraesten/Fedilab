@@ -93,7 +93,9 @@ public class API {
         AUTHORIZE,
         REJECT,
         REPORT,
-        REMOTE_FOLLOW
+        REMOTE_FOLLOW,
+        PIN,
+        UNPIN
     }
 
     public API(Context context) {
@@ -297,6 +299,37 @@ public class API {
      */
     public APIResponse getStatusWithMedia(String accountId, String max_id) {
         return getStatus(accountId, true, false, max_id, null, tootPerPage);
+    }
+
+    /**
+     * Retrieves pinned status(es) *synchronously*
+     *
+     * @param accountId String Id of the account
+     * @return APIResponse
+     */
+    public APIResponse getPinnedStatuses(String accountId)
+    {
+        RequestParams params = new RequestParams();
+
+        params.put("pinned", Boolean.toString(true));
+
+        get(String.format("/accounts/%s/statuses", accountId), params, new JsonHttpResponseHandler() {
+        @Override
+        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            Status status = parseStatuses(context, response);
+            statuses.add(status);
+        }
+        @Override
+        public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+            statuses = parseStatuses(response);
+        }
+        @Override
+        public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
+            setError(statusCode, error);
+        }
+    });
+        apiResponse.setStatuses(statuses);
+        return apiResponse;
     }
 
 
@@ -834,6 +867,12 @@ public class API {
                 break;
             case UNMUTE:
                 action = String.format("/accounts/%s/unmute", targetedId);
+                break;
+            case PIN:
+                action = String.format("/statuses/%s/pin", targetedId);
+                break;
+            case UNPIN:
+                action = String.format("statuses/%s/unpin", targetedId);
                 break;
             case UNSTATUS:
                 action = String.format("/statuses/%s", targetedId);

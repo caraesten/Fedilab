@@ -91,7 +91,6 @@ import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
-import static fr.gouv.etalab.mastodon.helper.Helper.shortnameToUnicode;
 
 
 /**
@@ -465,7 +464,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
         //Redraws top icons (boost/reply)
         final float scale = context.getResources().getDisplayMetrics().density;
-        if( !status.getIn_reply_to_account_id().equals("null") || !status.getIn_reply_to_id().equals("null") ){
+        if( (status.getIn_reply_to_account_id()!= null && !status.getIn_reply_to_account_id().equals("null")) || (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null")) ){
             Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_reply);
             img.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
             holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
@@ -1178,7 +1177,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         if( isOwner) {
             stringArray = context.getResources().getStringArray(R.array.more_action_owner);
             stringArrayConf = context.getResources().getStringArray(R.array.more_action_owner_confirm);
-            doAction = new API.StatusAction[]{API.StatusAction.UNSTATUS};
+            doAction = new API.StatusAction[]{API.StatusAction.PIN,API.StatusAction.UNSTATUS};
 
         }else {
             stringArray = context.getResources().getStringArray(R.array.more_action);
@@ -1290,7 +1289,9 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                                 doAction[position] == API.StatusAction.UNFAVOURITE ||
                                 doAction[position] == API.StatusAction.REBLOG ||
                                 doAction[position] == API.StatusAction.UNREBLOG ||
-                                doAction[position] == API.StatusAction.UNSTATUS
+                                doAction[position] == API.StatusAction.UNSTATUS ||
+                                    doAction[position] == API.StatusAction.PIN ||
+                                    doAction[position] == API.StatusAction.UNPIN
                             )
                                 targetedId = status.getId();
                             else

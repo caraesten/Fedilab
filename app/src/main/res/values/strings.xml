@@ -105,6 +105,7 @@
         <item>Share</item>
     </string-array>
     <string-array name="more_action_owner">
+        <item>Pin</item>
         <item>Remove</item>
         <item>Copy</item>
         <item>Share</item>
@@ -125,6 +126,7 @@
     </string-array>
 
     <string-array name="more_action_owner_confirm">
+        <item>Pin this toot?</item>
         <item>Remove this toot?</item>
         <item>null</item> <!-- Ugly hack to fix confirm box-->
         <item>null</item>
@@ -261,6 +263,8 @@
     <string name="toast_unfavourite">The toot was removed from your favourites!</string>
     <string name="toast_report">The toot was reported!</string>
     <string name="toast_unstatus">The toot was deleted!</string>
+    <string name="toast_pin">The toot was pinned!</string>
+    <string name="toast_unpin">The toot was unpinned!</string>
     <string name="toast_error">Oops ! An error occurred!</string>
     <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
     <string name="toast_error_instance">The instance domain does not seem to be valide!</string>
