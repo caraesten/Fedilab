@@ -41,6 +41,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -344,10 +345,10 @@ public class MainActivity extends AppCompatActivity
                 switch (tab.getPosition()){
                     case 0:
                         DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
-                        if( displayStatusFragment != null )
-                            displayStatusFragment.scrollToTop();
                         countNewStatus = 0;
                         updateHomeCounter();
+                        if( displayStatusFragment != null )
+                            displayStatusFragment.scrollToTop();
                         break;
                     case 2:
                     case 3:
@@ -357,10 +358,10 @@ public class MainActivity extends AppCompatActivity
                         break;
                     case 1:
                         DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
-                        if( displayNotificationsFragment != null )
-                            displayNotificationsFragment.scrollToTop();
                         countNewNotifications = 0;
                         updateNotifCounter();
+                        if( displayNotificationsFragment != null )
+                            displayNotificationsFragment.scrollToTop();
                         break;
                 }
             }
@@ -1158,6 +1159,7 @@ public class MainActivity extends AppCompatActivity
         if( tabHome == null)
             return;
         TextView tabCounterHome = (TextView) tabHome.findViewById(R.id.tab_counter);
+        tabCounterHome.setText(String.valueOf(countNewStatus));
         if( countNewStatus> 0){
             //New data are available
             //The fragment is not displayed, so the counter is displayed
@@ -1175,6 +1177,7 @@ public class MainActivity extends AppCompatActivity
         if( tabNotif == null)
             return;
         TextView tabCounterNotif = (TextView) tabNotif.findViewById(R.id.tab_counter);
+        tabCounterNotif.setText(String.valueOf(countNewNotifications));
         if( countNewNotifications > 0){
             tabCounterNotif.setVisibility(View.VISIBLE);
         }else {

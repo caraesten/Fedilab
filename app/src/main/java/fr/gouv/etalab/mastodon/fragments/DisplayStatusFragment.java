@@ -38,12 +38,9 @@ import java.util.List;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRepliesAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
-import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
-import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
-import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
@@ -261,7 +258,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             return;
         }
         List<Status> statuses = apiResponse.getStatuses();
-        String since_id = apiResponse.getSince_id();
         max_id = apiResponse.getMax_id();
 
         flag_loading = (max_id == null );
@@ -274,6 +270,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             lv_status.setAdapter(statusListAdapter);
             swiped = false;
         }
+        if( firstLoad)
+            MainActivity.countNewStatus = 0;
         if( statuses != null && statuses.size() > 0) {
             for(Status tmpStatus: statuses){
                 if( type == RetrieveFeedsAsyncTask.Type.HOME && firstLoad && Long.parseLong(tmpStatus.getId()) > Long.parseLong(lastReadStatus)){
@@ -285,22 +283,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 this.statuses.add(tmpStatus);
             }
             statusListAdapter.notifyDataSetChanged();
+        }
+        if( firstLoad)
             ((MainActivity)context).updateHomeCounter();
-        }
         swipeRefreshLayout.setRefreshing(false);
-
-        //Store last toot id for home timeline to avoid to notify for those that have been already seen
-        if(statuses != null && statuses.size()  > 0 && type == RetrieveFeedsAsyncTask.Type.HOME ){
-            //acct is null when used in Fragment, data need to be retrieved via shared preferences and db
-
-            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
-            if( currentAccount != null && firstLoad && since_id != null){
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + currentAccount.getId(), statuses.get(0).getId());
-                editor.apply();
-            }
-        }
         firstLoad = false;
 
         //Retrieves replies
@@ -323,15 +309,26 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 boolean isOnWifi = Helper.isOnWIFI(context);
                 final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, status.getId());
-                editor.apply();
                 statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
                 lv_status.setAdapter(statusListAdapter);
                 if (textviewNoAction.getVisibility() == View.VISIBLE)
                     textviewNoAction.setVisibility(View.GONE);
             }
+        }
+    }
+
+    @Override
+    public void setMenuVisibility(final boolean visible) {
+        super.setMenuVisibility(visible);
+        if( context == null)
+            return;
+        //Store last toot id for home timeline to avoid to notify for those that have been already seen
+        if (visible && statuses != null && statuses.size() > 0) {
+            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, statuses.get(0).getId());
+            editor.apply();
         }
     }
 
