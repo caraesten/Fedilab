@@ -20,25 +20,18 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
-import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -61,7 +54,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private AsyncTask<Void, Void, Void> asyncTask;
     private NotificationsListAdapter notificationsListAdapter;
     private String max_id;
-    private List<Notification> notifications, notificationsTmp;
+    private List<Notification> notifications;
     private RelativeLayout mainLoader, nextElementLoader, textviewNoAction;
     private boolean firstLoad;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -160,14 +153,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     @Override
     public void onResume() {
         super.onResume();
-        refresh();
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if( isVisibleToUser )
-            refresh();
     }
 
     @Override
@@ -195,8 +180,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         else
             textviewNoAction.setVisibility(View.GONE);
         if( swiped ){
-            Helper.cacheNotificationsClear(context,null);
-            ((MainActivity) context).updateNotifCounter();
             boolean isOnWifi = Helper.isOnWIFI(context);
             int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
             notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments, this.notifications);
@@ -238,29 +221,17 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     }
 
 
-    public void refresh(){
+    public void refresh(Notification notification){
         if( context == null)
             return;
-        notificationsTmp = Helper.getTempNotification(context, null);
-        if( notificationsTmp.size() > 0){
-            ArrayList<String> added = new ArrayList<>();
-            for(Notification notification : notifications){
-                added.add(notification.getId());
-            }
-            for(int i = notificationsTmp.size() -1 ; i >= 0 ; i--){
-                if( !added.contains(notificationsTmp.get(i).getId())) {
-                    this.notifications.add(0, notificationsTmp.get(i));
-                    added.add(notificationsTmp.get(i).getId());
-                }
-            }
-            if( this.notifications.size() > 0 )
-                max_id = this.notifications.get(this.notifications.size()-1).getId();
+        if( notification != null){
+            notifications.add(0, notification);
             boolean isOnWifi = Helper.isOnWIFI(context);
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
             SharedPreferences.Editor editor = sharedpreferences.edit();
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notificationsTmp.get(0).getId());
+            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notification.getId());
             editor.apply();
             notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments, notifications);
             lv_notifications.setAdapter(notificationsListAdapter);

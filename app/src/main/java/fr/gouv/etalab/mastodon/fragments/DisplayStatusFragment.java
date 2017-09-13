@@ -25,7 +25,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,8 +34,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
-
-import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRepliesAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -63,7 +60,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private AsyncTask<Void, Void, Void> asyncTask;
     private StatusListAdapter statusListAdapter;
     private String max_id;
-    private List<Status> statuses, statusesTmp;
+    private List<Status> statuses;
     private RetrieveFeedsAsyncTask.Type type;
     private RelativeLayout mainLoader, nextElementLoader, textviewNoAction;
     private boolean firstLoad;
@@ -78,6 +75,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private int positionSpinnerTrans;
     private boolean hideHeader;
     private String instanceValue;
+    private String lastReadStatus;
+    private String userId;
 
     public DisplayStatusFragment(){
     }
@@ -117,7 +116,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-
+        userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        lastReadStatus = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
         lv_status = (ListView) rootView.findViewById(R.id.lv_status);
         mainLoader = (RelativeLayout) rootView.findViewById(R.id.loader);
         nextElementLoader = (RelativeLayout) rootView.findViewById(R.id.loading_next_status);
@@ -226,7 +226,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     @Override
     public void onResume() {
         super.onResume();
-        refresh();
     }
 
     @Override
@@ -269,14 +268,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         else
             textviewNoAction.setVisibility(View.GONE);
         if( swiped ){
-            if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
-                Helper.cacheStatusClear(context,null);
-                ((MainActivity) context).updateHomeCounter();
-            }
             statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
             lv_status.setAdapter(statusListAdapter);
             swiped = false;
         }
+        //Avoids to add a second time the same status, can happen due call in on resume
         ArrayList<String> added = new ArrayList<>();
         for(Status status : this.statuses){
             added.add(status.getId());
@@ -286,6 +282,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 if( !added.contains(tmpStatus.getId())) {
                     this.statuses.add(tmpStatus);
                     added.add(tmpStatus.getId());
+                    if( Long.parseLong(tmpStatus.getId()) > Long.parseLong(lastReadStatus)){
+                        tmpStatus.setNew(true);
+                    }else {
+                        tmpStatus.setNew(false);
+                    }
                 }
             }
             statusListAdapter.notifyDataSetChanged();
@@ -295,7 +296,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
         if(statuses != null && statuses.size()  > 0 && type == RetrieveFeedsAsyncTask.Type.HOME ){
             //acct is null when used in Fragment, data need to be retrieved via shared preferences and db
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
             if( currentAccount != null && firstLoad && since_id != null){
@@ -316,38 +317,19 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if( isVisibleToUser )
-            refresh();
-    }
-
-    public void refresh(){
+    public void refresh(Status status){
         //New data are available
         if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
             if (context == null)
                 return;
-            statusesTmp = Helper.getTempStatus(context, null);
-            if (statusesTmp.size() > 0) {
-                ArrayList<String> added = new ArrayList<>();
-                for (Status status : statuses) {
-                    added.add(status.getId());
-                }
-                for (int i = statusesTmp.size() - 1; i >= 0; i--) {
-                    if (!added.contains(statusesTmp.get(i).getId())) {
-                        this.statuses.add(0, statusesTmp.get(i));
-                        added.add(statusesTmp.get(i).getId());
-                    }
-                }
-                if (this.statuses.size() > 0)
-                    max_id = this.statuses.get(this.statuses.size() - 1).getId();
+            if (status != null) {
+                statuses.add(0,status);
                 boolean isOnWifi = Helper.isOnWIFI(context);
                 final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, statusesTmp.get(0).getId());
+                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, status.getId());
                 editor.apply();
                 statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
                 lv_status.setAdapter(statusListAdapter);

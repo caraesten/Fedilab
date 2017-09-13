@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Binder;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
@@ -65,6 +66,11 @@ public class StreamingService extends Service {
         NONE
     }
     private final IBinder iBinder = new StreamingServiceBinder();
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return START_STICKY;
+    }
 
     public class StreamingServiceBinder extends Binder {
         public StreamingService getService() {
@@ -255,14 +261,16 @@ public class StreamingService extends Service {
         Status status ;
         Notification notification;
         String dataId = null;
+
+        Bundle b = new Bundle();
         if( event == EventStreaming.NOTIFICATION){
             notification = API.parseNotificationResponse(getApplicationContext(), response);
-            Helper.cacheNotifications(getApplicationContext(), notification, userId);
+            b.putParcelable("data", notification);
         }else if ( event ==  EventStreaming.UPDATE){
             status = API.parseStatuses(getApplicationContext(), response);
             status.setReplies(new ArrayList<Status>());
             status.setNew(true);
-            Helper.cacheStatus(getApplicationContext(), status, userId);
+            b.putParcelable("data", status);
         }else if( event == EventStreaming.DELETE){
             try {
                 dataId = response.getString("id");
@@ -272,6 +280,7 @@ public class StreamingService extends Service {
         }
         Intent intentBC = new Intent(Helper.RECEIVE_DATA);
         intentBC.putExtra("eventStreaming", event);
+        intentBC.putExtras(b);
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentBC);
     }
 }
