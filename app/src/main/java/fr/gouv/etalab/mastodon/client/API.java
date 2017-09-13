@@ -68,6 +68,7 @@ public class API {
     private Attachment attachment;
     private List<Account> accounts;
     private List<Status> statuses;
+    private List<Status> pins;
     private List<Notification> notifications;
     private int tootPerPage, accountPerPage, notificationPerPage;
     private int actionCode;
@@ -309,26 +310,28 @@ public class API {
      */
     public APIResponse getPinnedStatuses(String accountId)
     {
+        pins = new ArrayList<>();
+
         RequestParams params = new RequestParams();
 
         params.put("pinned", Boolean.toString(true));
 
         get(String.format("/accounts/%s/statuses", accountId), params, new JsonHttpResponseHandler() {
-        @Override
-        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-            Status status = parseStatuses(context, response);
-            statuses.add(status);
-        }
-        @Override
-        public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-            statuses = parseStatuses(response);
-        }
-        @Override
-        public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-            setError(statusCode, error);
-        }
-    });
-        apiResponse.setStatuses(statuses);
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Status status = parseStatuses(context, response);
+                pins.add(status);
+            }
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                pins = parseStatuses(response);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
+                setError(statusCode, error);
+            }
+        });
+        apiResponse.setStatuses(pins);
         return apiResponse;
     }
 

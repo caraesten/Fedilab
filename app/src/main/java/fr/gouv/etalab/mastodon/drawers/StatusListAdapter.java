@@ -78,12 +78,14 @@ import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
 import fr.gouv.etalab.mastodon.translation.GoogleTranslateQuery;
 import fr.gouv.etalab.mastodon.translation.YandexQuery;
@@ -97,7 +99,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class StatusListAdapter extends BaseAdapter implements OnPostActionInterface, OnTranslatedInterface {
+public class StatusListAdapter extends BaseAdapter implements OnPostActionInterface, OnTranslatedInterface, OnRetrieveFeedsInterface {
 
     private Context context;
     private List<Status> statuses;
@@ -116,6 +118,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     private HashMap<String, String> urlConversion;
     private HashMap<String, String> tagConversion;
 
+    private List<Status> pins;
+
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
         this.context = context;
         this.statuses = statuses;
@@ -126,6 +130,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         this.type = type;
         this.targetedId = targetedId;
         this.translator = translator;
+
+        pins = new ArrayList<>();
     }
 
 
@@ -219,6 +225,11 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }
 
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+
+        new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.PINS, userId,null, false,
+                StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         //Display a preview for accounts that have replied *if enabled and only for home timeline*
         if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
@@ -725,10 +736,10 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_spoiler_button.setTextColor(ContextCompat.getColor(context, R.color.white));
         }
 
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         final boolean isOwner = status.getAccount().getId().equals(userId);
 
         if (isOwner) {
+
             imgPinToot = ContextCompat.getDrawable(context, R.drawable.ic_action_pin);
             imgPinToot.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
 
@@ -893,9 +904,22 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
      * @param status Status
      */
     private void pinAction(Status status) {
-        // Checks for if status is already pinned & owned (Though maybe we can do this prior to getting here?
-        new PostActionAsyncTask(context, API.StatusAction.PIN, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        for (Status pin : pins) {
+            if (status.getId().equals(pin.getId()))
+                status.setPinned(true);
+        }
+
+        if (status.isPinned()) {
+            new PostActionAsyncTask(context, API.StatusAction.UNPIN, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            status.setPinned(false);
+        } else {
+            new PostActionAsyncTask(context, API.StatusAction.PIN, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            status.setPinned(true);
+        }
+
         statusListAdapter.notifyDataSetChanged();
+
     }
 
     private void loadAttachments(final Status status, ViewHolder holder){
@@ -982,13 +1006,26 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     }
 
     @Override
+    public void onRetrieveFeeds(APIResponse apiResponse, boolean refreshData) {
+        if( apiResponse.getError() != null){
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages)
+                Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        pins = apiResponse.getStatuses();
+    }
+
+    @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
 
         if( error != null){
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
-                Toast.makeText(context, error.getError(),Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Here: " + error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
         Helper.manageMessageStatusCode(context, statusCode, statusAction);
