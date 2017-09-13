@@ -41,7 +41,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -155,11 +154,13 @@ public class MainActivity extends AppCompatActivity
                     if(notificationsFragment != null){
                         Notification notification = b.getParcelable("data");
                         notificationsFragment.refresh(notification);
+                        countNewStatus++;
                     }
                 }else if(eventStreaming == StreamingService.EventStreaming.UPDATE){
                     Status status = b.getParcelable("data");
                     if( homeFragment != null){
                         homeFragment.refresh(status);
+                        countNewNotifications++;
                     }
                 }else if(eventStreaming == StreamingService.EventStreaming.DELETE){
                     String id = b.getString("id");
