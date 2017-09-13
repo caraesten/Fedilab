@@ -121,6 +121,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 firstLoad = true;
                 flag_loading = true;
                 swiped = true;
+                MainActivity.countNewNotifications = 0;
                 asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
@@ -191,8 +192,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             lv_notifications.setAdapter(notificationsListAdapter);
             swiped = false;
         }
-        if( firstLoad)
-            MainActivity.countNewNotifications = 0;
         if( notifications != null && notifications.size() > 0) {
             for(Notification tmpNotification: notifications){
                 if( Long.parseLong(tmpNotification.getId()) > Long.parseLong(lastReadNotifications))
@@ -218,6 +217,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         if (visible && notifications != null && notifications.size() > 0) {
             editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + this.userId, notifications.get(0).getId());
             editor.apply();
+            lastReadNotifications = notifications.get(0).getId();
         }
     }
 

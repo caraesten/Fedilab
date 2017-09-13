@@ -25,6 +25,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -184,6 +185,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     firstLoad = true;
                     flag_loading = true;
                     swiped = true;
+                    MainActivity.countNewStatus = 0;
                     if( type == RetrieveFeedsAsyncTask.Type.USER)
                         asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     else if( type == RetrieveFeedsAsyncTask.Type.TAG)
@@ -270,8 +272,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             lv_status.setAdapter(statusListAdapter);
             swiped = false;
         }
-        if( firstLoad)
-            MainActivity.countNewStatus = 0;
         if( statuses != null && statuses.size() > 0) {
             for(Status tmpStatus: statuses){
                 if( type == RetrieveFeedsAsyncTask.Type.HOME && firstLoad && Long.parseLong(tmpStatus.getId()) > Long.parseLong(lastReadStatus)){
@@ -322,12 +322,14 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         super.setMenuVisibility(visible);
         if( context == null)
             return;
+
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
-        if (visible && statuses != null && statuses.size() > 0) {
+        if (type == RetrieveFeedsAsyncTask.Type.HOME && visible && statuses != null && statuses.size() > 0) {
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedpreferences.edit();
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, statuses.get(0).getId());
+            lastReadStatus = statuses.get(0).getId();
             editor.apply();
         }
     }
