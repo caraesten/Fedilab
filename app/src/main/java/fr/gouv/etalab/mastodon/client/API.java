@@ -875,7 +875,7 @@ public class API {
                 action = String.format("/statuses/%s/pin", targetedId);
                 break;
             case UNPIN:
-                action = String.format("statuses/%s/unpin", targetedId);
+                action = String.format("/statuses/%s/unpin", targetedId);
                 break;
             case UNSTATUS:
                 action = String.format("/statuses/%s", targetedId);
