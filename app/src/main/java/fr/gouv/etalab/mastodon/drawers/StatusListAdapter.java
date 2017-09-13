@@ -714,11 +714,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         else
             imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_retweet_black);
 
-        imgPinToot = ContextCompat.getDrawable(context, R.drawable.ic_action_pin);
-
         imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
         imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-        imgPinToot.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
 
         holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
         holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
@@ -727,6 +724,30 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_show_more.setTextColor(ContextCompat.getColor(context, R.color.white));
             holder.status_spoiler_button.setTextColor(ContextCompat.getColor(context, R.color.white));
         }
+
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        final boolean isOwner = status.getAccount().getId().equals(userId);
+
+        if (isOwner) {
+            imgPinToot = ContextCompat.getDrawable(context, R.drawable.ic_action_pin);
+            imgPinToot.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+
+            holder.status_pin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, "Clicked on Pin", Toast.LENGTH_SHORT).show();
+                    //displayConfirmationDialog(PIN,status);
+                    pinAction(status);
+                }
+            });
+
+            holder.status_pin.setVisibility(View.VISIBLE);
+        }
+
+        else {
+            holder.status_pin.setVisibility(View.GONE);
+        }
+
         holder.status_show_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -785,14 +806,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             }
         });
 
-        holder.status_pin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "Clicked on Pin", Toast.LENGTH_SHORT).show();
-                //displayConfirmationDialog(PIN,status);
-                pinAction(status);
-            }
-        });
+
         switch (status.getVisibility()){
             case "direct":
             case "private":
