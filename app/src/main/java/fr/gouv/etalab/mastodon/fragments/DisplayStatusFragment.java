@@ -34,6 +34,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
+
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRepliesAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -272,24 +274,18 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             lv_status.setAdapter(statusListAdapter);
             swiped = false;
         }
-        //Avoids to add a second time the same status, can happen due call in on resume
-        ArrayList<String> added = new ArrayList<>();
-        for(Status status : this.statuses){
-            added.add(status.getId());
-        }
         if( statuses != null && statuses.size() > 0) {
             for(Status tmpStatus: statuses){
-                if( !added.contains(tmpStatus.getId())) {
-                    this.statuses.add(tmpStatus);
-                    added.add(tmpStatus.getId());
-                    if( Long.parseLong(tmpStatus.getId()) > Long.parseLong(lastReadStatus)){
-                        tmpStatus.setNew(true);
-                    }else {
-                        tmpStatus.setNew(false);
-                    }
+                if( type == RetrieveFeedsAsyncTask.Type.HOME && firstLoad && Long.parseLong(tmpStatus.getId()) > Long.parseLong(lastReadStatus)){
+                    tmpStatus.setNew(true);
+                    MainActivity.countNewStatus++;
+                }else {
+                    tmpStatus.setNew(false);
                 }
+                this.statuses.add(tmpStatus);
             }
             statusListAdapter.notifyDataSetChanged();
+            ((MainActivity)context).updateHomeCounter();
         }
         swipeRefreshLayout.setRefreshing(false);
 

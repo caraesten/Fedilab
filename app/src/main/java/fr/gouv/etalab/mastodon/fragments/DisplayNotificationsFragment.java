@@ -29,6 +29,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
+
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
@@ -60,6 +62,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean swiped;
     private ListView lv_notifications;
+    private String userId;
+    private String lastReadNotifications;
 
     public DisplayNotificationsFragment(){
     }
@@ -85,6 +89,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         nextElementLoader.setVisibility(View.GONE);
         boolean isOnWifi = Helper.isOnWIFI(context);
         int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+        userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        lastReadNotifications = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
         notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments,this.notifications);
         lv_notifications.setAdapter(notificationsListAdapter);
         lv_notifications.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -186,17 +192,13 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             lv_notifications.setAdapter(notificationsListAdapter);
             swiped = false;
         }
-        ArrayList<String> added = new ArrayList<>();
-        for(Notification notification : this.notifications){
-            added.add(notification.getId());
-        }
         if( notifications != null && notifications.size() > 0) {
             for(Notification tmpNotification: notifications){
-                if( !added.contains(tmpNotification.getId())) {
-                    this.notifications.add(tmpNotification);
-                    added.add(tmpNotification.getId());
-                }
+                if( Long.parseLong(tmpNotification.getId()) > Long.parseLong(lastReadNotifications))
+                    MainActivity.countNewNotifications++;
+                this.notifications.add(tmpNotification);
             }
+            ((MainActivity)context).updateNotifCounter();
             notificationsListAdapter.notifyDataSetChanged();
         }
         swipeRefreshLayout.setRefreshing(false);

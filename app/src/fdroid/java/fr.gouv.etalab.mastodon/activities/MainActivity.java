@@ -133,8 +133,8 @@ public class MainActivity extends AppCompatActivity
     private DisplayNotificationsFragment notificationsFragment;
     private BroadcastReceiver receive_data;
     private boolean display_local, display_global;
-    private int countNewStatus = 0;
-    private int countNewNotifications = 0;
+    public static int countNewStatus = 0;
+    public static int countNewNotifications = 0;
 
     public MainActivity() {
     }
