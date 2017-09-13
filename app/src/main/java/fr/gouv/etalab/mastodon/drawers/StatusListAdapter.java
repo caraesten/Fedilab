@@ -113,6 +113,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     private final int REBLOG = 1;
     private final int FAVOURITE = 2;
     private final int PIN = 3;
+    private final int UNPIN = 4;
     private RetrieveFeedsAsyncTask.Type type;
     private String targetedId;
     private HashMap<String, String> urlConversion;
@@ -714,7 +715,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 holder.status_privacy.setImageResource(R.drawable.ic_local_post_office);
                 break;
         }
-        Drawable imgFav, imgReblog, imgPinToot;
+        Drawable imgFav, imgReblog;
         if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited()))
             imgFav = ContextCompat.getDrawable(context, R.drawable.ic_fav_yellow);
         else
@@ -739,15 +740,26 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         final boolean isOwner = status.getAccount().getId().equals(userId);
 
         if (isOwner) {
+            Drawable imgUnPinToot, imgPinToot;
+            imgUnPinToot = ContextCompat.getDrawable(context, R.drawable.ic_action_pin);
+            imgPinToot = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_yellow);
 
-            imgPinToot = ContextCompat.getDrawable(context, R.drawable.ic_action_pin);
+            imgUnPinToot.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
             imgPinToot.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+
+            if (status.isPinned()) {
+                holder.status_pin.setImageDrawable(imgPinToot);
+            } else {
+                holder.status_pin.setImageDrawable(imgUnPinToot);
+            }
 
             holder.status_pin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "Clicked on Pin", Toast.LENGTH_SHORT).show();
-                    //displayConfirmationDialog(PIN,status);
+                    /* Code is in for displayConfirmationDialog() but we don't call it.
+                     * Need to make sure we can successfully get a pinned toots list by
+                     * this point, after async call earlier.
+                     */
                     pinAction(status);
                 }
             });
@@ -905,6 +917,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
      */
     private void pinAction(Status status) {
 
+        // Assuming that by this point pins list has already been set up.
         for (Status pin : pins) {
             if (status.getId().equals(pin.getId()))
                 status.setPinned(true);
@@ -913,6 +926,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         if (status.isPinned()) {
             new PostActionAsyncTask(context, API.StatusAction.UNPIN, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             status.setPinned(false);
+
         } else {
             new PostActionAsyncTask(context, API.StatusAction.PIN, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             status.setPinned(true);
@@ -1021,11 +1035,12 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
 
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
         if( error != null){
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
-                Toast.makeText(context, "Here: " + error.getError(),Toast.LENGTH_LONG).show();
+                Toast.makeText(context, error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
         Helper.manageMessageStatusCode(context, statusCode, statusAction);
@@ -1045,6 +1060,15 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             }
             statuses.removeAll(statusesToRemove);
             statusListAdapter.notifyDataSetChanged();
+        }
+
+        // Need to refresh the list of pins
+        else if ( statusAction == API.StatusAction.PIN || statusAction == API.StatusAction.UNPIN ) {
+
+            String accountId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+
+            new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.PINS, accountId, null, false,
+                    StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
@@ -1207,14 +1231,12 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 title = context.getString(R.string.reblog_remove);
             else
                 title = context.getString(R.string.reblog_add);
-        }
-        else if ( action == PIN){
-            //Checks for pinned toot to be done
-            // If not already pinned...
+        }else if ( action == PIN) {
             title = context.getString(R.string.pin_add);
-            // else
-            // title = context.getString(R.string.pin_remove);
+        }else if (action == UNPIN) {
+            title = context.getString(R.string.pin_remove);
         }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -1232,6 +1254,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     else if( action == FAVOURITE)
                         favouriteAction(status);
                     else if ( action == PIN)
+                        pinAction(status);
+                    else if ( action == UNPIN)
                         pinAction(status);
                     dialog.dismiss();
                 }
@@ -1263,7 +1287,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         if( isOwner) {
             stringArray = context.getResources().getStringArray(R.array.more_action_owner);
             stringArrayConf = context.getResources().getStringArray(R.array.more_action_owner_confirm);
-            doAction = new API.StatusAction[]{API.StatusAction.PIN,API.StatusAction.UNSTATUS};
+            doAction = new API.StatusAction[]{API.StatusAction.UNSTATUS};
 
         }else {
             stringArray = context.getResources().getStringArray(R.array.more_action);
@@ -1375,9 +1399,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                                 doAction[position] == API.StatusAction.UNFAVOURITE ||
                                 doAction[position] == API.StatusAction.REBLOG ||
                                 doAction[position] == API.StatusAction.UNREBLOG ||
-                                doAction[position] == API.StatusAction.UNSTATUS ||
-                                    doAction[position] == API.StatusAction.PIN ||
-                                    doAction[position] == API.StatusAction.UNPIN
+                                doAction[position] == API.StatusAction.UNSTATUS
                             )
                                 targetedId = status.getId();
                             else
