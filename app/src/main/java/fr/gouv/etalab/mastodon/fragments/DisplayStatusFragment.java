@@ -284,7 +284,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
             statusListAdapter.notifyDataSetChanged();
         }
-        if( firstLoad)
+        if( firstLoad && getActivity() != null && getActivity().getClass().isInstance(MainActivity.class))
             ((MainActivity)context).updateHomeCounter();
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
