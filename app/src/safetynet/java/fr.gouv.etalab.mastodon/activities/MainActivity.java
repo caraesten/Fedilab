@@ -16,10 +16,12 @@ package fr.gouv.etalab.mastodon.activities;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
@@ -27,6 +29,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -76,6 +79,8 @@ import java.util.regex.Matcher;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMetaDataAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Notification;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayFollowRequestSentFragment;
@@ -131,6 +136,8 @@ public class MainActivity extends AppCompatActivity
     private static final int ERROR_DIALOG_REQUEST_CODE = 97;
     private BroadcastReceiver receive_data;
     private boolean display_local, display_global;
+    public static int countNewStatus = 0;
+    public static int countNewNotifications = 0;
 
     public MainActivity() {
     }
@@ -148,19 +155,15 @@ public class MainActivity extends AppCompatActivity
                 StreamingService.EventStreaming eventStreaming = (StreamingService.EventStreaming) intent.getSerializableExtra("eventStreaming");
                 if( eventStreaming == StreamingService.EventStreaming.NOTIFICATION){
                     if(notificationsFragment != null){
-                        if(notificationsFragment.getUserVisibleHint() && isActivityVisible()){
-                            notificationsFragment.showNewContent();
-                        }else{
-                            notificationsFragment.refresh();
-                        }
+                        Notification notification = b.getParcelable("data");
+                        notificationsFragment.refresh(notification);
+                        countNewNotifications++;
                     }
                 }else if(eventStreaming == StreamingService.EventStreaming.UPDATE){
+                    Status status = b.getParcelable("data");
                     if( homeFragment != null){
-                        if(homeFragment.getUserVisibleHint() && isActivityVisible()){
-                            homeFragment.showNewContent();
-                        }else{
-                            homeFragment.refresh();
-                        }
+                        homeFragment.refresh(status);
+                        countNewStatus++;
                     }
                 }else if(eventStreaming == StreamingService.EventStreaming.DELETE){
                     String id = b.getString("id");
@@ -176,6 +179,8 @@ public class MainActivity extends AppCompatActivity
                 updateHomeCounter();
             }
         };
+        Intent intentService = new Intent(this, StreamingService.class);
+        bindService(intentService, serviceConnection, Context.BIND_AUTO_CREATE);
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
 
 
@@ -264,6 +269,12 @@ public class MainActivity extends AppCompatActivity
             tabLayout.addTab(tabPublic);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
+        int countPage = 2;
+        if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true))
+            countPage++;
+        if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true))
+            countPage++;
+        viewPager.setOffscreenPageLimit(countPage);
         main_app_container = (RelativeLayout) findViewById(R.id.main_app_container);
         PagerAdapter adapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
@@ -290,21 +301,10 @@ public class MainActivity extends AppCompatActivity
                 if( tab.getPosition() == 0) {
                     item = navigationView.getMenu().findItem(R.id.nav_home);
                     fragmentTag = "HOME_TIMELINE";
-                    if (homeFragment != null && Helper.getUnreadToots(getApplicationContext(), null) > 0) {
-                        homeFragment.refresh();
-                    }
-                    Helper.cacheStatusClear(getApplicationContext(), null);
-                    updateHomeCounter();
                 }else if( tab.getPosition() == 1) {
                     fragmentTag = "NOTIFICATIONS";
                     item = navigationView.getMenu().findItem(R.id.nav_notification);
-                    if (notificationsFragment != null && Helper.getUnreadNotifications(getApplicationContext(), null) > 0) {
-                        notificationsFragment.refresh();
-                    }
-                    Helper.cacheNotificationsClear(getApplicationContext(), null);
-                    updateNotifCounter();
                 }else if( tab.getPosition() == 2 && display_local) {
-
                     fragmentTag = "LOCAL_TIMELINE";
                     item = navigationView.getMenu().findItem(R.id.nav_local);
                 }else if( tab.getPosition() == 2 && !display_local) {
@@ -350,10 +350,10 @@ public class MainActivity extends AppCompatActivity
                 switch (tab.getPosition()){
                     case 0:
                         DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
+                        countNewStatus = 0;
+                        updateHomeCounter();
                         if( displayStatusFragment != null )
                             displayStatusFragment.scrollToTop();
-                        Helper.cacheStatusClear(getApplicationContext(), null);
-                        updateHomeCounter();
                         break;
                     case 2:
                     case 3:
@@ -363,10 +363,10 @@ public class MainActivity extends AppCompatActivity
                         break;
                     case 1:
                         DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
+                        countNewNotifications = 0;
+                        updateNotifCounter();
                         if( displayNotificationsFragment != null )
                             displayNotificationsFragment.scrollToTop();
-                        Helper.cacheNotificationsClear(getApplicationContext(), null);
-                        updateNotifCounter();
                         break;
                 }
             }
@@ -903,6 +903,37 @@ public class MainActivity extends AppCompatActivity
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
+
+    StreamingService streamingService = null;
+    boolean mBound = false;
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            StreamingService.StreamingServiceBinder binder = (StreamingService.StreamingServiceBinder) service;
+            streamingService = binder.getService();
+            mBound = true;
+            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            SQLiteDatabase db = Sqlite.getInstance(MainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
+            streamingService.connect(account);
+        }
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -912,6 +943,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onDestroy(){
         super.onDestroy();
+        if( streamingService != null)
+            streamingService.disconnect();
+        if (mBound) {
+            unbindService(serviceConnection);
+            mBound = false;
+        }
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
     }
 
@@ -1174,8 +1211,8 @@ public class MainActivity extends AppCompatActivity
         if( tabHome == null)
             return;
         TextView tabCounterHome = (TextView) tabHome.findViewById(R.id.tab_counter);
-        tabCounterHome.setText(String.valueOf(Helper.getUnreadToots(getApplicationContext(), null)));
-        if( Helper.getUnreadToots(getApplicationContext(), null) > 0){
+        tabCounterHome.setText(String.valueOf(countNewStatus));
+        if( countNewStatus> 0){
             //New data are available
             //The fragment is not displayed, so the counter is displayed
             tabCounterHome.setVisibility(View.VISIBLE);
@@ -1192,8 +1229,8 @@ public class MainActivity extends AppCompatActivity
         if( tabNotif == null)
             return;
         TextView tabCounterNotif = (TextView) tabNotif.findViewById(R.id.tab_counter);
-        tabCounterNotif.setText(String.valueOf(Helper.getUnreadNotifications(getApplicationContext(), null)));
-        if( Helper.getUnreadNotifications(getApplicationContext(), null) > 0){
+        tabCounterNotif.setText(String.valueOf(countNewNotifications));
+        if( countNewNotifications > 0){
             tabCounterNotif.setVisibility(View.VISIBLE);
         }else {
             tabCounterNotif.setVisibility(View.GONE);
