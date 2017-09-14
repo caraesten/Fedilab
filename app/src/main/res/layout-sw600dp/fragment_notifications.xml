@@ -80,18 +80,5 @@
             android:indeterminate="true" />
     </RelativeLayout>
 
-    <TextView
-        android:visibility="gone"
-        android:background="@color/mastodonC3"
-        android:textColor="@color/mastodonC1"
-        android:clickable="true"
-        android:padding="10dp"
-        android:gravity="center"
-        android:text="@string/new_data"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/new_data"
-        android:layout_width="match_parent"
-        android:textSize="18sp"
-        android:layout_height="wrap_content"/>
 </RelativeLayout>
 

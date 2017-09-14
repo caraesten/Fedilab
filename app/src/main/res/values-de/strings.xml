@@ -1,5 +1,4 @@
 <resources>
-
     <string name="navigation_drawer_open">Öffne Menü</string>
     <string name="navigation_drawer_close">Menü schließen</string>
 
@@ -44,9 +43,8 @@
     <string name="speech_prompt">Bitte sag etwas</string>
     <string name="speech_not_supported">Sorry! Dein Gerät unterstützt keine Spracheingabe!</string>
     <string name="delete_all">Alles löschen</string>
-    <string name="translate_toot">Übersetzen toot.</string>
+    <string name="translate_toot">Toot übersetzen</string>
     <string name="schedule">Planen</string>
-
     <string name="text_size">Text- und Symbolgröße</string>
     <string name="text_size_change">Ändere Textgröße:</string>
     <string name="icon_size_change">Ändere Symbolgröße:</string>
@@ -59,6 +57,8 @@
     <string name="shared_via">Geteilt von Mastalab</string>
     <string name="replies">Antworten</string>
     <string name="username">Benutzername</string>
+
+    <string name="new_data">Neue Beiträge sind verfügbar! Anzeigen?</string>
     <!--- Menu -->
     <string name="home_menu">Home</string>
     <string name="local_menu">Lokale Zeitleiste</string>
@@ -90,6 +90,7 @@
     <string name="reblog_added">Toot wurde geteilt!</string>
     <string name="reblog_removed">Toot wird nicht länger geteilt!</string>
     <string name="reblog_by">Geteilt von %1$s</string>
+
 
     <string name="favourite_add">Diesen toot deinen Favoriten hinzufügen?</string>
     <string name="favourite_remove">Diesen toot aus deinen Favoriten entfernen?</string>
@@ -127,6 +128,11 @@
         <item>null</item> <!-- Ugly hack to fix confirm box-->
         <item>null</item>
     </string-array>
+
+    <plurals name="preview_replies">
+        <item quantity="one">%d Antwort</item>
+        <item quantity="other">%d Antworten</item>
+    </plurals>
     <!-- Date -->
     <plurals name="date_seconds">
         <item quantity="one">Vor %d Sekunden</item>
@@ -165,7 +171,7 @@
     <string name="toot_delete_media">Lösche diese Datei?</string>
     <string name="toot_error_no_content">Dein toot ist leer!</string>
     <string name="toot_visibility_tilte">Sichtbarkeit des toots:</string>
-    <string name="toots_visibility_tilte">Standard Sichtbarkeit der toots: </string>
+    <string name="toots_visibility_tilte">Standard Sichtbarkeit der toots:</string>
     <string name="toot_sent">Der toot wurde gesendet!</string>
     <string name="toot_reply_content_title">Du antwortest auf diesen toot:</string>
     <string name="toot_sensitive">Sensibler Inhalt?</string>
@@ -186,13 +192,12 @@
     <!-- About -->
     <string name="about_vesrion">Version %1$s</string>
     <string name="about_developer">Entwickler:</string>
-    <string name="about_developer_action">\@tschneider</string>
-    <string name="about_license">Lizenz: </string>
+    <string name="about_developer_action">\\@tschneider</string>
+    <string name="about_license">Lizenz:</string>
     <string name="about_license_action">GNU GPL V3</string>
-    <string name="about_code">Quellcode: </string>
+    <string name="about_code">Quellcode:</string>
     <string name="about_code_action">Bitbucket</string>
     <string name="about_yandex">Übersetzen von toots:</string>
-
     <string name="about_thekinrar">Instanzensuche:</string>
     <string name="about_thekinrar_action">instances.social</string>
 
@@ -202,16 +207,19 @@
     <!-- Accounts -->
     <string name="no_accounts">Keinen Nutzer gefunden</string>
     <string name="no_follow_request">Keine Folgen-Anfrage</string>
-    <string name="status_cnt">Toots \n %d</string>
-    <string name="following_cnt">Following \n %d</string>
-    <string name="followers_cnt">Followers \n %d</string>
+    <string name="status_cnt">Toots \n
+    %d</string>
+    <string name="following_cnt">Following \n
+    %d</string>
+    <string name="followers_cnt">Followers \n
+    %d</string>
     <string name="authorize">Authorisieren</string>
     <string name="reject">Ablehnen</string>
 
 
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">Keine geplanten toots vorhanden!</string>
-    <string name="no_scheduled_toots_indications">Schreibe einen toot und wähle <b>Planen</b> im Topmenü.</string>
+    <string name="no_scheduled_toots_indications">Schreibe einen toot und wähle <b >Planen</b> im Topmenü.</string>
     <string name="remove_scheduled">Geplanten toot löschen?</string>
     <string name="media_count">Dateien: %d</string>
     <string name="toot_scheduled">Der toot wurde geplant!</string>
@@ -265,16 +273,16 @@
     <string name="toast_saved">Datei wurde gespeichert!</string>
     <string name="toast_error_translate">Während der Übersetzung ist ein Fehler aufgetreten!</string>
     <string name="toast_toot_saved">Entwurf gespeichert!</string>
+    <string name="toast_error_char_limit">Bist du sicher das diese Instanz die Anzahl an Zeichen unterstützt? Gewöhnlich liegt der Wert bei 500.</string>
     <string name="toast_visibility_changed">Sichtbarkeit der toots für Nutzer %1$s wurde geändert</string>
+    <string name="toast_empty_search">Instanzname und Benutzername dürfen nicht leer sein!</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimierter Ladevorgang</string>
     <string name="set_toots_page">Anzahl der toots beim Laden</string>
     <string name="set_accounts_page">Anzahl der Konten beim Laden</string>
     <string name="set_notifications_page">Anzahl der Benachrichtigungen beim Laden</string>
-    <string name="toast_error_char_limit">Bist du sicher das diese Instanz die Anzahl an Zeichen unterstützt? Gewöhnlich liegt der Wert bei 500.</string>
     <string name="set_attachment_always">Immer</string>
     <string name="set_attachment_wifi">WLAN</string>
-    <string name="toast_empty_search">Instanzname und Benutzername dürfen nicht leer sein!</string>
     <string name="set_attachment_ask">Fragen</string>
     <string name="set_attachment_action">Lade Anhang</string>
     <string name="load_attachment">Lade Bilder</string>
@@ -282,18 +290,19 @@
     <string name="load_sensitive_attachment">Sensibler Inhalt</string>
     <string name="set_display_reply">Zeige vorherige Nachricht beim Antworten</string>
     <string name="set_display_local">Lokale Zeitleiste anzeigen</string>
-    <string name="set_display_global">Öffentliche Zeitlinie anzeigen</string>
-    <string name="set_folder_title">Pfad: </string>
+    <string name="set_display_global">Öffentliche Zeitleiste anzeigen</string>
+    <string name="set_folder_title">Pfad:</string>
     <string name="set_auto_store_toot">Speichere Entwürfe automatisch</string>
+    <string name="set_bubble_counter">Anzahl neuer Beiträge anzeigen</string>
+    <string name="set_auto_add_media_url">Füge die URL bei Anhängen in toots hinzu</string>
     <string name="settings_title_notifications">Benachrichtigen wenn …</string>
     <string name="set_notif_follow">mir jemand folgt</string>
     <string name="set_notif_follow_ask">ich eine Folgen Anfrage erhalte</string>
     <string name="set_notif_follow_share">jemand meinen Status teilt</string>
     <string name="set_notif_follow_add">jemand meinen Status favorisiert</string>
     <string name="set_notif_follow_mention">ich erwähnt werde</string>
-    <string name="set_auto_add_media_url">Füge die URL bei Anhängen in toots hinzu</string>
-    <string name="set_share_validation">Zeige Bestätigungsdialog vor dem Teilen</string>
-    <string name="set_share_validation_fav">Zeige Bestätigungsdialog vor dem zu favoriten hinzufügen</string>
+    <string name="set_share_validation">Bestätigungsdialog vor dem Teilen</string>
+    <string name="set_share_validation_fav">Bestätigungsdialog vor dem favorisieren</string>
     <string name="settings_title_more_options">Erweiterte Einstellungen</string>
     <string name="set_wifi_only">Nur bei WLAN benachrichtigen</string>
     <string name="set_notif_silent">Leise Benachrichtigungen</string>
@@ -303,27 +312,21 @@
     <string name="set_profile_description">Über mich…</string>
     <string name="set_save_changes">Änderungen speichern</string>
     <string name="set_header_picture_overlay">Wähle ein Profilbild</string>
+    <string name="set_preview_reply">Zeige die Anzahl der Antworten in der home Zeitlinie an</string>
+    <string name="set_preview_reply_pp">Profilbilder anzeigen?</string>
     <string name="note_no_space">Du hast die Grenze von 160 Zeichen erreicht!</string>
     <string name="username_no_space">Du hast die Grenze von 30 Zeichen erreicht!</string>
 
     <string name="settings_title_hour">Zeitfenster für Benachrichtigungen:</string>
     <string name="settings_time_from">Zwischen</string>
     <string name="settings_time_to">und</string>
-    <string name="set_preview_reply">Zeige die Anzahl der Antworten in der home Zeitlinie an</string>
     <string name="settings_time_greater">Uhrzeit muss größer sein als %1$s</string>
-    <string name="set_preview_reply_pp">Profilbilder anzeigen?</string>
     <string name="settings_time_lower">Uhrzeit muss kleiner sein als %1$s</string>
     <string name="settings_hour_init">Anfangszeit</string>
     <string name="settings_hour_end">Ende</string>
     <string name="embedded_browser">Benutze internen browser</string>
     <string name="use_javascript">Javascript aktivieren</string>
     <string name="use_cookies">Erlaube cookies von Drittanbietern</string>
-
-    <string name="set_title_news">Neuigkeiten</string>
-    <string name="set_notification_news">Benachrichtigung für neue toots auf der Startleiste</string>
-    <string name="set_show_error_messages">Zeige Fehlermeldungen</string>
-    <string name="action_follow">Folge</string>
-    <string name="action_unfollow">Entfolge</string>
     <string name="settings_ui_layout">Zeitlininen wie anzeigen:</string>
     <string-array name="settings_menu_tabs">
         <item>Nur als Reiter</item>
@@ -331,25 +334,29 @@
         <item>Reiter und Menü</item>
     </string-array>
 
-
     <string-array name="settings_translation">
         <item>Yandex</item>
         <item>Google</item>
         <item>Nein</item>
     </string-array>
 
-    <string name="set_led_colour">LED Farbe auswählen:</string>
+    <string name="set_led_colour">LED Farbe auswählen</string>
 
     <string-array name="led_colours">
-        <item>Blue</item>
+        <item>Blau</item>
         <item>Cyan</item>
         <item>Magenta</item>
-        <item>Green</item>
-        <item>Red</item>
-        <item>Yellow</item>
-        <item>White</item>
+        <item>Grün</item>
+        <item>Rot</item>
+        <item>Gelb</item>
+        <item>Weiß</item>
     </string-array>
 
+    <string name="set_title_news">Neuigkeiten</string>
+    <string name="set_notification_news">Benachrichtigung für neue toots auf der Startleiste</string>
+    <string name="set_show_error_messages">Zeige Fehlermeldungen</string>
+    <string name="action_follow">Folge</string>
+    <string name="action_unfollow">Entfolge</string>s
     <string name="action_block">Blockiere</string>
     <string name="action_unblock">Nicht mehr blockieren</string>
     <string name="action_mute">Stummschalten</string>
@@ -362,69 +369,53 @@
 
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push Benachrichtigungen</string>
-    <string name="settings_popup_message">
-        Bitte bestätige welche Push Benachrichtigungen du erhalten möchtest.
-        Diese können später im Benachrichtungsreiter aktiviert oder deaktiviert werden.
-    </string>
+    <string name="settings_popup_message">Bitte bestätige welche Push Benachrichtigungen du erhalten möchtest.         Diese können später im Benachrichtungsreiter aktiviert oder deaktiviert werden.</string>
     <string name="settings_popup_timeline">Für ungelesene toots auf der Startleiste?</string>
     <string name="settings_popup_notification">Für ungelesene Benachrichtigungen?</string>
     <!-- CACHE -->
     <string name="cache_title">Speicher leeren</string>
-    <string name="cache_message">Es sind %1$s Daten im Speicher.\n\nMöchtest du diese löschen?</string>
+    <string name="cache_message">Es sind %1$s Daten im Speicher.\n
+   \n
+   Möchtest du diese löschen?</string>
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Speicher wurde geleert! %1$s wurden freigeben</string>
 
     <!-- PRIVACY -->
     <string name="privacy_data_title">Aufgezeichnete Daten</string>
-    <string name="privacy_data">
-        Nur Grundinformationen der Konten werden auf dem Gerät gespeichert.
-        Die Daten sind streng vertraulich und können nur von der Anwendung genutzt werden.
-        Beim Löschen der Anwendung werden diese umgehend entfernt.\n
-        &#9888; Logindaten und Passwörter werden nie gespeichert. Sie werden nur während einer sicheren (SSL) Authentifizierung mit einer Instanz verwendet.
-    </string>
+    <string name="privacy_data">Nur Grundinformationen der Konten werden auf dem Gerät gespeichert.         Die Daten sind streng vertraulich und können nur von der Anwendung genutzt werden.         Beim Löschen der Anwendung werden diese umgehend entfernt.\n
+            ⚠ Logindaten und Passwörter werden nie gespeichert. Sie werden nur während einer sicheren (SSL) Authentifizierung mit einer Instanz verwendet.</string>
 
     <string name="privacy_authorizations_title">Berechtigungen:</string>
-    <string name="privacy_authorizations">
-        - <b>ACCESS_NETWORK_STATE</b>: Erkennen von bestehenden Verbindungen zu WIFI Netzwerken.\n
-        - <b>INTERNET</b>: Genutzt für Anfragen an eine Instanz.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Dateien speichern oder App auf SD Karte verschieben.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Dateianhänge für toots.\n
-        - <b>BOOT_COMPLETED</b>: Benachrichtigungsdienst starten.\n
-        - <b>WAKE_LOCK</b>: Benachrichtigungsdienst.
-    </string>
+    <string name="privacy_authorizations">- <b >ACCESS_NETWORK_STATE</b>: Erkennen von bestehenden Verbindungen zu WIFI Netzwerken.\n
+            - <b >INTERNET</b>: Genutzt für Anfragen an eine Instanz.\n
+            - <b >WRITE_EXTERNAL_STORAGE</b>: Dateien speichern oder App auf SD Karte verschieben.\n
+            - <b >READ_EXTERNAL_STORAGE</b>: Dateianhänge für toots.\n
+            - <b >BOOT_COMPLETED</b>: Benachrichtigungsdienst starten.\n
+            - <b >WAKE_LOCK</b>: Benachrichtigungsdienst.</string>
 
     <string name="privacy_API_authorizations_title">API Berechtigungen:</string>
-    <string name="privacy_API_authorizations">
-        - <b>Read</b>: Daten lesen.\n
-        - <b>Write</b>: Status veröffentlichen und Dateien hochladen.\n
-        - <b>Follow</b>: Folgen, nicht mehr folgen, blockieren, nicht mehr blockieren.\n\n
-        <b>&#9888; Diese Aktionen werden nur auf Verlangen des Benutzers durchgeführt.</b>
-    </string>
+    <string name="privacy_API_authorizations">- <b >Read</b>: Daten lesen.\n
+            - <b >Write</b>: Status veröffentlichen und Dateien hochladen.\n
+            - <b >Follow</b>: Folgen, nicht mehr folgen, blockieren, nicht mehr blockieren.\n
+   \n
+            <b >⚠ Diese Aktionen werden nur auf Verlangen des Benutzers durchgeführt.</b></string>
     <string name="privacy_API_title">Tracking und Bibliotheken</string>
-    <string name="privacy_API">
-        Die Anwendung <b>benutzt keine Trackingwerkzeuge</b> (Nutzerbewertung, Fehlerberichte, etc.) und enthält keinerlei Werbung.\n\n
-        Die Nutzung von Bibliotheken ist minimiert: \n
-        - <b>Android Asynchronous Http Client</b>: Anfragen verwalten\n
-        - <b>Universal Image Loader</b>: Dateien verwalten\n
-        - <b>Android-Job</b>: Dienste verwalten\n
-        - <b>PhotoView</b>: Bilder verwalten\n
-        - <b>Gson</b> : Entwürfe speichern
-        </string>
-
+    <string name="privacy_API">Die Anwendung <b >benutzt keine Trackingwerkzeuge</b> (Nutzerbewertung, Fehlerberichte, etc.) und enthält keinerlei Werbung.\n
+   \n
+            Die Nutzung von Bibliotheken ist minimiert: \n
+            - <b >Android Asynchronous Http Client</b>: Anfragen verwalten\n
+            - <b >Universal Image Loader</b>: Dateien verwalten\n
+            - <b >Android-Job</b>: Dienste verwalten\n
+            - <b >PhotoView</b>: Bilder verwalten\n
+            - <b >Gson</b> : Entwürfe speichern</string>
 
 
     <string name="privacy_API_yandex_title">Übersetzung von toots</string>
-    <string name="privacy_API_yandex_authorizations">
-        Die Anwendung bietet die Möglichkeit, toots mithilfe der lokalen sowie Yandex API zu übersetzen.\n
-        Yandex hat seine eigene Datenschutzerklärung. Diese kann hier eingehesen werden: https://yandex.ru/legal/confidential/?lang=en
-        </string>
+    <string name="privacy_API_yandex_authorizations">Die Anwendung bietet die Möglichkeit, toots mithilfe der lokalen sowie Yandex API zu übersetzen.\n
+            Yandex hat seine eigene Datenschutzerklärung. Diese kann hier eingehesen werden: https://yandex.ru/legal/confidential/?lang=en</string>
 
 
     <string name="thanks_text">Danke an Stéphane für das Logo.</string>
 
-    <string name="thanks_text_dev">
-        Danke an:
-    </string>
-    <string name="new_data">Neue Daten verfügbar sind! Wollen Sie Sie anzeigen?</string>
-    <string name="set_bubble_counter">Display-Zähler</string>
+    <string name="thanks_text_dev">Danke an @PhotonQyv für seine Beiträge.</string>
 </resources>
