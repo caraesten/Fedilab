@@ -308,6 +308,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 int index = lv_status.getFirstVisiblePosition() + 1;
                 View v = lv_status.getChildAt(0);
                 int top = (v == null) ? 0 : v.getTop();
+                status.setReplies(new ArrayList<Status>());
                 statuses.add(0,status);
                 statusListAdapter.notifyDataSetChanged();
                 lv_status.setSelectionFromTop(index, top);
@@ -348,7 +349,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         for(Status stmp: modifiedStatus){
             for(Status status: statuses){
                 if( status.getId().equals(stmp.getId()))
-                    status.setReplies(stmp.getReplies());
+                    if( stmp.getReplies() != null )
+                        status.setReplies(stmp.getReplies());
+                    else
+                        status.setReplies(new ArrayList<Status>());
             }
         }
         statusListAdapter.notifyDataSetChanged();
