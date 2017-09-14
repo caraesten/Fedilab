@@ -758,6 +758,11 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             imgUnPinToot.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
             imgPinToot.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
 
+            /* Need to change the icon if we have a pinned toot.
+                Not entirely happy with this as it doesn't always
+                appear to work.
+             */
+
             for (Status pin : pins)
             {
                 if (pin.getId().equals(status.getId())) {
@@ -779,6 +784,9 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                      */
                     pinAction(status);
 
+                    /* Think this might need to be re-coded so the icon gets changed
+                        in the callback for the async call. But it'll do as a first pass.
+                     */
                     if (status.isPinned())
                         holder.status_pin.setImageDrawable(imgPinToot);
                     else
