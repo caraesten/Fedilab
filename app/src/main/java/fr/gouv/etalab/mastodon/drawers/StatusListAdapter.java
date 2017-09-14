@@ -70,22 +70,27 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import fr.gouv.etalab.mastodon.activities.InstanceActivity;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveInstanceAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.Entities.Instance;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveInstanceInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
 import fr.gouv.etalab.mastodon.translation.GoogleTranslateQuery;
 import fr.gouv.etalab.mastodon.translation.YandexQuery;
@@ -99,7 +104,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class StatusListAdapter extends BaseAdapter implements OnPostActionInterface, OnTranslatedInterface, OnRetrieveFeedsInterface {
+public class StatusListAdapter extends BaseAdapter implements OnPostActionInterface, OnTranslatedInterface, OnRetrieveFeedsInterface, OnRetrieveInstanceInterface {
 
     private Context context;
     private List<Status> statuses;
@@ -120,6 +125,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     private HashMap<String, String> tagConversion;
 
     private List<Status> pins;
+    private int instMinVers;
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
         this.context = context;
@@ -133,6 +139,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         this.translator = translator;
 
         pins = new ArrayList<>();
+
+        new RetrieveInstanceAsyncTask(context, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 
@@ -229,6 +237,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
 
+        // Get the pins, as early as we can
         new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.PINS, userId,null, false,
                 StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
@@ -737,21 +746,29 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_spoiler_button.setTextColor(ContextCompat.getColor(context, R.color.white));
         }
 
-        final boolean isOwner = status.getAccount().getId().equals(userId);
+        boolean isOwner = status.getAccount().getId().equals(userId);
 
-        if (isOwner) {
-            Drawable imgUnPinToot, imgPinToot;
+        // Pinning toots is only available on Mastodon 1._6_.0 instances.
+        if (isOwner && instMinVers > 5) {
+
+            final Drawable imgUnPinToot, imgPinToot;
             imgUnPinToot = ContextCompat.getDrawable(context, R.drawable.ic_action_pin);
             imgPinToot = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_yellow);
 
             imgUnPinToot.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
             imgPinToot.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
 
-            if (status.isPinned()) {
-                holder.status_pin.setImageDrawable(imgPinToot);
-            } else {
-                holder.status_pin.setImageDrawable(imgUnPinToot);
+            for (Status pin : pins)
+            {
+                if (pin.getId().equals(status.getId())) {
+                    holder.status_pin.setImageDrawable(imgPinToot);
+                    status.setPinned(true);
+                    break;
+                }
             }
+
+            if (!status.isPinned())
+                holder.status_pin.setImageDrawable(imgUnPinToot);
 
             holder.status_pin.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -761,6 +778,11 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                      * this point, after async call earlier.
                      */
                     pinAction(status);
+
+                    if (status.isPinned())
+                        holder.status_pin.setImageDrawable(imgPinToot);
+                    else
+                        holder.status_pin.setImageDrawable(imgUnPinToot);
                 }
             });
 
@@ -1017,6 +1039,19 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_document_container.setVisibility(View.GONE);
         }
         holder.status_show_more.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onRetrieveInstance(APIResponse apiResponse) {
+
+        if( apiResponse.getError() != null){
+            Toast.makeText(context, R.string.toast_error, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        String instVers = apiResponse.getInstance().getVersion();
+        String [] version = instVers.split("\\.");
+        instMinVers = Integer.parseInt(version[1]);
     }
 
     @Override
