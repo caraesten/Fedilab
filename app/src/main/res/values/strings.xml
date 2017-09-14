@@ -214,6 +214,7 @@
     <string name="status_cnt">Toots \n %d</string>
     <string name="following_cnt">Following \n %d</string>
     <string name="followers_cnt">Followers \n %d</string>
+    <string name="pins_cnt">Pinned \n %d</string>
     <string name="authorize">Authorize</string>
     <string name="reject">Reject</string>
 
@@ -248,6 +249,7 @@
     <!-- HEADER -->
     <string name="following">Following</string>
     <string name="followers">Followers</string>
+    <string name="pinned_toots">Pinned</string>
     <!-- TOAST -->
     <string name="client_error">Unable to get client id!</string>
     <string name="no_internet">No Internet connection!</string>
