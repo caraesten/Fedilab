@@ -305,12 +305,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             if (context == null)
                 return;
             if (status != null) {
+                int index = lv_status.getFirstVisiblePosition() + 1;
+                View v = lv_status.getChildAt(0);
+                int top = (v == null) ? 0 : v.getTop();
+                status.setReplies(new ArrayList<Status>());
                 statuses.add(0,status);
-                boolean isOnWifi = Helper.isOnWIFI(context);
-                final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-                statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
-                lv_status.setAdapter(statusListAdapter);
+                statusListAdapter.notifyDataSetChanged();
+                lv_status.setSelectionFromTop(index, top);
                 if (textviewNoAction.getVisibility() == View.VISIBLE)
                     textviewNoAction.setVisibility(View.GONE);
             }
@@ -348,7 +349,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         for(Status stmp: modifiedStatus){
             for(Status status: statuses){
                 if( status.getId().equals(stmp.getId()))
-                    status.setReplies(stmp.getReplies());
+                    if( stmp.getReplies() != null )
+                        status.setReplies(stmp.getReplies());
+                    else
+                        status.setReplies(new ArrayList<Status>());
             }
         }
         statusListAdapter.notifyDataSetChanged();
