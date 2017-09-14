@@ -140,6 +140,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
         pins = new ArrayList<>();
 
+        // Perhaps this could be moved to the Helper class, to get the instance version.
         new RetrieveInstanceAsyncTask(context, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
