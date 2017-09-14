@@ -157,13 +157,13 @@ public class MainActivity extends AppCompatActivity
                     if(notificationsFragment != null){
                         Notification notification = b.getParcelable("data");
                         notificationsFragment.refresh(notification);
-                        countNewStatus++;
+                        countNewNotifications++;
                     }
                 }else if(eventStreaming == StreamingService.EventStreaming.UPDATE){
                     Status status = b.getParcelable("data");
                     if( homeFragment != null){
                         homeFragment.refresh(status);
-                        countNewNotifications++;
+                        countNewStatus++;
                     }
                 }else if(eventStreaming == StreamingService.EventStreaming.DELETE){
                     String id = b.getString("id");

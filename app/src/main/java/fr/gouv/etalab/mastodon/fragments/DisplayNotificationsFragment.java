@@ -15,12 +15,10 @@ package fr.gouv.etalab.mastodon.fragments;
  * see <http://www.gnu.org/licenses>. */
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,11 +31,8 @@ import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.APIResponse;
-import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
-import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
-import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveNotificationsAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
@@ -231,12 +226,12 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         if( context == null)
             return;
         if( notification != null){
+            int index = lv_notifications.getFirstVisiblePosition() + 1;
+            View v = lv_notifications.getChildAt(0);
+            int top = (v == null) ? 0 : v.getTop();
             notifications.add(0, notification);
-            boolean isOnWifi = Helper.isOnWIFI(context);
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-            notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments, notifications);
-            lv_notifications.setAdapter(notificationsListAdapter);
+            notificationsListAdapter.notifyDataSetChanged();
+            lv_notifications.setSelectionFromTop(index, top);
             if( textviewNoAction.getVisibility() == View.VISIBLE)
                 textviewNoAction.setVisibility(View.GONE);
         }
