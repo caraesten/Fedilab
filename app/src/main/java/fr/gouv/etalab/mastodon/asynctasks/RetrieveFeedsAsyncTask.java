@@ -50,7 +50,8 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         FAVOURITES,
         ONESTATUS,
         CONTEXT,
-        TAG
+        TAG,
+        PINS
     }
 
     public RetrieveFeedsAsyncTask(Context context, Type action, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
@@ -108,6 +109,9 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 break;
             case TAG:
                 apiResponse = api.getPublicTimelineTag(tag, false, max_id);
+                break;
+            case PINS:
+                apiResponse = api.getPinnedStatuses(targetedID); // Might need max_id later?
                 break;
             case HASHTAG:
                 break;

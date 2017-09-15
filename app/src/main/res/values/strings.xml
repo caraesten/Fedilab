@@ -97,6 +97,8 @@
     <string name="favourite_remove">Remove this toot from your favourites?</string>
     <string name="reblog_add">Boost this toot?</string>
     <string name="reblog_remove">Unboost this toot?</string>
+    <string name="pin_add">Pin this toot?</string>
+    <string name="pin_remove">Unpin this toot?</string>
     <string-array name="more_action">
         <item>Mute</item>
         <item>Block</item>
@@ -212,6 +214,7 @@
     <string name="status_cnt">Toots \n %d</string>
     <string name="following_cnt">Following \n %d</string>
     <string name="followers_cnt">Followers \n %d</string>
+    <string name="pins_cnt">Pinned \n %d</string>
     <string name="authorize">Authorize</string>
     <string name="reject">Reject</string>
 
@@ -246,6 +249,7 @@
     <!-- HEADER -->
     <string name="following">Following</string>
     <string name="followers">Followers</string>
+    <string name="pinned_toots">Pinned</string>
     <!-- TOAST -->
     <string name="client_error">Unable to get client id!</string>
     <string name="no_internet">No Internet connection!</string>
@@ -261,6 +265,8 @@
     <string name="toast_unfavourite">The toot was removed from your favourites!</string>
     <string name="toast_report">The toot was reported!</string>
     <string name="toast_unstatus">The toot was deleted!</string>
+    <string name="toast_pin">The toot was pinned!</string>
+    <string name="toast_unpin">The toot was unpinned!</string>
     <string name="toast_error">Oops ! An error occurred!</string>
     <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
     <string name="toast_error_instance">The instance domain does not seem to be valide!</string>
