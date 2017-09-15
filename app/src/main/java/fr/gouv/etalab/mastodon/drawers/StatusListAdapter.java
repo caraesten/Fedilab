@@ -14,7 +14,6 @@ package fr.gouv.etalab.mastodon.drawers;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.graphics.Paint;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.content.ClipData;
@@ -71,21 +70,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import fr.gouv.etalab.mastodon.activities.InstanceActivity;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveInstanceAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
-import fr.gouv.etalab.mastodon.client.Entities.Instance;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -105,7 +99,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class StatusListAdapter extends BaseAdapter implements OnPostActionInterface, OnTranslatedInterface, OnRetrieveFeedsInterface, OnRetrieveInstanceInterface {
+public class StatusListAdapter extends BaseAdapter implements OnPostActionInterface, OnTranslatedInterface, OnRetrieveFeedsInterface {
 
     private Context context;
     private List<Status> statuses;
@@ -127,7 +121,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     private HashMap<String, String> tagConversion;
 
     private List<Status> pins;
-    private int instMinVers;
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
         this.context = context;
@@ -142,8 +135,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
         pins = new ArrayList<>();
 
-        // Perhaps this could be moved to the Helper class, to get the instance version.
-        new RetrieveInstanceAsyncTask(context, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
     }
 
 
@@ -455,10 +447,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_content_translated_container.setVisibility(View.GONE);
         }
 
-        //Hides action bottom bar action when looking to status trough accounts
-        if( type == RetrieveFeedsAsyncTask.Type.USER){
-            holder.status_action_container.setVisibility(View.GONE);
-        }
         //Manages theme for icon colors
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_DARK){
@@ -751,7 +739,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         boolean isOwner = status.getAccount().getId().equals(userId);
 
         // Pinning toots is only available on Mastodon 1._6_.0 instances.
-        if (isOwner && instMinVers > 5) {
+        if (isOwner && Helper.canPin && (status.getVisibility().equals("public") || status.getVisibility().equals("unlisted"))) {
 
             final Drawable imgUnPinToot, imgPinToot;
             imgUnPinToot = ContextCompat.getDrawable(context, R.drawable.ic_action_pin);
@@ -1023,18 +1011,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_show_more.setVisibility(View.GONE);
     }
 
-    @Override
-    public void onRetrieveInstance(APIResponse apiResponse) {
 
-        if( apiResponse.getError() != null){
-            Toast.makeText(context, R.string.toast_error, Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        String instVers = apiResponse.getInstance().getVersion();
-        String [] version = instVers.split("\\.");
-        instMinVers = Integer.parseInt(version[1]);
-    }
 
     @Override
     public void onRetrieveFeeds(APIResponse apiResponse, boolean refreshData) {
@@ -1092,16 +1069,13 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }
 
         else if ( statusAction == API.StatusAction.PIN || statusAction == API.StatusAction.UNPIN ) {
-
             Status toCheck = null;
-
             for (Status checkPin: statuses) {
                 if (checkPin.getId().equals(targetedId)) {
                     toCheck = checkPin;
                     break;
                 }
             }
-
             if (statusAction == API.StatusAction.PIN) {
                 if (toCheck != null)
                     toCheck.setPinned(true);
@@ -1110,6 +1084,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 if (toCheck != null)
                     toCheck.setPinned(false);
             }
+            statusListAdapter.notifyDataSetChanged();
         }
     }
 

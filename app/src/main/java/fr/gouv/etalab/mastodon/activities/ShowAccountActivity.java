@@ -49,6 +49,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -200,7 +201,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.following)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.followers)));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.pinned_toots));
+
 
         mPager = (ViewPager) findViewById(R.id.account_viewpager);
         PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
@@ -495,7 +496,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
             SpannableString spannableString = Helper.clickableElementsDescription(ShowAccountActivity.this, account.getNote());
             account_note.setText(spannableString, TextView.BufferType.SPANNABLE);
             account_note.setMovementMethod(LinkMovementMethod.getInstance());
-            if (tabLayout.getTabAt(0) != null && tabLayout.getTabAt(1) != null && tabLayout.getTabAt(2) != null && tabLayout.getTabAt(3) != null) {
+            if (tabLayout.getTabAt(0) != null && tabLayout.getTabAt(1) != null && tabLayout.getTabAt(2) != null) {
                 //noinspection ConstantConditions
                 tabLayout.getTabAt(0).setText(getString(R.string.status_cnt, account.getStatuses_count()));
                 //noinspection ConstantConditions
@@ -527,18 +528,18 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 Toast.makeText(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
-
         pins = apiResponse.getStatuses();
+        if (pins != null && pins.size() > 0) {
+            if( pins.get(0).isPinned()) {
 
-        if (pins != null)
-        {
-            for (Status pin : pins)
-            {
-                this.statuses.add(pin);
+                tabLayout.addTab(tabLayout.newTab().setText(R.string.pinned_toots));
+                for (Status pin : pins) {
+                    this.statuses.add(pin);
+                }
+                //noinspection ConstantConditions
+                tabLayout.getTabAt(3).setText(getString(R.string.pins_cnt, pins.size()));
+                statusListAdapter.notifyDataSetChanged();
             }
-
-            tabLayout.getTabAt(3).setText(getString(R.string.pins_cnt, pins.size()));
-            statusListAdapter.notifyDataSetChanged();
         }
     }
 
