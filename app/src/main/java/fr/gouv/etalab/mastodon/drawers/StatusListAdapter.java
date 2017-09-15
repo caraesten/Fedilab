@@ -232,10 +232,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
 
-        // Get the pins, as early as we can
-        new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.PINS, userId, null, false,
-                StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
         //Display a preview for accounts that have replied *if enabled and only for home timeline*
         if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
             boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);

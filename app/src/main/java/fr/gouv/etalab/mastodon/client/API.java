@@ -68,7 +68,6 @@ public class API {
     private Attachment attachment;
     private List<Account> accounts;
     private List<Status> statuses;
-    private List<Status> pins;
     private List<Notification> notifications;
     private int tootPerPage, accountPerPage, notificationPerPage;
     private int actionCode;
@@ -277,7 +276,7 @@ public class API {
      * @return APIResponse
      */
     public APIResponse getStatus(String accountId) {
-        return getStatus(accountId, false, false, null, null, tootPerPage);
+        return getStatus(accountId, false, false, false, null, null, tootPerPage);
     }
 
     /**
@@ -288,7 +287,7 @@ public class API {
      * @return APIResponse
      */
     public APIResponse getStatus(String accountId, String max_id) {
-        return getStatus(accountId, false, false, max_id, null, tootPerPage);
+        return getStatus(accountId, false, false, false, max_id, null, tootPerPage);
     }
 
     /**
@@ -299,42 +298,19 @@ public class API {
      * @return APIResponse
      */
     public APIResponse getStatusWithMedia(String accountId, String max_id) {
-        return getStatus(accountId, true, false, max_id, null, tootPerPage);
+        return getStatus(accountId, true, false, false, max_id, null, tootPerPage);
     }
 
     /**
      * Retrieves pinned status(es) *synchronously*
      *
      * @param accountId String Id of the account
+     * @param max_id    String id max
      * @return APIResponse
      */
-    public APIResponse getPinnedStatuses(String accountId)
-    {
-        pins = new ArrayList<>();
-
-        RequestParams params = new RequestParams();
-
-        params.put("pinned", Boolean.toString(true));
-
-        get(String.format("/accounts/%s/statuses", accountId), params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Status status = parseStatuses(context, response);
-                pins.add(status);
-            }
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                pins = parseStatuses(response);
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-                setError(statusCode, error);
-            }
-        });
-        apiResponse.setStatuses(pins);
-        return apiResponse;
+    public APIResponse getPinnedStatuses(String accountId, String max_id) {
+        return getStatus(accountId, false, true, false, max_id, null, tootPerPage);
     }
-
 
     /**
      * Retrieves status for the account *synchronously*
@@ -347,7 +323,7 @@ public class API {
      * @param limit           int limit  - max value 40
      * @return APIResponse
      */
-    private APIResponse getStatus(String accountId, boolean onlyMedia,
+    private APIResponse getStatus(String accountId, boolean onlyMedia, boolean pinned,
                                   boolean exclude_replies, String max_id, String since_id, int limit) {
 
         RequestParams params = new RequestParams();
@@ -361,6 +337,8 @@ public class API {
             limit = 40;
         if( onlyMedia)
             params.put("only_media", Boolean.toString(true));
+        if( pinned)
+            params.put("pinned", Boolean.toString(true));
         params.put("limit", String.valueOf(limit));
         statuses = new ArrayList<>();
         get(String.format("/accounts/%s/statuses", accountId), params, new JsonHttpResponseHandler() {

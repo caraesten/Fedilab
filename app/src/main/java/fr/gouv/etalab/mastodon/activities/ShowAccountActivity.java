@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -49,7 +48,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -93,8 +91,6 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRelationshipInterface;
-import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
-import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
 
@@ -115,7 +111,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     private StatusListAdapter statusListAdapter;
     private FloatingActionButton account_follow;
 
-    private static final int NUM_PAGES = 4;
+    private static final int NUM_PAGES = 3;
     private ViewPager mPager;
     private String accountId;
     private TabLayout tabLayout;
@@ -123,7 +119,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     private String userId;
     private static int instanceValue = 0;
     private Relationship relationship;
-    private boolean showMediaOnly;
+    private boolean showMediaOnly, showPinned;
     private ImageView pp_actionBar;
     private BroadcastReceiver hide_header;
     private boolean isHiddingShowing = false;
@@ -166,13 +162,11 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
             new RetrieveAccountAsyncTask(getApplicationContext(),accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
 
-            // Get the pins, as early as we can
-            new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.PINS, userId, null, false,
-                    ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }else{
             Toast.makeText(this,R.string.toast_error_loading_account,Toast.LENGTH_LONG).show();
         }
         showMediaOnly = false;
+        showPinned = false;
         imageLoader = ImageLoader.getInstance();
         File cacheDir = new File(getCacheDir(), getString(R.string.app_name));
         ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(this)
@@ -201,7 +195,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.following)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.followers)));
-
 
         mPager = (ViewPager) findViewById(R.id.account_viewpager);
         PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
@@ -251,11 +244,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                         DisplayAccountsFragment displayAccountsFragment = ((DisplayAccountsFragment) fragment);
                         if (displayAccountsFragment != null)
                             displayAccountsFragment.scrollToTop();
-                        break;
-                    case 3:
-                        displayStatusFragment = ((DisplayStatusFragment) fragment);
-                        if( displayStatusFragment != null )
-                            displayStatusFragment.scrollToTop();
                         break;
                 }
             }
@@ -346,6 +334,9 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_showaccount, menu);
+        if( !Helper.canPin || !accountId.equals(userId)) {
+           menu.findItem(R.id.action_show_pinned).setVisible(false);
+        }
         return true;
     }
 
@@ -354,6 +345,14 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                return true;
+            case R.id.action_show_pinned:
+                showPinned = !showPinned;
+                if( tabLayout.getTabAt(0) != null)
+                    //noinspection ConstantConditions
+                    tabLayout.getTabAt(0).select();
+                PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+                mPager.setAdapter(mPagerAdapter);
                 return true;
             case R.id.action_show_media:
                 showMediaOnly = !showMediaOnly;
@@ -364,7 +363,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 if( tabLayout.getTabAt(0) != null)
                     //noinspection ConstantConditions
                     tabLayout.getTabAt(0).select();
-                PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+                mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
                 mPager.setAdapter(mPagerAdapter);
                 return true;
             default:
@@ -503,6 +502,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 tabLayout.getTabAt(1).setText(getString(R.string.following_cnt, account.getFollowing_count()));
                 //noinspection ConstantConditions
                 tabLayout.getTabAt(2).setText(getString(R.string.followers_cnt, account.getFollowers_count()));
+
             }
 
             imageLoader.displayImage(account.getAvatar(), account_pp, options);
@@ -528,11 +528,11 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 Toast.makeText(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
+
         pins = apiResponse.getStatuses();
         if (pins != null && pins.size() > 0) {
             if( pins.get(0).isPinned()) {
 
-                tabLayout.addTab(tabLayout.newTab().setText(R.string.pinned_toots));
                 for (Status pin : pins) {
                     this.statuses.add(pin);
                 }
@@ -614,6 +614,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                     bundle.putString("targetedId", accountId);
                     bundle.putBoolean("hideHeader",true);
                     bundle.putBoolean("showMediaOnly",showMediaOnly);
+                    bundle.putBoolean("showPinned",showPinned);
                     bundle.putString("hideHeaderValue",String.valueOf(instanceValue));
                     displayStatusFragment.setArguments(bundle);
                     return displayStatusFragment;
@@ -633,15 +634,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                     bundle.putString("hideHeaderValue",String.valueOf(instanceValue));
                     displayAccountsFragment.setArguments(bundle);
                     return displayAccountsFragment;
-                case 3:
-                    displayStatusFragment = new DisplayStatusFragment();
-                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PINS);
-                    bundle.putString("targetedId", userId);
-                    bundle.putBoolean("hideHeader",true);
-                    bundle.putBoolean("showMediaOnly",showMediaOnly);
-                    bundle.putString("hideHeaderValue",String.valueOf(instanceValue));
-                    displayStatusFragment.setArguments(bundle);
-                    return displayStatusFragment;
             }
             return null;
         }

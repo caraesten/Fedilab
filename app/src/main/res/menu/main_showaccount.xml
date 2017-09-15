@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_show_pinned"
+        android:title="@string/pinned_toots"
+        android:icon="@drawable/ic_action_pin"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/action_show_media"
         android:title="@string/media"
         android:icon="@drawable/ic_perm_media"
