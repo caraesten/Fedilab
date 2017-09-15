@@ -112,6 +112,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     private LayoutInflater layoutInflater;
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
+    private ViewHolder holder;
     private boolean isOnWifi;
     private int translator;
     private int behaviorWithAttachments;
@@ -182,7 +183,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 
         final Status status = statuses.get(position);
-        final ViewHolder holder;
+
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.drawer_status, parent, false);
             holder = new ViewHolder();
@@ -759,21 +760,9 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             imgUnPinToot.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
             imgPinToot.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
 
-            /* Need to change the icon if we have a pinned toot.
-                Not entirely happy with this as it doesn't always
-                appear to work.
-             */
-
-            for (Status pin : pins)
-            {
-                if (pin.getId().equals(status.getId())) {
-                    holder.status_pin.setImageDrawable(imgPinToot);
-                    status.setPinned(true);
-                    break;
-                }
-            }
-
-            if (!status.isPinned())
+            if (status.isPinned())
+                holder.status_pin.setImageDrawable(imgPinToot);
+            else
                 holder.status_pin.setImageDrawable(imgUnPinToot);
 
             holder.status_pin.setOnClickListener(new View.OnClickListener() {
@@ -784,14 +773,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                      * this point, after async call earlier.
                      */
                     pinAction(status);
-
-                    /* Think this might need to be re-coded so the icon gets changed
-                        in the callback for the async call. But it'll do as a first pass.
-                     */
-                    if (status.isPinned())
-                        holder.status_pin.setImageDrawable(imgPinToot);
-                    else
-                        holder.status_pin.setImageDrawable(imgUnPinToot);
                 }
             });
 
@@ -948,23 +929,15 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
      */
     private void pinAction(Status status) {
 
-        // Assuming that by this point pins list has already been set up.
-        for (Status pin : pins) {
-            if (status.getId().equals(pin.getId()))
-                status.setPinned(true);
-        }
-
         if (status.isPinned()) {
             new PostActionAsyncTask(context, API.StatusAction.UNPIN, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            status.setPinned(false);
-
+            holder.status_pin.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_action_pin));
         } else {
             new PostActionAsyncTask(context, API.StatusAction.PIN, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            status.setPinned(true);
+            holder.status_pin.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_action_pin_yellow));
         }
 
         statusListAdapter.notifyDataSetChanged();
-
     }
 
     private void loadAttachments(final Status status, ViewHolder holder){
@@ -1074,6 +1047,18 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }
 
         pins = apiResponse.getStatuses();
+
+        for (Status haystack : statuses)
+        {
+            for (Status pin : pins) {
+
+                if (haystack.getId().equals(pin.getId()))
+                {
+                    haystack.setPinned(true);
+                    break;
+                }
+            }
+        }
     }
 
     @Override
@@ -1106,13 +1091,25 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             statusListAdapter.notifyDataSetChanged();
         }
 
-        // Need to refresh the list of pins
         else if ( statusAction == API.StatusAction.PIN || statusAction == API.StatusAction.UNPIN ) {
 
-            String accountId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            Status toCheck = null;
 
-            new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.PINS, accountId, null, false,
-                    StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            for (Status checkPin: statuses) {
+                if (checkPin.getId().equals(targetedId)) {
+                    toCheck = checkPin;
+                    break;
+                }
+            }
+
+            if (statusAction == API.StatusAction.PIN) {
+                if (toCheck != null)
+                    toCheck.setPinned(true);
+            }
+            else {
+                if (toCheck != null)
+                    toCheck.setPinned(false);
+            }
         }
     }
 
