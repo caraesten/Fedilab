@@ -268,6 +268,7 @@ public class Helper {
 
     private static boolean menuAccountsOpened = false;
 
+    public static boolean canPin;
 
     private static final Pattern SHORTNAME_PATTERN = Pattern.compile(":( |)([-+\\w]+):");
 
@@ -525,11 +526,15 @@ public class Helper {
                 message = context.getString(R.string.toast_favourite);
             }else if(statusAction == API.StatusAction.UNFAVOURITE){
                 message = context.getString(R.string.toast_unfavourite);
+            }else if(statusAction == API.StatusAction.PIN){
+                message = context.getString(R.string.toast_pin);
+            }else if (statusAction == API.StatusAction.UNPIN){
+                message = context.getString(R.string.toast_unpin);
             }else if(statusAction == API.StatusAction.REPORT){
                 message = context.getString(R.string.toast_report);
             }else if(statusAction == API.StatusAction.UNSTATUS){
                 message = context.getString(R.string.toast_unstatus);
-            }   
+            }
         }else {
             message = context.getString(R.string.toast_error);
         }
@@ -1571,7 +1576,7 @@ public class Helper {
                     navigationView.getMenu().findItem(R.id.nav_local).setVisible(false);
                     navigationView.getMenu().findItem(R.id.nav_global).setVisible(false);
                     navigationView.getMenu().findItem(R.id.nav_notification).setVisible(false);
-                    params.height = (int) Helper.convertDpToPixel(heightSearchdp, activity);;
+                    params.height = (int) Helper.convertDpToPixel(heightSearchdp, activity);
                     toolbar_search_container.setLayoutParams(params);
                     tableLayout.setVisibility(View.VISIBLE);
                     break;
@@ -1589,7 +1594,7 @@ public class Helper {
                     navigationView.getMenu().findItem(R.id.nav_local).setVisible(true);
                     navigationView.getMenu().findItem(R.id.nav_global).setVisible(true);
                     navigationView.getMenu().findItem(R.id.nav_notification).setVisible(true);
-                    params.height = (int) Helper.convertDpToPixel(heightSearchdp, activity);;
+                    params.height = (int) Helper.convertDpToPixel(heightSearchdp, activity);
                     toolbar_search_container.setLayoutParams(params);
                     tableLayout.setVisibility(View.VISIBLE);
                     break;

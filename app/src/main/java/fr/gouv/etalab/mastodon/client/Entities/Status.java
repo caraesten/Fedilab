@@ -42,6 +42,7 @@ public class Status implements Parcelable {
     private int favourites_count;
     private boolean reblogged;
     private boolean favourited;
+    private boolean pinned;
     private boolean sensitive;
     private String spoiler_text;
     private String visibility;
@@ -51,6 +52,7 @@ public class Status implements Parcelable {
     private List<Status> replies;
     private List<Mention> mentions;
     private List<Tag> tags;
+    private List<Status> pins;
     private Application application;
     private String language;
     private boolean isTranslated = false;
@@ -81,6 +83,9 @@ public class Status implements Parcelable {
         isTranslated = in.readByte() != 0;
         isTranslationShown = in.readByte() != 0;
         isNew = in.readByte() != 0;
+
+        pinned = false;
+        pins = null;
     }
 
     public Status(){}
@@ -200,6 +205,14 @@ public class Status implements Parcelable {
     public void setFavourited(boolean favourited) {
         this.favourited = favourited;
     }
+
+    public void setPinned(boolean pinned) { this.pinned = pinned; }
+
+    public boolean isPinned() { return pinned; }
+
+    public List<Status> getPins() { return pins; }
+
+    public void setPins(List<Status> pins) { this.pins = pins; }
 
     public boolean isSensitive() {
         return sensitive;

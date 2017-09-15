@@ -14,7 +14,6 @@ package fr.gouv.etalab.mastodon.drawers;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.graphics.Paint;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.content.ClipData;
@@ -71,20 +70,22 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
-
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;;
 import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveInstanceInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
 import fr.gouv.etalab.mastodon.translation.GoogleTranslateQuery;
 import fr.gouv.etalab.mastodon.translation.YandexQuery;
@@ -92,30 +93,34 @@ import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
-import static fr.gouv.etalab.mastodon.helper.Helper.shortnameToUnicode;
 
 
 /**
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class StatusListAdapter extends BaseAdapter implements OnPostActionInterface, OnTranslatedInterface {
+public class StatusListAdapter extends BaseAdapter implements OnPostActionInterface, OnTranslatedInterface, OnRetrieveFeedsInterface {
 
     private Context context;
     private List<Status> statuses;
     private LayoutInflater layoutInflater;
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
+    private ViewHolder holder;
     private boolean isOnWifi;
     private int translator;
     private int behaviorWithAttachments;
     private StatusListAdapter statusListAdapter;
     private final int REBLOG = 1;
     private final int FAVOURITE = 2;
+    private final int PIN = 3;
+    private final int UNPIN = 4;
     private RetrieveFeedsAsyncTask.Type type;
     private String targetedId;
     private HashMap<String, String> urlConversion;
     private HashMap<String, String> tagConversion;
+
+    private List<Status> pins;
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
         this.context = context;
@@ -127,6 +132,10 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         this.type = type;
         this.targetedId = targetedId;
         this.translator = translator;
+
+        pins = new ArrayList<>();
+
+
     }
 
 
@@ -166,7 +175,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 
         final Status status = statuses.get(position);
-        final ViewHolder holder;
+
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.drawer_status, parent, false);
             holder = new ViewHolder();
@@ -182,6 +191,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_account_profile_boost_by = (ImageView) convertView.findViewById(R.id.status_account_profile_boost_by);
             holder.status_favorite_count = (TextView) convertView.findViewById(R.id.status_favorite_count);
             holder.status_reblog_count = (TextView) convertView.findViewById(R.id.status_reblog_count);
+            holder.status_pin = (ImageView) convertView.findViewById(R.id.status_pin);
             holder.status_toot_date = (TextView) convertView.findViewById(R.id.status_toot_date);
             holder.status_show_more = (Button) convertView.findViewById(R.id.status_show_more);
             holder.status_more = (ImageView) convertView.findViewById(R.id.status_more);
@@ -219,6 +229,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }
 
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
 
         //Display a preview for accounts that have replied *if enabled and only for home timeline*
         if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
@@ -431,10 +443,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_content_translated_container.setVisibility(View.GONE);
         }
 
-        //Hides action bottom bar action when looking to status trough accounts
-        if( type == RetrieveFeedsAsyncTask.Type.USER){
-            holder.status_action_container.setVisibility(View.GONE);
-        }
         //Manages theme for icon colors
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_DARK){
@@ -446,6 +454,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_fav_black,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_action_pin, R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_translate,R.color.dark_text);
@@ -458,6 +467,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.black);
             changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.black);
             changeDrawableColor(context, R.drawable.ic_fav_black,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_action_pin, R.color.black);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.white);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.white);
             changeDrawableColor(context, R.drawable.ic_translate,R.color.white);
@@ -713,6 +723,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
         imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
         imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+
         holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
         holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
 
@@ -720,6 +731,42 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_show_more.setTextColor(ContextCompat.getColor(context, R.color.white));
             holder.status_spoiler_button.setTextColor(ContextCompat.getColor(context, R.color.white));
         }
+
+        boolean isOwner = status.getAccount().getId().equals(userId);
+
+        // Pinning toots is only available on Mastodon 1._6_.0 instances.
+        if (isOwner && Helper.canPin && (status.getVisibility().equals("public") || status.getVisibility().equals("unlisted"))) {
+
+            final Drawable imgUnPinToot, imgPinToot;
+            imgUnPinToot = ContextCompat.getDrawable(context, R.drawable.ic_action_pin);
+            imgPinToot = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_yellow);
+
+            imgUnPinToot.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+            imgPinToot.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+
+            if (status.isPinned())
+                holder.status_pin.setImageDrawable(imgPinToot);
+            else
+                holder.status_pin.setImageDrawable(imgUnPinToot);
+
+            holder.status_pin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    /* Code is in for displayConfirmationDialog() but we don't call it.
+                     * Need to make sure we can successfully get a pinned toots list by
+                     * this point, after async call earlier.
+                     */
+                    pinAction(status);
+                }
+            });
+
+            holder.status_pin.setVisibility(View.VISIBLE);
+        }
+
+        else {
+            holder.status_pin.setVisibility(View.GONE);
+        }
+
         holder.status_show_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -777,6 +824,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     reblogAction(status);
             }
         });
+
+
         switch (status.getVisibility()){
             case "direct":
             case "private":
@@ -858,7 +907,22 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         statusListAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Pin or unpin a status
+     * @param status Status
+     */
+    private void pinAction(Status status) {
 
+        if (status.isPinned()) {
+            new PostActionAsyncTask(context, API.StatusAction.UNPIN, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            holder.status_pin.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_action_pin));
+        } else {
+            new PostActionAsyncTask(context, API.StatusAction.PIN, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            holder.status_pin.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_action_pin_yellow));
+        }
+
+        statusListAdapter.notifyDataSetChanged();
+    }
 
     private void loadAttachments(final Status status, ViewHolder holder){
         List<Attachment> attachments = status.getMedia_attachments();
@@ -943,11 +1007,39 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_show_more.setVisibility(View.GONE);
     }
 
+
+
+    @Override
+    public void onRetrieveFeeds(APIResponse apiResponse, boolean refreshData) {
+        if( apiResponse.getError() != null){
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages)
+                Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        pins = apiResponse.getStatuses();
+
+        for (Status haystack : statuses)
+        {
+            for (Status pin : pins) {
+
+                if (haystack.getId().equals(pin.getId()))
+                {
+                    haystack.setPinned(true);
+                    break;
+                }
+            }
+        }
+    }
+
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
 
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
         if( error != null){
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
                 Toast.makeText(context, error.getError(),Toast.LENGTH_LONG).show();
@@ -969,6 +1061,25 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     statusesToRemove.add(status);
             }
             statuses.removeAll(statusesToRemove);
+            statusListAdapter.notifyDataSetChanged();
+        }
+
+        else if ( statusAction == API.StatusAction.PIN || statusAction == API.StatusAction.UNPIN ) {
+            Status toCheck = null;
+            for (Status checkPin: statuses) {
+                if (checkPin.getId().equals(targetedId)) {
+                    toCheck = checkPin;
+                    break;
+                }
+            }
+            if (statusAction == API.StatusAction.PIN) {
+                if (toCheck != null)
+                    toCheck.setPinned(true);
+            }
+            else {
+                if (toCheck != null)
+                    toCheck.setPinned(false);
+            }
             statusListAdapter.notifyDataSetChanged();
         }
     }
@@ -1096,6 +1207,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         ImageView status_prev4_play;
         RelativeLayout status_prev4_container;
         ImageView status_reply;
+        ImageView status_pin;
         ImageView status_privacy;
         FloatingActionButton status_translate;
         LinearLayout status_container2;
@@ -1131,7 +1243,12 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 title = context.getString(R.string.reblog_remove);
             else
                 title = context.getString(R.string.reblog_add);
+        }else if ( action == PIN) {
+            title = context.getString(R.string.pin_add);
+        }else if (action == UNPIN) {
+            title = context.getString(R.string.pin_remove);
         }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -1148,6 +1265,10 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         reblogAction(status);
                     else if( action == FAVOURITE)
                         favouriteAction(status);
+                    else if ( action == PIN)
+                        pinAction(status);
+                    else if ( action == UNPIN)
+                        pinAction(status);
                     dialog.dismiss();
                 }
             })

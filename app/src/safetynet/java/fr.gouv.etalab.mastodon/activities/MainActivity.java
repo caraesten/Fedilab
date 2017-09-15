@@ -76,17 +76,21 @@ import java.util.Locale;
 import java.util.Stack;
 import java.util.regex.Matcher;
 
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveInstanceAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMetaDataAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayFollowRequestSentFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayScheduledTootsFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveInstanceInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMetaDataInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
 import fr.gouv.etalab.mastodon.services.StreamingService;
@@ -114,7 +118,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, ProviderInstaller.ProviderInstallListener, OnRetrieveMetaDataInterface {
+        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, ProviderInstaller.ProviderInstallListener, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface {
 
     private FloatingActionButton toot;
     private HashMap<String, String> tagTile = new HashMap<>();
@@ -215,6 +219,7 @@ public class MainActivity extends AppCompatActivity
                 startService(intent);
             }
         }
+        Helper.canPin = false;
         Helper.fillMapEmoji(getApplicationContext());
         //Here, the user is authenticated
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -569,7 +574,8 @@ public class MainActivity extends AppCompatActivity
         }
         Helper.switchLayout(MainActivity.this);
 
-
+        // Retrieves instance
+        new RetrieveInstanceAsyncTask(getApplicationContext(), MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 
@@ -1144,6 +1150,18 @@ public class MainActivity extends AppCompatActivity
             intentSendImage.putExtra("description", description);
             LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentSendImage);
         }
+    }
+
+    @Override
+    public void onRetrieveInstance(APIResponse apiResponse) {
+        if( apiResponse.getError() != null){
+            return;
+        }
+        if( apiResponse.getInstance() == null || apiResponse.getInstance().getVersion() == null || apiResponse.getInstance().getVersion().trim().length() == 0)
+            return;
+        Version currentVersion = new Version(apiResponse.getInstance().getVersion());
+        Version minVersion = new Version("1.6");
+        Helper.canPin = (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion));
     }
 
 

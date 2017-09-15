@@ -39,6 +39,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     private String targetedID;
     private String tag;
     private boolean showMediaOnly = false;
+    private boolean showPinned = false;
     private boolean refreshData;
 
     public enum Type{
@@ -61,7 +62,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.refreshData = true;
     }
 
-    public RetrieveFeedsAsyncTask(Context context, Type action, String targetedID, String max_id, boolean showMediaOnly, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
+    public RetrieveFeedsAsyncTask(Context context, Type action, String targetedID, String max_id, boolean showMediaOnly, boolean showPinned, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
         this.context = context;
         this.action = action;
         this.max_id = max_id;
@@ -69,6 +70,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.targetedID = targetedID;
         this.showMediaOnly = showMediaOnly;
         this.refreshData = true;
+        this.showPinned = showPinned;
     }
     public RetrieveFeedsAsyncTask(Context context, Type action, String tag, String targetedID, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
         this.context = context;
@@ -98,10 +100,12 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 apiResponse = api.getFavourites(max_id);
                 break;
             case USER:
-                if( !showMediaOnly)
-                    apiResponse = api.getStatus(targetedID, max_id);
-                else
+                if( showMediaOnly)
                     apiResponse = api.getStatusWithMedia(targetedID, max_id);
+                else if (showPinned)
+                    apiResponse = api.getPinnedStatuses(targetedID, max_id);
+                else
+                    apiResponse = api.getStatus(targetedID, max_id);
                 break;
             case ONESTATUS:
                 apiResponse = api.getStatusbyId(targetedID);

@@ -71,7 +71,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private ListView lv_status;
     private boolean isOnWifi;
     private int behaviorWithAttachments;
-    private boolean showMediaOnly;
+    private boolean showMediaOnly, showPinned;
     private int positionSpinnerTrans;
     private boolean hideHeader;
     private String instanceValue;
@@ -90,6 +90,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         boolean comesFromSearch = false;
         hideHeader = false;
         showMediaOnly = false;
+        showPinned = false;
         if (bundle != null) {
             type = (RetrieveFeedsAsyncTask.Type) bundle.get("type");
             targetedId = bundle.getString("targetedId", null);
@@ -97,6 +98,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             instanceValue = bundle.getString("hideHeaderValue", null);
             hideHeader = bundle.getBoolean("hideHeader", false);
             showMediaOnly = bundle.getBoolean("showMediaOnly",false);
+            showPinned = bundle.getBoolean("showPinned",false);
             if( bundle.containsKey("statuses")){
                 ArrayList<Parcelable> statusesReceived = bundle.getParcelableArrayList("statuses");
                 assert statusesReceived != null;
@@ -162,7 +164,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         if(!flag_loading ) {
                             flag_loading = true;
                             if( type == RetrieveFeedsAsyncTask.Type.USER)
-                                asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             else if( type == RetrieveFeedsAsyncTask.Type.TAG)
                                 asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             else
@@ -187,7 +189,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     swiped = true;
                     MainActivity.countNewStatus = 0;
                     if( type == RetrieveFeedsAsyncTask.Type.USER)
-                        asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     else if( type == RetrieveFeedsAsyncTask.Type.TAG)
                         asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     else
@@ -199,7 +201,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     R.color.mastodonC3);
 
             if( type == RetrieveFeedsAsyncTask.Type.USER)
-                asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             else if( type == RetrieveFeedsAsyncTask.Type.TAG)
                 asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             else
