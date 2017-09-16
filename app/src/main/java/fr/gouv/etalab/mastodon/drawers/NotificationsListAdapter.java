@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.drawers;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.graphics.Bitmap;
 import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -49,6 +50,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -489,10 +491,11 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
         });
         holder.notification_account_username.setText( String.format("@%s",notification.getAccount().getUsername()));
 
+        final View finalConvertView = convertView;
         holder.status_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                moreOptionDialog(status);
+                moreOptionDialog(status, finalConvertView);
             }
         });
 
@@ -816,7 +819,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
      * More option for status (report / remove status / Mute / Block)
      * @param status Status current status
      */
-    private void moreOptionDialog(final Status status){
+    private void moreOptionDialog(final Status status, final View view){
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
@@ -868,12 +871,24 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                         Toast.makeText(context,R.string.clipboard,Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                         return;
-                    }else {
+                    }else if( which == 2) {
                         Intent sendIntent = new Intent(Intent.ACTION_SEND);
                         sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
                         sendIntent.putExtra(Intent.EXTRA_TEXT, status.getUrl());
                         sendIntent.setType("text/plain");
                         context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
+                        return;
+                    }else if (which == 3){
+                        Bitmap bitmap = Helper.getBitmapFromView(view);
+                        Intent intent = new Intent(context, TootActivity.class);
+                        Bundle b = new Bundle();
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        byte[] byteArray = stream.toByteArray();
+                        intent.putExtra("pictureMention", byteArray);
+                        b.putParcelable("tootMention", status);
+                        intent.putExtras(b);
+                        context.startActivity(intent);
                         return;
                     }
                 }else {
@@ -898,12 +913,24 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                         Toast.makeText(context,R.string.clipboard,Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                         return;
-                    }else {
+                    }else if (which == 4){
                         Intent sendIntent = new Intent(Intent.ACTION_SEND);
                         sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
                         sendIntent.putExtra(Intent.EXTRA_TEXT, status.getUrl());
                         sendIntent.setType("text/plain");
                         context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
+                        return;
+                    }else if (which == 5){
+                        Bitmap bitmap = Helper.getBitmapFromView(view);
+                        Intent intent = new Intent(context, TootActivity.class);
+                        Bundle b = new Bundle();
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        byte[] byteArray = stream.toByteArray();
+                        intent.putExtra("pictureMention", byteArray);
+                        b.putParcelable("tootMention", status);
+                        intent.putExtras(b);
+                        context.startActivity(intent);
                         return;
                     }
                 }

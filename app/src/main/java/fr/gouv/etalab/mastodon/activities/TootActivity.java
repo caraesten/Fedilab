@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -81,6 +82,7 @@ import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -147,6 +149,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private EditText toot_cw_content;
     private LinearLayout toot_reply_content_container;
     private Status tootReply = null;
+    private Status tootMention = null;
     private String sharedContent, sharedSubject, sharedContentIni;
     private CheckBox toot_sensitive;
     public long currentToId;
@@ -252,16 +255,14 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         restored = -1;
         if(b != null) {
             tootReply = b.getParcelable("tootReply");
+            tootMention = b.getParcelable("tootMention");
             sharedContent = b.getString("sharedContent", null);
             sharedContentIni = b.getString("sharedContent", null);
             sharedSubject = b.getString("sharedSubject", null);
             // ACTION_SEND route
             if (b.getInt("uriNumber", 0) == 1) {
-
                 Uri fileUri = b.getParcelable("sharedUri");
-
-                if (fileUri != null)
-                {
+                if (fileUri != null) {
                     sharedUri.add(fileUri);
                 }
             }
@@ -290,6 +291,23 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         }
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        if( tootMention != null) {
+            byte[] byteArray = getIntent().getByteArrayExtra("pictureMention");
+            if (byteArray != null) {
+                Bitmap pictureMention = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                pictureMention.compress(Bitmap.CompressFormat.PNG, 0, bos);
+                byte[] bitmapdata = bos.toByteArray();
+                ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
+                loading_picture.setVisibility(View.VISIBLE);
+                toot_picture.setEnabled(false);
+                new UploadActionAsyncTask(getApplicationContext(), bs, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+            if( tootMention.getAccount() != null && tootMention.getAccount().getAcct() != null && !tootMention.getAccount().getId().equals(userId)) {
+                toot_content.setText(String.format("\n\nvia @%s ", tootMention.getAccount().getAcct()));
+            }
+        }
+
         Account account = new AccountDAO(getApplicationContext(),db).getAccountByID(userId);
         String url = account.getAvatar();
         if( url.startsWith("/") ){
