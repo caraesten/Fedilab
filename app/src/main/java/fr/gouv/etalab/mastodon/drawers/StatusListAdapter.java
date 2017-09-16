@@ -1413,8 +1413,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
                         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                         byte[] byteArray = stream.toByteArray();
-                        intent.putExtra("picturemention", byteArray);
-                        b.putParcelable("tootmention", status);
+                        intent.putExtra("pictureMention", byteArray);
+                        b.putParcelable("tootMention", status);
                         intent.putExtras(b);
                         context.startActivity(intent);
                         return;
