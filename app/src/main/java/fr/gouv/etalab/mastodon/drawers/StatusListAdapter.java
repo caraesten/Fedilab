@@ -32,6 +32,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.SpannableString;
+import android.text.method.ArrowKeyMovementMethod;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.util.Patterns;
@@ -578,6 +579,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
 
         if( status.getContent_translated() != null && status.getContent_translated().length() > 0){
+            holder.status_content_translated.setMovementMethod(null);
             SpannableString spannableStringTrans = Helper.clickableElements(context, status.getContent_translated(),
                     status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), false);
             holder.status_content_translated.setText(spannableStringTrans, TextView.BufferType.SPANNABLE);
@@ -604,6 +606,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         content = content.replaceAll("<p>","");
         if( content.endsWith("<br/><br/>") )
             content = content.substring(0,content.length() -10);
+        holder.status_content.setMovementMethod(null);
         final SpannableString spannableString = Helper.clickableElements(context,content,
                 status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), true);
         holder.status_content.setText(spannableString, TextView.BufferType.SPANNABLE);

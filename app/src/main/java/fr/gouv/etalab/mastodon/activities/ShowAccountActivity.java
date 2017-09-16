@@ -334,7 +334,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_showaccount, menu);
-        //TODO: if one day pinned toots from another can be displayed, we need to remove the condition !accountId.equals(userId)
+        //TODO: if one day pinned toots from another account can be displayed, we need to remove the condition !accountId.equals(userId)
         if( !Helper.canPin || !accountId.equals(userId)) {
            menu.findItem(R.id.action_show_pinned).setVisible(false);
         }

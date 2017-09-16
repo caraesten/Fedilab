@@ -1135,7 +1135,6 @@ public class Helper {
      * @return TextView
      */
     public static SpannableString clickableElements(final Context context, String fullContent, List<Mention> mentions, boolean useHTML) {
-
         SpannableString spannableString;
         if( useHTML) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
