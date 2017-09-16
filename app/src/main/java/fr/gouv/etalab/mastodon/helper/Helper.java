@@ -205,12 +205,10 @@ public class Helper {
     public static final String SET_MEDIA_URLS = "set_media_urls";
     public static final String SET_TEXT_SIZE = "set_text_size";
     public static final String SET_ICON_SIZE = "set_icon_size";
-    public static final String SET_PREVIEW_REPLIES = "set_preview_replies";
+    public static final String SET_PREVIEW_REPLIES = "set_preview_replies_";
     public static final String SET_PREVIEW_REPLIES_PP = "set_preview_replies_pp";
     public static final String SET_TRANSLATOR = "set_translator";
     public static final String SET_LED_COLOUR = "set_led_colour";
-    private static final String SET_TEMP_STATUS = "set_temp_status";
-    private static final String SET_TEMP_NOTIFICATIONS = "set_temp_notifications";
 
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
