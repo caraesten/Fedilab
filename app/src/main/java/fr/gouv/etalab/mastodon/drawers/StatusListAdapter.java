@@ -14,6 +14,7 @@ package fr.gouv.etalab.mastodon.drawers;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
+import android.graphics.Bitmap;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.content.ClipData;
@@ -62,6 +63,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -835,7 +837,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                moreOptionDialog(status);
+                moreOptionDialog(status, holder.card_status_container);
             }
         });
 
@@ -1312,7 +1314,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
      * More option for status (report / remove status / Mute / Block)
      * @param status Status current status
      */
-    private void moreOptionDialog(final Status status){
+    private void moreOptionDialog(final Status status, final View view){
 
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -1365,13 +1367,15 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         Toast.makeText(context,R.string.clipboard,Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                         return;
-                    }else {
+                    }else if( which == 2) {
                         Intent sendIntent = new Intent(Intent.ACTION_SEND);
                         sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
                         sendIntent.putExtra(Intent.EXTRA_TEXT, status.getUrl());
                         sendIntent.setType("text/plain");
                         context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
                         return;
+                    }else if( which == 3) {
+
                     }
                 }else {
                     if( which < 2 ){
@@ -1395,12 +1399,24 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         Toast.makeText(context,R.string.clipboard,Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                         return;
-                    }else {
+                    }else if( which == 4 ){
                         Intent sendIntent = new Intent(Intent.ACTION_SEND);
                         sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
                         sendIntent.putExtra(Intent.EXTRA_TEXT, status.getUrl());
                         sendIntent.setType("text/plain");
                         context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
+                        return;
+                    }else if( which == 5 ){
+                        Bitmap bitmap = Helper.getBitmapFromView(view);
+                        Intent intent = new Intent(context, TootActivity.class);
+                        Bundle b = new Bundle();
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        byte[] byteArray = stream.toByteArray();
+                        intent.putExtra("picturemention", byteArray);
+                        b.putParcelable("tootmention", status);
+                        intent.putExtras(b);
+                        context.startActivity(intent);
                         return;
                     }
                 }

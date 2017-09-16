@@ -102,11 +102,13 @@
         <item>Signaler</item>
         <item>Copier</item>
         <item>Partager</item>
+        <item>Mentionner</item>
     </string-array>
     <string-array name="more_action_owner">
         <item>Supprimer</item>
         <item>Copier</item>
         <item>Partager</item>
+        <item>Mentionner</item>
     </string-array>
 
     <string-array name="more_action_confirm">

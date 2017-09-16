@@ -102,11 +102,13 @@
         <item>Melden</item>
         <item>Kopieren</item>
         <item>Teilen</item>
+        <item>Erwähnen</item>
     </string-array>
     <string-array name="more_action_owner">
         <item>Entfernen</item>
         <item>Kopieren</item>
         <item>Teilen</item>
+        <item>Erwähnen</item>
     </string-array>
 
     <string-array name="more_action_confirm">

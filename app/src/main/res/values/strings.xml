@@ -105,11 +105,13 @@
         <item>Report</item>
         <item>Copy</item>
         <item>Share</item>
+        <item>Mention</item>
     </string-array>
     <string-array name="more_action_owner">
         <item>Remove</item>
         <item>Copy</item>
         <item>Share</item>
+        <item>Mention</item>
     </string-array>
 
     <string-array name="more_action_confirm">
