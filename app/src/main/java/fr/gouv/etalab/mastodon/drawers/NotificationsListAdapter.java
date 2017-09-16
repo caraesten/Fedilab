@@ -31,6 +31,7 @@ import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +52,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -882,11 +885,21 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                         Bitmap bitmap = Helper.convertTootIntoBitmap(context, view);
                         Intent intent = new Intent(context, TootActivity.class);
                         Bundle b = new Bundle();
-                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                        byte[] byteArray = stream.toByteArray();
-                        intent.putExtra("pictureMention", byteArray);
-                        b.putParcelable("tootMention", status);
+                        String fname = "tootmention_" + status.getId() +".jpg";
+                        File file = new File (context.getCacheDir() + "/", fname);
+                        if (file.exists ()) //noinspection ResultOfMethodCallIgnored
+                            file.delete ();
+                        try {
+                            FileOutputStream out = new FileOutputStream(file);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                            out.flush();
+                            out.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        b.putString("fileMention", fname);
+                        b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
+                        b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
                         intent.putExtras(b);
                         context.startActivity(intent);
                         return;
@@ -924,11 +937,21 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                         Bitmap bitmap = Helper.convertTootIntoBitmap(context, view);
                         Intent intent = new Intent(context, TootActivity.class);
                         Bundle b = new Bundle();
-                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                        byte[] byteArray = stream.toByteArray();
-                        intent.putExtra("pictureMention", byteArray);
-                        b.putParcelable("tootMention", status);
+                        String fname = "tootmention_" + status.getId() +".jpg";
+                        File file = new File (context.getCacheDir() + "/", fname);
+                        if (file.exists ()) //noinspection ResultOfMethodCallIgnored
+                            file.delete ();
+                        try {
+                            FileOutputStream out = new FileOutputStream(file);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                            out.flush();
+                            out.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        b.putString("fileMention", fname);
+                        b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
+                        b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
                         intent.putExtras(b);
                         context.startActivity(intent);
                         return;
