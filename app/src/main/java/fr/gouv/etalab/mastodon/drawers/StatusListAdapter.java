@@ -454,7 +454,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_fav_black,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_action_pin, R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_action_pin_dark, R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_translate,R.color.dark_text);
@@ -467,7 +467,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.black);
             changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.black);
             changeDrawableColor(context, R.drawable.ic_fav_black,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_action_pin, R.color.black);
+            changeDrawableColor(context, R.drawable.ic_action_pin_dark, R.color.black);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.white);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.white);
             changeDrawableColor(context, R.drawable.ic_translate,R.color.white);
@@ -736,19 +736,13 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
         // Pinning toots is only available on Mastodon 1._6_.0 instances.
         if (isOwner && Helper.canPin && (status.getVisibility().equals("public") || status.getVisibility().equals("unlisted"))) {
-
-            final Drawable imgUnPinToot, imgPinToot;
-            imgUnPinToot = ContextCompat.getDrawable(context, R.drawable.ic_action_pin);
-            imgPinToot = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_yellow);
-
-            imgUnPinToot.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-            imgPinToot.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-
-            if (status.isPinned())
-                holder.status_pin.setImageDrawable(imgPinToot);
+            Drawable imgPin;
+            if( status.isPinned())
+                imgPin = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_yellow);
             else
-                holder.status_pin.setImageDrawable(imgUnPinToot);
-
+                imgPin = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_dark);
+            imgPin.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+            holder.status_pin.setImageDrawable(imgPin);
             holder.status_pin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -759,10 +753,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     pinAction(status);
                 }
             });
-
             holder.status_pin.setVisibility(View.VISIBLE);
         }
-
         else {
             holder.status_pin.setVisibility(View.GONE);
         }
