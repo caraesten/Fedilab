@@ -17,6 +17,7 @@ package fr.gouv.etalab.mastodon.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -1310,6 +1311,11 @@ public class API {
             status.setReblogs_count(Integer.valueOf(resobj.get("reblogs_count").toString()));
             status.setReblogged(Boolean.valueOf(resobj.get("reblogged").toString()));
             status.setFavourited(Boolean.valueOf(resobj.get("favourited").toString()));
+            try {
+                status.setPinned(Boolean.valueOf(resobj.get("pinned").toString()));
+            }catch (JSONException e){
+                status.setPinned(false);
+            }
             try{
                 status.setReblog(parseStatuses(context, resobj.getJSONObject("reblog")));
             }catch (Exception ignored){}

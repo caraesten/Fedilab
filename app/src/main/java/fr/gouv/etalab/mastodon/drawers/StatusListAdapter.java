@@ -32,6 +32,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.SpannableString;
+import android.text.method.ArrowKeyMovementMethod;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.util.Patterns;
@@ -323,11 +324,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 statusListAdapter.notifyDataSetChanged();
             }
         });
-        if( currentLocale != null && status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale) && !status.getLanguage().trim().equals("null")){
-            if (translator != Helper.TRANS_NONE)
-                holder.status_translate.setVisibility(View.VISIBLE);
-            else
-                holder.status_translate.setVisibility(View.GONE);
+        if( translator != Helper.TRANS_NONE && currentLocale != null && status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale)){
+            holder.status_translate.setVisibility(View.VISIBLE);
         }else {
             holder.status_translate.setVisibility(View.GONE);
         }
@@ -454,7 +452,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_fav_black,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_action_pin, R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_action_pin_dark, R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_translate,R.color.dark_text);
@@ -467,7 +465,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.black);
             changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.black);
             changeDrawableColor(context, R.drawable.ic_fav_black,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_action_pin, R.color.black);
+            changeDrawableColor(context, R.drawable.ic_action_pin_dark, R.color.black);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.white);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.white);
             changeDrawableColor(context, R.drawable.ic_translate,R.color.white);
@@ -578,6 +576,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
 
         if( status.getContent_translated() != null && status.getContent_translated().length() > 0){
+            holder.status_content_translated.setMovementMethod(null);
             SpannableString spannableStringTrans = Helper.clickableElements(context, status.getContent_translated(),
                     status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), false);
             holder.status_content_translated.setText(spannableStringTrans, TextView.BufferType.SPANNABLE);
@@ -604,6 +603,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         content = content.replaceAll("<p>","");
         if( content.endsWith("<br/><br/>") )
             content = content.substring(0,content.length() -10);
+        holder.status_content.setMovementMethod(null);
         final SpannableString spannableString = Helper.clickableElements(context,content,
                 status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), true);
         holder.status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
@@ -617,6 +617,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_content.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     holder.status_content.setFocusableInTouchMode(false);
                     holder.status_content.clearFocus();
@@ -736,19 +737,13 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
         // Pinning toots is only available on Mastodon 1._6_.0 instances.
         if (isOwner && Helper.canPin && (status.getVisibility().equals("public") || status.getVisibility().equals("unlisted"))) {
-
-            final Drawable imgUnPinToot, imgPinToot;
-            imgUnPinToot = ContextCompat.getDrawable(context, R.drawable.ic_action_pin);
-            imgPinToot = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_yellow);
-
-            imgUnPinToot.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-            imgPinToot.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-
-            if (status.isPinned())
-                holder.status_pin.setImageDrawable(imgPinToot);
+            Drawable imgPin;
+            if( status.isPinned())
+                imgPin = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_yellow);
             else
-                holder.status_pin.setImageDrawable(imgUnPinToot);
-
+                imgPin = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_dark);
+            imgPin.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+            holder.status_pin.setImageDrawable(imgPin);
             holder.status_pin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -759,10 +754,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     pinAction(status);
                 }
             });
-
             holder.status_pin.setVisibility(View.VISIBLE);
         }
-
         else {
             holder.status_pin.setVisibility(View.GONE);
         }
@@ -1063,7 +1056,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             statuses.removeAll(statusesToRemove);
             statusListAdapter.notifyDataSetChanged();
         }
-
         else if ( statusAction == API.StatusAction.PIN || statusAction == API.StatusAction.UNPIN ) {
             Status toCheck = null;
             for (Status checkPin: statuses) {
@@ -1079,6 +1071,40 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             else {
                 if (toCheck != null)
                     toCheck.setPinned(false);
+            }
+            statusListAdapter.notifyDataSetChanged();
+        }
+
+        if( statusAction == API.StatusAction.REBLOG){
+            for(Status status: statuses){
+                if( status.getId().equals(targetedId)) {
+                    status.setReblogs_count(status.getReblogs_count() + 1);
+                    break;
+                }
+            }
+            statusListAdapter.notifyDataSetChanged();
+        }else if( statusAction == API.StatusAction.UNREBLOG){
+            for(Status status: statuses){
+                if( status.getId().equals(targetedId)) {
+                    status.setReblogs_count(status.getReblogs_count() - 1);
+                    break;
+                }
+            }
+            statusListAdapter.notifyDataSetChanged();
+        }else if( statusAction == API.StatusAction.FAVOURITE){
+            for(Status status: statuses){
+                if( status.getId().equals(targetedId)) {
+                    status.setFavourites_count(status.getFavourites_count() + 1);
+                    break;
+                }
+            }
+            statusListAdapter.notifyDataSetChanged();
+        }else if( statusAction == API.StatusAction.UNFAVOURITE){
+            for(Status status: statuses){
+                if( status.getId().equals(targetedId)) {
+                    status.setFavourites_count(status.getFavourites_count() - 1);
+                    break;
+                }
             }
             statusListAdapter.notifyDataSetChanged();
         }

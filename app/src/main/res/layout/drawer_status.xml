@@ -384,7 +384,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_action_pin"/>
+                android:src="@drawable/ic_action_pin_dark"/>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"

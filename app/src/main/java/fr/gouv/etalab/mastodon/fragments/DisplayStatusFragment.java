@@ -338,8 +338,18 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     }
 
     public void scrollToTop(){
-        if( lv_status != null)
+        if( lv_status != null) {
             lv_status.setAdapter(statusListAdapter);
+            //Store last toot id for home timeline to avoid to notify for those that have been already seen
+            if (type == RetrieveFeedsAsyncTask.Type.HOME && statuses != null && statuses.size() > 0) {
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, statuses.get(0).getId());
+                lastReadStatus = statuses.get(0).getId();
+                editor.apply();
+            }
+        }
     }
 
     @Override

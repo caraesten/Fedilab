@@ -52,7 +52,6 @@ public class Status implements Parcelable {
     private List<Status> replies;
     private List<Mention> mentions;
     private List<Tag> tags;
-    private List<Status> pins;
     private Application application;
     private String language;
     private boolean isTranslated = false;
@@ -83,9 +82,7 @@ public class Status implements Parcelable {
         isTranslated = in.readByte() != 0;
         isTranslationShown = in.readByte() != 0;
         isNew = in.readByte() != 0;
-
-        pinned = false;
-        pins = null;
+        pinned = in.readByte() != 0;
     }
 
     public Status(){}
@@ -210,10 +207,6 @@ public class Status implements Parcelable {
 
     public boolean isPinned() { return pinned; }
 
-    public List<Status> getPins() { return pins; }
-
-    public void setPins(List<Status> pins) { this.pins = pins; }
-
     public boolean isSensitive() {
         return sensitive;
     }
@@ -310,6 +303,7 @@ public class Status implements Parcelable {
         dest.writeByte((byte) (isTranslated ? 1 : 0));
         dest.writeByte((byte) (isTranslationShown ? 1 : 0));
         dest.writeByte((byte) (isNew ? 1 : 0));
+        dest.writeByte((byte) (pinned ? 1 : 0));
     }
 
     public boolean isSpoilerShown() {

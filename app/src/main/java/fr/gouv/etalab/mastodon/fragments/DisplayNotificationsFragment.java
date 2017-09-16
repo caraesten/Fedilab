@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -219,6 +220,15 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     public void scrollToTop(){
         if( lv_notifications != null)
             lv_notifications.setAdapter(notificationsListAdapter);
+        //Store last toot id for home timeline to avoid to notify for those that have been already seen
+        //Store last notification id to avoid to notify for those that have been already seen
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        if (notifications != null && notifications.size() > 0) {
+            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + this.userId, notifications.get(0).getId());
+            editor.apply();
+            lastReadNotifications = notifications.get(0).getId();
+        }
     }
 
 
