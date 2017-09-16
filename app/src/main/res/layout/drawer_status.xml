@@ -207,6 +207,16 @@
                             android:text="Powered by Google Translate"
                             android:layout_height="wrap_content"
                             tools:ignore="HardcodedText" />
+                        <TextView
+                            android:visibility="gone"
+                            android:textColor="@color/mastodonC4"
+                            android:id="@+id/mastalab_watermark"
+                            android:layout_width="match_parent"
+                            android:padding="2dp"
+                            android:gravity="end"
+                            android:text="Via #Mastalab"
+                            android:layout_height="wrap_content"
+                            tools:ignore="HardcodedText"/>
                     </LinearLayout>
 
                     <LinearLayout

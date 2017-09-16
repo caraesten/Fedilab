@@ -1322,7 +1322,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         final boolean isOwner = status.getAccount().getId().equals(userId);
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
-        //builderSingle.setTitle(R.string.make_a_choice);
         final String[] stringArray, stringArrayConf;
         final API.StatusAction[] doAction;
         if( isOwner) {
@@ -1376,7 +1375,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
                         return;
                     }else if( which == 3) {
-                        Bitmap bitmap = Helper.getBitmapFromView(view);
+                        Bitmap bitmap = Helper.convertTootIntoBitmap(view);
                         Intent intent = new Intent(context, TootActivity.class);
                         Bundle b = new Bundle();
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -1418,7 +1417,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
                         return;
                     }else if( which == 5 ){
-                        Bitmap bitmap = Helper.getBitmapFromView(view);
+                        Bitmap bitmap = Helper.convertTootIntoBitmap(view);
                         Intent intent = new Intent(context, TootActivity.class);
                         Bundle b = new Bundle();
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
