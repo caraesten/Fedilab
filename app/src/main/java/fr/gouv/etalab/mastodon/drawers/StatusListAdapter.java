@@ -834,10 +834,11 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 holder.status_reblog_count.setVisibility(View.VISIBLE);
         }
 
+        final View finalConvertView = convertView;
         holder.status_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                moreOptionDialog(status, holder.card_status_container);
+                moreOptionDialog(status, finalConvertView);
             }
         });
 
@@ -1375,7 +1376,17 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
                         return;
                     }else if( which == 3) {
-
+                        Bitmap bitmap = Helper.getBitmapFromView(view);
+                        Intent intent = new Intent(context, TootActivity.class);
+                        Bundle b = new Bundle();
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        byte[] byteArray = stream.toByteArray();
+                        intent.putExtra("pictureMention", byteArray);
+                        b.putParcelable("tootMention", status);
+                        intent.putExtras(b);
+                        context.startActivity(intent);
+                        return;
                     }
                 }else {
                     if( which < 2 ){
