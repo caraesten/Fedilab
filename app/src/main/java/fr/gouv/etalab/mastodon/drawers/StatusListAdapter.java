@@ -617,6 +617,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_content.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     holder.status_content.setFocusableInTouchMode(false);
                     holder.status_content.clearFocus();
@@ -1055,7 +1056,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             statuses.removeAll(statusesToRemove);
             statusListAdapter.notifyDataSetChanged();
         }
-
         else if ( statusAction == API.StatusAction.PIN || statusAction == API.StatusAction.UNPIN ) {
             Status toCheck = null;
             for (Status checkPin: statuses) {
@@ -1071,6 +1071,40 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             else {
                 if (toCheck != null)
                     toCheck.setPinned(false);
+            }
+            statusListAdapter.notifyDataSetChanged();
+        }
+
+        if( statusAction == API.StatusAction.REBLOG){
+            for(Status status: statuses){
+                if( status.getId().equals(targetedId)) {
+                    status.setReblogs_count(status.getReblogs_count() + 1);
+                    break;
+                }
+            }
+            statusListAdapter.notifyDataSetChanged();
+        }else if( statusAction == API.StatusAction.UNREBLOG){
+            for(Status status: statuses){
+                if( status.getId().equals(targetedId)) {
+                    status.setReblogs_count(status.getReblogs_count() - 1);
+                    break;
+                }
+            }
+            statusListAdapter.notifyDataSetChanged();
+        }else if( statusAction == API.StatusAction.FAVOURITE){
+            for(Status status: statuses){
+                if( status.getId().equals(targetedId)) {
+                    status.setFavourites_count(status.getFavourites_count() + 1);
+                    break;
+                }
+            }
+            statusListAdapter.notifyDataSetChanged();
+        }else if( statusAction == API.StatusAction.UNFAVOURITE){
+            for(Status status: statuses){
+                if( status.getId().equals(targetedId)) {
+                    status.setFavourites_count(status.getFavourites_count() - 1);
+                    break;
+                }
             }
             statusListAdapter.notifyDataSetChanged();
         }
