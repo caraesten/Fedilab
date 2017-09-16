@@ -19,6 +19,9 @@ package fr.gouv.etalab.mastodon.helper;
 
 import android.app.Activity;
 import android.app.NotificationManager;
+import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.PorterDuffXfermode;
 import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
@@ -35,7 +38,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.graphics.Matrix;
@@ -77,6 +79,7 @@ import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -1605,10 +1608,10 @@ public class Helper {
      * @param view The view to convert
      * @return Bitmap
      */
-    public static Bitmap convertTootIntoBitmap(View view) {
+    public static Bitmap convertTootIntoBitmap(Context context, View view) {
 
         int status_content_v = 0, status_content_translated_v = 0, yandex_translate_v = 0, google_translate_v = 0, status_content_translated_container_v = 0;
-        int status_action_container_v = 0, status_content_container_v = 0, status_translate_v = 0, new_element_v = 0, notification_delete_v = 0;
+        int status_spoiler_button_v = 0, status_action_container_v = 0, status_content_container_v = 0, status_translate_v = 0, new_element_v = 0, notification_delete_v = 0;
         //Removes some elements
 
         TextView status_content = (TextView) view.findViewById(R.id.status_content);
@@ -1636,11 +1639,11 @@ public class Helper {
             google_translate.setVisibility(View.GONE);
         }
 
-        TextView mastalab_watermark = (TextView) view.findViewById(R.id.mastalab_watermark);
-        if( mastalab_watermark != null) {
-            mastalab_watermark.setVisibility(View.VISIBLE);
+        Button status_spoiler_button = (Button) view.findViewById(R.id.status_spoiler_button) ;
+        if( status_spoiler_button != null) {
+            status_spoiler_button_v = status_spoiler_button.getVisibility();
+            status_spoiler_button.setVisibility(View.GONE);
         }
-
         LinearLayout status_content_translated_container  = (LinearLayout) view.findViewById(R.id.status_content_translated_container);
         if( status_content_translated_container != null) {
             status_content_translated_container_v = status_content_translated_container.getVisibility();
@@ -1685,6 +1688,13 @@ public class Helper {
         else
             canvas.drawColor(Color.WHITE);
         view.draw(canvas);
+        Paint paint = new Paint();
+        int mastodonC4 = ContextCompat.getColor(context, R.color.mastodonC4);
+        paint.setColor(mastodonC4);
+        paint.setStrokeWidth(12);
+        paint.setTextSize(30);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
+        canvas.drawText("Via #Mastalab", view.getWidth()-230, view.getHeight() - 35, paint);
 
         //Restores initial visibilities
         if( status_content != null)
@@ -1695,8 +1705,6 @@ public class Helper {
             yandex_translate.setVisibility(yandex_translate_v);
         if( google_translate != null)
             google_translate.setVisibility(google_translate_v);
-        if( mastalab_watermark != null)
-            mastalab_watermark.setVisibility(View.GONE);
         if( status_content_translated_container != null)
             status_content_translated_container.setVisibility(status_content_translated_container_v);
         if( status_action_container != null)
@@ -1709,7 +1717,8 @@ public class Helper {
             new_element.setVisibility(new_element_v);
         if( notification_delete != null)
             notification_delete.setVisibility(notification_delete_v);
-
+        if( status_spoiler_button != null)
+            status_spoiler_button.setVisibility(status_spoiler_button_v);
         return returnedBitmap;
     }
 

@@ -879,7 +879,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                         context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
                         return;
                     }else if (which == 3){
-                        Bitmap bitmap = Helper.convertTootIntoBitmap(view);
+                        Bitmap bitmap = Helper.convertTootIntoBitmap(context, view);
                         Intent intent = new Intent(context, TootActivity.class);
                         Bundle b = new Bundle();
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -921,7 +921,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                         context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
                         return;
                     }else if (which == 5){
-                        Bitmap bitmap = Helper.convertTootIntoBitmap(view);
+                        Bitmap bitmap = Helper.convertTootIntoBitmap(context, view);
                         Intent intent = new Intent(context, TootActivity.class);
                         Bundle b = new Bundle();
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
