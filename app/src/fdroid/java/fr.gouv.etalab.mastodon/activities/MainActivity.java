@@ -945,8 +945,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onDestroy(){
         super.onDestroy();
-        if( streamingService != null)
-            streamingService.disconnect();
         if (mBound) {
             unbindService(serviceConnection);
             mBound = false;
