@@ -69,6 +69,7 @@ import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -1325,14 +1326,38 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         final String[] stringArray, stringArrayConf;
         final API.StatusAction[] doAction;
         if( isOwner) {
-            stringArray = context.getResources().getStringArray(R.array.more_action_owner);
-            stringArrayConf = context.getResources().getStringArray(R.array.more_action_owner_confirm);
-            doAction = new API.StatusAction[]{API.StatusAction.UNSTATUS};
+            if( status.getVisibility().equals("private") || status.getVisibility().equals("direct")){
+                String[] stringArraytmp = context.getResources().getStringArray(R.array.more_action_owner);
+                List<String> list = new ArrayList<>(Arrays.asList(stringArraytmp));
+                list.remove(3);
+                stringArray = list.toArray(new String[0]);
+                String[] stringArrayConftmp = context.getResources().getStringArray(R.array.more_action_owner_confirm);
+                list = new ArrayList<>(Arrays.asList(stringArrayConftmp));
+                list.remove(3);
+                stringArrayConf = list.toArray(new String[0]);
+                doAction = new API.StatusAction[]{API.StatusAction.UNSTATUS};
+            }else {
+                stringArray = context.getResources().getStringArray(R.array.more_action_owner);
+                stringArrayConf = context.getResources().getStringArray(R.array.more_action_owner_confirm);
+                doAction = new API.StatusAction[]{API.StatusAction.UNSTATUS};
+            }
 
         }else {
-            stringArray = context.getResources().getStringArray(R.array.more_action);
-            stringArrayConf = context.getResources().getStringArray(R.array.more_action_confirm);
-            doAction = new API.StatusAction[]{API.StatusAction.MUTE,API.StatusAction.BLOCK,API.StatusAction.REPORT};
+            if( status.getVisibility().equals("private") || status.getVisibility().equals("direct")){
+                String[] stringArraytmp = context.getResources().getStringArray(R.array.more_action);
+                List<String> list = new ArrayList<>(Arrays.asList(stringArraytmp));
+                list.remove(5);
+                stringArray = list.toArray(new String[0]);
+                String[] stringArrayConftmp = context.getResources().getStringArray(R.array.more_action_confirm);
+                list = new ArrayList<>(Arrays.asList(stringArrayConftmp));
+                list.remove(5);
+                stringArrayConf = list.toArray(new String[0]);
+                doAction = new API.StatusAction[]{API.StatusAction.MUTE, API.StatusAction.BLOCK, API.StatusAction.REPORT};
+            }else {
+                stringArray = context.getResources().getStringArray(R.array.more_action);
+                stringArrayConf = context.getResources().getStringArray(R.array.more_action_confirm);
+                doAction = new API.StatusAction[]{API.StatusAction.MUTE, API.StatusAction.BLOCK, API.StatusAction.REPORT};
+            }
         }
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, stringArray);
         builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
