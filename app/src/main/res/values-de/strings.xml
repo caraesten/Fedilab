@@ -422,4 +422,10 @@
     <string name="thanks_text">Danke an Stéphane für das Logo.</string>
 
     <string name="thanks_text_dev">Danke an @PhotonQyv für seine Beiträge.</string>
+    <string name="pin_add">Pin this toot?</string>
+    <string name="pin_remove">Unpin this toot?</string>
+    <string name="pinned_toots">Pinned</string>
+    <string name="pins_cnt">Pinned   %d</string>
+    <string name="toast_pin">The toot was pinned!</string>
+    <string name="toast_unpin">The toot was unpinned!</string>
 </resources>
