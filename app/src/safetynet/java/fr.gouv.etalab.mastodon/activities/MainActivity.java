@@ -102,6 +102,8 @@ import fr.gouv.etalab.mastodon.fragments.TabLayoutSettingsFragment;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
+import static fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment.tempNotifications;
+import static fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment.tempStatuses;
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_THEME_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_USER_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
@@ -158,16 +160,20 @@ public class MainActivity extends AppCompatActivity
                 Bundle b = intent.getExtras();
                 StreamingService.EventStreaming eventStreaming = (StreamingService.EventStreaming) intent.getSerializableExtra("eventStreaming");
                 if( eventStreaming == StreamingService.EventStreaming.NOTIFICATION){
+                    Notification notification = b.getParcelable("data");
                     if(notificationsFragment != null){
-                        Notification notification = b.getParcelable("data");
                         notificationsFragment.refresh(notification);
                         countNewNotifications++;
+                    }else {
+                        tempNotifications.add(notification);
                     }
                 }else if(eventStreaming == StreamingService.EventStreaming.UPDATE){
                     Status status = b.getParcelable("data");
                     if( homeFragment != null){
                         homeFragment.refresh(status);
                         countNewStatus++;
+                    }else {
+                        tempStatuses.add(status);
                     }
                 }else if(eventStreaming == StreamingService.EventStreaming.DELETE){
                     String id = b.getString("id");

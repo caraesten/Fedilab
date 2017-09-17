@@ -32,6 +32,7 @@ import java.util.List;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -61,6 +62,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private ListView lv_notifications;
     private String lastReadNotifications;
     private String userId;
+    public static ArrayList<Notification> tempNotifications = new ArrayList<>();
 
     public DisplayNotificationsFragment(){
     }
@@ -157,6 +159,19 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     @Override
     public void onResume() {
         super.onResume();
+        for(Notification notification: tempNotifications){
+            int index = lv_notifications.getFirstVisiblePosition() + 1;
+            View v = lv_notifications.getChildAt(0);
+            int top = (v == null) ? 0 : v.getTop();
+            notifications.add(0,notification);
+            notificationsListAdapter.notifyDataSetChanged();
+            lv_notifications.setSelectionFromTop(index, top);
+            if (textviewNoAction.getVisibility() == View.VISIBLE)
+                textviewNoAction.setVisibility(View.GONE);
+        }
+        ((MainActivity)context).updateNotifCounter();
+        tempNotifications.clear();
+        tempNotifications = new ArrayList<>();
     }
 
     @Override
