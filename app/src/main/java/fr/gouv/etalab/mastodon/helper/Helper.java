@@ -19,8 +19,12 @@ package fr.gouv.etalab.mastodon.helper;
 
 import android.app.Activity;
 import android.app.NotificationManager;
+import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.PorterDuffXfermode;
 import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.PendingIntent;
@@ -34,7 +38,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.graphics.Matrix;
@@ -76,6 +79,7 @@ import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -205,12 +209,10 @@ public class Helper {
     public static final String SET_MEDIA_URLS = "set_media_urls";
     public static final String SET_TEXT_SIZE = "set_text_size";
     public static final String SET_ICON_SIZE = "set_icon_size";
-    public static final String SET_PREVIEW_REPLIES = "set_preview_replies";
+    public static final String SET_PREVIEW_REPLIES = "set_preview_replies_";
     public static final String SET_PREVIEW_REPLIES_PP = "set_preview_replies_pp";
     public static final String SET_TRANSLATOR = "set_translator";
     public static final String SET_LED_COLOUR = "set_led_colour";
-    private static final String SET_TEMP_STATUS = "set_temp_status";
-    private static final String SET_TEMP_NOTIFICATIONS = "set_temp_notifications";
 
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
@@ -268,6 +270,7 @@ public class Helper {
 
     private static boolean menuAccountsOpened = false;
 
+    public static boolean canPin;
 
     private static final Pattern SHORTNAME_PATTERN = Pattern.compile(":( |)([-+\\w]+):");
 
@@ -525,11 +528,15 @@ public class Helper {
                 message = context.getString(R.string.toast_favourite);
             }else if(statusAction == API.StatusAction.UNFAVOURITE){
                 message = context.getString(R.string.toast_unfavourite);
+            }else if(statusAction == API.StatusAction.PIN){
+                message = context.getString(R.string.toast_pin);
+            }else if (statusAction == API.StatusAction.UNPIN){
+                message = context.getString(R.string.toast_unpin);
             }else if(statusAction == API.StatusAction.REPORT){
                 message = context.getString(R.string.toast_report);
             }else if(statusAction == API.StatusAction.UNSTATUS){
                 message = context.getString(R.string.toast_unstatus);
-            }   
+            }
         }else {
             message = context.getString(R.string.toast_error);
         }
@@ -1130,7 +1137,6 @@ public class Helper {
      * @return TextView
      */
     public static SpannableString clickableElements(final Context context, String fullContent, List<Mention> mentions, boolean useHTML) {
-
         SpannableString spannableString;
         if( useHTML) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -1571,7 +1577,7 @@ public class Helper {
                     navigationView.getMenu().findItem(R.id.nav_local).setVisible(false);
                     navigationView.getMenu().findItem(R.id.nav_global).setVisible(false);
                     navigationView.getMenu().findItem(R.id.nav_notification).setVisible(false);
-                    params.height = (int) Helper.convertDpToPixel(heightSearchdp, activity);;
+                    params.height = (int) Helper.convertDpToPixel(heightSearchdp, activity);
                     toolbar_search_container.setLayoutParams(params);
                     tableLayout.setVisibility(View.VISIBLE);
                     break;
@@ -1589,7 +1595,7 @@ public class Helper {
                     navigationView.getMenu().findItem(R.id.nav_local).setVisible(true);
                     navigationView.getMenu().findItem(R.id.nav_global).setVisible(true);
                     navigationView.getMenu().findItem(R.id.nav_notification).setVisible(true);
-                    params.height = (int) Helper.convertDpToPixel(heightSearchdp, activity);;
+                    params.height = (int) Helper.convertDpToPixel(heightSearchdp, activity);
                     toolbar_search_container.setLayoutParams(params);
                     tableLayout.setVisibility(View.VISIBLE);
                     break;
@@ -1597,123 +1603,130 @@ public class Helper {
         }
     }
 
+    /**
+     * Get a bitmap from a view
+     * @param view The view to convert
+     * @return Bitmap
+     */
+    public static Bitmap convertTootIntoBitmap(Context context, View view) {
 
-    public static int getUnreadNotifications(Context context,  String userId){
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        if( userId == null)
-            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        Gson gson = new Gson();
-        String json = sharedpreferences.getString(Helper.SET_TEMP_NOTIFICATIONS + userId, null);
-        Type type = new TypeToken<ArrayList<Notification>>() {}.getType();
-        ArrayList<Notification> notifications =  gson.fromJson(json, type);
-        return (notifications == null)?0:notifications.size();
-    }
+        int status_content_v = 0, status_content_translated_v = 0, yandex_translate_v = 0, google_translate_v = 0, status_content_translated_container_v = 0;
+        int status_spoiler_button_v = 0, status_show_more_v = 0, status_action_container_v = 0, status_content_container_v = 0, status_translate_v = 0, new_element_v = 0, notification_delete_v = 0;
+        //Removes some elements
 
+        TextView status_content = (TextView) view.findViewById(R.id.status_content);
+        if( status_content != null) {
+            status_content_v = status_content.getVisibility();
+            status_content.setVisibility(View.VISIBLE);
+        }
 
+        TextView status_content_translated = (TextView) view.findViewById(R.id.status_content_translated);
+        if( status_content_translated != null) {
+            status_content_translated_v = status_content_translated.getVisibility();
+            status_content_translated.setVisibility(View.GONE);
+        }
 
-    public static int getUnreadToots(Context context,  String userId){
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        if( userId == null)
-            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        Gson gson = new Gson();
-        String json = sharedpreferences.getString(Helper.SET_TEMP_STATUS + userId, null);
-        Type type = new TypeToken<ArrayList<Status>>() {}.getType();
-        ArrayList<Status> statuses = gson.fromJson(json, type);
-        return (statuses == null)?0:statuses.size();
-    }
+        TextView yandex_translate = (TextView) view.findViewById(R.id.yandex_translate);
+        if( yandex_translate != null) {
+            yandex_translate_v = yandex_translate.getVisibility();
+            yandex_translate.setVisibility(View.GONE);
 
+        }
 
-    public static void cacheStatus(Context context, Status status, String userId){
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        if( userId == null)
-            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        ArrayList<Status> statuses = getTempStatus(context, userId);
-        if( statuses == null)
-            statuses = new ArrayList<>();
-        if( status != null)
-            statuses.add(0,status);
-        Gson gson = new Gson();
-        String serializedAccounts = gson.toJson(statuses);
-        editor.putString(Helper.SET_TEMP_STATUS + userId, serializedAccounts);
-        editor.apply();
-    }
+        TextView google_translate = (TextView) view.findViewById(R.id.google_translate);
+        if( google_translate != null) {
+            google_translate_v = google_translate.getVisibility();
+            google_translate.setVisibility(View.GONE);
+        }
 
-    public static void cacheStatusClear(Context context, String userId){
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        if( userId == null)
-            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        ArrayList<Status> statuses = new ArrayList<>();
-        Gson gson = new Gson();
-        String serializedAccounts = gson.toJson(statuses);
-        editor.putString(Helper.SET_TEMP_STATUS + userId, serializedAccounts);
-        editor.apply();
-        //noinspection EmptyTryBlock
-        try {
-            NotificationManager notificationManager = (NotificationManager) context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-            long notif_id = Long.parseLong(userId);
-            int notificationId = ((notif_id + 2) > 2147483647) ? (int) (2147483647 - notif_id - 2) : (int) (notif_id + 2);
-            notificationManager.cancel(notificationId);
-        }catch (Exception ignored){}
-    }
+        Button status_spoiler_button = (Button) view.findViewById(R.id.status_spoiler_button) ;
+        if( status_spoiler_button != null) {
+            status_spoiler_button_v = status_spoiler_button.getVisibility();
+            status_spoiler_button.setVisibility(View.GONE);
+        }
+        LinearLayout status_content_translated_container  = (LinearLayout) view.findViewById(R.id.status_content_translated_container);
+        if( status_content_translated_container != null) {
+            status_content_translated_container_v = status_content_translated_container.getVisibility();
+            status_content_translated_container.setVisibility(View.VISIBLE);
+        }
 
-    public static ArrayList<Status> getTempStatus(Context context, String userId){
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        if( userId == null)
-            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        Gson gson = new Gson();
-        String json = sharedpreferences.getString(Helper.SET_TEMP_STATUS + userId, null);
-        Type type = new TypeToken<ArrayList<Status>>() {}.getType();
-        return gson.fromJson(json, type);
-    }
+        LinearLayout status_action_container  = (LinearLayout) view.findViewById(R.id.status_action_container);
+        if( status_action_container != null) {
+            status_action_container_v = status_action_container.getVisibility();
+            status_action_container.setVisibility(View.GONE);
+        }
 
+        LinearLayout status_content_container  = (LinearLayout) view.findViewById(R.id.status_content_container);
+        if( status_content_container != null) {
+            status_content_container_v = status_content_container.getVisibility();
+            status_content_container.setVisibility(View.VISIBLE);
+        }
 
-    public static void cacheNotifications(Context context, Notification notification, String userId){
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        if( userId == null)
-            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        ArrayList<Notification> notifications = getTempNotification(context, userId);
-        if( notifications == null)
-            notifications = new ArrayList<>();
-        if( notification != null)
-            notifications.add(0,notification);
-        Gson gson = new Gson();
-        String serializedAccounts = gson.toJson(notifications);
-        editor.putString(Helper.SET_TEMP_NOTIFICATIONS + userId, serializedAccounts);
-        editor.apply();
-    }
+        FloatingActionButton status_translate  = (FloatingActionButton) view.findViewById(R.id.status_translate);
+        if( status_translate != null) {
+            status_translate_v = status_translate.getVisibility();
+            status_translate.setVisibility(View.GONE);
+        }
 
-    public static void cacheNotificationsClear(Context context, String userId){
+        ImageView new_element = (ImageView) view.findViewById(R.id.new_element);
+        if( new_element != null) {
+            new_element_v = new_element.getVisibility();
+            new_element.setVisibility(View.GONE);
+        }
 
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        if( userId == null)
-            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        ArrayList<Notification> notifications = new ArrayList<>();
-        Gson gson = new Gson();
-        String serializedAccounts = gson.toJson(notifications);
-        editor.putString(Helper.SET_TEMP_NOTIFICATIONS + userId, serializedAccounts);
-        editor.apply();
-        //noinspection EmptyTryBlock
-        try {
-            NotificationManager notificationManager = (NotificationManager) context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-            long notif_id = Long.parseLong(userId);
-            int notificationId = ((notif_id + 1) > 2147483647) ? (int) (2147483647 - notif_id - 1) : (int) (notif_id + 1);
-            notificationManager.cancel(notificationId);
-        }catch (Exception ignored){}
+        ImageView notification_delete = (ImageView) view.findViewById(R.id.notification_delete);
+        if( notification_delete != null) {
+            notification_delete_v = notification_delete.getVisibility();
+            notification_delete.setVisibility(View.GONE);
+        }
+        Button status_show_more = (Button) view.findViewById(R.id.status_show_more);
+        if( status_show_more != null){
+            status_show_more_v = status_show_more.getVisibility();
+            status_show_more.setVisibility(View.GONE);
+        }
 
-    }
+        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(returnedBitmap);
+        Drawable bgDrawable =view.getBackground();
+        if (bgDrawable!=null)
+            bgDrawable.draw(canvas);
+        else
+            canvas.drawColor(Color.WHITE);
+        view.draw(canvas);
+        Paint paint = new Paint();
+        int mastodonC4 = ContextCompat.getColor(context, R.color.mastodonC4);
+        paint.setColor(mastodonC4);
+        paint.setStrokeWidth(12);
+        paint.setTextSize(30);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
+        canvas.drawText("Via #Mastalab", view.getWidth()-230, view.getHeight() - 35, paint);
 
-    public static ArrayList<Notification> getTempNotification(Context context, String userId){
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        if( userId == null)
-            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        Gson gson = new Gson();
-        String json = sharedpreferences.getString(Helper.SET_TEMP_NOTIFICATIONS + userId, null);
-        Type type = new TypeToken<ArrayList<Notification>>() {}.getType();
-        return gson.fromJson(json, type);
+        //Restores initial visibilities
+        if( status_content != null)
+            status_content.setVisibility(status_content_v);
+        if( status_content_translated != null)
+            status_content_translated.setVisibility(status_content_translated_v);
+        if( yandex_translate != null)
+            yandex_translate.setVisibility(yandex_translate_v);
+        if( google_translate != null)
+            google_translate.setVisibility(google_translate_v);
+        if( status_content_translated_container != null)
+            status_content_translated_container.setVisibility(status_content_translated_container_v);
+        if( status_action_container != null)
+            status_action_container.setVisibility(status_action_container_v);
+        if( status_content_container != null)
+            status_content_container.setVisibility(status_content_container_v);
+        if( status_translate != null)
+            status_translate.setVisibility(status_translate_v);
+        if( new_element != null)
+            new_element.setVisibility(new_element_v);
+        if( notification_delete != null)
+            notification_delete.setVisibility(notification_delete_v);
+        if( status_spoiler_button != null)
+            status_spoiler_button.setVisibility(status_spoiler_button_v);
+        if( status_show_more != null)
+            status_show_more.setVisibility(status_show_more_v);
+        return returnedBitmap;
     }
 
 }

@@ -71,16 +71,25 @@
                     style="?attr/shapeBorder"
                     android:visibility="gone"
                     tools:ignore="ContentDescription" />
-
                 <ImageView
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="70dp"
                     android:id="@+id/new_element"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     android:src="@drawable/ic_fiber_new"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:ignore="ContentDescription" />
+                <android.support.design.widget.FloatingActionButton
+                    android:layout_below="@+id/new_element"
+                    android:visibility="gone"
+                    android:id="@+id/status_translate"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerHorizontal="true"
+                    app:fabSize="mini"
+                    android:layout_marginTop="10dp"
+                    app:srcCompat="@drawable/ic_translate" />
             </RelativeLayout>
             <LinearLayout
                 android:layout_marginStart="5dp"
@@ -198,6 +207,7 @@
                             android:text="Powered by Google Translate"
                             android:layout_height="wrap_content"
                             tools:ignore="HardcodedText" />
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -332,17 +342,6 @@
 
             </LinearLayout>
         </LinearLayout>
-        <TextView
-            android:visibility="gone"
-            android:text="@string/translate_toot"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center_vertical|end"
-            android:id="@+id/status_translate"
-            android:textColor="@color/mastodonC4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
         <LinearLayout
             android:id="@+id/status_action_container"
             android:layout_width="match_parent"
@@ -379,6 +378,14 @@
                 android:layout_height="20dp"
                 android:src="@drawable/ic_reply"
                 tools:ignore="ContentDescription" />
+            <ImageView
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:id="@+id/status_pin"
+                android:layout_gravity="center_vertical"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_action_pin_dark"/>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"

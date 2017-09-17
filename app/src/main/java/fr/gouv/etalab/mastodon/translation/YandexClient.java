@@ -34,6 +34,7 @@ class YandexClient {
 
     private static String getAbsoluteUrl(String content, String toLanguage) {
         String key  = "key=" + YANDEX_KEY + "&";
+        toLanguage = toLanguage.replace("null","");
         String lang = "lang=" + toLanguage + "&";
         String text;
         try {

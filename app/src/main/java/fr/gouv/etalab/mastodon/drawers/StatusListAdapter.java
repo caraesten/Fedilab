@@ -14,7 +14,9 @@ package fr.gouv.etalab.mastodon.drawers;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.graphics.Paint;
+import android.graphics.Bitmap;
+import android.os.Environment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -61,7 +63,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -70,7 +74,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
-
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
@@ -78,12 +81,14 @@ import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
 import fr.gouv.etalab.mastodon.translation.GoogleTranslateQuery;
 import fr.gouv.etalab.mastodon.translation.YandexQuery;
@@ -91,30 +96,34 @@ import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
-import static fr.gouv.etalab.mastodon.helper.Helper.shortnameToUnicode;
 
 
 /**
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class StatusListAdapter extends BaseAdapter implements OnPostActionInterface, OnTranslatedInterface {
+public class StatusListAdapter extends BaseAdapter implements OnPostActionInterface, OnTranslatedInterface, OnRetrieveFeedsInterface {
 
     private Context context;
     private List<Status> statuses;
     private LayoutInflater layoutInflater;
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
+    private ViewHolder holder;
     private boolean isOnWifi;
     private int translator;
     private int behaviorWithAttachments;
     private StatusListAdapter statusListAdapter;
     private final int REBLOG = 1;
     private final int FAVOURITE = 2;
+    private final int PIN = 3;
+    private final int UNPIN = 4;
     private RetrieveFeedsAsyncTask.Type type;
     private String targetedId;
     private HashMap<String, String> urlConversion;
     private HashMap<String, String> tagConversion;
+
+    private List<Status> pins;
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
         this.context = context;
@@ -126,6 +135,10 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         this.type = type;
         this.targetedId = targetedId;
         this.translator = translator;
+
+        pins = new ArrayList<>();
+
+
     }
 
 
@@ -165,7 +178,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 
         final Status status = statuses.get(position);
-        final ViewHolder holder;
+
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.drawer_status, parent, false);
             holder = new ViewHolder();
@@ -181,6 +194,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_account_profile_boost_by = (ImageView) convertView.findViewById(R.id.status_account_profile_boost_by);
             holder.status_favorite_count = (TextView) convertView.findViewById(R.id.status_favorite_count);
             holder.status_reblog_count = (TextView) convertView.findViewById(R.id.status_reblog_count);
+            holder.status_pin = (ImageView) convertView.findViewById(R.id.status_pin);
             holder.status_toot_date = (TextView) convertView.findViewById(R.id.status_toot_date);
             holder.status_show_more = (Button) convertView.findViewById(R.id.status_show_more);
             holder.status_more = (ImageView) convertView.findViewById(R.id.status_more);
@@ -199,7 +213,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_prev4_container = (RelativeLayout) convertView.findViewById(R.id.status_prev4_container);
             holder.status_reply = (ImageView) convertView.findViewById(R.id.status_reply);
             holder.status_privacy = (ImageView) convertView.findViewById(R.id.status_privacy);
-            holder.status_translate = (TextView) convertView.findViewById(R.id.status_translate);
+            holder.status_translate = (FloatingActionButton) convertView.findViewById(R.id.status_translate);
             holder.status_content_translated_container = (LinearLayout) convertView.findViewById(R.id.status_content_translated_container);
             holder.main_container = (LinearLayout) convertView.findViewById(R.id.main_container);
             holder.status_spoiler_container = (LinearLayout) convertView.findViewById(R.id.status_spoiler_container);
@@ -218,6 +232,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }
 
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
 
         //Display a preview for accounts that have replied *if enabled and only for home timeline*
         if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
@@ -267,7 +283,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         if( status.isNew())
             holder.new_element.setVisibility(View.VISIBLE);
         else
-            holder.new_element.setVisibility(View.GONE);
+            holder.new_element.setVisibility(View.INVISIBLE);
         int iconSizePercent = sharedpreferences.getInt(Helper.SET_ICON_SIZE, 130);
         int textSizePercent = sharedpreferences.getInt(Helper.SET_TEXT_SIZE, 110);
         
@@ -310,12 +326,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 statusListAdapter.notifyDataSetChanged();
             }
         });
-        holder.status_translate.setPaintFlags(holder.status_translate.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        if( currentLocale != null && status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale) && !status.getLanguage().trim().equals("null")){
-            if (translator != Helper.TRANS_NONE)
-                holder.status_translate.setVisibility(View.VISIBLE);
-            else
-                holder.status_translate.setVisibility(View.GONE);
+        if( translator != Helper.TRANS_NONE && currentLocale != null && status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale)){
+            holder.status_translate.setVisibility(View.VISIBLE);
         }else {
             holder.status_translate.setVisibility(View.GONE);
         }
@@ -431,10 +443,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_content_translated_container.setVisibility(View.GONE);
         }
 
-        //Hides action bottom bar action when looking to status trough accounts
-        if( type == RetrieveFeedsAsyncTask.Type.USER){
-            holder.status_action_container.setVisibility(View.GONE);
-        }
         //Manages theme for icon colors
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_DARK){
@@ -446,6 +454,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_fav_black,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_action_pin_dark, R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_translate,R.color.dark_text);
@@ -458,6 +467,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.black);
             changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.black);
             changeDrawableColor(context, R.drawable.ic_fav_black,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_action_pin_dark, R.color.black);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.white);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.white);
             changeDrawableColor(context, R.drawable.ic_translate,R.color.white);
@@ -465,7 +475,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
         //Redraws top icons (boost/reply)
         final float scale = context.getResources().getDisplayMetrics().density;
-        if( !status.getIn_reply_to_account_id().equals("null") || !status.getIn_reply_to_id().equals("null") ){
+        if( (status.getIn_reply_to_account_id()!= null && !status.getIn_reply_to_account_id().equals("null")) || (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null")) ){
             Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_reply);
             img.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
             holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
@@ -568,6 +578,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
 
         if( status.getContent_translated() != null && status.getContent_translated().length() > 0){
+            holder.status_content_translated.setMovementMethod(null);
             SpannableString spannableStringTrans = Helper.clickableElements(context, status.getContent_translated(),
                     status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), false);
             holder.status_content_translated.setText(spannableStringTrans, TextView.BufferType.SPANNABLE);
@@ -594,6 +605,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         content = content.replaceAll("<p>","");
         if( content.endsWith("<br/><br/>") )
             content = content.substring(0,content.length() -10);
+        holder.status_content.setMovementMethod(null);
         final SpannableString spannableString = Helper.clickableElements(context,content,
                 status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), true);
         holder.status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
@@ -607,6 +619,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_content.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     holder.status_content.setFocusableInTouchMode(false);
                     holder.status_content.clearFocus();
@@ -713,6 +726,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
         imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
         imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+
         holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
         holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
 
@@ -720,6 +734,34 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_show_more.setTextColor(ContextCompat.getColor(context, R.color.white));
             holder.status_spoiler_button.setTextColor(ContextCompat.getColor(context, R.color.white));
         }
+
+        boolean isOwner = status.getAccount().getId().equals(userId);
+
+        // Pinning toots is only available on Mastodon 1._6_.0 instances.
+        if (isOwner && Helper.canPin && (status.getVisibility().equals("public") || status.getVisibility().equals("unlisted"))) {
+            Drawable imgPin;
+            if( status.isPinned())
+                imgPin = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_yellow);
+            else
+                imgPin = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_dark);
+            imgPin.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+            holder.status_pin.setImageDrawable(imgPin);
+            holder.status_pin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    /* Code is in for displayConfirmationDialog() but we don't call it.
+                     * Need to make sure we can successfully get a pinned toots list by
+                     * this point, after async call earlier.
+                     */
+                    pinAction(status);
+                }
+            });
+            holder.status_pin.setVisibility(View.VISIBLE);
+        }
+        else {
+            holder.status_pin.setVisibility(View.GONE);
+        }
+
         holder.status_show_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -777,6 +819,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     reblogAction(status);
             }
         });
+
+
         switch (status.getVisibility()){
             case "direct":
             case "private":
@@ -790,10 +834,11 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 holder.status_reblog_count.setVisibility(View.VISIBLE);
         }
 
+        final View finalConvertView = convertView;
         holder.status_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                moreOptionDialog(status);
+                moreOptionDialog(status, finalConvertView);
             }
         });
 
@@ -858,7 +903,22 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         statusListAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Pin or unpin a status
+     * @param status Status
+     */
+    private void pinAction(Status status) {
 
+        if (status.isPinned()) {
+            new PostActionAsyncTask(context, API.StatusAction.UNPIN, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            holder.status_pin.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_action_pin));
+        } else {
+            new PostActionAsyncTask(context, API.StatusAction.PIN, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            holder.status_pin.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_action_pin_yellow));
+        }
+
+        statusListAdapter.notifyDataSetChanged();
+    }
 
     private void loadAttachments(final Status status, ViewHolder holder){
         List<Attachment> attachments = status.getMedia_attachments();
@@ -943,11 +1003,39 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_show_more.setVisibility(View.GONE);
     }
 
+
+
+    @Override
+    public void onRetrieveFeeds(APIResponse apiResponse, boolean refreshData) {
+        if( apiResponse.getError() != null){
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages)
+                Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        pins = apiResponse.getStatuses();
+
+        for (Status haystack : statuses)
+        {
+            for (Status pin : pins) {
+
+                if (haystack.getId().equals(pin.getId()))
+                {
+                    haystack.setPinned(true);
+                    break;
+                }
+            }
+        }
+    }
+
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
 
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
         if( error != null){
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
                 Toast.makeText(context, error.getError(),Toast.LENGTH_LONG).show();
@@ -969,6 +1057,58 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     statusesToRemove.add(status);
             }
             statuses.removeAll(statusesToRemove);
+            statusListAdapter.notifyDataSetChanged();
+        }
+        else if ( statusAction == API.StatusAction.PIN || statusAction == API.StatusAction.UNPIN ) {
+            Status toCheck = null;
+            for (Status checkPin: statuses) {
+                if (checkPin.getId().equals(targetedId)) {
+                    toCheck = checkPin;
+                    break;
+                }
+            }
+            if (statusAction == API.StatusAction.PIN) {
+                if (toCheck != null)
+                    toCheck.setPinned(true);
+            }
+            else {
+                if (toCheck != null)
+                    toCheck.setPinned(false);
+            }
+            statusListAdapter.notifyDataSetChanged();
+        }
+
+        if( statusAction == API.StatusAction.REBLOG){
+            for(Status status: statuses){
+                if( status.getId().equals(targetedId)) {
+                    status.setReblogs_count(status.getReblogs_count() + 1);
+                    break;
+                }
+            }
+            statusListAdapter.notifyDataSetChanged();
+        }else if( statusAction == API.StatusAction.UNREBLOG){
+            for(Status status: statuses){
+                if( status.getId().equals(targetedId)) {
+                    status.setReblogs_count(status.getReblogs_count() - 1);
+                    break;
+                }
+            }
+            statusListAdapter.notifyDataSetChanged();
+        }else if( statusAction == API.StatusAction.FAVOURITE){
+            for(Status status: statuses){
+                if( status.getId().equals(targetedId)) {
+                    status.setFavourites_count(status.getFavourites_count() + 1);
+                    break;
+                }
+            }
+            statusListAdapter.notifyDataSetChanged();
+        }else if( statusAction == API.StatusAction.UNFAVOURITE){
+            for(Status status: statuses){
+                if( status.getId().equals(targetedId)) {
+                    status.setFavourites_count(status.getFavourites_count() - 1);
+                    break;
+                }
+            }
             statusListAdapter.notifyDataSetChanged();
         }
     }
@@ -1096,8 +1236,9 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         ImageView status_prev4_play;
         RelativeLayout status_prev4_container;
         ImageView status_reply;
+        ImageView status_pin;
         ImageView status_privacy;
-        TextView status_translate;
+        FloatingActionButton status_translate;
         LinearLayout status_container2;
         LinearLayout status_container3;
         LinearLayout main_container;
@@ -1131,7 +1272,12 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 title = context.getString(R.string.reblog_remove);
             else
                 title = context.getString(R.string.reblog_add);
+        }else if ( action == PIN) {
+            title = context.getString(R.string.pin_add);
+        }else if (action == UNPIN) {
+            title = context.getString(R.string.pin_remove);
         }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -1148,6 +1294,10 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         reblogAction(status);
                     else if( action == FAVOURITE)
                         favouriteAction(status);
+                    else if ( action == PIN)
+                        pinAction(status);
+                    else if ( action == UNPIN)
+                        pinAction(status);
                     dialog.dismiss();
                 }
             })
@@ -1165,14 +1315,13 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
      * More option for status (report / remove status / Mute / Block)
      * @param status Status current status
      */
-    private void moreOptionDialog(final Status status){
+    private void moreOptionDialog(final Status status, final View view){
 
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         final boolean isOwner = status.getAccount().getId().equals(userId);
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
-        //builderSingle.setTitle(R.string.make_a_choice);
         final String[] stringArray, stringArrayConf;
         final API.StatusAction[] doAction;
         if( isOwner) {
@@ -1218,12 +1367,34 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         Toast.makeText(context,R.string.clipboard,Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                         return;
-                    }else {
+                    }else if( which == 2) {
                         Intent sendIntent = new Intent(Intent.ACTION_SEND);
                         sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
                         sendIntent.putExtra(Intent.EXTRA_TEXT, status.getUrl());
                         sendIntent.setType("text/plain");
                         context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
+                        return;
+                    }else if( which == 3) {
+                        Bitmap bitmap = Helper.convertTootIntoBitmap(context, view);
+                        Intent intent = new Intent(context, TootActivity.class);
+                        Bundle b = new Bundle();
+                        String fname = "tootmention_" + status.getId() +".jpg";
+                        File file = new File (context.getCacheDir() + "/", fname);
+                        if (file.exists ()) //noinspection ResultOfMethodCallIgnored
+                            file.delete ();
+                        try {
+                            FileOutputStream out = new FileOutputStream(file);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                            out.flush();
+                            out.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        b.putString("fileMention", fname);
+                        b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
+                        b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
+                        intent.putExtras(b);
+                        context.startActivity(intent);
                         return;
                     }
                 }else {
@@ -1248,12 +1419,34 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         Toast.makeText(context,R.string.clipboard,Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                         return;
-                    }else {
+                    }else if( which == 4 ){
                         Intent sendIntent = new Intent(Intent.ACTION_SEND);
                         sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
                         sendIntent.putExtra(Intent.EXTRA_TEXT, status.getUrl());
                         sendIntent.setType("text/plain");
                         context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
+                        return;
+                    }else if( which == 5 ){
+                        Bitmap bitmap = Helper.convertTootIntoBitmap(context, view);
+                        Intent intent = new Intent(context, TootActivity.class);
+                        Bundle b = new Bundle();
+                        String fname = "tootmention_" + status.getId() +".jpg";
+                        File file = new File (context.getCacheDir() + "/", fname);
+                        if (file.exists ()) //noinspection ResultOfMethodCallIgnored
+                            file.delete ();
+                        try {
+                            FileOutputStream out = new FileOutputStream(file);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                            out.flush();
+                            out.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        b.putString("fileMention", fname);
+                        b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
+                        b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
+                        intent.putExtras(b);
+                        context.startActivity(intent);
                         return;
                     }
                 }

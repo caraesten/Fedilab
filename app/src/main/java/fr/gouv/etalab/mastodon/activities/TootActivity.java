@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -44,6 +45,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -81,6 +83,7 @@ import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -147,6 +150,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private EditText toot_cw_content;
     private LinearLayout toot_reply_content_container;
     private Status tootReply = null;
+    private String tootMention = null;
+    private String urlMention = null;
+    private String fileMention = null;
     private String sharedContent, sharedSubject, sharedContentIni;
     private CheckBox toot_sensitive;
     public long currentToId;
@@ -252,16 +258,16 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         restored = -1;
         if(b != null) {
             tootReply = b.getParcelable("tootReply");
+            tootMention = b.getString("tootMention", null);
+            urlMention = b.getString("urlMention", null);
+            fileMention = b.getString("fileMention", null);
             sharedContent = b.getString("sharedContent", null);
             sharedContentIni = b.getString("sharedContent", null);
             sharedSubject = b.getString("sharedSubject", null);
             // ACTION_SEND route
             if (b.getInt("uriNumber", 0) == 1) {
-
                 Uri fileUri = b.getParcelable("sharedUri");
-
-                if (fileUri != null)
-                {
+                if (fileUri != null) {
                     sharedUri.add(fileUri);
                 }
             }
@@ -290,6 +296,23 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         }
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        if( tootMention != null && urlMention != null && fileMention != null) {
+            Bitmap pictureMention = BitmapFactory.decodeFile(getCacheDir() + "/" + fileMention);
+            if (pictureMention != null) {
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                pictureMention.compress(Bitmap.CompressFormat.PNG, 0, bos);
+                byte[] bitmapdata = bos.toByteArray();
+                ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
+                toot_picture_container.setVisibility(View.VISIBLE);
+                loading_picture.setVisibility(View.VISIBLE);
+                picture_scrollview.setVisibility(View.VISIBLE);
+                toot_picture.setEnabled(false);
+                new UploadActionAsyncTask(getApplicationContext(), bs, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+            toot_content.setText(String.format("\n\nvia @%s\n\n%s\n\n", tootMention, urlMention));
+            toot_space_left.setText(String.valueOf(toot_content.length()));
+        }
+
         Account account = new AccountDAO(getApplicationContext(),db).getAccountByID(userId);
         String url = account.getAvatar();
         if( url.startsWith("/") ){
@@ -346,6 +369,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                                     f = new FileOutputStream(getCacheDir() + URLUtil.guessFileName(image, null, null));
                                     picture_scrollview.setVisibility(View.VISIBLE);
                                     InputStream bis = new ByteArrayInputStream(binaryData);
+                                    toot_picture_container.setVisibility(View.VISIBLE);
                                     loading_picture.setVisibility(View.VISIBLE);
                                     toot_picture.setEnabled(false);
                                     new UploadActionAsyncTask(getApplicationContext(),bis,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -640,7 +664,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
                     try {
                         InputStream inputStream = getContentResolver().openInputStream(fileUri);
+                        toot_picture_container.setVisibility(View.VISIBLE);
                         loading_picture.setVisibility(View.VISIBLE);
+                        picture_scrollview.setVisibility(View.VISIBLE);
                         toot_picture.setEnabled(false);
                         new UploadActionAsyncTask(getApplicationContext(), inputStream, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         count++;
@@ -669,6 +695,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             }
             try {
                 InputStream inputStream = getContentResolver().openInputStream(data.getData());
+                toot_picture_container.setVisibility(View.VISIBLE);
                 loading_picture.setVisibility(View.VISIBLE);
                 toot_picture.setEnabled(false);
                 new UploadActionAsyncTask(getApplicationContext(),inputStream,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);

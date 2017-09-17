@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.drawers;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.graphics.Bitmap;
 import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,6 +31,7 @@ import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +51,9 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -489,10 +494,11 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
         });
         holder.notification_account_username.setText( String.format("@%s",notification.getAccount().getUsername()));
 
+        final View finalConvertView = convertView;
         holder.status_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                moreOptionDialog(status);
+                moreOptionDialog(status, finalConvertView);
             }
         });
 
@@ -642,6 +648,39 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             notifications.removeAll(notificationsToRemove);
             notificationsListAdapter.notifyDataSetChanged();
         }
+        if( statusAction == API.StatusAction.REBLOG){
+            for(Notification notification: notifications){
+                if( notification.getStatus().getId().equals(targetedId)) {
+                    notification.getStatus().setReblogs_count(notification.getStatus().getReblogs_count() + 1);
+                    break;
+                }
+            }
+            notificationsListAdapter.notifyDataSetChanged();
+        }else if( statusAction == API.StatusAction.UNREBLOG){
+            for(Notification notification: notifications){
+                if( notification.getStatus().getId().equals(targetedId)) {
+                    notification.getStatus().setReblogs_count(notification.getStatus().getReblogs_count() - 1);
+                    break;
+                }
+            }
+            notificationsListAdapter.notifyDataSetChanged();
+        }else if( statusAction == API.StatusAction.FAVOURITE){
+            for(Notification notification: notifications){
+                if( notification.getStatus().getId().equals(targetedId)) {
+                    notification.getStatus().setFavourites_count(notification.getStatus().getFavourites_count() + 1);
+                    break;
+                }
+            }
+            notificationsListAdapter.notifyDataSetChanged();
+        }else if( statusAction == API.StatusAction.UNFAVOURITE){
+            for(Notification notification: notifications){
+                if( notification.getStatus().getId().equals(targetedId)) {
+                    notification.getStatus().setFavourites_count(notification.getStatus().getFavourites_count() - 1);
+                    break;
+                }
+            }
+            notificationsListAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -783,7 +822,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
      * More option for status (report / remove status / Mute / Block)
      * @param status Status current status
      */
-    private void moreOptionDialog(final Status status){
+    private void moreOptionDialog(final Status status, final View view){
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
@@ -835,12 +874,34 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                         Toast.makeText(context,R.string.clipboard,Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                         return;
-                    }else {
+                    }else if( which == 2) {
                         Intent sendIntent = new Intent(Intent.ACTION_SEND);
                         sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
                         sendIntent.putExtra(Intent.EXTRA_TEXT, status.getUrl());
                         sendIntent.setType("text/plain");
                         context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
+                        return;
+                    }else if (which == 3){
+                        Bitmap bitmap = Helper.convertTootIntoBitmap(context, view);
+                        Intent intent = new Intent(context, TootActivity.class);
+                        Bundle b = new Bundle();
+                        String fname = "tootmention_" + status.getId() +".jpg";
+                        File file = new File (context.getCacheDir() + "/", fname);
+                        if (file.exists ()) //noinspection ResultOfMethodCallIgnored
+                            file.delete ();
+                        try {
+                            FileOutputStream out = new FileOutputStream(file);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                            out.flush();
+                            out.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        b.putString("fileMention", fname);
+                        b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
+                        b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
+                        intent.putExtras(b);
+                        context.startActivity(intent);
                         return;
                     }
                 }else {
@@ -865,12 +926,34 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                         Toast.makeText(context,R.string.clipboard,Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                         return;
-                    }else {
+                    }else if (which == 4){
                         Intent sendIntent = new Intent(Intent.ACTION_SEND);
                         sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
                         sendIntent.putExtra(Intent.EXTRA_TEXT, status.getUrl());
                         sendIntent.setType("text/plain");
                         context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
+                        return;
+                    }else if (which == 5){
+                        Bitmap bitmap = Helper.convertTootIntoBitmap(context, view);
+                        Intent intent = new Intent(context, TootActivity.class);
+                        Bundle b = new Bundle();
+                        String fname = "tootmention_" + status.getId() +".jpg";
+                        File file = new File (context.getCacheDir() + "/", fname);
+                        if (file.exists ()) //noinspection ResultOfMethodCallIgnored
+                            file.delete ();
+                        try {
+                            FileOutputStream out = new FileOutputStream(file);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                            out.flush();
+                            out.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        b.putString("fileMention", fname);
+                        b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
+                        b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
+                        intent.putExtras(b);
+                        context.startActivity(intent);
                         return;
                     }
                 }
