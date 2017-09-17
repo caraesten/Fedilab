@@ -69,6 +69,7 @@ public class API {
     private Attachment attachment;
     private List<Account> accounts;
     private List<Status> statuses;
+    private List<Relationship> relationships;
     private List<Notification> notifications;
     private int tootPerPage, accountPerPage, notificationPerPage;
     private int actionCode;
@@ -268,6 +269,42 @@ public class API {
             }
         });
         return relationship;
+    }
+
+    /**
+     * Returns a relationship between the authenticated account and an account
+     * @param accounts ArrayList<Account> accounts fetched
+     * @return Relationship entity
+     */
+    public APIResponse getRelationship(List<Account> accounts) {
+
+        relationship = new Relationship();
+        RequestParams params = new RequestParams();
+        if( accounts != null && accounts.size() > 0 ) {
+            for(Account account: accounts) {
+                params.add("id[]", account.getId());
+            }
+        }
+        get("/accounts/relationships", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Relationship relationship = parseRelationshipResponse(response);
+                relationships.add(relationship);
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
+            }
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
+                relationships = parseRelationshipResponse(response);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
+                setError(statusCode, error);
+            }
+        });
+        return apiResponse;
     }
 
     /**
@@ -1399,29 +1436,47 @@ public class API {
 
 
     /**
-     * Parse json response for list of accounts which could contain the developer name
-     * @param jsonArray JSONArray
-     * @return List<Account>
+     * Parse json response an unique relationship
+     * @param resobj JSONObject
+     * @return Relationship
      */
-    private List<Account> parseDeveloperResponse(JSONArray jsonArray){
+    private Relationship parseRelationshipResponse(JSONObject resobj){
 
-        List<Account> accounts = new ArrayList<>();
+        Relationship relationship = new Relationship();
         try {
-            int i = 0;
-            Account account = null;
-            while (i < jsonArray.length() ) {
-                JSONObject resobj = jsonArray.getJSONObject(i);
-                account = parseAccountResponse(context, resobj);
-                if( account.getAcct().contains(Helper.DEVELOPER_INSTANCE))
-                    accounts.add(account);
-                i++;
-            }
-            if( accounts.size() == 0)
-                accounts.add(account);
+            relationship.setId(resobj.get("id").toString());
+            relationship.setFollowing(Boolean.valueOf(resobj.get("following").toString()));
+            relationship.setFollowed_by(Boolean.valueOf(resobj.get("followed_by").toString()));
+            relationship.setBlocking(Boolean.valueOf(resobj.get("blocking").toString()));
+            relationship.setMuting(Boolean.valueOf(resobj.get("muting").toString()));
+            relationship.setRequested(Boolean.valueOf(resobj.get("requested").toString()));
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return accounts;
+        return relationship;
+    }
+
+
+    /**
+     * Parse json response for list of relationship
+     * @param jsonArray JSONArray
+     * @return List<Relationship>
+     */
+    private List<Relationship> parseRelationshipResponse(JSONArray jsonArray){
+
+        List<Relationship> relationships = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length() ) {
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                Relationship relationship = parseRelationshipResponse(resobj);
+                relationships.add(relationship);
+                i++;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return relationships;
     }
 
     /**
@@ -1469,26 +1524,7 @@ public class API {
         return attachment;
     }
 
-    /**
-     * Parse json response an unique relationship
-     * @param resobj JSONObject
-     * @return Relationship
-     */
-    private Relationship parseRelationshipResponse(JSONObject resobj){
 
-        Relationship relationship = new Relationship();
-        try {
-            relationship.setId(resobj.get("id").toString());
-            relationship.setFollowing(Boolean.valueOf(resobj.get("following").toString()));
-            relationship.setFollowed_by(Boolean.valueOf(resobj.get("followed_by").toString()));
-            relationship.setBlocking(Boolean.valueOf(resobj.get("blocking").toString()));
-            relationship.setMuting(Boolean.valueOf(resobj.get("muting").toString()));
-            relationship.setRequested(Boolean.valueOf(resobj.get("requested").toString()));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return relationship;
-    }
 
     /**
      * Parse json response an unique notification

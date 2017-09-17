@@ -45,12 +45,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveManyRelationshipsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveRelationshipAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.Entities.Relationship;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveManyRelationshipsInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRelationshipInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
@@ -60,7 +66,7 @@ import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
  * Created by Thomas on 27/04/2017.
  * Adapter for accounts
  */
-public class AccountsListAdapter extends BaseAdapter implements OnPostActionInterface {
+public class AccountsListAdapter extends BaseAdapter implements OnPostActionInterface, OnRetrieveRelationshipInterface, OnRetrieveManyRelationshipsInterface {
 
     private List<Account> accounts;
     private LayoutInflater layoutInflater;
@@ -76,6 +82,17 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
         this.action = action;
         this.accountsListAdapter = this;
         this.targetedId = targetedId;
+    }
+
+
+    @Override
+    public void onRetrieveRelationship(APIResponse apiResponse) {
+
+    }
+
+    @Override
+    public void onRetrieveRelationship(Relationship relationship, Error error) {
+
     }
 
     public enum action{
@@ -146,7 +163,9 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
             account.setFollowType(Account.followAction.BLOCK);
         else if( action == RetrieveAccountsAsyncTask.Type.MUTED)
             account.setFollowType(Account.followAction.MUTE);
-
+        else {
+            new RetrieveManyRelationshipsAsyncTask(context, accounts,AccountsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
         if (account.getFollowType() == Account.followAction.NOTHING){
             holder.account_follow.setVisibility(View.GONE);
             holder.account_follow_request.setVisibility(View.GONE);
