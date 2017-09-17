@@ -155,6 +155,17 @@
                 android:visibility="gone"/>
         </LinearLayout>
         <android.support.design.widget.FloatingActionButton
+            android:id="@+id/account_follow"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            app:fabSize="mini"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="center"
+            android:layout_gravity="center"
+            android:gravity="center"
+            />
+        <android.support.design.widget.FloatingActionButton
             android:layout_marginTop="20dp"
             android:visibility="gone"
             android:id="@+id/account_action_block"
