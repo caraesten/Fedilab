@@ -29,6 +29,7 @@ public class APIResponse {
     private List<Status> statuses = null;
     private List<Context> contexts = null;
     private List<Notification> notifications = null;
+    private List<Relationship> relationships = null;
     private fr.gouv.etalab.mastodon.client.Entities.Error error = null;
     private String since_id, max_id;
     private Instance instance;
@@ -95,5 +96,13 @@ public class APIResponse {
 
     public void setInstance(Instance instance) {
         this.instance = instance;
+    }
+
+    public List<Relationship> getRelationships() {
+        return relationships;
+    }
+
+    public void setRelationships(List<Relationship> relationships) {
+        this.relationships = relationships;
     }
 }

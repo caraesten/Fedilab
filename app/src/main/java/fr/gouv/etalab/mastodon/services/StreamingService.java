@@ -97,6 +97,9 @@ public class StreamingService extends Service {
     }
 
 
+
+
+
     /**
      * Task in background starts here.
      */
@@ -109,9 +112,12 @@ public class StreamingService extends Service {
         boolean notif_ask = sharedpreferences.getBoolean(Helper.SET_NOTIF_ASK, true);
         boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
         boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
+        boolean notif_home = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, true);
         //User disagree with all notifications
-        if( !notif_follow && !notif_add && !notif_ask && !notif_mention && !notif_share)
+        if( !notif_home && !notif_follow && !notif_add && !notif_ask && !notif_mention && !notif_share) {
             return; //Nothing is done
+
+        }
         //No account connected, the service is stopped
         if(!Helper.isLoggedIn(getApplicationContext()))
             return;
@@ -122,37 +128,7 @@ public class StreamingService extends Service {
             Thread readThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    try {
-                        boolean connectionAlive = false;
-                        isConnectingHashMap = true;
-                        if( httpsURLConnection != null) {
-                            try {
-                                connectionAlive = (httpsURLConnection.getResponseCode() == 200);
-                            } catch (Exception e) {
-                                connectionAlive = false;
-                            }
-                        }
-                        if( connectionAlive) {
-                            if( httpsURLConnection != null)
-                                httpsURLConnection.disconnect();
-                        }
-                        try {
-                            URL url = new URL("https://" + account.getInstance() + "/api/v1/streaming/user");
-                            httpsURLConnection = (HttpsURLConnection) url.openConnection();
-                            httpsURLConnection.setRequestProperty("Content-Type", "application/json");
-                            httpsURLConnection.setRequestProperty("Authorization", "Bearer " + account.getToken());
-                            httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
-                            httpsURLConnection.setRequestProperty("Keep-Alive", "header");
-                            httpsURLConnection.setRequestProperty("Connection", "close");
-                            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
-                            InputStream inputStream = new BufferedInputStream(httpsURLConnection.getInputStream());
-                            readStream(inputStream, account);
-                        } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
-                            e.printStackTrace();
-                            forceRestart(account);
-                        }
-                    } catch (Exception ignored) {
-                    }
+                    longPolling(account);
                 }
             });
             readThread.start();
@@ -160,89 +136,96 @@ public class StreamingService extends Service {
     }
 
 
-
-
-    @SuppressWarnings("ConstantConditions")
-    private String readStream(InputStream inputStream, final Account account) {
-        BufferedReader reader = null;
-        try{
-            reader = new BufferedReader(new InputStreamReader(inputStream));
-            String event;
-            EventStreaming eventStreaming;
-            //noinspection InfiniteLoopStatement
-            while(true){
+    public void longPolling(Account account) {
+        //noinspection InfiniteLoopStatement
+        while (true) {
+            try {
+                if( httpsURLConnection != null)
+                    httpsURLConnection.disconnect();
+                URL url = new URL("https://" + account.getInstance() + "/api/v1/streaming/user");
+                httpsURLConnection = (HttpsURLConnection) url.openConnection();
+                httpsURLConnection.setRequestProperty("Content-Type", "application/json");
+                httpsURLConnection.setRequestProperty("Authorization", "Bearer " + account.getToken());
+                httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
+                httpsURLConnection.setRequestProperty("Keep-Alive", "header");
+                httpsURLConnection.setRequestProperty("Connection", "close");
+                httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+                httpsURLConnection.setRequestMethod("GET");
+                httpsURLConnection.setConnectTimeout(70000);
+                httpsURLConnection.setReadTimeout(70000);
+                httpsURLConnection.connect();
+                InputStream inputStream = null;
                 try {
-                    event = reader.readLine();
+                    inputStream = new BufferedInputStream(httpsURLConnection.getInputStream());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                BufferedReader reader = null;
+                try{
+                    reader = new BufferedReader(new InputStreamReader(inputStream));
+                    String event;
+                    EventStreaming eventStreaming;
+                    //noinspection InfiniteLoopStatement
+                    while((event = reader.readLine()) != null){
+                        if (event !=null){
+                            if( (lastEvent == EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
+                                switch (event.trim()) {
+                                    case "event: update":
+                                        lastEvent = EventStreaming.UPDATE;
+                                        break;
+                                    case "event: notification":
+                                        lastEvent = EventStreaming.NOTIFICATION;
+                                        break;
+                                    case "event: delete":
+                                        lastEvent = EventStreaming.DELETE;
+                                        break;
+                                    default:
+                                        lastEvent = EventStreaming.NONE;
+                                }
+                            }else{
+                                if( !event.startsWith("data: ")){
+                                    lastEvent = EventStreaming.NONE;
+                                    continue;
+                                }
+                                event = event.substring(6);
+                                if(lastEvent == EventStreaming.UPDATE) {
+                                    eventStreaming = EventStreaming.UPDATE;
+                                }else if(lastEvent == EventStreaming.NOTIFICATION) {
+                                    eventStreaming = EventStreaming.NOTIFICATION;
+                                }else if( lastEvent == EventStreaming.DELETE) {
+                                    eventStreaming = EventStreaming.DELETE;
+                                    event = "{id:" + event + "}";
+                                }else {
+                                    eventStreaming = EventStreaming.UPDATE;
+                                }
+                                lastEvent = EventStreaming.NONE;
+                                try {
+                                    JSONObject eventJson = new JSONObject(event);
+                                    onRetrieveStreaming(eventStreaming, eventJson, account.getId());
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
                 }catch (Exception e){
                     e.printStackTrace();
-                    forceRestart(account);
-                    break;
-                }
-                if (event !=null){
-
-                    if( (lastEvent == EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
-                        switch (event.trim()) {
-                            case "event: update":
-                                lastEvent = EventStreaming.UPDATE;
-                                break;
-                            case "event: notification":
-                                lastEvent = EventStreaming.NOTIFICATION;
-                                break;
-                            case "event: delete":
-                                lastEvent = EventStreaming.DELETE;
-                                break;
-                            default:
-                                lastEvent = EventStreaming.NONE;
-                        }
-                    }else{
-                        if( !event.startsWith("data: ")){
-                            lastEvent = EventStreaming.NONE;
-                            continue;
-                        }
-                        event = event.substring(6);
-                        if(lastEvent == EventStreaming.UPDATE) {
-                            eventStreaming = EventStreaming.UPDATE;
-                        }else if(lastEvent == EventStreaming.NOTIFICATION) {
-                            eventStreaming = EventStreaming.NOTIFICATION;
-                        }else if( lastEvent == EventStreaming.DELETE) {
-                            eventStreaming = EventStreaming.DELETE;
-                            event = "{id:" + event + "}";
-                        }else {
-                            eventStreaming = EventStreaming.UPDATE;
-                        }
-                        lastEvent = EventStreaming.NONE;
-                        try {
-                            JSONObject eventJson = new JSONObject(event);
-                            onRetrieveStreaming(eventStreaming, eventJson, account.getId());
-                        } catch (JSONException e) {
+                }finally {
+                    if(reader != null){
+                        try{
+                            reader.close();
+                        }catch (IOException e){
                             e.printStackTrace();
                         }
                     }
                 }
+            } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
+                e.printStackTrace();
             }
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            if(reader != null){
-                try{
-                    reader.close();
-                }catch (IOException e){
-                    e.printStackTrace();
-                }
-            }
-            forceRestart(account);
         }
-        return null;
     }
 
-    private void forceRestart(Account account){
-        isConnectingHashMap = false;
-        SystemClock.sleep(1000);
-        Intent intent = new Intent(getApplicationContext(), StreamingService.class);
-        intent.putExtra("accountId", account.getId());
-        intent.putExtra("accountAcct", account.getAcct());
-        startService(intent);
-    }
+
 
     @Override
     public void onTaskRemoved(Intent rootIntent) {

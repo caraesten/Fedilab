@@ -34,9 +34,13 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveManyRelationshipsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Relationship;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveManyRelationshipsInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.drawers.AccountsListAdapter;
@@ -47,7 +51,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountsInterface;
  * Created by Thomas on 27/04/2017.
  * Fragment to display content related to accounts
  */
-public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccountsInterface {
+public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccountsInterface, OnRetrieveManyRelationshipsInterface {
 
     private boolean flag_loading;
     private Context context;
@@ -59,7 +63,6 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
     private RelativeLayout mainLoader, nextElementLoader, textviewNoAction;
     private boolean firstLoad;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private int accountPerPage;
     private String targetedId;
     private boolean swiped;
     private ListView lv_accounts;
@@ -97,7 +100,6 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
 
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        accountPerPage = sharedpreferences.getInt(Helper.SET_ACCOUNTS_PER_PAGE, 40);
         lv_accounts = (ListView) rootView.findViewById(R.id.lv_accounts);
 
         mainLoader = (RelativeLayout) rootView.findViewById(R.id.loader);
@@ -166,7 +168,6 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
                         asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             });
-            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
             swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
                     R.color.mastodonC2,
                     R.color.mastodonC3);
@@ -246,5 +247,46 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         }
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
+
+        if( type != RetrieveAccountsAsyncTask.Type.BLOCKED && type != RetrieveAccountsAsyncTask.Type.MUTED)
+            new RetrieveManyRelationshipsAsyncTask(context, accounts,DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    @Override
+    public void onRetrieveRelationship(APIResponse apiResponse) {
+        if( apiResponse.getError() != null){
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages)
+                Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        List<Relationship> relationships = apiResponse.getRelationships();
+        if( relationships != null && relationships.size() > 0 ){
+            for(Relationship relationship: relationships){
+                for(Account account: accounts){
+                    if( account.getId().equals(userId)){
+                        account.setFollowType(Account.followAction.NOTHING);
+                        continue;
+                    }
+                    if( account.getId().equals(relationship.getId())){
+                        if( relationship.isFollowing())
+                            account.setFollowType(Account.followAction.FOLLOW);
+                        else
+                            account.setFollowType(Account.followAction.NOT_FOLLOW);
+                        if(relationship.isBlocking())
+                            account.setFollowType(Account.followAction.BLOCK);
+                        else if(relationship.isMuting())
+                            account.setFollowType(Account.followAction.MUTE);
+                        else if(relationship.isRequested())
+                            account.setFollowType(Account.followAction.REQUEST_SENT);
+                        break;
+                    }
+                }
+            }
+            accountsListAdapter.notifyDataSetChanged();
+        }
     }
 }
