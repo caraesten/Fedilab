@@ -14,9 +14,7 @@ package fr.gouv.etalab.mastodon.drawers;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.support.v7.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -33,30 +31,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveManyRelationshipsAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveRelationshipAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
-import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
-import fr.gouv.etalab.mastodon.client.Entities.Relationship;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveManyRelationshipsInterface;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRelationshipInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
@@ -66,7 +55,7 @@ import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
  * Created by Thomas on 27/04/2017.
  * Adapter for accounts
  */
-public class AccountsListAdapter extends BaseAdapter implements OnPostActionInterface, OnRetrieveRelationshipInterface, OnRetrieveManyRelationshipsInterface {
+public class AccountsListAdapter extends BaseAdapter implements OnPostActionInterface {
 
     private List<Account> accounts;
     private LayoutInflater layoutInflater;
@@ -82,17 +71,6 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
         this.action = action;
         this.accountsListAdapter = this;
         this.targetedId = targetedId;
-    }
-
-
-    @Override
-    public void onRetrieveRelationship(APIResponse apiResponse) {
-
-    }
-
-    @Override
-    public void onRetrieveRelationship(Relationship relationship, Error error) {
-
     }
 
     public enum action{
@@ -163,9 +141,7 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
             account.setFollowType(Account.followAction.BLOCK);
         else if( action == RetrieveAccountsAsyncTask.Type.MUTED)
             account.setFollowType(Account.followAction.MUTE);
-        else {
-            new RetrieveManyRelationshipsAsyncTask(context, accounts,AccountsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }
+
         if (account.getFollowType() == Account.followAction.NOTHING){
             holder.account_follow.setVisibility(View.GONE);
             holder.account_follow_request.setVisibility(View.GONE);
@@ -190,7 +166,7 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
             holder.account_follow.setVisibility(View.VISIBLE);
             holder.account_follow_request.setVisibility(View.GONE);
         }else if( account.getFollowType() == Account.followAction.MUTE){
-            holder.account_follow.setImageResource(R.drawable.ic_unlock_alt);
+            holder.account_follow.setImageResource(R.drawable.ic_mute_white);
             doAction = API.StatusAction.UNMUTE;
             holder.account_follow.setVisibility(View.VISIBLE);
             holder.account_follow_request.setVisibility(View.GONE);

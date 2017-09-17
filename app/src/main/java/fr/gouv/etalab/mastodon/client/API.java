@@ -304,6 +304,7 @@ public class API {
                 setError(statusCode, error);
             }
         });
+        apiResponse.setRelationships(relationships);
         return apiResponse;
     }
 
