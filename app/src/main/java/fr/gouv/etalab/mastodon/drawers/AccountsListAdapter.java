@@ -78,7 +78,15 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
         this.targetedId = targetedId;
     }
 
+    public enum action{
+        FOLLOW,
+        UNFOLLOW,
+        UNBLOCK,
+        NOTHING,
+        UNMUTE
+    }
 
+    private API.StatusAction doAction;
 
     @Override
     public int getCount() {
@@ -126,9 +134,8 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
             holder.account_sc = (TextView) convertView.findViewById(R.id.account_sc);
             holder.account_fgc = (TextView) convertView.findViewById(R.id.account_fgc);
             holder.account_frc = (TextView) convertView.findViewById(R.id.account_frc);
-            holder.account_action_block = (FloatingActionButton) convertView.findViewById(R.id.account_action_block);
-            holder.account_action_mute = (FloatingActionButton) convertView.findViewById(R.id.account_action_mute);
-
+            holder.account_follow = (FloatingActionButton) convertView.findViewById(R.id.account_follow);
+            holder.account_follow_request = (TextView) convertView.findViewById(R.id.account_follow_request);
             holder.account_container = (LinearLayout) convertView.findViewById(R.id.account_container);
             convertView.setTag(holder);
         } else {
@@ -136,24 +143,40 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
         }
 
         if( action == RetrieveAccountsAsyncTask.Type.BLOCKED)
-            holder.account_action_block.setVisibility(View.VISIBLE);
+            account.setFollowType(Account.followAction.BLOCK);
         else if( action == RetrieveAccountsAsyncTask.Type.MUTED)
-            holder.account_action_mute.setVisibility(View.VISIBLE);
+            account.setFollowType(Account.followAction.MUTE);
 
+        if (account.getFollowType() == Account.followAction.NOTHING){
+            holder.account_follow.setVisibility(View.GONE);
+            holder.account_follow_request.setVisibility(View.GONE);
+            doAction = null;
+        }else if( account.getFollowType() == Account.followAction.REQUEST_SENT){
+            holder.account_follow.setVisibility(View.GONE);
+            holder.account_follow_request.setVisibility(View.VISIBLE);
+            doAction = null;
+        }else if( account.getFollowType() == Account.followAction.FOLLOW){
+            holder.account_follow.setImageResource(R.drawable.ic_user_times);
+            doAction = API.StatusAction.UNFOLLOW;
+            holder.account_follow.setVisibility(View.VISIBLE);
+            holder.account_follow_request.setVisibility(View.GONE);
+        }else if( account.getFollowType() == Account.followAction.NOT_FOLLOW){
+            holder.account_follow.setImageResource(R.drawable.ic_user_plus);
+            doAction = API.StatusAction.FOLLOW;
+            holder.account_follow.setVisibility(View.VISIBLE);
+            holder.account_follow_request.setVisibility(View.GONE);
+        }else if( account.getFollowType() == Account.followAction.BLOCK){
+            holder.account_follow.setImageResource(R.drawable.ic_unlock_alt);
+            doAction = API.StatusAction.UNBLOCK;
+            holder.account_follow.setVisibility(View.VISIBLE);
+            holder.account_follow_request.setVisibility(View.GONE);
+        }else if( account.getFollowType() == Account.followAction.MUTE){
+            holder.account_follow.setImageResource(R.drawable.ic_unlock_alt);
+            doAction = API.StatusAction.UNMUTE;
+            holder.account_follow.setVisibility(View.VISIBLE);
+            holder.account_follow_request.setVisibility(View.GONE);
+        }
 
-        holder.account_action_mute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                moreOptionDialog(account);
-            }
-        });
-
-        holder.account_action_block.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                moreOptionDialog(account);
-            }
-        });
         
         holder.account_container.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,6 +207,22 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
         imageLoader.displayImage(account.getAvatar(), holder.account_pp, options);
 
 
+
+        if( account.isMakingAction()){
+            holder.account_follow.setEnabled(false);
+        }else {
+            holder.account_follow.setEnabled(true);
+        }
+        //Follow button
+        holder.account_follow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( doAction != null) {
+                    account.setMakingAction(true);
+                    new PostActionAsyncTask(context, doAction, account.getId(), AccountsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
+            }
+        });
         holder.account_pp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -233,44 +272,9 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
         TextView account_sc;
         TextView account_fgc;
         TextView account_frc;
+        FloatingActionButton account_follow;
+        TextView account_follow_request;
         LinearLayout account_container;
-        FloatingActionButton account_action_block;
-        FloatingActionButton account_action_mute;
-    }
-
-
-    /**
-     * More option for acccounts (unmute / unblock)
-     * @param account Account current account
-     */
-    private void moreOptionDialog(final Account account){
-
-        String[] stringArrayConf = context.getResources().getStringArray(R.array.more_action_confirm_account);
-        final API.StatusAction doAction;
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-
-        if( action == RetrieveAccountsAsyncTask.Type.BLOCKED) {
-            dialog.setMessage(stringArrayConf[1]);
-            doAction = API.StatusAction.UNBLOCK;
-        }else {
-            dialog.setMessage(stringArrayConf[0]);
-            doAction = API.StatusAction.UNMUTE;
-        }
-        dialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog,int which) {
-                dialog.dismiss();
-            }
-        });
-        dialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog,int which) {
-                new PostActionAsyncTask(context, doAction, account.getId(), AccountsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
     }
 
 }

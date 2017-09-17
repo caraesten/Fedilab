@@ -48,6 +48,34 @@ public class Account implements Parcelable {
     private String instance;
     private boolean isFollowing;
     private boolean isRemote;
+    private followAction followType = followAction.NOTHING;
+    private boolean isMakingAction = false;
+
+    public followAction getFollowType() {
+        return followType;
+    }
+
+    public void setFollowType(followAction followType) {
+        this.followType = followType;
+    }
+
+    public boolean isMakingAction() {
+        return isMakingAction;
+    }
+
+    public void setMakingAction(boolean makingAction) {
+        isMakingAction = makingAction;
+    }
+
+    public enum followAction{
+        FOLLOW,
+        NOT_FOLLOW,
+        BLOCK,
+        MUTE,
+        REQUEST_SENT,
+        NOTHING
+    }
+
 
     protected Account(Parcel in) {
         id = in.readString();
