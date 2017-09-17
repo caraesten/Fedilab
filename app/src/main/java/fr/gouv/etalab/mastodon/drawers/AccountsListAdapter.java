@@ -255,6 +255,20 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
             accounts.removeAll(accountsToRemove);
             accountsListAdapter.notifyDataSetChanged();
         }
+        if( statusAction == API.StatusAction.FOLLOW){
+            for(Account account: accounts){
+                if( account.getId().equals(targetedId))
+                    account.setFollowType(Account.followAction.FOLLOW);
+            }
+            accountsListAdapter.notifyDataSetChanged();
+        }
+        if( statusAction == API.StatusAction.UNFOLLOW){
+            for(Account account: accounts){
+                if( account.getId().equals(targetedId))
+                    account.setFollowType(Account.followAction.NOT_FOLLOW);
+            }
+            accountsListAdapter.notifyDataSetChanged();
+        }
     }
 
 
