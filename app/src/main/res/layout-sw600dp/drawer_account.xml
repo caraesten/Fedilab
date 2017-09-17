@@ -154,6 +154,17 @@
                 android:autoLink="web"
                 android:visibility="gone"/>
         </LinearLayout>
+        <TextView
+            android:id="@+id/account_follow_request"
+            android:textColor="?attr/colorAccent"
+            android:text="@string/request_sent"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            />
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/account_follow"
             android:layout_marginTop="20dp"
