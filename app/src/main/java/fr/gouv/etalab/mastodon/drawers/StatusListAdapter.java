@@ -15,6 +15,7 @@ package fr.gouv.etalab.mastodon.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 import android.graphics.Bitmap;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.content.ClipData;
@@ -33,7 +34,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.SpannableString;
-import android.text.method.ArrowKeyMovementMethod;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.util.Patterns;
@@ -65,6 +65,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -78,7 +79,7 @@ import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
@@ -88,7 +89,6 @@ import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveInstanceInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
 import fr.gouv.etalab.mastodon.translation.GoogleTranslateQuery;
 import fr.gouv.etalab.mastodon.translation.YandexQuery;
@@ -1378,11 +1378,21 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         Bitmap bitmap = Helper.convertTootIntoBitmap(context, view);
                         Intent intent = new Intent(context, TootActivity.class);
                         Bundle b = new Bundle();
-                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                        byte[] byteArray = stream.toByteArray();
-                        intent.putExtra("pictureMention", byteArray);
-                        b.putParcelable("tootMention", status);
+                        String fname = "tootmention_" + status.getId() +".jpg";
+                        File file = new File (context.getCacheDir() + "/", fname);
+                        if (file.exists ()) //noinspection ResultOfMethodCallIgnored
+                            file.delete ();
+                        try {
+                            FileOutputStream out = new FileOutputStream(file);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                            out.flush();
+                            out.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        b.putString("fileMention", fname);
+                        b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
+                        b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
                         intent.putExtras(b);
                         context.startActivity(intent);
                         return;
@@ -1420,11 +1430,21 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         Bitmap bitmap = Helper.convertTootIntoBitmap(context, view);
                         Intent intent = new Intent(context, TootActivity.class);
                         Bundle b = new Bundle();
-                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                        byte[] byteArray = stream.toByteArray();
-                        intent.putExtra("pictureMention", byteArray);
-                        b.putParcelable("tootMention", status);
+                        String fname = "tootmention_" + status.getId() +".jpg";
+                        File file = new File (context.getCacheDir() + "/", fname);
+                        if (file.exists ()) //noinspection ResultOfMethodCallIgnored
+                            file.delete ();
+                        try {
+                            FileOutputStream out = new FileOutputStream(file);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                            out.flush();
+                            out.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        b.putString("fileMention", fname);
+                        b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
+                        b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
                         intent.putExtras(b);
                         context.startActivity(intent);
                         return;

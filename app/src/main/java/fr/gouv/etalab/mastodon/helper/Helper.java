@@ -1611,7 +1611,7 @@ public class Helper {
     public static Bitmap convertTootIntoBitmap(Context context, View view) {
 
         int status_content_v = 0, status_content_translated_v = 0, yandex_translate_v = 0, google_translate_v = 0, status_content_translated_container_v = 0;
-        int status_spoiler_button_v = 0, status_action_container_v = 0, status_content_container_v = 0, status_translate_v = 0, new_element_v = 0, notification_delete_v = 0;
+        int status_spoiler_button_v = 0, status_show_more_v = 0, status_action_container_v = 0, status_content_container_v = 0, status_translate_v = 0, new_element_v = 0, notification_delete_v = 0;
         //Removes some elements
 
         TextView status_content = (TextView) view.findViewById(R.id.status_content);
@@ -1679,6 +1679,11 @@ public class Helper {
             notification_delete_v = notification_delete.getVisibility();
             notification_delete.setVisibility(View.GONE);
         }
+        Button status_show_more = (Button) view.findViewById(R.id.status_show_more);
+        if( status_show_more != null){
+            status_show_more_v = status_show_more.getVisibility();
+            status_show_more.setVisibility(View.GONE);
+        }
 
         Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(returnedBitmap);
@@ -1719,6 +1724,8 @@ public class Helper {
             notification_delete.setVisibility(notification_delete_v);
         if( status_spoiler_button != null)
             status_spoiler_button.setVisibility(status_spoiler_button_v);
+        if( status_show_more != null)
+            status_show_more.setVisibility(status_show_more_v);
         return returnedBitmap;
     }
 
