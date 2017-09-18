@@ -17,6 +17,7 @@ package fr.gouv.etalab.mastodon.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -68,6 +69,7 @@ public class API {
     private Attachment attachment;
     private List<Account> accounts;
     private List<Status> statuses;
+    private List<Relationship> relationships;
     private List<Notification> notifications;
     private int tootPerPage, accountPerPage, notificationPerPage;
     private int actionCode;
@@ -93,7 +95,9 @@ public class API {
         AUTHORIZE,
         REJECT,
         REPORT,
-        REMOTE_FOLLOW
+        REMOTE_FOLLOW,
+        PIN,
+        UNPIN
     }
 
     public API(Context context) {
@@ -268,13 +272,50 @@ public class API {
     }
 
     /**
+     * Returns a relationship between the authenticated account and an account
+     * @param accounts ArrayList<Account> accounts fetched
+     * @return Relationship entity
+     */
+    public APIResponse getRelationship(List<Account> accounts) {
+
+        relationship = new Relationship();
+        RequestParams params = new RequestParams();
+        if( accounts != null && accounts.size() > 0 ) {
+            for(Account account: accounts) {
+                params.add("id[]", account.getId());
+            }
+        }
+        get("/accounts/relationships", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Relationship relationship = parseRelationshipResponse(response);
+                relationships.add(relationship);
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
+            }
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                apiResponse.setSince_id(findSinceId(headers));
+                apiResponse.setMax_id(findMaxId(headers));
+                relationships = parseRelationshipResponse(response);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
+                setError(statusCode, error);
+            }
+        });
+        apiResponse.setRelationships(relationships);
+        return apiResponse;
+    }
+
+    /**
      * Retrieves status for the account *synchronously*
      *
      * @param accountId String Id of the account
      * @return APIResponse
      */
     public APIResponse getStatus(String accountId) {
-        return getStatus(accountId, false, false, null, null, tootPerPage);
+        return getStatus(accountId, false, false, false, null, null, tootPerPage);
     }
 
     /**
@@ -285,7 +326,7 @@ public class API {
      * @return APIResponse
      */
     public APIResponse getStatus(String accountId, String max_id) {
-        return getStatus(accountId, false, false, max_id, null, tootPerPage);
+        return getStatus(accountId, false, false, false, max_id, null, tootPerPage);
     }
 
     /**
@@ -296,9 +337,19 @@ public class API {
      * @return APIResponse
      */
     public APIResponse getStatusWithMedia(String accountId, String max_id) {
-        return getStatus(accountId, true, false, max_id, null, tootPerPage);
+        return getStatus(accountId, true, false, false, max_id, null, tootPerPage);
     }
 
+    /**
+     * Retrieves pinned status(es) *synchronously*
+     *
+     * @param accountId String Id of the account
+     * @param max_id    String id max
+     * @return APIResponse
+     */
+    public APIResponse getPinnedStatuses(String accountId, String max_id) {
+        return getStatus(accountId, false, true, false, max_id, null, tootPerPage);
+    }
 
     /**
      * Retrieves status for the account *synchronously*
@@ -311,7 +362,7 @@ public class API {
      * @param limit           int limit  - max value 40
      * @return APIResponse
      */
-    private APIResponse getStatus(String accountId, boolean onlyMedia,
+    private APIResponse getStatus(String accountId, boolean onlyMedia, boolean pinned,
                                   boolean exclude_replies, String max_id, String since_id, int limit) {
 
         RequestParams params = new RequestParams();
@@ -325,6 +376,8 @@ public class API {
             limit = 40;
         if( onlyMedia)
             params.put("only_media", Boolean.toString(true));
+        if( pinned)
+            params.put("pinned", Boolean.toString(true));
         params.put("limit", String.valueOf(limit));
         statuses = new ArrayList<>();
         get(String.format("/accounts/%s/statuses", accountId), params, new JsonHttpResponseHandler() {
@@ -835,6 +888,12 @@ public class API {
             case UNMUTE:
                 action = String.format("/accounts/%s/unmute", targetedId);
                 break;
+            case PIN:
+                action = String.format("/statuses/%s/pin", targetedId);
+                break;
+            case UNPIN:
+                action = String.format("/statuses/%s/unpin", targetedId);
+                break;
             case UNSTATUS:
                 action = String.format("/statuses/%s", targetedId);
                 break;
@@ -1290,6 +1349,11 @@ public class API {
             status.setReblogs_count(Integer.valueOf(resobj.get("reblogs_count").toString()));
             status.setReblogged(Boolean.valueOf(resobj.get("reblogged").toString()));
             status.setFavourited(Boolean.valueOf(resobj.get("favourited").toString()));
+            try {
+                status.setPinned(Boolean.valueOf(resobj.get("pinned").toString()));
+            }catch (JSONException e){
+                status.setPinned(false);
+            }
             try{
                 status.setReblog(parseStatuses(context, resobj.getJSONObject("reblog")));
             }catch (Exception ignored){}
@@ -1373,29 +1437,47 @@ public class API {
 
 
     /**
-     * Parse json response for list of accounts which could contain the developer name
-     * @param jsonArray JSONArray
-     * @return List<Account>
+     * Parse json response an unique relationship
+     * @param resobj JSONObject
+     * @return Relationship
      */
-    private List<Account> parseDeveloperResponse(JSONArray jsonArray){
+    private Relationship parseRelationshipResponse(JSONObject resobj){
 
-        List<Account> accounts = new ArrayList<>();
+        Relationship relationship = new Relationship();
         try {
-            int i = 0;
-            Account account = null;
-            while (i < jsonArray.length() ) {
-                JSONObject resobj = jsonArray.getJSONObject(i);
-                account = parseAccountResponse(context, resobj);
-                if( account.getAcct().contains(Helper.DEVELOPER_INSTANCE))
-                    accounts.add(account);
-                i++;
-            }
-            if( accounts.size() == 0)
-                accounts.add(account);
+            relationship.setId(resobj.get("id").toString());
+            relationship.setFollowing(Boolean.valueOf(resobj.get("following").toString()));
+            relationship.setFollowed_by(Boolean.valueOf(resobj.get("followed_by").toString()));
+            relationship.setBlocking(Boolean.valueOf(resobj.get("blocking").toString()));
+            relationship.setMuting(Boolean.valueOf(resobj.get("muting").toString()));
+            relationship.setRequested(Boolean.valueOf(resobj.get("requested").toString()));
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return accounts;
+        return relationship;
+    }
+
+
+    /**
+     * Parse json response for list of relationship
+     * @param jsonArray JSONArray
+     * @return List<Relationship>
+     */
+    private List<Relationship> parseRelationshipResponse(JSONArray jsonArray){
+
+        List<Relationship> relationships = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length() ) {
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                Relationship relationship = parseRelationshipResponse(resobj);
+                relationships.add(relationship);
+                i++;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return relationships;
     }
 
     /**
@@ -1443,26 +1525,7 @@ public class API {
         return attachment;
     }
 
-    /**
-     * Parse json response an unique relationship
-     * @param resobj JSONObject
-     * @return Relationship
-     */
-    private Relationship parseRelationshipResponse(JSONObject resobj){
 
-        Relationship relationship = new Relationship();
-        try {
-            relationship.setId(resobj.get("id").toString());
-            relationship.setFollowing(Boolean.valueOf(resobj.get("following").toString()));
-            relationship.setFollowed_by(Boolean.valueOf(resobj.get("followed_by").toString()));
-            relationship.setBlocking(Boolean.valueOf(resobj.get("blocking").toString()));
-            relationship.setMuting(Boolean.valueOf(resobj.get("muting").toString()));
-            relationship.setRequested(Boolean.valueOf(resobj.get("requested").toString()));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return relationship;
-    }
 
     /**
      * Parse json response an unique notification

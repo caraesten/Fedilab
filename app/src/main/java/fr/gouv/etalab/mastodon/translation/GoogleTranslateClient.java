@@ -38,6 +38,7 @@ class GoogleTranslateClient {
     }
 
     private static String getAbsoluteUrl(String content, String toLanguage) {
+        toLanguage = toLanguage.replace("null","");
         String lang = "tl=" + toLanguage + "&dt=t&";
         String text;
         try {

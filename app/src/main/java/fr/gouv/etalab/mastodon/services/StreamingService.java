@@ -19,63 +19,31 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Build;
+import android.os.Binder;
+import android.os.Bundle;
 import android.os.IBinder;
-import android.os.StrictMode;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.text.Html;
 import android.util.Log;
-import android.view.View;
-
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import javax.net.ssl.HttpsURLConnection;
-
-import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
-import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.client.TLSSocketFactory;
 import fr.gouv.etalab.mastodon.helper.Helper;
-import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
-import fr.gouv.etalab.mastodon.sqlite.Sqlite;
-import mastodon.etalab.gouv.fr.mastodon.R;
 
-import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
-import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
-import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
-import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
-import static fr.gouv.etalab.mastodon.helper.Helper.canNotify;
-import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
 
 /**
  * Created by Thomas on 28/08/2017.
@@ -84,12 +52,9 @@ import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
 
 public class StreamingService extends Service {
 
-    private String message;
-    private int notificationId;
-    private Intent intent;
-    private String lastPreviousContent;
-    private static HashMap<String, HttpsURLConnection> connectionHashMap = new HashMap<>();
-    private static HashMap<String, Boolean> isConnectingHashMap = new HashMap<>();
+
+    private static HttpsURLConnection httpsURLConnection;
+
     private EventStreaming lastEvent;
     public enum EventStreaming{
         UPDATE,
@@ -97,45 +62,31 @@ public class StreamingService extends Service {
         DELETE,
         NONE
     }
-
+    private final IBinder iBinder = new StreamingServiceBinder();
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if( intent != null){
-            String accountId = intent.getStringExtra("accountId");
-            String accountAcct = intent.getStringExtra("accountAcct");
-            if( accountId != null && accountAcct != null){
-                SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                Account account = new AccountDAO(getApplicationContext(), db).getAccountByIDAcct(accountId, accountAcct);
-                if( account != null)
-                    callAsynchronousTask(account);
-            }else {
-                SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                List<Account> accounts = new AccountDAO(getApplicationContext(), db).getAllAccount();
-                if( accounts != null){
-                    for (Account account: accounts) {
-                        intent = new Intent(getApplicationContext(), StreamingService.class);
-                        intent.putExtra("accountId", account.getId());
-                        intent.putExtra("accountAcct", account.getAcct());
-                        startService(intent);
-                    }
-                }
-            }
-        }
         return START_STICKY;
+    }
+
+    public class StreamingServiceBinder extends Binder {
+        public StreamingService getService() {
+            return StreamingService.this;
+        }
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return iBinder;
     }
+
 
 
     /**
      * Task in background starts here.
      */
-    private void callAsynchronousTask(final Account account) {
+    public void connect(final Account account) {
         //If an Internet connection and user agrees with notification refresh
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         //Check which notifications the user wants to see
@@ -144,52 +95,21 @@ public class StreamingService extends Service {
         boolean notif_ask = sharedpreferences.getBoolean(Helper.SET_NOTIF_ASK, true);
         boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
         boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
+        boolean notif_home = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, true);
         //User disagree with all notifications
-        if( !notif_follow && !notif_add && !notif_ask && !notif_mention && !notif_share)
+        if( !notif_home && !notif_follow && !notif_add && !notif_ask && !notif_mention && !notif_share) {
             return; //Nothing is done
+
+        }
         //No account connected, the service is stopped
         if(!Helper.isLoggedIn(getApplicationContext()))
             return;
         //If WIFI only and on WIFI OR user defined any connections to use the service.
-        if( isConnectingHashMap.get(account.getAcct()+account.getId()) != null && isConnectingHashMap.get(account.getAcct()+account.getId()))
-            return;
         if(!sharedpreferences.getBoolean(Helper.SET_WIFI_ONLY, false) || Helper.isOnWIFI(getApplicationContext())) {
             Thread readThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    try {
-                        boolean connectionAlive = false;
-                        isConnectingHashMap.put(account.getAcct()+account.getId(), true);
-                        if( connectionHashMap.get(account.getAcct()+account.getId()) != null) {
-                            try {
-                                connectionAlive = (connectionHashMap.get(account.getAcct()+account.getId()).getResponseCode() == 200);
-                            } catch (Exception e) {
-                                connectionAlive = false;
-                            }
-                        }
-                        if( connectionAlive) {
-                            HttpsURLConnection httpsURLConnection = connectionHashMap.get(account.getAcct() + account.getId());
-                            if( httpsURLConnection != null)
-                                httpsURLConnection.disconnect();
-                        }
-                        try {
-                            URL url = new URL("https://" + account.getInstance() + "/api/v1/streaming/user");
-                            HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-                            urlConnection.setRequestProperty("Content-Type", "application/json");
-                            urlConnection.setRequestProperty("Authorization", "Bearer " + account.getToken());
-                            urlConnection.setRequestProperty("Connection", "Keep-Alive");
-                            urlConnection.setRequestProperty("Keep-Alive", "header");
-                            urlConnection.setRequestProperty("Connection", "close");
-                            urlConnection.setSSLSocketFactory(new TLSSocketFactory());
-                            connectionHashMap.put(account.getAcct()+account.getId(), urlConnection);
-                            InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
-                            readStream(inputStream, account);
-                        } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
-                            e.printStackTrace();
-                            forceRestart(account);
-                        }
-                    } catch (Exception ignored) {
-                    }
+                    longPolling(account);
                 }
             });
             readThread.start();
@@ -197,69 +117,72 @@ public class StreamingService extends Service {
     }
 
 
-
-
-
-
-
-    @SuppressWarnings("ConstantConditions")
-    private String readStream(InputStream inputStream, final Account account) {
+    public void longPolling(Account account) {
+        //noinspection InfiniteLoopStatement
+        InputStream inputStream;
         BufferedReader reader = null;
-        try{
+        try {
+            URL url = new URL("https://" + account.getInstance() + "/api/v1/streaming/user");
+            if( httpsURLConnection != null){
+                httpsURLConnection.disconnect();
+            }
+            httpsURLConnection = (HttpsURLConnection) url.openConnection();
+            httpsURLConnection.setRequestProperty("Content-Type", "application/json");
+            httpsURLConnection.setRequestProperty("Authorization", "Bearer " + account.getToken());
+            httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
+            httpsURLConnection.setRequestProperty("Keep-Alive", "header");
+            httpsURLConnection.setRequestProperty("Connection", "close");
+            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+            httpsURLConnection.setRequestMethod("GET");
+            httpsURLConnection.setConnectTimeout(70000);
+            httpsURLConnection.setReadTimeout(70000);
+            // httpsURLConnection.connect();
+            inputStream = new BufferedInputStream(httpsURLConnection.getInputStream());
             reader = new BufferedReader(new InputStreamReader(inputStream));
             String event;
-            EventStreaming eventStreaming = null;
+            EventStreaming eventStreaming;
             //noinspection InfiniteLoopStatement
-            while(true){
-                try {
-                    event = reader.readLine();
-                }catch (Exception e){
-                    e.printStackTrace();
-                    forceRestart(account);
-                    break;
-                }
-                if (event !=null){
-                    if( (lastEvent == EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
-                        switch (event.trim()) {
-                            case "event: update":
-                                lastEvent = EventStreaming.UPDATE;
-                                break;
-                            case "event: notification":
-                                lastEvent = EventStreaming.NOTIFICATION;
-                                break;
-                            case "event: delete":
-                                lastEvent = EventStreaming.DELETE;
-                                break;
-                            default:
-                                lastEvent = EventStreaming.NONE;
-                        }
-                    }else{
-                        if( !event.startsWith("data: ")){
+            while((event = reader.readLine()) != null){
+                if( (lastEvent == EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
+                    switch (event.trim()) {
+                        case "event: update":
+                            lastEvent = EventStreaming.UPDATE;
+                            break;
+                        case "event: notification":
+                            lastEvent = EventStreaming.NOTIFICATION;
+                            break;
+                        case "event: delete":
+                            lastEvent = EventStreaming.DELETE;
+                            break;
+                        default:
                             lastEvent = EventStreaming.NONE;
-                            continue;
-                        }
-                        event = event.substring(6);
-                        if(lastEvent == EventStreaming.UPDATE) {
-                            eventStreaming = EventStreaming.UPDATE;
-                        }else if(lastEvent == EventStreaming.NOTIFICATION) {
-                            eventStreaming = EventStreaming.NOTIFICATION;
-                        }else if( lastEvent == EventStreaming.DELETE) {
-                            eventStreaming = EventStreaming.DELETE;
-                            event = "{id:" + event + "}";
-                        }else {
-                            eventStreaming = EventStreaming.UPDATE;
-                        }
+                    }
+                }else{
+                    if( !event.startsWith("data: ")){
                         lastEvent = EventStreaming.NONE;
-                        try {
-                            JSONObject eventJson = new JSONObject(event);
-                            onRetrieveStreaming(eventStreaming, eventJson, account.getAcct(), account.getId());
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        continue;
+                    }
+                    event = event.substring(6);
+                    if(lastEvent == EventStreaming.UPDATE) {
+                        eventStreaming = EventStreaming.UPDATE;
+                    }else if(lastEvent == EventStreaming.NOTIFICATION) {
+                        eventStreaming = EventStreaming.NOTIFICATION;
+                    }else if( lastEvent == EventStreaming.DELETE) {
+                        eventStreaming = EventStreaming.DELETE;
+                        event = "{id:" + event + "}";
+                    }else {
+                        eventStreaming = EventStreaming.UPDATE;
+                    }
+                    lastEvent = EventStreaming.NONE;
+                    try {
+                        JSONObject eventJson = new JSONObject(event);
+                        onRetrieveStreaming(eventStreaming, eventJson);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }finally {
             if(reader != null){
@@ -269,19 +192,11 @@ public class StreamingService extends Service {
                     e.printStackTrace();
                 }
             }
-            forceRestart(account);
+            stopSelf();
         }
-        return null;
     }
 
-    private void forceRestart(Account account){
-        isConnectingHashMap.put(account.getAcct()+account.getId(), false);
-        SystemClock.sleep(1000);
-        Intent intent = new Intent(getApplicationContext(), StreamingService.class);
-        intent.putExtra("accountId", account.getId());
-        intent.putExtra("accountAcct", account.getAcct());
-        startService(intent);
-    }
+
 
     @Override
     public void onTaskRemoved(Intent rootIntent) {
@@ -293,100 +208,23 @@ public class StreamingService extends Service {
     }
 
 
-    public void onRetrieveStreaming(EventStreaming event, JSONObject response, String acct, String userId) {
+    public void onRetrieveStreaming(EventStreaming event, JSONObject response) {
         if(  response == null )
             return;
-        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
-        boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
-        boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
-        boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
-
         //No previous notifications in cache, so no notification will be sent
-        boolean notify = false;
-        String notificationUrl = null;
-        String title = null;
-        Status status = null;
-        Notification notification = null;
+        Status status ;
+        Notification notification;
         String dataId = null;
+
+        Bundle b = new Bundle();
         if( event == EventStreaming.NOTIFICATION){
             notification = API.parseNotificationResponse(getApplicationContext(), response);
-            switch (notification.getType()){
-                case "mention":
-                    if(notif_mention){
-                        lastPreviousContent = notification.getStatus().getContent();
-                        notify = true;
-                        notificationUrl = notification.getAccount().getAvatar();
-                        if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
-                            title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_mention));
-                        else
-                            title = String.format("%s %s", notification.getAccount().getUsername(),getString(R.string.notif_mention));
-                    }
-                    break;
-                case "reblog":
-                    if(notif_share){
-                        notify = true;
-                        notificationUrl = notification.getAccount().getAvatar();
-                        if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
-                            title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_reblog));
-                        else
-                            title = String.format("%s %s", notification.getAccount().getUsername(),getString(R.string.notif_reblog));
-                    }
-                    break;
-                case "favourite":
-                    if(notif_add){
-                        notify = true;
-                        notificationUrl = notification.getAccount().getAvatar();
-                        if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
-                            title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_favourite));
-                        else
-                            title = String.format("%s %s", notification.getAccount().getUsername(),getString(R.string.notif_favourite));
-                    }
-                    break;
-                case "follow":
-                    if(notif_follow){
-                        notify = true;
-                        notificationUrl = notification.getAccount().getAvatar();
-                        if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
-                            title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_follow));
-                        else
-                            title = String.format("%s %s", notification.getAccount().getUsername(),getString(R.string.notif_follow));
-                    }
-                    break;
-                default:
-                    break;
-            }
-            Helper.cacheNotifications(getApplicationContext(), notification, userId);
-            if( notification.getStatus().getContent()!= null) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                    message = Html.fromHtml(notification.getStatus().getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
-                else
-                    //noinspection deprecation
-                    message = Html.fromHtml(notification.getStatus().getContent()).toString();
-                message = message.substring(0, message.length()>49?49:message.length());
-                message = message + "…";
-            }else{
-                message = "";
-            }
-
+            b.putParcelable("data", notification);
         }else if ( event ==  EventStreaming.UPDATE){
             status = API.parseStatuses(getApplicationContext(), response);
-            status.setReplies(new ArrayList<Status>()); //Force to don't display replies
+            status.setReplies(new ArrayList<Status>());
             status.setNew(true);
-            Helper.cacheStatus(getApplicationContext(), status, userId);
-            if( status.getContent() != null) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                    message = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
-                else
-                    //noinspection deprecation
-                    message = Html.fromHtml(status.getContent()).toString();
-                message = message.substring(0, message.length()>49?49:message.length());
-                message = message + "…";
-            }else{
-                message = "";
-            }
-            title = getString(R.string.notif_pouet, status.getAccount().getUsername());
-            notificationUrl = status.getAccount().getAvatar();
+            b.putParcelable("data", status);
         }else if( event == EventStreaming.DELETE){
             try {
                 dataId = response.getString("id");
@@ -394,110 +232,9 @@ public class StreamingService extends Service {
                 e.printStackTrace();
             }
         }
-
-        //Check which user is connected and if activity is to front
-        boolean activityVisible = false;
-        try{
-            activityVisible = MainActivity.isActivityVisible();
-        }catch (Exception ignored){}
-        String connectedUser = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(connectedUser);
-        //User receiving the notification is connected
-        if( isCurrentAccountLoggedIn(acct, userId)){
-            notify = false;
-            Intent intentBC = new Intent(Helper.RECEIVE_DATA);
-            intentBC.putExtra("eventStreaming", event);
-            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentBC);
-        }
-        //User receiving the notification is connected and application is to front, notification won't be pushed
-        //Instead, the interaction is done in the activity
-        if( activityVisible && isCurrentAccountLoggedIn(acct, userId)){
-            notify = false;
-        }else if(event == EventStreaming.NOTIFICATION ){
-            notify = true;
-        }else if(event == EventStreaming.UPDATE ){
-            //lastPreviousContent contains the content of the last notification, if it was a mention it will avoid to push two notifications
-            if( account == null || (lastPreviousContent != null && lastPreviousContent.equals(status.getContent()))) {
-                notify = false;
-            }else {
-                notify = true;
-                //Retrieve users in db that owner has, and if the toot matches one of them we don't notify
-                List<Account> accounts = new AccountDAO(getApplicationContext(),db).getAllAccount();
-                for(Account act_tmp: accounts) {
-                    if(notify && act_tmp.getAcct().trim().equals(status.getAccount().getAcct()) && act_tmp.getId().trim().equals(status.getAccount().getId().trim())){
-                        notify = false;
-                    }
-                }
-                //Here we check if the user wants home timeline notifications
-                if( notify )
-                    notify = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, true);
-            }
-            lastPreviousContent = status.getContent();
-        }
-        //All is good here for a notification, we will know check if it can be done depending of the hour
-        if( notify)
-            notify = canNotify(getApplicationContext());
-        if( notify && event == EventStreaming.NOTIFICATION){
-            intent = new Intent(getApplicationContext(), MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
-            intent.putExtra(INTENT_ACTION, NOTIFICATION_INTENT);
-            intent.putExtra(PREF_KEY_ID, userId);
-            long notif_id = Long.parseLong(userId);
-            notificationId = ((notif_id + 1) > 2147483647) ? (int) (2147483647 - notif_id - 1) : (int) (notif_id + 1);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notification.getId());
-            editor.apply();
-        }
-        if( notify && event == EventStreaming.UPDATE) {
-            intent = new Intent(getApplicationContext(), MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra(INTENT_ACTION, HOME_TIMELINE_INTENT);
-            intent.putExtra(PREF_KEY_ID, userId);
-            long notif_id = Long.parseLong(userId);
-            notificationId = ((notif_id + 2) > 2147483647) ? (int) (2147483647 - notif_id - 2) : (int) (notif_id + 2);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, status.getId());
-            editor.apply();
-        }
-
-        if( notify){
-            if( notificationUrl != null){
-                ImageLoader imageLoaderNoty = ImageLoader.getInstance();
-                File cacheDir = new File(getApplicationContext().getCacheDir(), getString(R.string.app_name));
-                ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
-                        .imageDownloader(new PatchBaseImageDownloader(getApplicationContext()))
-                        .threadPoolSize(5)
-                        .threadPriority(Thread.MIN_PRIORITY + 3)
-                        .denyCacheImageMultipleSizesInMemory()
-                        .diskCache(new UnlimitedDiskCache(cacheDir))
-                        .build();
-                imageLoaderNoty.init(config);
-                DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                        .cacheOnDisk(true).resetViewBeforeLoading(true).build();
-
-                final String finalTitle = title;
-                imageLoaderNoty.loadImage(notificationUrl, options, new SimpleImageLoadingListener(){
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        super.onLoadingComplete(imageUri, view, loadedImage);
-                        notify_user(getApplicationContext(), intent, notificationId, loadedImage, finalTitle, message);
-
-                    }
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason){
-                        notify_user(getApplicationContext(), intent, notificationId, BitmapFactory.decodeResource(getApplicationContext().getResources(),
-                                R.drawable.mastodonlogo), finalTitle, message);
-                    }});
-            }
-        }
-    }
-
-    private boolean isCurrentAccountLoggedIn(String acct, String userId){
-        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        String userconnected = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userconnected);
-        return acct.trim().equals(account.getAcct().trim()) && userId.trim().equals(account.getId().trim());
+        Intent intentBC = new Intent(Helper.RECEIVE_DATA);
+        intentBC.putExtra("eventStreaming", event);
+        intentBC.putExtras(b);
+        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentBC);
     }
 }
