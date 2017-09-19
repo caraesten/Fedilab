@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.drawers;
 
 import android.graphics.Bitmap;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.content.ClipData;
@@ -226,6 +227,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_replies_profile_pictures = (LinearLayout) convertView.findViewById(R.id.status_replies_profile_pictures);
             holder.status_replies_text = (TextView) convertView.findViewById(R.id.status_replies_text);
             holder.new_element = (ImageView) convertView.findViewById(R.id.new_element);
+            holder.status_action_container = (LinearLayout) convertView.findViewById(R.id.status_action_container);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -481,8 +483,9 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_content_container.setVisibility(View.VISIBLE);
             holder.status_translate.setVisibility(View.GONE);
             holder.status_show_more.setVisibility(View.GONE);
+            holder.status_action_container.setVisibility(View.GONE);
         }else {
-
+            holder.status_action_container.setVisibility(View.VISIBLE);
             if( translator != Helper.TRANS_NONE && currentLocale != null && status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale)){
                 holder.status_translate.setVisibility(View.VISIBLE);
             }else {
@@ -1260,7 +1263,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         LinearLayout main_container;
         TextView yandex_translate;
         TextView google_translate;
-
+        LinearLayout status_action_container;
         LinearLayout status_replies;
         LinearLayout status_replies_profile_pictures;
         TextView status_replies_text;
@@ -1417,28 +1420,38 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     }else if( which == 3) {
                         status.setTakingScreenShot(true);
                         statusListAdapter.notifyDataSetChanged();
-                        Bitmap bitmap = Helper.convertTootIntoBitmap(context, view);
-                        status.setTakingScreenShot(false);
-                        statusListAdapter.notifyDataSetChanged();
-                        Intent intent = new Intent(context, TootActivity.class);
-                        Bundle b = new Bundle();
-                        String fname = "tootmention_" + status.getId() +".jpg";
-                        File file = new File (context.getCacheDir() + "/", fname);
-                        if (file.exists ()) //noinspection ResultOfMethodCallIgnored
-                            file.delete ();
-                        try {
-                            FileOutputStream out = new FileOutputStream(file);
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-                            out.flush();
-                            out.close();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        b.putString("fileMention", fname);
-                        b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
-                        b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
-                        intent.putExtras(b);
-                        context.startActivity(intent);
+
+
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                Bitmap bitmap = Helper.convertTootIntoBitmap(context, view);
+                                status.setTakingScreenShot(false);
+                                statusListAdapter.notifyDataSetChanged();
+                                Intent intent = new Intent(context, TootActivity.class);
+                                Bundle b = new Bundle();
+                                String fname = "tootmention_" + status.getId() +".jpg";
+                                File file = new File (context.getCacheDir() + "/", fname);
+                                if (file.exists ()) //noinspection ResultOfMethodCallIgnored
+                                    file.delete ();
+                                try {
+                                    FileOutputStream out = new FileOutputStream(file);
+                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                                    out.flush();
+                                    out.close();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                b.putString("fileMention", fname);
+                                b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
+                                b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
+                                intent.putExtras(b);
+                                context.startActivity(intent);
+                            }
+
+                        }, 1000);
                         return;
                     }
                 }else {
@@ -1473,28 +1486,38 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     }else if( which == 5 ){
                         status.setTakingScreenShot(true);
                         statusListAdapter.notifyDataSetChanged();
-                        Bitmap bitmap = Helper.convertTootIntoBitmap(context, view);
-                        status.setTakingScreenShot(false);
-                        statusListAdapter.notifyDataSetChanged();
-                        Intent intent = new Intent(context, TootActivity.class);
-                        Bundle b = new Bundle();
-                        String fname = "tootmention_" + status.getId() +".jpg";
-                        File file = new File (context.getCacheDir() + "/", fname);
-                        if (file.exists ()) //noinspection ResultOfMethodCallIgnored
-                            file.delete ();
-                        try {
-                            FileOutputStream out = new FileOutputStream(file);
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-                            out.flush();
-                            out.close();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        b.putString("fileMention", fname);
-                        b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
-                        b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
-                        intent.putExtras(b);
-                        context.startActivity(intent);
+
+
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                Bitmap bitmap = Helper.convertTootIntoBitmap(context, view);
+                                status.setTakingScreenShot(false);
+                                statusListAdapter.notifyDataSetChanged();
+                                Intent intent = new Intent(context, TootActivity.class);
+                                Bundle b = new Bundle();
+                                String fname = "tootmention_" + status.getId() +".jpg";
+                                File file = new File (context.getCacheDir() + "/", fname);
+                                if (file.exists ()) //noinspection ResultOfMethodCallIgnored
+                                    file.delete ();
+                                try {
+                                    FileOutputStream out = new FileOutputStream(file);
+                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                                    out.flush();
+                                    out.close();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                b.putString("fileMention", fname);
+                                b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
+                                b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
+                                intent.putExtras(b);
+                                context.startActivity(intent);
+                            }
+
+                        }, 1000);
                         return;
                     }
                 }
