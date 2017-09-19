@@ -295,7 +295,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }
         if( statuses != null && statuses.size() > 0) {
             for(Status tmpStatus: statuses){
-                if( type == RetrieveFeedsAsyncTask.Type.HOME && firstLoad && Long.parseLong(tmpStatus.getId()) > Long.parseLong(lastReadStatus)){
+                if( type == RetrieveFeedsAsyncTask.Type.HOME && firstLoad && lastReadStatus != null && Long.parseLong(tmpStatus.getId()) > Long.parseLong(lastReadStatus)){
                     tmpStatus.setNew(true);
                     MainActivity.countNewStatus++;
                 }else {
