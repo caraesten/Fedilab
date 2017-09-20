@@ -44,6 +44,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -226,6 +227,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         loading_picture = (ProgressBar) findViewById(R.id.loading_picture);
         toot_picture_container = (LinearLayout) findViewById(R.id.toot_picture_container);
         toot_content = (AutoCompleteTextView) findViewById(R.id.toot_content);
+        int newInputType = toot_content.getInputType() & (toot_content.getInputType() ^ InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
+        toot_content.setInputType(newInputType);
         toot_cw_content = (EditText) findViewById(R.id.toot_cw_content);
         toot_reply_content_container = (LinearLayout) findViewById(R.id.toot_reply_content_container);
         picture_scrollview = (HorizontalScrollView) findViewById(R.id.picture_scrollview);
@@ -233,7 +236,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         //search_small_container = (LinearLayout) findViewById(R.id.search_small_container);
 
         drawer_layout = (LinearLayout) findViewById(R.id.drawer_layout);
-
         drawer_layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
