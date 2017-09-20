@@ -96,6 +96,8 @@
     <string name="favourite_remove">Diesen toot aus deinen Favoriten entfernen?</string>
     <string name="reblog_add">Teile diesen toot?</string>
     <string name="reblog_remove">Toot nicht mehr teilen?</string>
+    <string name="pin_add">Diesen toot anheften?</string>
+    <string name="pin_remove">Diesen toot nicht mehr anheften?</string>
     <string-array name="more_action">
         <item>Stummschalten</item>
         <item>Blockieren</item>
@@ -212,11 +214,13 @@
     <string name="no_accounts">Keinen Nutzer gefunden</string>
     <string name="no_follow_request">Keine Folgen-Anfrage</string>
     <string name="status_cnt">Toots \n
-    %d</string>
+     %d</string>
     <string name="following_cnt">Following \n
-    %d</string>
+     %d</string>
     <string name="followers_cnt">Followers \n
-    %d</string>
+     %d</string>
+    <string name="pins_cnt">Angeheftet\n
+ %d</string>
     <string name="authorize">Authorisieren</string>
     <string name="reject">Ablehnen</string>
 
@@ -251,6 +255,7 @@
     <!-- HEADER -->
     <string name="following">Following</string>
     <string name="followers">Followers</string>
+    <string name="pinned_toots">Angeheftet</string>
     <!-- TOAST -->
     <string name="client_error">Unable to get client id!</string>
     <string name="no_internet">Keine Internetverbindung!</string>
@@ -266,6 +271,8 @@
     <string name="toast_unfavourite">Der toot wurde aus deinen Favoriten entfernt!</string>
     <string name="toast_report">Toot wurde gemeldet!</string>
     <string name="toast_unstatus">Toot wurde gelöscht!</string>
+    <string name="toast_pin">Toot wurde angeheftet!</string>
+    <string name="toast_unpin">Toot wird nicht mehr angeheftet!</string>
     <string name="toast_error">Oops ! Ein Fehler ist aufgetreten!</string>
     <string name="toast_code_error">Ein Fehler ist aufgetreten! The instance did not return an authorisation code!</string>
     <string name="toast_error_instance">Der Name der Instanz scheint ungültig zu sein!</string>
@@ -299,13 +306,13 @@
     <string name="set_auto_store_toot">Speichere Entwürfe automatisch</string>
     <string name="set_bubble_counter">Anzahl neuer Beiträge anzeigen</string>
     <string name="set_auto_add_media_url">Füge die URL bei Anhängen in toots hinzu</string>
-    <string name="settings_title_notifications">Benachrichtigen wenn …</string>
+    <string name="settings_title_notifications">Benachrichtigen wenn ...</string>
     <string name="set_notif_follow">mir jemand folgt</string>
     <string name="set_notif_follow_ask">ich eine Folgen Anfrage erhalte</string>
     <string name="set_notif_follow_share">jemand meinen Status teilt</string>
     <string name="set_notif_follow_add">jemand meinen Status favorisiert</string>
     <string name="set_notif_follow_mention">ich erwähnt werde</string>
-    <string name="set_share_validation">Bestätigungsdialog vor dem Teilen</string>
+    <string name="set_share_validation">Zeige Bestätigungsdialog vor dem Teilen</string>
     <string name="set_share_validation_fav">Bestätigungsdialog vor dem favorisieren</string>
     <string name="settings_title_more_options">Erweiterte Einstellungen</string>
     <string name="set_wifi_only">Nur bei WLAN benachrichtigen</string>
@@ -379,53 +386,47 @@
     <!-- CACHE -->
     <string name="cache_title">Speicher leeren</string>
     <string name="cache_message">Es sind %1$s Daten im Speicher.\n
-   \n
-   Möchtest du diese löschen?</string>
+    \n
+    Möchtest du diese löschen?</string>
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Speicher wurde geleert! %1$s wurden freigeben</string>
 
     <!-- PRIVACY -->
     <string name="privacy_data_title">Aufgezeichnete Daten</string>
     <string name="privacy_data">Nur Grundinformationen der Konten werden auf dem Gerät gespeichert.         Die Daten sind streng vertraulich und können nur von der Anwendung genutzt werden.         Beim Löschen der Anwendung werden diese umgehend entfernt.\n
-            ⚠ Logindaten und Passwörter werden nie gespeichert. Sie werden nur während einer sicheren (SSL) Authentifizierung mit einer Instanz verwendet.</string>
+             ⚠ Logindaten und Passwörter werden nie gespeichert. Sie werden nur während einer sicheren (SSL) Authentifizierung mit einer Instanz verwendet.</string>
 
     <string name="privacy_authorizations_title">Berechtigungen:</string>
     <string name="privacy_authorizations">- <b >ACCESS_NETWORK_STATE</b>: Erkennen von bestehenden Verbindungen zu WIFI Netzwerken.\n
-            - <b >INTERNET</b>: Genutzt für Anfragen an eine Instanz.\n
-            - <b >WRITE_EXTERNAL_STORAGE</b>: Dateien speichern oder App auf SD Karte verschieben.\n
-            - <b >READ_EXTERNAL_STORAGE</b>: Dateianhänge für toots.\n
-            - <b >BOOT_COMPLETED</b>: Benachrichtigungsdienst starten.\n
-            - <b >WAKE_LOCK</b>: Benachrichtigungsdienst.</string>
+             - <b >INTERNET</b>: Genutzt für Anfragen an eine Instanz.\n
+             - <b >WRITE_EXTERNAL_STORAGE</b>: Dateien speichern oder App auf SD Karte verschieben.\n
+             - <b >READ_EXTERNAL_STORAGE</b>: Dateianhänge für toots.\n
+             - <b >BOOT_COMPLETED</b>: Benachrichtigungsdienst starten.\n
+             - <b >WAKE_LOCK</b>: Benachrichtigungsdienst.</string>
 
     <string name="privacy_API_authorizations_title">API Berechtigungen:</string>
     <string name="privacy_API_authorizations">- <b >Read</b>: Daten lesen.\n
-            - <b >Write</b>: Status veröffentlichen und Dateien hochladen.\n
-            - <b >Follow</b>: Folgen, nicht mehr folgen, blockieren, nicht mehr blockieren.\n
-   \n
-            <b >⚠ Diese Aktionen werden nur auf Verlangen des Benutzers durchgeführt.</b></string>
+             - <b >Write</b>: Status veröffentlichen und Dateien hochladen.\n
+             - <b >Follow</b>: Folgen, nicht mehr folgen, blockieren, nicht mehr blockieren.\n
+    \n
+             <b >⚠ Diese Aktionen werden nur auf Verlangen des Benutzers durchgeführt.</b></string>
     <string name="privacy_API_title">Tracking und Bibliotheken</string>
     <string name="privacy_API">Die Anwendung <b >benutzt keine Trackingwerkzeuge</b> (Nutzerbewertung, Fehlerberichte, etc.) und enthält keinerlei Werbung.\n
-   \n
-            Die Nutzung von Bibliotheken ist minimiert: \n
-            - <b >Android Asynchronous Http Client</b>: Anfragen verwalten\n
-            - <b >Universal Image Loader</b>: Dateien verwalten\n
-            - <b >Android-Job</b>: Dienste verwalten\n
-            - <b >PhotoView</b>: Bilder verwalten\n
-            - <b >Gson</b> : Entwürfe speichern</string>
+    \n
+             Die Nutzung von Bibliotheken ist minimiert: \n
+             - <b >Android Asynchronous Http Client</b>: Anfragen verwalten\n
+             - <b >Universal Image Loader</b>: Dateien verwalten\n
+             - <b >Android-Job</b>: Dienste verwalten\n
+             - <b >PhotoView</b>: Bilder verwalten\n
+             - <b >Gson</b> : Entwürfe speichern</string>
 
 
     <string name="privacy_API_yandex_title">Übersetzung von toots</string>
     <string name="privacy_API_yandex_authorizations">Die Anwendung bietet die Möglichkeit, toots mithilfe der lokalen sowie Yandex API zu übersetzen.\n
-            Yandex hat seine eigene Datenschutzerklärung. Diese kann hier eingehesen werden: https://yandex.ru/legal/confidential/?lang=en</string>
+             Yandex hat seine eigene Datenschutzerklärung. Diese kann hier eingehesen werden: https://yandex.ru/legal/confidential/?lang=en</string>
 
 
     <string name="thanks_text">Danke an Stéphane für das Logo.</string>
 
-    <string name="thanks_text_dev">Danke an @PhotonQyv für seine Beiträge.</string>
-    <string name="pin_add">Pin this toot?</string>
-    <string name="pin_remove">Unpin this toot?</string>
-    <string name="pinned_toots">Pinned</string>
-    <string name="pins_cnt">Pinned   %d</string>
-    <string name="toast_pin">The toot was pinned!</string>
-    <string name="toast_unpin">The toot was unpinned!</string>
+    <string name="thanks_text_dev">Danke an:</string>
 </resources>
