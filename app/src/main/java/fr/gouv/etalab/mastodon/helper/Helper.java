@@ -1610,64 +1610,8 @@ public class Helper {
      */
     public static Bitmap convertTootIntoBitmap(Context context, View view) {
 
-        int status_content_v = 0, status_content_translated_v = 0, yandex_translate_v = 0, google_translate_v = 0, status_content_translated_container_v = 0;
-        int status_spoiler_button_v = 0, status_show_more_v = 0, status_action_container_v = 0, status_content_container_v = 0, status_translate_v = 0, new_element_v = 0, notification_delete_v = 0;
+        int new_element_v = 0, notification_delete_v = 0;
         //Removes some elements
-
-        TextView status_content = (TextView) view.findViewById(R.id.status_content);
-        if( status_content != null) {
-            status_content_v = status_content.getVisibility();
-            status_content.setVisibility(View.VISIBLE);
-        }
-
-        TextView status_content_translated = (TextView) view.findViewById(R.id.status_content_translated);
-        if( status_content_translated != null) {
-            status_content_translated_v = status_content_translated.getVisibility();
-            status_content_translated.setVisibility(View.GONE);
-        }
-
-        TextView yandex_translate = (TextView) view.findViewById(R.id.yandex_translate);
-        if( yandex_translate != null) {
-            yandex_translate_v = yandex_translate.getVisibility();
-            yandex_translate.setVisibility(View.GONE);
-
-        }
-
-        TextView google_translate = (TextView) view.findViewById(R.id.google_translate);
-        if( google_translate != null) {
-            google_translate_v = google_translate.getVisibility();
-            google_translate.setVisibility(View.GONE);
-        }
-
-        Button status_spoiler_button = (Button) view.findViewById(R.id.status_spoiler_button) ;
-        if( status_spoiler_button != null) {
-            status_spoiler_button_v = status_spoiler_button.getVisibility();
-            status_spoiler_button.setVisibility(View.GONE);
-        }
-        LinearLayout status_content_translated_container  = (LinearLayout) view.findViewById(R.id.status_content_translated_container);
-        if( status_content_translated_container != null) {
-            status_content_translated_container_v = status_content_translated_container.getVisibility();
-            status_content_translated_container.setVisibility(View.VISIBLE);
-        }
-
-        LinearLayout status_action_container  = (LinearLayout) view.findViewById(R.id.status_action_container);
-        if( status_action_container != null) {
-            status_action_container_v = status_action_container.getVisibility();
-            status_action_container.setVisibility(View.GONE);
-        }
-
-        LinearLayout status_content_container  = (LinearLayout) view.findViewById(R.id.status_content_container);
-        if( status_content_container != null) {
-            status_content_container_v = status_content_container.getVisibility();
-            status_content_container.setVisibility(View.VISIBLE);
-        }
-
-        FloatingActionButton status_translate  = (FloatingActionButton) view.findViewById(R.id.status_translate);
-        if( status_translate != null) {
-            status_translate_v = status_translate.getVisibility();
-            status_translate.setVisibility(View.GONE);
-        }
-
         ImageView new_element = (ImageView) view.findViewById(R.id.new_element);
         if( new_element != null) {
             new_element_v = new_element.getVisibility();
@@ -1679,12 +1623,6 @@ public class Helper {
             notification_delete_v = notification_delete.getVisibility();
             notification_delete.setVisibility(View.GONE);
         }
-        Button status_show_more = (Button) view.findViewById(R.id.status_show_more);
-        if( status_show_more != null){
-            status_show_more_v = status_show_more.getVisibility();
-            status_show_more.setVisibility(View.GONE);
-        }
-
         Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(returnedBitmap);
         Drawable bgDrawable =view.getBackground();
@@ -1701,31 +1639,10 @@ public class Helper {
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
         canvas.drawText("Via #Mastalab", view.getWidth()-230, view.getHeight() - 35, paint);
 
-        //Restores initial visibilities
-        if( status_content != null)
-            status_content.setVisibility(status_content_v);
-        if( status_content_translated != null)
-            status_content_translated.setVisibility(status_content_translated_v);
-        if( yandex_translate != null)
-            yandex_translate.setVisibility(yandex_translate_v);
-        if( google_translate != null)
-            google_translate.setVisibility(google_translate_v);
-        if( status_content_translated_container != null)
-            status_content_translated_container.setVisibility(status_content_translated_container_v);
-        if( status_action_container != null)
-            status_action_container.setVisibility(status_action_container_v);
-        if( status_content_container != null)
-            status_content_container.setVisibility(status_content_container_v);
-        if( status_translate != null)
-            status_translate.setVisibility(status_translate_v);
         if( new_element != null)
             new_element.setVisibility(new_element_v);
         if( notification_delete != null)
             notification_delete.setVisibility(notification_delete_v);
-        if( status_spoiler_button != null)
-            status_spoiler_button.setVisibility(status_spoiler_button_v);
-        if( status_show_more != null)
-            status_show_more.setVisibility(status_show_more_v);
         return returnedBitmap;
     }
 
