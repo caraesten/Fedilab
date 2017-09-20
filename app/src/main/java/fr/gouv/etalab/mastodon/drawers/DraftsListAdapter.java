@@ -31,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.TootActivity;
@@ -126,6 +127,32 @@ public class DraftsListAdapter extends BaseAdapter  {
             }
             holder.draft_title.setTypeface(Typeface.DEFAULT_BOLD);
         }
+        holder.drafts_container.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle(R.string.delete_all);
+                builder.setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogConfirm, int which) {
+                                new StatusStoredDAO(context, db).removeAllDrafts();
+                                storedStatuses = new ArrayList<>();
+                                draftsListAdapter.notifyDataSetChanged();
+                                dialogConfirm.dismiss();
+                            }
+                        })
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogConfirm, int which) {
+                                dialogConfirm.dismiss();
+                            }
+                        })
+                        .show();
+
+                return false;
+            }
+        });
         holder.draft_date.setText(Helper.dateToString(context, draft.getCreation_date()));
         holder.draft_delete.setOnClickListener(new View.OnClickListener() {
             @Override
