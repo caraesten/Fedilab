@@ -15,6 +15,9 @@ package fr.gouv.etalab.mastodon.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 
+import android.content.Intent;
+import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,10 +28,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -48,12 +53,22 @@ public class DraftsListAdapter extends BaseAdapter  {
     private LayoutInflater layoutInflater;
     private Context context;
     private DraftsListAdapter draftsListAdapter;
+    private boolean clickable;
 
     public DraftsListAdapter(Context context, List<StoredStatus> storedStatuses){
         this.storedStatuses = storedStatuses;
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
         draftsListAdapter = this;
+        this.clickable = false;
+    }
+
+    public DraftsListAdapter(Context context, List<StoredStatus> storedStatuses, boolean clickable){
+        this.storedStatuses = storedStatuses;
+        this.context = context;
+        layoutInflater = LayoutInflater.from(context);
+        draftsListAdapter = this;
+        this.clickable = clickable;
     }
 
     @Override
@@ -83,6 +98,7 @@ public class DraftsListAdapter extends BaseAdapter  {
             holder.draft_title = (TextView) convertView.findViewById(R.id.draft_title);
             holder.draft_date = (TextView) convertView.findViewById(R.id.draft_date);
             holder.draft_delete = (ImageView) convertView.findViewById(R.id.draft_delete);
+            holder.drafts_container = (LinearLayout) convertView.findViewById(R.id.drafts_container);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -95,11 +111,20 @@ public class DraftsListAdapter extends BaseAdapter  {
             changeDrawableColor(context, R.drawable.ic_cancel,R.color.black);
         }
         final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        if(draft.getStatus() != null && draft.getStatus().getContent() != null ) {
-            if (draft.getStatus().getContent().length() > 20)
-                holder.draft_title.setText(draft.getStatus().getContent().substring(0, 20));
+
+        if( this.clickable){
+            if (draft.getStatus().getContent().length() > 300)
+                holder.draft_title.setText(draft.getStatus().getContent().substring(0, 299) + "…");
             else
                 holder.draft_title.setText(draft.getStatus().getContent());
+        }else {
+            if(draft.getStatus() != null && draft.getStatus().getContent() != null ) {
+                if (draft.getStatus().getContent().length() > 20)
+                    holder.draft_title.setText(draft.getStatus().getContent().substring(0, 20));
+                else
+                    holder.draft_title.setText(draft.getStatus().getContent());
+            }
+            holder.draft_title.setTypeface(Typeface.DEFAULT_BOLD);
         }
         holder.draft_date.setText(Helper.dateToString(context, draft.getCreation_date()));
         holder.draft_delete.setOnClickListener(new View.OnClickListener() {
@@ -129,11 +154,24 @@ public class DraftsListAdapter extends BaseAdapter  {
                         .show();
             }
         });
+        if( clickable){
+            holder.drafts_container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intentToot = new Intent(context, TootActivity.class);
+                    Bundle b = new Bundle();
+                    b.putLong("restored", draft.getId());
+                    intentToot.putExtras(b);
+                    context.startActivity(intentToot);
+                }
+            });
+        }
         return convertView;
     }
 
 
     private class ViewHolder {
+        LinearLayout drafts_container;
         TextView draft_title;
         TextView draft_date;
         ImageView draft_delete;
