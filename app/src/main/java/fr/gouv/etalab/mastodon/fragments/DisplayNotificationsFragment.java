@@ -159,15 +159,21 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     @Override
     public void onResume() {
         super.onResume();
+        ArrayList<String> knownId = new ArrayList<>();
+        for(Notification nt: notifications){
+            knownId.add(nt.getId());
+        }
         for(Notification notification: tempNotifications){
-            int index = lv_notifications.getFirstVisiblePosition() + 1;
-            View v = lv_notifications.getChildAt(0);
-            int top = (v == null) ? 0 : v.getTop();
-            notifications.add(0,notification);
-            notificationsListAdapter.notifyDataSetChanged();
-            lv_notifications.setSelectionFromTop(index, top);
-            if (textviewNoAction.getVisibility() == View.VISIBLE)
-                textviewNoAction.setVisibility(View.GONE);
+            if( !knownId.contains(notification.getId())) {
+                int index = lv_notifications.getFirstVisiblePosition() + 1;
+                View v = lv_notifications.getChildAt(0);
+                int top = (v == null) ? 0 : v.getTop();
+                notifications.add(0, notification);
+                notificationsListAdapter.notifyDataSetChanged();
+                lv_notifications.setSelectionFromTop(index, top);
+                if (textviewNoAction.getVisibility() == View.VISIBLE)
+                    textviewNoAction.setVisibility(View.GONE);
+            }
         }
         ((MainActivity)context).updateNotifCounter();
         tempNotifications.clear();
