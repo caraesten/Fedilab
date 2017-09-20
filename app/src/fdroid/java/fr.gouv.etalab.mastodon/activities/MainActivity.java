@@ -84,6 +84,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
+import fr.gouv.etalab.mastodon.fragments.DisplayDraftsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayFollowRequestSentFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayScheduledTootsFragment;
@@ -1046,6 +1047,12 @@ public class MainActivity extends AppCompatActivity
             fragmentTag = "SCHEDULED";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayScheduledTootsFragment, fragmentTag).commit();
+        }else if (id == R.id.nav_drafts) {
+            toot.setVisibility(View.VISIBLE);
+            DisplayDraftsFragment displayDraftsFragment = new DisplayDraftsFragment();
+            fragmentTag = "DRAFTS";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, displayDraftsFragment, fragmentTag).commit();
         }else if( id == R.id.nav_follow_request){
             toot.setVisibility(View.GONE);
             DisplayFollowRequestSentFragment followRequestSentFragment = new DisplayFollowRequestSentFragment();
