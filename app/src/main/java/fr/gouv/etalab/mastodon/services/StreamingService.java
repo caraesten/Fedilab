@@ -176,7 +176,7 @@ public class StreamingService extends Service {
                     lastEvent = EventStreaming.NONE;
                     try {
                         JSONObject eventJson = new JSONObject(event);
-                        onRetrieveStreaming(eventStreaming, eventJson);
+                        onRetrieveStreaming(eventStreaming, account, eventJson);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -208,7 +208,7 @@ public class StreamingService extends Service {
     }
 
 
-    public void onRetrieveStreaming(EventStreaming event, JSONObject response) {
+    public void onRetrieveStreaming(EventStreaming event, Account account, JSONObject response) {
         if(  response == null )
             return;
         //No previous notifications in cache, so no notification will be sent
@@ -232,6 +232,7 @@ public class StreamingService extends Service {
                 e.printStackTrace();
             }
         }
+        b.putString("userIdService", account.getId());
         Intent intentBC = new Intent(Helper.RECEIVE_DATA);
         intentBC.putExtra("eventStreaming", event);
         intentBC.putExtras(b);

@@ -142,6 +142,7 @@ public class MainActivity extends AppCompatActivity
     private boolean display_local, display_global;
     public static int countNewStatus = 0;
     public static int countNewNotifications = 0;
+    private String userIdService;
 
     public MainActivity() {
     }
@@ -157,34 +158,38 @@ public class MainActivity extends AppCompatActivity
             public void onReceive(Context context, Intent intent) {
                 Bundle b = intent.getExtras();
                 StreamingService.EventStreaming eventStreaming = (StreamingService.EventStreaming) intent.getSerializableExtra("eventStreaming");
-                if( eventStreaming == StreamingService.EventStreaming.NOTIFICATION){
-                    Notification notification = b.getParcelable("data");
-                    if(notificationsFragment != null){
-                        notificationsFragment.refresh(notification);
-                        countNewNotifications++;
-                    }else {
-                        tempNotifications.add(notification);
-                    }
-                }else if(eventStreaming == StreamingService.EventStreaming.UPDATE){
-                    Status status = b.getParcelable("data");
-                    if( homeFragment != null){
-                        homeFragment.refresh(status);
-                        countNewStatus++;
-                    }else {
-                        tempStatuses.add(status);
-                    }
-                }else if(eventStreaming == StreamingService.EventStreaming.DELETE){
-                    String id = b.getString("id");
-                    if(notificationsFragment != null) {
-                        if (notificationsFragment.getUserVisibleHint()) {
-
+                userIdService = b.getString("userIdService", null);
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                if( userIdService != null && userIdService.equals(userId)) {
+                    if (eventStreaming == StreamingService.EventStreaming.NOTIFICATION) {
+                        Notification notification = b.getParcelable("data");
+                        if (notificationsFragment != null) {
+                            notificationsFragment.refresh(notification);
+                            countNewNotifications++;
                         } else {
+                            tempNotifications.add(notification);
+                        }
+                    } else if (eventStreaming == StreamingService.EventStreaming.UPDATE) {
+                        Status status = b.getParcelable("data");
+                        if (homeFragment != null) {
+                            homeFragment.refresh(status);
+                            countNewStatus++;
+                        } else {
+                            tempStatuses.add(status);
+                        }
+                    } else if (eventStreaming == StreamingService.EventStreaming.DELETE) {
+                        String id = b.getString("id");
+                        if (notificationsFragment != null) {
+                            if (notificationsFragment.getUserVisibleHint()) {
 
+                            } else {
+
+                            }
                         }
                     }
+                    updateNotifCounter();
+                    updateHomeCounter();
                 }
-                updateNotifCounter();
-                updateHomeCounter();
             }
         };
         Intent intentService = new Intent(this, StreamingService.class);
