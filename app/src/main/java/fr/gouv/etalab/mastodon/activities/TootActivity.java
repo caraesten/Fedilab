@@ -483,22 +483,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
                 toot.setVisibility(visibility);
 
-                if( tootReply != null) {
-                    toot.setIn_reply_to_id(tootReply.getId());
-
-                    /*
-                       Strip the first appearance of " . "
-                        that we added to get capitalisation,
-                        from toot before posting it. Makes
-                        the end toot cleaner.
-                     */
-                    String preToot = toot_content.getText().toString().trim();
-                    String postToot = preToot.replaceFirst(" \\. ", "");
-
-                    toot.setContent(postToot.trim());
-                }else {
-                    toot.setContent(toot_content.getText().toString().trim());
-                }
+                toot.setContent(toot_content.getText().toString().trim());
 
                 new PostStatusAsyncTask(getApplicationContext(), toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
@@ -1359,10 +1344,10 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     }
                 }
             }
-
+            toot_content.setText(toot_content.getText().toString().trim());
             if (toot_content.getText().toString().startsWith("@")) {
-                //Put a "<space>dot<space>" at the end of all mentioned account to force capitalization
-                toot_content.append(" . ");
+                //Put a "<trim>dot<space>" at the end of all mentioned account to force capitalization
+                toot_content.append(". ");
             }
             toot_space_left.setText(String.valueOf(toot_content.length()));
             toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
