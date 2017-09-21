@@ -13,12 +13,11 @@ package fr.gouv.etalab.mastodon.services;
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -54,7 +53,8 @@ public class StreamingService extends Service {
 
 
     private static HttpsURLConnection httpsURLConnection;
-
+    private static boolean isRunning = false;
+    private AsyncTask<Void, Void, Void> callToStreaming;
     private EventStreaming lastEvent;
     public enum EventStreaming{
         UPDATE,
@@ -63,6 +63,7 @@ public class StreamingService extends Service {
         NONE
     }
     private final IBinder iBinder = new StreamingServiceBinder();
+    protected Account account;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -87,6 +88,7 @@ public class StreamingService extends Service {
      * Task in background starts here.
      */
     public void connect(final Account account) {
+        this.account = account;
         //If an Internet connection and user agrees with notification refresh
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         //Check which notifications the user wants to see
@@ -101,34 +103,33 @@ public class StreamingService extends Service {
             return; //Nothing is done
 
         }
+        if( callToStreaming != null)
+            callToStreaming.cancel(true);
         //No account connected, the service is stopped
-        if(!Helper.isLoggedIn(getApplicationContext()))
-            return;
         //If WIFI only and on WIFI OR user defined any connections to use the service.
-        if(!sharedpreferences.getBoolean(Helper.SET_WIFI_ONLY, false) || Helper.isOnWIFI(getApplicationContext())) {
-            Thread readThread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    longPolling(account);
-                }
-            });
-            readThread.start();
+        if (!sharedpreferences.getBoolean(Helper.SET_WIFI_ONLY, false) || Helper.isOnWIFI(getApplicationContext())) {
+            if (!isRunning)
+                callToStreaming = new CallToStreaming().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+    }
 
-    public void longPolling(Account account) {
+    public void longPolling() {
         //noinspection InfiniteLoopStatement
         InputStream inputStream;
         BufferedReader reader = null;
         try {
-            URL url = new URL("https://" + account.getInstance() + "/api/v1/streaming/user");
+            URL url = new URL("https://" + this.account.getInstance() + "/api/v1/streaming/user");
             if( httpsURLConnection != null){
                 httpsURLConnection.disconnect();
             }
             httpsURLConnection = (HttpsURLConnection) url.openConnection();
             httpsURLConnection.setRequestProperty("Content-Type", "application/json");
-            httpsURLConnection.setRequestProperty("Authorization", "Bearer " + account.getToken());
+            httpsURLConnection.setRequestProperty("Authorization", "Bearer " + this.account.getToken());
             httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
             httpsURLConnection.setRequestProperty("Keep-Alive", "header");
             httpsURLConnection.setRequestProperty("Connection", "close");
@@ -142,8 +143,8 @@ public class StreamingService extends Service {
             String event;
             EventStreaming eventStreaming;
             //noinspection InfiniteLoopStatement
-            while((event = reader.readLine()) != null){
-                if( (lastEvent == EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
+            while((event = reader.readLine()) != null) {
+                if ((lastEvent == EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
                     switch (event.trim()) {
                         case "event: update":
                             lastEvent = EventStreaming.UPDATE;
@@ -157,26 +158,26 @@ public class StreamingService extends Service {
                         default:
                             lastEvent = EventStreaming.NONE;
                     }
-                }else{
-                    if( !event.startsWith("data: ")){
+                } else {
+                    if (!event.startsWith("data: ")) {
                         lastEvent = EventStreaming.NONE;
                         continue;
                     }
                     event = event.substring(6);
-                    if(lastEvent == EventStreaming.UPDATE) {
+                    if (lastEvent == EventStreaming.UPDATE) {
                         eventStreaming = EventStreaming.UPDATE;
-                    }else if(lastEvent == EventStreaming.NOTIFICATION) {
+                    } else if (lastEvent == EventStreaming.NOTIFICATION) {
                         eventStreaming = EventStreaming.NOTIFICATION;
-                    }else if( lastEvent == EventStreaming.DELETE) {
+                    } else if (lastEvent == EventStreaming.DELETE) {
                         eventStreaming = EventStreaming.DELETE;
                         event = "{id:" + event + "}";
-                    }else {
+                    } else {
                         eventStreaming = EventStreaming.UPDATE;
                     }
                     lastEvent = EventStreaming.NONE;
                     try {
                         JSONObject eventJson = new JSONObject(event);
-                        onRetrieveStreaming(eventStreaming, account, eventJson);
+                        onRetrieveStreaming(eventStreaming, eventJson);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -192,23 +193,13 @@ public class StreamingService extends Service {
                     e.printStackTrace();
                 }
             }
-            stopSelf();
+            isRunning = false;
+            connect(this.account);
         }
     }
 
 
-
-    @Override
-    public void onTaskRemoved(Intent rootIntent) {
-        Intent intent = new Intent(getApplicationContext(), StreamingService.class);
-        PendingIntent pendingIntent = PendingIntent.getService(this, 1, intent, PendingIntent.FLAG_ONE_SHOT);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, SystemClock.elapsedRealtime() + 5000, pendingIntent);
-        super.onTaskRemoved(rootIntent);
-    }
-
-
-    public void onRetrieveStreaming(EventStreaming event, Account account, JSONObject response) {
+    public void onRetrieveStreaming(EventStreaming event, JSONObject response) {
         if(  response == null )
             return;
         //No previous notifications in cache, so no notification will be sent
@@ -232,10 +223,36 @@ public class StreamingService extends Service {
                 e.printStackTrace();
             }
         }
-        b.putString("userIdService", account.getId());
         Intent intentBC = new Intent(Helper.RECEIVE_DATA);
         intentBC.putExtra("eventStreaming", event);
         intentBC.putExtras(b);
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentBC);
+    }
+
+
+    private class CallToStreaming extends AsyncTask<Void, Void, Void> {
+
+
+        CallToStreaming(){
+            isRunning = true;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            if(!Helper.isConnectedToInternet(getApplicationContext(), account.getInstance())) {
+                SystemClock.sleep(2000);
+                isRunning = false;
+                connect(account);
+            }else {
+                longPolling();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            isRunning = false;
+        }
+
     }
 }

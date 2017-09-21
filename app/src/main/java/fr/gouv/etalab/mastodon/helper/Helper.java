@@ -340,16 +340,15 @@ public class Helper {
      *  Check if the user is connected to Internet
      * @return boolean
      */
-    @SuppressWarnings("unused")
-    public static boolean isConnectedToInternet(Context context) {
+    public static boolean isConnectedToInternet(Context context, String instance) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();
         if ( ni != null && ni.isConnected()) {
             try {
-                //Google is used for the ping
-                InetAddress ipAddr = InetAddress.getByName("google.com");
+                InetAddress ipAddr = InetAddress.getByName(instance);
                 return !ipAddr.toString().equals("");
             } catch (Exception e) {
+                e.printStackTrace();
                 return false;
             }
         } else {
