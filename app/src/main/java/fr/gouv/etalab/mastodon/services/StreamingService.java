@@ -13,14 +13,12 @@ package fr.gouv.etalab.mastodon.services;
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
-import android.app.Service;
+import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
-import android.os.Binder;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
@@ -35,13 +33,17 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+
 import javax.net.ssl.HttpsURLConnection;
+
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.TLSSocketFactory;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 
 /**
@@ -49,155 +51,122 @@ import fr.gouv.etalab.mastodon.helper.Helper;
  * Manage service for streaming api and new notifications
  */
 
-public class StreamingService extends Service {
+public class StreamingService extends IntentService {
 
 
-    private static HttpsURLConnection httpsURLConnection;
-    private static boolean isRunning = false;
-    private AsyncTask<Void, Void, Void> callToStreaming;
     private EventStreaming lastEvent;
+
+    /**
+     * Creates an IntentService.  Invoked by your subclass's constructor.
+     *
+     * @param name Used to name the worker thread, important only for debugging.
+     */
+    public StreamingService(String name) {
+        super(name);
+    }
+    public StreamingService() {
+        super("StreamingService");
+    }
+    private static HttpsURLConnection httpsURLConnection;
     public enum EventStreaming{
         UPDATE,
         NOTIFICATION,
         DELETE,
         NONE
     }
-    private final IBinder iBinder = new StreamingServiceBinder();
     protected Account account;
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        return START_STICKY;
+    public void onCreate() {
+        super.onCreate();
     }
 
-    public class StreamingServiceBinder extends Binder {
-        public StreamingService getService() {
-            return StreamingService.this;
-        }
-    }
-
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return iBinder;
-    }
-
-
-
-    /**
-     * Task in background starts here.
-     */
-    public void connect(final Account account) {
-        this.account = account;
-        //If an Internet connection and user agrees with notification refresh
-        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        //Check which notifications the user wants to see
-        boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
-        boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
-        boolean notif_ask = sharedpreferences.getBoolean(Helper.SET_NOTIF_ASK, true);
-        boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
-        boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
-        boolean notif_home = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, true);
-        //User disagree with all notifications
-        if( !notif_home && !notif_follow && !notif_add && !notif_ask && !notif_mention && !notif_share) {
-            return; //Nothing is done
-
-        }
-        if( callToStreaming != null)
-            callToStreaming.cancel(true);
-        //No account connected, the service is stopped
-        //If WIFI only and on WIFI OR user defined any connections to use the service.
-        if (!sharedpreferences.getBoolean(Helper.SET_WIFI_ONLY, false) || Helper.isOnWIFI(getApplicationContext())) {
-            if (!isRunning)
-                callToStreaming = new CallToStreaming().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }
-    }
 
     @Override
-    public void onDestroy(){
-        super.onDestroy();
-    }
-
-    public void longPolling() {
-        //noinspection InfiniteLoopStatement
+    protected void onHandleIntent(@Nullable Intent intent) {
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         InputStream inputStream;
         BufferedReader reader = null;
-        try {
-            URL url = new URL("https://" + this.account.getInstance() + "/api/v1/streaming/user");
-            if( httpsURLConnection != null){
-                httpsURLConnection.disconnect();
-            }
-            httpsURLConnection = (HttpsURLConnection) url.openConnection();
-            httpsURLConnection.setRequestProperty("Content-Type", "application/json");
-            httpsURLConnection.setRequestProperty("Authorization", "Bearer " + this.account.getToken());
-            httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
-            httpsURLConnection.setRequestProperty("Keep-Alive", "header");
-            httpsURLConnection.setRequestProperty("Connection", "close");
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
-            httpsURLConnection.setRequestMethod("GET");
-            httpsURLConnection.setConnectTimeout(70000);
-            httpsURLConnection.setReadTimeout(70000);
-            // httpsURLConnection.connect();
-            inputStream = new BufferedInputStream(httpsURLConnection.getInputStream());
-            reader = new BufferedReader(new InputStreamReader(inputStream));
-            String event;
-            EventStreaming eventStreaming;
-            //noinspection InfiniteLoopStatement
-            while((event = reader.readLine()) != null) {
-                if ((lastEvent == EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
-                    switch (event.trim()) {
-                        case "event: update":
-                            lastEvent = EventStreaming.UPDATE;
-                            break;
-                        case "event: notification":
-                            lastEvent = EventStreaming.NOTIFICATION;
-                            break;
-                        case "event: delete":
-                            lastEvent = EventStreaming.DELETE;
-                            break;
-                        default:
-                            lastEvent = EventStreaming.NONE;
-                    }
-                } else {
-                    if (!event.startsWith("data: ")) {
-                        lastEvent = EventStreaming.NONE;
-                        continue;
-                    }
-                    event = event.substring(6);
-                    if (lastEvent == EventStreaming.UPDATE) {
-                        eventStreaming = EventStreaming.UPDATE;
-                    } else if (lastEvent == EventStreaming.NOTIFICATION) {
-                        eventStreaming = EventStreaming.NOTIFICATION;
-                    } else if (lastEvent == EventStreaming.DELETE) {
-                        eventStreaming = EventStreaming.DELETE;
-                        event = "{id:" + event + "}";
+        Account accountStream = null;
+        if( httpsURLConnection != null)
+            httpsURLConnection.disconnect();
+        if( userId != null) {
+            SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            accountStream = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
+        }
+        if( accountStream != null){
+            try {
+
+                URL url = new URL("https://" + accountStream.getInstance() + "/api/v1/streaming/user");
+                httpsURLConnection = (HttpsURLConnection) url.openConnection();
+                httpsURLConnection.setRequestProperty("Content-Type", "application/json");
+                httpsURLConnection.setRequestProperty("Authorization", "Bearer " + accountStream.getToken());
+                httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
+                httpsURLConnection.setRequestProperty("Keep-Alive", "header");
+                httpsURLConnection.setRequestProperty("Connection", "close");
+                httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+                httpsURLConnection.setRequestMethod("GET");
+                httpsURLConnection.setConnectTimeout(70000);
+                httpsURLConnection.setReadTimeout(70000);
+                inputStream = new BufferedInputStream(httpsURLConnection.getInputStream());
+                reader = new BufferedReader(new InputStreamReader(inputStream));
+                String event;
+                EventStreaming eventStreaming;
+                while((event = reader.readLine()) != null) {
+                    if ((lastEvent == EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
+                        switch (event.trim()) {
+                            case "event: update":
+                                lastEvent = EventStreaming.UPDATE;
+                                break;
+                            case "event: notification":
+                                lastEvent = EventStreaming.NOTIFICATION;
+                                break;
+                            case "event: delete":
+                                lastEvent = EventStreaming.DELETE;
+                                break;
+                            default:
+                                lastEvent = EventStreaming.NONE;
+                        }
                     } else {
-                        eventStreaming = EventStreaming.UPDATE;
+                        if (!event.startsWith("data: ")) {
+                            lastEvent = EventStreaming.NONE;
+                            continue;
+                        }
+                        event = event.substring(6);
+                        if (lastEvent == EventStreaming.UPDATE) {
+                            eventStreaming = EventStreaming.UPDATE;
+                        } else if (lastEvent == EventStreaming.NOTIFICATION) {
+                            eventStreaming = EventStreaming.NOTIFICATION;
+                        } else if (lastEvent == EventStreaming.DELETE) {
+                            eventStreaming = EventStreaming.DELETE;
+                            event = "{id:" + event + "}";
+                        } else {
+                            eventStreaming = EventStreaming.UPDATE;
+                        }
+                        lastEvent = EventStreaming.NONE;
+                        try {
+                            JSONObject eventJson = new JSONObject(event);
+                            onRetrieveStreaming(eventStreaming, eventJson);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                    lastEvent = EventStreaming.NONE;
-                    try {
-                        JSONObject eventJson = new JSONObject(event);
-                        onRetrieveStreaming(eventStreaming, eventJson);
-                    } catch (JSONException e) {
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                if(reader != null){
+                    try{
+                        reader.close();
+                    }catch (IOException e){
                         e.printStackTrace();
                     }
                 }
+                SystemClock.sleep(1000);
+                sendBroadcast(new Intent("RestartStreamingService"));
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }finally {
-            if(reader != null){
-                try{
-                    reader.close();
-                }catch (IOException e){
-                    e.printStackTrace();
-                }
-            }
-            isRunning = false;
-            connect(this.account);
         }
     }
-
 
     public void onRetrieveStreaming(EventStreaming event, JSONObject response) {
         if(  response == null )
@@ -230,30 +199,4 @@ public class StreamingService extends Service {
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentBC);
     }
 
-
-    private class CallToStreaming extends AsyncTask<Void, Void, Void> {
-
-
-        CallToStreaming(){
-            isRunning = true;
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            if(!Helper.isConnectedToInternet(getApplicationContext(), account.getInstance())) {
-                SystemClock.sleep(2000);
-                isRunning = false;
-                connect(account);
-            }else {
-                longPolling();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            isRunning = false;
-        }
-
-    }
 }
