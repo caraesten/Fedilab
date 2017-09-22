@@ -24,6 +24,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -335,6 +336,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 int top = (v == null) ? 0 : v.getTop();
                 status.setReplies(new ArrayList<Status>());
                 statuses.add(0,status);
+                MainActivity.countNewStatus++;
                 statusListAdapter.notifyDataSetChanged();
                 lv_status.setSelectionFromTop(index, top);
                 if (textviewNoAction.getVisibility() == View.VISIBLE)

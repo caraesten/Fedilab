@@ -223,6 +223,7 @@ public class StreamingService extends Service {
                 e.printStackTrace();
             }
         }
+        b.putString("userIdService",account.getId());
         Intent intentBC = new Intent(Helper.RECEIVE_DATA);
         intentBC.putExtra("eventStreaming", event);
         intentBC.putExtras(b);

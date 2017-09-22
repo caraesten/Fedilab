@@ -261,6 +261,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             View v = lv_notifications.getChildAt(0);
             int top = (v == null) ? 0 : v.getTop();
             notifications.add(0, notification);
+            MainActivity.countNewNotifications++;
             notificationsListAdapter.notifyDataSetChanged();
             lv_notifications.setSelectionFromTop(index, top);
             if( textviewNoAction.getVisibility() == View.VISIBLE)

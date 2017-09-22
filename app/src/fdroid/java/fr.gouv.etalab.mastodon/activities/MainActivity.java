@@ -41,6 +41,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -161,11 +162,11 @@ public class MainActivity extends AppCompatActivity
                 userIdService = b.getString("userIdService", null);
                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 if( userIdService != null && userIdService.equals(userId)) {
+
                     if (eventStreaming == StreamingService.EventStreaming.NOTIFICATION) {
                         Notification notification = b.getParcelable("data");
                         if (notificationsFragment != null) {
                             notificationsFragment.refresh(notification);
-                            countNewNotifications++;
                         } else {
                             tempNotifications.add(notification);
                         }
@@ -173,7 +174,6 @@ public class MainActivity extends AppCompatActivity
                         Status status = b.getParcelable("data");
                         if (homeFragment != null) {
                             homeFragment.refresh(status);
-                            countNewStatus++;
                         } else {
                             tempStatuses.add(status);
                         }
@@ -218,15 +218,6 @@ public class MainActivity extends AppCompatActivity
             return;
         }
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        List<Account> accounts = new AccountDAO(getApplicationContext(), db).getAllAccount();
-        if( accounts != null){
-            for (Account account: accounts) {
-                Intent intent = new Intent(getApplicationContext(), StreamingService.class);
-                intent.putExtra("accountId", account.getId());
-                intent.putExtra("accountAcct", account.getAcct());
-                startService(intent);
-            }
-        }
         Helper.canPin = false;
         Helper.fillMapEmoji(getApplicationContext());
         //Here, the user is authenticated

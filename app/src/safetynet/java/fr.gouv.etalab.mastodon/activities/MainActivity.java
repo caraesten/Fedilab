@@ -168,7 +168,6 @@ public class MainActivity extends AppCompatActivity
                         Notification notification = b.getParcelable("data");
                         if (notificationsFragment != null) {
                             notificationsFragment.refresh(notification);
-                            countNewNotifications++;
                         } else {
                             tempNotifications.add(notification);
                         }
@@ -176,7 +175,6 @@ public class MainActivity extends AppCompatActivity
                         Status status = b.getParcelable("data");
                         if (homeFragment != null) {
                             homeFragment.refresh(status);
-                            countNewStatus++;
                         } else {
                             tempStatuses.add(status);
                         }
@@ -222,15 +220,6 @@ public class MainActivity extends AppCompatActivity
             return;
         }
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        List<Account> accounts = new AccountDAO(getApplicationContext(), db).getAllAccount();
-        if( accounts != null){
-            for (Account account: accounts) {
-                Intent intent = new Intent(getApplicationContext(), StreamingService.class);
-                intent.putExtra("accountId", account.getId());
-                intent.putExtra("accountAcct", account.getAcct());
-                startService(intent);
-            }
-        }
         Helper.canPin = false;
         Helper.fillMapEmoji(getApplicationContext());
         //Here, the user is authenticated
