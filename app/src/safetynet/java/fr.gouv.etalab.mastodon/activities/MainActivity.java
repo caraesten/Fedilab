@@ -16,12 +16,10 @@ package fr.gouv.etalab.mastodon.activities;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
@@ -29,7 +27,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -71,7 +68,6 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -193,8 +189,8 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         };
-        Intent intentService = new Intent(this, StreamingService.class);
-        bindService(intentService, serviceConnection, Context.BIND_AUTO_CREATE);
+        streamingIntent = new Intent(this, StreamingService.class);
+        startService(streamingIntent);
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
 
 
@@ -950,10 +946,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onDestroy(){
         super.onDestroy();
-        if (mBound) {
-            unbindService(serviceConnection);
-            mBound = false;
-        }
+        if( streamingIntent != null)
+            stopService(streamingIntent);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
     }
 
