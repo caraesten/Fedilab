@@ -125,7 +125,6 @@ public class MainActivity extends AppCompatActivity
     private HashMap<String, String> tagTile = new HashMap<>();
     private HashMap<String, Integer> tagItem = new HashMap<>();
     private TextView toolbarTitle;
-    private ImageView pp_actionBar;
     private SearchView toolbar_search;
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
@@ -223,7 +222,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbarTitle  = (TextView) toolbar.findViewById(R.id.toolbar_title);
-        pp_actionBar = (ImageView) toolbar.findViewById(R.id.pp_actionBar);
         toolbar_search = (SearchView) toolbar.findViewById(R.id.toolbar_search);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         TabLayout.Tab tabHome = tabLayout.newTab();
@@ -295,29 +293,9 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     stackBack.push(tab.getPosition());
                 }
-                final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-                MenuItem item = null;
-                String fragmentTag = null;
                 main_app_container.setVisibility(View.GONE);
                 viewPager.setVisibility(View.VISIBLE);
                 Helper.switchLayout(MainActivity.this);
-                if( tab.getPosition() == 0) {
-                    fragmentTag = "HOME_TIMELINE";
-                }else if( tab.getPosition() == 1) {
-                    fragmentTag = "NOTIFICATIONS";
-                }else if( tab.getPosition() == 2 && display_local) {
-                    fragmentTag = "LOCAL_TIMELINE";
-                }else if( tab.getPosition() == 2 && !display_local) {
-                        fragmentTag = "PUBLIC_TIMELINE";
-                }else if( tab.getPosition() == 3){
-                    fragmentTag = "PUBLIC_TIMELINE";
-                }
-                if( item != null){
-                    toolbarTitle.setText(item.getTitle());
-                    populateTitleWithTag(fragmentTag, item.getTitle().toString(), item.getItemId());
-                    unCheckAllMenuItems(navigationView);
-                    item.setChecked(true);
-                }
                 if( tab.getPosition() != 1 )
                     toot.setVisibility(View.VISIBLE);
                 else
@@ -431,7 +409,7 @@ public class MainActivity extends AppCompatActivity
                 toolbar_search.setQuery("", false);
                 toolbar_search.setIconified(true);
                 toolbarTitle.setVisibility(View.VISIBLE);
-                pp_actionBar.setVisibility(View.VISIBLE);
+                tabLayout.setVisibility(View.VISIBLE);
                 return false;
             }
             @Override
@@ -445,8 +423,17 @@ public class MainActivity extends AppCompatActivity
         toolbar_search.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
-                toolbarTitle.setVisibility(View.VISIBLE);
-                pp_actionBar.setVisibility(View.VISIBLE);
+                if( main_app_container.getVisibility() == View.VISIBLE){
+                    main_app_container.setVisibility(View.VISIBLE);
+                    viewPager.setVisibility(View.GONE);
+                    tabLayout.setVisibility(View.GONE);
+                    toolbarTitle.setVisibility(View.VISIBLE);
+                }else {
+                    main_app_container.setVisibility(View.GONE);
+                    viewPager.setVisibility(View.VISIBLE);
+                    tabLayout.setVisibility(View.VISIBLE);
+                    toolbarTitle.setVisibility(View.GONE);
+                }
                 //your code here
                 return false;
             }
@@ -455,11 +442,20 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 if( toolbar_search.isIconified()){
-                    toolbarTitle.setVisibility(View.VISIBLE);
-                    pp_actionBar.setVisibility(View.VISIBLE);
+                    if( main_app_container.getVisibility() == View.VISIBLE){
+                        main_app_container.setVisibility(View.VISIBLE);
+                        viewPager.setVisibility(View.GONE);
+                        tabLayout.setVisibility(View.GONE);
+                        toolbarTitle.setVisibility(View.VISIBLE);
+                    }else {
+                        main_app_container.setVisibility(View.GONE);
+                        viewPager.setVisibility(View.VISIBLE);
+                        tabLayout.setVisibility(View.VISIBLE);
+                        toolbarTitle.setVisibility(View.GONE);
+                    }
                 }else {
                     toolbarTitle.setVisibility(View.GONE);
-                    pp_actionBar.setVisibility(View.GONE);
+                    tabLayout.setVisibility(View.GONE);
                 }
             }
         });
@@ -697,9 +693,11 @@ public class MainActivity extends AppCompatActivity
                     super.onBackPressed();
                 }
             }else {
-                viewPager.setVisibility(View.VISIBLE);
                 Helper.switchLayout(MainActivity.this);
                 main_app_container.setVisibility(View.GONE);
+                viewPager.setVisibility(View.VISIBLE);
+                tabLayout.setVisibility(View.VISIBLE);
+                toolbarTitle.setVisibility(View.GONE);
                 final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                 unCheckAllMenuItems(navigationView);
                 toot.setVisibility(View.VISIBLE);
@@ -915,8 +913,6 @@ public class MainActivity extends AppCompatActivity
         item.setChecked(true);
         //Remove the search bar
         if( !toolbar_search.isIconified() ) {
-            toolbarTitle.setVisibility(View.VISIBLE);
-            pp_actionBar.setVisibility(View.VISIBLE);
             toolbar_search.setIconified(true);
         }
         toolbarTitle.setText(item.getTitle());
@@ -929,6 +925,7 @@ public class MainActivity extends AppCompatActivity
         main_app_container.setVisibility(View.VISIBLE);
         viewPager.setVisibility(View.GONE);
         tabLayout.setVisibility(View.GONE);
+        toolbarTitle.setVisibility(View.VISIBLE);
         if (id == R.id.nav_settings) {
             toot.setVisibility(View.GONE);
             TabLayoutSettingsFragment tabLayoutSettingsFragment= new TabLayoutSettingsFragment();
@@ -1060,7 +1057,7 @@ public class MainActivity extends AppCompatActivity
             //Remove the search bar
             if( !toolbar_search.isIconified() ) {
                 toolbarTitle.setVisibility(View.VISIBLE);
-                pp_actionBar.setVisibility(View.VISIBLE);
+                tabLayout.setVisibility(View.VISIBLE);
                 toolbar_search.setIconified(true);
             }
             //Selection comes from another menu, no action to do
