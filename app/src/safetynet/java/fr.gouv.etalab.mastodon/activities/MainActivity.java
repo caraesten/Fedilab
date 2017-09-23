@@ -142,6 +142,7 @@ public class MainActivity extends AppCompatActivity
     public static int countNewStatus = 0;
     public static int countNewNotifications = 0;
     private String userIdService;
+    private Intent streamingIntent;
 
     public MainActivity() {
     }
@@ -907,35 +908,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    StreamingService streamingService = null;
-    boolean mBound = false;
-    private ServiceConnection serviceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName className, IBinder service) {
-            StreamingService.StreamingServiceBinder binder = (StreamingService.StreamingServiceBinder) service;
-            streamingService = binder.getService();
-            mBound = true;
-            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            SQLiteDatabase db = Sqlite.getInstance(MainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
-            streamingService.connect(account);
-        }
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            mBound = false;
-        }
-    };
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-    }
 
     @Override
     protected void onPause() {

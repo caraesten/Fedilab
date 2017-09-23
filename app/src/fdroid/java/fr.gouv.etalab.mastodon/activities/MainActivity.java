@@ -158,7 +158,6 @@ public class MainActivity extends AppCompatActivity
                 userIdService = b.getString("userIdService", null);
                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 if( userIdService != null && userIdService.equals(userId)) {
-
                     if (eventStreaming == StreamingService.EventStreaming.NOTIFICATION) {
                         Notification notification = b.getParcelable("data");
                         if (notificationsFragment != null) {
