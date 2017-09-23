@@ -229,6 +229,7 @@ public class Helper {
     public static final int TRANS_GOOGLE = 1;
     public static final int TRANS_NONE = 2;
 
+    public static final String SET_TRANS_FORCED = "set_trans_forced";
     public static final String SET_NOTIF_FOLLOW = "set_notif_follow";
     public static final String SET_NOTIF_ADD = "set_notif_follow_add";
     public static final String SET_NOTIF_ASK = "set_notif_follow_ask";
