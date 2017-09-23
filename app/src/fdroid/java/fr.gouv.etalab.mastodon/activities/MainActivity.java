@@ -109,7 +109,6 @@ import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeHamburgerIcon;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeUser;
-import static fr.gouv.etalab.mastodon.helper.Helper.loadPPInActionBar;
 import static fr.gouv.etalab.mastodon.helper.Helper.menuAccounts;
 import static fr.gouv.etalab.mastodon.helper.Helper.unCheckAllMenuItems;
 import static fr.gouv.etalab.mastodon.helper.Helper.updateHeaderAccountInfo;
@@ -406,8 +405,17 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
                 toolbar_search.setQuery("", false);
                 toolbar_search.setIconified(true);
-                toolbarTitle.setVisibility(View.VISIBLE);
-                tabLayout.setVisibility(View.VISIBLE);
+                if( main_app_container.getVisibility() == View.VISIBLE){
+                    main_app_container.setVisibility(View.VISIBLE);
+                    viewPager.setVisibility(View.GONE);
+                    tabLayout.setVisibility(View.GONE);
+                    toolbarTitle.setVisibility(View.VISIBLE);
+                }else {
+                    main_app_container.setVisibility(View.GONE);
+                    viewPager.setVisibility(View.VISIBLE);
+                    tabLayout.setVisibility(View.VISIBLE);
+                    toolbarTitle.setVisibility(View.GONE);
+                }
                 return false;
             }
             @Override
@@ -496,15 +504,12 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.setDrawerIndicatorEnabled(false);
-        changeHamburgerIcon(MainActivity.this, account.getAvatar(), toggle);
+        changeHamburgerIcon(MainActivity.this, account.getAvatar());
         toggle.syncState();
-
-
         headerLayout = navigationView.getHeaderView(0);
 
 
         updateHeaderAccountInfo(MainActivity.this, account, headerLayout, imageLoader, options);
-        loadPPInActionBar(MainActivity.this, account.getAvatar());
         //Locked account can see follow request
         if (account.isLocked()) {
             navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);

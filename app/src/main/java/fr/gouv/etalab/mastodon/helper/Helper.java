@@ -20,6 +20,8 @@ package fr.gouv.etalab.mastodon.helper;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -959,12 +961,26 @@ public class Helper {
     }
 
 
+    public static Bitmap getRoundedCornerBitmap(Bitmap bitmap,int roundPixelSize) {
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        final RectF rectF = new RectF(rect);
+        final float roundPx = roundPixelSize;
+        paint.setAntiAlias(true);
+        canvas.drawRoundRect(rectF,roundPx,roundPx, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        return output;
+    }
+
     /**
      * Load the profile picture at the place of hamburger icon
      * @param activity Activity The current activity
      * @param url String the url of the profile picture
      */
-    public static void changeHamburgerIcon(final Activity activity, String url, ActionBarDrawerToggle toggle){
+    public static void changeHamburgerIcon(final Activity activity, String url){
         ImageLoader imageLoader;
         DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
@@ -977,8 +993,8 @@ public class Helper {
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 super.onLoadingComplete(imageUri, view, loadedImage);
                 Resources res = activity.getResources();
-                Bitmap loadedImageResized = Bitmap.createScaledBitmap(loadedImage, (int)convertDpToPixel(30, activity), (int)convertDpToPixel(30, activity), true);
-                BitmapDrawable icon = new BitmapDrawable(res, loadedImageResized);
+                Bitmap loadedImageResized = Bitmap.createScaledBitmap(loadedImage, (int)convertDpToPixel(40, activity), (int)convertDpToPixel(40, activity), true);
+                BitmapDrawable icon = new BitmapDrawable(res, getRoundedCornerBitmap(loadedImageResized, 90));
                 if( ((MainActivity)activity).getSupportActionBar() != null)
                     ((MainActivity)activity).getSupportActionBar().setIcon(icon);
             }
