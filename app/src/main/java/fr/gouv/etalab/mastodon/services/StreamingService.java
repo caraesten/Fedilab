@@ -22,7 +22,6 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -146,7 +145,7 @@ public class StreamingService extends IntentService {
                         lastEvent = EventStreaming.NONE;
                         try {
                             JSONObject eventJson = new JSONObject(event);
-                            onRetrieveStreaming(eventStreaming, eventJson);
+                            onRetrieveStreaming(eventStreaming, accountStream, eventJson);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -168,7 +167,7 @@ public class StreamingService extends IntentService {
         }
     }
 
-    public void onRetrieveStreaming(EventStreaming event, JSONObject response) {
+    public void onRetrieveStreaming(EventStreaming event, Account account, JSONObject response) {
         if(  response == null )
             return;
         //No previous notifications in cache, so no notification will be sent
@@ -192,7 +191,8 @@ public class StreamingService extends IntentService {
                 e.printStackTrace();
             }
         }
-        b.putString("userIdService",account.getId());
+        if( account != null)
+            b.putString("userIdService",account.getId());
         Intent intentBC = new Intent(Helper.RECEIVE_DATA);
         intentBC.putExtra("eventStreaming", event);
         intentBC.putExtras(b);
