@@ -18,13 +18,9 @@ package fr.gouv.etalab.mastodon.helper;
 
 
 import android.app.Activity;
-import android.app.NotificationManager;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.graphics.PorterDuffXfermode;
-import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.PendingIntent;
@@ -66,7 +62,6 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -79,7 +74,6 @@ import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -87,7 +81,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.BuildConfig;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -99,17 +92,14 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.lang.reflect.Type;
 import java.net.InetAddress;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -138,9 +128,10 @@ import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
-import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
+import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
+import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -160,7 +151,6 @@ public class Helper {
     @SuppressWarnings("unused")
     public static  final String TAG = "mastodon_etalab";
     public static final String CLIENT_NAME_VALUE = "Mastalab";
-    public static final String DEVELOPER_INSTANCE = "mastodon.etalab.gouv.fr";
     public static final String OAUTH_SCOPES = "read write follow";
     public static final String PREF_KEY_OAUTH_TOKEN = "oauth_token";
     public static final String PREF_KEY_ID = "userID";
@@ -931,6 +921,7 @@ public class Helper {
      */
     public static void changeUser(Activity activity, String userID, boolean checkItem) {
 
+
         final NavigationView navigationView = (NavigationView) activity.findViewById(R.id.nav_view);
         navigationView.getMenu().clear();
         navigationView.inflateMenu(R.menu.activity_main_drawer);
@@ -946,6 +937,18 @@ public class Helper {
             navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
         }
         SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String oldUserId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        //User wont' be the same, temp values are cleared
+        if( oldUserId != null && !oldUserId.equals(userID)){
+            if( DisplayStatusFragment.tempStatuses != null) {
+                DisplayStatusFragment.tempStatuses.clear();
+                DisplayStatusFragment.tempStatuses = new ArrayList<>();
+            }
+            if( DisplayNotificationsFragment.tempNotifications != null) {
+                DisplayNotificationsFragment.tempNotifications.clear();
+                DisplayNotificationsFragment.tempNotifications = new ArrayList<>();
+            }
+        }
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, account.getToken());
         editor.putString(Helper.PREF_KEY_ID, account.getId());
