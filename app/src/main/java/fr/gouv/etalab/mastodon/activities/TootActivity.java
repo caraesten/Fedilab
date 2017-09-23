@@ -44,8 +44,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
+import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -205,6 +205,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
         //By default the toot is not restored so the id -1 is defined
         currentToId = -1;
+        boolean restoredScheduled = false;
         imageLoader = ImageLoader.getInstance();
         File cacheDir = new File(getCacheDir(), getString(R.string.app_name));
         ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(this)
@@ -226,6 +227,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         loading_picture = (ProgressBar) findViewById(R.id.loading_picture);
         toot_picture_container = (LinearLayout) findViewById(R.id.toot_picture_container);
         toot_content = (AutoCompleteTextView) findViewById(R.id.toot_content);
+        int newInputType = toot_content.getInputType() & (toot_content.getInputType() ^ InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
+        toot_content.setInputType(newInputType);
         toot_cw_content = (EditText) findViewById(R.id.toot_cw_content);
         toot_reply_content_container = (LinearLayout) findViewById(R.id.toot_reply_content_container);
         picture_scrollview = (HorizontalScrollView) findViewById(R.id.picture_scrollview);
@@ -233,7 +236,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         //search_small_container = (LinearLayout) findViewById(R.id.search_small_container);
 
         drawer_layout = (LinearLayout) findViewById(R.id.drawer_layout);
-
         drawer_layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -264,6 +266,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             sharedContent = b.getString("sharedContent", null);
             sharedContentIni = b.getString("sharedContent", null);
             sharedSubject = b.getString("sharedSubject", null);
+            restoredScheduled = b.getBoolean("restoredScheduled", false);
             // ACTION_SEND route
             if (b.getInt("uriNumber", 0) == 1) {
                 Uri fileUri = b.getParcelable("sharedUri");
@@ -282,7 +285,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             restored = b.getLong("restored", -1);
         }
         initialContent = toot_content.getText().toString();
-        if( restored != -1 ){
+        if(restoredScheduled){
             toot_it.setVisibility(View.GONE);
             invalidateOptionsMenu();
         }
@@ -479,23 +482,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 if( toot_cw_content.getText().toString().trim().length() > 0)
                     toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
                 toot.setVisibility(visibility);
-
-                if( tootReply != null) {
+                if( tootReply != null)
                     toot.setIn_reply_to_id(tootReply.getId());
-
-                    /*
-                       Strip the first appearance of " . "
-                        that we added to get capitalisation,
-                        from toot before posting it. Makes
-                        the end toot cleaner.
-                     */
-                    String preToot = toot_content.getText().toString().trim();
-                    String postToot = preToot.replaceFirst(" \\. ", "");
-
-                    toot.setContent(postToot.trim());
-                }else {
-                    toot.setContent(toot_content.getText().toString().trim());
-                }
+                toot.setContent(toot_content.getText().toString().trim());
 
                 new PostStatusAsyncTask(getApplicationContext(), toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
@@ -1082,6 +1071,10 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             }
             return;
         }
+        if(restored != -1){
+            SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            new StatusStoredDAO(getApplicationContext(), db).remove(restored);
+        }
         //Clear the toot
         toot_content.setText("");
         toot_cw_content.setText("");
@@ -1352,10 +1345,10 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     }
                 }
             }
-
+            toot_content.setText(toot_content.getText().toString().trim());
             if (toot_content.getText().toString().startsWith("@")) {
-                //Put a "<space>dot<space>" at the end of all mentioned account to force capitalization
-                toot_content.append(" . ");
+                //Put a "<trim>dot<space>" at the end of all mentioned account to force capitalization
+                toot_content.append(". ");
             }
             toot_space_left.setText(String.valueOf(toot_content.length()));
             toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
@@ -1378,6 +1371,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
         toot.setVisibility(visibility);
         toot.setContent(toot_content.getText().toString().trim());
+
         if( tootReply != null)
             toot.setIn_reply_to_id(tootReply.getId());
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();

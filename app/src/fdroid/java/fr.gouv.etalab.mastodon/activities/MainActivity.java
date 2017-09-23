@@ -16,12 +16,10 @@ package fr.gouv.etalab.mastodon.activities;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
@@ -29,7 +27,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -69,7 +66,6 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -84,6 +80,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
+import fr.gouv.etalab.mastodon.fragments.DisplayDraftsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayFollowRequestSentFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayScheduledTootsFragment;
@@ -141,6 +138,8 @@ public class MainActivity extends AppCompatActivity
     private boolean display_local, display_global;
     public static int countNewStatus = 0;
     public static int countNewNotifications = 0;
+    private String userIdService;
+    private Intent streamingIntent;
 
     public MainActivity() {
     }
@@ -156,38 +155,40 @@ public class MainActivity extends AppCompatActivity
             public void onReceive(Context context, Intent intent) {
                 Bundle b = intent.getExtras();
                 StreamingService.EventStreaming eventStreaming = (StreamingService.EventStreaming) intent.getSerializableExtra("eventStreaming");
-                if( eventStreaming == StreamingService.EventStreaming.NOTIFICATION){
-                    Notification notification = b.getParcelable("data");
-                    if(notificationsFragment != null){
-                        notificationsFragment.refresh(notification);
-                        countNewNotifications++;
-                    }else {
-                        tempNotifications.add(notification);
-                    }
-                }else if(eventStreaming == StreamingService.EventStreaming.UPDATE){
-                    Status status = b.getParcelable("data");
-                    if( homeFragment != null){
-                        homeFragment.refresh(status);
-                        countNewStatus++;
-                    }else {
-                        tempStatuses.add(status);
-                    }
-                }else if(eventStreaming == StreamingService.EventStreaming.DELETE){
-                    String id = b.getString("id");
-                    if(notificationsFragment != null) {
-                        if (notificationsFragment.getUserVisibleHint()) {
-
+                userIdService = b.getString("userIdService", null);
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                if( userIdService != null && userIdService.equals(userId)) {
+                    if (eventStreaming == StreamingService.EventStreaming.NOTIFICATION) {
+                        Notification notification = b.getParcelable("data");
+                        if (notificationsFragment != null) {
+                            notificationsFragment.refresh(notification);
                         } else {
+                            tempNotifications.add(notification);
+                        }
+                    } else if (eventStreaming == StreamingService.EventStreaming.UPDATE) {
+                        Status status = b.getParcelable("data");
+                        if (homeFragment != null) {
+                            homeFragment.refresh(status);
+                        } else {
+                            tempStatuses.add(status);
+                        }
+                    } else if (eventStreaming == StreamingService.EventStreaming.DELETE) {
+                        String id = b.getString("id");
+                        if (notificationsFragment != null) {
+                            if (notificationsFragment.getUserVisibleHint()) {
 
+                            } else {
+
+                            }
                         }
                     }
+                    updateNotifCounter();
+                    updateHomeCounter();
                 }
-                updateNotifCounter();
-                updateHomeCounter();
             }
         };
-        Intent intentService = new Intent(this, StreamingService.class);
-        bindService(intentService, serviceConnection, Context.BIND_AUTO_CREATE);
+        streamingIntent = new Intent(this, StreamingService.class);
+        startService(streamingIntent);
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
 
 
@@ -212,15 +213,6 @@ public class MainActivity extends AppCompatActivity
             return;
         }
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        List<Account> accounts = new AccountDAO(getApplicationContext(), db).getAllAccount();
-        if( accounts != null){
-            for (Account account: accounts) {
-                Intent intent = new Intent(getApplicationContext(), StreamingService.class);
-                intent.putExtra("accountId", account.getId());
-                intent.putExtra("accountAcct", account.getAcct());
-                startService(intent);
-            }
-        }
         Helper.canPin = false;
         Helper.fillMapEmoji(getApplicationContext());
         //Here, the user is authenticated
@@ -912,35 +904,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    StreamingService streamingService = null;
-    boolean mBound = false;
-    private ServiceConnection serviceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName className, IBinder service) {
-            StreamingService.StreamingServiceBinder binder = (StreamingService.StreamingServiceBinder) service;
-            streamingService = binder.getService();
-            mBound = true;
-            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            SQLiteDatabase db = Sqlite.getInstance(MainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
-            streamingService.connect(account);
-        }
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            mBound = false;
-        }
-    };
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-    }
 
     @Override
     protected void onPause() {
@@ -951,10 +915,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onDestroy(){
         super.onDestroy();
-        if (mBound) {
-            unbindService(serviceConnection);
-            mBound = false;
-        }
+        if( streamingIntent != null)
+            stopService(streamingIntent);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
     }
 
@@ -1046,6 +1008,12 @@ public class MainActivity extends AppCompatActivity
             fragmentTag = "SCHEDULED";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayScheduledTootsFragment, fragmentTag).commit();
+        }else if (id == R.id.nav_drafts) {
+            toot.setVisibility(View.VISIBLE);
+            DisplayDraftsFragment displayDraftsFragment = new DisplayDraftsFragment();
+            fragmentTag = "DRAFTS";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, displayDraftsFragment, fragmentTag).commit();
         }else if( id == R.id.nav_follow_request){
             toot.setVisibility(View.GONE);
             DisplayFollowRequestSentFragment followRequestSentFragment = new DisplayFollowRequestSentFragment();

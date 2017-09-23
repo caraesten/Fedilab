@@ -297,6 +297,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
                 Intent intentToot = new Intent(context, TootActivity.class);
                 Bundle b = new Bundle();
                 b.putLong("restored", storedStatus.getId());
+                b.putBoolean("restoredScheduled", true);
                 intentToot.putExtras(b);
                 context.startActivity(intentToot);
             }
