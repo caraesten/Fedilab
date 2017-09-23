@@ -302,19 +302,14 @@ public class MainActivity extends AppCompatActivity
                 viewPager.setVisibility(View.VISIBLE);
                 Helper.switchLayout(MainActivity.this);
                 if( tab.getPosition() == 0) {
-                    item = navigationView.getMenu().findItem(R.id.nav_home);
                     fragmentTag = "HOME_TIMELINE";
                 }else if( tab.getPosition() == 1) {
                     fragmentTag = "NOTIFICATIONS";
-                    item = navigationView.getMenu().findItem(R.id.nav_notification);
                 }else if( tab.getPosition() == 2 && display_local) {
                     fragmentTag = "LOCAL_TIMELINE";
-                    item = navigationView.getMenu().findItem(R.id.nav_local);
                 }else if( tab.getPosition() == 2 && !display_local) {
-                        item = navigationView.getMenu().findItem(R.id.nav_global);
                         fragmentTag = "PUBLIC_TIMELINE";
                 }else if( tab.getPosition() == 3){
-                    item = navigationView.getMenu().findItem(R.id.nav_global);
                     fragmentTag = "PUBLIC_TIMELINE";
                 }
                 if( item != null){
@@ -402,7 +397,7 @@ public class MainActivity extends AppCompatActivity
                         muteFrag.scrollToTop();
                     }
                 //Scroll to top when top bar is clicked (THEME_MENU only)
-                } else if (Helper.THEME_MENU == sharedpreferences.getInt(Helper.SET_TABS, Helper.THEME_TABS)) {
+                } else {
                     int pos = tabLayout.getSelectedTabPosition();
                     Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, pos);
                     switch (pos) {
@@ -531,11 +526,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
         boolean matchingIntent = mamageNewIntent(getIntent());
-        if (savedInstanceState == null && !matchingIntent) {
-            navigationView.setCheckedItem(R.id.nav_home);
-            navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
-            toolbarTitle.setText(R.string.home_menu);
-        }
+
 
         boolean popupShown = sharedpreferences.getBoolean(Helper.SET_POPUP_PUSH, false);
         if(!popupShown){
@@ -620,9 +611,6 @@ public class MainActivity extends AppCompatActivity
                 matchingIntent = true;
             }else if( extras.getInt(INTENT_ACTION) == CHANGE_USER_INTENT){
                 unCheckAllMenuItems(navigationView);
-                navigationView.setCheckedItem(R.id.nav_home);
-                navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
-                toolbarTitle.setText(R.string.home_menu);
                 matchingIntent = true;
             }
         }else if( Intent.ACTION_SEND.equals(action) && type != null ) {
@@ -744,22 +732,8 @@ public class MainActivity extends AppCompatActivity
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.white);
                 }
                 switch (viewPager.getCurrentItem()){
-                    case 0:
-                        toolbarTitle.setText(R.string.home_menu);
-                        navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
-                        break;
                     case 1:
                         toot.setVisibility(View.GONE);
-                        toolbarTitle.setText(R.string.notifications);
-                        navigationView.getMenu().findItem(R.id.nav_notification).setChecked(true);
-                        break;
-                    case 2:
-                        toolbarTitle.setText(R.string.local_menu);
-                        navigationView.getMenu().findItem(R.id.nav_local).setChecked(true);
-                        break;
-                    case 3:
-                        toolbarTitle.setText(R.string.global_menu);
-                        navigationView.getMenu().findItem(R.id.nav_global).setChecked(true);
                         break;
                 }
             }
@@ -946,28 +920,6 @@ public class MainActivity extends AppCompatActivity
             toolbar_search.setIconified(true);
         }
         toolbarTitle.setText(item.getTitle());
-        if (id == R.id.nav_home) {
-            if( tabLayout.getSelectedTabPosition() != 0)
-                //noinspection ConstantConditions
-                tabLayout.getTabAt(0).select();
-            return true;
-        } else if( id == R.id.nav_notification){
-            if( tabLayout.getSelectedTabPosition() != 1)
-                //noinspection ConstantConditions
-                tabLayout.getTabAt(1).select();
-            return true;
-        }else if (id == R.id.nav_local) {
-
-            if( tabLayout.getSelectedTabPosition() != 2)
-                //noinspection ConstantConditions
-                tabLayout.getTabAt(2).select();
-            return true;
-        } else if (id == R.id.nav_global) {
-            if( tabLayout.getSelectedTabPosition() != 3)
-                //noinspection ConstantConditions
-                tabLayout.getTabAt(3).select();
-            return true;
-        }
         DisplayStatusFragment statusFragment;
         DisplayAccountsFragment accountsFragment;
         Bundle bundle = new Bundle();

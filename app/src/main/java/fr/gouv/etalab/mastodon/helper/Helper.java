@@ -196,7 +196,6 @@ public class Helper {
     public static final String SET_AUTO_STORE = "set_auto_store";
     public static final String SET_POPUP_PUSH = "set_popup_push";
     public static final String SET_NSFW_TIMEOUT = "set_nsfw_timeout";
-    public static final String SET_TABS = "set_tabs";
     public static final String SET_MEDIA_URLS = "set_media_urls";
     public static final String SET_TEXT_SIZE = "set_text_size";
     public static final String SET_ICON_SIZE = "set_icon_size";
@@ -210,9 +209,6 @@ public class Helper {
     public static final int ATTACHMENT_ASK = 3;
     public static final int THEME_LIGHT = 1;
     public static final int THEME_DARK = 2;
-    public static final int THEME_TABS = 1;
-    public static final int THEME_MENU = 2;
-    public static final int THEME_MENU_TABS = 3;
 
     public static final int LED_COLOUR = 0;
 
@@ -1577,22 +1573,9 @@ public class Helper {
      */
     public static void switchLayout(Activity activity){
         //Check if the class calling the method is an instance of MainActivity
-        boolean isTablet = activity.getResources().getBoolean(R.bool.isTablet);
         final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int timelineLayout = sharedpreferences.getInt(Helper.SET_TABS, Helper.THEME_TABS);
         final NavigationView navigationView = (NavigationView) activity.findViewById(R.id.nav_view);
-
         android.support.design.widget.TabLayout tableLayout = (android.support.design.widget.TabLayout) activity.findViewById(R.id.tabLayout);
-        LinearLayout toolbar_search_container = (LinearLayout) activity.findViewById(R.id.toolbar_search_container);
-        ViewGroup.LayoutParams params = toolbar_search_container.getLayoutParams();
-        int heightSearchdp, heightSearchdpAlone;
-        if( !isTablet){
-            heightSearchdp = 40;
-            heightSearchdpAlone = 60;
-        }else {
-            heightSearchdp = 40;
-            heightSearchdpAlone = 60;
-        }
         String userID = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(activity,db).getAccountByID(userID);
@@ -1605,37 +1588,7 @@ public class Helper {
                     navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
             }
         }
-        if( navigationView.getMenu().findItem(R.id.nav_home) != null){
-            switch (timelineLayout){
-                case Helper.THEME_TABS:
-                    navigationView.getMenu().findItem(R.id.nav_home).setVisible(false);
-                    navigationView.getMenu().findItem(R.id.nav_local).setVisible(false);
-                    navigationView.getMenu().findItem(R.id.nav_global).setVisible(false);
-                    navigationView.getMenu().findItem(R.id.nav_notification).setVisible(false);
-                    params.height = (int) Helper.convertDpToPixel(heightSearchdp, activity);
-                    toolbar_search_container.setLayoutParams(params);
-                    tableLayout.setVisibility(View.VISIBLE);
-                    break;
-                case Helper.THEME_MENU:
-                    navigationView.getMenu().findItem(R.id.nav_home).setVisible(true);
-                    navigationView.getMenu().findItem(R.id.nav_local).setVisible(true);
-                    navigationView.getMenu().findItem(R.id.nav_global).setVisible(true);
-                    navigationView.getMenu().findItem(R.id.nav_notification).setVisible(true);
-                    params.height = (int) Helper.convertDpToPixel(heightSearchdpAlone, activity);;
-                    toolbar_search_container.setLayoutParams(params);
-                    tableLayout.setVisibility(View.GONE);
-                    break;
-                case Helper.THEME_MENU_TABS:
-                    navigationView.getMenu().findItem(R.id.nav_home).setVisible(true);
-                    navigationView.getMenu().findItem(R.id.nav_local).setVisible(true);
-                    navigationView.getMenu().findItem(R.id.nav_global).setVisible(true);
-                    navigationView.getMenu().findItem(R.id.nav_notification).setVisible(true);
-                    params.height = (int) Helper.convertDpToPixel(heightSearchdp, activity);
-                    toolbar_search_container.setLayoutParams(params);
-                    tableLayout.setVisibility(View.VISIBLE);
-                    break;
-            }
-        }
+        tableLayout.setVisibility(View.VISIBLE);
     }
 
     /**

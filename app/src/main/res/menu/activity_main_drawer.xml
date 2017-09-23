@@ -12,22 +12,6 @@
                         android:title=""
                         android:visible="false"/>
                     <item
-                        android:id="@+id/nav_home"
-                        android:icon="@drawable/ic_action_home"
-                        android:title="@string/home_menu" />
-                    <item
-                        android:id="@+id/nav_local"
-                        android:icon="@drawable/ic_action_users"
-                        android:title="@string/local_menu" />
-                    <item
-                        android:id="@+id/nav_global"
-                        android:icon="@drawable/ic_action_globe_menu"
-                        android:title="@string/global_menu" />
-                    <item
-                        android:id="@+id/nav_notification"
-                        android:icon="@drawable/ic_notifications"
-                        android:title="@string/notifications" />
-                    <item
                         android:id="@+id/nav_scheduled"
                         android:icon="@drawable/ic_schedule_black"
                         android:title="@string/scheduled_toots" />
