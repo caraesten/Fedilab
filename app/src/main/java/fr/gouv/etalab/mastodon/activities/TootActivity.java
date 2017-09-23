@@ -802,6 +802,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
                 final DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.date_picker);
                 final TimePicker timePicker = (TimePicker) dialogView.findViewById(R.id.time_picker);
+                timePicker.setIs24HourView(true);
                 Button date_time_cancel = (Button) dialogView.findViewById(R.id.date_time_cancel);
                 final ImageButton date_time_previous = (ImageButton) dialogView.findViewById(R.id.date_time_previous);
                 final ImageButton date_time_next = (ImageButton) dialogView.findViewById(R.id.date_time_next);
