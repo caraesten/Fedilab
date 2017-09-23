@@ -49,10 +49,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -521,7 +519,7 @@ public class MainActivity extends AppCompatActivity
                 menuAccounts(MainActivity.this);
             }
         });
-        boolean matchingIntent = mamageNewIntent(getIntent());
+
 
 
         boolean popupShown = sharedpreferences.getBoolean(Helper.SET_POPUP_PUSH, false);
@@ -739,7 +737,6 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
-
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
