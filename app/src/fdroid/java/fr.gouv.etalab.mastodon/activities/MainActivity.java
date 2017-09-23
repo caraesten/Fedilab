@@ -380,18 +380,18 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 FragmentManager fragmentManager = getSupportFragmentManager();
 
-                if( navigationView.getMenu().findItem(R.id.nav_favorites).isChecked()){
+                if( navigationView.getMenu().findItem(R.id.nav_favorites) != null && navigationView.getMenu().findItem(R.id.nav_favorites).isChecked()){
                     DisplayStatusFragment faveFrag = (DisplayStatusFragment) fragmentManager.findFragmentByTag("FAVOURITES");
                     if (faveFrag != null && faveFrag.isVisible()) {
                         faveFrag.scrollToTop();
                     }
-                } else if (navigationView.getMenu().findItem(R.id.nav_blocked).isChecked()) {
+                } else if (navigationView.getMenu().findItem(R.id.nav_blocked) != null && navigationView.getMenu().findItem(R.id.nav_blocked).isChecked()) {
                     DisplayAccountsFragment blockFrag = (DisplayAccountsFragment) fragmentManager.findFragmentByTag("BLOCKS");
 
                     if (blockFrag != null && blockFrag.isVisible()) {
                         blockFrag.scrollToTop();
                     }
-                } else if (navigationView.getMenu().findItem(R.id.nav_muted).isChecked()) {
+                } else if (navigationView.getMenu().findItem(R.id.nav_muted) != null && navigationView.getMenu().findItem(R.id.nav_muted).isChecked()) {
                     DisplayAccountsFragment muteFrag = (DisplayAccountsFragment) fragmentManager.findFragmentByTag("MUTED");
 
                     if (muteFrag != null && muteFrag.isVisible()) {
@@ -517,7 +517,7 @@ public class MainActivity extends AppCompatActivity
             navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
         }
 
-        LinearLayout owner_container = (LinearLayout) headerLayout.findViewById(R.id.owner_container);
+        LinearLayout owner_container = (LinearLayout) headerLayout.findViewById(R.id.main_header_container);
         owner_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1014,9 +1014,6 @@ public class Helper {
 
         TextView username = (TextView) headerLayout.findViewById(R.id.username);
         TextView displayedName = (TextView) headerLayout.findViewById(R.id.displayedName);
-        TextView ownerStatus = (TextView) headerLayout.findViewById(R.id.owner_status);
-        TextView ownerFollowing = (TextView) headerLayout.findViewById(R.id.owner_following);
-        TextView ownerFollowers = (TextView) headerLayout.findViewById(R.id.owner_followers);
         ImageView header_edit_profile = (ImageView) headerLayout.findViewById(R.id.header_edit_profile);
         header_edit_profile.setOnClickListener(null);
         if( account == null ) {
@@ -1026,9 +1023,6 @@ public class Helper {
             activity.startActivity(myIntent);
             activity.finish(); //User is logged out to get a new token
         }else {
-            ownerStatus.setText(String.valueOf(account.getStatuses_count()));
-            ownerFollowers.setText(String.valueOf(account.getFollowers_count()));
-            ownerFollowing.setText(String.valueOf(account.getFollowing_count()));
             username.setText(String.format("@%s",account.getUsername()));
             displayedName.setText(account.getDisplay_name());
             String url = account.getAvatar();
