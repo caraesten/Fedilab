@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.drawers;
 
 import android.graphics.Bitmap;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.content.ClipData;
@@ -69,6 +70,7 @@ import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -199,7 +201,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_show_more = (Button) convertView.findViewById(R.id.status_show_more);
             holder.status_more = (ImageView) convertView.findViewById(R.id.status_more);
             holder.status_reblog_user = (TextView) convertView.findViewById(R.id.status_reblog_user);
-            holder.status_action_container = (LinearLayout) convertView.findViewById(R.id.status_action_container);
             holder.status_prev1 = (ImageView) convertView.findViewById(R.id.status_prev1);
             holder.status_prev2 = (ImageView) convertView.findViewById(R.id.status_prev2);
             holder.status_prev3 = (ImageView) convertView.findViewById(R.id.status_prev3);
@@ -226,6 +227,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_replies_profile_pictures = (LinearLayout) convertView.findViewById(R.id.status_replies_profile_pictures);
             holder.status_replies_text = (TextView) convertView.findViewById(R.id.status_replies_text);
             holder.new_element = (ImageView) convertView.findViewById(R.id.new_element);
+            holder.status_action_container = (LinearLayout) convertView.findViewById(R.id.status_action_container);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -277,7 +279,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 holder.loader_replies.setVisibility(View.GONE);
                 holder.status_replies.setVisibility(View.GONE);
             }
-
         }
         changeDrawableColor(context, R.drawable.ic_fiber_new,R.color.mastodonC4);
         if( status.isNew())
@@ -286,14 +287,13 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.new_element.setVisibility(View.INVISIBLE);
         int iconSizePercent = sharedpreferences.getInt(Helper.SET_ICON_SIZE, 130);
         int textSizePercent = sharedpreferences.getInt(Helper.SET_TEXT_SIZE, 110);
-        
+        boolean trans_forced = sharedpreferences.getBoolean(Helper.SET_TRANS_FORCED, false);
         holder.status_more.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
         holder.status_more.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
         holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
         holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
         holder.status_reply.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
         holder.status_reply.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
-
         holder.status_content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
         holder.status_account_displayname.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
         holder.status_account_username.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12*textSizePercent/100);
@@ -302,35 +302,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_spoiler.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
         holder.status_content_translated.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
 
-        if( status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()){
-            holder.status_content_container.setVisibility(View.GONE);
-            holder.status_spoiler_container.setVisibility(View.VISIBLE);
-            holder.status_spoiler_button.setVisibility(View.VISIBLE);
-            holder.status_spoiler.setVisibility(View.VISIBLE);
-        }else {
-            holder.status_spoiler_button.setVisibility(View.GONE);
-            holder.status_content_container.setVisibility(View.VISIBLE);
-            if( status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 )
-                holder.status_spoiler_container.setVisibility(View.VISIBLE);
-            else
-                holder.status_spoiler_container.setVisibility(View.GONE);
-        }
-        if( status.getSpoiler_text() != null)
-            holder.status_spoiler.setText(status.getSpoiler_text());
-        //Spoiler opens
-        holder.status_spoiler_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                status.setSpoilerShown(true);
-                holder.status_spoiler_button.setVisibility(View.GONE);
-                statusListAdapter.notifyDataSetChanged();
-            }
-        });
-        if( translator != Helper.TRANS_NONE && currentLocale != null && status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale)){
-            holder.status_translate.setVisibility(View.VISIBLE);
-        }else {
-            holder.status_translate.setVisibility(View.GONE);
-        }
+
 
         switch (translator)
         {
@@ -352,96 +324,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 break;
         }
 
-        holder.status_translate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    SpannableString spannableString;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                        spannableString = new SpannableString(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
-                    else
-                        //noinspection deprecation
-                        spannableString = new SpannableString(Html.fromHtml(status.getContent()));
-                    String text = spannableString.toString();
-                    if( !status.isTranslated() ){
-                        tagConversion = new HashMap<>();
-                        urlConversion = new HashMap<>();
-                        Matcher matcher;
-                        //Extracts urls
-                        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
-                            matcher = Patterns.WEB_URL.matcher(spannableString.toString());
-                        else
-                            matcher = Helper.urlPattern.matcher(spannableString.toString());
-                        int i = 0;
-                        //replaces them by a kind of variable which shouldn't be translated ie: __u0__, __u1__, etc.
-                        while (matcher.find()){
-                            String key = "__u" + String.valueOf(i) + "__";
-                            String value = matcher.group(0);
-                            int end = matcher.end();
-                            if (spannableString.charAt(end) == '/') {
-                                text = spannableString.toString().substring(0, end).
-                                        concat(spannableString.toString().substring(end+1, spannableString.length()));
-                            }
-                            if( value != null) {
-                                urlConversion.put(key, value);
-                                text = text.replace(value, key);
-                            }
-                            i++;
-                        }
-                        i = 0;
-                        //Same for tags with __t0__, __t1__, etc.
-                        matcher = Helper.hashtagPattern.matcher(text);
-                        while (matcher.find()){
-                            String key = "__t" + String.valueOf(i) + "__";
-                            String value = matcher.group(0);
-                            tagConversion.put(key, value);
-                            if( value != null) {
-                                tagConversion.put(key, value);
-                                text = text.replace(value, key);
-                            }
-                            i++;
-                        }
-                        if (translator == Helper.TRANS_YANDEX)
-                            new YandexQuery(StatusListAdapter.this).getYandexTextview(position, text, currentLocale);
-                        else if( translator == Helper.TRANS_GOOGLE) {
 
-                            while( text.charAt(text.length() -1) == '\n' && text.length() > 0)
-                                text = text.substring(0, text.length() -1);
-                            text += ".";
-                            new GoogleTranslateQuery(StatusListAdapter.this).getGoogleTextview(position, text.trim(), currentLocale);
-                        }
-                    }else {
-                        status.setTranslationShown(!status.isTranslationShown());
-                        statusListAdapter.notifyDataSetChanged();
-                    }
-                } catch (JSONException e) {
-                   Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
-                }
-            }
-        });
 
-        holder.yandex_translate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://translate.yandex.com/"));
-                context.startActivity(browserIntent);
-            }
-        });
-        holder.google_translate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://translate.google.com/"));
-                context.startActivity(browserIntent);
-            }
-        });
-        //Toot was translated and user asked to see it
-        if( status.isTranslationShown()){
-            holder.status_content.setVisibility(View.GONE);
-            holder.status_content_translated_container.setVisibility(View.VISIBLE);
-        }else { //Toot is not translated
-            holder.status_content.setVisibility(View.VISIBLE);
-            holder.status_content_translated_container.setVisibility(View.GONE);
-        }
 
         //Manages theme for icon colors
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -487,49 +371,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_account_displayname.setCompoundDrawables( null, null, null, null);
         }
 
-        //Click on a conversation
-        if( type != RetrieveFeedsAsyncTask.Type.CONTEXT ){
-            holder.status_content.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, ShowConversationActivity.class);
-                    Bundle b = new Bundle();
-                    if( status.getReblog() == null)
-                        b.putString("statusId", status.getId());
-                    else
-                        b.putString("statusId", status.getReblog().getId());
-                    intent.putExtras(b);
-                    context.startActivity(intent);
-                }
-            });
-            holder.card_status_container.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, ShowConversationActivity.class);
-                    Bundle b = new Bundle();
-                    if( status.getReblog() == null)
-                        b.putString("statusId", status.getId());
-                    else
-                        b.putString("statusId", status.getReblog().getId());
-                    intent.putExtras(b);
-                    context.startActivity(intent);
-                }
-            });
-        }else {
-            if( theme == Helper.THEME_LIGHT){
-                if( position == ShowConversationActivity.position){
-                    holder.main_container.setBackgroundResource(R.color.mastodonC3_);
-                }else {
-                    holder.main_container.setBackgroundResource(R.color.mastodonC3__);
-                }
-            }else {
-                if( position == ShowConversationActivity.position){
-                    holder.main_container.setBackgroundResource(R.color.mastodonC1_);
-                }else {
-                    holder.main_container.setBackgroundResource(R.color.mastodonC1);
-                }
-            }
-        }
+
 
         String content;
         final String displayName;
@@ -554,26 +396,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_account_username.setText(String.format("@%s",username));
         }
 
-        holder.status_reply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, TootActivity.class);
-                Bundle b = new Bundle();
-                if( status.getReblog() != null )
-                    b.putParcelable("tootReply", status.getReblog());
-                else
-                    b.putParcelable("tootReply", status);
-                intent.putExtras(b); //Put your id to your next Intent
-                context.startActivity(intent);
-                if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
-                    try {
-                        //Avoid to open multi activities when replying in a conversation
-                        ((ShowConversationActivity)context).finish();
-                    }catch (Exception ignored){}
 
-                }
-            }
-        });
 
 
 
@@ -653,115 +476,326 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_account_profile_boost_by.setVisibility(View.GONE);
             holder.status_account_profile.setVisibility(View.VISIBLE);
         }
-        if( status.getReblog() == null) {
-            if (status.getMedia_attachments().size() < 1) {
-                holder.status_document_container.setVisibility(View.GONE);
-                holder.status_show_more.setVisibility(View.GONE);
-            } else {
-                //If medias are loaded without any conditions or if device is on wifi
-                if (!status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
-                    loadAttachments(status, holder);
+        if( status.isTakingScreenShot()){
+            holder.status_document_container.setVisibility(View.GONE);
+            holder.status_content.setVisibility(View.VISIBLE);
+            holder.status_content_translated_container.setVisibility(View.GONE);
+            holder.status_spoiler_button.setVisibility(View.GONE);
+            holder.status_content_container.setVisibility(View.VISIBLE);
+            holder.status_translate.setVisibility(View.GONE);
+            holder.status_show_more.setVisibility(View.GONE);
+            holder.status_action_container.setVisibility(View.GONE);
+        }else {
+            holder.status_action_container.setVisibility(View.VISIBLE);
+            if( trans_forced || (translator != Helper.TRANS_NONE && currentLocale != null && status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale))){
+                holder.status_translate.setVisibility(View.VISIBLE);
+            }else {
+                holder.status_translate.setVisibility(View.GONE);
+            }
+            if( status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()){
+                holder.status_content_container.setVisibility(View.GONE);
+                holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                holder.status_spoiler_button.setVisibility(View.VISIBLE);
+                holder.status_spoiler.setVisibility(View.VISIBLE);
+            }else {
+                holder.status_spoiler_button.setVisibility(View.GONE);
+                holder.status_content_container.setVisibility(View.VISIBLE);
+                if( status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 )
+                    holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                else
+                    holder.status_spoiler_container.setVisibility(View.GONE);
+            }
+            if( status.getSpoiler_text() != null)
+                holder.status_spoiler.setText(status.getSpoiler_text());
+            if( status.getReblog() == null) {
+                if (status.getMedia_attachments().size() < 1) {
+                    holder.status_document_container.setVisibility(View.GONE);
                     holder.status_show_more.setVisibility(View.GONE);
-                    status.setAttachmentShown(true);
                 } else {
-                    //Text depending if toots is sensitive or not
-                    String textShowMore = (status.isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
-                    holder.status_show_more.setText(textShowMore);
-                    if (!status.isAttachmentShown()) {
-                        holder.status_show_more.setVisibility(View.VISIBLE);
-                        holder.status_document_container.setVisibility(View.GONE);
-                    } else {
+                    //If medias are loaded without any conditions or if device is on wifi
+                    if (!status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
                         loadAttachments(status, holder);
-                    }
-                }
-            }
-        }else { //Attachments for reblogs
-            if (status.getReblog().getMedia_attachments().size() < 1) {
-                holder.status_document_container.setVisibility(View.GONE);
-                holder.status_show_more.setVisibility(View.GONE);
-            } else {
-                //If medias are loaded without any conditions or if device is on wifi
-                if (!status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
-                    loadAttachments(status.getReblog(), holder);
-                    holder.status_show_more.setVisibility(View.GONE);
-                    status.getReblog().setAttachmentShown(true);
-                } else {
-                    //Text depending if toots is sensitive or not
-                    String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
-                    holder.status_show_more.setText(textShowMore);
-                    if (!status.isAttachmentShown()) {
-                        holder.status_show_more.setVisibility(View.VISIBLE);
-                        holder.status_document_container.setVisibility(View.GONE);
+                        holder.status_show_more.setVisibility(View.GONE);
+                        status.setAttachmentShown(true);
                     } else {
+                        //Text depending if toots is sensitive or not
+                        String textShowMore = (status.isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
+                        holder.status_show_more.setText(textShowMore);
+                        if (!status.isAttachmentShown()) {
+                            holder.status_show_more.setVisibility(View.VISIBLE);
+                            holder.status_document_container.setVisibility(View.GONE);
+                        } else {
+                            loadAttachments(status, holder);
+                        }
+                    }
+                }
+            }else { //Attachments for reblogs
+                if (status.getReblog().getMedia_attachments().size() < 1) {
+                    holder.status_document_container.setVisibility(View.GONE);
+                    holder.status_show_more.setVisibility(View.GONE);
+                } else {
+                    //If medias are loaded without any conditions or if device is on wifi
+                    if (!status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
                         loadAttachments(status.getReblog(), holder);
+                        holder.status_show_more.setVisibility(View.GONE);
+                        status.getReblog().setAttachmentShown(true);
+                    } else {
+                        //Text depending if toots is sensitive or not
+                        String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
+                        holder.status_show_more.setText(textShowMore);
+                        if (!status.isAttachmentShown()) {
+                            holder.status_show_more.setVisibility(View.VISIBLE);
+                            holder.status_document_container.setVisibility(View.GONE);
+                        } else {
+                            loadAttachments(status.getReblog(), holder);
+                        }
                     }
                 }
             }
-        }
+            //Toot was translated and user asked to see it
+            if( status.isTranslationShown()){
+                holder.status_content.setVisibility(View.GONE);
+                holder.status_content_translated_container.setVisibility(View.VISIBLE);
+            }else { //Toot is not translated
+                holder.status_content.setVisibility(View.VISIBLE);
+                holder.status_content_translated_container.setVisibility(View.GONE);
+            }
 
-        switch (status.getVisibility()){
-            case "public":
-                holder.status_privacy.setImageResource(R.drawable.ic_action_globe);
-                break;
-            case "unlisted":
-                holder.status_privacy.setImageResource(R.drawable.ic_action_lock_open);
-                break;
-            case "private":
-                holder.status_privacy.setImageResource(R.drawable.ic_action_lock_closed);
-                break;
-            case "direct":
-                holder.status_privacy.setImageResource(R.drawable.ic_local_post_office);
-                break;
-        }
-        Drawable imgFav, imgReblog;
-        if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited()))
-            imgFav = ContextCompat.getDrawable(context, R.drawable.ic_fav_yellow);
-        else
-            imgFav = ContextCompat.getDrawable(context, R.drawable.ic_fav_black);
+            switch (status.getVisibility()){
+                case "direct":
+                case "private":
+                    holder.status_reblog_count.setVisibility(View.GONE);
+                    break;
+                case "public":
+                case "unlisted":
+                    holder.status_reblog_count.setVisibility(View.VISIBLE);
+                    break;
+                default:
+                    holder.status_reblog_count.setVisibility(View.VISIBLE);
+            }
 
-        if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged()))
-            imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_retweet_yellow);
-        else
-            imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_retweet_black);
+            switch (status.getVisibility()){
+                case "public":
+                    holder.status_privacy.setImageResource(R.drawable.ic_action_globe);
+                    break;
+                case "unlisted":
+                    holder.status_privacy.setImageResource(R.drawable.ic_action_lock_open);
+                    break;
+                case "private":
+                    holder.status_privacy.setImageResource(R.drawable.ic_action_lock_closed);
+                    break;
+                case "direct":
+                    holder.status_privacy.setImageResource(R.drawable.ic_local_post_office);
+                    break;
+            }
 
-        imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-        imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-
-        holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
-        holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
-
-        if( theme == Helper.THEME_LIGHT) {
-            holder.status_show_more.setTextColor(ContextCompat.getColor(context, R.color.white));
-            holder.status_spoiler_button.setTextColor(ContextCompat.getColor(context, R.color.white));
-        }
-
-        boolean isOwner = status.getAccount().getId().equals(userId);
-
-        // Pinning toots is only available on Mastodon 1._6_.0 instances.
-        if (isOwner && Helper.canPin && (status.getVisibility().equals("public") || status.getVisibility().equals("unlisted"))) {
-            Drawable imgPin;
-            if( status.isPinned())
-                imgPin = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_yellow);
+            Drawable imgFav, imgReblog;
+            if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited()))
+                imgFav = ContextCompat.getDrawable(context, R.drawable.ic_fav_yellow);
             else
-                imgPin = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_dark);
-            imgPin.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-            holder.status_pin.setImageDrawable(imgPin);
-            holder.status_pin.setOnClickListener(new View.OnClickListener() {
+                imgFav = ContextCompat.getDrawable(context, R.drawable.ic_fav_black);
+
+            if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged()))
+                imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_retweet_yellow);
+            else
+                imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_retweet_black);
+
+            imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+            imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+
+            holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
+            holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
+
+            if( theme == Helper.THEME_LIGHT) {
+                holder.status_show_more.setTextColor(ContextCompat.getColor(context, R.color.white));
+                holder.status_spoiler_button.setTextColor(ContextCompat.getColor(context, R.color.white));
+            }
+
+            boolean isOwner = status.getAccount().getId().equals(userId);
+
+            // Pinning toots is only available on Mastodon 1._6_.0 instances.
+            if (isOwner && Helper.canPin && (status.getVisibility().equals("public") || status.getVisibility().equals("unlisted"))) {
+                Drawable imgPin;
+                if( status.isPinned())
+                    imgPin = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_yellow);
+                else
+                    imgPin = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_dark);
+                imgPin.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+                holder.status_pin.setImageDrawable(imgPin);
+
+                holder.status_pin.setVisibility(View.VISIBLE);
+            }
+            else {
+                holder.status_pin.setVisibility(View.GONE);
+            }
+        }
+
+        //Click on a conversation
+        if( type != RetrieveFeedsAsyncTask.Type.CONTEXT ){
+            holder.status_content.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    /* Code is in for displayConfirmationDialog() but we don't call it.
-                     * Need to make sure we can successfully get a pinned toots list by
-                     * this point, after async call earlier.
-                     */
-                    pinAction(status);
+                    Intent intent = new Intent(context, ShowConversationActivity.class);
+                    Bundle b = new Bundle();
+                    if( status.getReblog() == null)
+                        b.putString("statusId", status.getId());
+                    else
+                        b.putString("statusId", status.getReblog().getId());
+                    intent.putExtras(b);
+                    context.startActivity(intent);
                 }
             });
-            holder.status_pin.setVisibility(View.VISIBLE);
-        }
-        else {
-            holder.status_pin.setVisibility(View.GONE);
+            holder.card_status_container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ShowConversationActivity.class);
+                    Bundle b = new Bundle();
+                    if( status.getReblog() == null)
+                        b.putString("statusId", status.getId());
+                    else
+                        b.putString("statusId", status.getReblog().getId());
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+            });
+        }else {
+            if( theme == Helper.THEME_LIGHT){
+                if( position == ShowConversationActivity.position){
+                    holder.main_container.setBackgroundResource(R.color.mastodonC3_);
+                }else {
+                    holder.main_container.setBackgroundResource(R.color.mastodonC3__);
+                }
+            }else {
+                if( position == ShowConversationActivity.position){
+                    holder.main_container.setBackgroundResource(R.color.mastodonC1_);
+                }else {
+                    holder.main_container.setBackgroundResource(R.color.mastodonC1);
+                }
+            }
         }
 
+        holder.status_reply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, TootActivity.class);
+                Bundle b = new Bundle();
+                if( status.getReblog() != null )
+                    b.putParcelable("tootReply", status.getReblog());
+                else
+                    b.putParcelable("tootReply", status);
+                intent.putExtras(b); //Put your id to your next Intent
+                context.startActivity(intent);
+                if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
+                    try {
+                        //Avoid to open multi activities when replying in a conversation
+                        ((ShowConversationActivity)context).finish();
+                    }catch (Exception ignored){}
+
+                }
+            }
+        });
+
+        holder.status_translate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    SpannableString spannableString;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                        spannableString = new SpannableString(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
+                    else
+                        //noinspection deprecation
+                        spannableString = new SpannableString(Html.fromHtml(status.getContent()));
+                    String text = spannableString.toString();
+                    if( !status.isTranslated() ){
+                        tagConversion = new HashMap<>();
+                        urlConversion = new HashMap<>();
+                        Matcher matcher;
+                        //Extracts urls
+                        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
+                            matcher = Patterns.WEB_URL.matcher(spannableString.toString());
+                        else
+                            matcher = Helper.urlPattern.matcher(spannableString.toString());
+                        int i = 0;
+                        //replaces them by a kind of variable which shouldn't be translated ie: __u0__, __u1__, etc.
+                        while (matcher.find()){
+                            String key = "__u" + String.valueOf(i) + "__";
+                            String value = matcher.group(0);
+                            int end = matcher.end();
+                            if (spannableString.charAt(end) == '/') {
+                                text = spannableString.toString().substring(0, end).
+                                        concat(spannableString.toString().substring(end+1, spannableString.length()));
+                            }
+                            if( value != null) {
+                                urlConversion.put(key, value);
+                                text = text.replace(value, key);
+                            }
+                            i++;
+                        }
+                        i = 0;
+                        //Same for tags with __t0__, __t1__, etc.
+                        matcher = Helper.hashtagPattern.matcher(text);
+                        while (matcher.find()){
+                            String key = "__t" + String.valueOf(i) + "__";
+                            String value = matcher.group(0);
+                            tagConversion.put(key, value);
+                            if( value != null) {
+                                tagConversion.put(key, value);
+                                text = text.replace(value, key);
+                            }
+                            i++;
+                        }
+                        if (translator == Helper.TRANS_YANDEX)
+                            new YandexQuery(StatusListAdapter.this).getYandexTextview(position, text, currentLocale);
+                        else if( translator == Helper.TRANS_GOOGLE) {
+
+                            while( text.charAt(text.length() -1) == '\n' && text.length() > 0)
+                                text = text.substring(0, text.length() -1);
+                            text += ".";
+                            new GoogleTranslateQuery(StatusListAdapter.this).getGoogleTextview(position, text.trim(), currentLocale);
+                        }
+                    }else {
+                        status.setTranslationShown(!status.isTranslationShown());
+                        statusListAdapter.notifyDataSetChanged();
+                    }
+                } catch (JSONException e) {
+                    Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        holder.yandex_translate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://translate.yandex.com/"));
+                context.startActivity(browserIntent);
+            }
+        });
+        holder.google_translate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://translate.google.com/"));
+                context.startActivity(browserIntent);
+            }
+        });
+        //Spoiler opens
+        holder.status_spoiler_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                status.setSpoilerShown(true);
+                holder.status_spoiler_button.setVisibility(View.GONE);
+                statusListAdapter.notifyDataSetChanged();
+            }
+        });
+        holder.status_pin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /* Code is in for displayConfirmationDialog() but we don't call it.
+                 * Need to make sure we can successfully get a pinned toots list by
+                 * this point, after async call earlier.
+                 */
+                pinAction(status);
+            }
+        });
         holder.status_show_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -800,7 +834,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_favorite_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 boolean confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
                 if( confirmation )
                     displayConfirmationDialog(FAVOURITE,status);
@@ -808,7 +841,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     favouriteAction(status);
             }
         });
-
         holder.status_reblog_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -821,18 +853,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         });
 
 
-        switch (status.getVisibility()){
-            case "direct":
-            case "private":
-                holder.status_reblog_count.setVisibility(View.GONE);
-                break;
-            case "public":
-            case "unlisted":
-                holder.status_reblog_count.setVisibility(View.VISIBLE);
-                break;
-            default:
-                holder.status_reblog_count.setVisibility(View.VISIBLE);
-        }
+
 
         final View finalConvertView = convertView;
         holder.status_more.setOnClickListener(new View.OnClickListener() {
@@ -1224,7 +1245,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         TextView status_reblog_user;
         Button status_show_more;
         ImageView status_more;
-        LinearLayout status_action_container;
         LinearLayout status_document_container;
         ImageView status_prev1;
         ImageView status_prev2;
@@ -1244,7 +1264,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         LinearLayout main_container;
         TextView yandex_translate;
         TextView google_translate;
-
+        LinearLayout status_action_container;
         LinearLayout status_replies;
         LinearLayout status_replies_profile_pictures;
         TextView status_replies_text;
@@ -1325,14 +1345,38 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         final String[] stringArray, stringArrayConf;
         final API.StatusAction[] doAction;
         if( isOwner) {
-            stringArray = context.getResources().getStringArray(R.array.more_action_owner);
-            stringArrayConf = context.getResources().getStringArray(R.array.more_action_owner_confirm);
-            doAction = new API.StatusAction[]{API.StatusAction.UNSTATUS};
+            if( status.getVisibility().equals("private") || status.getVisibility().equals("direct")){
+                String[] stringArraytmp = context.getResources().getStringArray(R.array.more_action_owner);
+                List<String> list = new ArrayList<>(Arrays.asList(stringArraytmp));
+                list.remove(3);
+                stringArray = list.toArray(new String[0]);
+                String[] stringArrayConftmp = context.getResources().getStringArray(R.array.more_action_owner_confirm);
+                list = new ArrayList<>(Arrays.asList(stringArrayConftmp));
+                list.remove(3);
+                stringArrayConf = list.toArray(new String[0]);
+                doAction = new API.StatusAction[]{API.StatusAction.UNSTATUS};
+            }else {
+                stringArray = context.getResources().getStringArray(R.array.more_action_owner);
+                stringArrayConf = context.getResources().getStringArray(R.array.more_action_owner_confirm);
+                doAction = new API.StatusAction[]{API.StatusAction.UNSTATUS};
+            }
 
         }else {
-            stringArray = context.getResources().getStringArray(R.array.more_action);
-            stringArrayConf = context.getResources().getStringArray(R.array.more_action_confirm);
-            doAction = new API.StatusAction[]{API.StatusAction.MUTE,API.StatusAction.BLOCK,API.StatusAction.REPORT};
+            if( status.getVisibility().equals("private") || status.getVisibility().equals("direct")){
+                String[] stringArraytmp = context.getResources().getStringArray(R.array.more_action);
+                List<String> list = new ArrayList<>(Arrays.asList(stringArraytmp));
+                list.remove(5);
+                stringArray = list.toArray(new String[0]);
+                String[] stringArrayConftmp = context.getResources().getStringArray(R.array.more_action_confirm);
+                list = new ArrayList<>(Arrays.asList(stringArrayConftmp));
+                list.remove(5);
+                stringArrayConf = list.toArray(new String[0]);
+                doAction = new API.StatusAction[]{API.StatusAction.MUTE, API.StatusAction.BLOCK, API.StatusAction.REPORT};
+            }else {
+                stringArray = context.getResources().getStringArray(R.array.more_action);
+                stringArrayConf = context.getResources().getStringArray(R.array.more_action_confirm);
+                doAction = new API.StatusAction[]{API.StatusAction.MUTE, API.StatusAction.BLOCK, API.StatusAction.REPORT};
+            }
         }
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, stringArray);
         builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -1375,26 +1419,40 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
                         return;
                     }else if( which == 3) {
-                        Bitmap bitmap = Helper.convertTootIntoBitmap(context, view);
-                        Intent intent = new Intent(context, TootActivity.class);
-                        Bundle b = new Bundle();
-                        String fname = "tootmention_" + status.getId() +".jpg";
-                        File file = new File (context.getCacheDir() + "/", fname);
-                        if (file.exists ()) //noinspection ResultOfMethodCallIgnored
-                            file.delete ();
-                        try {
-                            FileOutputStream out = new FileOutputStream(file);
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-                            out.flush();
-                            out.close();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        b.putString("fileMention", fname);
-                        b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
-                        b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
-                        intent.putExtras(b);
-                        context.startActivity(intent);
+                        status.setTakingScreenShot(true);
+                        statusListAdapter.notifyDataSetChanged();
+
+
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                Bitmap bitmap = Helper.convertTootIntoBitmap(context, view);
+                                status.setTakingScreenShot(false);
+                                statusListAdapter.notifyDataSetChanged();
+                                Intent intent = new Intent(context, TootActivity.class);
+                                Bundle b = new Bundle();
+                                String fname = "tootmention_" + status.getId() +".jpg";
+                                File file = new File (context.getCacheDir() + "/", fname);
+                                if (file.exists ()) //noinspection ResultOfMethodCallIgnored
+                                    file.delete ();
+                                try {
+                                    FileOutputStream out = new FileOutputStream(file);
+                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                                    out.flush();
+                                    out.close();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                b.putString("fileMention", fname);
+                                b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
+                                b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
+                                intent.putExtras(b);
+                                context.startActivity(intent);
+                            }
+
+                        }, 1000);
                         return;
                     }
                 }else {
@@ -1427,26 +1485,40 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
                         return;
                     }else if( which == 5 ){
-                        Bitmap bitmap = Helper.convertTootIntoBitmap(context, view);
-                        Intent intent = new Intent(context, TootActivity.class);
-                        Bundle b = new Bundle();
-                        String fname = "tootmention_" + status.getId() +".jpg";
-                        File file = new File (context.getCacheDir() + "/", fname);
-                        if (file.exists ()) //noinspection ResultOfMethodCallIgnored
-                            file.delete ();
-                        try {
-                            FileOutputStream out = new FileOutputStream(file);
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-                            out.flush();
-                            out.close();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        b.putString("fileMention", fname);
-                        b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
-                        b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
-                        intent.putExtras(b);
-                        context.startActivity(intent);
+                        status.setTakingScreenShot(true);
+                        statusListAdapter.notifyDataSetChanged();
+
+
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                Bitmap bitmap = Helper.convertTootIntoBitmap(context, view);
+                                status.setTakingScreenShot(false);
+                                statusListAdapter.notifyDataSetChanged();
+                                Intent intent = new Intent(context, TootActivity.class);
+                                Bundle b = new Bundle();
+                                String fname = "tootmention_" + status.getId() +".jpg";
+                                File file = new File (context.getCacheDir() + "/", fname);
+                                if (file.exists ()) //noinspection ResultOfMethodCallIgnored
+                                    file.delete ();
+                                try {
+                                    FileOutputStream out = new FileOutputStream(file);
+                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                                    out.flush();
+                                    out.close();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                b.putString("fileMention", fname);
+                                b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
+                                b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
+                                intent.putExtras(b);
+                                context.startActivity(intent);
+                            }
+
+                        }, 1000);
                         return;
                     }
                 }

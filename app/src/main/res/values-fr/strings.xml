@@ -58,7 +58,7 @@
     <string name="shared_via">Partagé via Mastalab</string>
     <string name="replies">Réponses</string>
     <string name="username">Nom d\'utilisateur</string>
-
+    <string name="drafts">Brouillons</string>
     <string name="new_data">De nouvelles données sont disponibles ! Souhaitez-vous les afficher ?</string>
     <!--- Menu -->
     <string name="home_menu">Accueil</string>

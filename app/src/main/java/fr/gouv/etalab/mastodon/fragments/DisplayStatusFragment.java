@@ -16,7 +16,6 @@ package fr.gouv.etalab.mastodon.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -231,17 +230,23 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     public void onResume() {
         super.onResume();
         if( type == RetrieveFeedsAsyncTask.Type.HOME && tempStatuses != null && tempStatuses.size() > 0 ){
+            ArrayList<String> knownId = new ArrayList<>();
+            for(Status st: statuses){
+                knownId.add(st.getId());
+            }
             for(Status status: tempStatuses){
-                int index = lv_status.getFirstVisiblePosition() + 1;
-                View v = lv_status.getChildAt(0);
-                int top = (v == null) ? 0 : v.getTop();
-                status.setReplies(new ArrayList<Status>());
-                statuses.add(0,status);
-                statusListAdapter.notifyDataSetChanged();
-                lv_status.setSelectionFromTop(index, top);
-                if (textviewNoAction.getVisibility() == View.VISIBLE)
-                    textviewNoAction.setVisibility(View.GONE);
-                MainActivity.countNewStatus++;
+                if( !knownId.contains(status.getId())){
+                    int index = lv_status.getFirstVisiblePosition() + 1;
+                    View v = lv_status.getChildAt(0);
+                    int top = (v == null) ? 0 : v.getTop();
+                    status.setReplies(new ArrayList<Status>());
+                    statuses.add(0,status);
+                    statusListAdapter.notifyDataSetChanged();
+                    lv_status.setSelectionFromTop(index, top);
+                    if (textviewNoAction.getVisibility() == View.VISIBLE)
+                        textviewNoAction.setVisibility(View.GONE);
+                    MainActivity.countNewStatus++;
+                }
             }
             if( getActivity() != null && getActivity().getClass().isInstance(MainActivity.class))
                 ((MainActivity)context).updateHomeCounter();
@@ -331,6 +336,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 int top = (v == null) ? 0 : v.getTop();
                 status.setReplies(new ArrayList<Status>());
                 statuses.add(0,status);
+                MainActivity.countNewStatus++;
                 statusListAdapter.notifyDataSetChanged();
                 lv_status.setSelectionFromTop(index, top);
                 if (textviewNoAction.getVisibility() == View.VISIBLE)
