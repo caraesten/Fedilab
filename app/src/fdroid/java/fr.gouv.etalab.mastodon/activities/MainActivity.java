@@ -39,7 +39,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Patterns;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -50,6 +52,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -106,6 +109,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
+import static fr.gouv.etalab.mastodon.helper.Helper.changeHamburgerIcon;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeUser;
 import static fr.gouv.etalab.mastodon.helper.Helper.loadPPInActionBar;
 import static fr.gouv.etalab.mastodon.helper.Helper.menuAccounts;
@@ -480,14 +484,8 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-
-
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
 
         //Image loader configuration
         imageLoader = ImageLoader.getInstance();
@@ -503,11 +501,19 @@ public class MainActivity extends AppCompatActivity
         options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(90)).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        registerForContextMenu(drawer);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.setDrawerIndicatorEnabled(false);
+        changeHamburgerIcon(MainActivity.this, account.getAvatar(), toggle);
+        toggle.syncState();
+
 
         headerLayout = navigationView.getHeaderView(0);
 
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
+
         updateHeaderAccountInfo(MainActivity.this, account, headerLayout, imageLoader, options);
         loadPPInActionBar(MainActivity.this, account.getAvatar());
         //Locked account can see follow request
@@ -762,134 +768,134 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
     }
 
-
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if(id == R.id.action_logout) {
-            Helper.logout(getApplicationContext());
-            Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(myIntent);
-            finish();
-            return true;
-        }else if(id == R.id.action_about){
-            Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
-            startActivity(intent);
-        }else if(id == R.id.action_privacy){
-            Intent intent = new Intent(getApplicationContext(), PrivacyActivity.class);
-            startActivity(intent);
-        }else if(id == R.id.action_about_instance){
-            Intent intent = new Intent(getApplicationContext(), InstanceActivity.class);
-            startActivity(intent);
-        } else if( id == R.id.action_cache){ //Cache clear feature
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setTitle(R.string.cache_title);
-            long sizeCache = Helper.cacheSize(getCacheDir());
-            float cacheSize = 0;
-            if( sizeCache > 0 ) {
-                if (sizeCache > 0) {
-                    cacheSize = (float) sizeCache / 1000000.0f;
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                Helper.logout(getApplicationContext());
+                Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(myIntent);
+                finish();
+                return true;
+            case R.id.action_about:
+                Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_privacy:
+                intent = new Intent(getApplicationContext(), PrivacyActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_about_instance:
+                intent = new Intent(getApplicationContext(), InstanceActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_cache:
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle(R.string.cache_title);
+                long sizeCache = Helper.cacheSize(getCacheDir());
+                float cacheSize = 0;
+                if( sizeCache > 0 ) {
+                    if (sizeCache > 0) {
+                        cacheSize = (float) sizeCache / 1000000.0f;
+                    }
                 }
-            }
-            final float finalCacheSize = cacheSize;
-            builder.setMessage(getString(R.string.cache_message, String.format("%s %s", String.format(Locale.getDefault(), "%.2f", cacheSize), getString(R.string.cache_units))))
-                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // continue with delete
-                            try {
-                                String path = getCacheDir().getPath();
-                                File dir = new File(path);
-                                if (dir.isDirectory()) {
-                                    Helper.deleteDir(dir);
-                                }
-                            } catch (Exception ignored) {}
-                            Toast.makeText(MainActivity.this, getString(R.string.toast_cache_clear,String.format("%s %s", String.format(Locale.getDefault(), "%.2f", finalCacheSize), getString(R.string.cache_units))), Toast.LENGTH_LONG).show();
-                            dialog.dismiss();
-                        }
-                    })
-                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
-        }else if( id == R.id.action_size){
-            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            int textSize = sharedpreferences.getInt(Helper.SET_TEXT_SIZE,110);
-            int iconSize = sharedpreferences.getInt(Helper.SET_ICON_SIZE,130);
+                final float finalCacheSize = cacheSize;
+                builder.setMessage(getString(R.string.cache_message, String.format("%s %s", String.format(Locale.getDefault(), "%.2f", cacheSize), getString(R.string.cache_units))))
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                try {
+                                    String path = getCacheDir().getPath();
+                                    File dir = new File(path);
+                                    if (dir.isDirectory()) {
+                                        Helper.deleteDir(dir);
+                                    }
+                                } catch (Exception ignored) {}
+                                Toast.makeText(MainActivity.this, getString(R.string.toast_cache_clear,String.format("%s %s", String.format(Locale.getDefault(), "%.2f", finalCacheSize), getString(R.string.cache_units))), Toast.LENGTH_LONG).show();
+                                dialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+                return true;
+            case R.id.action_size:
+                final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                int textSize = sharedpreferences.getInt(Helper.SET_TEXT_SIZE,110);
+                int iconSize = sharedpreferences.getInt(Helper.SET_ICON_SIZE,130);
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setTitle(R.string.text_size);
+                builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle(R.string.text_size);
 
-            @SuppressLint("InflateParams") View popup_quick_settings = getLayoutInflater().inflate( R.layout.popup_text_size, null );
-            builder.setView(popup_quick_settings);
+                @SuppressLint("InflateParams") View popup_quick_settings = getLayoutInflater().inflate( R.layout.popup_text_size, null );
+                builder.setView(popup_quick_settings);
 
-            SeekBar set_text_size = (SeekBar) popup_quick_settings.findViewById(R.id.set_text_size);
-            SeekBar set_icon_size = (SeekBar) popup_quick_settings.findViewById(R.id.set_icon_size);
-            final TextView set_text_size_value = (TextView) popup_quick_settings.findViewById(R.id.set_text_size_value);
-            final TextView set_icon_size_value = (TextView) popup_quick_settings.findViewById(R.id.set_icon_size_value);
-            set_text_size_value.setText(String.format("%s%%",String.valueOf(textSize)));
-            set_icon_size_value.setText(String.format("%s%%",String.valueOf(iconSize)));
+                SeekBar set_text_size = (SeekBar) popup_quick_settings.findViewById(R.id.set_text_size);
+                SeekBar set_icon_size = (SeekBar) popup_quick_settings.findViewById(R.id.set_icon_size);
+                final TextView set_text_size_value = (TextView) popup_quick_settings.findViewById(R.id.set_text_size_value);
+                final TextView set_icon_size_value = (TextView) popup_quick_settings.findViewById(R.id.set_icon_size_value);
+                set_text_size_value.setText(String.format("%s%%",String.valueOf(textSize)));
+                set_icon_size_value.setText(String.format("%s%%",String.valueOf(iconSize)));
 
-            set_text_size.setMax(20);
-            set_icon_size.setMax(20);
+                set_text_size.setMax(20);
+                set_icon_size.setMax(20);
 
-            set_text_size.setProgress(((textSize-80)/5));
-            set_icon_size.setProgress(((iconSize-80)/5));
+                set_text_size.setProgress(((textSize-80)/5));
+                set_icon_size.setProgress(((iconSize-80)/5));
 
-            set_text_size.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {}
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {}
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                set_text_size.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {}
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {}
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-                    int value = 80 + progress*5;
-                    set_text_size_value.setText(String.format("%s%%",String.valueOf(value)));
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putInt(Helper.SET_TEXT_SIZE, value);
-                    editor.apply();
-                }
-            });
-            set_icon_size.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {}
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {}
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    int value = 80 + progress*5;
-                    set_icon_size_value.setText(String.format("%s%%",String.valueOf(value)));
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putInt(Helper.SET_ICON_SIZE, value);
-                    editor.apply();
-                }
-            });
-            builder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                        int value = 80 + progress*5;
+                        set_text_size_value.setText(String.format("%s%%",String.valueOf(value)));
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putInt(Helper.SET_TEXT_SIZE, value);
+                        editor.apply();
+                    }
+                });
+                set_icon_size.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {}
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {}
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                        int value = 80 + progress*5;
+                        set_icon_size_value.setText(String.format("%s%%",String.valueOf(value)));
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putInt(Helper.SET_ICON_SIZE, value);
+                        editor.apply();
+                    }
+                });
+                builder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         MainActivity.this.recreate();
                         dialog.dismiss();
                     }
                 })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

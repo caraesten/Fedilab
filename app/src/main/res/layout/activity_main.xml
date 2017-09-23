@@ -57,12 +57,20 @@
                         android:layout_marginRight="10dp"
                         tools:ignore="ContentDescription" />
                     <TextView
+                        android:visibility="gone"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_gravity="center_vertical"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
                         android:id="@+id/toolbar_title" />
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/tabLayout"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        app:tabSelectedTextColor="?attr/colorAccent"
+                        />
                     <android.support.v7.widget.SearchView
                         android:background="@null"
                         android:id="@+id/toolbar_search"
@@ -72,12 +80,7 @@
                         android:layout_height="wrap_content" />
                 </LinearLayout>
             </android.support.v7.widget.Toolbar>
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tabLayout"
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                app:tabSelectedTextColor="?attr/colorAccent"
-                />
+
         </android.support.design.widget.AppBarLayout>
 
 

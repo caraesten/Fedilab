@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.PorterDuffXfermode;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.PendingIntent;
@@ -963,6 +964,35 @@ public class Helper {
 
 
     /**
+     * Load the profile picture at the place of hamburger icon
+     * @param activity Activity The current activity
+     * @param url String the url of the profile picture
+     */
+    public static void changeHamburgerIcon(final Activity activity, String url, ActionBarDrawerToggle toggle){
+        ImageLoader imageLoader;
+        DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
+                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+        imageLoader = ImageLoader.getInstance();
+        if( url.startsWith("/") ){
+            url = "https://" + Helper.getLiveInstance(activity) + url;
+        }
+        imageLoader.loadImage(url, options, new SimpleImageLoadingListener(){
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                super.onLoadingComplete(imageUri, view, loadedImage);
+                Resources res = activity.getResources();
+                Bitmap loadedImageResized = Bitmap.createScaledBitmap(loadedImage, (int)convertDpToPixel(30, activity), (int)convertDpToPixel(30, activity), true);
+                BitmapDrawable icon = new BitmapDrawable(res, loadedImageResized);
+                if( ((MainActivity)activity).getSupportActionBar() != null)
+                    ((MainActivity)activity).getSupportActionBar().setIcon(icon);
+            }
+            @Override
+            public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
+
+            }});
+    }
+
+    /**
      * Load the profile picture in the current action bar
      * @param activity Activity The current activity
      * @param url String the url of the profile picture
@@ -1015,6 +1045,7 @@ public class Helper {
         TextView username = (TextView) headerLayout.findViewById(R.id.username);
         TextView displayedName = (TextView) headerLayout.findViewById(R.id.displayedName);
         ImageView header_edit_profile = (ImageView) headerLayout.findViewById(R.id.header_edit_profile);
+        ImageView header_option_menu = (ImageView) headerLayout.findViewById(R.id.header_option_menu);
         header_edit_profile.setOnClickListener(null);
         if( account == null ) {
             Helper.logout(activity);
@@ -1070,6 +1101,13 @@ public class Helper {
                 }
             });
         }
+        header_option_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View drawer_layout = activity.findViewById(R.id.drawer_layout);
+                ((MainActivity) activity).openContextMenu(drawer_layout);
+            }
+        });
         profilePicture.setOnClickListener(null);
         profilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
