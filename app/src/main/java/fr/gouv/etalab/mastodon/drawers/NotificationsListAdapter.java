@@ -17,6 +17,7 @@ package fr.gouv.etalab.mastodon.drawers;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.graphics.Bitmap;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -55,6 +56,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
@@ -336,94 +338,106 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                     context.startActivity(intent);
                 }
             });
-            switch (status.getVisibility()){
-                case "public":
-                    holder.status_privacy.setImageResource(R.drawable.ic_action_globe);
-                    break;
-                case "unlisted":
-                    holder.status_privacy.setImageResource(R.drawable.ic_action_lock_open);
-                    break;
-                case "private":
-                    holder.status_privacy.setImageResource(R.drawable.ic_action_lock_closed);
-                    break;
-                case "direct":
-                    holder.status_privacy.setImageResource(R.drawable.ic_local_post_office);
-                    break;
-            }
-            switch (status.getVisibility()){
-                case "direct":
-                case "private":
-                    holder.status_reblog_count.setVisibility(View.GONE);
-                    break;
-                case "public":
-                case "unlisted":
-                    holder.status_reblog_count.setVisibility(View.VISIBLE);
-                    break;
-                default:
-                    holder.status_reblog_count.setVisibility(View.VISIBLE);
-            }
-            Drawable imgFav, imgReblog;
-            if( status.isFavourited())
-                imgFav = ContextCompat.getDrawable(context, R.drawable.ic_fav_yellow);
-            else
-                imgFav = ContextCompat.getDrawable(context, R.drawable.ic_fav_black);
-
-            if( status.isReblogged())
-                imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_retweet_yellow);
-            else
-                imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_retweet_black);
-
-            imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-            imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-            holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
-            holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
+            if( status.isTakingScreenShot()){
+                holder.status_document_container.setVisibility(View.GONE);
+                holder.notification_status_content.setVisibility(View.VISIBLE);
+                holder.status_show_more.setVisibility(View.GONE);
+                holder.status_action_container.setVisibility(View.GONE);
+            }else {
+                holder.status_action_container.setVisibility(View.VISIBLE);
 
 
-            if( status.getReblog() == null) {
-                if (status.getMedia_attachments().size() < 1) {
-                    holder.status_document_container.setVisibility(View.GONE);
-                    holder.status_show_more.setVisibility(View.GONE);
-                } else {
-                    //If medias are loaded without any conditions or if device is on wifi
-                    if (!status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
-                        loadAttachments(status, holder);
+                Drawable imgFav, imgReblog;
+                if( status.isFavourited())
+                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_fav_yellow);
+                else
+                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_fav_black);
+
+                if( status.isReblogged())
+                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_retweet_yellow);
+                else
+                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_retweet_black);
+
+                imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+                imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+                holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
+                holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
+
+
+                if( status.getReblog() == null) {
+                    if (status.getMedia_attachments().size() < 1) {
+                        holder.status_document_container.setVisibility(View.GONE);
                         holder.status_show_more.setVisibility(View.GONE);
-                        status.setAttachmentShown(true);
                     } else {
-                        //Text depending if toots is sensitive or not
-                        String textShowMore = (status.isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
-                        holder.status_show_more.setText(textShowMore);
-                        if (!status.isAttachmentShown()) {
-                            holder.status_show_more.setVisibility(View.VISIBLE);
-                            holder.status_document_container.setVisibility(View.GONE);
-                        } else {
+                        //If medias are loaded without any conditions or if device is on wifi
+                        if (!status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
                             loadAttachments(status, holder);
+                            holder.status_show_more.setVisibility(View.GONE);
+                            status.setAttachmentShown(true);
+                        } else {
+                            //Text depending if toots is sensitive or not
+                            String textShowMore = (status.isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
+                            holder.status_show_more.setText(textShowMore);
+                            if (!status.isAttachmentShown()) {
+                                holder.status_show_more.setVisibility(View.VISIBLE);
+                                holder.status_document_container.setVisibility(View.GONE);
+                            } else {
+                                loadAttachments(status, holder);
+                            }
+                        }
+                    }
+                }else { //Attachments for reblogs
+                    if (status.getReblog().getMedia_attachments().size() < 1) {
+                        holder.status_document_container.setVisibility(View.GONE);
+                        holder.status_show_more.setVisibility(View.GONE);
+                    } else {
+                        //If medias are loaded without any conditions or if device is on wifi
+                        if (!status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
+                            loadAttachments(status.getReblog(), holder);
+                            holder.status_show_more.setVisibility(View.GONE);
+                            status.getReblog().setAttachmentShown(true);
+                        } else {
+                            //Text depending if toots is sensitive or not
+                            String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
+                            holder.status_show_more.setText(textShowMore);
+                            if (!status.isAttachmentShown()) {
+                                holder.status_show_more.setVisibility(View.VISIBLE);
+                                holder.status_document_container.setVisibility(View.GONE);
+                            } else {
+                                loadAttachments(status.getReblog(), holder);
+                            }
                         }
                     }
                 }
-            }else { //Attachments for reblogs
-                if (status.getReblog().getMedia_attachments().size() < 1) {
-                    holder.status_document_container.setVisibility(View.GONE);
-                    holder.status_show_more.setVisibility(View.GONE);
-                } else {
-                    //If medias are loaded without any conditions or if device is on wifi
-                    if (!status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
-                        loadAttachments(status.getReblog(), holder);
-                        holder.status_show_more.setVisibility(View.GONE);
-                        status.getReblog().setAttachmentShown(true);
-                    } else {
-                        //Text depending if toots is sensitive or not
-                        String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
-                        holder.status_show_more.setText(textShowMore);
-                        if (!status.isAttachmentShown()) {
-                            holder.status_show_more.setVisibility(View.VISIBLE);
-                            holder.status_document_container.setVisibility(View.GONE);
-                        } else {
-                            loadAttachments(status.getReblog(), holder);
-                        }
-                    }
+                switch (status.getVisibility()){
+                    case "public":
+                        holder.status_privacy.setImageResource(R.drawable.ic_action_globe);
+                        break;
+                    case "unlisted":
+                        holder.status_privacy.setImageResource(R.drawable.ic_action_lock_open);
+                        break;
+                    case "private":
+                        holder.status_privacy.setImageResource(R.drawable.ic_action_lock_closed);
+                        break;
+                    case "direct":
+                        holder.status_privacy.setImageResource(R.drawable.ic_local_post_office);
+                        break;
+                }
+                switch (status.getVisibility()){
+                    case "direct":
+                    case "private":
+                        holder.status_reblog_count.setVisibility(View.GONE);
+                        break;
+                    case "public":
+                    case "unlisted":
+                        holder.status_reblog_count.setVisibility(View.VISIBLE);
+                        break;
+                    default:
+                        holder.status_reblog_count.setVisibility(View.VISIBLE);
                 }
             }
+
+
             holder.status_show_more.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -832,14 +846,37 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
         final String[] stringArray, stringArrayConf;
         final API.StatusAction[] doAction;
         if( isOwner) {
-            stringArray = context.getResources().getStringArray(R.array.more_action_owner);
-            stringArrayConf = context.getResources().getStringArray(R.array.more_action_owner_confirm);
-            doAction = new API.StatusAction[]{API.StatusAction.UNSTATUS};
-
+            if( status.getVisibility().equals("private") || status.getVisibility().equals("direct")){
+                String[] stringArraytmp = context.getResources().getStringArray(R.array.more_action_owner);
+                List<String> list = new ArrayList<>(Arrays.asList(stringArraytmp));
+                list.remove(3);
+                stringArray = list.toArray(new String[0]);
+                String[] stringArrayConftmp = context.getResources().getStringArray(R.array.more_action_owner_confirm);
+                list = new ArrayList<>(Arrays.asList(stringArrayConftmp));
+                list.remove(3);
+                stringArrayConf = list.toArray(new String[0]);
+                doAction = new API.StatusAction[]{API.StatusAction.UNSTATUS};
+            }else {
+                stringArray = context.getResources().getStringArray(R.array.more_action_owner);
+                stringArrayConf = context.getResources().getStringArray(R.array.more_action_owner_confirm);
+                doAction = new API.StatusAction[]{API.StatusAction.UNSTATUS};
+            }
         }else {
-            stringArray = context.getResources().getStringArray(R.array.more_action);
-            stringArrayConf = context.getResources().getStringArray(R.array.more_action_confirm);
-            doAction = new API.StatusAction[]{API.StatusAction.MUTE,API.StatusAction.BLOCK,API.StatusAction.REPORT};
+            if( status.getVisibility().equals("private") || status.getVisibility().equals("direct")){
+                String[] stringArraytmp = context.getResources().getStringArray(R.array.more_action);
+                List<String> list = new ArrayList<>(Arrays.asList(stringArraytmp));
+                list.remove(5);
+                stringArray = list.toArray(new String[0]);
+                String[] stringArrayConftmp = context.getResources().getStringArray(R.array.more_action_confirm);
+                list = new ArrayList<>(Arrays.asList(stringArrayConftmp));
+                list.remove(5);
+                stringArrayConf = list.toArray(new String[0]);
+                doAction = new API.StatusAction[]{API.StatusAction.MUTE, API.StatusAction.BLOCK, API.StatusAction.REPORT};
+            }else {
+                stringArray = context.getResources().getStringArray(R.array.more_action);
+                stringArrayConf = context.getResources().getStringArray(R.array.more_action_confirm);
+                doAction = new API.StatusAction[]{API.StatusAction.MUTE, API.StatusAction.BLOCK, API.StatusAction.REPORT};
+            }
         }
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, stringArray);
         builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -882,26 +919,40 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                         context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
                         return;
                     }else if (which == 3){
-                        Bitmap bitmap = Helper.convertTootIntoBitmap(context, view);
-                        Intent intent = new Intent(context, TootActivity.class);
-                        Bundle b = new Bundle();
-                        String fname = "tootmention_" + status.getId() +".jpg";
-                        File file = new File (context.getCacheDir() + "/", fname);
-                        if (file.exists ()) //noinspection ResultOfMethodCallIgnored
-                            file.delete ();
-                        try {
-                            FileOutputStream out = new FileOutputStream(file);
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-                            out.flush();
-                            out.close();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        b.putString("fileMention", fname);
-                        b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
-                        b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
-                        intent.putExtras(b);
-                        context.startActivity(intent);
+                        status.setTakingScreenShot(true);
+                        notificationsListAdapter.notifyDataSetChanged();
+
+
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                Bitmap bitmap = Helper.convertTootIntoBitmap(context, view);
+                                status.setTakingScreenShot(false);
+                                notificationsListAdapter.notifyDataSetChanged();
+                                Intent intent = new Intent(context, TootActivity.class);
+                                Bundle b = new Bundle();
+                                String fname = "tootmention_" + status.getId() +".jpg";
+                                File file = new File (context.getCacheDir() + "/", fname);
+                                if (file.exists ()) //noinspection ResultOfMethodCallIgnored
+                                    file.delete ();
+                                try {
+                                    FileOutputStream out = new FileOutputStream(file);
+                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                                    out.flush();
+                                    out.close();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                b.putString("fileMention", fname);
+                                b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
+                                b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
+                                intent.putExtras(b);
+                                context.startActivity(intent);
+                            }
+
+                        }, 1000);
                         return;
                     }
                 }else {
@@ -934,26 +985,38 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                         context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
                         return;
                     }else if (which == 5){
-                        Bitmap bitmap = Helper.convertTootIntoBitmap(context, view);
-                        Intent intent = new Intent(context, TootActivity.class);
-                        Bundle b = new Bundle();
-                        String fname = "tootmention_" + status.getId() +".jpg";
-                        File file = new File (context.getCacheDir() + "/", fname);
-                        if (file.exists ()) //noinspection ResultOfMethodCallIgnored
-                            file.delete ();
-                        try {
-                            FileOutputStream out = new FileOutputStream(file);
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-                            out.flush();
-                            out.close();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        b.putString("fileMention", fname);
-                        b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
-                        b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
-                        intent.putExtras(b);
-                        context.startActivity(intent);
+                        status.setTakingScreenShot(true);
+                        notificationsListAdapter.notifyDataSetChanged();
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                Bitmap bitmap = Helper.convertTootIntoBitmap(context, view);
+                                status.setTakingScreenShot(false);
+                                notificationsListAdapter.notifyDataSetChanged();
+                                Intent intent = new Intent(context, TootActivity.class);
+                                Bundle b = new Bundle();
+                                String fname = "tootmention_" + status.getId() +".jpg";
+                                File file = new File (context.getCacheDir() + "/", fname);
+                                if (file.exists ()) //noinspection ResultOfMethodCallIgnored
+                                    file.delete ();
+                                try {
+                                    FileOutputStream out = new FileOutputStream(file);
+                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                                    out.flush();
+                                    out.close();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                b.putString("fileMention", fname);
+                                b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
+                                b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
+                                intent.putExtras(b);
+                                context.startActivity(intent);
+                            }
+
+                        }, 1000);
                         return;
                     }
                 }

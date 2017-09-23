@@ -37,7 +37,12 @@
         <service
             android:name="fr.gouv.etalab.mastodon.services.StreamingService"
             android:exported="false"/>
-
+        <receiver android:name="fr.gouv.etalab.mastodon.services.RestartServiceReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="RestartStreamingService" />
+            </intent-filter>
+        </receiver>
         <activity
             android:name="fr.gouv.etalab.mastodon.activities.MainActivity"
             android:label="@string/app_name"

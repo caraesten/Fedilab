@@ -101,16 +101,6 @@
                         android:autoLink="web"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
-                    <TextView
-                        android:visibility="gone"
-                        android:id="@+id/mastalab_watermark"
-                        android:layout_width="match_parent"
-                        android:padding="2dp"
-                        android:gravity="end"
-                        android:text="Via #Mastalab"
-                        android:layout_marginTop="10dp"
-                        android:layout_height="wrap_content"
-                        tools:ignore="HardcodedText"/>
                     <LinearLayout
                         android:id="@+id/status_document_container"
                         android:orientation="horizontal"

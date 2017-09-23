@@ -123,6 +123,12 @@
                 android:id="@+id/translation_layout_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+            <CheckBox
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:id="@+id/set_trans_forced"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout

@@ -57,6 +57,7 @@ public class Status implements Parcelable {
     private boolean isTranslated = false;
     private boolean isTranslationShown = false;
     private boolean isNew = false;
+    private boolean isTakingScreenShot = false;
 
     protected Status(Parcel in) {
         id = in.readString();
@@ -360,5 +361,13 @@ public class Status implements Parcelable {
 
     public void setNew(boolean aNew) {
         isNew = aNew;
+    }
+
+    public boolean isTakingScreenShot() {
+        return isTakingScreenShot;
+    }
+
+    public void setTakingScreenShot(boolean takingScreenShot) {
+        isTakingScreenShot = takingScreenShot;
     }
 }

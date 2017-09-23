@@ -472,6 +472,18 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean trans_forced = sharedpreferences.getBoolean(Helper.SET_TRANS_FORCED, false);
+        final CheckBox set_trans_forced = (CheckBox) rootView.findViewById(R.id.set_trans_forced);
+        set_trans_forced.setChecked(trans_forced);
+        set_trans_forced.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_TRANS_FORCED, set_trans_forced.isChecked());
+                editor.apply();
+            }
+        });
+
         return rootView;
     }
 
