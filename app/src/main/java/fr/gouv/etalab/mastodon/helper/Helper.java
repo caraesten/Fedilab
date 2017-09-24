@@ -1018,7 +1018,6 @@ public class Helper {
         TextView username = (TextView) headerLayout.findViewById(R.id.username);
         TextView displayedName = (TextView) headerLayout.findViewById(R.id.displayedName);
         ImageView header_edit_profile = (ImageView) headerLayout.findViewById(R.id.header_edit_profile);
-        ImageView header_option_menu = (ImageView) headerLayout.findViewById(R.id.header_option_menu);
         header_edit_profile.setOnClickListener(null);
         if( account == null ) {
             Helper.logout(activity);
@@ -1074,13 +1073,6 @@ public class Helper {
                 }
             });
         }
-        header_option_menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                View drawer_layout = activity.findViewById(R.id.drawer_layout);
-                ((MainActivity) activity).openContextMenu(drawer_layout);
-            }
-        });
         profilePicture.setOnClickListener(null);
         profilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
