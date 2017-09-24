@@ -77,6 +77,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private String lastReadStatus;
     private String userId;
     public static ArrayList<Status> tempStatuses = new ArrayList<>();
+    private int lastTotalItemCount = 0;
 
     public DisplayStatusFragment(){
     }
@@ -119,7 +120,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        lastReadStatus = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
+        if( type == RetrieveFeedsAsyncTask.Type.HOME)
+            lastReadStatus = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
         lv_status = (ListView) rootView.findViewById(R.id.lv_status);
         mainLoader = (RelativeLayout) rootView.findViewById(R.id.loader);
         nextElementLoader = (RelativeLayout) rootView.findViewById(R.id.loading_next_status);
@@ -250,6 +252,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
             if( getActivity() != null && getActivity().getClass().isInstance(MainActivity.class))
                 ((MainActivity)context).updateHomeCounter();
+            //Resets value for the counter but doesn't update it
+            MainActivity.countNewStatus = 0;
             tempStatuses.clear();
             tempStatuses = new ArrayList<>();
         }
@@ -298,20 +302,38 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             lv_status.setAdapter(statusListAdapter);
             swiped = false;
         }
+
         if( statuses != null && statuses.size() > 0) {
+            ArrayList<String> knownId = new ArrayList<>();
+            for(Status st: this.statuses){
+                knownId.add(st.getId());
+            }
             for(Status tmpStatus: statuses){
-                if( type == RetrieveFeedsAsyncTask.Type.HOME && firstLoad && lastReadStatus != null && Long.parseLong(tmpStatus.getId()) > Long.parseLong(lastReadStatus)){
-                    tmpStatus.setNew(true);
-                    MainActivity.countNewStatus++;
-                }else {
-                    tmpStatus.setNew(false);
+                if( !knownId.contains(tmpStatus.getId())) {
+                    if( type == RetrieveFeedsAsyncTask.Type.HOME && firstLoad && lastReadStatus != null && Long.parseLong(tmpStatus.getId()) > Long.parseLong(lastReadStatus)){
+                        tmpStatus.setNew(true);
+                        MainActivity.countNewStatus++;
+                    }else {
+                        tmpStatus.setNew(false);
+                    }
+                    this.statuses.add(tmpStatus);
                 }
-                this.statuses.add(tmpStatus);
+            }
+
+            if( firstLoad && type == RetrieveFeedsAsyncTask.Type.HOME) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, statuses.get(0).getId());
+                editor.apply();
+                lastReadStatus = statuses.get(0).getId();
             }
             statusListAdapter.notifyDataSetChanged();
+            if( firstLoad && type == RetrieveFeedsAsyncTask.Type.HOME)
+            //Display new value in counter
+            try {
+                ((MainActivity) context).updateHomeCounter();
+            }catch (Exception ignored){}
         }
-        if( firstLoad && getActivity() != null && getActivity().getClass().isInstance(MainActivity.class))
-            ((MainActivity)context).updateHomeCounter();
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
 
@@ -336,7 +358,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 int top = (v == null) ? 0 : v.getTop();
                 status.setReplies(new ArrayList<Status>());
                 statuses.add(0,status);
-                MainActivity.countNewStatus++;
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                if( !status.getAccount().getId().equals(userId))
+                    MainActivity.countNewStatus++;
                 statusListAdapter.notifyDataSetChanged();
                 lv_status.setSelectionFromTop(index, top);
                 if (textviewNoAction.getVisibility() == View.VISIBLE)
