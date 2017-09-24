@@ -1349,7 +1349,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             toot_content.setText(toot_content.getText().toString().trim());
             if (toot_content.getText().toString().startsWith("@")) {
                 //Put a "<trim>dot<space>" at the end of all mentioned account to force capitalization
-                toot_content.append(". ");
+                toot_content.append("\n");
             }
             toot_space_left.setText(String.valueOf(toot_content.length()));
             toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
