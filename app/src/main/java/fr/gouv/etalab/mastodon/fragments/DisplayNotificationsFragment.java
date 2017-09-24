@@ -196,8 +196,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         }
         max_id = apiResponse.getMax_id();
         List<Notification> notifications = apiResponse.getNotifications();
-        //The initial call comes from a classic tab refresh
-        flag_loading = (max_id == null );
+
         if( !swiped && firstLoad && (notifications == null || notifications.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
@@ -215,16 +214,20 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                     MainActivity.countNewNotifications++;
                 this.notifications.add(tmpNotification);
             }
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + this.userId, notifications.get(0).getId());
-            editor.apply();
-            lastReadNotifications = notifications.get(0).getId();
+            if( firstLoad) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + this.userId, notifications.get(0).getId());
+                editor.apply();
+                lastReadNotifications = notifications.get(0).getId();
+            }
             notificationsListAdapter.notifyDataSetChanged();
         }
         if( firstLoad )
             ((MainActivity)context).updateNotifCounter();
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
+        //The initial call comes from a classic tab refresh
+        flag_loading = (max_id == null );
     }
 
     @Override

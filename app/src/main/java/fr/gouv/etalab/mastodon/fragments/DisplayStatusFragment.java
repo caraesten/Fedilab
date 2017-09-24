@@ -77,6 +77,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private String lastReadStatus;
     private String userId;
     public static ArrayList<Status> tempStatuses = new ArrayList<>();
+    private int lastTotalItemCount = 0;
 
     public DisplayStatusFragment(){
     }
@@ -311,12 +312,16 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 }
                 this.statuses.add(tmpStatus);
             }
-            lastReadStatus = statuses.get(0).getId();
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, statuses.get(0).getId());
-            editor.apply();
+
+            if( firstLoad && type == RetrieveFeedsAsyncTask.Type.HOME) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, statuses.get(0).getId());
+                editor.apply();
+                lastReadStatus = statuses.get(0).getId();
+            }
             statusListAdapter.notifyDataSetChanged();
+            if( firstLoad && type == RetrieveFeedsAsyncTask.Type.HOME)
             //Display new value in counter
             try {
                 ((MainActivity) context).updateHomeCounter();
