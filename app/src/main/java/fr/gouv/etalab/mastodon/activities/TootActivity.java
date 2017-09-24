@@ -482,7 +482,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 if( toot_cw_content.getText().toString().trim().length() > 0)
                     toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
                 toot.setVisibility(visibility);
-
+                if( tootReply != null)
+                    toot.setIn_reply_to_id(tootReply.getId());
                 toot.setContent(toot_content.getText().toString().trim());
 
                 new PostStatusAsyncTask(getApplicationContext(), toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -801,6 +802,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
                 final DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.date_picker);
                 final TimePicker timePicker = (TimePicker) dialogView.findViewById(R.id.time_picker);
+                timePicker.setIs24HourView(true);
                 Button date_time_cancel = (Button) dialogView.findViewById(R.id.date_time_cancel);
                 final ImageButton date_time_previous = (ImageButton) dialogView.findViewById(R.id.date_time_previous);
                 final ImageButton date_time_next = (ImageButton) dialogView.findViewById(R.id.date_time_next);
@@ -1370,6 +1372,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
         toot.setVisibility(visibility);
         toot.setContent(toot_content.getText().toString().trim());
+
         if( tootReply != null)
             toot.setIn_reply_to_id(tootReply.getId());
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();

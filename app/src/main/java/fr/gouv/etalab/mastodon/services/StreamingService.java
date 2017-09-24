@@ -22,6 +22,8 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,6 +68,7 @@ public class StreamingService extends IntentService {
     public StreamingService() {
         super("StreamingService");
     }
+
     private static HttpsURLConnection httpsURLConnection;
     public enum EventStreaming{
         UPDATE,

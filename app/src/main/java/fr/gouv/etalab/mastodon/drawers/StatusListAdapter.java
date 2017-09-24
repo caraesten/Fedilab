@@ -287,6 +287,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.new_element.setVisibility(View.INVISIBLE);
         int iconSizePercent = sharedpreferences.getInt(Helper.SET_ICON_SIZE, 130);
         int textSizePercent = sharedpreferences.getInt(Helper.SET_TEXT_SIZE, 110);
+        boolean trans_forced = sharedpreferences.getBoolean(Helper.SET_TRANS_FORCED, false);
         holder.status_more.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
         holder.status_more.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
         holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
@@ -486,7 +487,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_action_container.setVisibility(View.GONE);
         }else {
             holder.status_action_container.setVisibility(View.VISIBLE);
-            if( translator != Helper.TRANS_NONE && currentLocale != null && status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale)){
+            if( trans_forced || (translator != Helper.TRANS_NONE && currentLocale != null && status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale))){
                 holder.status_translate.setVisibility(View.VISIBLE);
             }else {
                 holder.status_translate.setVisibility(View.GONE);

@@ -418,35 +418,6 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        final Spinner tabs_layout_spinner = (Spinner) rootView.findViewById(R.id.tabs_layout_spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.settings_menu_tabs, android.R.layout.simple_spinner_item);
-        tabs_layout_spinner.setAdapter(adapter);
-
-        int positionSpinner = (sharedpreferences.getInt(Helper.SET_TABS, Helper.THEME_TABS) - 1);
-        tabs_layout_spinner.setSelection(positionSpinner);
-        tabs_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if( count > 0){
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putInt(Helper.SET_TABS, (position + 1));
-                    editor.apply();
-                    Helper.switchLayout(getActivity());
-                    getActivity().recreate();
-                    Intent intent = new Intent(context, MainActivity.class);
-                    intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
-                    startActivity(intent);
-                }else {
-                    count++;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
         final Spinner translation_layout_spinner = (Spinner) rootView.findViewById(R.id.translation_layout_spinner);
         ArrayAdapter<CharSequence> adapterTrans = ArrayAdapter.createFromResource(getActivity(),
@@ -469,6 +440,18 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+        boolean trans_forced = sharedpreferences.getBoolean(Helper.SET_TRANS_FORCED, false);
+        final CheckBox set_trans_forced = (CheckBox) rootView.findViewById(R.id.set_trans_forced);
+        set_trans_forced.setChecked(trans_forced);
+        set_trans_forced.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_TRANS_FORCED, set_trans_forced.isChecked());
+                editor.apply();
             }
         });
 

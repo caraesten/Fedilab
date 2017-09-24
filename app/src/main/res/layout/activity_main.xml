@@ -47,22 +47,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:orientation="horizontal">
-                    <ImageView
-                        android:id="@+id/pp_actionBar"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="center_vertical"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginRight="10dp"
-                        tools:ignore="ContentDescription" />
                     <TextView
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:visibility="gone"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_gravity="center_vertical"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
                         android:id="@+id/toolbar_title" />
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/tabLayout"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        app:tabSelectedTextColor="?attr/colorAccent"
+                        />
                     <android.support.v7.widget.SearchView
                         android:background="@null"
                         android:id="@+id/toolbar_search"
@@ -72,12 +73,7 @@
                         android:layout_height="wrap_content" />
                 </LinearLayout>
             </android.support.v7.widget.Toolbar>
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tabLayout"
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                app:tabSelectedTextColor="?attr/colorAccent"
-                />
+
         </android.support.design.widget.AppBarLayout>
 
 
@@ -123,7 +119,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
+        android:fitsSystemWindows="false"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
 
