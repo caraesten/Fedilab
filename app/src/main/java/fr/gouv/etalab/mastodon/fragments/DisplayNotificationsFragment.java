@@ -215,6 +215,10 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                     MainActivity.countNewNotifications++;
                 this.notifications.add(tmpNotification);
             }
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + this.userId, notifications.get(0).getId());
+            editor.apply();
+            lastReadNotifications = notifications.get(0).getId();
             notificationsListAdapter.notifyDataSetChanged();
         }
         if( firstLoad )
