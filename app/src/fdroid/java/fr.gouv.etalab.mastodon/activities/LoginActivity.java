@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -95,7 +96,9 @@ public class LoginActivity extends AppCompatActivity {
         final Button connectionButton = (Button) findViewById(R.id.login_button);
         login_instance = (AutoCompleteTextView) findViewById(R.id.login_instance);
 
-
+        if( theme == Helper.THEME_LIGHT) {
+           connectionButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+        }
         login_instance.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}

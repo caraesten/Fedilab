@@ -802,6 +802,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
                 final DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.date_picker);
                 final TimePicker timePicker = (TimePicker) dialogView.findViewById(R.id.time_picker);
+                timePicker.setIs24HourView(true);
                 Button date_time_cancel = (Button) dialogView.findViewById(R.id.date_time_cancel);
                 final ImageButton date_time_previous = (ImageButton) dialogView.findViewById(R.id.date_time_previous);
                 final ImageButton date_time_next = (ImageButton) dialogView.findViewById(R.id.date_time_next);
@@ -915,6 +916,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             if( attachments.size() == 0 )
                 toot_picture_container.setVisibility(View.GONE);
+            toot_picture.setEnabled(true);
             return;
         }
         toot_picture_container.setVisibility(View.VISIBLE);
@@ -1348,7 +1350,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             toot_content.setText(toot_content.getText().toString().trim());
             if (toot_content.getText().toString().startsWith("@")) {
                 //Put a "<trim>dot<space>" at the end of all mentioned account to force capitalization
-                toot_content.append(". ");
+                toot_content.append("\n");
             }
             toot_space_left.setText(String.valueOf(toot_content.length()));
             toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end

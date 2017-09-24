@@ -418,35 +418,6 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        final Spinner tabs_layout_spinner = (Spinner) rootView.findViewById(R.id.tabs_layout_spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.settings_menu_tabs, android.R.layout.simple_spinner_item);
-        tabs_layout_spinner.setAdapter(adapter);
-
-        int positionSpinner = (sharedpreferences.getInt(Helper.SET_TABS, Helper.THEME_TABS) - 1);
-        tabs_layout_spinner.setSelection(positionSpinner);
-        tabs_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if( count > 0){
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putInt(Helper.SET_TABS, (position + 1));
-                    editor.apply();
-                    Helper.switchLayout(getActivity());
-                    getActivity().recreate();
-                    Intent intent = new Intent(context, MainActivity.class);
-                    intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
-                    startActivity(intent);
-                }else {
-                    count++;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
         final Spinner translation_layout_spinner = (Spinner) rootView.findViewById(R.id.translation_layout_spinner);
         ArrayAdapter<CharSequence> adapterTrans = ArrayAdapter.createFromResource(getActivity(),
