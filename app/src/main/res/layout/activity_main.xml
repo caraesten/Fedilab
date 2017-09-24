@@ -61,6 +61,8 @@
                         android:id="@+id/tabLayout"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        app:tabGravity="fill"
+                        app:tabMaxWidth="0dp"
                         android:layout_height="wrap_content"
                         app:tabSelectedTextColor="?attr/colorAccent"
                         />
