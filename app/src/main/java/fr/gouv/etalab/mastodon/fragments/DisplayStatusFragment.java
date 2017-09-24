@@ -119,7 +119,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        lastReadStatus = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
+        if( type == RetrieveFeedsAsyncTask.Type.HOME)
+            lastReadStatus = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
         lv_status = (ListView) rootView.findViewById(R.id.lv_status);
         mainLoader = (RelativeLayout) rootView.findViewById(R.id.loader);
         nextElementLoader = (RelativeLayout) rootView.findViewById(R.id.loading_next_status);
@@ -250,6 +251,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
             if( getActivity() != null && getActivity().getClass().isInstance(MainActivity.class))
                 ((MainActivity)context).updateHomeCounter();
+            //Resets value for the counter but doesn't update it
+            MainActivity.countNewStatus = 0;
             tempStatuses.clear();
             tempStatuses = new ArrayList<>();
         }
@@ -308,10 +311,17 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 }
                 this.statuses.add(tmpStatus);
             }
+            lastReadStatus = statuses.get(0).getId();
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, statuses.get(0).getId());
+            editor.apply();
             statusListAdapter.notifyDataSetChanged();
+            //Display new value in counter
+            try {
+                ((MainActivity) context).updateHomeCounter();
+            }catch (Exception ignored){}
         }
-        if( firstLoad && getActivity() != null && getActivity().getClass().isInstance(MainActivity.class))
-            ((MainActivity)context).updateHomeCounter();
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
 
