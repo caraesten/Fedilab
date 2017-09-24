@@ -916,6 +916,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             if( attachments.size() == 0 )
                 toot_picture_container.setVisibility(View.GONE);
+            toot_picture.setEnabled(true);
             return;
         }
         toot_picture_container.setVisibility(View.VISIBLE);
