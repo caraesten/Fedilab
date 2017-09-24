@@ -980,7 +980,7 @@ public class Helper {
      * @param activity Activity The current activity
      * @param url String the url of the profile picture
      */
-    public static void changeHamburgerIcon(final Activity activity, String url){
+    public static void loadPictureIcon(final Activity activity, String url, final ImageView imageView){
         ImageLoader imageLoader;
         DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
@@ -989,14 +989,13 @@ public class Helper {
             url = "https://" + Helper.getLiveInstance(activity) + url;
         }
         imageLoader.loadImage(url, options, new SimpleImageLoadingListener(){
+            @SuppressWarnings("ConstantConditions")
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 super.onLoadingComplete(imageUri, view, loadedImage);
                 Resources res = activity.getResources();
-                Bitmap loadedImageResized = Bitmap.createScaledBitmap(loadedImage, (int)convertDpToPixel(40, activity), (int)convertDpToPixel(40, activity), true);
-                BitmapDrawable icon = new BitmapDrawable(res, getRoundedCornerBitmap(loadedImageResized, 90));
-                if( ((MainActivity)activity).getSupportActionBar() != null)
-                    ((MainActivity)activity).getSupportActionBar().setIcon(icon);
+                BitmapDrawable icon = new BitmapDrawable(res, getRoundedCornerBitmap(loadedImage, 150));
+                imageView.setImageDrawable(icon);
             }
             @Override
             public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
@@ -1004,44 +1003,6 @@ public class Helper {
             }});
     }
 
-    /**
-     * Load the profile picture in the current action bar
-     * @param activity Activity The current activity
-     * @param url String the url of the profile picture
-     */
-    public static void loadPPInActionBar(final Activity activity, String url){
-        ImageLoader imageLoader;
-        DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
-        imageLoader = ImageLoader.getInstance();
-        if( url.startsWith("/") ){
-            url = "https://" + Helper.getLiveInstance(activity) + url;
-        }
-        imageLoader.loadImage(url, options, new SimpleImageLoadingListener(){
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                super.onLoadingComplete(imageUri, view, loadedImage);
-
-                Drawable ppDrawable;
-                Toolbar toolBar = (Toolbar) activity.findViewById(R.id.toolbar);
-                if( toolBar != null){
-                    ppDrawable  = new BitmapDrawable(activity.getResources(), Bitmap.createScaledBitmap(loadedImage, (int) convertDpToPixel(25, activity), (int) convertDpToPixel(25, activity), true));
-                    toolBar.findViewById(R.id.pp_actionBar).setBackgroundDrawable(ppDrawable);
-                }else{
-                    ActionBar supportActionBar = ((TootActivity) activity).getSupportActionBar();
-                    if( supportActionBar != null){
-                        ppDrawable = new BitmapDrawable(activity.getResources(), Bitmap.createScaledBitmap(loadedImage, (int) convertDpToPixel(20, activity), (int) convertDpToPixel(20, activity), true));
-                        supportActionBar.setIcon(ppDrawable);
-                    }
-                }
-
-
-            }
-            @Override
-            public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
-
-            }});
-    }
 
     /**
      * Update the header with the new selected account

@@ -110,7 +110,6 @@ import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
-import static fr.gouv.etalab.mastodon.helper.Helper.changeHamburgerIcon;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeUser;
 import static fr.gouv.etalab.mastodon.helper.Helper.menuAccounts;
 import static fr.gouv.etalab.mastodon.helper.Helper.unCheckAllMenuItems;
@@ -358,7 +357,6 @@ public class MainActivity extends AppCompatActivity
         toolbarTitle.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 FragmentManager fragmentManager = getSupportFragmentManager();
-
                 if( navigationView.getMenu().findItem(R.id.nav_favorites) != null && navigationView.getMenu().findItem(R.id.nav_favorites).isChecked()){
                     DisplayStatusFragment faveFrag = (DisplayStatusFragment) fragmentManager.findFragmentByTag("FAVOURITES");
                     if (faveFrag != null && faveFrag.isVisible()) {
@@ -486,8 +484,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
-
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
 
@@ -509,10 +505,15 @@ public class MainActivity extends AppCompatActivity
         registerForContextMenu(drawer);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
         toggle.setDrawerIndicatorEnabled(false);
-        changeHamburgerIcon(MainActivity.this, account.getAvatar());
-        toggle.syncState();
+        ImageView iconbar = (ImageView) toolbar.findViewById(R.id.iconbar);
+        iconbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.openDrawer(Gravity.START);
+            }
+        });
+        Helper.loadPictureIcon(MainActivity.this, account.getAvatar(),iconbar);
         headerLayout = navigationView.getHeaderView(0);
 
 

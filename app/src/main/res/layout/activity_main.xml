@@ -31,6 +31,7 @@
         tools:context="mastodon.etalab.gouv.fr.mastodon.fr.etalab.gouv.fr.mastodon.activities.MainActivity">
 
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/AppTheme.AppBarOverlay"
@@ -42,6 +43,11 @@
                 android:background="?attr/colorPrimary"
                 android:theme="@style/AppThemeDark_NoActionBar"
                 app:popupTheme="?attr/popupOverlay">
+                <ImageView
+                    android:id="@+id/iconbar"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    tools:ignore="ContentDescription" />
                 <LinearLayout
                     android:id="@+id/toolbar_search_container"
                     android:layout_width="match_parent"
