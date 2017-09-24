@@ -18,13 +18,12 @@ package fr.gouv.etalab.mastodon.helper;
 
 
 import android.app.Activity;
-import android.app.NotificationManager;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.graphics.PorterDuffXfermode;
-import android.preference.PreferenceManager;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.PendingIntent;
@@ -66,7 +65,6 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -79,7 +77,6 @@ import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -87,7 +84,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.BuildConfig;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -99,17 +95,14 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.lang.reflect.Type;
 import java.net.InetAddress;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -138,9 +131,10 @@ import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
-import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
+import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
+import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -160,7 +154,6 @@ public class Helper {
     @SuppressWarnings("unused")
     public static  final String TAG = "mastodon_etalab";
     public static final String CLIENT_NAME_VALUE = "Mastalab";
-    public static final String DEVELOPER_INSTANCE = "mastodon.etalab.gouv.fr";
     public static final String OAUTH_SCOPES = "read write follow";
     public static final String PREF_KEY_OAUTH_TOKEN = "oauth_token";
     public static final String PREF_KEY_ID = "userID";
@@ -205,7 +198,6 @@ public class Helper {
     public static final String SET_AUTO_STORE = "set_auto_store";
     public static final String SET_POPUP_PUSH = "set_popup_push";
     public static final String SET_NSFW_TIMEOUT = "set_nsfw_timeout";
-    public static final String SET_TABS = "set_tabs";
     public static final String SET_MEDIA_URLS = "set_media_urls";
     public static final String SET_TEXT_SIZE = "set_text_size";
     public static final String SET_ICON_SIZE = "set_icon_size";
@@ -219,9 +211,6 @@ public class Helper {
     public static final int ATTACHMENT_ASK = 3;
     public static final int THEME_LIGHT = 1;
     public static final int THEME_DARK = 2;
-    public static final int THEME_TABS = 1;
-    public static final int THEME_MENU = 2;
-    public static final int THEME_MENU_TABS = 3;
 
     public static final int LED_COLOUR = 0;
 
@@ -931,6 +920,7 @@ public class Helper {
      */
     public static void changeUser(Activity activity, String userID, boolean checkItem) {
 
+
         final NavigationView navigationView = (NavigationView) activity.findViewById(R.id.nav_view);
         navigationView.getMenu().clear();
         navigationView.inflateMenu(R.menu.activity_main_drawer);
@@ -946,6 +936,18 @@ public class Helper {
             navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
         }
         SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String oldUserId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        //User wont' be the same, temp values are cleared
+        if( oldUserId != null && !oldUserId.equals(userID)){
+            if( DisplayStatusFragment.tempStatuses != null) {
+                DisplayStatusFragment.tempStatuses.clear();
+                DisplayStatusFragment.tempStatuses = new ArrayList<>();
+            }
+            if( DisplayNotificationsFragment.tempNotifications != null) {
+                DisplayNotificationsFragment.tempNotifications.clear();
+                DisplayNotificationsFragment.tempNotifications = new ArrayList<>();
+            }
+        }
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, account.getToken());
         editor.putString(Helper.PREF_KEY_ID, account.getId());
@@ -959,12 +961,26 @@ public class Helper {
     }
 
 
+    public static Bitmap getRoundedCornerBitmap(Bitmap bitmap,int roundPixelSize) {
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        final RectF rectF = new RectF(rect);
+        final float roundPx = roundPixelSize;
+        paint.setAntiAlias(true);
+        canvas.drawRoundRect(rectF,roundPx,roundPx, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        return output;
+    }
+
     /**
-     * Load the profile picture in the current action bar
+     * Load the profile picture at the place of hamburger icon
      * @param activity Activity The current activity
      * @param url String the url of the profile picture
      */
-    public static void loadPPInActionBar(final Activity activity, String url){
+    public static void loadPictureIcon(final Activity activity, String url, final ImageView imageView){
         ImageLoader imageLoader;
         DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
@@ -973,30 +989,20 @@ public class Helper {
             url = "https://" + Helper.getLiveInstance(activity) + url;
         }
         imageLoader.loadImage(url, options, new SimpleImageLoadingListener(){
+            @SuppressWarnings("ConstantConditions")
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 super.onLoadingComplete(imageUri, view, loadedImage);
-
-                Drawable ppDrawable;
-                Toolbar toolBar = (Toolbar) activity.findViewById(R.id.toolbar);
-                if( toolBar != null){
-                    ppDrawable  = new BitmapDrawable(activity.getResources(), Bitmap.createScaledBitmap(loadedImage, (int) convertDpToPixel(25, activity), (int) convertDpToPixel(25, activity), true));
-                    toolBar.findViewById(R.id.pp_actionBar).setBackgroundDrawable(ppDrawable);
-                }else{
-                    ActionBar supportActionBar = ((TootActivity) activity).getSupportActionBar();
-                    if( supportActionBar != null){
-                        ppDrawable = new BitmapDrawable(activity.getResources(), Bitmap.createScaledBitmap(loadedImage, (int) convertDpToPixel(20, activity), (int) convertDpToPixel(20, activity), true));
-                        supportActionBar.setIcon(ppDrawable);
-                    }
-                }
-
-
+                Resources res = activity.getResources();
+                BitmapDrawable icon = new BitmapDrawable(res, getRoundedCornerBitmap(loadedImage, 150));
+                imageView.setImageDrawable(icon);
             }
             @Override
             public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
 
             }});
     }
+
 
     /**
      * Update the header with the new selected account
@@ -1011,9 +1017,6 @@ public class Helper {
 
         TextView username = (TextView) headerLayout.findViewById(R.id.username);
         TextView displayedName = (TextView) headerLayout.findViewById(R.id.displayedName);
-        TextView ownerStatus = (TextView) headerLayout.findViewById(R.id.owner_status);
-        TextView ownerFollowing = (TextView) headerLayout.findViewById(R.id.owner_following);
-        TextView ownerFollowers = (TextView) headerLayout.findViewById(R.id.owner_followers);
         ImageView header_edit_profile = (ImageView) headerLayout.findViewById(R.id.header_edit_profile);
         header_edit_profile.setOnClickListener(null);
         if( account == null ) {
@@ -1023,9 +1026,6 @@ public class Helper {
             activity.startActivity(myIntent);
             activity.finish(); //User is logged out to get a new token
         }else {
-            ownerStatus.setText(String.valueOf(account.getStatuses_count()));
-            ownerFollowers.setText(String.valueOf(account.getFollowers_count()));
-            ownerFollowing.setText(String.valueOf(account.getFollowing_count()));
             username.setText(String.format("@%s",account.getUsername()));
             displayedName.setText(account.getDisplay_name());
             String url = account.getAvatar();
@@ -1542,22 +1542,9 @@ public class Helper {
      */
     public static void switchLayout(Activity activity){
         //Check if the class calling the method is an instance of MainActivity
-        boolean isTablet = activity.getResources().getBoolean(R.bool.isTablet);
         final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int timelineLayout = sharedpreferences.getInt(Helper.SET_TABS, Helper.THEME_TABS);
         final NavigationView navigationView = (NavigationView) activity.findViewById(R.id.nav_view);
-
         android.support.design.widget.TabLayout tableLayout = (android.support.design.widget.TabLayout) activity.findViewById(R.id.tabLayout);
-        LinearLayout toolbar_search_container = (LinearLayout) activity.findViewById(R.id.toolbar_search_container);
-        ViewGroup.LayoutParams params = toolbar_search_container.getLayoutParams();
-        int heightSearchdp, heightSearchdpAlone;
-        if( !isTablet){
-            heightSearchdp = 40;
-            heightSearchdpAlone = 60;
-        }else {
-            heightSearchdp = 40;
-            heightSearchdpAlone = 60;
-        }
         String userID = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(activity,db).getAccountByID(userID);
@@ -1570,37 +1557,7 @@ public class Helper {
                     navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
             }
         }
-        if( navigationView.getMenu().findItem(R.id.nav_home) != null){
-            switch (timelineLayout){
-                case Helper.THEME_TABS:
-                    navigationView.getMenu().findItem(R.id.nav_home).setVisible(false);
-                    navigationView.getMenu().findItem(R.id.nav_local).setVisible(false);
-                    navigationView.getMenu().findItem(R.id.nav_global).setVisible(false);
-                    navigationView.getMenu().findItem(R.id.nav_notification).setVisible(false);
-                    params.height = (int) Helper.convertDpToPixel(heightSearchdp, activity);
-                    toolbar_search_container.setLayoutParams(params);
-                    tableLayout.setVisibility(View.VISIBLE);
-                    break;
-                case Helper.THEME_MENU:
-                    navigationView.getMenu().findItem(R.id.nav_home).setVisible(true);
-                    navigationView.getMenu().findItem(R.id.nav_local).setVisible(true);
-                    navigationView.getMenu().findItem(R.id.nav_global).setVisible(true);
-                    navigationView.getMenu().findItem(R.id.nav_notification).setVisible(true);
-                    params.height = (int) Helper.convertDpToPixel(heightSearchdpAlone, activity);;
-                    toolbar_search_container.setLayoutParams(params);
-                    tableLayout.setVisibility(View.GONE);
-                    break;
-                case Helper.THEME_MENU_TABS:
-                    navigationView.getMenu().findItem(R.id.nav_home).setVisible(true);
-                    navigationView.getMenu().findItem(R.id.nav_local).setVisible(true);
-                    navigationView.getMenu().findItem(R.id.nav_global).setVisible(true);
-                    navigationView.getMenu().findItem(R.id.nav_notification).setVisible(true);
-                    params.height = (int) Helper.convertDpToPixel(heightSearchdp, activity);
-                    toolbar_search_container.setLayoutParams(params);
-                    tableLayout.setVisibility(View.VISIBLE);
-                    break;
-            }
-        }
+        tableLayout.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -1637,7 +1594,7 @@ public class Helper {
         paint.setStrokeWidth(12);
         paint.setTextSize(30);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-        canvas.drawText("Via #Mastalab", view.getWidth()-230, view.getHeight() - 35, paint);
+        canvas.drawText("Via #Mastalab", view.getWidth()-230, view.getHeight() - 5, paint);
 
         if( new_element != null)
             new_element.setVisibility(new_element_v);
