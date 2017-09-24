@@ -139,6 +139,7 @@ public class MainActivity extends AppCompatActivity
     public static int countNewNotifications = 0;
     private String userIdService;
     private Intent streamingIntent;
+    public static boolean broadCastRegistred = false;
 
     public MainActivity() {
     }
@@ -188,7 +189,11 @@ public class MainActivity extends AppCompatActivity
         };
         streamingIntent = new Intent(this, StreamingService.class);
         startService(streamingIntent);
-        LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
+
+        if( !broadCastRegistred) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
+            broadCastRegistred = true;
+        }
 
 
 
@@ -906,6 +911,7 @@ public class MainActivity extends AppCompatActivity
         if( streamingIntent != null)
             stopService(streamingIntent);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
+        broadCastRegistred = false;
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

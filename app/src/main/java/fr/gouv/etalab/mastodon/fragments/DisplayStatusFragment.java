@@ -302,15 +302,22 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             lv_status.setAdapter(statusListAdapter);
             swiped = false;
         }
+
         if( statuses != null && statuses.size() > 0) {
+            ArrayList<String> knownId = new ArrayList<>();
+            for(Status st: this.statuses){
+                knownId.add(st.getId());
+            }
             for(Status tmpStatus: statuses){
-                if( type == RetrieveFeedsAsyncTask.Type.HOME && firstLoad && lastReadStatus != null && Long.parseLong(tmpStatus.getId()) > Long.parseLong(lastReadStatus)){
-                    tmpStatus.setNew(true);
-                    MainActivity.countNewStatus++;
-                }else {
-                    tmpStatus.setNew(false);
+                if( !knownId.contains(tmpStatus.getId())) {
+                    if( type == RetrieveFeedsAsyncTask.Type.HOME && firstLoad && lastReadStatus != null && Long.parseLong(tmpStatus.getId()) > Long.parseLong(lastReadStatus)){
+                        tmpStatus.setNew(true);
+                        MainActivity.countNewStatus++;
+                    }else {
+                        tmpStatus.setNew(false);
+                    }
+                    this.statuses.add(tmpStatus);
                 }
-                this.statuses.add(tmpStatus);
             }
 
             if( firstLoad && type == RetrieveFeedsAsyncTask.Type.HOME) {
@@ -351,7 +358,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 int top = (v == null) ? 0 : v.getTop();
                 status.setReplies(new ArrayList<Status>());
                 statuses.add(0,status);
-                MainActivity.countNewStatus++;
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                if( !status.getAccount().getId().equals(userId))
+                    MainActivity.countNewStatus++;
                 statusListAdapter.notifyDataSetChanged();
                 lv_status.setSelectionFromTop(index, top);
                 if (textviewNoAction.getVisibility() == View.VISIBLE)
