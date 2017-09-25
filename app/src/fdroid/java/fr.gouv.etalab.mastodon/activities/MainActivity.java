@@ -50,6 +50,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -515,7 +516,7 @@ public class MainActivity extends AppCompatActivity
         });
         Helper.loadPictureIcon(MainActivity.this, account.getAvatar(),iconbar);
         headerLayout = navigationView.getHeaderView(0);
-
+        mamageNewIntent(getIntent());
         final ImageView menuMore = (ImageView) headerLayout.findViewById(R.id.header_option_menu);
         menuMore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -724,6 +725,7 @@ public class MainActivity extends AppCompatActivity
      * @param intent Intent - intent related to a notification in top bar
      */
     private boolean mamageNewIntent(Intent intent){
+
         if( intent == null || intent.getExtras() == null )
             return false;
 
@@ -1106,6 +1108,20 @@ public class MainActivity extends AppCompatActivity
             return null;
         }
 
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
+            // save the appropriate reference depending on position
+            switch (position) {
+                case 0:
+                    homeFragment = (DisplayStatusFragment) createdFragment;
+                    break;
+                case 1:
+                    notificationsFragment = (DisplayNotificationsFragment) createdFragment;
+                    break;
+            }
+            return createdFragment;
+        }
         @Override
         public int getCount() {
             return mNumOfTabs;
