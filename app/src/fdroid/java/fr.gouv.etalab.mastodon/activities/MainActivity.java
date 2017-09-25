@@ -515,7 +515,7 @@ public class MainActivity extends AppCompatActivity
         });
         Helper.loadPictureIcon(MainActivity.this, account.getAvatar(),iconbar);
         headerLayout = navigationView.getHeaderView(0);
-
+        mamageNewIntent(getIntent());
         final ImageView menuMore = (ImageView) headerLayout.findViewById(R.id.header_option_menu);
         menuMore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -724,6 +724,7 @@ public class MainActivity extends AppCompatActivity
      * @param intent Intent - intent related to a notification in top bar
      */
     private boolean mamageNewIntent(Intent intent){
+
         if( intent == null || intent.getExtras() == null )
             return false;
 

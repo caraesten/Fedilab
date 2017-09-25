@@ -518,7 +518,7 @@ public class MainActivity extends AppCompatActivity
         });
         Helper.loadPictureIcon(MainActivity.this, account.getAvatar(),iconbar);
         headerLayout = navigationView.getHeaderView(0);
-
+        mamageNewIntent(getIntent());
         final ImageView menuMore = (ImageView) headerLayout.findViewById(R.id.header_option_menu);
         menuMore.setOnClickListener(new View.OnClickListener() {
             @Override
