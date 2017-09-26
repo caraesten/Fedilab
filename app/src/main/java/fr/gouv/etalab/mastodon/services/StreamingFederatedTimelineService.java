@@ -73,6 +73,11 @@ public class StreamingFederatedTimelineService extends IntentService {
 
     public void onCreate() {
         super.onCreate();
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean display_global = sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true);
+        if( !display_global){
+            stopSelf();
+        }
     }
 
 

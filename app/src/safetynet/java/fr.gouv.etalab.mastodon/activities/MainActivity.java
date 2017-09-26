@@ -211,8 +211,6 @@ public class MainActivity extends AppCompatActivity
         streamingIntent = new Intent(this, StreamingService.class);
         startService(streamingIntent);
 
-        streamingFederatedIntent = new Intent(this, StreamingFederatedTimelineService.class);
-        startService(streamingFederatedIntent);
 
         if( !broadCastRegistred) {
             LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
@@ -331,6 +329,17 @@ public class MainActivity extends AppCompatActivity
                     toot.setVisibility(View.GONE);
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
+
+                if( tab.getPosition() == 2 && !display_local && display_global){
+                    streamingFederatedIntent = new Intent(getApplicationContext(), StreamingFederatedTimelineService.class);
+                    startService(streamingFederatedIntent);
+                }else if(  tab.getPosition() == 3 && display_local && display_global){
+                    streamingFederatedIntent = new Intent(getApplicationContext(), StreamingFederatedTimelineService.class);
+                    startService(streamingFederatedIntent);
+                }else{
+                    if( streamingFederatedIntent != null)
+                        stopService(streamingFederatedIntent);
+                }
             }
 
             @Override
