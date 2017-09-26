@@ -92,6 +92,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveInstanceInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMetaDataInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
+import fr.gouv.etalab.mastodon.services.StreamingFederatedTimelineService;
 import fr.gouv.etalab.mastodon.services.StreamingService;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
@@ -134,16 +135,16 @@ public class MainActivity extends AppCompatActivity
     private RelativeLayout main_app_container;
     private Stack<Integer> stackBack = new Stack<>();
 
-    private DisplayStatusFragment homeFragment;
+    private DisplayStatusFragment homeFragment, federatedFragment;
     private DisplayNotificationsFragment notificationsFragment;
     private static final int ERROR_DIALOG_REQUEST_CODE = 97;
-    private BroadcastReceiver receive_data;
+    private BroadcastReceiver receive_data, receive_federated_data;
     private boolean display_local, display_global;
     public static int countNewStatus = 0;
     public static int countNewNotifications = 0;
     private String userIdService;
-    private Intent streamingIntent;
-    public static boolean broadCastRegistred = false;
+    private Intent streamingIntent, streamingFederatedIntent;
+    public static boolean broadCastRegistred = false, broadCastFederatedRegistred = false;
 
     public MainActivity() {
     }
@@ -154,6 +155,22 @@ public class MainActivity extends AppCompatActivity
 
 
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+
+
+        receive_federated_data = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Bundle b = intent.getExtras();
+                userIdService = b.getString("userIdService", null);
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                if( userIdService != null && userIdService.equals(userId)) {
+                    Status status = b.getParcelable("data");
+                    if (federatedFragment != null) {
+                        federatedFragment.refresh(status);
+                    }
+                }
+            }
+        };
         receive_data = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -194,9 +211,16 @@ public class MainActivity extends AppCompatActivity
         streamingIntent = new Intent(this, StreamingService.class);
         startService(streamingIntent);
 
+        streamingFederatedIntent = new Intent(this, StreamingFederatedTimelineService.class);
+        startService(streamingFederatedIntent);
+
         if( !broadCastRegistred) {
             LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
             broadCastRegistred = true;
+        }
+        if( !broadCastFederatedRegistred) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(receive_federated_data, new IntentFilter(Helper.RECEIVE_FEDERATED_DATA));
+            broadCastFederatedRegistred = true;
         }
 
         ProviderInstaller.installIfNeededAsync(this, this);
@@ -914,8 +938,12 @@ public class MainActivity extends AppCompatActivity
         super.onDestroy();
         if( streamingIntent != null)
             stopService(streamingIntent);
+        if( streamingFederatedIntent != null)
+            stopService(streamingFederatedIntent);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_federated_data);
         broadCastRegistred = false;
+        broadCastFederatedRegistred = false;
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -1167,6 +1195,14 @@ public class MainActivity extends AppCompatActivity
                     break;
                 case 1:
                     notificationsFragment = (DisplayNotificationsFragment) createdFragment;
+                    break;
+                case 2:
+                    if ( !display_local && display_global)
+                        federatedFragment = (DisplayStatusFragment) createdFragment;
+                    break;
+                case 3:
+                    if( display_local && display_global)
+                        federatedFragment = (DisplayStatusFragment) createdFragment;
                     break;
             }
             return createdFragment;

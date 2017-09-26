@@ -349,7 +349,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
     public void refresh(Status status){
         //New data are available
-        if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
+        if( type == RetrieveFeedsAsyncTask.Type.HOME) {
             if (context == null)
                 return;
             if (status != null) {
@@ -367,8 +367,31 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 if (textviewNoAction.getVisibility() == View.VISIBLE)
                     textviewNoAction.setVisibility(View.GONE);
             }
+        }else if(type == RetrieveFeedsAsyncTask.Type.PUBLIC){
+            if (context == null)
+                return;
+            if (status != null) {
+                if (lv_status.getFirstVisiblePosition() > 3) {
+                    int index = lv_status.getFirstVisiblePosition() + 1;
+                    View v = lv_status.getChildAt(0);
+                    int top = (v == null) ? 0 : v.getTop();
+                    status.setReplies(new ArrayList<Status>());
+                    statuses.add(0, status);
+                    statusListAdapter.notifyDataSetChanged();
+                    lv_status.setSelectionFromTop(index, top);
+
+                } else {
+                    status.setReplies(new ArrayList<Status>());
+                    status.setNew(false);
+                    statuses.add(0, status);
+                    statusListAdapter.notifyDataSetChanged();
+                }
+                if (textviewNoAction.getVisibility() == View.VISIBLE)
+                    textviewNoAction.setVisibility(View.GONE);
+            }
         }
     }
+
 
     @Override
     public void setMenuVisibility(final boolean visible) {
