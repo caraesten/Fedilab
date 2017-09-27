@@ -102,8 +102,6 @@ import fr.gouv.etalab.mastodon.fragments.TabLayoutSettingsFragment;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
-import static fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment.tempNotifications;
-import static fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment.tempStatuses;
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_THEME_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_USER_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
@@ -144,7 +142,7 @@ public class MainActivity extends AppCompatActivity
     public static int countNewNotifications = 0;
     private String userIdService;
     private Intent streamingIntent, streamingFederatedIntent;
-    public static boolean broadCastRegistred = false, broadCastFederatedRegistred = false;
+    public static String lastHomeId = null, lastNotificationId = null;
 
     public MainActivity() {
     }
@@ -157,71 +155,6 @@ public class MainActivity extends AppCompatActivity
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
 
 
-        receive_federated_data = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Bundle b = intent.getExtras();
-                userIdService = b.getString("userIdService", null);
-                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                if( userIdService != null && userIdService.equals(userId)) {
-                    Status status = b.getParcelable("data");
-                    if (federatedFragment != null) {
-                        federatedFragment.refresh(status);
-                    }
-                }
-            }
-        };
-        receive_data = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Bundle b = intent.getExtras();
-                StreamingService.EventStreaming eventStreaming = (StreamingService.EventStreaming) intent.getSerializableExtra("eventStreaming");
-                userIdService = b.getString("userIdService", null);
-                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                if( userIdService != null && userIdService.equals(userId)) {
-                    if (eventStreaming == StreamingService.EventStreaming.NOTIFICATION) {
-                        Notification notification = b.getParcelable("data");
-                        if (notificationsFragment != null) {
-                            notificationsFragment.refresh(notification);
-                        } else {
-                            tempNotifications.add(notification);
-                        }
-                    } else if (eventStreaming == StreamingService.EventStreaming.UPDATE) {
-                        Status status = b.getParcelable("data");
-                        if (homeFragment != null) {
-                            homeFragment.refresh(status);
-                        } else {
-                            tempStatuses.add(status);
-                        }
-                    } else if (eventStreaming == StreamingService.EventStreaming.DELETE) {
-                        String id = b.getString("id");
-                        if (notificationsFragment != null) {
-                            if (notificationsFragment.getUserVisibleHint()) {
-
-                            } else {
-
-                            }
-                        }
-                    }
-                    updateNotifCounter();
-                    updateHomeCounter();
-                }
-            }
-        };
-        streamingIntent = new Intent(this, StreamingService.class);
-        startService(streamingIntent);
-
-
-        if( !broadCastRegistred) {
-            LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
-            broadCastRegistred = true;
-        }
-        if( !broadCastFederatedRegistred) {
-            LocalBroadcastManager.getInstance(this).registerReceiver(receive_federated_data, new IntentFilter(Helper.RECEIVE_FEDERATED_DATA));
-            broadCastFederatedRegistred = true;
-        }
-
-        ProviderInstaller.installIfNeededAsync(this, this);
 
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
@@ -931,10 +864,86 @@ public class MainActivity extends AppCompatActivity
         //Proceeds to update of the authenticated account
         if(Helper.isLoggedIn(getApplicationContext()))
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if( lastHomeId != null && homeFragment != null){
+            homeFragment.retrieveMissingToots(lastHomeId);
+        }
+        if( lastNotificationId != null && notificationsFragment != null){
+            notificationsFragment.retrieveMissingNotifications(lastNotificationId);
+        }
     }
 
 
+    @Override
+    public void onStart(){
+        super.onStart();
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        receive_federated_data = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Bundle b = intent.getExtras();
+                userIdService = b.getString("userIdService", null);
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                if( userIdService != null && userIdService.equals(userId)) {
+                    Status status = b.getParcelable("data");
+                    if (federatedFragment != null) {
+                        federatedFragment.refresh(status);
+                    }
+                }
+            }
+        };
+        receive_data = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Bundle b = intent.getExtras();
+                StreamingService.EventStreaming eventStreaming = (StreamingService.EventStreaming) intent.getSerializableExtra("eventStreaming");
+                userIdService = b.getString("userIdService", null);
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                if( userIdService != null && userIdService.equals(userId)) {
+                    if (eventStreaming == StreamingService.EventStreaming.NOTIFICATION) {
+                        Notification notification = b.getParcelable("data");
+                        if (notificationsFragment != null) {
+                            notificationsFragment.refresh(notification);
+                        }
+                    } else if (eventStreaming == StreamingService.EventStreaming.UPDATE) {
+                        Status status = b.getParcelable("data");
+                        if (homeFragment != null) {
+                            homeFragment.refresh(status);
+                        }
+                    } else if (eventStreaming == StreamingService.EventStreaming.DELETE) {
+                        String id = b.getString("id");
+                        if (notificationsFragment != null) {
+                            if (notificationsFragment.getUserVisibleHint()) {
 
+                            } else {
+
+                            }
+                        }
+                    }
+                    updateNotifCounter();
+                    updateHomeCounter();
+                }
+            }
+        };
+        streamingIntent = new Intent(this, StreamingService.class);
+        startService(streamingIntent);
+        streamingFederatedIntent = new Intent(this, StreamingFederatedTimelineService.class);
+        startService(streamingFederatedIntent);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
+        LocalBroadcastManager.getInstance(this).registerReceiver(receive_federated_data, new IntentFilter(Helper.RECEIVE_FEDERATED_DATA));
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        if( streamingIntent != null)
+            stopService(streamingIntent);
+        if( streamingFederatedIntent != null)
+            stopService(streamingFederatedIntent);
+        if( receive_data != null)
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
+        if( receive_federated_data != null)
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_federated_data);
+    }
 
     @Override
     protected void onPause() {
@@ -945,14 +954,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onDestroy(){
         super.onDestroy();
-        if( streamingIntent != null)
-            stopService(streamingIntent);
-        if( streamingFederatedIntent != null)
-            stopService(streamingFederatedIntent);
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_federated_data);
-        broadCastRegistred = false;
-        broadCastFederatedRegistred = false;
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

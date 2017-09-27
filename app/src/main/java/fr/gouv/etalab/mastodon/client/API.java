@@ -469,10 +469,26 @@ public class API {
     }
 
     /**
+     * Retrieves home timeline for the account *synchronously*
+     * @return APIResponse
+     */
+    public APIResponse getHomeTimeline( String max_id, int tootPerPage) {
+        return getHomeTimeline(max_id, null, tootPerPage);
+    }
+
+    /**
      * Retrieves home timeline for the account since an Id value *synchronously*
      * @return APIResponse
      */
     public APIResponse getHomeTimelineSinceId(String since_id) {
+        return getHomeTimeline(null, since_id, tootPerPage);
+    }
+
+    /**
+     * Retrieves home timeline for the account since an Id value *synchronously*
+     * @return APIResponse
+     */
+    public APIResponse getHomeTimelineSinceId(String since_id, int tootPerPage) {
         return getHomeTimeline(null, since_id, tootPerPage);
     }
 
@@ -490,8 +506,8 @@ public class API {
             params.put("max_id", max_id);
         if (since_id != null)
             params.put("since_id", since_id);
-        if (0 > limit || limit > 40)
-            limit = 40;
+        if (0 > limit || limit > 80)
+            limit = 80;
         params.put("limit",String.valueOf(limit));
         statuses = new ArrayList<>();
         get("/timelines/home", params, new JsonHttpResponseHandler() {
@@ -1067,6 +1083,15 @@ public class API {
      * @return APIResponse
      */
     public APIResponse getNotificationsSince(String since_id){
+        return getNotifications(null, since_id, notificationPerPage);
+    }
+
+    /**
+     * Retrieves notifications for the authenticated account since an id*synchronously*
+     * @param since_id String since max
+     * @return APIResponse
+     */
+    public APIResponse getNotificationsSince(String since_id, int notificationPerPage){
         return getNotifications(null, since_id, notificationPerPage);
     }
 

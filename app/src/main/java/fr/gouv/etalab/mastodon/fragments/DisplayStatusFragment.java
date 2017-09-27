@@ -36,10 +36,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRepliesAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMissingFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
@@ -51,7 +53,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
  * Created by Thomas on 24/04/2017.
  * Fragment to display content related to status
  */
-public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsInterface, OnRetrieveRepliesInterface {
+public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsInterface, OnRetrieveRepliesInterface, OnRetrieveMissingFeedsInterface {
 
 
     private boolean flag_loading;
@@ -76,8 +78,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private String instanceValue;
     private String lastReadStatus;
     private String userId;
-    public static ArrayList<Status> tempStatuses = new ArrayList<>();
-    private int lastTotalItemCount = 0;
 
     public DisplayStatusFragment(){
     }
@@ -229,37 +229,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
 
     @Override
-    public void onResume() {
-        super.onResume();
-        if( type == RetrieveFeedsAsyncTask.Type.HOME && tempStatuses != null && tempStatuses.size() > 0 ){
-            ArrayList<String> knownId = new ArrayList<>();
-            for(Status st: statuses){
-                knownId.add(st.getId());
-            }
-            for(Status status: tempStatuses){
-                if( !knownId.contains(status.getId())){
-                    int index = lv_status.getFirstVisiblePosition() + 1;
-                    View v = lv_status.getChildAt(0);
-                    int top = (v == null) ? 0 : v.getTop();
-                    status.setReplies(new ArrayList<Status>());
-                    statuses.add(0,status);
-                    statusListAdapter.notifyDataSetChanged();
-                    lv_status.setSelectionFromTop(index, top);
-                    if (textviewNoAction.getVisibility() == View.VISIBLE)
-                        textviewNoAction.setVisibility(View.GONE);
-                    MainActivity.countNewStatus++;
-                }
-            }
-            if( getActivity() != null && getActivity().getClass().isInstance(MainActivity.class))
-                ((MainActivity)context).updateHomeCounter();
-            //Resets value for the counter but doesn't update it
-            MainActivity.countNewStatus = 0;
-            tempStatuses.clear();
-            tempStatuses = new ArrayList<>();
-        }
-    }
-
-    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
@@ -321,6 +290,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
 
             if( firstLoad && type == RetrieveFeedsAsyncTask.Type.HOME) {
+                //Update the id of the last toot retrieved
+                MainActivity.lastHomeId = statuses.get(0).getId();
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, statuses.get(0).getId());
@@ -347,12 +318,18 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }
     }
 
+    /**
+     * Deals with new status coming from the streaming api
+     * @param status Status
+     */
     public void refresh(Status status){
         //New data are available
         if( type == RetrieveFeedsAsyncTask.Type.HOME) {
             if (context == null)
                 return;
             if (status != null) {
+                //Update the id of the last toot retrieved
+                MainActivity.lastHomeId = status.getId();
                 int index = lv_status.getFirstVisiblePosition() + 1;
                 View v = lv_status.getChildAt(0);
                 int top = (v == null) ? 0 : v.getTop();
@@ -393,12 +370,24 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     }
 
 
+
+    /**
+     * Called from main activity in onResume to retrieve missing toots (home timeline)
+     * @param sinceId String
+     */
+    public void retrieveMissingToots(String sinceId){
+        asyncTask = new RetrieveMissingFeedsAsyncTask(context, sinceId, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    /**
+     * When tab comes visible, first displayed toot is defined as read
+     * @param visible boolean
+     */
     @Override
     public void setMenuVisibility(final boolean visible) {
         super.setMenuVisibility(visible);
         if( context == null)
             return;
-
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
         if (type == RetrieveFeedsAsyncTask.Type.HOME && visible && statuses != null && statuses.size() > 0) {
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -441,5 +430,26 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
         }
         statusListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRetrieveMissingFeeds(List<Status> statuses) {
+        if( statuses != null && statuses.size() > 0) {
+            ArrayList<String> knownId = new ArrayList<>();
+            for (Status st : this.statuses) {
+                knownId.add(st.getId());
+            }
+            for (int i = statuses.size()-1 ; i >= 0 ; i--) {
+                if (!knownId.contains(statuses.get(i).getId())) {
+                    statuses.get(i).setNew(true);
+                    MainActivity.countNewStatus++;
+                    this.statuses.add(0, statuses.get(i));
+                }
+            }
+            statusListAdapter.notifyDataSetChanged();
+            try {
+                ((MainActivity) context).updateHomeCounter();
+            }catch (Exception ignored){}
+        }
     }
 }

@@ -31,10 +31,12 @@ import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingNotificationsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMissingNotificationsInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveNotificationsAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
@@ -45,7 +47,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveNotificationsInterface;
  * Created by Thomas on 28/04/2017.
  * Fragment to display notifications related to accounts
  */
-public class DisplayNotificationsFragment extends Fragment implements OnRetrieveNotificationsInterface {
+public class DisplayNotificationsFragment extends Fragment implements OnRetrieveNotificationsInterface, OnRetrieveMissingNotificationsInterface {
 
 
 
@@ -62,7 +64,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private ListView lv_notifications;
     private String lastReadNotifications;
     private String userId;
-    public static ArrayList<Notification> tempNotifications = new ArrayList<>();
 
     public DisplayNotificationsFragment(){
     }
@@ -155,31 +156,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             asyncTask.cancel(true);
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        ArrayList<String> knownId = new ArrayList<>();
-        for(Notification nt: notifications){
-            knownId.add(nt.getId());
-        }
-        for(Notification notification: tempNotifications){
-            if( !knownId.contains(notification.getId())) {
-                int index = lv_notifications.getFirstVisiblePosition() + 1;
-                View v = lv_notifications.getChildAt(0);
-                int top = (v == null) ? 0 : v.getTop();
-                notifications.add(0, notification);
-                notificationsListAdapter.notifyDataSetChanged();
-                lv_notifications.setSelectionFromTop(index, top);
-                if (textviewNoAction.getVisibility() == View.VISIBLE)
-                    textviewNoAction.setVisibility(View.GONE);
-            }
-        }
-        ((MainActivity)context).updateNotifCounter();
-        tempNotifications.clear();
-        tempNotifications = new ArrayList<>();
-    }
-
     @Override
     public void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId, boolean refreshData) {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -215,6 +191,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 this.notifications.add(tmpNotification);
             }
             if( firstLoad) {
+                //Update the id of the last notification retrieved
+                MainActivity.lastNotificationId = notifications.get(0).getId();
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + this.userId, notifications.get(0).getId());
                 editor.apply();
@@ -228,6 +206,14 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         firstLoad = false;
         //The initial call comes from a classic tab refresh
         flag_loading = (max_id == null );
+    }
+
+    /**
+     * Called from main activity in onResume to retrieve missing notifications
+     * @param sinceId String
+     */
+    public void retrieveMissingNotifications(String sinceId){
+        asyncTask = new RetrieveMissingNotificationsAsyncTask(context, sinceId, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
@@ -264,6 +250,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         if( context == null)
             return;
         if( notification != null){
+            //Update the id of the last notification retrieved
+            MainActivity.lastNotificationId = notification.getId();
             int index = lv_notifications.getFirstVisiblePosition() + 1;
             View v = lv_notifications.getChildAt(0);
             int top = (v == null) ? 0 : v.getTop();
@@ -273,6 +261,26 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             lv_notifications.setSelectionFromTop(index, top);
             if( textviewNoAction.getVisibility() == View.VISIBLE)
                 textviewNoAction.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onRetrieveMissingNotifications(List<Notification> notifications) {
+        if( notifications != null && notifications.size() > 0) {
+            ArrayList<String> knownId = new ArrayList<>();
+            for (Notification nt : this.notifications) {
+                knownId.add(nt.getId());
+            }
+            for (int i = notifications.size()-1 ; i >= 0 ; i--) {
+                if (!knownId.contains(notifications.get(i).getId())) {
+                    MainActivity.countNewNotifications++;
+                    this.notifications.add(0, notifications.get(i));
+                }
+            }
+            notificationsListAdapter.notifyDataSetChanged();
+            try {
+                ((MainActivity) context).updateNotifCounter();
+            }catch (Exception ignored){}
         }
     }
 }

@@ -937,17 +937,6 @@ public class Helper {
         }
         SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String oldUserId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        //User wont' be the same, temp values are cleared
-        if( oldUserId != null && !oldUserId.equals(userID)){
-            if( DisplayStatusFragment.tempStatuses != null) {
-                DisplayStatusFragment.tempStatuses.clear();
-                DisplayStatusFragment.tempStatuses = new ArrayList<>();
-            }
-            if( DisplayNotificationsFragment.tempNotifications != null) {
-                DisplayNotificationsFragment.tempNotifications.clear();
-                DisplayNotificationsFragment.tempNotifications = new ArrayList<>();
-            }
-        }
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, account.getToken());
         editor.putString(Helper.PREF_KEY_ID, account.getId());
@@ -967,9 +956,8 @@ public class Helper {
         final Paint paint = new Paint();
         final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
         final RectF rectF = new RectF(rect);
-        final float roundPx = roundPixelSize;
         paint.setAntiAlias(true);
-        canvas.drawRoundRect(rectF,roundPx,roundPx, paint);
+        canvas.drawRoundRect(rectF, (float) roundPixelSize, (float) roundPixelSize, paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(bitmap, rect, rect, paint);
         return output;
