@@ -1372,8 +1372,16 @@ public class API {
             status.setContent(resobj.get("content").toString());
             status.setFavourites_count(Integer.valueOf(resobj.get("favourites_count").toString()));
             status.setReblogs_count(Integer.valueOf(resobj.get("reblogs_count").toString()));
-            status.setReblogged(Boolean.valueOf(resobj.get("reblogged").toString()));
-            status.setFavourited(Boolean.valueOf(resobj.get("favourited").toString()));
+            try {
+                status.setReblogged(Boolean.valueOf(resobj.get("reblogged").toString()));
+            }catch (Exception e){
+                status.setReblogged(false);
+            }
+            try {
+                status.setFavourited(Boolean.valueOf(resobj.get("favourited").toString()));
+            }catch (Exception e){
+                status.setReblogged(false);
+            }
             try {
                 status.setPinned(Boolean.valueOf(resobj.get("pinned").toString()));
             }catch (JSONException e){

@@ -116,6 +116,8 @@ public class StreamingFederatedTimelineService extends IntentService {
                         continue;
                     }
                     event = event.substring(6);
+                    if( event.matches("^[0-9]{1,}$"))
+                        continue;
                     try {
                         JSONObject eventJson = new JSONObject(event);
                         onRetrieveStreaming(accountStream, eventJson);

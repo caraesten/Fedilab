@@ -19,6 +19,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -347,26 +348,26 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }else if(type == RetrieveFeedsAsyncTask.Type.PUBLIC){
             if (context == null)
                 return;
-            if (status != null) {
-                if (lv_status.getFirstVisiblePosition() > 3) {
-                    int index = lv_status.getFirstVisiblePosition() + 1;
-                    View v = lv_status.getChildAt(0);
-                    int top = (v == null) ? 0 : v.getTop();
-                    status.setReplies(new ArrayList<Status>());
-                    statuses.add(0, status);
-                    statusListAdapter.notifyDataSetChanged();
-                    lv_status.setSelectionFromTop(index, top);
+            //Avoids the array to be too big...
 
-                } else {
+            if (status != null) {
+
+                if (lv_status.getFirstVisiblePosition() < 3) {
+                    if( statuses.size() >  40)
+                        statuses.subList(0, 40).clear();
                     status.setReplies(new ArrayList<Status>());
                     status.setNew(false);
                     statuses.add(0, status);
                     statusListAdapter.notifyDataSetChanged();
+                } else {
+                    status.setReplies(new ArrayList<Status>());
+                    statuses.add(0, status);
                 }
                 if (textviewNoAction.getVisibility() == View.VISIBLE)
                     textviewNoAction.setVisibility(View.GONE);
             }
         }
+
     }
 
 

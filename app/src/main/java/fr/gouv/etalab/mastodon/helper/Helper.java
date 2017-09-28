@@ -923,6 +923,8 @@ public class Helper {
 
         final NavigationView navigationView = (NavigationView) activity.findViewById(R.id.nav_view);
         navigationView.getMenu().clear();
+        MainActivity.lastNotificationId = null;
+        MainActivity.lastHomeId = null;
         navigationView.inflateMenu(R.menu.activity_main_drawer);
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(activity,db).getAccountByID(userID);
