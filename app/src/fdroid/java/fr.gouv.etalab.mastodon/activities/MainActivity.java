@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity
     public static int countNewStatus = 0;
     public static int countNewNotifications = 0;
     private String userIdService;
-    private Intent streamingIntent, streamingFederatedIntent;
+    private Intent streamingIntent;
     public static String lastHomeId = null, lastNotificationId = null;
 
     public MainActivity() {
@@ -259,17 +259,6 @@ public class MainActivity extends AppCompatActivity
                     toot.setVisibility(View.GONE);
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
-
-                if( tab.getPosition() == 2 && !display_local && display_global){
-                    streamingFederatedIntent = new Intent(getApplicationContext(), StreamingFederatedTimelineService.class);
-                    startService(streamingFederatedIntent);
-                }else if(  tab.getPosition() == 3 && display_local && display_global){
-                    streamingFederatedIntent = new Intent(getApplicationContext(), StreamingFederatedTimelineService.class);
-                    startService(streamingFederatedIntent);
-                }else{
-                    if( streamingFederatedIntent != null)
-                        stopService(streamingFederatedIntent);
-                }
             }
 
             @Override
@@ -923,8 +912,7 @@ public class MainActivity extends AppCompatActivity
         };
         streamingIntent = new Intent(this, StreamingService.class);
         startService(streamingIntent);
-        streamingFederatedIntent = new Intent(this, StreamingFederatedTimelineService.class);
-        startService(streamingFederatedIntent);
+
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_federated_data, new IntentFilter(Helper.RECEIVE_FEDERATED_DATA));
     }
@@ -933,9 +921,7 @@ public class MainActivity extends AppCompatActivity
     public void onStop(){
         super.onStop();
         if( streamingIntent != null)
-            stopService(streamingIntent);
-        if( streamingFederatedIntent != null)
-            stopService(streamingFederatedIntent);
+            StreamingService.shouldContinue = false;
         if( receive_data != null)
             LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
         if( receive_federated_data != null)

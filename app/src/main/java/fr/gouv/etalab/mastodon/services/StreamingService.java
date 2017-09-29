@@ -55,7 +55,7 @@ public class StreamingService extends IntentService {
 
 
     private EventStreaming lastEvent;
-
+    public static volatile boolean shouldContinue = true;
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
@@ -114,6 +114,9 @@ public class StreamingService extends IntentService {
                 String event;
                 EventStreaming eventStreaming;
                 while((event = reader.readLine()) != null) {
+
+                    if( !shouldContinue )
+                        stopSelf();
                     if ((lastEvent == EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
                         switch (event.trim()) {
                             case "event: update":

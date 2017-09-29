@@ -44,6 +44,7 @@ import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMissingFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
+import fr.gouv.etalab.mastodon.services.StreamingFederatedTimelineService;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
@@ -78,7 +79,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private boolean hideHeader;
     private String instanceValue;
     private String lastReadStatus;
-    private String userId;
+    private Intent streamingFederatedIntent;
 
     public DisplayStatusFragment(){
     }
@@ -120,7 +121,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-        userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         if( type == RetrieveFeedsAsyncTask.Type.HOME)
             lastReadStatus = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
         lv_status = (ListView) rootView.findViewById(R.id.lv_status);
@@ -371,7 +372,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     }
 
 
-
     /**
      * Called from main activity in onResume to retrieve missing toots (home timeline)
      * @param sinceId String
@@ -397,6 +397,17 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, statuses.get(0).getId());
             lastReadStatus = statuses.get(0).getId();
             editor.apply();
+        }
+        if( type == RetrieveFeedsAsyncTask.Type.PUBLIC ){
+            if (visible) {
+                StreamingFederatedTimelineService.shouldContinue = true;
+                streamingFederatedIntent = new Intent(context, StreamingFederatedTimelineService.class);
+                context.startService(streamingFederatedIntent);
+            }else {
+                if( streamingFederatedIntent != null){
+                    StreamingFederatedTimelineService.shouldContinue = false;
+                }
+            }
         }
     }
 

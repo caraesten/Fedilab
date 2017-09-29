@@ -23,7 +23,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,6 +70,7 @@ public class StreamingFederatedTimelineService extends IntentService {
 
     private static HttpsURLConnection httpsURLConnection;
     protected Account account;
+    public static volatile boolean shouldContinue = true;
 
     public void onCreate() {
         super.onCreate();
@@ -115,6 +116,11 @@ public class StreamingFederatedTimelineService extends IntentService {
                     if (!event.startsWith("data: ")) {
                         continue;
                     }
+
+                    if (!shouldContinue) {
+                        stopSelf();
+                        return;
+                    }
                     event = event.substring(6);
                     if( event.matches("^[0-9]{1,}$"))
                         continue;
@@ -135,8 +141,10 @@ public class StreamingFederatedTimelineService extends IntentService {
                         e.printStackTrace();
                     }
                 }
-                SystemClock.sleep(1000);
-                sendBroadcast(new Intent("RestartStreamingFederatedService"));
+                if( shouldContinue) {
+                    SystemClock.sleep(1000);
+                    sendBroadcast(new Intent("RestartStreamingFederatedService"));
+                }
             }
         }
     }
