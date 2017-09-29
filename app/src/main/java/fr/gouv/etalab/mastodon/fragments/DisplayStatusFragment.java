@@ -34,7 +34,10 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingFeedsAsyncTask;
@@ -80,6 +83,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private String instanceValue;
     private String lastReadStatus;
     private Intent streamingFederatedIntent;
+    private Date lastRefreshPublic;
 
     public DisplayStatusFragment(){
     }
@@ -166,6 +170,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     }
                     if(firstVisibleItem + visibleItemCount == totalItemCount ) {
                         if(!flag_loading ) {
+                            if( type == RetrieveFeedsAsyncTask.Type.PUBLIC)
+                                lastRefreshPublic = new Date();
                             flag_loading = true;
                             if( type == RetrieveFeedsAsyncTask.Type.USER)
                                 asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -192,6 +198,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     flag_loading = true;
                     swiped = true;
                     MainActivity.countNewStatus = 0;
+                    if( type == RetrieveFeedsAsyncTask.Type.PUBLIC)
+                        lastRefreshPublic = new Date();
                     if( type == RetrieveFeedsAsyncTask.Type.USER)
                         asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     else if( type == RetrieveFeedsAsyncTask.Type.TAG)
@@ -203,13 +211,15 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
                     R.color.mastodonC2,
                     R.color.mastodonC3);
-
+            if( type == RetrieveFeedsAsyncTask.Type.PUBLIC)
+                lastRefreshPublic = new Date();
             if( type == RetrieveFeedsAsyncTask.Type.USER)
                 asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             else if( type == RetrieveFeedsAsyncTask.Type.TAG)
                 asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            else
+            else {
                 asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
         }else {
             statusListAdapter.notifyDataSetChanged();
             mainLoader.setVisibility(View.GONE);
@@ -246,7 +256,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
 
     @Override
-    public void onRetrieveFeeds(APIResponse apiResponse, boolean refreshData) {
+    public void onRetrieveFeeds(APIResponse apiResponse) {
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
@@ -371,6 +381,25 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        if( type == RetrieveFeedsAsyncTask.Type.PUBLIC){
+            Calendar date = Calendar.getInstance();
+            long t = date.getTimeInMillis();
+            Date newDate = new Date(t - TimeUnit.SECONDS.toMillis(20));
+            if( lastRefreshPublic.before(newDate)){
+                lastRefreshPublic = new Date();
+                max_id = null;
+                statuses = new ArrayList<>();
+                firstLoad = true;
+                flag_loading = true;
+                swiped = true;
+                asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+
+        }
+    }
 
     /**
      * Called from main activity in onResume to retrieve missing toots (home timeline)

@@ -1027,7 +1027,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
 
     @Override
-    public void onRetrieveFeeds(APIResponse apiResponse, boolean refreshData) {
+    public void onRetrieveFeeds(APIResponse apiResponse) {
         if( apiResponse.getError() != null){
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);

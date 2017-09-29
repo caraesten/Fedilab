@@ -21,5 +21,5 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
  * Interface when status have been retrieved
  */
 public interface OnRetrieveFeedsInterface {
-    void onRetrieveFeeds(APIResponse apiResponse, boolean refreshData);
+    void onRetrieveFeeds(APIResponse apiResponse);
 }

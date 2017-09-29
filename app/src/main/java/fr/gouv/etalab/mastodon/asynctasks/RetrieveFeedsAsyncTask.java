@@ -37,7 +37,6 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     private String tag;
     private boolean showMediaOnly = false;
     private boolean showPinned = false;
-    private boolean refreshData;
 
     public enum Type{
         HOME,
@@ -56,7 +55,6 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.action = action;
         this.max_id = max_id;
         this.listener = onRetrieveFeedsInterface;
-        this.refreshData = true;
     }
 
     public RetrieveFeedsAsyncTask(Context context, Type action, String targetedID, String max_id, boolean showMediaOnly, boolean showPinned, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
@@ -66,7 +64,6 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.listener = onRetrieveFeedsInterface;
         this.targetedID = targetedID;
         this.showMediaOnly = showMediaOnly;
-        this.refreshData = true;
         this.showPinned = showPinned;
     }
     public RetrieveFeedsAsyncTask(Context context, Type action, String tag, String targetedID, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
@@ -76,7 +73,6 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.listener = onRetrieveFeedsInterface;
         this.targetedID = targetedID;
         this.tag = tag;
-        this.refreshData = true;
     }
 
 
@@ -118,6 +114,6 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveFeeds(apiResponse, refreshData);
+        listener.onRetrieveFeeds(apiResponse);
     }
 }

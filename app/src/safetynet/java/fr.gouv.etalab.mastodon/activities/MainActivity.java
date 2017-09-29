@@ -92,7 +92,6 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveInstanceInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMetaDataInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
-import fr.gouv.etalab.mastodon.services.StreamingFederatedTimelineService;
 import fr.gouv.etalab.mastodon.services.StreamingService;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
@@ -916,10 +915,8 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         };
-        StreamingService.shouldContinue = true;
         streamingIntent = new Intent(this, StreamingService.class);
         startService(streamingIntent);
-
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_federated_data, new IntentFilter(Helper.RECEIVE_FEDERATED_DATA));
     }
@@ -927,8 +924,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onStop(){
         super.onStop();
-        if( streamingIntent != null)
-            StreamingService.shouldContinue = false;
+        if( streamingIntent != null) {
+            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED+userId, false);
+            editor.apply();
+        }
         if( receive_data != null)
             LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
         if( receive_federated_data != null)

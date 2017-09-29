@@ -90,7 +90,6 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveInstanceInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMetaDataInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
-import fr.gouv.etalab.mastodon.services.StreamingFederatedTimelineService;
 import fr.gouv.etalab.mastodon.services.StreamingService;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
