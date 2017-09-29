@@ -105,16 +105,10 @@
     <string name="more_action_1">Stummschalten</string>
     <string name="more_action_2">Blockieren</string>
     <string name="more_action_3">Melden</string>
-    <string name="more_action_4">Kopieren</string>
-    <string name="more_action_5">Teilen</string>
-    <string name="more_action_6">Erwähnen</string>
-
-
-    <string name="more_action_owner_1">Entfernen</string>
-    <string name="more_action_owner_2">Kopieren</string>
-    <string name="more_action_owner_3">Teilen</string>
-    <string name="more_action_owner_4">Erwähnen</string>
-
+    <string name="more_action_4">Entfernen</string>
+    <string name="more_action_5">Kopieren</string>
+    <string name="more_action_6">Teilen</string>
+    <string name="more_action_7">Erwähnen</string>
 
 
     <string-array name="more_action_confirm">

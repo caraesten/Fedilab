@@ -14,15 +14,19 @@
         android:title="@string/more_action_3"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_copy"
+        android:id="@+id/action_remove"
         android:title="@string/more_action_4"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_share"
+        android:id="@+id/action_copy"
         android:title="@string/more_action_5"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_mention"
+        android:id="@+id/action_share"
         android:title="@string/more_action_6"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_mention"
+        android:title="@string/more_action_7"
         app:showAsAction="never" />
 </menu>

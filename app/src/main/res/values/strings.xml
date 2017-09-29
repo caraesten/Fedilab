@@ -113,9 +113,10 @@
     <string name="more_action_1">Mute</string>
     <string name="more_action_2">Block</string>
     <string name="more_action_3">Report</string>
-    <string name="more_action_4">Copy</string>
-    <string name="more_action_5">Share</string>
-    <string name="more_action_6">Mention</string>
+    <string name="more_action_4">Remove</string>
+    <string name="more_action_5">Copy</string>
+    <string name="more_action_6">Share</string>
+    <string name="more_action_7">Mention</string>
     <string-array name="more_action_confirm">
         <item>Mute this account?</item>
         <item>Block this account?</item>
@@ -123,10 +124,6 @@
     </string-array>
 
 
-    <string name="more_action_owner_1">Remove</string>
-    <string name="more_action_owner_2">Copy</string>
-    <string name="more_action_owner_3">Share</string>
-    <string name="more_action_owner_4">Mention</string>
     <string-array name="more_action_owner_confirm">
         <item>Remove this toot?</item>
     </string-array>

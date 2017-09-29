@@ -866,225 +866,150 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             public void onClick(View v) {
                 PopupMenu popup = new PopupMenu(context, holder.status_more);
                 final boolean isOwner = status.getAccount().getId().equals(userId);
-                if( isOwner) {
-                    popup.getMenuInflater()
-                            .inflate(R.menu.option_toot_owner, popup.getMenu());
-                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        public boolean onMenuItemClick(MenuItem item) {
-                            AlertDialog.Builder builderInner;
-                            String[] stringArrayConf = context.getResources().getStringArray(R.array.more_action_owner_confirm);
-                            final API.StatusAction doAction;
-                            switch (item.getItemId()) {
-                                case R.id.action_remove:
-                                    builderInner = new AlertDialog.Builder(context);
-                                    builderInner.setTitle(stringArrayConf[0]);
-                                    doAction = API.StatusAction.UNSTATUS;
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                                        builderInner.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
-                                    else
-                                        //noinspection deprecation
-                                        builderInner.setMessage(Html.fromHtml(status.getContent()));
-                                    break;
-                                case R.id.action_copy:
-                                    ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-                                    String content;
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                                        content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
-                                    else
-                                        //noinspection deprecation
-                                        content = Html.fromHtml(status.getContent()).toString();
-                                    ClipData clip = ClipData.newPlainText(Helper.CLIP_BOARD, content);
-                                    clipboard.setPrimaryClip(clip);
-                                    Toast.makeText(context,R.string.clipboard,Toast.LENGTH_LONG).show();
-                                    return true;
-                                case R.id.action_share:
-                                    Intent sendIntent = new Intent(Intent.ACTION_SEND);
-                                    sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
-                                    sendIntent.putExtra(Intent.EXTRA_TEXT, status.getUrl());
-                                    sendIntent.setType("text/plain");
-                                    context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
-                                    return true;
-                                case R.id.action_mention:
-                                    status.setTakingScreenShot(true);
-                                    statusListAdapter.notifyDataSetChanged();
-                                    Handler handler = new Handler();
-                                    handler.postDelayed(new Runnable() {
-
-                                        @Override
-                                        public void run() {
-                                            Bitmap bitmap = Helper.convertTootIntoBitmap(context, finalConvertView);
-                                            status.setTakingScreenShot(false);
-                                            statusListAdapter.notifyDataSetChanged();
-                                            Intent intent = new Intent(context, TootActivity.class);
-                                            Bundle b = new Bundle();
-                                            String fname = "tootmention_" + status.getId() +".jpg";
-                                            File file = new File (context.getCacheDir() + "/", fname);
-                                            if (file.exists ()) //noinspection ResultOfMethodCallIgnored
-                                                file.delete ();
-                                            try {
-                                                FileOutputStream out = new FileOutputStream(file);
-                                                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-                                                out.flush();
-                                                out.close();
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                            }
-                                            b.putString("fileMention", fname);
-                                            b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
-                                            b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
-                                            intent.putExtras(b);
-                                            context.startActivity(intent);
-                                        }
-
-                                    }, 1000);
-                                    return true;
-                                default:
-                                    return true;
-                            }
-                            builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog,int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                            builderInner.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog,int which) {
-                                    if(doAction ==  API.StatusAction.UNSTATUS ){
-                                        String targetedId = status.getId();
-                                        new PostActionAsyncTask(context, doAction, targetedId, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                    }
-                                    dialog.dismiss();
-                                }
-                            });
-                            builderInner.show();
-                            return true;
-                        }
-                    });
-                }else {
-                    popup.getMenuInflater()
-                            .inflate(R.menu.option_toot, popup.getMenu());
-                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        public boolean onMenuItemClick(MenuItem item) {
-                            AlertDialog.Builder builderInner;
-                            String[] stringArrayConf = context.getResources().getStringArray(R.array.more_action_confirm);
-                            final API.StatusAction doAction;
-                            switch (item.getItemId()) {
-                                case R.id.action_mute:
-                                    builderInner = new AlertDialog.Builder(context);
-                                    builderInner.setTitle(stringArrayConf[0]);
-                                    doAction = API.StatusAction.MUTE;
-                                    break;
-                                case R.id.action_block:
-                                    builderInner = new AlertDialog.Builder(context);
-                                    builderInner.setTitle(stringArrayConf[1]);
-                                    doAction = API.StatusAction.BLOCK;
-                                    break;
-                                case R.id.action_report:
-                                    builderInner = new AlertDialog.Builder(context);
-                                    builderInner.setTitle(stringArrayConf[2]);
-                                    doAction = API.StatusAction.REPORT;
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                                        builderInner.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
-                                    else
-                                        //noinspection deprecation
-                                        builderInner.setMessage(Html.fromHtml(status.getContent()));
-                                    break;
-                                case R.id.action_copy:
-                                    ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-                                    String content;
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                                        content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
-                                    else
-                                        //noinspection deprecation
-                                        content = Html.fromHtml(status.getContent()).toString();
-                                    ClipData clip = ClipData.newPlainText(Helper.CLIP_BOARD, content);
-                                    clipboard.setPrimaryClip(clip);
-                                    Toast.makeText(context,R.string.clipboard,Toast.LENGTH_LONG).show();
-                                    return true;
-                                case R.id.action_share:
-                                    Intent sendIntent = new Intent(Intent.ACTION_SEND);
-                                    sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
-                                    sendIntent.putExtra(Intent.EXTRA_TEXT, status.getUrl());
-                                    sendIntent.setType("text/plain");
-                                    context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
-                                    return true;
-                                case R.id.action_mention:
-                                    status.setTakingScreenShot(true);
-                                    statusListAdapter.notifyDataSetChanged();
-                                    Handler handler = new Handler();
-                                    handler.postDelayed(new Runnable() {
-
-                                        @Override
-                                        public void run() {
-                                            Bitmap bitmap = Helper.convertTootIntoBitmap(context, finalConvertView);
-                                            status.setTakingScreenShot(false);
-                                            statusListAdapter.notifyDataSetChanged();
-                                            Intent intent = new Intent(context, TootActivity.class);
-                                            Bundle b = new Bundle();
-                                            String fname = "tootmention_" + status.getId() +".jpg";
-                                            File file = new File (context.getCacheDir() + "/", fname);
-                                            if (file.exists ()) //noinspection ResultOfMethodCallIgnored
-                                                file.delete ();
-                                            try {
-                                                FileOutputStream out = new FileOutputStream(file);
-                                                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-                                                out.flush();
-                                                out.close();
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                            }
-                                            b.putString("fileMention", fname);
-                                            b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
-                                            b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
-                                            intent.putExtras(b);
-                                            context.startActivity(intent);
-                                        }
-
-                                    }, 1000);
-                                    return true;
-                                default:
-                                    return true;
-                            }
-                            //Text for report
-                            EditText input = null;
-                            if( doAction == API.StatusAction.REPORT){
-                                input = new EditText(context);
-                                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                                        LinearLayout.LayoutParams.MATCH_PARENT,
-                                        LinearLayout.LayoutParams.WRAP_CONTENT);
-                                input.setLayoutParams(lp);
-                                builderInner.setView(input);
-                            }
-                            builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog,int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-
-                            final EditText finalInput = input;
-                            builderInner.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog,int which) {
-                                    if(doAction ==  API.StatusAction.REPORT ){
-                                        String comment = null;
-                                        if( finalInput.getText() != null)
-                                            comment = finalInput.getText().toString();
-                                        new PostActionAsyncTask(context, doAction, status.getId(), status, comment, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                    }else{
-                                        String targetedId = status.getAccount().getId();
-                                        new PostActionAsyncTask(context, doAction, targetedId, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                    }
-                                    dialog.dismiss();
-                                }
-                            });
-                            builderInner.show();
-                            return true;
-                        }
-                    });
+                popup.getMenuInflater()
+                        .inflate(R.menu.option_toot, popup.getMenu());
+                if( status.getVisibility().equals("private") || status.getVisibility().equals("direct")){
+                    popup.getMenu().findItem(R.id.action_mention).setVisible(false);
                 }
+                if( isOwner) {
+                    popup.getMenu().findItem(R.id.action_block).setVisible(false);
+                    popup.getMenu().findItem(R.id.action_mute).setVisible(false);
+                    popup.getMenu().findItem(R.id.action_report).setVisible(false);
+                }else {
+                    popup.getMenu().findItem(R.id.action_remove).setVisible(false);
+                }
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        AlertDialog.Builder builderInner;
+                        String[] stringArrayConf = context.getResources().getStringArray(R.array.more_action_owner_confirm);
+                        final API.StatusAction doAction;
+                        switch (item.getItemId()) {
+                            case R.id.action_remove:
+                                builderInner = new AlertDialog.Builder(context);
+                                builderInner.setTitle(stringArrayConf[0]);
+                                doAction = API.StatusAction.UNSTATUS;
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                                    builderInner.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
+                                else
+                                    //noinspection deprecation
+                                    builderInner.setMessage(Html.fromHtml(status.getContent()));
+                                break;
+                            case R.id.action_mute:
+                                builderInner = new AlertDialog.Builder(context);
+                                builderInner.setTitle(stringArrayConf[0]);
+                                doAction = API.StatusAction.MUTE;
+                                break;
+                            case R.id.action_block:
+                                builderInner = new AlertDialog.Builder(context);
+                                builderInner.setTitle(stringArrayConf[1]);
+                                doAction = API.StatusAction.BLOCK;
+                                break;
+                            case R.id.action_report:
+                                builderInner = new AlertDialog.Builder(context);
+                                builderInner.setTitle(stringArrayConf[2]);
+                                doAction = API.StatusAction.REPORT;
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                                    builderInner.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
+                                else
+                                    //noinspection deprecation
+                                    builderInner.setMessage(Html.fromHtml(status.getContent()));
+                                break;
+                            case R.id.action_copy:
+                                ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                                String content;
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                                    content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
+                                else
+                                    //noinspection deprecation
+                                    content = Html.fromHtml(status.getContent()).toString();
+                                ClipData clip = ClipData.newPlainText(Helper.CLIP_BOARD, content);
+                                clipboard.setPrimaryClip(clip);
+                                Toast.makeText(context,R.string.clipboard,Toast.LENGTH_LONG).show();
+                                return true;
+                            case R.id.action_share:
+                                Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                                sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
+                                sendIntent.putExtra(Intent.EXTRA_TEXT, status.getUrl());
+                                sendIntent.setType("text/plain");
+                                context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
+                                return true;
+                            case R.id.action_mention:
+                                status.setTakingScreenShot(true);
+                                statusListAdapter.notifyDataSetChanged();
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
 
+                                    @Override
+                                    public void run() {
+                                        Bitmap bitmap = Helper.convertTootIntoBitmap(context, finalConvertView);
+                                        status.setTakingScreenShot(false);
+                                        statusListAdapter.notifyDataSetChanged();
+                                        Intent intent = new Intent(context, TootActivity.class);
+                                        Bundle b = new Bundle();
+                                        String fname = "tootmention_" + status.getId() +".jpg";
+                                        File file = new File (context.getCacheDir() + "/", fname);
+                                        if (file.exists ()) //noinspection ResultOfMethodCallIgnored
+                                            file.delete ();
+                                        try {
+                                            FileOutputStream out = new FileOutputStream(file);
+                                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                                            out.flush();
+                                            out.close();
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                        b.putString("fileMention", fname);
+                                        b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
+                                        b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
+                                        intent.putExtras(b);
+                                        context.startActivity(intent);
+                                    }
+
+                                }, 1000);
+                                return true;
+                            default:
+                                return true;
+                        }
+
+                        //Text for report
+                        EditText input = null;
+                        if( doAction == API.StatusAction.REPORT){
+                            input = new EditText(context);
+                            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.MATCH_PARENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT);
+                            input.setLayoutParams(lp);
+                            builderInner.setView(input);
+                        }
+                        builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        final EditText finalInput = input;
+                        builderInner.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,int which) {
+                                if(doAction ==  API.StatusAction.UNSTATUS ){
+                                    String targetedId = status.getId();
+                                    new PostActionAsyncTask(context, doAction, targetedId, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                }else if(doAction ==  API.StatusAction.REPORT ){
+                                    String comment = null;
+                                    if( finalInput.getText() != null)
+                                        comment = finalInput.getText().toString();
+                                    new PostActionAsyncTask(context, doAction, status.getId(), status, comment, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                }else{
+                                    String targetedId = status.getAccount().getId();
+                                    new PostActionAsyncTask(context, doAction, targetedId, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                }
+                                dialog.dismiss();
+                            }
+                        });
+                        builderInner.show();
+                            return true;
+                        }
+                });
                 popup.show();
             }
         });

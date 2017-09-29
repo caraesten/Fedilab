@@ -102,14 +102,11 @@
     <string name="more_action_1">Masquer</string>
     <string name="more_action_2">Bloquer</string>
     <string name="more_action_3">Signaler</string>
-    <string name="more_action_4">Copier</string>
-    <string name="more_action_5">Partager</string>
-    <string name="more_action_6">Mentionner</string>
+    <string name="more_action_4">Supprimer</string>
+    <string name="more_action_5">Copier</string>
+    <string name="more_action_6">Partager</string>
+    <string name="more_action_7">Mentionner</string>
 
-    <string name="more_action_owner_1">Supprimer</string>
-    <string name="more_action_owner_2">Copier</string>
-    <string name="more_action_owner_3">Partager</string>
-    <string name="more_action_owner_4">Mentionner</string>
 
 
     <string-array name="more_action_confirm">
