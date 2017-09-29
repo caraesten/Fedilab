@@ -70,7 +70,6 @@ public class StreamingFederatedTimelineService extends IntentService {
 
     private static HttpsURLConnection httpsURLConnection;
     protected Account account;
-    public static volatile boolean shouldContinue = true;
 
     public void onCreate() {
         super.onCreate();
@@ -79,6 +78,10 @@ public class StreamingFederatedTimelineService extends IntentService {
         if( !display_global){
             stopSelf();
         }
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED+userId, true);
+        editor.apply();
     }
 
 
@@ -117,7 +120,7 @@ public class StreamingFederatedTimelineService extends IntentService {
                         continue;
                     }
 
-                    if (!shouldContinue) {
+                    if (!sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + accountStream.getId(), true)) {
                         stopSelf();
                         return;
                     }
@@ -141,7 +144,7 @@ public class StreamingFederatedTimelineService extends IntentService {
                         e.printStackTrace();
                     }
                 }
-                if( shouldContinue) {
+                if( sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + accountStream.getId(), true)) {
                     SystemClock.sleep(1000);
                     sendBroadcast(new Intent("RestartStreamingFederatedService"));
                 }

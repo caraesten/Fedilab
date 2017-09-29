@@ -711,6 +711,9 @@ public class MainActivity extends AppCompatActivity
                 matchingIntent = true;
             }else if( extras.getInt(INTENT_ACTION) == CHANGE_USER_INTENT){
                 unCheckAllMenuItems(navigationView);
+                if( tabLayout.getTabAt(0) != null)
+                    //noinspection ConstantConditions
+                    tabLayout.getTabAt(0).select();
                 matchingIntent = true;
             }
         }else if( Intent.ACTION_SEND.equals(action) && type != null ) {

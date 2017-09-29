@@ -55,7 +55,6 @@ public class StreamingService extends IntentService {
 
 
     private EventStreaming lastEvent;
-    public static volatile boolean shouldContinue = true;
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
@@ -79,6 +78,11 @@ public class StreamingService extends IntentService {
 
     public void onCreate() {
         super.onCreate();
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING+userId, true);
+        editor.apply();
     }
 
 
@@ -115,7 +119,7 @@ public class StreamingService extends IntentService {
                 EventStreaming eventStreaming;
                 while((event = reader.readLine()) != null) {
 
-                    if( !shouldContinue )
+                    if( !sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING + accountStream.getId(), true) )
                         stopSelf();
                     if ((lastEvent == EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
                         switch (event.trim()) {

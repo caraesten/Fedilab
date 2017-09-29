@@ -181,6 +181,9 @@ public class Helper {
     public static final String SHOW_BATTERY_SAVER_MESSAGE = "show_battery_saver_message";
     public static final String LAST_NOTIFICATION_MAX_ID = "last_notification_max_id";
     public static final String LAST_HOMETIMELINE_MAX_ID = "last_hometimeline_max_id";
+    public static final String SHOULD_CONTINUE_STREAMING = "should_continue_streaming";
+    public static final String SHOULD_CONTINUE_STREAMING_FEDERATED = "should_continue_streaming_federated";
+
     public static final String CLIP_BOARD = "clipboard";
     //Notifications
     public static final int NOTIFICATION_INTENT = 1;

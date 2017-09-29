@@ -708,6 +708,9 @@ public class MainActivity extends AppCompatActivity
                 matchingIntent = true;
             }else if( extras.getInt(INTENT_ACTION) == CHANGE_USER_INTENT){
                 unCheckAllMenuItems(navigationView);
+                if( tabLayout.getTabAt(0) != null)
+                    //noinspection ConstantConditions
+                    tabLayout.getTabAt(0).select();
                 matchingIntent = true;
             }
         }else if( Intent.ACTION_SEND.equals(action) && type != null ) {
@@ -912,7 +915,6 @@ public class MainActivity extends AppCompatActivity
         };
         streamingIntent = new Intent(this, StreamingService.class);
         startService(streamingIntent);
-
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_federated_data, new IntentFilter(Helper.RECEIVE_FEDERATED_DATA));
     }
@@ -920,8 +922,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onStop(){
         super.onStop();
-        if( streamingIntent != null)
-            StreamingService.shouldContinue = false;
+        if( streamingIntent != null) {
+            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED+userId, false);
+            editor.apply();
+        }
         if( receive_data != null)
             LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
         if( receive_federated_data != null)

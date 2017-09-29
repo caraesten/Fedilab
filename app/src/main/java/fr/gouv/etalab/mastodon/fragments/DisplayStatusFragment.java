@@ -400,14 +400,34 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }
         if( type == RetrieveFeedsAsyncTask.Type.PUBLIC ){
             if (visible) {
-                StreamingFederatedTimelineService.shouldContinue = true;
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED+userId, true);
+                editor.apply();
                 streamingFederatedIntent = new Intent(context, StreamingFederatedTimelineService.class);
                 context.startService(streamingFederatedIntent);
             }else {
                 if( streamingFederatedIntent != null){
-                    StreamingFederatedTimelineService.shouldContinue = false;
+                    SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                    editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED+userId, false);
+                    editor.apply();
                 }
             }
+        }
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        if( streamingFederatedIntent != null){
+            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED+userId, false);
+            editor.apply();
         }
     }
 
