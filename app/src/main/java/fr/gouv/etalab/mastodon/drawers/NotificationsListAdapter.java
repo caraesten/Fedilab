@@ -35,6 +35,7 @@ import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -519,24 +520,26 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 holder.status_more.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        PopupMenu popup = new PopupMenu(context, holder.status_more);
+                        PopupMenu popup = new PopupMenu(context, holder.status_more, Gravity.NO_GRAVITY, R.attr.actionOverflowMenuStyle, 0);
                         final boolean isOwner = status.getAccount().getId().equals(userId);
                         popup.getMenuInflater()
                                 .inflate(R.menu.option_toot, popup.getMenu());
                         if( status.getVisibility().equals("private") || status.getVisibility().equals("direct")){
                             popup.getMenu().findItem(R.id.action_mention).setVisible(false);
                         }
+                        final String[] stringArrayConf;
                         if( isOwner) {
                             popup.getMenu().findItem(R.id.action_block).setVisible(false);
                             popup.getMenu().findItem(R.id.action_mute).setVisible(false);
                             popup.getMenu().findItem(R.id.action_report).setVisible(false);
+                            stringArrayConf =  context.getResources().getStringArray(R.array.more_action_owner_confirm);
                         }else {
                             popup.getMenu().findItem(R.id.action_remove).setVisible(false);
+                            stringArrayConf =  context.getResources().getStringArray(R.array.more_action_confirm);
                         }
                         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             public boolean onMenuItemClick(MenuItem item) {
                                 AlertDialog.Builder builderInner;
-                                String[] stringArrayConf = context.getResources().getStringArray(R.array.more_action_owner_confirm);
                                 final API.StatusAction doAction;
                                 switch (item.getItemId()) {
                                     case R.id.action_remove:
