@@ -385,6 +385,16 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     public void onResume(){
         super.onResume();
         if( type == RetrieveFeedsAsyncTask.Type.PUBLIC){
+            if( isVisible() ){
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED+userId, true);
+                editor.apply();
+                streamingFederatedIntent = new Intent(context, StreamingFederatedTimelineService.class);
+                context.startService(streamingFederatedIntent);
+            }
+
             Calendar date = Calendar.getInstance();
             long t = date.getTimeInMillis();
             Date newDate = new Date(t - TimeUnit.SECONDS.toMillis(20));
@@ -451,7 +461,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     @Override
     public void onStop(){
         super.onStop();
-        if( streamingFederatedIntent != null){
+        if( type == RetrieveFeedsAsyncTask.Type.PUBLIC && streamingFederatedIntent != null){
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedpreferences.edit();
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
