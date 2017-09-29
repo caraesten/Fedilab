@@ -40,7 +40,6 @@ import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.util.Patterns;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -862,10 +861,11 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
 
         final View finalConvertView = convertView;
+        final View attached = holder.status_more;
         holder.status_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupMenu popup = new PopupMenu(context, holder.status_more, Gravity.NO_GRAVITY, R.attr.actionOverflowMenuStyle, 0);
+                PopupMenu popup = new PopupMenu(context, attached);
                 final boolean isOwner = status.getAccount().getId().equals(userId);
                 popup.getMenuInflater()
                         .inflate(R.menu.option_toot, popup.getMenu());
