@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
 
 
-
+        ProviderInstaller.installIfNeededAsync(this, this);
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
             setTheme(R.style.AppTheme_NoActionBar);
