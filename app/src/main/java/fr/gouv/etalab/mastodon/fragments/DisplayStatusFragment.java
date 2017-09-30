@@ -365,12 +365,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             if (context == null)
                 return;
             //Avoids the array to be too big...
-
             if (status != null) {
-
-                if (lv_status.getFirstVisiblePosition() < 3) {
-                    if( statuses.size() >  40)
-                        statuses.subList(0, 40).clear();
+                if (lv_status.getFirstVisiblePosition() == 0) {
                     status.setReplies(new ArrayList<Status>());
                     status.setNew(false);
                     statuses.add(0, status);
