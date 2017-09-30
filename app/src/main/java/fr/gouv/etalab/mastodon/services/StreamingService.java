@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 
 import org.json.JSONException;
@@ -118,7 +119,6 @@ public class StreamingService extends IntentService {
                 String event;
                 EventStreaming eventStreaming;
                 while((event = reader.readLine()) != null) {
-
                     if( !sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING + accountStream.getId(), true) )
                         stopSelf();
                     if ((lastEvent == EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {

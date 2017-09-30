@@ -929,6 +929,7 @@ public class MainActivity extends AppCompatActivity
             SharedPreferences.Editor editor = sharedpreferences.edit();
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED+userId, false);
+            stopService(streamingIntent);
             editor.apply();
         }
         if( receive_data != null)

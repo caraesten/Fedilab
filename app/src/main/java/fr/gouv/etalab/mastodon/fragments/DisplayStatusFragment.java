@@ -385,6 +385,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     public void onResume(){
         super.onResume();
         if( type == RetrieveFeedsAsyncTask.Type.PUBLIC){
+
             if( getUserVisibleHint() ){
                 SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -452,6 +453,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                     editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED+userId, false);
                     editor.apply();
+                    context.stopService(streamingFederatedIntent);
                 }
             }
         }
@@ -466,6 +468,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED+userId, false);
             editor.apply();
+            context.stopService(streamingFederatedIntent);
         }
     }
 
