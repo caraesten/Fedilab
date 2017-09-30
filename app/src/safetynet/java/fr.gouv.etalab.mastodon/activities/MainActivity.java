@@ -132,10 +132,10 @@ public class MainActivity extends AppCompatActivity
     private RelativeLayout main_app_container;
     private Stack<Integer> stackBack = new Stack<>();
 
-    private DisplayStatusFragment homeFragment, federatedFragment;
+    private DisplayStatusFragment homeFragment, federatedFragment, localFragment;
     private DisplayNotificationsFragment notificationsFragment;
     private static final int ERROR_DIALOG_REQUEST_CODE = 97;
-    private BroadcastReceiver receive_data, receive_federated_data;
+    private BroadcastReceiver receive_data, receive_federated_data, receive_local_data;
     private boolean display_local, display_global;
     public static int countNewStatus = 0;
     public static int countNewNotifications = 0;
@@ -882,6 +882,20 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         };
+        receive_local_data = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Bundle b = intent.getExtras();
+                userIdService = b.getString("userIdService", null);
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                if( userIdService != null && userIdService.equals(userId)) {
+                    Status status = b.getParcelable("data");
+                    if (localFragment != null) {
+                        localFragment.refresh(status);
+                    }
+                }
+            }
+        };
         receive_data = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -919,6 +933,7 @@ public class MainActivity extends AppCompatActivity
         startService(streamingIntent);
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_federated_data, new IntentFilter(Helper.RECEIVE_FEDERATED_DATA));
+        LocalBroadcastManager.getInstance(this).registerReceiver(receive_local_data, new IntentFilter(Helper.RECEIVE_LOCAL_DATA));
     }
 
     @Override
@@ -936,6 +951,8 @@ public class MainActivity extends AppCompatActivity
             LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
         if( receive_federated_data != null)
             LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_federated_data);
+        if( receive_local_data != null)
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_local_data);
     }
 
     @Override
@@ -1202,6 +1219,8 @@ public class MainActivity extends AppCompatActivity
                 case 2:
                     if ( !display_local && display_global)
                         federatedFragment = (DisplayStatusFragment) createdFragment;
+                    if( display_local)
+                        localFragment = (DisplayStatusFragment) createdFragment;
                     break;
                 case 3:
                     if( display_local && display_global)

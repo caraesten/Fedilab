@@ -414,6 +414,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
 
         }else if (type == RetrieveFeedsAsyncTask.Type.LOCAL){
+
             if( getUserVisibleHint() ){
                 SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
