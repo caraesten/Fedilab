@@ -118,11 +118,6 @@
     </string-array>
 
 
-    <string-array name="more_action_confirm_account">
-        <item>Nutzer nicht mehr stummschalten?</item>
-        <item>Nutzer nicht mehr blockieren?</item>
-    </string-array>
-
     <string-array name="more_action_owner_confirm">
         <item>Entferne diesen toot?</item>
     </string-array>
