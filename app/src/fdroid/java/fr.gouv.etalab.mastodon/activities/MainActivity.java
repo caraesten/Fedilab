@@ -710,6 +710,9 @@ public class MainActivity extends AppCompatActivity
                 if( tabLayout.getTabAt(0) != null)
                     //noinspection ConstantConditions
                     tabLayout.getTabAt(0).select();
+                if( !toolbar_search.isIconified() ) {
+                    toolbar_search.setIconified(true);
+                }
                 matchingIntent = true;
             }
         }else if( Intent.ACTION_SEND.equals(action) && type != null ) {
