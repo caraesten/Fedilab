@@ -13,6 +13,7 @@ package fr.gouv.etalab.mastodon.services;
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
+
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +28,7 @@ import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -48,41 +50,38 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 
 /**
- * Created by Thomas on 28/08/2017.
- * Manage service for streaming api and new notifications
+ * Created by Thomas on 26/09/2017.
+ * Manage service for streaming api for federated timeline
  */
 
-public class StreamingService extends IntentService {
+public class StreamingFederatedTimelineService extends IntentService {
 
 
-    private EventStreaming lastEvent;
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
      * @param name Used to name the worker thread, important only for debugging.
      */
-    public StreamingService(String name) {
+    public StreamingFederatedTimelineService(String name) {
         super(name);
     }
-    public StreamingService() {
-        super("StreamingService");
+    public StreamingFederatedTimelineService() {
+        super("StreamingFederatedTimelineService");
     }
 
     private static HttpsURLConnection httpsURLConnection;
-    public enum EventStreaming{
-        UPDATE,
-        NOTIFICATION,
-        DELETE,
-        NONE
-    }
     protected Account account;
 
     public void onCreate() {
         super.onCreate();
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean display_global = sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true);
+        if( !display_global){
+            stopSelf();
+        }
         SharedPreferences.Editor editor = sharedpreferences.edit();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING+userId, true);
+        editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED+userId, true);
         editor.apply();
     }
 
@@ -103,7 +102,7 @@ public class StreamingService extends IntentService {
         if( accountStream != null){
             try {
 
-                URL url = new URL("https://" + accountStream.getInstance() + "/api/v1/streaming/user");
+                URL url = new URL("https://" + accountStream.getInstance() + "/api/v1/streaming/public");
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
                 httpsURLConnection.setRequestProperty("Content-Type", "application/json");
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + accountStream.getToken());
@@ -117,47 +116,23 @@ public class StreamingService extends IntentService {
                 inputStream = new BufferedInputStream(httpsURLConnection.getInputStream());
                 reader = new BufferedReader(new InputStreamReader(inputStream));
                 String event;
-                EventStreaming eventStreaming;
                 while((event = reader.readLine()) != null) {
-                    if( !sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING + accountStream.getId(), true) )
+                    if (!event.startsWith("data: ")) {
+                        continue;
+                    }
+
+                    if (!sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + accountStream.getId(), true)) {
                         stopSelf();
-                    if ((lastEvent == EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
-                        switch (event.trim()) {
-                            case "event: update":
-                                lastEvent = EventStreaming.UPDATE;
-                                break;
-                            case "event: notification":
-                                lastEvent = EventStreaming.NOTIFICATION;
-                                break;
-                            case "event: delete":
-                                lastEvent = EventStreaming.DELETE;
-                                break;
-                            default:
-                                lastEvent = EventStreaming.NONE;
-                        }
-                    } else {
-                        if (!event.startsWith("data: ")) {
-                            lastEvent = EventStreaming.NONE;
-                            continue;
-                        }
-                        event = event.substring(6);
-                        if (lastEvent == EventStreaming.UPDATE) {
-                            eventStreaming = EventStreaming.UPDATE;
-                        } else if (lastEvent == EventStreaming.NOTIFICATION) {
-                            eventStreaming = EventStreaming.NOTIFICATION;
-                        } else if (lastEvent == EventStreaming.DELETE) {
-                            eventStreaming = EventStreaming.DELETE;
-                            event = "{id:" + event + "}";
-                        } else {
-                            eventStreaming = EventStreaming.UPDATE;
-                        }
-                        lastEvent = EventStreaming.NONE;
-                        try {
-                            JSONObject eventJson = new JSONObject(event);
-                            onRetrieveStreaming(eventStreaming, accountStream, eventJson);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        return;
+                    }
+                    event = event.substring(6);
+                    if( event.matches("^[0-9]{1,}$"))
+                        continue;
+                    try {
+                        JSONObject eventJson = new JSONObject(event);
+                        onRetrieveStreaming(accountStream, eventJson);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 }
             } catch (Exception e) {
@@ -170,40 +145,26 @@ public class StreamingService extends IntentService {
                         e.printStackTrace();
                     }
                 }
-                SystemClock.sleep(1000);
-                sendBroadcast(new Intent("RestartStreamingService"));
+                if( sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + accountStream.getId(), true)) {
+                    SystemClock.sleep(1000);
+                    sendBroadcast(new Intent("RestartStreamingFederatedService"));
+                }
             }
         }
     }
 
-    public void onRetrieveStreaming(EventStreaming event, Account account, JSONObject response) {
+    public void onRetrieveStreaming(Account account, JSONObject response) {
         if(  response == null )
             return;
-        //No previous notifications in cache, so no notification will be sent
         Status status ;
-        Notification notification;
-        String dataId = null;
-
         Bundle b = new Bundle();
-        if( event == EventStreaming.NOTIFICATION){
-            notification = API.parseNotificationResponse(getApplicationContext(), response);
-            b.putParcelable("data", notification);
-        }else if ( event ==  EventStreaming.UPDATE){
-            status = API.parseStatuses(getApplicationContext(), response);
-            status.setReplies(new ArrayList<Status>());
-            status.setNew(true);
-            b.putParcelable("data", status);
-        }else if( event == EventStreaming.DELETE){
-            try {
-                dataId = response.getString("id");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
+        status = API.parseStatuses(getApplicationContext(), response);
+        status.setReplies(new ArrayList<Status>());
+        status.setNew(true);
+        b.putParcelable("data", status);
         if( account != null)
             b.putString("userIdService",account.getId());
-        Intent intentBC = new Intent(Helper.RECEIVE_DATA);
-        intentBC.putExtra("eventStreaming", event);
+        Intent intentBC = new Intent(Helper.RECEIVE_FEDERATED_DATA);
         intentBC.putExtras(b);
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentBC);
     }

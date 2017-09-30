@@ -14,12 +14,13 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.interfaces;
 
-import fr.gouv.etalab.mastodon.client.APIResponse;
+import java.util.List;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
 
 /**
- * Created by Thomas on 24/04/2017.
- * Interface when status have been retrieved
+ * Created by Thomas on 27/09/2017.
+ * Interface when missing status have been retrieved
  */
-public interface OnRetrieveFeedsInterface {
-    void onRetrieveFeeds(APIResponse apiResponse);
+public interface OnRetrieveMissingFeedsInterface {
+    void onRetrieveMissingFeeds(List<Status> statuses);
 }
