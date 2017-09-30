@@ -48,6 +48,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMissingFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
 import fr.gouv.etalab.mastodon.services.StreamingFederatedTimelineService;
+import fr.gouv.etalab.mastodon.services.StreamingLocalTimelineService;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
@@ -82,8 +83,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private boolean hideHeader;
     private String instanceValue;
     private String lastReadStatus;
-    private Intent streamingFederatedIntent;
-    private Date lastRefreshPublic;
+    private Intent streamingFederatedIntent, streamingLocalIntent;
+    private Date lastRefreshPublic, lastRefreshLocal;
 
     public DisplayStatusFragment(){
     }
@@ -172,6 +173,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         if(!flag_loading ) {
                             if( type == RetrieveFeedsAsyncTask.Type.PUBLIC)
                                 lastRefreshPublic = new Date();
+                            if( type == RetrieveFeedsAsyncTask.Type.LOCAL)
+                                lastRefreshLocal = new Date();
                             flag_loading = true;
                             if( type == RetrieveFeedsAsyncTask.Type.USER)
                                 asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -213,6 +216,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     R.color.mastodonC3);
             if( type == RetrieveFeedsAsyncTask.Type.PUBLIC)
                 lastRefreshPublic = new Date();
+            if( type == RetrieveFeedsAsyncTask.Type.LOCAL)
+                lastRefreshLocal = new Date();
             if( type == RetrieveFeedsAsyncTask.Type.USER)
                 asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             else if( type == RetrieveFeedsAsyncTask.Type.TAG)
@@ -408,6 +413,29 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
 
+        }else if (type == RetrieveFeedsAsyncTask.Type.LOCAL){
+            if( getUserVisibleHint() ){
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL+userId, true);
+                editor.apply();
+                streamingLocalIntent = new Intent(context, StreamingLocalTimelineService.class);
+                context.startService(streamingLocalIntent);
+            }
+            Calendar date = Calendar.getInstance();
+            long t = date.getTimeInMillis();
+            Date newDate = new Date(t - TimeUnit.SECONDS.toMillis(20));
+            if( lastRefreshLocal.before(newDate)){
+                lastRefreshLocal = new Date();
+                max_id = null;
+                statuses = new ArrayList<>();
+                firstLoad = true;
+                flag_loading = true;
+                swiped = true;
+                asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+
         }
     }
 
@@ -456,6 +484,25 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     context.stopService(streamingFederatedIntent);
                 }
             }
+        }else if (type == RetrieveFeedsAsyncTask.Type.LOCAL){
+            if (visible) {
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL+userId, true);
+                editor.apply();
+                streamingLocalIntent = new Intent(context, StreamingLocalTimelineService.class);
+                context.startService(streamingLocalIntent);
+            }else {
+                if( streamingLocalIntent != null){
+                    SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                    editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL+userId, false);
+                    editor.apply();
+                    context.stopService(streamingLocalIntent);
+                }
+            }
         }
     }
 
@@ -469,6 +516,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED+userId, false);
             editor.apply();
             context.stopService(streamingFederatedIntent);
+        }else if(type == RetrieveFeedsAsyncTask.Type.LOCAL && streamingLocalIntent != null){
+            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL+userId, false);
+            editor.apply();
+            context.stopService(streamingLocalIntent);
         }
     }
 
