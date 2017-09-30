@@ -23,8 +23,6 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
-
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,7 +39,6 @@ import javax.net.ssl.HttpsURLConnection;
 
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.TLSSocketFactory;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -50,11 +47,11 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 
 /**
- * Created by Thomas on 26/09/2017.
- * Manage service for streaming api for federated timeline
+ * Created by Thomas on 29/09/2017.
+ * Manage service for streaming api for local timeline
  */
 
-public class StreamingFederatedTimelineService extends IntentService {
+public class StreamingLocalTimelineService extends IntentService {
 
 
     /**
@@ -62,11 +59,11 @@ public class StreamingFederatedTimelineService extends IntentService {
      *
      * @param name Used to name the worker thread, important only for debugging.
      */
-    public StreamingFederatedTimelineService(String name) {
+    public StreamingLocalTimelineService(String name) {
         super(name);
     }
-    public StreamingFederatedTimelineService() {
-        super("StreamingFederatedTimelineService");
+    public StreamingLocalTimelineService() {
+        super("StreamingLocalTimelineService");
     }
 
     private static HttpsURLConnection httpsURLConnection;
@@ -81,7 +78,7 @@ public class StreamingFederatedTimelineService extends IntentService {
         }
         SharedPreferences.Editor editor = sharedpreferences.edit();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED+userId, true);
+        editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL+userId, true);
         editor.apply();
     }
 
@@ -102,7 +99,7 @@ public class StreamingFederatedTimelineService extends IntentService {
         if( accountStream != null){
             try {
 
-                URL url = new URL("https://" + accountStream.getInstance() + "/api/v1/streaming/public");
+                URL url = new URL("https://" + accountStream.getInstance() + "/api/v1/streaming/public?local=true");
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
                 httpsURLConnection.setRequestProperty("Content-Type", "application/json");
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + accountStream.getToken());
@@ -121,7 +118,7 @@ public class StreamingFederatedTimelineService extends IntentService {
                         continue;
                     }
 
-                    if (!sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + accountStream.getId(), true)) {
+                    if (!sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL + accountStream.getId(), true)) {
                         stopSelf();
                         return;
                     }
@@ -145,9 +142,9 @@ public class StreamingFederatedTimelineService extends IntentService {
                         e.printStackTrace();
                     }
                 }
-                if( sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + accountStream.getId(), true)) {
+                if( sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL + accountStream.getId(), true)) {
                     SystemClock.sleep(1000);
-                    sendBroadcast(new Intent("RestartStreamingFederatedService"));
+                    sendBroadcast(new Intent("RestartStreamingLocalService"));
                 }
             }
         }
@@ -164,7 +161,7 @@ public class StreamingFederatedTimelineService extends IntentService {
         b.putParcelable("data", status);
         if( account != null)
             b.putString("userIdService",account.getId());
-        Intent intentBC = new Intent(Helper.RECEIVE_FEDERATED_DATA);
+        Intent intentBC = new Intent(Helper.RECEIVE_LOCAL_DATA);
         intentBC.putExtras(b);
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentBC);
     }

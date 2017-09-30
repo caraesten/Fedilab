@@ -183,6 +183,7 @@ public class Helper {
     public static final String LAST_HOMETIMELINE_MAX_ID = "last_hometimeline_max_id";
     public static final String SHOULD_CONTINUE_STREAMING = "should_continue_streaming";
     public static final String SHOULD_CONTINUE_STREAMING_FEDERATED = "should_continue_streaming_federated";
+    public static final String SHOULD_CONTINUE_STREAMING_LOCAL = "should_continue_streaming_local";
 
     public static final String CLIP_BOARD = "clipboard";
     //Notifications
@@ -256,6 +257,7 @@ public class Helper {
     public static final String HEADER_ACCOUNT = "header_account";
     public static final String RECEIVE_DATA = "receive_data";
     public static final String RECEIVE_FEDERATED_DATA = "receive_federated_data";
+    public static final String RECEIVE_LOCAL_DATA = "receive_local_data";
     public static final String RECEIVE_PICTURE = "receive_picture";
     //User agent
     public static final String USER_AGENT = "Mastalab/"+ BuildConfig.VERSION_NAME + " Android/"+ Build.VERSION.RELEASE;
