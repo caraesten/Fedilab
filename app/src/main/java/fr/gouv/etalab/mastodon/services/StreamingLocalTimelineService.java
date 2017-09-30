@@ -72,8 +72,8 @@ public class StreamingLocalTimelineService extends IntentService {
     public void onCreate() {
         super.onCreate();
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean display_global = sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true);
-        if( !display_global){
+        boolean display_local = sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true);
+        if( !display_local){
             stopSelf();
         }
         SharedPreferences.Editor editor = sharedpreferences.edit();
