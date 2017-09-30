@@ -99,14 +99,6 @@
     <string name="reblog_remove">Unboost this toot?</string>
     <string name="pin_add">Pin this toot?</string>
     <string name="pin_remove">Unpin this toot?</string>
-    <string-array name="more_action">
-        <item>Mute</item>
-        <item>Block</item>
-        <item>Report</item>
-        <item>Copy</item>
-        <item>Share</item>
-        <item>Mention</item>
-    </string-array>
 
 
 
@@ -122,7 +114,6 @@
         <item>Block this account?</item>
         <item>Report this toot?</item>
     </string-array>
-
 
     <string-array name="more_action_owner_confirm">
         <item>Remove this toot?</item>
