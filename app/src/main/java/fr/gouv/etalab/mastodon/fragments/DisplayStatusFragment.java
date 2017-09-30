@@ -361,7 +361,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 if (textviewNoAction.getVisibility() == View.VISIBLE)
                     textviewNoAction.setVisibility(View.GONE);
             }
-        }else if(type == RetrieveFeedsAsyncTask.Type.PUBLIC){
+        }else if(type == RetrieveFeedsAsyncTask.Type.PUBLIC || type == RetrieveFeedsAsyncTask.Type.LOCAL){
             if (context == null)
                 return;
             //Avoids the array to be too big...
@@ -383,7 +383,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     textviewNoAction.setVisibility(View.GONE);
             }
         }
-
     }
 
     @Override

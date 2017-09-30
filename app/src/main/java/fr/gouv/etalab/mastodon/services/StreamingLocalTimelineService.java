@@ -100,7 +100,7 @@ public class StreamingLocalTimelineService extends IntentService {
         if( accountStream != null){
             try {
 
-                URL url = new URL("https://" + accountStream.getInstance() + "/api/v1/streaming/public?local=true");
+                URL url = new URL("https://" + accountStream.getInstance() + "/api/v1/streaming/public/local");
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
                 httpsURLConnection.setRequestProperty("Content-Type", "application/json");
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + accountStream.getToken());
@@ -118,7 +118,6 @@ public class StreamingLocalTimelineService extends IntentService {
                     if (!event.startsWith("data: ")) {
                         continue;
                     }
-
                     if (!sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL + accountStream.getId(), true)) {
                         stopSelf();
                         return;
