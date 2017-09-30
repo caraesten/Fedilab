@@ -271,6 +271,9 @@ public class API {
         return relationship;
     }
 
+
+
+
     /**
      * Returns a relationship between the authenticated account and an account
      * @param accounts ArrayList<Account> accounts fetched
@@ -1120,6 +1123,21 @@ public class API {
         if( 0 > limit || limit > 40)
             limit = 40;
         params.put("limit",String.valueOf(limit));
+
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
+        boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
+        boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
+        boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
+        if( !notif_follow )
+            params.add("exclude_types[]", "follow");
+        if( !notif_add )
+            params.add("exclude_types[]", "favourite");
+        if( !notif_share )
+            params.add("exclude_types[]", "reblog");
+        if( !notif_mention )
+            params.add("exclude_types[]", "mention");
+
         notifications = new ArrayList<>();
         get("/notifications", params, new JsonHttpResponseHandler() {
 
