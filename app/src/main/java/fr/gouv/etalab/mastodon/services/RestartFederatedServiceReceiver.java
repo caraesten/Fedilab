@@ -1,3 +1,4 @@
+package fr.gouv.etalab.mastodon.services;
 /* Copyright 2017 Thomas Schneider
  *
  * This file is a part of Mastalab
@@ -12,14 +13,21 @@
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
-package fr.gouv.etalab.mastodon.interfaces;
-
-import fr.gouv.etalab.mastodon.client.APIResponse;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 
 /**
- * Created by Thomas on 24/04/2017.
- * Interface when status have been retrieved
+ * Created by Thomas on 26/09/2017.
+ * BroadcastReceiver for restarting the service for listening federated timeline
  */
-public interface OnRetrieveFeedsInterface {
-    void onRetrieveFeeds(APIResponse apiResponse);
+
+public class RestartFederatedServiceReceiver extends BroadcastReceiver {
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Intent  streamingServiceIntent = new Intent(context.getApplicationContext(), StreamingFederatedTimelineService.class);
+        context.startService(streamingServiceIntent);
+    }
+
 }

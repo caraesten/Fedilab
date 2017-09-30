@@ -181,6 +181,10 @@ public class Helper {
     public static final String SHOW_BATTERY_SAVER_MESSAGE = "show_battery_saver_message";
     public static final String LAST_NOTIFICATION_MAX_ID = "last_notification_max_id";
     public static final String LAST_HOMETIMELINE_MAX_ID = "last_hometimeline_max_id";
+    public static final String SHOULD_CONTINUE_STREAMING = "should_continue_streaming";
+    public static final String SHOULD_CONTINUE_STREAMING_FEDERATED = "should_continue_streaming_federated";
+    public static final String SHOULD_CONTINUE_STREAMING_LOCAL = "should_continue_streaming_local";
+
     public static final String CLIP_BOARD = "clipboard";
     //Notifications
     public static final int NOTIFICATION_INTENT = 1;
@@ -250,9 +254,10 @@ public class Helper {
     public static final String INTENT_ACTION = "intent_action";
 
     //Receiver
-    public static final String SEARCH_VALIDATE_ACCOUNT = "search_validate_account";
     public static final String HEADER_ACCOUNT = "header_account";
     public static final String RECEIVE_DATA = "receive_data";
+    public static final String RECEIVE_FEDERATED_DATA = "receive_federated_data";
+    public static final String RECEIVE_LOCAL_DATA = "receive_local_data";
     public static final String RECEIVE_PICTURE = "receive_picture";
     //User agent
     public static final String USER_AGENT = "Mastalab/"+ BuildConfig.VERSION_NAME + " Android/"+ Build.VERSION.RELEASE;
@@ -923,6 +928,8 @@ public class Helper {
 
         final NavigationView navigationView = (NavigationView) activity.findViewById(R.id.nav_view);
         navigationView.getMenu().clear();
+        MainActivity.lastNotificationId = null;
+        MainActivity.lastHomeId = null;
         navigationView.inflateMenu(R.menu.activity_main_drawer);
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(activity,db).getAccountByID(userID);
@@ -937,17 +944,6 @@ public class Helper {
         }
         SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String oldUserId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        //User wont' be the same, temp values are cleared
-        if( oldUserId != null && !oldUserId.equals(userID)){
-            if( DisplayStatusFragment.tempStatuses != null) {
-                DisplayStatusFragment.tempStatuses.clear();
-                DisplayStatusFragment.tempStatuses = new ArrayList<>();
-            }
-            if( DisplayNotificationsFragment.tempNotifications != null) {
-                DisplayNotificationsFragment.tempNotifications.clear();
-                DisplayNotificationsFragment.tempNotifications = new ArrayList<>();
-            }
-        }
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, account.getToken());
         editor.putString(Helper.PREF_KEY_ID, account.getId());
@@ -967,9 +963,8 @@ public class Helper {
         final Paint paint = new Paint();
         final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
         final RectF rectF = new RectF(rect);
-        final float roundPx = roundPixelSize;
         paint.setAntiAlias(true);
-        canvas.drawRoundRect(rectF,roundPx,roundPx, paint);
+        canvas.drawRoundRect(rectF, (float) roundPixelSize, (float) roundPixelSize, paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(bitmap, rect, rect, paint);
         return output;

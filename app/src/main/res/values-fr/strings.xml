@@ -96,28 +96,23 @@
     <string name="favourite_remove">Supprimer ce pouet des favoris ?</string>
     <string name="reblog_add">Partager ce pouet ?</string>
     <string name="reblog_remove">Supprimer ce pouet des partages ?</string>
-    <string-array name="more_action">
-        <item>Masquer</item>
-        <item>Bloquer</item>
-        <item>Signaler</item>
-        <item>Copier</item>
-        <item>Partager</item>
-        <item>Mentionner</item>
-    </string-array>
-    <string-array name="more_action_owner">
-        <item>Supprimer</item>
-        <item>Copier</item>
-        <item>Partager</item>
-        <item>Mentionner</item>
-    </string-array>
+
+
+
+    <string name="more_action_1">Masquer</string>
+    <string name="more_action_2">Bloquer</string>
+    <string name="more_action_3">Signaler</string>
+    <string name="more_action_4">Supprimer</string>
+    <string name="more_action_5">Copier</string>
+    <string name="more_action_6">Partager</string>
+    <string name="more_action_7">Mentionner</string>
+
+
 
     <string-array name="more_action_confirm">
         <item>Masquer ce compte ?</item>
         <item>Bloquer ce compte ?</item>
         <item>Signaler ce pouet ?</item>
-        <item>null</item> <!-- Ugly hack to fix confirm box-->
-        <item>null</item>
-        <item>null</item>
     </string-array>
 
 
@@ -128,9 +123,6 @@
 
     <string-array name="more_action_owner_confirm">
         <item>Supprimer ce pouet ?</item>
-        <item>null</item> <!-- Ugly hack to fix confirm box-->
-        <item>null</item>
-        <item>null</item>
     </string-array>
 
     <plurals name="preview_replies">

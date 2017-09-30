@@ -550,6 +550,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 }else {
                     searchLength = 15;
                 }
+                int totalChar = toot_cw_content.length() + toot_content.length();
+                toot_space_left.setText(String.valueOf(totalChar));
                 if( currentCursorPosition- (searchLength-1) < 0 || currentCursorPosition == 0 || currentCursorPosition > s.toString().length())
                     return;
                 Matcher m;
@@ -566,7 +568,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     }
                     new RetrieveSearchAccountsAsyncTask(getApplicationContext(),search,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }else{toot_content.dismissDropDown();}
-                int totalChar = toot_cw_content.length() + toot_content.length();
+                totalChar = toot_cw_content.length() + toot_content.length();
                 toot_space_left.setText(String.valueOf(totalChar));
             }
         });

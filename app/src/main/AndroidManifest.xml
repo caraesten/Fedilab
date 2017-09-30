@@ -43,6 +43,24 @@
                 <action android:name="RestartStreamingService" />
             </intent-filter>
         </receiver>
+        <service
+            android:name="fr.gouv.etalab.mastodon.services.StreamingFederatedTimelineService"
+            android:exported="false"/>
+        <receiver android:name="fr.gouv.etalab.mastodon.services.RestartFederatedServiceReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="RestartStreamingFederatedService" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name="fr.gouv.etalab.mastodon.services.StreamingLocalTimelineService"
+            android:exported="false"/>
+        <receiver android:name="fr.gouv.etalab.mastodon.services.RestartLocalServiceReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="RestartStreamingLocalService" />
+            </intent-filter>
+        </receiver>
         <activity
             android:name="fr.gouv.etalab.mastodon.activities.MainActivity"
             android:label="@string/app_name"
