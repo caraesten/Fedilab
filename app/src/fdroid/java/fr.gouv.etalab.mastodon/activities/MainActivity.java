@@ -42,6 +42,7 @@ import android.support.v7.widget.SwitchCompat;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -139,6 +140,7 @@ public class MainActivity extends AppCompatActivity
     private String userIdService;
     private Intent streamingIntent;
     public static String lastHomeId = null, lastNotificationId = null;
+    boolean notif_follow, notif_add, notif_mention, notif_share;
 
     public MainActivity() {
     }
@@ -224,6 +226,89 @@ public class MainActivity extends AppCompatActivity
             tabLayout.addTab(tabLocal);
         if( display_global)
             tabLayout.addTab(tabPublic);
+        //Display filter for notification when long pressing the tab
+        final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
+        tabStrip.getChildAt(1).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                //Only shown if the tab has focus
+                if( notificationsFragment != null && notificationsFragment.getUserVisibleHint()){
+                    PopupMenu popup = new PopupMenu(MainActivity.this, tabStrip.getChildAt(1));
+                    popup.getMenuInflater()
+                            .inflate(R.menu.option_filter_notifications, popup.getMenu());
+                    Menu menu = popup.getMenu();
+                    final MenuItem itemFavourite = menu.findItem(R.id.action_favorite);
+                    final MenuItem itemFollow = menu.findItem(R.id.action_follow);
+                    final MenuItem itemMention = menu.findItem(R.id.action_mention);
+                    final MenuItem itemBoost = menu.findItem(R.id.action_boost);
+                    notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
+                    notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
+                    notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
+                    notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
+                    itemFavourite.setChecked(notif_add);
+                    itemFollow.setChecked(notif_follow);
+                    itemMention.setChecked(notif_mention);
+                    itemBoost.setChecked(notif_share);
+                    popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
+                        @Override
+                        public void onDismiss(PopupMenu menu) {
+                            if( notificationsFragment != null)
+                                notificationsFragment.refreshAll();
+                        }
+                    });
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        public boolean onMenuItemClick(MenuItem item) {
+                            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+                            item.setActionView(new View(getApplicationContext()));
+                            item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                                @Override
+                                public boolean onMenuItemActionExpand(MenuItem item) {
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onMenuItemActionCollapse(MenuItem item) {
+                                    return false;
+                                }
+                            });
+                            switch (item.getItemId()) {
+                                case R.id.action_favorite:
+                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                    notif_add = !notif_add;
+                                    editor.putBoolean(Helper.SET_NOTIF_ADD, notif_add);
+                                    itemFavourite.setChecked(notif_add);
+                                    editor.apply();
+                                    break;
+                                case R.id.action_follow:
+                                    editor = sharedpreferences.edit();
+                                    notif_follow = !notif_follow;
+                                    editor.putBoolean(Helper.SET_NOTIF_FOLLOW, notif_follow);
+                                    itemFollow.setChecked(notif_follow);
+                                    editor.apply();
+                                    break;
+                                case R.id.action_mention:
+                                    editor = sharedpreferences.edit();
+                                    notif_mention = !notif_mention;
+                                    editor.putBoolean(Helper.SET_NOTIF_MENTION, notif_mention);
+                                    itemMention.setChecked(notif_mention);
+                                    editor.apply();
+                                    break;
+                                case R.id.action_boost:
+                                    editor = sharedpreferences.edit();
+                                    notif_share = !notif_share;
+                                    editor.putBoolean(Helper.SET_NOTIF_SHARE, notif_share);
+                                    itemBoost.setChecked(notif_share);
+                                    editor.apply();
+                                    break;
+                            }
+                            return false;
+                        }
+                    });
+                    popup.show();
+                }
+                return true;
+            }
+        });
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         int countPage = 2;
