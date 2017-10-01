@@ -302,6 +302,7 @@
     <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
     <string name="settings_title_more_options">Advanced settings</string>
     <string name="set_wifi_only">Notify in WIFI only</string>
+    <string name="set_notify">Notify?</string>
     <string name="set_notif_silent">Silent Notifications</string>
     <string name="set_night_mode">Night mode</string>
     <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>

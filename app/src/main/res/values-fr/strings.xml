@@ -296,6 +296,7 @@
     <string name="set_share_validation_fav">Confirmer avant d\'ajouter aux favoris</string>
     <string name="settings_title_more_options">Options avancées</string>
     <string name="set_wifi_only">Notifier en WIFI seulement</string>
+    <string name="set_notify">Notifier ?</string>
     <string name="set_notif_silent">Utiliser le vibreur</string>
     <string name="set_night_mode">Mode nuit</string>
     <string name="set_nsfw_timeout">Délai d\'affichage NSFW (en secondes, 0 signifie aucun délai)</string>

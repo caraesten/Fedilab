@@ -307,6 +307,7 @@
     <string name="set_share_validation_fav">Bestätigungsdialog vor dem favorisieren</string>
     <string name="settings_title_more_options">Erweiterte Einstellungen</string>
     <string name="set_wifi_only">Nur bei WLAN benachrichtigen</string>
+    <string name="set_notify">Benachrichtigen?</string>
     <string name="set_notif_silent">Leise Benachrichtigungen</string>
     <string name="set_night_mode">Nachtmodus</string>
     <string name="set_nsfw_timeout">NSFW Anzeige Dauer (Sekunden, 0 bedeutet aus)</string>
