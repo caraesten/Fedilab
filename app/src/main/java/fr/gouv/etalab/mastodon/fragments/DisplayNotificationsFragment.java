@@ -247,6 +247,18 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         }
     }
 
+    public void refreshAll(){
+        if( context == null)
+            return;
+        max_id = null;
+        notifications = new ArrayList<>();
+        firstLoad = true;
+        flag_loading = true;
+        swiped = true;
+        MainActivity.countNewNotifications = 0;
+        asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
 
     public void refresh(Notification notification){
         if( context == null)
