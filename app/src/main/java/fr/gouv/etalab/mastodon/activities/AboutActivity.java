@@ -126,6 +126,15 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
             about_license.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
         }
 
+        TextView about_website = (TextView) findViewById(R.id.about_website);
+        about_website.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://tom79.bitbucket.io"));
+                startActivity(browserIntent);
+            }
+        });
+
         lv_contributors.setExpanded(true);
         lv_developers.setExpanded(true);
         accountSearchWebAdapterContributors = new AccountSearchDevAdapter(AboutActivity.this, contributors);
