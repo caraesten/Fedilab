@@ -32,6 +32,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -69,6 +70,30 @@ public class SettingsNotificationsFragment extends Fragment {
         }else {
             style = R.style.Dialog;
         }
+
+        boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
+        final SwitchCompat switchCompatNotify = (SwitchCompat) rootView.findViewById(R.id.set_notify);
+        switchCompatNotify.setChecked(notify);
+        final LinearLayout notification_settings = (LinearLayout) rootView.findViewById(R.id.notification_settings);
+        if( notify)
+            notification_settings.setVisibility(View.VISIBLE);
+        else
+            notification_settings.setVisibility(View.GONE);
+        switchCompatNotify.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // Save the state here
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_NOTIFY, isChecked);
+                editor.apply();
+                if( isChecked)
+                    notification_settings.setVisibility(View.VISIBLE);
+                else
+                    notification_settings.setVisibility(View.GONE);
+            }
+        });
+
+
         boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
         boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
         boolean notif_ask = sharedpreferences.getBoolean(Helper.SET_NOTIF_ASK, true);
