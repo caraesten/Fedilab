@@ -707,6 +707,17 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 menuAccounts(MainActivity.this);
+                if( main_app_container.getVisibility() == View.VISIBLE){
+                    main_app_container.setVisibility(View.VISIBLE);
+                    viewPager.setVisibility(View.GONE);
+                    tabLayout.setVisibility(View.GONE);
+                    toolbarTitle.setVisibility(View.VISIBLE);
+                }else {
+                    main_app_container.setVisibility(View.GONE);
+                    viewPager.setVisibility(View.VISIBLE);
+                    tabLayout.setVisibility(View.VISIBLE);
+                    toolbarTitle.setVisibility(View.GONE);
+                }
             }
         });
 

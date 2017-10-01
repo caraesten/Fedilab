@@ -149,7 +149,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private Button toot_it;
     private AutoCompleteTextView toot_content;
     private EditText toot_cw_content;
-    private LinearLayout toot_reply_content_container;
     private Status tootReply = null;
     private String tootMention = null;
     private String urlMention = null;
@@ -231,7 +230,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         int newInputType = toot_content.getInputType() & (toot_content.getInputType() ^ InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
         toot_content.setInputType(newInputType);
         toot_cw_content = (EditText) findViewById(R.id.toot_cw_content);
-        toot_reply_content_container = (LinearLayout) findViewById(R.id.toot_reply_content_container);
         picture_scrollview = (HorizontalScrollView) findViewById(R.id.picture_scrollview);
         toot_sensitive = (CheckBox) findViewById(R.id.toot_sensitive);
         //search_small_container = (LinearLayout) findViewById(R.id.search_small_container);
@@ -714,6 +712,28 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             case android.R.id.home:
                 finish();
                 return true;
+            case R.id.action_view_reply:
+                AlertDialog.Builder alert = new AlertDialog.Builder(TootActivity.this);
+                alert.setTitle(R.string.toot_reply_content_title);
+                final TextView input = new TextView(TootActivity.this);
+                //Set the padding
+                input.setPadding(30, 30, 30, 30);
+                alert.setView(input);
+                String content = tootReply.getContent();
+                if(tootReply.getReblog() != null)
+                    content = tootReply.getReblog().getContent();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                    input.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY));
+                else
+                    //noinspection deprecation
+                    input.setText(Html.fromHtml(content));
+                alert.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
+                return true;
             case R.id.action_microphone:
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
@@ -905,6 +925,11 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             MenuItem itemSchedule = menu.findItem(R.id.action_schedule);
             if( itemSchedule != null)
                 itemSchedule.setVisible(false);
+        }
+        MenuItem itemViewReply = menu.findItem(R.id.action_view_reply);
+        if( tootReply == null){
+            if( itemViewReply != null)
+                itemViewReply.setVisible(false);
         }
         return true;
     }
@@ -1285,35 +1310,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             setTitle(R.string.toot_title_reply);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
 
-
-        FloatingActionButton ic_show = (FloatingActionButton) findViewById(R.id.toot_show_reply);
-
-        ic_show.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(TootActivity.this);
-                alert.setTitle(R.string.toot_reply_content_title);
-                final TextView input = new TextView(TootActivity.this);
-                //Set the padding
-                input.setPadding(30, 30, 30, 30);
-                alert.setView(input);
-                String content = tootReply.getContent();
-                if(tootReply.getReblog() != null)
-                    content = tootReply.getReblog().getContent();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                    input.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY));
-                else
-                    //noinspection deprecation
-                    input.setText(Html.fromHtml(content));
-                alert.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        dialog.dismiss();
-                    }
-                });
-                alert.show();
-            }
-        });
-        toot_reply_content_container.setVisibility(View.VISIBLE);
         switch (tootReply.getVisibility()){
             case "public":
                 visibility = "public";
