@@ -60,6 +60,11 @@
     <string name="username">User name</string>
     <string name="drafts">Drafts</string>
     <string name="new_data">New data are available! Do you want to display them?</string>
+    <string name="favourite">Favourites</string>
+    <string name="follow">New followers</string>
+    <string name="mention">Mentions</string>
+    <string name="reblog">Boosts</string>
+
     <!--- Menu -->
     <string name="home_menu">Home</string>
     <string name="local_menu">Local timeline</string>
