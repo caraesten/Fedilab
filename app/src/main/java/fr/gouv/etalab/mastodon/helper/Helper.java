@@ -223,6 +223,7 @@ public class Helper {
     public static final int TRANS_NONE = 2;
 
     public static final String SET_TRANS_FORCED = "set_trans_forced";
+    public static final String SET_NOTIFY = "set_notify";
     public static final String SET_NOTIF_FOLLOW = "set_notif_follow";
     public static final String SET_NOTIF_ADD = "set_notif_follow_add";
     public static final String SET_NOTIF_ASK = "set_notif_follow_ask";
@@ -1443,6 +1444,9 @@ public class Helper {
      */
     public static boolean canNotify(Context context){
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
+        if( !notify)
+            return false;
         String dateIni = sharedpreferences.getString(Helper.SET_TIME_FROM, "07:00");
         String dateEnd = sharedpreferences.getString(Helper.SET_TIME_TO, "22:00");
         Calendar now = Calendar.getInstance();

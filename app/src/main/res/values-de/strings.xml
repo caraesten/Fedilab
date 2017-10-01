@@ -59,6 +59,10 @@
     <string name="username">Benutzername</string>
     <string name="drafts">Entwürfe</string>
     <string name="new_data">Neue Beiträge sind verfügbar! Anzeigen?</string>
+    <string name="favourite">Favorisierungen</string>
+    <string name="follow">Neue Folgende</string>
+    <string name="mention">Erwähnungen</string>
+    <string name="reblog">Geteilte Beiträge</string>
     <!--- Menu -->
     <string name="home_menu">Home</string>
     <string name="local_menu">Lokale Zeitleiste</string>
@@ -303,6 +307,7 @@
     <string name="set_share_validation_fav">Bestätigungsdialog vor dem favorisieren</string>
     <string name="settings_title_more_options">Erweiterte Einstellungen</string>
     <string name="set_wifi_only">Nur bei WLAN benachrichtigen</string>
+    <string name="set_notify">Benachrichtigen?</string>
     <string name="set_notif_silent">Leise Benachrichtigungen</string>
     <string name="set_night_mode">Nachtmodus</string>
     <string name="set_nsfw_timeout">NSFW Anzeige Dauer (Sekunden, 0 bedeutet aus)</string>

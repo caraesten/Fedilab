@@ -22,7 +22,6 @@
     android:layout_height="match_parent"
     >
     <LinearLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,29 +39,6 @@
             android:hint="@string/toot_cw_placeholder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <LinearLayout
-            android:id="@+id/toot_reply_content_container"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-            <TextView
-                android:id="@+id/toot_reply_content_title"
-                android:text="@string/show_reply"
-                android:layout_width="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content" />
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/toot_show_reply"
-                android:layout_marginStart="30dp"
-                android:layout_marginLeft="30dp"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center_vertical|end"
-                app:fabSize="mini"
-                app:srcCompat="@drawable/ic_action_eye_open" />
-        </LinearLayout>
         <AutoCompleteTextView
             android:layout_marginTop="10dp"
             android:id="@+id/toot_content"

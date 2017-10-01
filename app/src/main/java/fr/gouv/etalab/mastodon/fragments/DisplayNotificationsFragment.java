@@ -195,10 +195,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 //Update the id of the last notification retrieved
 
                 MainActivity.lastNotificationId = notifications.get(0).getId();
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + this.userId, notifications.get(0).getId());
-                editor.apply();
-                lastReadNotifications = notifications.get(0).getId();
+                updateNotificationLastId(sharedpreferences, this.userId, notifications.get(0).getId());
             }
             notificationsListAdapter.notifyDataSetChanged();
         }
@@ -225,11 +222,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             return;
         //Store last notification id to avoid to notify for those that have been already seen
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedpreferences.edit();
         if (visible && notifications != null && notifications.size() > 0) {
-            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + this.userId, notifications.get(0).getId());
-            editor.apply();
-            lastReadNotifications = notifications.get(0).getId();
+            updateNotificationLastId(sharedpreferences, this.userId, notifications.get(0).getId());
         }
     }
 
@@ -239,12 +233,21 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
         //Store last notification id to avoid to notify for those that have been already seen
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedpreferences.edit();
         if (notifications != null && notifications.size() > 0) {
-            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + this.userId, notifications.get(0).getId());
-            editor.apply();
-            lastReadNotifications = notifications.get(0).getId();
+            updateNotificationLastId(sharedpreferences, this.userId, notifications.get(0).getId());
         }
+    }
+
+    public void refreshAll(){
+        if( context == null)
+            return;
+        max_id = null;
+        notifications = new ArrayList<>();
+        firstLoad = true;
+        flag_loading = true;
+        swiped = true;
+        MainActivity.countNewNotifications = 0;
+        asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 
@@ -283,6 +286,22 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             try {
                 ((MainActivity) context).updateNotifCounter();
             }catch (Exception ignored){}
+        }
+    }
+
+    /**
+     * Records the id of the notification only if its greater than the previous one.
+     * @param sharedPreferences SharedPreferences
+     * @param userId String current logged user
+     * @param notificationId String current notification id to check
+     */
+    private void updateNotificationLastId(SharedPreferences sharedPreferences, String userId, String notificationId){
+        String lastNotif = sharedPreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
+        if( lastNotif != null && notificationId != null && Long.parseLong(notificationId) > Long.parseLong(lastNotif)){
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notificationId);
+            editor.apply();
+            lastReadNotifications = notificationId;
         }
     }
 }
