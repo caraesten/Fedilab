@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_favorite"
+        android:checkable="true"
+        android:title="@string/favourite"
+        app:actionViewClass="android.widget.CheckBox"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+    <item
+        android:id="@+id/action_follow"
+        android:checkable="true"
+        android:title="@string/follow"
+        app:actionViewClass="android.widget.CheckBox"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_mention"
+        android:checkable="true"
+        android:title="@string/mention"
+        app:actionViewClass="android.widget.CheckBox"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_boost"
+        android:checkable="true"
+        android:title="@string/reblog"
+        app:actionViewClass="android.widget.CheckBox"
+        app:showAsAction="always" />
+</menu>
