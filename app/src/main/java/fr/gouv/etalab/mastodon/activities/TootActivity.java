@@ -1291,12 +1291,14 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         tootReply = draft.getStatusReply();
         if( tootReply != null) {
             tootReply();
+
         }else {
             if( title != null)
                 title.setText(getString(R.string.toot_title));
             else
                 setTitle(R.string.toot_title);
         }
+        invalidateOptionsMenu();
         initialContent = toot_content.getText().toString();
         toot_space_left.setText(String.valueOf(toot_content.getText().length() + toot_cw_content.getText().length()));
     }
