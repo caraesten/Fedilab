@@ -181,6 +181,7 @@
 
     <string name="no_draft">Kein Entwurf!</string>
     <string name="choose_toot">Wähle einen toot</string>
+    <string name="choose_accounts">Wähle einen konto</string>
     <string name="remove_draft">Entwurf entfernen?</string>
     <string name="show_reply">Klicke auf das Auge um den ursprünglichen toot zu sehen</string>
     <!-- Instance -->

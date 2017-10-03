@@ -14,8 +14,8 @@ package fr.gouv.etalab.mastodon.drawers;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.os.Environment;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -45,8 +45,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -66,21 +64,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 
-import fr.gouv.etalab.mastodon.activities.LoginActivity;
-import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
@@ -89,6 +83,7 @@ import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
@@ -97,6 +92,8 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
+import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.translation.GoogleTranslateQuery;
 import fr.gouv.etalab.mastodon.translation.YandexQuery;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -241,7 +238,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-
+        
         //Display a preview for accounts that have replied *if enabled and only for home timeline*
         if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
             boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);
@@ -839,25 +836,121 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_favorite_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
-                if( confirmation )
-                    displayConfirmationDialog(FAVOURITE,status);
-                else
-                    favouriteAction(status);
+                List<Account> accounts = Helper.connectedAccounts(context);
+                if( accounts.size() == 1) {
+                    boolean confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
+                    if (confirmation)
+                        displayConfirmationDialog(FAVOURITE, status);
+                    else
+                        favouriteAction(status);
+                }else {
+                    AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
+                    builderSingle.setTitle(context.getString(R.string.choose_accounts));
+                    final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(context, accounts);
+                    final Account[] accountArray = new Account[accounts.size()];
+                    int i = 0;
+                    for(Account account: accounts){
+                        accountArray[i] = account;
+                        i++;
+                    }
+                    builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builderSingle.setAdapter(accountsSearchAdapter, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Account selectedAccount = accountArray[which];
+                            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                            Account loggedAccount = new AccountDAO(context, db).getAccountByID(userId);
+                            if(loggedAccount.getInstance().equals(selectedAccount.getInstance())){
+                                if( status.isReblogged() || (status.getReblog()!= null && status.getReblog().isReblogged())){
+                                    new PostActionAsyncTask(context, selectedAccount, API.StatusAction.UNFAVOURITE, targetedId, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    status.setReblogged(false);
+                                }else{
+                                    new PostActionAsyncTask(context, selectedAccount, API.StatusAction.FAVOURITE, targetedId, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    status.setReblogged(true);
+                                }
+                            }else{ //Account is from another instance
+                                if( status.isReblogged() || (status.getReblog()!= null && status.getReblog().isReblogged())){
+                                    new PostActionAsyncTask(context, selectedAccount, status,  API.StatusAction.UNFAVOURITE, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    status.setReblogged(false);
+                                }else{
+                                    new PostActionAsyncTask(context, selectedAccount, status, API.StatusAction.FAVOURITE, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    status.setReblogged(true);
+                                }
+                            }
+
+                            statusListAdapter.notifyDataSetChanged();
+                            dialog.dismiss();
+                        }
+                    });
+                    builderSingle.show();
+                }
             }
         });
+
         holder.status_reblog_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
-                if( confirmation )
-                    displayConfirmationDialog(REBLOG,status);
-                else
-                    reblogAction(status);
+                List<Account> accounts = Helper.connectedAccounts(context);
+                if( accounts.size() == 1) {
+                    boolean confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
+                    if (confirmation)
+                        displayConfirmationDialog(REBLOG, status);
+                    else
+                        reblogAction(status);
+                }else{
+                    AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
+                    builderSingle.setTitle(context.getString(R.string.choose_accounts));
+                    final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(context, accounts);
+                    final Account[] accountArray = new Account[accounts.size()];
+                    int i = 0;
+                    for(Account account: accounts){
+                        accountArray[i] = account;
+                        i++;
+                    }
+                    builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builderSingle.setAdapter(accountsSearchAdapter, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Account selectedAccount = accountArray[which];
+                            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                            Account loggedAccount = new AccountDAO(context, db).getAccountByID(userId);
+                            if(loggedAccount.getInstance().equals(selectedAccount.getInstance())){
+                                if( status.isReblogged() || (status.getReblog()!= null && status.getReblog().isReblogged())){
+                                    new PostActionAsyncTask(context, selectedAccount, API.StatusAction.UNREBLOG, targetedId, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    status.setReblogged(false);
+                                }else{
+                                    new PostActionAsyncTask(context, selectedAccount, API.StatusAction.REBLOG, targetedId, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    status.setReblogged(true);
+                                }
+                            }else{ //Account is from another instance
+                                if( status.isReblogged() || (status.getReblog()!= null && status.getReblog().isReblogged())){
+                                    new PostActionAsyncTask(context, selectedAccount, status,  API.StatusAction.UNREBLOG, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    status.setReblogged(false);
+                                }else{
+                                    new PostActionAsyncTask(context, selectedAccount, status, API.StatusAction.REBLOG, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    status.setReblogged(true);
+                                }
+                            }
+                            statusListAdapter.notifyDataSetChanged();
+                            dialog.dismiss();
+                        }
+                    });
+                    builderSingle.show();
+                }
             }
         });
-
-
 
 
         final View finalConvertView = convertView;

@@ -1428,6 +1428,7 @@ public class API {
         Status status = new Status();
         try {
             status.setId(resobj.get("id").toString());
+            status.setUri(resobj.get("uri").toString());
             status.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
             status.setIn_reply_to_id(resobj.get("in_reply_to_id").toString());
             status.setIn_reply_to_account_id(resobj.get("in_reply_to_account_id").toString());
