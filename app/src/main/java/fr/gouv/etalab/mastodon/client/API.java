@@ -17,7 +17,6 @@ package fr.gouv.etalab.mastodon.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import android.util.Log;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -146,6 +145,10 @@ public class API {
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
                 setError(statusCode, error);
             }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
+                setError(statusCode, error);
+            }
         });
         apiResponse.setInstance(instanceEntity);
         return apiResponse;
@@ -178,6 +181,10 @@ public class API {
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
                 setError(statusCode, error);
             }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
+                setError(statusCode, error);
+            }
         });
         return apiResponse;
     }
@@ -204,6 +211,10 @@ public class API {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
+                setError(statusCode, error);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
                 setError(statusCode, error);
             }
         });
@@ -233,6 +244,10 @@ public class API {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
+                setError(statusCode, error);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
                 setError(statusCode, error);
             }
         });
@@ -265,6 +280,10 @@ public class API {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
+                setError(statusCode, error);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
                 setError(statusCode, error);
             }
         });
@@ -304,6 +323,10 @@ public class API {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
+                setError(statusCode, error);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
                 setError(statusCode, error);
             }
         });
@@ -402,6 +425,10 @@ public class API {
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
                 setError(statusCode, error);
             }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
+                setError(statusCode, error);
+            }
         });
         apiResponse.setStatuses(statuses);
         return apiResponse;
@@ -434,6 +461,10 @@ public class API {
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
                 setError(statusCode, error);
             }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
+                setError(statusCode, error);
+            }
         });
         apiResponse.setStatuses(statuses);
         return apiResponse;
@@ -454,6 +485,10 @@ public class API {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
+                setError(statusCode, error);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
                 setError(statusCode, error);
             }
         });
@@ -533,6 +568,10 @@ public class API {
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
                 setError(statusCode, error);
             }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
+                setError(statusCode, error);
+            }
         });
         apiResponse.setStatuses(statuses);
         return apiResponse;
@@ -586,6 +625,11 @@ public class API {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
+                setError(statusCode, error);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
                 setError(statusCode, error);
             }
         });
@@ -643,6 +687,10 @@ public class API {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
+                setError(statusCode, error);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
                 setError(statusCode, error);
             }
         });
@@ -727,6 +775,10 @@ public class API {
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
                 setError(statusCode, error);
             }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
+                setError(statusCode, error);
+            }
         });
         apiResponse.setAccounts(accounts);
         return apiResponse;
@@ -778,6 +830,10 @@ public class API {
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
                 setError(statusCode, error);
             }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
+                setError(statusCode, error);
+            }
         });
         apiResponse.setAccounts(accounts);
         return apiResponse;
@@ -827,6 +883,10 @@ public class API {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
+                setError(statusCode, error);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
                 setError(statusCode, error);
             }
         });
@@ -969,6 +1029,12 @@ public class API {
                     setError(statusCode, error);
                     error.printStackTrace();
                 }
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
+                    actionCode = statusCode;
+                    setError(statusCode, error);
+                    error.printStackTrace();
+                }
             });
         }else{
             delete(action, null, new JsonHttpResponseHandler() {
@@ -985,6 +1051,11 @@ public class API {
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response) {
+                    actionCode = statusCode;
+                    setError(statusCode, error);
+                }
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
                     actionCode = statusCode;
                     setError(statusCode, error);
                 }
@@ -1041,6 +1112,12 @@ public class API {
                 setError(statusCode, error);
                 error.printStackTrace();
             }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
+                actionCode = statusCode;
+                setError(statusCode, error);
+                error.printStackTrace();
+            }
         });
         apiResponse.setStatuses(statuses);
         return apiResponse;
@@ -1073,6 +1150,11 @@ public class API {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response) {
+                setError(statusCode, error);
+                error.printStackTrace();
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
                 setError(statusCode, error);
                 error.printStackTrace();
             }
@@ -1159,6 +1241,10 @@ public class API {
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
                 setError(statusCode, error);
             }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
+                setError(statusCode, error);
+            }
         });
         apiResponse.setNotifications(notifications);
         return apiResponse;
@@ -1192,6 +1278,10 @@ public class API {
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
                 setError(statusCode, error);
             }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
+                setError(statusCode, error);
+            }
         });
         return attachment;
     }
@@ -1216,6 +1306,12 @@ public class API {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
                 setError(statusCode, error);
+                error.printStackTrace();
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
+                setError(statusCode, error);
+                error.printStackTrace();
             }
         });
         return results;
@@ -1256,6 +1352,10 @@ public class API {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
+                setError(statusCode, error);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
                 setError(statusCode, error);
             }
         });
@@ -1329,6 +1429,7 @@ public class API {
         Status status = new Status();
         try {
             status.setId(resobj.get("id").toString());
+            status.setUri(resobj.get("uri").toString());
             status.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
             status.setIn_reply_to_id(resobj.get("in_reply_to_id").toString());
             status.setIn_reply_to_account_id(resobj.get("in_reply_to_account_id").toString());

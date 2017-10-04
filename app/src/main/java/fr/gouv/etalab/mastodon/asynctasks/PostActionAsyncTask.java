@@ -16,7 +16,13 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+
+import java.util.List;
+
 import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Results;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 
 
@@ -35,12 +41,31 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
     private String comment;
     private fr.gouv.etalab.mastodon.client.Entities.Status status;
     private API api;
+    private Account account;
+    private fr.gouv.etalab.mastodon.client.Entities.Status remoteStatus;
+
 
     public PostActionAsyncTask(Context context, API.StatusAction apiAction, String targetedId, OnPostActionInterface onPostActionInterface){
         this.context = context;
         this.listener = onPostActionInterface;
         this.apiAction = apiAction;
         this.targetedId = targetedId;
+    }
+
+    public PostActionAsyncTask(Context context, Account account, API.StatusAction apiAction, String targetedId, OnPostActionInterface onPostActionInterface){
+        this.context = context;
+        this.listener = onPostActionInterface;
+        this.apiAction = apiAction;
+        this.targetedId = targetedId;
+        this.account = account;
+    }
+
+    public PostActionAsyncTask(Context context, Account account, fr.gouv.etalab.mastodon.client.Entities.Status remoteStatus, API.StatusAction apiAction, OnPostActionInterface onPostActionInterface){
+        this.context = context;
+        this.listener = onPostActionInterface;
+        this.apiAction = apiAction;
+        this.remoteStatus = remoteStatus;
+        this.account = account;
     }
 
     public PostActionAsyncTask(Context context, API.StatusAction apiAction, String targetedId, fr.gouv.etalab.mastodon.client.Entities.Status status, String comment, OnPostActionInterface onPostActionInterface){
@@ -55,13 +80,30 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
 
-        api = new API(context);
-        if(apiAction ==  API.StatusAction.REPORT)
-            statusCode = api.reportAction(status, comment);
-        else if(apiAction == API.StatusAction.CREATESTATUS)
-            statusCode = api.statusAction(status);
+        //Remote action
+        if( account !=null)
+            api = new API(context, account.getInstance(), account.getToken());
         else
-            statusCode = api.postAction(apiAction, targetedId);
+            api = new API(context);
+        if( remoteStatus != null){
+            Results search = api.search(remoteStatus.getUri());
+            if( search != null){
+                List<fr.gouv.etalab.mastodon.client.Entities.Status> remoteStatuses = search.getStatuses();
+                if( remoteStatuses != null && remoteStatuses.size() > 0 ){
+                    fr.gouv.etalab.mastodon.client.Entities.Status statusTmp = remoteStatuses.get(0);
+                    this.targetedId = statusTmp.getId();
+                    statusCode = api.postAction(apiAction, targetedId);
+                }
+            }
+        } else {
+
+            if (apiAction == API.StatusAction.REPORT)
+                statusCode = api.reportAction(status, comment);
+            else if (apiAction == API.StatusAction.CREATESTATUS)
+                statusCode = api.statusAction(status);
+            else
+                statusCode = api.postAction(apiAction, targetedId);
+        }
         return null;
     }
 

@@ -14,8 +14,8 @@ package fr.gouv.etalab.mastodon.drawers;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.os.Environment;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -45,8 +45,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -66,21 +64,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 
-import fr.gouv.etalab.mastodon.activities.LoginActivity;
-import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
@@ -89,10 +83,12 @@ import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
+import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
@@ -121,10 +117,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     private int translator;
     private int behaviorWithAttachments;
     private StatusListAdapter statusListAdapter;
-    private final int REBLOG = 1;
-    private final int FAVOURITE = 2;
-    private final int PIN = 3;
-    private final int UNPIN = 4;
     private RetrieveFeedsAsyncTask.Type type;
     private String targetedId;
     private HashMap<String, String> urlConversion;
@@ -594,7 +586,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     break;
             }
 
-            Drawable imgFav, imgReblog;
+            Drawable imgFav, imgReblog, imgPinned;
             if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited()))
                 imgFav = ContextCompat.getDrawable(context, R.drawable.ic_fav_yellow);
             else
@@ -605,11 +597,18 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             else
                 imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_retweet_black);
 
+            if( status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned()))
+                imgPinned = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_yellow);
+            else
+                imgPinned = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_dark);
+
             imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
             imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+            imgPinned.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
 
             holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
             holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
+            holder.status_pin.setImageDrawable(imgPinned);
 
             if( theme == Helper.THEME_LIGHT) {
                 holder.status_show_more.setTextColor(ContextCompat.getColor(context, R.color.white));
@@ -682,21 +681,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, TootActivity.class);
-                Bundle b = new Bundle();
-                if( status.getReblog() != null )
-                    b.putParcelable("tootReply", status.getReblog());
-                else
-                    b.putParcelable("tootReply", status);
-                intent.putExtras(b); //Put your id to your next Intent
-                context.startActivity(intent);
-                if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
-                    try {
-                        //Avoid to open multi activities when replying in a conversation
-                        ((ShowConversationActivity)context).finish();
-                    }catch (Exception ignored){}
-
-                }
+                CrossActions.doCrossReply(context, status, type);
             }
         });
 
@@ -791,16 +776,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 statusListAdapter.notifyDataSetChanged();
             }
         });
-        holder.status_pin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /* Code is in for displayConfirmationDialog() but we don't call it.
-                 * Need to make sure we can successfully get a pinned toots list by
-                 * this point, after async call earlier.
-                 */
-                pinAction(status);
-            }
-        });
+
         holder.status_show_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -839,24 +815,22 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_favorite_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
-                if( confirmation )
-                    displayConfirmationDialog(FAVOURITE,status);
-                else
-                    favouriteAction(status);
-            }
-        });
-        holder.status_reblog_count.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
-                if( confirmation )
-                    displayConfirmationDialog(REBLOG,status);
-                else
-                    reblogAction(status);
+                CrossActions.doCrossAction(context, status, (status.isFavourited()|| (status.getReblog() != null && status.getReblog().isFavourited()))? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, statusListAdapter, StatusListAdapter.this);
             }
         });
 
+        holder.status_reblog_count.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CrossActions.doCrossAction(context, status, (status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged()))? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, statusListAdapter, StatusListAdapter.this);
+            }
+        });
+        holder.status_pin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CrossActions.doCrossAction(context, status, (status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned()))? API.StatusAction.UNPIN:API.StatusAction.PIN, statusListAdapter, StatusListAdapter.this);
+            }
+        });
 
 
 
@@ -1048,52 +1022,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         return convertView;
     }
 
-    /**
-     * Favourites/Unfavourites a status
-     * @param status Status
-     */
-    private void favouriteAction(Status status){
-        if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())){
-            new PostActionAsyncTask(context, API.StatusAction.UNFAVOURITE, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            status.setFavourited(false);
-        }else{
-            new PostActionAsyncTask(context, API.StatusAction.FAVOURITE, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            status.setFavourited(true);
-        }
-        statusListAdapter.notifyDataSetChanged();
-    }
 
-    /**
-     * Reblog/Unreblog a status
-     * @param status Status
-     */
-    private void reblogAction(Status status){
-        if( status.isReblogged() || (status.getReblog()!= null && status.getReblog().isReblogged())){
-            new PostActionAsyncTask(context, API.StatusAction.UNREBLOG, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            status.setReblogged(false);
-        }else{
-            new PostActionAsyncTask(context, API.StatusAction.REBLOG, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            status.setReblogged(true);
-        }
-        statusListAdapter.notifyDataSetChanged();
-    }
-
-    /**
-     * Pin or unpin a status
-     * @param status Status
-     */
-    private void pinAction(Status status) {
-
-        if (status.isPinned()) {
-            new PostActionAsyncTask(context, API.StatusAction.UNPIN, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            holder.status_pin.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_action_pin));
-        } else {
-            new PostActionAsyncTask(context, API.StatusAction.PIN, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            holder.status_pin.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_action_pin_yellow));
-        }
-
-        statusListAdapter.notifyDataSetChanged();
-    }
 
     private void loadAttachments(final Status status, ViewHolder holder){
         List<Attachment> attachments = status.getMedia_attachments();
@@ -1264,7 +1193,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }else if( statusAction == API.StatusAction.UNREBLOG){
             for(Status status: statuses){
                 if( status.getId().equals(targetedId)) {
-                    status.setReblogs_count(status.getReblogs_count() - 1);
+                    if( status.getReblogs_count() - 1 >= 0)
+                        status.setReblogs_count(status.getReblogs_count() - 1);
                     break;
                 }
             }
@@ -1280,7 +1210,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }else if( statusAction == API.StatusAction.UNFAVOURITE){
             for(Status status: statuses){
                 if( status.getId().equals(targetedId)) {
-                    status.setFavourites_count(status.getFavourites_count() - 1);
+                    if( status.getFavourites_count() - 1 >= 0)
+                        status.setFavourites_count(status.getFavourites_count() - 1);
                     break;
                 }
             }
@@ -1428,60 +1359,5 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     }
 
 
-    /**
-     * Display a validation message
-     * @param action int
-     * @param status Status
-     */
-    private void displayConfirmationDialog(final int action, final Status status){
 
-        String title = null;
-        if( action == FAVOURITE){
-            if( status.isFavourited() || ( status.getReblog() != null && status.getReblog().isFavourited()))
-                title = context.getString(R.string.favourite_remove);
-            else
-                title = context.getString(R.string.favourite_add);
-        }else if( action == REBLOG ){
-            if( status.isReblogged() || (status.getReblog() != null && status.getReblog().isReblogged()))
-                title = context.getString(R.string.reblog_remove);
-            else
-                title = context.getString(R.string.reblog_add);
-        }else if ( action == PIN) {
-            title = context.getString(R.string.pin_add);
-        }else if (action == UNPIN) {
-            title = context.getString(R.string.pin_remove);
-        }
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            builder.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
-        else
-            //noinspection deprecation
-            builder.setMessage(Html.fromHtml(status.getContent()));
-        builder.setIcon(android.R.drawable.ic_dialog_alert)
-            .setTitle(title)
-            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if( action == REBLOG)
-                        reblogAction(status);
-                    else if( action == FAVOURITE)
-                        favouriteAction(status);
-                    else if ( action == PIN)
-                        pinAction(status);
-                    else if ( action == UNPIN)
-                        pinAction(status);
-                    dialog.dismiss();
-                }
-            })
-            .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-
-            })
-            .show();
-    }
 }

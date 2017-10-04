@@ -16,9 +16,12 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostStatusActionInterface;
 
 
@@ -33,16 +36,22 @@ public class PostStatusAsyncTask extends AsyncTask<Void, Void, Void> {
     private OnPostStatusActionInterface listener;
     private APIResponse apiResponse;
     private fr.gouv.etalab.mastodon.client.Entities.Status status;
+    private Account account;
 
-    public PostStatusAsyncTask(Context context, fr.gouv.etalab.mastodon.client.Entities.Status status, OnPostStatusActionInterface onPostStatusActionInterface){
+    public PostStatusAsyncTask(Context context, Account account, fr.gouv.etalab.mastodon.client.Entities.Status status, OnPostStatusActionInterface onPostStatusActionInterface){
         this.context = context;
         this.listener = onPostStatusActionInterface;
         this.status = status;
+        this.account = account;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        apiResponse = new API(context).postStatusAction(status);
+        if( account == null)
+            apiResponse = new API(context).postStatusAction(status);
+        else
+            apiResponse = new API(context, account.getInstance(), account.getToken()).postStatusAction(status);
+
         return null;
     }
 
