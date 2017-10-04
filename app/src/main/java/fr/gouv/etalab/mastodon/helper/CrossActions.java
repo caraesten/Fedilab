@@ -17,18 +17,26 @@ package fr.gouv.etalab.mastodon.helper;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
+import android.util.Log;
 import android.widget.BaseAdapter;
 import java.util.ArrayList;
 import java.util.List;
+
+import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
+import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.AccountsSearchAdapter;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
@@ -42,7 +50,7 @@ import mastodon.etalab.gouv.fr.mastodon.R;
 public class CrossActions {
 
     public static void doCrossAction(final Context context, final Status status, final API.StatusAction doAction, final BaseAdapter baseAdapter, final OnPostActionInterface onPostActionInterface){
-        List<Account> accounts = connectedAccounts(context);
+        List<Account> accounts = connectedAccounts(context, null);
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
 
         boolean undoAction = (doAction == API.StatusAction.UNPIN || doAction == API.StatusAction.UNREBLOG || doAction == API.StatusAction.UNFAVOURITE );
@@ -104,6 +112,67 @@ public class CrossActions {
         }
     }
 
+    public static void doCrossReply(final Context context, final Status status, final RetrieveFeedsAsyncTask.Type type){
+        List<Account> accounts = connectedAccounts(context, status);
+
+        if( accounts.size() == 1) {
+            Intent intent = new Intent(context, TootActivity.class);
+            Bundle b = new Bundle();
+            if( status.getReblog() != null )
+                b.putParcelable("tootReply", status.getReblog());
+            else
+                b.putParcelable("tootReply", status);
+            intent.putExtras(b); //Put your id to your next Intent
+            context.startActivity(intent);
+            if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
+                try {
+                    //Avoid to open multi activities when replying in a conversation
+                    ((ShowConversationActivity)context).finish();
+                }catch (Exception ignored){}
+
+            }
+        }else {
+            AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
+            builderSingle.setTitle(context.getString(R.string.choose_accounts));
+            final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(context, accounts, true);
+            final Account[] accountArray = new Account[accounts.size()];
+            int i = 0;
+            for(Account account: accounts){
+                accountArray[i] = account;
+                i++;
+            }
+            builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builderSingle.setAdapter(accountsSearchAdapter, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Account account = accountArray[which];
+                    Intent intent = new Intent(context, TootActivity.class);
+                    Bundle b = new Bundle();
+                    if( status.getReblog() != null )
+                        b.putParcelable("tootReply", status.getReblog());
+                    else
+                        b.putParcelable("tootReply", status);
+                    b.putParcelable("accountReply", account);
+                    intent.putExtras(b); //Put your id to your next Intent
+                    context.startActivity(intent);
+                    if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
+                        try {
+                            //Avoid to open multi activities when replying in a conversation
+                            ((ShowConversationActivity)context).finish();
+                        }catch (Exception ignored){}
+
+                    }
+                    dialog.dismiss();
+                }
+            });
+            builderSingle.show();
+        }
+    }
 
 
     /**
@@ -215,15 +284,48 @@ public class CrossActions {
      * @param context Context
      * @return List<Account>
      */
-    private static List<Account> connectedAccounts(Context context){
+    private static List<Account> connectedAccounts(Context context, Status status){
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        List<Account> accounts = new AccountDAO(context, db).getAllAccount();
-        if( sharedpreferences.getBoolean(Helper.SET_ALLOW_CROSS_ACTIONS, true) && accounts.size() > 1 ){
+        List<Account> accountstmp = new AccountDAO(context, db).getAllAccount();
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
+        List<Account> accounts = new ArrayList<>();
+        if( sharedpreferences.getBoolean(Helper.SET_ALLOW_CROSS_ACTIONS, true) && accountstmp.size() > 1 ){
+            //It's for a reply
+            if( status != null){
+                //Status is private or direct
+                if( status.getVisibility().equals("private") || status.getVisibility().equals("direct") ){
+                    //Retrieves mentioned accounts and compares them to the list of accounts in the device.
+                    List<Mention> mentions = status.getMentions();
+                    List<String> addedAccount = new ArrayList<>();
+                    //Adds the owner
+                    accounts.add(currentAccount);
+                    addedAccount.add(currentAccount.getId() + "|" + currentAccount.getAcct());
+                    for(Mention mention: mentions){
+                        for(Account account: accountstmp){
+                            String mentionAcct = (mention.getAcct().contains("@"))?mention.getAcct():mention.getAcct()+"@"+currentAccount.getInstance();
+                            if( (account.getAcct() + "@" + account.getInstance()).equals(mentionAcct) && !addedAccount.contains(account.getId() + "|" + account.getAcct())) {
+                                accounts.add(account);
+                            }
+                        }
+                    }
+                    for(Account account: accountstmp){
+                        Account tootOwner = status.getAccount();
+                        String mentionAcct = (tootOwner.getAcct().contains("@"))?tootOwner.getAcct():tootOwner.getAcct()+"@"+currentAccount.getInstance();
+                        if( (account.getAcct() + "@" + account.getInstance()).equals(mentionAcct) && !addedAccount.contains(account.getId() + "|" + account.getAcct())) {
+                            accounts.add(account);
+                        }
+                    }
+                }else {
+                    accounts = accountstmp;
+                }
+            }else {
+                accounts = accountstmp;
+            }
             return accounts;
         }else {
             List<Account> oneAccount = new ArrayList<>();
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             Account account = new AccountDAO(context, db).getAccountByID(userId);
             oneAccount.add(account);
             return  oneAccount;

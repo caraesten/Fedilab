@@ -681,21 +681,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, TootActivity.class);
-                Bundle b = new Bundle();
-                if( status.getReblog() != null )
-                    b.putParcelable("tootReply", status.getReblog());
-                else
-                    b.putParcelable("tootReply", status);
-                intent.putExtras(b); //Put your id to your next Intent
-                context.startActivity(intent);
-                if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
-                    try {
-                        //Avoid to open multi activities when replying in a conversation
-                        ((ShowConversationActivity)context).finish();
-                    }catch (Exception ignored){}
-
-                }
+                CrossActions.doCrossReply(context, status, type);
             }
         });
 
@@ -1207,7 +1193,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }else if( statusAction == API.StatusAction.UNREBLOG){
             for(Status status: statuses){
                 if( status.getId().equals(targetedId)) {
-                    status.setReblogs_count(status.getReblogs_count() - 1);
+                    if( status.getReblogs_count() - 1 >= 0)
+                        status.setReblogs_count(status.getReblogs_count() - 1);
                     break;
                 }
             }
@@ -1223,7 +1210,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }else if( statusAction == API.StatusAction.UNFAVOURITE){
             for(Status status: statuses){
                 if( status.getId().equals(targetedId)) {
-                    status.setFavourites_count(status.getFavourites_count() - 1);
+                    if( status.getFavourites_count() - 1 >= 0)
+                        status.setFavourites_count(status.getFavourites_count() - 1);
                     break;
                 }
             }

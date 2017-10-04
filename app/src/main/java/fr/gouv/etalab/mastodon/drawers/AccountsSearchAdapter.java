@@ -16,6 +16,8 @@ package fr.gouv.etalab.mastodon.drawers;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +37,8 @@ import java.util.ArrayList;
 import java.util.List;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
 
@@ -49,10 +53,12 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
     private boolean owner;
+    private Context context;
 
     public AccountsSearchAdapter(Context context, List<Account> accounts){
         super(context, android.R.layout.simple_list_item_1, accounts);
         this.accounts = accounts;
+        this.context = context;
         this.tempAccounts = new ArrayList<>(accounts);
         this.suggestions = new ArrayList<>(accounts);
         layoutInflater = LayoutInflater.from(context);
@@ -65,6 +71,7 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
     public AccountsSearchAdapter(Context context, List<Account> accounts, boolean owner){
         super(context, android.R.layout.simple_list_item_1, accounts);
         this.accounts = accounts;
+        this.context = context;
         this.tempAccounts = new ArrayList<>(accounts);
         this.suggestions = new ArrayList<>(accounts);
         layoutInflater = LayoutInflater.from(context);
@@ -110,7 +117,12 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
         }
 
         if( owner) {
-            holder.account_un.setText(String.format("@%s", account.getUsername() + "@" + account.getInstance()));
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
+            String instance = (account.getInstance() !=null)?account.getInstance():currentAccount.getInstance();
+            holder.account_un.setText(String.format("@%s", account.getUsername() + "@" + instance));
             holder.account_dn.setVisibility(View.GONE);
         }else {
             holder.account_un.setText(String.format("@%s", account.getUsername()));

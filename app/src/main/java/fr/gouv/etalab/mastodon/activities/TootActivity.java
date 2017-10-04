@@ -168,6 +168,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private String initialContent;
     private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 754;
     private BroadcastReceiver receive_picture;
+    private Account accountReply;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -259,6 +260,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         restored = -1;
         if(b != null) {
             tootReply = b.getParcelable("tootReply");
+            accountReply = b.getParcelable("accountReply");
             tootMention = b.getString("tootMention", null);
             urlMention = b.getString("urlMention", null);
             fileMention = b.getString("fileMention", null);
@@ -297,7 +299,12 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 setTitle(R.string.toot_title);
         }
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String userId;
+        if( accountReply == null)
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        else
+            userId = accountReply.getId();
+
         if( tootMention != null && urlMention != null && fileMention != null) {
             Bitmap pictureMention = BitmapFactory.decodeFile(getCacheDir() + "/" + fileMention);
             if (pictureMention != null) {
@@ -314,8 +321,12 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             toot_content.setText(String.format("\n\nvia @%s\n\n%s\n\n", tootMention, urlMention));
             toot_space_left.setText(String.valueOf(toot_content.length()));
         }
+        Account account;
+        if( accountReply == null)
+            account = new AccountDAO(getApplicationContext(),db).getAccountByID(userId);
+        else
+            account = accountReply;
 
-        Account account = new AccountDAO(getApplicationContext(),db).getAccountByID(userId);
         String url = account.getAvatar();
         if( url.startsWith("/") ){
             url = "https://" + Helper.getLiveInstance(getApplicationContext()) + account.getAvatar();
@@ -484,8 +495,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 if( tootReply != null)
                     toot.setIn_reply_to_id(tootReply.getId());
                 toot.setContent(toot_content.getText().toString().trim());
-
-                new PostStatusAsyncTask(getApplicationContext(), toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new PostStatusAsyncTask(getApplicationContext(), accountReply, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
             }
         });
@@ -1310,7 +1320,11 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             title.setText(getString(R.string.toot_title_reply));
         else
             setTitle(R.string.toot_title_reply);
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String userId;
+        if( accountReply == null)
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        else
+            userId = accountReply.getId();
 
         switch (tootReply.getVisibility()){
             case "public":

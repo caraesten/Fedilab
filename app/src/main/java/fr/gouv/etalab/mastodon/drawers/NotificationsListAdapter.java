@@ -741,7 +741,8 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
         }else if( statusAction == API.StatusAction.UNREBLOG){
             for(Notification notification: notifications){
                 if( notification.getStatus().getId().equals(targetedId)) {
-                    notification.getStatus().setReblogs_count(notification.getStatus().getReblogs_count() - 1);
+                    if( notification.getStatus().getReblogs_count() - 1 >= 0 )
+                        notification.getStatus().setReblogs_count(notification.getStatus().getReblogs_count() - 1);
                     break;
                 }
             }
@@ -757,7 +758,8 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
         }else if( statusAction == API.StatusAction.UNFAVOURITE){
             for(Notification notification: notifications){
                 if( notification.getStatus().getId().equals(targetedId)) {
-                    notification.getStatus().setFavourites_count(notification.getStatus().getFavourites_count() - 1);
+                    if( notification.getStatus().getFavourites_count() - 1 >= 0 )
+                        notification.getStatus().setFavourites_count(notification.getStatus().getFavourites_count() - 1);
                     break;
                 }
             }
