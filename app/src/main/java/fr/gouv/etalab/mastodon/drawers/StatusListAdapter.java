@@ -88,6 +88,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
+import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
@@ -238,7 +239,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        
+
         //Display a preview for accounts that have replied *if enabled and only for home timeline*
         if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
             boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);
@@ -591,7 +592,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     break;
             }
 
-            Drawable imgFav, imgReblog;
+            Drawable imgFav, imgReblog, imgPinned;
             if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited()))
                 imgFav = ContextCompat.getDrawable(context, R.drawable.ic_fav_yellow);
             else
@@ -602,11 +603,18 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             else
                 imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_retweet_black);
 
+            if( status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned()))
+                imgPinned = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_yellow);
+            else
+                imgPinned = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_dark);
+
             imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
             imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+            imgPinned.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
 
             holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
             holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
+            holder.status_pin.setImageDrawable(imgPinned);
 
             if( theme == Helper.THEME_LIGHT) {
                 holder.status_show_more.setTextColor(ContextCompat.getColor(context, R.color.white));
@@ -788,16 +796,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 statusListAdapter.notifyDataSetChanged();
             }
         });
-        holder.status_pin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /* Code is in for displayConfirmationDialog() but we don't call it.
-                 * Need to make sure we can successfully get a pinned toots list by
-                 * this point, after async call earlier.
-                 */
-                pinAction(status);
-            }
-        });
+
         holder.status_show_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -836,121 +835,23 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_favorite_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Account> accounts = Helper.connectedAccounts(context);
-                if( accounts.size() == 1) {
-                    boolean confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
-                    if (confirmation)
-                        displayConfirmationDialog(FAVOURITE, status);
-                    else
-                        favouriteAction(status);
-                }else {
-                    AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
-                    builderSingle.setTitle(context.getString(R.string.choose_accounts));
-                    final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(context, accounts);
-                    final Account[] accountArray = new Account[accounts.size()];
-                    int i = 0;
-                    for(Account account: accounts){
-                        accountArray[i] = account;
-                        i++;
-                    }
-                    builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    builderSingle.setAdapter(accountsSearchAdapter, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Account selectedAccount = accountArray[which];
-                            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                            Account loggedAccount = new AccountDAO(context, db).getAccountByID(userId);
-                            if(loggedAccount.getInstance().equals(selectedAccount.getInstance())){
-                                if( status.isReblogged() || (status.getReblog()!= null && status.getReblog().isReblogged())){
-                                    new PostActionAsyncTask(context, selectedAccount, API.StatusAction.UNFAVOURITE, targetedId, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                    status.setReblogged(false);
-                                }else{
-                                    new PostActionAsyncTask(context, selectedAccount, API.StatusAction.FAVOURITE, targetedId, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                    status.setReblogged(true);
-                                }
-                            }else{ //Account is from another instance
-                                if( status.isReblogged() || (status.getReblog()!= null && status.getReblog().isReblogged())){
-                                    new PostActionAsyncTask(context, selectedAccount, status,  API.StatusAction.UNFAVOURITE, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                    status.setReblogged(false);
-                                }else{
-                                    new PostActionAsyncTask(context, selectedAccount, status, API.StatusAction.FAVOURITE, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                    status.setReblogged(true);
-                                }
-                            }
-
-                            statusListAdapter.notifyDataSetChanged();
-                            dialog.dismiss();
-                        }
-                    });
-                    builderSingle.show();
-                }
+                CrossActions.doCrossAction(context, status, targetedId, status.isFavourited()? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, statusListAdapter, StatusListAdapter.this);
             }
         });
 
         holder.status_reblog_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Account> accounts = Helper.connectedAccounts(context);
-                if( accounts.size() == 1) {
-                    boolean confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
-                    if (confirmation)
-                        displayConfirmationDialog(REBLOG, status);
-                    else
-                        reblogAction(status);
-                }else{
-                    AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
-                    builderSingle.setTitle(context.getString(R.string.choose_accounts));
-                    final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(context, accounts);
-                    final Account[] accountArray = new Account[accounts.size()];
-                    int i = 0;
-                    for(Account account: accounts){
-                        accountArray[i] = account;
-                        i++;
-                    }
-                    builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    builderSingle.setAdapter(accountsSearchAdapter, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Account selectedAccount = accountArray[which];
-                            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                            Account loggedAccount = new AccountDAO(context, db).getAccountByID(userId);
-                            if(loggedAccount.getInstance().equals(selectedAccount.getInstance())){
-                                if( status.isReblogged() || (status.getReblog()!= null && status.getReblog().isReblogged())){
-                                    new PostActionAsyncTask(context, selectedAccount, API.StatusAction.UNREBLOG, targetedId, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                    status.setReblogged(false);
-                                }else{
-                                    new PostActionAsyncTask(context, selectedAccount, API.StatusAction.REBLOG, targetedId, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                    status.setReblogged(true);
-                                }
-                            }else{ //Account is from another instance
-                                if( status.isReblogged() || (status.getReblog()!= null && status.getReblog().isReblogged())){
-                                    new PostActionAsyncTask(context, selectedAccount, status,  API.StatusAction.UNREBLOG, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                    status.setReblogged(false);
-                                }else{
-                                    new PostActionAsyncTask(context, selectedAccount, status, API.StatusAction.REBLOG, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                    status.setReblogged(true);
-                                }
-                            }
-                            statusListAdapter.notifyDataSetChanged();
-                            dialog.dismiss();
-                        }
-                    });
-                    builderSingle.show();
-                }
+                CrossActions.doCrossAction(context, status, targetedId, status.isReblogged()? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, statusListAdapter, StatusListAdapter.this);
             }
         });
+        holder.status_pin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CrossActions.doCrossAction(context, status, targetedId, status.isPinned()? API.StatusAction.UNPIN:API.StatusAction.PIN, statusListAdapter, StatusListAdapter.this);
+            }
+        });
+
 
 
         final View finalConvertView = convertView;
@@ -1141,52 +1042,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         return convertView;
     }
 
-    /**
-     * Favourites/Unfavourites a status
-     * @param status Status
-     */
-    private void favouriteAction(Status status){
-        if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())){
-            new PostActionAsyncTask(context, API.StatusAction.UNFAVOURITE, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            status.setFavourited(false);
-        }else{
-            new PostActionAsyncTask(context, API.StatusAction.FAVOURITE, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            status.setFavourited(true);
-        }
-        statusListAdapter.notifyDataSetChanged();
-    }
 
-    /**
-     * Reblog/Unreblog a status
-     * @param status Status
-     */
-    private void reblogAction(Status status){
-        if( status.isReblogged() || (status.getReblog()!= null && status.getReblog().isReblogged())){
-            new PostActionAsyncTask(context, API.StatusAction.UNREBLOG, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            status.setReblogged(false);
-        }else{
-            new PostActionAsyncTask(context, API.StatusAction.REBLOG, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            status.setReblogged(true);
-        }
-        statusListAdapter.notifyDataSetChanged();
-    }
-
-    /**
-     * Pin or unpin a status
-     * @param status Status
-     */
-    private void pinAction(Status status) {
-
-        if (status.isPinned()) {
-            new PostActionAsyncTask(context, API.StatusAction.UNPIN, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            holder.status_pin.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_action_pin));
-        } else {
-            new PostActionAsyncTask(context, API.StatusAction.PIN, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            holder.status_pin.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_action_pin_yellow));
-        }
-
-        statusListAdapter.notifyDataSetChanged();
-    }
 
     private void loadAttachments(final Status status, ViewHolder holder){
         List<Attachment> attachments = status.getMedia_attachments();
@@ -1521,60 +1377,5 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     }
 
 
-    /**
-     * Display a validation message
-     * @param action int
-     * @param status Status
-     */
-    private void displayConfirmationDialog(final int action, final Status status){
 
-        String title = null;
-        if( action == FAVOURITE){
-            if( status.isFavourited() || ( status.getReblog() != null && status.getReblog().isFavourited()))
-                title = context.getString(R.string.favourite_remove);
-            else
-                title = context.getString(R.string.favourite_add);
-        }else if( action == REBLOG ){
-            if( status.isReblogged() || (status.getReblog() != null && status.getReblog().isReblogged()))
-                title = context.getString(R.string.reblog_remove);
-            else
-                title = context.getString(R.string.reblog_add);
-        }else if ( action == PIN) {
-            title = context.getString(R.string.pin_add);
-        }else if (action == UNPIN) {
-            title = context.getString(R.string.pin_remove);
-        }
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            builder.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
-        else
-            //noinspection deprecation
-            builder.setMessage(Html.fromHtml(status.getContent()));
-        builder.setIcon(android.R.drawable.ic_dialog_alert)
-            .setTitle(title)
-            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if( action == REBLOG)
-                        reblogAction(status);
-                    else if( action == FAVOURITE)
-                        favouriteAction(status);
-                    else if ( action == PIN)
-                        pinAction(status);
-                    else if ( action == UNPIN)
-                        pinAction(status);
-                    dialog.dismiss();
-                }
-            })
-            .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-
-            })
-            .show();
-    }
 }

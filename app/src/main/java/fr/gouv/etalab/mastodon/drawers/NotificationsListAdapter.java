@@ -33,14 +33,11 @@ import android.support.v7.widget.PopupMenu;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -54,11 +51,9 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
@@ -71,6 +66,7 @@ import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnPostNotificationsActionInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -92,8 +88,6 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
     private LayoutInflater layoutInflater;
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
-    private final int REBLOG = 1;
-    private final int FAVOURITE = 2;
     private NotificationsListAdapter notificationsListAdapter;
     private int behaviorWithAttachments;
     private boolean isOnWifi;
@@ -460,23 +454,17 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
         holder.status_favorite_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                boolean confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
-                if( confirmation )
-                    displayConfirmationDialog(FAVOURITE,status);
-                else
-                    favouriteAction(status);
+                if( status != null)
+                    CrossActions.doCrossAction(context, status, status.getId(), status.isFavourited()? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, notificationsListAdapter, NotificationsListAdapter.this);
             }
         });
 
         holder.status_reblog_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
-                if( confirmation )
-                    displayConfirmationDialog(REBLOG,status);
-                else
-                    reblogAction(status);
+                if( status != null)
+                    CrossActions.doCrossAction(context, status, status.getId(), status.isReblogged()? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, notificationsListAdapter, NotificationsListAdapter.this);
+
             }
         });
 
@@ -683,54 +671,6 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
         return convertView;
     }
 
-    /**
-     * Display a validation message
-     * @param action int
-     * @param status Status
-     */
-    private void displayConfirmationDialog(final int action, final Status status){
-
-        String title = null;
-        if( action == FAVOURITE){
-            if( status.isFavourited())
-                title = context.getString(R.string.favourite_remove);
-            else
-                title = context.getString(R.string.favourite_add);
-        }else if( action == REBLOG ){
-            if( status.isReblogged())
-                title = context.getString(R.string.reblog_remove);
-            else
-                title = context.getString(R.string.reblog_add);
-        }
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            builder.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
-        else
-            //noinspection deprecation
-            builder.setMessage(Html.fromHtml(status.getContent()));
-        builder.setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle(title)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if( action == REBLOG)
-                            reblogAction(status);
-                        else if( action == FAVOURITE)
-                            favouriteAction(status);
-                        dialog.dismiss();
-                    }
-                })
-                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-
-                })
-                .show();
-    }
 
     /**
      * Display a validation message for notification deletion
@@ -769,36 +709,6 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                     }
                 }).create();
         dialog.show();
-    }
-
-    /**
-     * Favourites/Unfavourites a status
-     * @param status Status
-     */
-    private void favouriteAction(Status status){
-        if( status.isFavourited()){
-            new PostActionAsyncTask(context, API.StatusAction.UNFAVOURITE, status.getId(), NotificationsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            status.setFavourited(false);
-        }else{
-            new PostActionAsyncTask(context, API.StatusAction.FAVOURITE, status.getId(), NotificationsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            status.setFavourited(true);
-        }
-        notificationsListAdapter.notifyDataSetChanged();
-    }
-
-    /**
-     * Reblog/Unreblog a status
-     * @param status Status
-     */
-    private void reblogAction(Status status){
-        if( status.isReblogged()){
-            new PostActionAsyncTask(context, API.StatusAction.UNREBLOG, status.getId(), NotificationsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            status.setReblogged(false);
-        }else{
-            new PostActionAsyncTask(context, API.StatusAction.REBLOG, status.getId(), NotificationsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            status.setReblogged(true);
-        }
-        notificationsListAdapter.notifyDataSetChanged();
     }
 
     @Override
