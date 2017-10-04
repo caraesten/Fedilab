@@ -47,6 +47,12 @@
             android:layout_height="wrap_content" />
 
         <CheckBox
+            android:id="@+id/set_multiaccount_actions"
+            android:layout_width="wrap_content"
+            android:text="@string/set_multiaccount_actions"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
             android:id="@+id/set_show_error_messages"
             android:layout_width="wrap_content"
             android:text="@string/set_show_error_messages"

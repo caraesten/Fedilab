@@ -94,6 +94,8 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+
+
         boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
         final CheckBox set_show_error_messages = (CheckBox) rootView.findViewById(R.id.set_show_error_messages);
         set_show_error_messages.setChecked(show_error_messages);
@@ -178,6 +180,20 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_NOTIF_VALIDATION_FAV, set_share_validation_fav.isChecked());
+                editor.apply();
+            }
+        });
+
+
+        boolean multiaccount_actions = sharedpreferences.getBoolean(Helper.SET_ALLOW_CROSS_ACTIONS, true);
+        final CheckBox set_multiaccount_actions = (CheckBox) rootView.findViewById(R.id.set_multiaccount_actions);
+        set_multiaccount_actions.setChecked(multiaccount_actions);
+
+        set_multiaccount_actions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_ALLOW_CROSS_ACTIONS, set_multiaccount_actions.isChecked());
                 editor.apply();
             }
         });

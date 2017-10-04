@@ -9,5 +9,5 @@
     <dimen name="drawer_padding">2dp</dimen>
     <dimen name="toot_padding">20dp</dimen>
     <bool name="isTablet">false</bool>
-    <dimen name="layout_height_header">250dp</dimen>
+    <dimen name="layout_height_header">180dp</dimen>
 </resources>

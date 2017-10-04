@@ -179,6 +179,7 @@
     </string-array>
     <string name="no_draft">Aucun brouillon !</string>
     <string name="choose_toot">Choisissez un pouet</string>
+    <string name="choose_accounts">Choisissez un compte</string>
     <string name="remove_draft">Supprimer le brouillon ?</string>
     <string name="show_reply">Cliquer sur le bouton pour afficher le pouet d\'origine</string>
     <!-- Instance -->
@@ -306,6 +307,7 @@
     <string name="set_header_picture_overlay">Choisissez une image d\'entête</string>
     <string name="set_preview_reply">Afficher le nombre de réponses sur la page d\'accueil</string>
     <string name="set_preview_reply_pp">Afficher les images de profil ?</string>
+    <string name="set_multiaccount_actions">Permettre les interactions entre comptes ?</string>
     <string name="note_no_space">Vous avez atteint les 160 caractères autorisés !</string>
     <string name="username_no_space">Vous avez atteint les 30 caractères autorisés !</string>
     <string name="settings_title_hour">Plage horaire pour les notifications :</string>
