@@ -422,4 +422,5 @@
     <string name="thanks_text">Danke an Stéphane für das Logo.</string>
 
     <string name="thanks_text_dev">Danke an:</string>
+    <string name="set_multiaccount_actions">Erlauben Interaktionen zwischen den accounts?</string>
 </resources>
