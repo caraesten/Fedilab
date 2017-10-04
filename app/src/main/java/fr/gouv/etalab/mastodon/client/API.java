@@ -17,7 +17,6 @@ package fr.gouv.etalab.mastodon.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import android.util.Log;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -1307,10 +1306,12 @@ public class API {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
                 setError(statusCode, error);
+                error.printStackTrace();
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
                 setError(statusCode, error);
+                error.printStackTrace();
             }
         });
         return results;

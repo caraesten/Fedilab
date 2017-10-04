@@ -1558,26 +1558,7 @@ public class Helper {
         tableLayout.setVisibility(View.VISIBLE);
     }
 
-    /**
-     * Returns the list of connected accounts when cross actions are allowed otherwise, returns the current account
-     * @param context Context
-     * @return List<Account>
-     */
-    public static List<Account> connectedAccounts(Context context){
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        List<Account> accounts = new AccountDAO(context, db).getAllAccount();
-        if( sharedpreferences.getBoolean(Helper.SET_ALLOW_CROSS_ACTIONS, true) && accounts.size() > 1 ){
-            return accounts;
-        }else {
 
-            List<Account> oneAccount = new ArrayList<>();
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            Account account = new AccountDAO(context, db).getAccountByID(userId);
-            oneAccount.add(account);
-            return  oneAccount;
-        }
-    }
 
     /**
      * Get a bitmap from a view

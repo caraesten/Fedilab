@@ -829,20 +829,20 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_favorite_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CrossActions.doCrossAction(context, status, targetedId, (status.isFavourited()|| (status.getReblog() != null && status.getReblog().isFavourited()))? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, statusListAdapter, StatusListAdapter.this);
+                CrossActions.doCrossAction(context, status, (status.isFavourited()|| (status.getReblog() != null && status.getReblog().isFavourited()))? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, statusListAdapter, StatusListAdapter.this);
             }
         });
 
         holder.status_reblog_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CrossActions.doCrossAction(context, status, targetedId, (status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged()))? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, statusListAdapter, StatusListAdapter.this);
+                CrossActions.doCrossAction(context, status, (status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged()))? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, statusListAdapter, StatusListAdapter.this);
             }
         });
         holder.status_pin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CrossActions.doCrossAction(context, status, targetedId, (status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned()))? API.StatusAction.UNPIN:API.StatusAction.PIN, statusListAdapter, StatusListAdapter.this);
+                CrossActions.doCrossAction(context, status, (status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned()))? API.StatusAction.UNPIN:API.StatusAction.PIN, statusListAdapter, StatusListAdapter.this);
             }
         });
 

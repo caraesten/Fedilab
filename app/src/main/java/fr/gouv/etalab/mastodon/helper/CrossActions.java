@@ -23,11 +23,9 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
-import android.util.Log;
 import android.widget.BaseAdapter;
-
+import java.util.ArrayList;
 import java.util.List;
-
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -43,8 +41,8 @@ import mastodon.etalab.gouv.fr.mastodon.R;
  */
 public class CrossActions {
 
-    public static void doCrossAction(final Context context, final Status status, final String targetedId, final API.StatusAction doAction, final BaseAdapter baseAdapter, final OnPostActionInterface onPostActionInterface){
-        List<Account> accounts = Helper.connectedAccounts(context);
+    public static void doCrossAction(final Context context, final Status status, final API.StatusAction doAction, final BaseAdapter baseAdapter, final OnPostActionInterface onPostActionInterface){
+        List<Account> accounts = connectedAccounts(context);
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
 
         boolean undoAction = (doAction == API.StatusAction.UNPIN || doAction == API.StatusAction.UNREBLOG || doAction == API.StatusAction.UNFAVOURITE );
@@ -85,7 +83,7 @@ public class CrossActions {
                     SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                     Account loggedAccount = new AccountDAO(context, db).getAccountByID(userId);
                     if(loggedAccount.getInstance().equals(selectedAccount.getInstance())){
-                        new PostActionAsyncTask(context, selectedAccount, doAction, targetedId, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        new PostActionAsyncTask(context, selectedAccount, doAction, status.getId(), onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }else{ //Account is from another instance
                         new PostActionAsyncTask(context, selectedAccount, status, doAction, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
@@ -93,7 +91,7 @@ public class CrossActions {
                         if (doAction == API.StatusAction.REBLOG) {
                             status.setReblogged(true);
                         } else if (doAction == API.StatusAction.FAVOURITE) {
-                            status.setReblogged(true);
+                            status.setFavourited(true);
                         } else if (doAction == API.StatusAction.PIN) {
                             status.setPinned(true);
                         }
@@ -209,6 +207,27 @@ public class CrossActions {
             status.setPinned(true);
         }
         baseAdapter.notifyDataSetChanged();
+    }
+
+
+    /**
+     * Returns the list of connected accounts when cross actions are allowed otherwise, returns the current account
+     * @param context Context
+     * @return List<Account>
+     */
+    private static List<Account> connectedAccounts(Context context){
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        List<Account> accounts = new AccountDAO(context, db).getAllAccount();
+        if( sharedpreferences.getBoolean(Helper.SET_ALLOW_CROSS_ACTIONS, true) && accounts.size() > 1 ){
+            return accounts;
+        }else {
+            List<Account> oneAccount = new ArrayList<>();
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            Account account = new AccountDAO(context, db).getAccountByID(userId);
+            oneAccount.add(account);
+            return  oneAccount;
+        }
     }
 
 
