@@ -941,6 +941,17 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             if( itemViewReply != null)
                 itemViewReply.setVisible(false);
         }
+        if( accountReply != null){
+            MenuItem itemRestore = menu.findItem(R.id.action_restore);
+            if( itemRestore != null)
+                itemRestore.setVisible(false);
+            MenuItem itemSchedule = menu.findItem(R.id.action_schedule);
+            if( itemSchedule != null)
+                itemSchedule.setVisible(false);
+            MenuItem itemStore= menu.findItem(R.id.action_store);
+            if( itemStore != null)
+                itemStore.setVisible(false);
+        }
         return true;
     }
 
@@ -1095,7 +1106,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         super.onPause();
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean storeToot = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
-        if( storeToot)
+        if( storeToot && accountReply == null)
             storeToot(true);
     }
 
