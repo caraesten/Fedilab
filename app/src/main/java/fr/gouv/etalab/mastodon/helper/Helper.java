@@ -242,7 +242,7 @@ public class Helper {
     public static final String SET_TOOT_VISIBILITY = "set_toot_visibility";
     public static final String SET_DISPLAY_LOCAL = "set_display_local";
     public static final String SET_DISPLAY_GLOBAL = "set_display_global";
-
+    public static final String SET_ALLOW_CROSS_ACTIONS = "set_allow_cross_actions";
     //End points
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 
@@ -302,7 +302,6 @@ public class Helper {
                     input = input.replace(":" + matcher.group(2) + ":", "");
             }
         }
-
         return input;
     }
     //Emoji manager
@@ -1558,6 +1557,8 @@ public class Helper {
         }
         tableLayout.setVisibility(View.VISIBLE);
     }
+
+
 
     /**
      * Get a bitmap from a view
