@@ -23,6 +23,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
+import android.util.Log;
 import android.widget.BaseAdapter;
 
 import java.util.List;
@@ -47,18 +48,23 @@ public class CrossActions {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
 
         boolean undoAction = (doAction == API.StatusAction.UNPIN || doAction == API.StatusAction.UNREBLOG || doAction == API.StatusAction.UNFAVOURITE );
-
         //Undo actions won't ask for choosing a user
         if( accounts.size() == 1 || undoAction) {
             boolean confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
             if (confirmation)
                 displayConfirmationDialog(context, doAction, status, baseAdapter, onPostActionInterface);
-            else
-                favouriteAction(context, status, baseAdapter, onPostActionInterface);
+            else {
+                if( doAction == API.StatusAction.REBLOG || doAction == API.StatusAction.UNREBLOG)
+                    reblogAction(context, status, baseAdapter, onPostActionInterface);
+                else if( doAction == API.StatusAction.FAVOURITE || doAction == API.StatusAction.UNFAVOURITE)
+                    favouriteAction(context, status, baseAdapter, onPostActionInterface);
+                else if ( doAction == API.StatusAction.PIN || doAction == API.StatusAction.UNPIN)
+                    pinAction(context, status, baseAdapter, onPostActionInterface);
+            }
         }else {
             AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
             builderSingle.setTitle(context.getString(R.string.choose_accounts));
-            final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(context, accounts);
+            final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(context, accounts, true);
             final Account[] accountArray = new Account[accounts.size()];
             int i = 0;
             for(Account account: accounts){
@@ -83,14 +89,16 @@ public class CrossActions {
                     }else{ //Account is from another instance
                         new PostActionAsyncTask(context, selectedAccount, status, doAction, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
-                    if (doAction == API.StatusAction.REBLOG ){
-                        status.setReblogged(true);
-                    }else if( doAction == API.StatusAction.FAVOURITE ){
-                        status.setReblogged(true);
-                    }else if( doAction == API.StatusAction.PIN ){
-                        status.setPinned(true);
+                    if( selectedAccount.getInstance().equals(loggedAccount.getInstance()) && selectedAccount.getId().equals(loggedAccount.getId())) {
+                        if (doAction == API.StatusAction.REBLOG) {
+                            status.setReblogged(true);
+                        } else if (doAction == API.StatusAction.FAVOURITE) {
+                            status.setReblogged(true);
+                        } else if (doAction == API.StatusAction.PIN) {
+                            status.setPinned(true);
+                        }
+                        baseAdapter.notifyDataSetChanged();
                     }
-                    baseAdapter.notifyDataSetChanged();
                     dialog.dismiss();
                 }
             });

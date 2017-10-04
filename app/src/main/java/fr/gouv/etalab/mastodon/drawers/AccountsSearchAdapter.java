@@ -48,6 +48,7 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
     private LayoutInflater layoutInflater;
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
+    private boolean owner;
 
     public AccountsSearchAdapter(Context context, List<Account> accounts){
         super(context, android.R.layout.simple_list_item_1, accounts);
@@ -58,6 +59,19 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
         imageLoader = ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+        this.owner = false;
+    }
+
+    public AccountsSearchAdapter(Context context, List<Account> accounts, boolean owner){
+        super(context, android.R.layout.simple_list_item_1, accounts);
+        this.accounts = accounts;
+        this.tempAccounts = new ArrayList<>(accounts);
+        this.suggestions = new ArrayList<>(accounts);
+        layoutInflater = LayoutInflater.from(context);
+        imageLoader = ImageLoader.getInstance();
+        options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
+                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+        this.owner = owner;
     }
 
     @Override
@@ -94,8 +108,15 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
-        holder.account_un.setText(String.format("@%s",account.getUsername()));
+
+        if( owner) {
+            holder.account_un.setText(String.format("@%s", account.getUsername() + "@" + account.getInstance()));
+            holder.account_dn.setVisibility(View.GONE);
+        }else {
+            holder.account_un.setText(String.format("@%s", account.getUsername()));
+            holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
+            holder.account_dn.setVisibility(View.VISIBLE);
+        }
         //Profile picture
         imageLoader.displayImage(account.getAvatar(), holder.account_pp, options);
 

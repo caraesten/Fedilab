@@ -93,8 +93,6 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
-import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
-import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.translation.GoogleTranslateQuery;
 import fr.gouv.etalab.mastodon.translation.YandexQuery;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -119,10 +117,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     private int translator;
     private int behaviorWithAttachments;
     private StatusListAdapter statusListAdapter;
-    private final int REBLOG = 1;
-    private final int FAVOURITE = 2;
-    private final int PIN = 3;
-    private final int UNPIN = 4;
     private RetrieveFeedsAsyncTask.Type type;
     private String targetedId;
     private HashMap<String, String> urlConversion;
@@ -835,20 +829,20 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_favorite_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CrossActions.doCrossAction(context, status, targetedId, status.isFavourited()? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, statusListAdapter, StatusListAdapter.this);
+                CrossActions.doCrossAction(context, status, targetedId, (status.isFavourited()|| (status.getReblog() != null && status.getReblog().isFavourited()))? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, statusListAdapter, StatusListAdapter.this);
             }
         });
 
         holder.status_reblog_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CrossActions.doCrossAction(context, status, targetedId, status.isReblogged()? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, statusListAdapter, StatusListAdapter.this);
+                CrossActions.doCrossAction(context, status, targetedId, (status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged()))? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, statusListAdapter, StatusListAdapter.this);
             }
         });
         holder.status_pin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CrossActions.doCrossAction(context, status, targetedId, status.isPinned()? API.StatusAction.UNPIN:API.StatusAction.PIN, statusListAdapter, StatusListAdapter.this);
+                CrossActions.doCrossAction(context, status, targetedId, (status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned()))? API.StatusAction.UNPIN:API.StatusAction.PIN, statusListAdapter, StatusListAdapter.this);
             }
         });
 
