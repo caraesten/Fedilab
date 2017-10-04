@@ -25,7 +25,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
-import android.util.Log;
 import android.widget.BaseAdapter;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +49,7 @@ import mastodon.etalab.gouv.fr.mastodon.R;
 public class CrossActions {
 
     public static void doCrossAction(final Context context, final Status status, final API.StatusAction doAction, final BaseAdapter baseAdapter, final OnPostActionInterface onPostActionInterface){
-        List<Account> accounts = connectedAccounts(context, null);
+        List<Account> accounts = connectedAccounts(context, status);
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
 
         boolean undoAction = (doAction == API.StatusAction.UNPIN || doAction == API.StatusAction.UNREBLOG || doAction == API.StatusAction.UNFAVOURITE );
