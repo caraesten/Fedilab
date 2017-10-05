@@ -455,7 +455,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             @Override
             public void onClick(View v) {
                 if( status != null)
-                    CrossActions.doCrossAction(context, status, status.isFavourited()? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, notificationsListAdapter, NotificationsListAdapter.this);
+                    CrossActions.doCrossAction(context, status, status.isFavourited()? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, notificationsListAdapter, NotificationsListAdapter.this, true);
             }
         });
 
@@ -463,7 +463,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             @Override
             public void onClick(View v) {
                 if( status != null)
-                    CrossActions.doCrossAction(context, status, status.isReblogged()? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, notificationsListAdapter, NotificationsListAdapter.this);
+                    CrossActions.doCrossAction(context, status, status.isReblogged()? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, notificationsListAdapter, NotificationsListAdapter.this, true);
 
             }
         });
@@ -730,40 +730,42 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             notifications.removeAll(notificationsToRemove);
             notificationsListAdapter.notifyDataSetChanged();
         }
-        if( statusAction == API.StatusAction.REBLOG){
-            for(Notification notification: notifications){
-                if( notification.getStatus().getId().equals(targetedId)) {
-                    notification.getStatus().setReblogs_count(notification.getStatus().getReblogs_count() + 1);
-                    break;
+        if( targetedId != null) {
+            if (statusAction == API.StatusAction.REBLOG) {
+                for (Notification notification : notifications) {
+                    if (notification.getStatus().getId().equals(targetedId)) {
+                        notification.getStatus().setReblogs_count(notification.getStatus().getReblogs_count() + 1);
+                        break;
+                    }
                 }
-            }
-            notificationsListAdapter.notifyDataSetChanged();
-        }else if( statusAction == API.StatusAction.UNREBLOG){
-            for(Notification notification: notifications){
-                if( notification.getStatus().getId().equals(targetedId)) {
-                    if( notification.getStatus().getReblogs_count() - 1 >= 0 )
-                        notification.getStatus().setReblogs_count(notification.getStatus().getReblogs_count() - 1);
-                    break;
+                notificationsListAdapter.notifyDataSetChanged();
+            } else if (statusAction == API.StatusAction.UNREBLOG) {
+                for (Notification notification : notifications) {
+                    if (notification.getStatus().getId().equals(targetedId)) {
+                        if (notification.getStatus().getReblogs_count() - 1 >= 0)
+                            notification.getStatus().setReblogs_count(notification.getStatus().getReblogs_count() - 1);
+                        break;
+                    }
                 }
-            }
-            notificationsListAdapter.notifyDataSetChanged();
-        }else if( statusAction == API.StatusAction.FAVOURITE){
-            for(Notification notification: notifications){
-                if( notification.getStatus().getId().equals(targetedId)) {
-                    notification.getStatus().setFavourites_count(notification.getStatus().getFavourites_count() + 1);
-                    break;
+                notificationsListAdapter.notifyDataSetChanged();
+            } else if (statusAction == API.StatusAction.FAVOURITE) {
+                for (Notification notification : notifications) {
+                    if (notification.getStatus().getId().equals(targetedId)) {
+                        notification.getStatus().setFavourites_count(notification.getStatus().getFavourites_count() + 1);
+                        break;
+                    }
                 }
-            }
-            notificationsListAdapter.notifyDataSetChanged();
-        }else if( statusAction == API.StatusAction.UNFAVOURITE){
-            for(Notification notification: notifications){
-                if( notification.getStatus().getId().equals(targetedId)) {
-                    if( notification.getStatus().getFavourites_count() - 1 >= 0 )
-                        notification.getStatus().setFavourites_count(notification.getStatus().getFavourites_count() - 1);
-                    break;
+                notificationsListAdapter.notifyDataSetChanged();
+            } else if (statusAction == API.StatusAction.UNFAVOURITE) {
+                for (Notification notification : notifications) {
+                    if (notification.getStatus().getId().equals(targetedId)) {
+                        if (notification.getStatus().getFavourites_count() - 1 >= 0)
+                            notification.getStatus().setFavourites_count(notification.getStatus().getFavourites_count() - 1);
+                        break;
+                    }
                 }
+                notificationsListAdapter.notifyDataSetChanged();
             }
-            notificationsListAdapter.notifyDataSetChanged();
         }
     }
 

@@ -48,8 +48,8 @@ import mastodon.etalab.gouv.fr.mastodon.R;
  */
 public class CrossActions {
 
-    public static void doCrossAction(final Context context, final Status status, final API.StatusAction doAction, final BaseAdapter baseAdapter, final OnPostActionInterface onPostActionInterface){
-        List<Account> accounts = connectedAccounts(context, status);
+    public static void doCrossAction(final Context context, final Status status, final API.StatusAction doAction, final BaseAdapter baseAdapter, final OnPostActionInterface onPostActionInterface, boolean limitedToOwner){
+        List<Account> accounts = connectedAccounts(context, status, limitedToOwner);
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
 
         boolean undoAction = (doAction == API.StatusAction.UNPIN || doAction == API.StatusAction.UNREBLOG || doAction == API.StatusAction.UNFAVOURITE );
@@ -111,8 +111,8 @@ public class CrossActions {
         }
     }
 
-    public static void doCrossReply(final Context context, final Status status, final RetrieveFeedsAsyncTask.Type type){
-        List<Account> accounts = connectedAccounts(context, status);
+    public static void doCrossReply(final Context context, final Status status, final RetrieveFeedsAsyncTask.Type type, boolean limitedToOwner){
+        List<Account> accounts = connectedAccounts(context, status, limitedToOwner);
 
         if( accounts.size() == 1) {
             Intent intent = new Intent(context, TootActivity.class);
@@ -283,14 +283,14 @@ public class CrossActions {
      * @param context Context
      * @return List<Account>
      */
-    private static List<Account> connectedAccounts(Context context, Status status){
+    private static List<Account> connectedAccounts(Context context, Status status, boolean limitedToOwner){
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         List<Account> accountstmp = new AccountDAO(context, db).getAllAccount();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
         List<Account> accounts = new ArrayList<>();
-        if( sharedpreferences.getBoolean(Helper.SET_ALLOW_CROSS_ACTIONS, true) && accountstmp.size() > 1 ){
+        if( !limitedToOwner && sharedpreferences.getBoolean(Helper.SET_ALLOW_CROSS_ACTIONS, true) && accountstmp.size() > 1 ){
             //It's for a reply
             if( status != null){
                 //Status is private or direct
