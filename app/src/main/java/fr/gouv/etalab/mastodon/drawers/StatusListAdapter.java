@@ -825,7 +825,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_pin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CrossActions.doCrossAction(context, status, (status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned()))? API.StatusAction.UNPIN:API.StatusAction.PIN, statusListAdapter, StatusListAdapter.this, false);
+                CrossActions.doCrossAction(context, status, (status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned()))? API.StatusAction.UNPIN:API.StatusAction.PIN, statusListAdapter, StatusListAdapter.this, true);
             }
         });
 
