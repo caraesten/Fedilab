@@ -54,8 +54,13 @@ public class CrossActions {
 
         boolean undoAction = (doAction == API.StatusAction.UNPIN || doAction == API.StatusAction.UNREBLOG || doAction == API.StatusAction.UNFAVOURITE );
         //Undo actions won't ask for choosing a user
-        if( accounts.size() == 1 || undoAction) {
-            boolean confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
+        if( accounts.size() == 1 || undoAction ) {
+
+            boolean confirmation = false;
+            if( doAction == API.StatusAction.UNFAVOURITE || doAction == API.StatusAction.FAVOURITE)
+                confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
+            else if( doAction == API.StatusAction.UNREBLOG || doAction == API.StatusAction.REBLOG )
+                confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
             if (confirmation)
                 displayConfirmationDialog(context, doAction, status, baseAdapter, onPostActionInterface);
             else {
@@ -183,15 +188,13 @@ public class CrossActions {
 
         String title = null;
         if( action == API.StatusAction.FAVOURITE){
-            if( status.isFavourited() || ( status.getReblog() != null && status.getReblog().isFavourited()))
-                title = context.getString(R.string.favourite_remove);
-            else
-                title = context.getString(R.string.favourite_add);
-        }else if( action == API.StatusAction.REBLOG ){
-            if( status.isReblogged() || (status.getReblog() != null && status.getReblog().isReblogged()))
-                title = context.getString(R.string.reblog_remove);
-            else
-                title = context.getString(R.string.reblog_add);
+            title = context.getString(R.string.favourite_add);
+        }else if( action == API.StatusAction.UNFAVOURITE){
+            title = context.getString(R.string.favourite_remove);
+        }else if( action == API.StatusAction.REBLOG){
+            title = context.getString(R.string.reblog_add);
+        }else if(action == API.StatusAction.UNREBLOG){
+            title = context.getString(R.string.reblog_remove);
         }else if ( action == API.StatusAction.PIN) {
             title = context.getString(R.string.pin_add);
         }else if (action == API.StatusAction.UNPIN) {
@@ -210,13 +213,11 @@ public class CrossActions {
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if( action == API.StatusAction.REBLOG)
+                        if( action == API.StatusAction.REBLOG || action == API.StatusAction.UNREBLOG)
                             reblogAction(context, status, baseAdapter, onPostActionInterface);
-                        else if( action == API.StatusAction.FAVOURITE)
+                        else if( action == API.StatusAction.FAVOURITE || action == API.StatusAction.UNFAVOURITE)
                             favouriteAction(context, status, baseAdapter, onPostActionInterface);
-                        else if ( action == API.StatusAction.PIN)
-                            pinAction(context, status, baseAdapter, onPostActionInterface);
-                        else if ( action == API.StatusAction.UNPIN)
+                        else if ( action == API.StatusAction.PIN || action == API.StatusAction.UNPIN)
                             pinAction(context, status, baseAdapter, onPostActionInterface);
                         dialog.dismiss();
                     }

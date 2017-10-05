@@ -678,7 +678,59 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         holder.status_reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CrossActions.doCrossReply(context, status, type, true);
+            }
+        });
+
+        holder.status_reply.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
                 CrossActions.doCrossReply(context, status, type, false);
+                return true;
+            }
+        });
+
+        holder.status_favorite_count.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CrossActions.doCrossAction(context, status, (status.isFavourited()|| (status.getReblog() != null && status.getReblog().isFavourited()))? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, statusListAdapter, StatusListAdapter.this, true);
+            }
+        });
+
+        holder.status_reblog_count.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CrossActions.doCrossAction(context, status, (status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged()))? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, statusListAdapter, StatusListAdapter.this, true);
+            }
+        });
+        holder.status_pin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CrossActions.doCrossAction(context, status, (status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned()))? API.StatusAction.UNPIN:API.StatusAction.PIN, statusListAdapter, StatusListAdapter.this, true);
+            }
+        });
+
+
+        holder.status_favorite_count.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                CrossActions.doCrossAction(context, status, (status.isFavourited()|| (status.getReblog() != null && status.getReblog().isFavourited()))? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, statusListAdapter, StatusListAdapter.this, false);
+                return true;
+            }
+        });
+
+        holder.status_reblog_count.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                CrossActions.doCrossAction(context, status, (status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged()))? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, statusListAdapter, StatusListAdapter.this, false);
+                return true;
+            }
+        });
+        holder.status_pin.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                CrossActions.doCrossAction(context, status, (status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned()))? API.StatusAction.UNPIN:API.StatusAction.PIN, statusListAdapter, StatusListAdapter.this, true);
+                return false;
             }
         });
 
@@ -806,26 +858,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         }
                     }.start();
                 }
-            }
-        });
-
-        holder.status_favorite_count.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CrossActions.doCrossAction(context, status, (status.isFavourited()|| (status.getReblog() != null && status.getReblog().isFavourited()))? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, statusListAdapter, StatusListAdapter.this, false);
-            }
-        });
-
-        holder.status_reblog_count.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CrossActions.doCrossAction(context, status, (status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged()))? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, statusListAdapter, StatusListAdapter.this, false);
-            }
-        });
-        holder.status_pin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CrossActions.doCrossAction(context, status, (status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned()))? API.StatusAction.UNPIN:API.StatusAction.PIN, statusListAdapter, StatusListAdapter.this, true);
             }
         });
 
