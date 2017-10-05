@@ -353,13 +353,13 @@
             android:layout_marginEnd="@dimen/activity_vertical_margin"
             android:layout_marginRight="@dimen/activity_vertical_margin"
             android:orientation="horizontal">
-            <TextView
-                android:drawablePadding="2dp"
+            <ImageView
+                android:id="@+id/status_reply"
                 android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:id="@+id/status_favorite_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_reply"
+                tools:ignore="ContentDescription" />
             <TextView
                 android:layout_marginLeft="20dp"
                 android:layout_marginStart="20dp"
@@ -369,15 +369,16 @@
                 android:id="@+id/status_reblog_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <ImageView
+            <TextView
                 android:layout_marginLeft="20dp"
                 android:layout_marginStart="20dp"
-                android:id="@+id/status_reply"
+                android:drawablePadding="2dp"
                 android:layout_gravity="center_vertical"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_reply"
-                tools:ignore="ContentDescription" />
+                android:gravity="center_vertical"
+                android:id="@+id/status_favorite_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
             <ImageView
                 android:layout_marginLeft="20dp"
                 android:layout_marginStart="20dp"
