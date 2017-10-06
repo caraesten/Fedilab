@@ -29,6 +29,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -94,6 +95,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRelationshipInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.canPin;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
@@ -126,7 +128,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     private LinearLayout main_header_container;
     private ImageView header_edit_profile;
     private List<Status> pins;
-
+    private String accountUrl;
     public enum action{
         FOLLOW,
         UNFOLLOW,
@@ -165,6 +167,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         }else{
             Toast.makeText(this,R.string.toast_error_loading_account,Toast.LENGTH_LONG).show();
         }
+        accountUrl = null;
         showMediaOnly = false;
         showPinned = false;
         imageLoader = ImageLoader.getInstance();
@@ -371,6 +374,17 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
                 mPager.setAdapter(mPagerAdapter);
                 return true;
+            case R.id.action_open_browser:
+                if( accountUrl != null) {
+                    Intent intent = new Intent(getApplicationContext(), WebviewActivity.class);
+                    Bundle b = new Bundle();
+                    if( !accountUrl.startsWith("http://") && ! accountUrl.startsWith("https://"))
+                        accountUrl = "http://" + accountUrl;
+                    b.putString("url", accountUrl);
+                    intent.putExtras(b);
+                    startActivity(intent);
+                }
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -392,6 +406,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
             return;
         }
 
+        accountUrl = account.getUrl();
         ImageView account_pp = (ImageView) findViewById(R.id.account_pp);
         TextView account_dn = (TextView) findViewById(R.id.account_dn);
         TextView account_un = (TextView) findViewById(R.id.account_un);

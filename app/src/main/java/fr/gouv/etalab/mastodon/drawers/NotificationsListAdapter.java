@@ -62,6 +62,7 @@ import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.PostNotificationsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
@@ -455,7 +456,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             @Override
             public void onClick(View v) {
                 if( status != null)
-                    CrossActions.doCrossAction(context, status, status.isFavourited()? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, notificationsListAdapter, NotificationsListAdapter.this);
+                    CrossActions.doCrossAction(context, status, status.isFavourited()? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, notificationsListAdapter, NotificationsListAdapter.this, true);
             }
         });
 
@@ -463,8 +464,41 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             @Override
             public void onClick(View v) {
                 if( status != null)
-                    CrossActions.doCrossAction(context, status, status.isReblogged()? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, notificationsListAdapter, NotificationsListAdapter.this);
+                    CrossActions.doCrossAction(context, status, status.isReblogged()? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, notificationsListAdapter, NotificationsListAdapter.this, true);
 
+            }
+        });
+        holder.status_reply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CrossActions.doCrossReply(context, status, RetrieveFeedsAsyncTask.Type.LOCAL, true);
+            }
+        });
+
+
+        holder.status_favorite_count.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                if( status != null)
+                    CrossActions.doCrossAction(context, status, status.isFavourited()? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, notificationsListAdapter, NotificationsListAdapter.this, false);
+                return true;
+            }
+        });
+
+        holder.status_reply.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                CrossActions.doCrossReply(context, status, RetrieveFeedsAsyncTask.Type.LOCAL, false);
+                return true;
+            }
+        });
+
+        holder.status_reblog_count.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                if( status != null)
+                    CrossActions.doCrossAction(context, status, status.isReblogged()? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, notificationsListAdapter, NotificationsListAdapter.this, false);
+                return true;
             }
         });
 
@@ -479,16 +513,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             }
         });
 
-        holder.status_reply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, TootActivity.class);
-                Bundle b = new Bundle();
-                b.putParcelable("tootReply", notification.getStatus());
-                intent.putExtras(b);
-                context.startActivity(intent);
-            }
-        });
+
 
         holder.notification_delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -718,6 +743,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
                 Toast.makeText(context, error.getError(),Toast.LENGTH_LONG).show();
+            return;
         }
         Helper.manageMessageStatusCode(context, statusCode, statusAction);
         //When muting or blocking an account, its status are removed from the list
@@ -730,35 +756,35 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             notifications.removeAll(notificationsToRemove);
             notificationsListAdapter.notifyDataSetChanged();
         }
-        if( statusAction == API.StatusAction.REBLOG){
-            for(Notification notification: notifications){
-                if( notification.getStatus().getId().equals(targetedId)) {
+        if (statusAction == API.StatusAction.REBLOG) {
+            for (Notification notification : notifications) {
+                if (notification.getStatus().getId().equals(targetedId)) {
                     notification.getStatus().setReblogs_count(notification.getStatus().getReblogs_count() + 1);
                     break;
                 }
             }
             notificationsListAdapter.notifyDataSetChanged();
-        }else if( statusAction == API.StatusAction.UNREBLOG){
-            for(Notification notification: notifications){
-                if( notification.getStatus().getId().equals(targetedId)) {
-                    if( notification.getStatus().getReblogs_count() - 1 >= 0 )
+        } else if (statusAction == API.StatusAction.UNREBLOG) {
+            for (Notification notification : notifications) {
+                if (notification.getStatus().getId().equals(targetedId)) {
+                    if (notification.getStatus().getReblogs_count() - 1 >= 0)
                         notification.getStatus().setReblogs_count(notification.getStatus().getReblogs_count() - 1);
                     break;
                 }
             }
             notificationsListAdapter.notifyDataSetChanged();
-        }else if( statusAction == API.StatusAction.FAVOURITE){
-            for(Notification notification: notifications){
-                if( notification.getStatus().getId().equals(targetedId)) {
+        } else if (statusAction == API.StatusAction.FAVOURITE) {
+            for (Notification notification : notifications) {
+                if (notification.getStatus().getId().equals(targetedId)) {
                     notification.getStatus().setFavourites_count(notification.getStatus().getFavourites_count() + 1);
                     break;
                 }
             }
             notificationsListAdapter.notifyDataSetChanged();
-        }else if( statusAction == API.StatusAction.UNFAVOURITE){
-            for(Notification notification: notifications){
-                if( notification.getStatus().getId().equals(targetedId)) {
-                    if( notification.getStatus().getFavourites_count() - 1 >= 0 )
+        } else if (statusAction == API.StatusAction.UNFAVOURITE) {
+            for (Notification notification : notifications) {
+                if (notification.getStatus().getId().equals(targetedId)) {
+                    if (notification.getStatus().getFavourites_count() - 1 >= 0)
                         notification.getStatus().setFavourites_count(notification.getStatus().getFavourites_count() - 1);
                     break;
                 }

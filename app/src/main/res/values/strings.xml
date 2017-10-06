@@ -95,7 +95,7 @@
     <string name="fav_removed">The toot was removed from favourites!</string>
     <string name="reblog_added">The toot was boosted!</string>
     <string name="reblog_removed">The toot is no longer boosted!</string>
-    <string name="reblog_by">Shared via %1$s</string>
+    <string name="reblog_by">Boosted by %1$s</string>
 
 
     <string name="favourite_add">Add this toot to your favourites?</string>
