@@ -615,7 +615,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             boolean isOwner = status.getAccount().getId().equals(userId);
 
             // Pinning toots is only available on Mastodon 1._6_.0 instances.
-            if (isOwner && Helper.canPin && (status.getVisibility().equals("public") || status.getVisibility().equals("unlisted"))) {
+            if (isOwner && Helper.canPin && (status.getVisibility().equals("public") || status.getVisibility().equals("unlisted")) && status.getReblog() == null) {
                 Drawable imgPin;
                 if( status.isPinned())
                     imgPin = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_yellow);
