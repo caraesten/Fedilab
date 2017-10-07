@@ -532,23 +532,39 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             for (Status st : this.statuses) {
                 knownId.add(st.getId());
             }
-            int index = lv_status.getFirstVisiblePosition() + statuses.size();
-            View v = lv_status.getChildAt(0);
-            int top = (v == null) ? 0 : v.getTop();
-            for (int i = statuses.size()-1 ; i >= 0 ; i--) {
-                if (!knownId.contains(statuses.get(i).getId())) {
-                    if( type == RetrieveFeedsAsyncTask.Type.HOME)
-                        statuses.get(i).setNew(true);
-                    statuses.get(i).setReplies(new ArrayList<Status>());
-                    this.statuses.add(0, statuses.get(i));
-                    SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                    String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                    if( type == RetrieveFeedsAsyncTask.Type.HOME && !statuses.get(i).getAccount().getId().equals(userId))
-                        MainActivity.countNewStatus++;
+            if( lv_status.getFirstVisiblePosition() > 1 ) {
+                int index = lv_status.getFirstVisiblePosition() + statuses.size();
+                View v = lv_status.getChildAt(0);
+                int top = (v == null) ? 0 : v.getTop();
+                for (int i = statuses.size() - 1; i >= 0; i--) {
+                    if (!knownId.contains(statuses.get(i).getId())) {
+                        if (type == RetrieveFeedsAsyncTask.Type.HOME)
+                            statuses.get(i).setNew(true);
+                        statuses.get(i).setReplies(new ArrayList<Status>());
+                        this.statuses.add(0, statuses.get(i));
+                        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                        if (type == RetrieveFeedsAsyncTask.Type.HOME && !statuses.get(i).getAccount().getId().equals(userId))
+                            MainActivity.countNewStatus++;
+                    }
                 }
+                statusListAdapter.notifyDataSetChanged();
+                lv_status.setSelectionFromTop(index, top);
+            }else {
+                for (int i = statuses.size() - 1; i >= 0; i--) {
+                    if (!knownId.contains(statuses.get(i).getId())) {
+                        if (type == RetrieveFeedsAsyncTask.Type.HOME)
+                            statuses.get(i).setNew(true);
+                        statuses.get(i).setReplies(new ArrayList<Status>());
+                        this.statuses.add(0, statuses.get(i));
+                        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                        if (type == RetrieveFeedsAsyncTask.Type.HOME && !statuses.get(i).getAccount().getId().equals(userId))
+                            MainActivity.countNewStatus++;
+                    }
+                }
+                statusListAdapter.notifyDataSetChanged();
             }
-            statusListAdapter.notifyDataSetChanged();
-            lv_status.setSelectionFromTop(index, top);
             try {
                 ((MainActivity) context).updateHomeCounter();
             }catch (Exception ignored){}
