@@ -117,13 +117,13 @@ public class StreamingFederatedTimelineService extends IntentService {
                 reader = new BufferedReader(new InputStreamReader(inputStream));
                 String event;
                 while((event = reader.readLine()) != null) {
-                    if (!event.startsWith("data: ")) {
-                        continue;
-                    }
-
                     if (!sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + accountStream.getId(), true)) {
+                        httpsURLConnection.disconnect();
                         stopSelf();
                         return;
+                    }
+                    if (!event.startsWith("data: ")) {
+                        continue;
                     }
                     event = event.substring(6);
                     if( event.matches("^[0-9]{1,}$"))
