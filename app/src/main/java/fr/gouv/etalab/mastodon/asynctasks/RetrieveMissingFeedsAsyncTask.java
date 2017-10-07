@@ -35,11 +35,13 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     private String since_id;
     private OnRetrieveMissingFeedsInterface listener;
     private List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = new ArrayList<>();
+    private RetrieveFeedsAsyncTask.Type type;
 
-    public RetrieveMissingFeedsAsyncTask(Context context, String since_id, OnRetrieveMissingFeedsInterface onRetrieveMissingFeedsInterface){
+    public RetrieveMissingFeedsAsyncTask(Context context, String since_id, RetrieveFeedsAsyncTask.Type type, OnRetrieveMissingFeedsInterface onRetrieveMissingFeedsInterface){
         this.context = context;
         this.since_id = since_id;
         this.listener = onRetrieveMissingFeedsInterface;
+        this.type = type;
     }
 
 
@@ -48,18 +50,27 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         int loopInc = 0;
         API api = new API(context);
         List<fr.gouv.etalab.mastodon.client.Entities.Status> tempStatus;
+        APIResponse apiResponse = null;
         while (loopInc < 10){
-            APIResponse apiResponse = api.getHomeTimelineSinceId(since_id, 80);
+
+            if( type == RetrieveFeedsAsyncTask.Type.HOME)
+                apiResponse = api.getHomeTimelineSinceId(since_id, 80);
+            else if( type == RetrieveFeedsAsyncTask.Type.LOCAL)
+                apiResponse = api.getPublicTimelineSinceId(true, since_id, 80);
+            else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC)
+                apiResponse = api.getPublicTimelineSinceId(false, since_id, 80);
+            if (apiResponse == null)
+                break;
             String max_id = apiResponse.getMax_id();
             since_id = apiResponse.getSince_id();
             tempStatus = apiResponse.getStatuses();
             if( statuses != null && tempStatus != null)
                 statuses.addAll(0, tempStatus);
             loopInc++;
-            if( max_id == null || max_id.equals(since_id))
+            if( tempStatus == null || max_id == null || max_id.equals(since_id) || tempStatus.size() == 0)
                 break;
         }
-        if( statuses != null && statuses.size() > 0) {
+        if( type == RetrieveFeedsAsyncTask.Type.HOME && statuses != null && statuses.size() > 0) {
             MainActivity.lastHomeId = statuses.get(0).getId();
         }
         return null;

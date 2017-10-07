@@ -587,6 +587,18 @@ public class API {
     public APIResponse getPublicTimeline(boolean local, String max_id){
         return getPublicTimeline(local, max_id, null, tootPerPage);
     }
+
+
+    /**
+     * Retrieves public timeline for the account since an Id value *synchronously*
+     * @param local boolean only local timeline
+     * @param since_id String id since
+     * @return APIResponse
+     */
+    public APIResponse getPublicTimelineSinceId(boolean local, String since_id, int tootPerPage) {
+        return getPublicTimeline(local, null, since_id, tootPerPage);
+    }
+
     /**
      * Retrieves public timeline for the account *synchronously*
      * @param local boolean only local timeline
