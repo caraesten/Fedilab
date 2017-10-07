@@ -193,7 +193,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             }
             if( firstLoad) {
                 //Update the id of the last notification retrieved
-
                 MainActivity.lastNotificationId = notifications.get(0).getId();
                 updateNotificationLastId(sharedpreferences, this.userId, notifications.get(0).getId());
             }

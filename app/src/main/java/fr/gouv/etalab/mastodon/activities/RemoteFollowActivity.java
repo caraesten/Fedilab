@@ -24,6 +24,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -63,12 +64,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveRelationshipAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteAccountsAsyncTask;
+import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.Entities.Relationship;
+import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.KinrarClient;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
-import fr.gouv.etalab.mastodon.drawers.AccountSearchWebAdapter;
+import fr.gouv.etalab.mastodon.drawers.AccountsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRelationshipInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -80,7 +90,7 @@ import mastodon.etalab.gouv.fr.mastodon.R;
  * Remote follow activity class
  */
 
-public class RemoteFollowActivity extends AppCompatActivity implements OnRetrieveRemoteAccountInterface {
+public class RemoteFollowActivity extends AppCompatActivity implements OnRetrieveRemoteAccountInterface, OnRetrieveRelationshipInterface, OnPostActionInterface {
 
 
     private ImageView pp_actionBar;
@@ -241,7 +251,7 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
                 rf_no_result.setVisibility(View.GONE);
                 if( screen_name.startsWith("@"))
                     screen_name = screen_name.substring(1);
-                new RetrieveRemoteAccountsAsyncTask(screen_name, instance_name, RemoteFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), screen_name, instance_name, RemoteFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(rf_search.getWindowToken(), 0);
             }
@@ -261,30 +271,96 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
 
 
     @Override
-    public void onRetrieveRemoteAccount(boolean error, String name, String username, String instance_name, boolean locked, String avatar, String bio, String statusCount, String followingCount, String followersCount) {
+    public void onRetrieveRemoteAccount(Results results) {
         loader.setVisibility(View.GONE);
         rf_search.setEnabled(true);
-        if( error){
-            rf_no_result.setVisibility(View.VISIBLE);
-            Toast.makeText(getApplicationContext(), R.string.toast_error,Toast.LENGTH_LONG).show();
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        if( results == null){
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages)
+                Toast.makeText(getApplicationContext(), R.string.toast_error,Toast.LENGTH_LONG).show();
             return;
         }
-        Account account = new Account();
-        account.setInstance(instance_name);
-        account.setAcct(screen_name + "@" + instance_name);
-        account.setAvatar(avatar);
-        account.setDisplay_name(username);
-        account.setStatuses_count_str(statusCount);
-        account.setFollowers_count_str(followersCount);
-        account.setFollowing_count_str(followingCount);
-        account.setUsername(name);
-        account.setLocked(locked);
-        account.setNote(bio);
+        List<Account> accounts = results.getAccounts();
+        Account account;
         List<Account> selectedAccount = new ArrayList<>();
-        selectedAccount.add(account);
-        AccountSearchWebAdapter accountSearchWebAdapter = new AccountSearchWebAdapter(RemoteFollowActivity.this, selectedAccount);
-        lv_account.setAdapter(accountSearchWebAdapter);
-        lv_account.setVisibility(View.VISIBLE);
+        if( accounts != null && accounts.size() > 0){
+            account = accounts.get(0);
+            selectedAccount.add(account);
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            AccountsListAdapter accountSearchWebAdapter = new AccountsListAdapter(RemoteFollowActivity.this, RetrieveAccountsAsyncTask.Type.FOLLOWERS, userId, selectedAccount);
+            lv_account.setAdapter(accountSearchWebAdapter);
+            lv_account.setVisibility(View.VISIBLE);
+            new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),RemoteFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+    }
 
+    @Override
+    public void onRetrieveRelationship(Relationship relationship, Error error) {
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        if( error != null){
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages)
+                Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
+        if( relationship == null)
+            return;
+        final FloatingActionButton account_follow = findViewById(R.id.account_follow);
+        ShowAccountActivity.action doAction = null;
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        final String accountId = relationship.getId();
+        if( accountId != null && accountId.equals(userId)){
+            account_follow.setVisibility(View.GONE);
+        }else if( relationship.isBlocking()){
+            account_follow.setImageResource(R.drawable.ic_unlock_alt);
+            doAction = ShowAccountActivity.action.UNBLOCK;
+            account_follow.setVisibility(View.VISIBLE);
+        }else if( relationship.isRequested()){
+            account_follow.setVisibility(View.GONE);
+            doAction = ShowAccountActivity.action.NOTHING;
+        }else if( relationship.isFollowing()){
+            account_follow.setImageResource(R.drawable.ic_user_times);
+            doAction = ShowAccountActivity.action.UNFOLLOW;
+            account_follow.setVisibility(View.VISIBLE);
+        }else if( !relationship.isFollowing()){
+            account_follow.setImageResource(R.drawable.ic_user_plus);
+            doAction = ShowAccountActivity.action.FOLLOW;
+            account_follow.setVisibility(View.VISIBLE);
+        }else{
+            account_follow.setVisibility(View.GONE);
+            doAction = ShowAccountActivity.action.NOTHING;
+        }
+        final ShowAccountActivity.action finalDoAction = doAction;
+        account_follow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( finalDoAction == ShowAccountActivity.action.NOTHING){
+                    Toast.makeText(getApplicationContext(), R.string.nothing_to_do, Toast.LENGTH_LONG).show();
+                }else if( finalDoAction == ShowAccountActivity.action.FOLLOW){
+                    account_follow.setEnabled(false);
+                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.FOLLOW, accountId, RemoteFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }else if( finalDoAction == ShowAccountActivity.action.UNFOLLOW){
+                    account_follow.setEnabled(false);
+                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.UNFOLLOW, accountId, RemoteFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }else if( finalDoAction == ShowAccountActivity.action.UNBLOCK){
+                    account_follow.setEnabled(false);
+                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.UNBLOCK, accountId, RemoteFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onPostAction(int statusCode, API.StatusAction statusAction, String userId, Error error) {
+        if( error != null){
+            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages)
+                Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
+        Helper.manageMessageStatusCode(getApplicationContext(), statusCode, statusAction);
+        new RetrieveRelationshipAsyncTask(getApplicationContext(), userId,RemoteFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 }

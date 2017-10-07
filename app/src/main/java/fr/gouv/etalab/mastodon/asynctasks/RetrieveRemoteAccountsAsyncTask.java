@@ -14,12 +14,11 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.asynctasks;
 
+import android.content.Context;
 import android.os.AsyncTask;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
-
+import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
 
 
@@ -32,49 +31,27 @@ public class RetrieveRemoteAccountsAsyncTask extends AsyncTask<Void, Void, Void>
 
     private OnRetrieveRemoteAccountInterface listener;
     private String url;
-    private String avatar, name, username, bio;
-    private String statusCount, followingCount, followersCount;
-    private boolean islocked;
-    private boolean error = false;
-    private String instance;
+    private Context context;
+    private Results results;
 
-    public RetrieveRemoteAccountsAsyncTask(String username, String instance, OnRetrieveRemoteAccountInterface onRetrieveRemoteAccountInterface){
+    public RetrieveRemoteAccountsAsyncTask(Context context, String username, String instance, OnRetrieveRemoteAccountInterface onRetrieveRemoteAccountInterface){
         this.url = "https://" + instance  + "/@" + username;
         this.listener = onRetrieveRemoteAccountInterface;
-        this.instance = instance;
+        this.context = context;
     }
 
 
 
     @Override
     protected Void doInBackground(Void... params) {
-        String userAgent = "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36";
-        try {
-            Document document = Jsoup.connect(url).userAgent(userAgent).get();
-            Elements avatarElement = document.getElementsByClass("avatar");
-            avatar = avatarElement.get(0).getElementsByClass("u-photo").get(0).attr("src");
-            avatar = "https://" + instance + avatar;
-            Elements nameElement = document.getElementsByClass("name");
-            name = nameElement.get(0).getElementsByClass("p-name").get(0).html();
-            username = nameElement.get(0).getElementsByTag("span").get(1).html();
-            islocked = (nameElement.get(0).getElementsByClass("fa-lock") != null && nameElement.get(0).getElementsByClass("fa-lock").size() > 0);
-
-            Elements bioElement = document.getElementsByClass("bio");
-            bio = bioElement.get(0).html();
-            Elements countElement = document.getElementsByClass("counter-number");
-            statusCount = countElement.get(0).html();
-            followingCount = countElement.get(1).html();
-            followersCount = countElement.get(2).html();
-        } catch (Exception e) {
-            error = true;
-            e.printStackTrace();
-        }
+        API api = new API(context);
+        results = api.search(this.url);
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveRemoteAccount(error, name, username, instance, islocked, avatar, bio, statusCount, followingCount, followersCount);
+        listener.onRetrieveRemoteAccount(results);
     }
 
 }

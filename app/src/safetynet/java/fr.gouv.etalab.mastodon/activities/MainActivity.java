@@ -62,6 +62,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.security.ProviderInstaller;
+import com.kobakei.ratethisapp.RateThisApp;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -176,6 +177,10 @@ public class MainActivity extends AppCompatActivity
             finish();
             return;
         }
+        RateThisApp.onCreate(this);
+        RateThisApp.Config config = new RateThisApp.Config(5, 10);
+        RateThisApp.init(config);
+
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Helper.canPin = false;
         Helper.fillMapEmoji(getApplicationContext());

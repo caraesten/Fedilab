@@ -25,6 +25,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
+import android.util.Log;
 import android.widget.BaseAdapter;
 import java.util.ArrayList;
 import java.util.List;
@@ -253,7 +254,8 @@ public class CrossActions {
      */
     private static void reblogAction(Context context, Status status, BaseAdapter baseAdapter, OnPostActionInterface onPostActionInterface){
         if( status.isReblogged() || (status.getReblog()!= null && status.getReblog().isReblogged())){
-            new PostActionAsyncTask(context, API.StatusAction.UNREBLOG, status.getId(), onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            String statusId = status.getReblog()!=null?status.getReblog().getId():status.getId();
+            new PostActionAsyncTask(context, API.StatusAction.UNREBLOG, statusId, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             status.setReblogged(false);
         }else{
             new PostActionAsyncTask(context, API.StatusAction.REBLOG, status.getId(), onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
