@@ -15,10 +15,12 @@
 package fr.gouv.etalab.mastodon.interfaces;
 
 
+import fr.gouv.etalab.mastodon.client.Entities.Results;
+
 /**
  * Created by Thomas on 22/08/2017.
  * Interface for retrieving a remote account
  */
 public interface OnRetrieveRemoteAccountInterface {
-    void onRetrieveRemoteAccount(boolean error, String name, String username, String instance, boolean locked, String avatar, String bio, String statusCount, String followingCount, String followersCount);
+    void onRetrieveRemoteAccount(Results results);
 }

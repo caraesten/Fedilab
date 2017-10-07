@@ -20,6 +20,7 @@ import com.nostra13.universalimageloader.core.assist.ContentLengthInputStream;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 
 import java.io.BufferedInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -65,7 +66,12 @@ public class PatchBaseImageDownloader extends BaseImageDownloader {
         if (conn instanceof HttpsURLConnection) {
             ((HttpsURLConnection) conn).setSSLSocketFactory(sf);
         }
-        return new ContentLengthInputStream(new BufferedInputStream(conn.getInputStream(), BUFFER_SIZE), conn.getContentLength());
+        try {
+            return new ContentLengthInputStream(new BufferedInputStream(conn.getInputStream(), BUFFER_SIZE), conn.getContentLength());
+        }catch (FileNotFoundException e){
+            return null;
+        }
+
     }
 
     private static class MySSLSocketFactory extends SSLSocketFactory {

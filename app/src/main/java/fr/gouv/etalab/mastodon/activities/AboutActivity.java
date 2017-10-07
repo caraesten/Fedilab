@@ -23,10 +23,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +36,11 @@ import java.util.List;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveDeveloperAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRelationshipAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteAccountsAsyncTask;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
+import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.drawers.AccountSearchDevAdapter;
 import fr.gouv.etalab.mastodon.helper.ExpandableHeightListView;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -158,40 +162,36 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
 
 
     @Override
-    public void onRetrieveRemoteAccount(boolean error, String name, String username, String instance_name, boolean locked, String avatar, String bio, String statusCount, String followingCount, String followersCount) {
-        if( error){
+    public void onRetrieveRemoteAccount(Results results) {
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        if( results == null){
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages)
+                Toast.makeText(getApplicationContext(), R.string.toast_error,Toast.LENGTH_LONG).show();
             return;
         }
-        Account account = new Account();
-        account.setInstance(instance_name);
-        account.setAcct(username + "@" + instance_name);
-        account.setAvatar(avatar);
-        account.setDisplay_name(username);
-        account.setStatuses_count_str(statusCount);
-        account.setFollowers_count_str(followersCount);
-        account.setFollowing_count_str(followingCount);
-        account.setUsername(name);
-        account.setLocked(locked);
-        account.setNote(bio);
-        account.setFollowing(false);
-        account.setRemote(true);
-
-        if( username.equals("@tschneider")) {
-            developers.add(account);
-            accountSearchWebAdapterDeveloper.notifyDataSetChanged();
-        }else {
-            contributors.add(account);
-            accountSearchWebAdapterContributors.notifyDataSetChanged();
+        List<Account> accounts = results.getAccounts();
+        Account account;
+        if( accounts != null && accounts.size() > 0){
+            account = accounts.get(0);
+            account.setFollowing(false);
+            account.setRemote(true);
+            if( account.getUsername().equals("@tschneider")) {
+                developers.add(account);
+                accountSearchWebAdapterDeveloper.notifyDataSetChanged();
+            }else {
+                contributors.add(account);
+                accountSearchWebAdapterContributors.notifyDataSetChanged();
+            }
         }
-
     }
 
     @Override
     public void onRetrieveSearchDevelopersAccounts(ArrayList<Account> accounts) {
         if( accounts == null || accounts.size() == 0) {
-            new RetrieveRemoteAccountsAsyncTask("tschneider", "mastodon.etalab.gouv.fr", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            new RetrieveRemoteAccountsAsyncTask("PhotonQyv", "mastodon.xyz", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            new RetrieveRemoteAccountsAsyncTask("angrytux", "social.tchncs.de", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), "tschneider", "mastodon.etalab.gouv.fr", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new RetrieveRemoteAccountsAsyncTask(getApplicationContext(),"PhotonQyv", "mastodon.xyz", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new RetrieveRemoteAccountsAsyncTask(getApplicationContext(),"angrytux", "social.tchncs.de", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             return;
         }
         boolean tschneider = false;
@@ -225,11 +225,11 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
             }
         }
         if( !tschneider)
-            new RetrieveRemoteAccountsAsyncTask("tschneider", "mastodon.etalab.gouv.fr", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), "tschneider", "mastodon.etalab.gouv.fr", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         if( !PhotonQyv)
-            new RetrieveRemoteAccountsAsyncTask("PhotonQyv", "mastodon.xyz", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), "PhotonQyv", "mastodon.xyz", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         if( !angrytux)
-            new RetrieveRemoteAccountsAsyncTask("angrytux", "social.tchncs.de", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), "angrytux", "social.tchncs.de", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
