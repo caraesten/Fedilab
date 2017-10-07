@@ -532,7 +532,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             for (Status st : this.statuses) {
                 knownId.add(st.getId());
             }
-            int index = lv_status.getFirstVisiblePosition() + 1;
+            int index = lv_status.getFirstVisiblePosition() + statuses.size();
             View v = lv_status.getChildAt(0);
             int top = (v == null) ? 0 : v.getTop();
             for (int i = statuses.size()-1 ; i >= 0 ; i--) {
