@@ -547,7 +547,6 @@ public class API {
             params.put("since_id", since_id);
         if (0 > limit || limit > 80)
             limit = 80;
-
         params.put("limit",String.valueOf(limit));
         statuses = new ArrayList<>();
         get("/timelines/home", params, new JsonHttpResponseHandler() {

@@ -231,6 +231,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
         final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
 
+
+
         //Display a preview for accounts that have replied *if enabled and only for home timeline*
         if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
             boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);

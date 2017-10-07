@@ -63,11 +63,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.KinrarClient;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
-import fr.gouv.etalab.mastodon.drawers.AccountSearchWebAdapter;
+import fr.gouv.etalab.mastodon.drawers.AccountsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -241,7 +243,7 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
                 rf_no_result.setVisibility(View.GONE);
                 if( screen_name.startsWith("@"))
                     screen_name = screen_name.substring(1);
-                new RetrieveRemoteAccountsAsyncTask(screen_name, instance_name, RemoteFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), screen_name, instance_name, RemoteFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(rf_search.getWindowToken(), 0);
             }
@@ -261,30 +263,26 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
 
 
     @Override
-    public void onRetrieveRemoteAccount(boolean error, String name, String username, String instance_name, boolean locked, String avatar, String bio, String statusCount, String followingCount, String followersCount) {
+    public void onRetrieveRemoteAccount(Results results) {
         loader.setVisibility(View.GONE);
         rf_search.setEnabled(true);
-        if( error){
-            rf_no_result.setVisibility(View.VISIBLE);
-            Toast.makeText(getApplicationContext(), R.string.toast_error,Toast.LENGTH_LONG).show();
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        if( results == null){
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages)
+                Toast.makeText(getApplicationContext(), R.string.toast_error,Toast.LENGTH_LONG).show();
             return;
         }
-        Account account = new Account();
-        account.setInstance(instance_name);
-        account.setAcct(screen_name + "@" + instance_name);
-        account.setAvatar(avatar);
-        account.setDisplay_name(username);
-        account.setStatuses_count_str(statusCount);
-        account.setFollowers_count_str(followersCount);
-        account.setFollowing_count_str(followingCount);
-        account.setUsername(name);
-        account.setLocked(locked);
-        account.setNote(bio);
+        List<Account> accounts = results.getAccounts();
+        Account account;
         List<Account> selectedAccount = new ArrayList<>();
-        selectedAccount.add(account);
-        AccountSearchWebAdapter accountSearchWebAdapter = new AccountSearchWebAdapter(RemoteFollowActivity.this, selectedAccount);
-        lv_account.setAdapter(accountSearchWebAdapter);
-        lv_account.setVisibility(View.VISIBLE);
-
+        if( accounts != null && accounts.size() > 0){
+            account = accounts.get(0);
+            selectedAccount.add(account);
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            AccountsListAdapter accountSearchWebAdapter = new AccountsListAdapter(RemoteFollowActivity.this, RetrieveAccountsAsyncTask.Type.FOLLOWERS, userId, selectedAccount);
+            lv_account.setAdapter(accountSearchWebAdapter);
+            lv_account.setVisibility(View.VISIBLE);
+        }
     }
 }
