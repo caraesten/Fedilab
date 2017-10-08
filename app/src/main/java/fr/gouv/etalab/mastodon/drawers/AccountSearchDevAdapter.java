@@ -132,12 +132,11 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            holder.account_dn.setText(Html.fromHtml(Helper.shortnameToUnicode(account.getDisplay_name(), true), Html.FROM_HTML_MODE_LEGACY));
-            holder.account_un.setText(Html.fromHtml(Helper.shortnameToUnicode(account.getUsername(), true), Html.FROM_HTML_MODE_LEGACY));
+            holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
+            holder.account_un.setText(String.format("@%s",account.getAcct()));
         }else {
-            //noinspection deprecation
-            holder.account_dn.setText(Html.fromHtml(Helper.shortnameToUnicode(account.getDisplay_name(), true)));
-            holder.account_un.setText(Html.fromHtml(Helper.shortnameToUnicode(account.getUsername(), true)));
+            holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
+            holder.account_un.setText(String.format("@%s",account.getAcct()));
         }
         changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.mastodonC4);
         //Profile picture
@@ -149,33 +148,23 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
             holder.account_follow.setVisibility(View.VISIBLE);
         }
 
-        if( account.isRemote()) {
-            holder.account_follow.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    holder.account_follow.setEnabled(false);
-                    new PostActionAsyncTask(context, API.StatusAction.REMOTE_FOLLOW, account.getAcct(), AccountSearchDevAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }
-            });
-        }else {
-            holder.account_follow.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    holder.account_follow.setEnabled(false);
-                    new PostActionAsyncTask(context, API.StatusAction.FOLLOW, account.getId(), AccountSearchDevAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }
-            });
-            holder.acccount_container.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, ShowAccountActivity.class);
-                    Bundle b = new Bundle();
-                    b.putString("accountId", account.getId());
-                    intent.putExtras(b);
-                    context.startActivity(intent);
-                }
-            });
-        }
+        holder.account_follow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.account_follow.setEnabled(false);
+                new PostActionAsyncTask(context, API.StatusAction.FOLLOW, account.getId(), AccountSearchDevAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        });
+        holder.acccount_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ShowAccountActivity.class);
+                Bundle b = new Bundle();
+                b.putString("accountId", account.getId());
+                intent.putExtras(b);
+                context.startActivity(intent);
+            }
+        });
 
         return convertView;
     }
