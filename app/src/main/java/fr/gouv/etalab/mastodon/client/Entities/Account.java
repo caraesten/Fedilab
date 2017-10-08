@@ -47,7 +47,6 @@ public class Account implements Parcelable {
     private String token;
     private String instance;
     private boolean isFollowing;
-    private boolean isRemote;
     private followAction followType = followAction.NOTHING;
     private boolean isMakingAction = false;
 
@@ -277,14 +276,6 @@ public class Account implements Parcelable {
 
     public void setFollowing(boolean following) {
         isFollowing = following;
-    }
-
-    public boolean isRemote() {
-        return isRemote;
-    }
-
-    public void setRemote(boolean remote) {
-        isRemote = remote;
     }
 
     public String getFollowers_count_str() {

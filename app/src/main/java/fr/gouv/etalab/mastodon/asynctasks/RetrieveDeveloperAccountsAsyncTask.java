@@ -48,6 +48,9 @@ public class RetrieveDeveloperAccountsAsyncTask extends AsyncTask<Void, Void, Vo
         APIResponse apiResponse = api.searchAccounts("@tschneider@mastodon.etalab.gouv.fr", 1);
         if( apiResponse.getAccounts() != null && apiResponse.getAccounts().size() > 0)
             accounts.add(apiResponse.getAccounts().get(0));
+        apiResponse = api.searchAccounts("@daycode@mastodon.social",1);
+        if( apiResponse.getAccounts() != null && apiResponse.getAccounts().size() > 0)
+            accounts.add(apiResponse.getAccounts().get(0));
         apiResponse = api.searchAccounts("@PhotonQyv@mastodon.xyz",1);
         if( apiResponse.getAccounts() != null && apiResponse.getAccounts().size() > 0)
             accounts.add(apiResponse.getAccounts().get(0));
