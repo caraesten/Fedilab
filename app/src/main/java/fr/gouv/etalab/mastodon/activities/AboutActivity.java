@@ -55,14 +55,15 @@ import mastodon.etalab.gouv.fr.mastodon.R;
  * About activity
  */
 
-public class AboutActivity extends AppCompatActivity implements OnRetrieveRemoteAccountInterface, OnRetrieveSearchDevelopersAccountshInterface, OnRetrieveRelationshipInterface {
+public class AboutActivity extends AppCompatActivity implements OnRetrieveRemoteAccountInterface, OnRetrieveRelationshipInterface {
 
     private List<Account> developers = new ArrayList<>();
     private List<Account> contributors = new ArrayList<>();
+    private List<Account> designers = new ArrayList<>();
     private AccountSearchDevAdapter accountSearchWebAdapterDeveloper;
+    private AccountSearchDevAdapter accountSearchWebAdapterDesigner;
     private AccountSearchDevAdapter accountSearchWebAdapterContributors;
-    @SuppressWarnings("FieldCanBeLocal")
-    private int DEV_COUNT = 1, CONTRIBUTOR_COUNT = 2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +86,9 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
         } catch (PackageManager.NameNotFoundException ignored) {}
 
         ExpandableHeightListView lv_developers = (ExpandableHeightListView) findViewById(R.id.lv_developers);
+        ExpandableHeightListView lv_designers = (ExpandableHeightListView) findViewById(R.id.lv_designers);
         ExpandableHeightListView lv_contributors = (ExpandableHeightListView) findViewById(R.id.lv_contributors);
+
         Button about_code = (Button) findViewById(R.id.about_code);
         Button about_license = (Button) findViewById(R.id.about_license);
         Button about_thekinrar = (Button) findViewById(R.id.about_thekinrar);
@@ -138,14 +141,22 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
                 startActivity(browserIntent);
             }
         });
-
+        setTitle(R.string.action_about);
         lv_contributors.setExpanded(true);
         lv_developers.setExpanded(true);
+        lv_designers.setExpanded(true);
+
         accountSearchWebAdapterContributors = new AccountSearchDevAdapter(AboutActivity.this, contributors);
         lv_contributors.setAdapter(accountSearchWebAdapterContributors);
+        accountSearchWebAdapterDesigner = new AccountSearchDevAdapter(AboutActivity.this, designers);
+        lv_designers.setAdapter(accountSearchWebAdapterDesigner);
         accountSearchWebAdapterDeveloper = new AccountSearchDevAdapter(AboutActivity.this, developers);
         lv_developers.setAdapter(accountSearchWebAdapterDeveloper);
-        new RetrieveDeveloperAccountsAsyncTask(getApplicationContext(), AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), "tschneider", "mastodon.etalab.gouv.fr", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), "daycode", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), "PhotonQyv", "mastodon.xyz", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), "angrytux", "social.tchncs.de", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 
@@ -174,78 +185,46 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
         Account account;
         if( accounts != null && accounts.size() > 0){
             account = accounts.get(0);
-            account.setFollowing(false);
-            account.setRemote(true);
-            if( account.getUsername().equals("@tschneider")) {
-                developers.add(account);
-                accountSearchWebAdapterDeveloper.notifyDataSetChanged();
-            }else {
-                contributors.add(account);
-                accountSearchWebAdapterContributors.notifyDataSetChanged();
+            account.setFollowing(true);
+            switch (account.getUsername()) {
+                case "tschneider":
+                    developers.add(account);
+                    accountSearchWebAdapterDeveloper.notifyDataSetChanged();
+                    break;
+                case "daycode":
+                    designers.add(account);
+                    accountSearchWebAdapterDesigner.notifyDataSetChanged();
+                    break;
+                default:
+                    contributors.add(account);
+                    accountSearchWebAdapterContributors.notifyDataSetChanged();
+                    break;
             }
+            new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
-    @Override
-    public void onRetrieveSearchDevelopersAccounts(ArrayList<Account> accounts) {
-        if( accounts == null || accounts.size() == 0) {
-            new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), "tschneider", "mastodon.etalab.gouv.fr", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            new RetrieveRemoteAccountsAsyncTask(getApplicationContext(),"PhotonQyv", "mastodon.xyz", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            new RetrieveRemoteAccountsAsyncTask(getApplicationContext(),"angrytux", "social.tchncs.de", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            return;
-        }
-        boolean tschneider = false;
-        boolean PhotonQyv = false;
-        boolean angrytux = false;
-
-        for(Account account: accounts){
-            if( account.getUsername().equals("tschneider")){
-                account.setFollowing(false);
-                account.setRemote(false);
-                developers.add(account);
-                accountSearchWebAdapterDeveloper.notifyDataSetChanged();
-                tschneider = true;
-                new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            }
-            if( account.getUsername().equals("PhotonQyv")){
-                account.setFollowing(false);
-                account.setRemote(false);
-                contributors.add(account);
-                accountSearchWebAdapterContributors.notifyDataSetChanged();
-                PhotonQyv = true;
-                new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            }
-            if( account.getUsername().equals("angrytux")){
-                account.setFollowing(false);
-                account.setRemote(false);
-                contributors.add(account);
-                accountSearchWebAdapterContributors.notifyDataSetChanged();
-                angrytux = true;
-                new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            }
-        }
-        if( !tschneider)
-            new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), "tschneider", "mastodon.etalab.gouv.fr", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        if( !PhotonQyv)
-            new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), "PhotonQyv", "mastodon.xyz", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        if( !angrytux)
-            new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), "angrytux", "social.tchncs.de", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-    }
 
     @Override
     public void onResume(){
         super.onResume();
-        if( developers != null && developers.size() == DEV_COUNT){
+        if( developers != null){
             for(Account account: developers){
                 new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
-        if( contributors != null && contributors.size() == CONTRIBUTOR_COUNT){
+        if( designers != null){
+            for(Account account: designers){
+                new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        }
+        if( contributors != null){
             for(Account account: contributors){
                 new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
     }
+
     @Override
     public void onRetrieveRelationship(Relationship relationship, Error error) {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
@@ -254,14 +233,24 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
             return;
         }
         for( int i = 0 ; i < developers.size() ; i++){
-            if( contributors.get(i).getId() != null && developers.get(i).getId().equals(relationship.getId())){
+            if( developers.get(i).getId() != null && developers.get(i).getId().equals(relationship.getId())){
+                Log.v(Helper.TAG,developers.get(i).getUsername() + " -> " + (relationship.isFollowing() || userId.trim().equals(relationship.getId())));
                 developers.get(i).setFollowing(relationship.isFollowing() || userId.trim().equals(relationship.getId()));
                 accountSearchWebAdapterDeveloper.notifyDataSetChanged();
                 break;
             }
         }
+        for( int i = 0 ; i < designers.size() ; i++){
+            if( designers.get(i).getId() != null && designers.get(i).getId().equals(relationship.getId())){
+                Log.v(Helper.TAG,designers.get(i).getUsername() + " -> " + (relationship.isFollowing() || userId.trim().equals(relationship.getId())));
+                designers.get(i).setFollowing(relationship.isFollowing() || userId.trim().equals(relationship.getId()));
+                accountSearchWebAdapterDesigner.notifyDataSetChanged();
+                break;
+            }
+        }
         for( int i = 0 ; i < contributors.size() ; i++){
             if( contributors.get(i).getId() != null && contributors.get(i).getId().equals(relationship.getId())){
+                Log.v(Helper.TAG,contributors.get(i).getUsername() + " -> " + (relationship.isFollowing() || userId.trim().equals(relationship.getId())));
                 contributors.get(i).setFollowing(relationship.isFollowing() || userId.trim().equals(relationship.getId()));
                 accountSearchWebAdapterContributors.notifyDataSetChanged();
                 break;
