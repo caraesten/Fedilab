@@ -68,20 +68,15 @@ public class TagsSearchAdapter extends ArrayAdapter<String> implements Filterabl
         final String tag = tags.get(position);
         final ViewHolder holder;
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.drawer_tag, parent, false);
+            convertView = layoutInflater.inflate(R.layout.drawer_tag_search, parent, false);
             holder = new ViewHolder();
             holder.tag_name = (TextView) convertView.findViewById(R.id.tag_name);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.tag_name.setText(tag);
-        holder.tag_name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.tag_name.setText(String.format("#%s", tag));
 
-            }
-        });
         return convertView;
     }
 

@@ -1266,7 +1266,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             toot_content.setThreshold(1);
             toot_content.setAdapter(tagsSearchAdapter);
             final String oldContent = toot_content.getText().toString();
-            String[] searchA = oldContent.substring(0,currentCursorPosition).split("@");
+            String[] searchA = oldContent.substring(0,currentCursorPosition).split("#");
             final String search = searchA[searchA.length-1];
             toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
