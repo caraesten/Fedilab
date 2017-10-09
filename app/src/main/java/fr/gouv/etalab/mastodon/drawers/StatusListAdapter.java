@@ -762,7 +762,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                             String key = "__u" + String.valueOf(i) + "__";
                             String value = matcher.group(0);
                             int end = matcher.end();
-                            if (spannableString.charAt(end) == '/') {
+                            if (spannableString.length() > end && spannableString.charAt(end) == '/') {
                                 text = spannableString.toString().substring(0, end).
                                         concat(spannableString.toString().substring(end+1, spannableString.length()));
                             }
