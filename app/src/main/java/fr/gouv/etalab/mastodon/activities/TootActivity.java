@@ -545,7 +545,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         String pattern = "^(.|\\s)*(@([a-zA-Z0-9_]{2,}))$";
         final Pattern sPattern = Pattern.compile(pattern);
 
-        String patternTag = "^(.|\\s)*(#([\\w-]{2,}))$";
+        String patternTag = "^(.|\\s)*(\\#([\\w-]{2,}))$";
         final Pattern tPattern = Pattern.compile(patternTag);
 
         toot_content.addTextChangedListener(new TextWatcher() {
@@ -585,20 +585,22 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                         pp_actionBar.setVisibility(View.GONE);
                     }
                     new RetrieveSearchAccountsAsyncTask(getApplicationContext(),search,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }else{toot_content.dismissDropDown();}
+                }else{
+                    if( s.toString().charAt(0) == '#')
+                        mt = tPattern.matcher(s.toString().substring(currentCursorPosition- searchLength, currentCursorPosition));
+                    else
+                        mt = tPattern.matcher(s.toString().substring(currentCursorPosition- (searchLength-1), currentCursorPosition));
+                    if(mt.matches()) {
+                        String search = mt.group(3);
+                        if (pp_progress != null && pp_actionBar != null) {
+                            pp_progress.setVisibility(View.VISIBLE);
+                            pp_actionBar.setVisibility(View.GONE);
+                        }
+                        new RetrieveSearchAsyncTask(getApplicationContext(),search,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    }else{toot_content.dismissDropDown();}
+                }
 
-                if( s.toString().charAt(0) == '#')
-                    mt = tPattern.matcher(s.toString().substring(currentCursorPosition- searchLength, currentCursorPosition));
-                else
-                    mt = tPattern.matcher(s.toString().substring(currentCursorPosition- (searchLength-1), currentCursorPosition));
-                if(mt.matches()) {
-                    String search = mt.group(3);
-                    if (pp_progress != null && pp_actionBar != null) {
-                        pp_progress.setVisibility(View.VISIBLE);
-                        pp_actionBar.setVisibility(View.GONE);
-                    }
-                    new RetrieveSearchAsyncTask(getApplicationContext(),search,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }else{toot_content.dismissDropDown();}
+
                 totalChar = toot_cw_content.length() + toot_content.length();
                 toot_space_left.setText(String.valueOf(totalChar));
             }
