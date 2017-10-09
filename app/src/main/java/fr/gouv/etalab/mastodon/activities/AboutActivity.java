@@ -234,7 +234,6 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
         }
         for( int i = 0 ; i < developers.size() ; i++){
             if( developers.get(i).getId() != null && developers.get(i).getId().equals(relationship.getId())){
-                Log.v(Helper.TAG,developers.get(i).getUsername() + " -> " + (relationship.isFollowing() || userId.trim().equals(relationship.getId())));
                 developers.get(i).setFollowing(relationship.isFollowing() || userId.trim().equals(relationship.getId()));
                 accountSearchWebAdapterDeveloper.notifyDataSetChanged();
                 break;
@@ -242,7 +241,6 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
         }
         for( int i = 0 ; i < designers.size() ; i++){
             if( designers.get(i).getId() != null && designers.get(i).getId().equals(relationship.getId())){
-                Log.v(Helper.TAG,designers.get(i).getUsername() + " -> " + (relationship.isFollowing() || userId.trim().equals(relationship.getId())));
                 designers.get(i).setFollowing(relationship.isFollowing() || userId.trim().equals(relationship.getId()));
                 accountSearchWebAdapterDesigner.notifyDataSetChanged();
                 break;
@@ -250,7 +248,6 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
         }
         for( int i = 0 ; i < contributors.size() ; i++){
             if( contributors.get(i).getId() != null && contributors.get(i).getId().equals(relationship.getId())){
-                Log.v(Helper.TAG,contributors.get(i).getUsername() + " -> " + (relationship.isFollowing() || userId.trim().equals(relationship.getId())));
                 contributors.get(i).setFollowing(relationship.isFollowing() || userId.trim().equals(relationship.getId()));
                 accountSearchWebAdapterContributors.notifyDataSetChanged();
                 break;
