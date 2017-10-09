@@ -828,7 +828,8 @@ public class MainActivity extends AppCompatActivity
                     while (matcher.find()){
                         int matchStart = matcher.start(1);
                         int matchEnd = matcher.end();
-                        sharedText = sharedText.substring(matchStart, matchEnd);
+                        if(matchStart < matchEnd && sharedText.length() > matchEnd)
+                            sharedText = sharedText.substring(matchStart, matchEnd);
                     }
                     new RetrieveMetaDataAsyncTask(sharedText, MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     Intent intentToot = new Intent(getApplicationContext(), TootActivity.class);
