@@ -511,7 +511,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         }
         if( account != null){
             account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
-            account_un.setText(String.format("@%s", account.getUsername()));
+            account_un.setText(String.format("@%s", account.getAcct()));
             SpannableString spannableString = Helper.clickableElementsDescription(ShowAccountActivity.this, account.getNote());
             account_note.setText(spannableString, TextView.BufferType.SPANNABLE);
             account_note.setMovementMethod(LinkMovementMethod.getInstance());

@@ -1021,7 +1021,7 @@ public class Helper {
             activity.startActivity(myIntent);
             activity.finish(); //User is logged out to get a new token
         }else {
-            username.setText(String.format("@%s",account.getUsername()));
+            username.setText(String.format("@%s",account.getUsername() + "@" + account.getInstance()));
             displayedName.setText(account.getDisplay_name());
             String url = account.getAvatar();
             if( url.startsWith("/") ){
