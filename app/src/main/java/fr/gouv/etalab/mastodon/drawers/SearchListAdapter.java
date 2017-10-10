@@ -236,6 +236,7 @@ public class SearchListAdapter extends BaseAdapter {
                 holder.account_fgc = (TextView) v.findViewById(R.id.account_fgc);
                 holder.account_frc = (TextView) v.findViewById(R.id.account_frc);
                 holder.account_search_title = (TextView) v.findViewById(R.id.account_search_title);
+                holder.main_container = (LinearLayout) v.findViewById(R.id.main_container);
                 v.setTag(holder);
             } else {
                 holder = (ViewHolderAccounts) v.getTag();
@@ -260,7 +261,7 @@ public class SearchListAdapter extends BaseAdapter {
             imageLoader.displayImage(account.getAvatar(), holder.account_pp, options);
 
 
-            holder.account_pp.setOnClickListener(new View.OnClickListener() {
+            holder.main_container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ShowAccountActivity.class);
@@ -335,6 +336,7 @@ public class SearchListAdapter extends BaseAdapter {
         TextView account_fgc;
         TextView account_frc;
         TextView account_search_title;
+        LinearLayout main_container;
     }
 
     private class ViewHolderTag {
