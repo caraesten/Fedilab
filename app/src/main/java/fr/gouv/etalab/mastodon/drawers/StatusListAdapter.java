@@ -96,6 +96,7 @@ import fr.gouv.etalab.mastodon.translation.YandexQuery;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
@@ -348,7 +349,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_fav_black,R.color.dark_text);
+                changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_action_pin_dark, R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
@@ -361,7 +362,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_fav_black,R.color.black);
+                changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_action_pin_dark, R.color.black);
                 changeDrawableColor(context, R.drawable.ic_photo,R.color.white);
                 changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.white);
@@ -601,10 +602,16 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 }
 
                 Drawable imgFav, imgReblog, imgPinned;
-                if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited()))
-                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_fav_yellow);
-                else
-                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_fav_black);
+                if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
+                    changeDrawableColor(context, R.drawable.ic_favorite,R.color.yellowicon);
+                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_favorite);
+                }else {
+                    if( theme == THEME_DARK)
+                        changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_text);
+                    else
+                        changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.black);
+                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_favorite_border);
+                }
 
                 if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged()))
                     imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_retweet_yellow);

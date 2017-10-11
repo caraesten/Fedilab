@@ -75,6 +75,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.helper.Helper;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
@@ -261,7 +262,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_retweet,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_fav_black,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_delete,R.color.dark_text);
@@ -274,7 +275,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.black);
             changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.black);
             changeDrawableColor(context, R.drawable.ic_retweet,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_fav_black,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.black);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.black);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.black);
             changeDrawableColor(context, R.drawable.ic_delete,R.color.black);
@@ -345,10 +346,16 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
 
 
                 Drawable imgFav, imgReblog;
-                if( status.isFavourited())
-                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_fav_yellow);
-                else
-                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_fav_black);
+                if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
+                    changeDrawableColor(context, R.drawable.ic_favorite,R.color.yellowicon);
+                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_favorite);
+                }else {
+                    if( theme == THEME_DARK)
+                        changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_text);
+                    else
+                        changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.black);
+                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_favorite_border);
+                }
 
                 if( status.isReblogged())
                     imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_retweet_yellow);

@@ -987,7 +987,7 @@ public class MainActivity extends AppCompatActivity
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.dark_text);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_local_post_office,R.color.dark_text);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_retweet_black,R.color.dark_text);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_fav_black,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_favorite_border,R.color.dark_text);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_photo,R.color.dark_text);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_remove_red_eye,R.color.dark_text);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.dark_text);
@@ -999,7 +999,7 @@ public class MainActivity extends AppCompatActivity
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.black);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_local_post_office,R.color.black);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_retweet_black,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_fav_black,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_favorite_border,R.color.black);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_photo,R.color.white);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_remove_red_eye,R.color.white);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.white);
