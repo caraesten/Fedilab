@@ -348,7 +348,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.dark_text);
+                changeDrawableColor(context, R.drawable.ic_boost,R.color.dark_text);
+                changeDrawableColor(context, R.drawable.ic_boost_header,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_action_pin_dark, R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
@@ -361,7 +362,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.black);
+                changeDrawableColor(context, R.drawable.ic_boost,R.color.black);
+                changeDrawableColor(context, R.drawable.ic_boost_header,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_action_pin_dark, R.color.black);
                 changeDrawableColor(context, R.drawable.ic_photo,R.color.white);
@@ -376,7 +378,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 img.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
                 holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
             }else if( status.getReblog() != null){
-                Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_retweet_black);
+                Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_boost_header);
                 img.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
                 holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
             }else{
@@ -613,10 +615,16 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     imgFav = ContextCompat.getDrawable(context, R.drawable.ic_favorite_border);
                 }
 
-                if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged()))
-                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_retweet_yellow);
-                else
-                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_retweet_black);
+                if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged())) {
+                    changeDrawableColor(context, R.drawable.ic_boost,R.color.yellowicon);
+                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost);
+                }else {
+                    if( theme == THEME_DARK)
+                        changeDrawableColor(context, R.drawable.ic_boost,R.color.dark_text);
+                    else
+                        changeDrawableColor(context, R.drawable.ic_boost,R.color.black);
+                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost);
+                }
 
                 if( status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned()))
                     imgPinned = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_yellow);
