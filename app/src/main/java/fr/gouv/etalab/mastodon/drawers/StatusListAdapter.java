@@ -415,9 +415,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             }
 
 
-
-
-
             if( status.getContent_translated() != null && status.getContent_translated().length() > 0){
                 holder.status_content_translated.setMovementMethod(null);
                 SpannableString spannableStringTrans = Helper.clickableElements(context, status.getContent_translated(),

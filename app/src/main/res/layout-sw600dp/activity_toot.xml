@@ -83,7 +83,6 @@
                 android:layout_height="wrap_content">
                 <ImageButton
                     android:id="@+id/toot_picture"
-                    android:padding="5dp"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/ic_insert_photo"
@@ -92,7 +91,6 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginStart="5dp"
                     android:id="@+id/toot_visibility"
-                    android:padding="5dp"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/ic_action_globe"
