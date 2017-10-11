@@ -165,9 +165,9 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             if (status.getReblog() != null && !sharedpreferences.getBoolean(Helper.SET_SHOW_BOOSTS, true))
                 return HIDDEN_STATUS;
-            else if ((status.getIn_reply_to_account_id() != null && !status.getIn_reply_to_account_id().equals("null")) || (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null")) && !sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true))
+            else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true)) {
                 return HIDDEN_STATUS;
-            else
+            }else
                 return DISPLAYED_STATUS;
         }else {
             return DISPLAYED_STATUS;
