@@ -66,8 +66,6 @@
         tools:ignore="UseCompoundDrawables">
         <TextView
             android:gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
             android:id="@+id/displayedName"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -85,8 +83,6 @@
             tools:ignore="ContentDescription" />
     </LinearLayout>
     <TextView
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
         android:id="@+id/username"
         android:layout_width="wrap_content"
         android:textSize="12sp"
