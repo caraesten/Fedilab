@@ -428,7 +428,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
             }else {
                 if( visibility.equals("direct") ){
-                    toot_visibility.setImageResource(R.drawable.ic_local_post_office);
+                    toot_visibility.setImageResource(R.drawable.ic_mail_outline);
                 }else{
                     visibility = "private";
                     toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
@@ -448,7 +448,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                         toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
                         break;
                     case "direct":
-                        toot_visibility.setImageResource(R.drawable.ic_local_post_office);
+                        toot_visibility.setImageResource(R.drawable.ic_mail_outline);
                         break;
                 }
             }
@@ -1115,7 +1115,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                         break;
                     case 3:
                         visibility = "direct";
-                        toot_visibility.setImageResource(R.drawable.ic_local_post_office);
+                        toot_visibility.setImageResource(R.drawable.ic_mail_outline);
                         break;
                 }
                 changeColor();
@@ -1379,7 +1379,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 break;
             case "direct":
                 visibility = "direct";
-                toot_visibility.setImageResource(R.drawable.ic_local_post_office);
+                toot_visibility.setImageResource(R.drawable.ic_mail_outline);
                 break;
         }
         changeColor();
@@ -1428,7 +1428,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 break;
             case "direct":
                 visibility = "direct";
-                toot_visibility.setImageResource(R.drawable.ic_local_post_office);
+                toot_visibility.setImageResource(R.drawable.ic_mail_outline);
                 break;
         }
         changeColor();
@@ -1507,7 +1507,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             changeDrawableColor(TootActivity.this, R.drawable.ic_action_globe, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_open, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_closed, R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_local_post_office, R.color.dark_text);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_mail_outline, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_insert_photo, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_skip_previous, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next, R.color.dark_text);
@@ -1516,7 +1516,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             changeDrawableColor(TootActivity.this, R.drawable.ic_action_globe, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_open, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_closed, R.color.white);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_local_post_office, R.color.white);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_mail_outline, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_insert_photo, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_skip_previous, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next, R.color.white);

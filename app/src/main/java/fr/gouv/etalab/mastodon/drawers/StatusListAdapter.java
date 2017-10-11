@@ -347,7 +347,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 changeDrawableColor(context, R.drawable.ic_action_globe,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.dark_text);
+                changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_action_pin_dark, R.color.dark_text);
@@ -360,7 +360,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 changeDrawableColor(context, R.drawable.ic_action_globe,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.black);
+                changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_action_pin_dark, R.color.black);
@@ -597,7 +597,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         holder.status_privacy.setImageResource(R.drawable.ic_action_lock_closed);
                         break;
                     case "direct":
-                        holder.status_privacy.setImageResource(R.drawable.ic_local_post_office);
+                        holder.status_privacy.setImageResource(R.drawable.ic_mail_outline);
                         break;
                 }
 

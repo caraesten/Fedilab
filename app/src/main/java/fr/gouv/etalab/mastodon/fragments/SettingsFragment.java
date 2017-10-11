@@ -373,7 +373,7 @@ public class SettingsFragment extends Fragment {
                     set_toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
                     break;
                 case "direct":
-                    set_toot_visibility.setImageResource(R.drawable.ic_local_post_office);
+                    set_toot_visibility.setImageResource(R.drawable.ic_mail_outline);
                     break;
             }
             changeColor();
@@ -415,7 +415,7 @@ public class SettingsFragment extends Fragment {
                                 break;
                             case 3:
                                 visibility = "direct";
-                                set_toot_visibility.setImageResource(R.drawable.ic_local_post_office);
+                                set_toot_visibility.setImageResource(R.drawable.ic_mail_outline);
                                 break;
                         }
                         if( account != null) {
@@ -482,12 +482,12 @@ public class SettingsFragment extends Fragment {
             changeDrawableColor(context, R.drawable.ic_action_globe,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_text);
         }else {
             changeDrawableColor(context, R.drawable.ic_action_globe,R.color.white);
             changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.white);
             changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.white);
-            changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.white);
+            changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.white);
         }
 
     }
