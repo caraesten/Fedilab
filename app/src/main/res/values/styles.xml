@@ -224,7 +224,7 @@
 
 
     <style name="CardViewStyle.Dark" parent="CardView">
-        <item name="cardBackgroundColor">@color/mastodonC1</item>
+        <item name="cardBackgroundColor">@color/mastodonC1_</item>
     </style>
 
 
