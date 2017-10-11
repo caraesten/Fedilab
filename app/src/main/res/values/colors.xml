@@ -19,7 +19,7 @@
     <color name="header2D">#455A64</color>
     <color name="header3D">#607D8B</color>
 
-    <color name="dark_text">#efefef</color>
+    <color name="dark_text">#f3f3f3</color>
     <color name="transparent">#00000000</color>
 
 
@@ -64,73 +64,6 @@
     <color name="primary_dark_material_dark">@color/mastodonC1</color>
     <color name="primary_dark_material_light">@color/mastodonC3__</color>
 
-    <!-- 20% white (foreground) -->
-    <color name="ripple_material_dark">@color/mastodonC4</color>
-    <!-- 12% black (foreground) -->
-    <color name="ripple_material_light">@color/mastodonC4</color>
-
-    <color name="accent_material_light">@color/mastodonC4</color>
-    <color name="accent_material_dark">@color/mastodonC4</color>
-
-    <color name="button_material_dark">@color/mastodonC4</color>
-    <color name="button_material_light">@color/mastodonC4</color>
-
-    <color name="switch_thumb_normal_material_dark">@color/mastodonC2</color>
-    <color name="switch_thumb_normal_material_light">@color/mastodonC3__</color>
-    <color name="switch_thumb_disabled_material_dark">@color/mastodonC1</color>
-    <color name="switch_thumb_disabled_material_light">@color/mastodonC3__</color>
-
-    <color name="bright_foreground_material_dark">@color/mastodonC3</color>
-    <color name="bright_foreground_material_light">@color/mastodonC3</color>
-    <!-- White 50% -->
-    <color name="bright_foreground_disabled_material_dark">@color/mastodonC3</color>
-    <!-- Black 50% -->
-    <color name="bright_foreground_disabled_material_light">@color/mastodonC3</color>
-    <color name="bright_foreground_inverse_material_dark">@color/mastodonC2</color>
-
-    <color name="dim_foreground_material_dark">@color/mastodonC2</color>
-    <color name="dim_foreground_material_light">@color/mastodonC2</color>
-    <color name="dim_foreground_disabled_material_dark">@color/mastodonC3</color>
-    <color name="dim_foreground_disabled_material_light">@color/mastodonC3__</color>
-
-    <item name="hint_alpha_material_dark" format="float" type="dimen">0.50</item>
-    <item name="hint_alpha_material_light" format="float" type="dimen">0.38</item>
-
-    <item name="hint_pressed_alpha_material_dark" format="float" type="dimen">0.70</item>
-    <item name="hint_pressed_alpha_material_light" format="float" type="dimen">0.54</item>
-
-    <!-- TODO: This is 40% alpha on the default accent color. -->
-    <color name="highlighted_text_material_dark">@color/mastodonC4</color>
-    <!-- TODO: This is 40% alpha on the default accent color. -->
-    <color name="highlighted_text_material_light">@color/mastodonC4</color>
-
-    <!-- Text & foreground colors -->
-    <eat-comment />
-
-    <!-- 87% black -->
-    <color name="primary_text_default_material_light">@color/mastodonC1</color>
-    <!-- 54% black -->
-    <color name="secondary_text_default_material_light">@color/mastodonC3__</color>
-
-    <!-- 100% white -->
-    <color name="primary_text_default_material_dark">@color/mastodonC3</color>
-    <!-- 70% white -->
-    <color name="secondary_text_default_material_dark">@color/mastodonC3</color>
-
-    <item name="disabled_alpha_material_light" format="float" type="dimen">0.26</item>
-    <item name="disabled_alpha_material_dark" format="float" type="dimen">0.30</item>
-
-    <item name="highlight_alpha_material_light" format="float" type="dimen">0.12</item>
-    <item name="highlight_alpha_material_dark" format="float" type="dimen">0.20</item>
-    <item name="highlight_alpha_material_colored" format="float" type="dimen">0.26</item>
-
-    <!-- 26% of default values -->
-    <color name="primary_text_disabled_material_light">@color/mastodonC3__</color>
-    <color name="secondary_text_disabled_material_light">@color/mastodonC3__</color>
-
-    <!-- 30% of default values -->
-    <color name="primary_text_disabled_material_dark">@color/mastodonC3</color>
-    <color name="secondary_text_disabled_material_dark">@color/mastodonC3</color>
 
     <!-- Primary & accent colors -->
     <color name="notif_dark_1">#313543</color>
