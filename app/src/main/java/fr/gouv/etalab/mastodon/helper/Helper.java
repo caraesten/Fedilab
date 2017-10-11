@@ -992,7 +992,7 @@ public class Helper {
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 super.onLoadingComplete(imageUri, view, loadedImage);
                 Resources res = activity.getResources();
-                BitmapDrawable icon = new BitmapDrawable(res, getRoundedCornerBitmap(loadedImage, 150));
+                BitmapDrawable icon = new BitmapDrawable(res, getRoundedCornerBitmap(loadedImage, 20));
                 imageView.setImageDrawable(icon);
             }
             @Override

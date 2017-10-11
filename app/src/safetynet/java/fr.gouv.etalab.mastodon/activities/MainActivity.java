@@ -610,7 +610,7 @@ public class MainActivity extends AppCompatActivity
                 .diskCache(new UnlimitedDiskCache(cacheDir))
                 .build();
         imageLoader.init(configImg);
-        options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(90)).cacheInMemory(false)
+        options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(20)).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

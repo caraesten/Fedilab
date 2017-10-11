@@ -538,7 +538,7 @@ public class MainActivity extends AppCompatActivity
                 .diskCache(new UnlimitedDiskCache(cacheDir))
                 .build();
         imageLoader.init(configImg);
-        options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(90)).cacheInMemory(false)
+        options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(20)).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -913,9 +913,9 @@ public class MainActivity extends AppCompatActivity
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_action_globe,R.color.dark_text);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_open,R.color.dark_text);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.dark_text);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_local_post_office,R.color.dark_text);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_retweet_black,R.color.dark_text);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_fav_black,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_retweet,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_favorite_border,R.color.dark_text);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_photo,R.color.dark_text);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_remove_red_eye,R.color.dark_text);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.dark_text);
@@ -925,9 +925,9 @@ public class MainActivity extends AppCompatActivity
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_action_globe,R.color.black);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_open,R.color.black);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_local_post_office,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_retweet_black,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_fav_black,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_retweet,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_favorite_border,R.color.black);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_photo,R.color.white);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_remove_red_eye,R.color.white);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.white);
