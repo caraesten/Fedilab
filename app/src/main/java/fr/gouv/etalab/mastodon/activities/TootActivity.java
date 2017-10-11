@@ -1508,7 +1508,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_open, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_closed, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_local_post_office, R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_action_camera, R.color.dark_text);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_insert_photo, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_skip_previous, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_check, R.color.dark_text);
@@ -1517,7 +1517,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_open, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_closed, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_local_post_office, R.color.white);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_action_camera, R.color.white);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_insert_photo, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_skip_previous, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_check, R.color.white);

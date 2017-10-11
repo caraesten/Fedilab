@@ -86,7 +86,7 @@
                     android:padding="5dp"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/ic_action_camera"
+                    android:src="@drawable/ic_insert_photo"
                     tools:ignore="ContentDescription" />
                 <ImageButton
                     android:layout_marginLeft="5dp"
