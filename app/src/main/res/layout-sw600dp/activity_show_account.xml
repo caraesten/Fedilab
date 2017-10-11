@@ -87,7 +87,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginStart="10dp"
                                 android:gravity="center_horizontal|bottom"
-                                android:src="@drawable/ic_action_edit"
+                                android:src="@drawable/ic_edit"
                                 android:id="@+id/header_edit_profile"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
