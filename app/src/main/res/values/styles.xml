@@ -110,6 +110,7 @@
 
     <!-- Dark theme -->
     <style name="AppThemeDark" parent="Theme.AppCompat">
+        <item name="android:textColor">@color/dark_text</item>
         <item name="colorPrimary">@color/mastodonC1</item>
         <item name="colorPrimaryDark">@color/mastodonC2</item>
         <item name="colorAccent">@color/mastodonC4</item>
@@ -132,6 +133,7 @@
     </style>
 
     <style name="AppThemeDark_NoActionBar" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:textColor">@color/dark_text</item>
         <item name="colorPrimary">@color/mastodonC1</item>
         <item name="colorPrimaryDark">@color/mastodonC2</item>
         <item name="colorAccent">@color/mastodonC4</item>
