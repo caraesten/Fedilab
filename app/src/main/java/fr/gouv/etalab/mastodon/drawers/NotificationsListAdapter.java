@@ -302,7 +302,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
             holder.status_date.setText(Helper.dateDiff(context, status.getCreated_at()));
 
-            Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/Bookerly.ttf");
+            Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/WorkSans-Regular.ttf");
             holder.notification_status_content.setTypeface(tf);
 
             //Adds attachment -> disabled, to enable them uncomment the line below
