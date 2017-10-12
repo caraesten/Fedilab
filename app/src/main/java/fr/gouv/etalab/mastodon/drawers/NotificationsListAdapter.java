@@ -202,7 +202,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 }else {
                     holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_2));
                 }
-                imgH = ContextCompat.getDrawable(context, R.drawable.ic_boost_header);
+                imgH = ContextCompat.getDrawable(context, R.drawable.ic_boost_header_notif);
                 break;
             case "favourite":
                 holder.status_action_container.setVisibility(View.GONE);
@@ -232,7 +232,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 break;
         }
         changeDrawableColor(context, R.drawable.ic_chat_bubble_outline, R.color.mastodonC4);
-        changeDrawableColor(context, R.drawable.ic_boost_header,R.color.mastodonC4);
+        changeDrawableColor(context, R.drawable.ic_boost_header_notif,R.color.mastodonC4);
         changeDrawableColor(context, R.drawable.ic_fav_notif_header,R.color.mastodonC4);
         changeDrawableColor(context, R.drawable.ic_follow_notif_header,R.color.mastodonC4);
         holder.notification_type.setText(typeString);

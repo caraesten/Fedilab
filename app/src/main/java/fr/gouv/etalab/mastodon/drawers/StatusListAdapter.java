@@ -352,7 +352,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_boost,R.color.dark_text);
+                changeDrawableColor(context, R.drawable.ic_boost_border,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_boost_header,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_action_pin_dark, R.color.dark_text);
@@ -366,7 +366,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_boost,R.color.black);
+                changeDrawableColor(context, R.drawable.ic_boost_border,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_boost_header,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_action_pin_dark, R.color.black);
