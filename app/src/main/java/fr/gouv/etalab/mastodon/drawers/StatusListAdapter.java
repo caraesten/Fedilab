@@ -621,10 +621,10 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost);
                 }else {
                     if( theme == THEME_DARK)
-                        changeDrawableColor(context, R.drawable.ic_boost,R.color.dark_text);
+                        changeDrawableColor(context, R.drawable.ic_boost_border,R.color.dark_text);
                     else
-                        changeDrawableColor(context, R.drawable.ic_boost,R.color.black);
-                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost);
+                        changeDrawableColor(context, R.drawable.ic_boost_border,R.color.black);
+                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost_border);
                 }
 
                 if( status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned()))

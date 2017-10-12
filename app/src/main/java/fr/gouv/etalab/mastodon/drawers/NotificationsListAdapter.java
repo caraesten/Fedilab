@@ -350,10 +350,10 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                     imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost);
                 }else {
                     if( theme == THEME_DARK)
-                        changeDrawableColor(context, R.drawable.ic_boost,R.color.dark_text);
+                        changeDrawableColor(context, R.drawable.ic_boost_border,R.color.dark_text);
                     else
-                        changeDrawableColor(context, R.drawable.ic_boost,R.color.black);
-                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost);
+                        changeDrawableColor(context, R.drawable.ic_boost_border,R.color.black);
+                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost_border);
                 }
 
                 imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
