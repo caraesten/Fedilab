@@ -15,6 +15,7 @@ package fr.gouv.etalab.mastodon.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -567,6 +568,10 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         }
                     }
                 }
+
+                Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/DroidSans.ttf");
+                holder.status_content.setTypeface(tf);
+
                 //Toot was translated and user asked to see it
                 if( status.isTranslationShown()){
                     holder.status_content.setVisibility(View.GONE);
