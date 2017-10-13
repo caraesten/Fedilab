@@ -576,6 +576,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 if( status.isTranslationShown()){
                     holder.status_content.setVisibility(View.GONE);
                     holder.status_content_translated_container.setVisibility(View.VISIBLE);
+                    holder.status_content_translated.setTypeface(tf);
                 }else { //Toot is not translated
                     holder.status_content.setVisibility(View.VISIBLE);
                     holder.status_content_translated_container.setVisibility(View.GONE);
