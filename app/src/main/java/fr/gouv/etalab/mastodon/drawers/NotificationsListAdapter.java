@@ -295,6 +295,8 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
 
             SpannableString spannableString = Helper.clickableElements(context, content,
                     status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), true);
+            Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/WorkSans-Regular.ttf");
+            holder.notification_status_content.setTypeface(tf);
             holder.notification_status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
             holder.notification_status_content.setMovementMethod(null);
             holder.notification_status_content.setMovementMethod(LinkMovementMethod.getInstance());
