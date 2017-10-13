@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity
     private String userIdService;
     private Intent streamingIntent;
     public static String lastHomeId = null, lastNotificationId = null;
-    boolean notif_follow, notif_add, notif_mention, notif_share;
+    boolean notif_follow, notif_add, notif_mention, notif_share, show_boosts, show_replies;
 
     public MainActivity() {
     }
@@ -298,6 +298,70 @@ public class MainActivity extends AppCompatActivity
                                     notif_share = !notif_share;
                                     editor.putBoolean(Helper.SET_NOTIF_SHARE, notif_share);
                                     itemBoost.setChecked(notif_share);
+                                    editor.apply();
+                                    break;
+                            }
+                            return false;
+                        }
+                    });
+                    popup.show();
+                }
+                return true;
+            }
+        });
+
+
+        tabStrip.getChildAt(0).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                //Only shown if the tab has focus
+                if( homeFragment != null && homeFragment.getUserVisibleHint()){
+                    PopupMenu popup = new PopupMenu(MainActivity.this, tabStrip.getChildAt(0));
+                    popup.getMenuInflater()
+                            .inflate(R.menu.option_filter_toots, popup.getMenu());
+                    Menu menu = popup.getMenu();
+                    final MenuItem itemShowBoosts = menu.findItem(R.id.action_show_boosts);
+                    final MenuItem itemShowReplies = menu.findItem(R.id.action_show_replies);
+
+                    show_boosts = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOSTS, true);
+                    show_replies = sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true);
+                    itemShowBoosts.setChecked(show_boosts);
+                    itemShowReplies.setChecked(show_replies);
+                    popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
+                        @Override
+                        public void onDismiss(PopupMenu menu) {
+                            if( homeFragment != null)
+                                homeFragment.refreshFilter();
+                        }
+                    });
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        public boolean onMenuItemClick(MenuItem item) {
+                            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+                            item.setActionView(new View(getApplicationContext()));
+                            item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                                @Override
+                                public boolean onMenuItemActionExpand(MenuItem item) {
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onMenuItemActionCollapse(MenuItem item) {
+                                    return false;
+                                }
+                            });
+                            switch (item.getItemId()) {
+                                case R.id.action_show_boosts:
+                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                    show_boosts = !show_boosts;
+                                    editor.putBoolean(Helper.SET_SHOW_BOOSTS, show_boosts);
+                                    itemShowBoosts.setChecked(show_boosts);
+                                    editor.apply();
+                                    break;
+                                case R.id.action_show_replies:
+                                    editor = sharedpreferences.edit();
+                                    show_replies = !show_replies;
+                                    editor.putBoolean(Helper.SET_SHOW_REPLIES, show_replies);
+                                    itemShowReplies.setChecked(show_replies);
                                     editor.apply();
                                     break;
                             }
