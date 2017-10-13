@@ -49,6 +49,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -137,6 +138,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     }
 
     private action doAction;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -492,16 +494,16 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
                 }});
             if( Build.VERSION.SDK_INT >= 21) {
+
                 AppBarLayout appBar = (AppBarLayout) findViewById(R.id.appBar);
                 appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
                     @Override
                     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                        if (verticalOffset > 10 ) {
-                            pp_actionBar.setVisibility(View.GONE);
-                        } else {
+                        if (Math.abs(verticalOffset)-appBarLayout.getTotalScrollRange() == 0) {
                             pp_actionBar.setVisibility(View.VISIBLE);
+                        } else {
+                            pp_actionBar.setVisibility(View.GONE);
                         }
-
                     }
                 });
             }
