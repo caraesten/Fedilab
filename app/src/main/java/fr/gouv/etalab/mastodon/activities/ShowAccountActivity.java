@@ -36,6 +36,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -276,6 +277,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         });
         
         if( Build.VERSION.SDK_INT < 21) {
+            final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarLayout);
             //Register LocalBroadcast to receive selected accounts after search
             hide_header = new BroadcastReceiver() {
                 @Override
@@ -285,14 +287,14 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                         ImageView account_pp = (ImageView) findViewById(R.id.account_pp);
                         boolean hide = intent.getBooleanExtra("hide", false);
                         if (hide) {
-                            main_header_container.setVisibility(View.GONE);
+                            collapsingToolbarLayout.setVisibility(View.GONE);
                             if (pp_actionBar != null)
                                 pp_actionBar.setVisibility(View.VISIBLE);
                             tabLayout.setVisibility(View.GONE);
                         } else {
                             manageButtonVisibility();
                             tabLayout.setVisibility(View.VISIBLE);
-                            main_header_container.setVisibility(View.VISIBLE);
+                            collapsingToolbarLayout.setVisibility(View.VISIBLE);
                             if (pp_actionBar != null)
                                 pp_actionBar.setVisibility(View.GONE);
                         }
