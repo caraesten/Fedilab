@@ -79,7 +79,6 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
     private SwipeRefreshLayout swipeRefreshLayout;
     private ListView lv_status;
     private boolean isRefreshed;
-    private TextView title;
     private ImageView pp_actionBar;
 
     @Override
@@ -101,7 +100,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
             View view = inflater.inflate(R.layout.conversation_action_bar, null);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-            title = (TextView) actionBar.getCustomView().findViewById(R.id.toolbar_title);
+            TextView title = (TextView) actionBar.getCustomView().findViewById(R.id.toolbar_title);
             pp_actionBar = (ImageView) actionBar.getCustomView().findViewById(R.id.pp_actionBar);
             title.setText(R.string.conversation);
             ImageView close_conversation = (ImageView) actionBar.getCustomView().findViewById(R.id.close_conversation);
@@ -163,15 +162,9 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, false,false, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
-        if( theme == Helper.THEME_LIGHT) {
-            swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,
-                    R.color.colorPrimary,
-                    R.color.colorPrimaryDark);
-        }else {
-            swipeRefreshLayout.setColorSchemeResources(R.color.colorAccentD,
-                    R.color.colorPrimaryD,
-                    R.color.colorPrimaryDarkD);
-        }
+        swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
+                R.color.mastodonC2,
+                R.color.mastodonC3);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
