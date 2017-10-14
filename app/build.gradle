@@ -7,8 +7,8 @@ android {
         applicationId "fr.gouv.etalab.mastodon"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 60
-        versionName "1.5.0"
+        versionCode 61
+        versionName "1.5.1"
     }
     buildTypes {
         release {
@@ -41,6 +41,7 @@ dependencies {
     compile 'com.github.chrisbanes:PhotoView:2.0.0'
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'org.jsoup:jsoup:1.10.3'
+    compile 'de.hdodenhof:circleimageview:2.2.0'
     safetynetCompile 'com.google.android.gms:play-services-safetynet:11.0.4'
     safetynetCompile 'io.github.kobakei:ratethisapp:1.2.0'
 }

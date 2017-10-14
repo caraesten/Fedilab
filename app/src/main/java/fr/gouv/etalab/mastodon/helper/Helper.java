@@ -209,6 +209,9 @@ public class Helper {
     public static final String SET_PREVIEW_REPLIES_PP = "set_preview_replies_pp";
     public static final String SET_TRANSLATOR = "set_translator";
     public static final String SET_LED_COLOUR = "set_led_colour";
+    public static final String SET_SHOW_BOOSTS = "set_show_boost";
+    public static final String SET_SHOW_REPLIES = "set_show_replies";
+
 
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
@@ -825,7 +828,6 @@ public class Helper {
                     if( currentSubmenu  == null)
                         continue;
                     final MenuItem item = currentSubmenu.add("@" + account.getAcct());
-                    //final MenuItem item = mainMenu.addSubMenu("@" + account.getAcct()).add("@" + account.getAcct());
                     ImageLoader imageLoader;
                     DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                             .cacheOnDisk(true).resetViewBeforeLoading(true).build();
@@ -989,7 +991,7 @@ public class Helper {
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 super.onLoadingComplete(imageUri, view, loadedImage);
                 Resources res = activity.getResources();
-                BitmapDrawable icon = new BitmapDrawable(res, getRoundedCornerBitmap(loadedImage, 150));
+                BitmapDrawable icon = new BitmapDrawable(res, getRoundedCornerBitmap(loadedImage, 20));
                 imageView.setImageDrawable(icon);
             }
             @Override
@@ -1021,7 +1023,7 @@ public class Helper {
             activity.startActivity(myIntent);
             activity.finish(); //User is logged out to get a new token
         }else {
-            username.setText(String.format("@%s",account.getUsername()));
+            username.setText(String.format("@%s",account.getUsername() + "@" + account.getInstance()));
             displayedName.setText(account.getDisplay_name());
             String url = account.getAvatar();
             if( url.startsWith("/") ){

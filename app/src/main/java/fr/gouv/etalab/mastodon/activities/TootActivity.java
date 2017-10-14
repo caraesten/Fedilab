@@ -103,21 +103,27 @@ import java.util.regex.Pattern;
 import cz.msebera.android.httpclient.Header;
 import fr.gouv.etalab.mastodon.asynctasks.PostStatusAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAccountsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UploadActionAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
+import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
+import fr.gouv.etalab.mastodon.client.Entities.Tag;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.drawers.AccountsSearchAdapter;
 import fr.gouv.etalab.mastodon.drawers.DraftsListAdapter;
+import fr.gouv.etalab.mastodon.drawers.TagsListAdapter;
+import fr.gouv.etalab.mastodon.drawers.TagsSearchAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostStatusActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchInterface;
 import fr.gouv.etalab.mastodon.jobs.ScheduledTootsSyncJob;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -133,7 +139,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Toot activity class
  */
 
-public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostStatusActionInterface {
+public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface {
 
 
     private String visibility;
@@ -422,7 +428,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
             }else {
                 if( visibility.equals("direct") ){
-                    toot_visibility.setImageResource(R.drawable.ic_local_post_office);
+                    toot_visibility.setImageResource(R.drawable.ic_mail_outline);
                 }else{
                     visibility = "private";
                     toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
@@ -442,7 +448,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                         toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
                         break;
                     case "direct":
-                        toot_visibility.setImageResource(R.drawable.ic_local_post_office);
+                        toot_visibility.setImageResource(R.drawable.ic_mail_outline);
                         break;
                 }
             }
@@ -539,6 +545,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         String pattern = "^(.|\\s)*(@([a-zA-Z0-9_]{2,}))$";
         final Pattern sPattern = Pattern.compile(pattern);
 
+        String patternTag = "^(.|\\s)*(\\#([\\w-]{2,}))$";
+        final Pattern tPattern = Pattern.compile(patternTag);
+
         toot_content.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -563,7 +572,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 toot_space_left.setText(String.valueOf(totalChar));
                 if( currentCursorPosition- (searchLength-1) < 0 || currentCursorPosition == 0 || currentCursorPosition > s.toString().length())
                     return;
-                Matcher m;
+                Matcher m, mt;
 
                 if( s.toString().charAt(0) == '@')
                     m = sPattern.matcher(s.toString().substring(currentCursorPosition- searchLength, currentCursorPosition));
@@ -576,7 +585,22 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                         pp_actionBar.setVisibility(View.GONE);
                     }
                     new RetrieveSearchAccountsAsyncTask(getApplicationContext(),search,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }else{toot_content.dismissDropDown();}
+                }else{
+                    if( s.toString().charAt(0) == '#')
+                        mt = tPattern.matcher(s.toString().substring(currentCursorPosition- searchLength, currentCursorPosition));
+                    else
+                        mt = tPattern.matcher(s.toString().substring(currentCursorPosition- (searchLength-1), currentCursorPosition));
+                    if(mt.matches()) {
+                        String search = mt.group(3);
+                        if (pp_progress != null && pp_actionBar != null) {
+                            pp_progress.setVisibility(View.VISIBLE);
+                            pp_actionBar.setVisibility(View.GONE);
+                        }
+                        new RetrieveSearchAsyncTask(getApplicationContext(),search,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    }else{toot_content.dismissDropDown();}
+                }
+
+
                 totalChar = toot_cw_content.length() + toot_content.length();
                 toot_space_left.setText(String.valueOf(totalChar));
             }
@@ -1039,7 +1063,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                             toot_content.setText(toot_content.getText().toString().replace(attachment.getText_url(), ""));
                             toot_space_left.setText(String.valueOf(toot_content.length()));
                             //Moves the cursor
-                            if (selectionBefore >= 0)
+                            if (selectionBefore >= 0 && selectionBefore < toot_content.length())
                                 toot_content.setSelection(selectionBefore);
                         }
                         ((ViewGroup) namebar.getParent()).removeView(namebar);
@@ -1091,7 +1115,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                         break;
                     case 3:
                         visibility = "direct";
-                        toot_visibility.setImageResource(R.drawable.ic_local_post_office);
+                        toot_visibility.setImageResource(R.drawable.ic_mail_outline);
                         break;
                 }
                 changeColor();
@@ -1220,7 +1244,59 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 }
             });
         }
+    }
 
+    @Override
+    public void onRetrieveSearch(Results results, Error error) {
+        if( pp_progress != null && pp_actionBar != null) {
+            pp_progress.setVisibility(View.GONE);
+            pp_actionBar.setVisibility(View.VISIBLE);
+        }
+        if( results == null){
+            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages)
+                Toast.makeText(getApplicationContext(), R.string.toast_error, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        final List<String> tags = results.getHashtags();
+        if( tags != null && tags.size() > 0){
+            TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(TootActivity.this, tags);
+            toot_content.setThreshold(1);
+            toot_content.setAdapter(tagsSearchAdapter);
+            final String oldContent = toot_content.getText().toString();
+            String[] searchA = oldContent.substring(0,currentCursorPosition).split("#");
+            final String search = searchA[searchA.length-1];
+            toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String tag = tags.get(position);
+                    String deltaSearch = "";
+                    if( currentCursorPosition-searchLength > 0 && currentCursorPosition < oldContent.length() )
+                        deltaSearch = oldContent.substring(currentCursorPosition-searchLength, currentCursorPosition);
+                    else {
+                        if( currentCursorPosition >= oldContent.length() )
+                            deltaSearch = oldContent.substring(currentCursorPosition-searchLength, oldContent.length());
+                    }
+
+                    if( !search.equals(""))
+                        deltaSearch = deltaSearch.replace("#"+search,"");
+                    String newContent = oldContent.substring(0,currentCursorPosition-searchLength);
+                    newContent += deltaSearch;
+                    newContent += "#" + tag + " ";
+                    int newPosition = newContent.length();
+                    if( currentCursorPosition < oldContent.length() - 1)
+                        newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
+                    toot_content.setText(newContent);
+                    toot_space_left.setText(String.valueOf(toot_content.length()));
+                    toot_content.setSelection(newPosition);
+                    TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(TootActivity.this, new ArrayList<String>());
+                    toot_content.setThreshold(1);
+                    toot_content.setAdapter(tagsSearchAdapter);
+                }
+            });
+        }
     }
 
     private void restoreToot(long id){
@@ -1303,7 +1379,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 break;
             case "direct":
                 visibility = "direct";
-                toot_visibility.setImageResource(R.drawable.ic_local_post_office);
+                toot_visibility.setImageResource(R.drawable.ic_mail_outline);
                 break;
         }
         changeColor();
@@ -1352,7 +1428,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 break;
             case "direct":
                 visibility = "direct";
-                toot_visibility.setImageResource(R.drawable.ic_local_post_office);
+                toot_visibility.setImageResource(R.drawable.ic_mail_outline);
                 break;
         }
         changeColor();
@@ -1431,8 +1507,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             changeDrawableColor(TootActivity.this, R.drawable.ic_action_globe, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_open, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_closed, R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_local_post_office, R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_action_camera, R.color.dark_text);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_mail_outline, R.color.dark_text);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_insert_photo, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_skip_previous, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_check, R.color.dark_text);
@@ -1440,11 +1516,13 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             changeDrawableColor(TootActivity.this, R.drawable.ic_action_globe, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_open, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_action_lock_closed, R.color.white);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_local_post_office, R.color.white);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_action_camera, R.color.white);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_mail_outline, R.color.white);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_insert_photo, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_skip_previous, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_check, R.color.white);
         }
     }
+
+
 }

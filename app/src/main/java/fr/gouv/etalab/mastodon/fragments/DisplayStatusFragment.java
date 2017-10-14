@@ -370,6 +370,17 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }
     }
 
+    /**
+     * Refresh status in list
+     */
+    public void refreshFilter(){
+        int index = lv_status.getFirstVisiblePosition() + 1;
+        View v = lv_status.getChildAt(0);
+        int top = (v == null) ? 0 : v.getTop();
+        statusListAdapter.notifyDataSetChanged();
+        lv_status.setSelectionFromTop(index, top);
+    }
+
     @Override
     public void onResume(){
         super.onResume();

@@ -122,13 +122,13 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
             changeDrawableColor(context, R.drawable.ic_action_globe,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_text);
         }else {
             changeDrawableColor(context, R.drawable.ic_cancel,R.color.black);
             changeDrawableColor(context, R.drawable.ic_action_globe,R.color.black);
             changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.black);
             changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.black);
         }
 
         final Status status = storedStatus.getStatus();
@@ -144,7 +144,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
                 holder.scheduled_toot_privacy.setImageResource(R.drawable.ic_action_lock_closed);
                 break;
             case "direct":
-                holder.scheduled_toot_privacy.setImageResource(R.drawable.ic_local_post_office);
+                holder.scheduled_toot_privacy.setImageResource(R.drawable.ic_mail_outline);
                 break;
         }
         final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();

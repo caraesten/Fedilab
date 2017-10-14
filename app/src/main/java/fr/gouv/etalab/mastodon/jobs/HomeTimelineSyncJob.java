@@ -141,7 +141,7 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
         for(Status status: statuses){
             //The notification associated to max_id is discarded as it is supposed to have already been sent
             //Also, if the toot comes from the owner, we will avoid to warn him/her...
-            if( (status.getId().equals(max_id)) || (acct != null && status.getAccount().getAcct().trim().equals(acct.trim()) ))
+            if( max_id != null && (status.getId().equals(max_id)) || (acct != null && status.getAccount().getAcct().trim().equals(acct.trim()) ))
                 continue;
             String notificationUrl = status.getAccount().getAvatar();
 

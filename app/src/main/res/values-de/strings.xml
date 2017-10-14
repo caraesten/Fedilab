@@ -63,6 +63,9 @@
     <string name="follow">Neue Folgende</string>
     <string name="mention">Erwähnungen</string>
     <string name="reblog">Geteilte Beiträge</string>
+    <string name="show_boosts">Geteilte Beiträge anzeigen</string>
+    <string name="show_replies">Antworten anzeigen</string>
+
     <!--- Menu -->
     <string name="home_menu">Home</string>
     <string name="local_menu">Lokale Zeitleiste</string>
