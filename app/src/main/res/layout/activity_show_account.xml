@@ -34,7 +34,7 @@
             android:id="@+id/collapsingToolbarLayout"
             android:layout_height="@dimen/layout_height_header"
             android:fitsSystemWindows="true"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap">
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
         <LinearLayout
             android:id="@+id/main_header_container"
             android:background="@color/mastodonC1"
