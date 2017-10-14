@@ -58,6 +58,7 @@ import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
 import org.json.JSONArray;
@@ -111,7 +112,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     private List<Status> statuses;
     private LayoutInflater layoutInflater;
     private ImageLoader imageLoader;
-    private DisplayImageOptions options;
+    private DisplayImageOptions options, optionsAttachment;
     private ViewHolder holder;
     private boolean isOnWifi;
     private int translator;
@@ -194,9 +195,10 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     .build();
             if( !imageLoader.isInited())
                 imageLoader.init(configImg);
-            options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
+            options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(10)).cacheInMemory(false)
                     .cacheOnDisk(true).resetViewBeforeLoading(true).build();
-
+            optionsAttachment = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
+                    .cacheOnDisk(true).resetViewBeforeLoading(true).build();
             if (convertView == null) {
                 convertView = layoutInflater.inflate(R.layout.drawer_status, parent, false);
                 holder = new ViewHolder();
@@ -707,9 +709,9 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     }
                 }else {
                     if( position == ShowConversationActivity.position){
-                        holder.main_container.setBackgroundResource(R.color.mastodonC1_);
+                        holder.main_container.setBackgroundResource(R.color.mastodonC1___);
                     }else {
-                        holder.main_container.setBackgroundResource(R.color.mastodonC1);
+                        holder.main_container.setBackgroundResource(R.color.mastodonC1_);
                     }
                 }
             }
@@ -1154,7 +1156,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 if( url == null || url.trim().equals(""))
                     url = attachment.getUrl();
                 if( !url.trim().contains("missing.png"))
-                    imageLoader.displayImage(url, imageView, options);
+                    imageLoader.displayImage(url, imageView, optionsAttachment);
                 final int finalPosition = position;
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override

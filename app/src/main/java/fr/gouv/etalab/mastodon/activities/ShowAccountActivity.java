@@ -14,11 +14,8 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.activities;
 
-import android.annotation.SuppressLint;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -29,11 +26,9 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -42,14 +37,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -63,7 +55,6 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
@@ -72,6 +63,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
@@ -94,8 +86,6 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRelationshipInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
-
-import static fr.gouv.etalab.mastodon.helper.Helper.canPin;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
@@ -123,12 +113,12 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     private Relationship relationship;
     private boolean showMediaOnly, showPinned;
     private ImageView pp_actionBar;
-    private BroadcastReceiver hide_header;
-    private boolean isHiddingShowing = false;
-    private LinearLayout main_header_container;
+    private LinearLayout small_info;
     private ImageView header_edit_profile;
     private List<Status> pins;
     private String accountUrl;
+    private int maxScrollSize;
+    private boolean avatarShown = true;
     public enum action{
         FOLLOW,
         UNFOLLOW,
@@ -138,15 +128,16 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
     private action doAction;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
-            setTheme(R.style.AppTheme);
+            setTheme(R.style.AppTheme_NoActionBar);
         }else {
-            setTheme(R.style.AppThemeDark);
+            setTheme(R.style.AppThemeDark_NoActionBar);
         }
         setContentView(R.layout.activity_show_account);
         setTitle("");
@@ -155,7 +146,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         Bundle b = getIntent().getExtras();
         account_follow = (FloatingActionButton) findViewById(R.id.account_follow);
         account_follow_request = (TextView) findViewById(R.id.account_follow_request);
-        main_header_container = (LinearLayout) findViewById(R.id.main_header_container);
+        small_info = (LinearLayout) findViewById(R.id.small_info);
         header_edit_profile = (ImageView) findViewById(R.id.header_edit_profile);
         account_follow.setEnabled(false);
         if(b != null){
@@ -186,12 +177,9 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
 
         statusListAdapter = new StatusListAdapter(getApplicationContext(), RetrieveFeedsAsyncTask.Type.USER, accountId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
-        options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(80)).cacheInMemory(false)
+        options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 
-
-        if( getSupportActionBar() != null)
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         tabLayout = (TabLayout) findViewById(R.id.account_tabLayout);
@@ -272,43 +260,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 }
             }
         });
-        
-        if( Build.VERSION.SDK_INT < 21) {
-            //Register LocalBroadcast to receive selected accounts after search
-            hide_header = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    if (!isHiddingShowing) {
-                        isHiddingShowing = true;
-                        ImageView account_pp = (ImageView) findViewById(R.id.account_pp);
-                        boolean hide = intent.getBooleanExtra("hide", false);
-                        if (hide) {
-                            main_header_container.setVisibility(View.GONE);
-                            if (pp_actionBar != null)
-                                pp_actionBar.setVisibility(View.VISIBLE);
-                            tabLayout.setVisibility(View.GONE);
-                        } else {
-                            manageButtonVisibility();
-                            tabLayout.setVisibility(View.VISIBLE);
-                            main_header_container.setVisibility(View.VISIBLE);
-                            if (pp_actionBar != null)
-                                pp_actionBar.setVisibility(View.GONE);
-                        }
-                        account_pp.requestLayout();
-                        Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                isHiddingShowing = false;
-                            }
-                        }, 700);
-                    }
-
-                }
-            };
-
-            LocalBroadcastManager.getInstance(this).registerReceiver(hide_header, new IntentFilter(Helper.HEADER_ACCOUNT + String.valueOf(instanceValue)));
-        }
 
         header_edit_profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -393,7 +344,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     @Override
     public void onDestroy(){
         super.onDestroy();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(hide_header);
     }
 
     @Override
@@ -407,7 +357,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         }
 
         accountUrl = account.getUrl();
-        ImageView account_pp = (ImageView) findViewById(R.id.account_pp);
+        final CircleImageView account_pp = (CircleImageView) findViewById(R.id.account_pp);
         TextView account_dn = (TextView) findViewById(R.id.account_dn);
         TextView account_un = (TextView) findViewById(R.id.account_un);
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -431,23 +381,21 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         super.onLoadingComplete(imageUri, view, loadedImage);
-                        LinearLayout main_header_container = (LinearLayout) findViewById(R.id.main_header_container);
+                        ImageView banner_pp = (ImageView) findViewById(R.id.banner_pp);
                         Bitmap workingBitmap = Bitmap.createBitmap(loadedImage);
                         Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
                         Canvas canvas = new Canvas(mutableBitmap);
                         Paint p = new Paint(Color.BLACK);
                         ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);
-
                         p.setColorFilter(filter);
                         canvas.drawBitmap(mutableBitmap, new Matrix(), p);
                         BitmapDrawable background = new BitmapDrawable(getResources(), mutableBitmap);
-                        main_header_container.setBackground(background);
+                        banner_pp.setImageDrawable(background);
                     }
 
                     @Override
                     public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason) {
-                        LinearLayout main_header_container = (LinearLayout) findViewById(R.id.main_header_container);
-                        main_header_container.setBackgroundResource(R.drawable.side_nav_bar);
+
                     }
                 });
             }
@@ -462,16 +410,12 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
             account_dn.setCompoundDrawables( null, null, null, null);
         }
 
-        final ActionBar actionBar = getSupportActionBar();
-        LayoutInflater mInflater = LayoutInflater.from(ShowAccountActivity.this);
-        if( actionBar != null && account != null){
-            @SuppressLint("InflateParams") View show_account_actionbar = mInflater.inflate(R.layout.showaccount_actionbar, null);
-            TextView actionbar_title = (TextView) show_account_actionbar.findViewById(R.id.show_account_title);
+
+        if( account != null){
+            TextView actionbar_title = (TextView) findViewById(R.id.show_account_title);
             if( account.getAcct() != null)
                 actionbar_title.setText(account.getAcct());
-            actionBar.setCustomView(show_account_actionbar);
-            actionBar.setDisplayShowCustomEnabled(true);
-            pp_actionBar = (ImageView) actionBar.getCustomView().findViewById(R.id.pp_actionBar);
+            pp_actionBar = (ImageView) findViewById(R.id.pp_actionBar);
             String url = account.getAvatar();
             if( url.startsWith("/") ){
                 url = "https://" + Helper.getLiveInstance(getApplicationContext()) + account.getAvatar();
@@ -491,20 +435,41 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
 
                 }});
-            if( Build.VERSION.SDK_INT >= 21) {
-                AppBarLayout appBar = (AppBarLayout) findViewById(R.id.appBar);
-                appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-                    @Override
-                    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                        if (verticalOffset > 10 ) {
-                            pp_actionBar.setVisibility(View.GONE);
-                        } else {
-                            pp_actionBar.setVisibility(View.VISIBLE);
-                        }
+            final AppBarLayout appBar = (AppBarLayout) findViewById(R.id.appBar);
+            maxScrollSize = appBar.getTotalScrollRange();
 
+
+            appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+                @Override
+                public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                    if (Math.abs(verticalOffset)-appBar.getTotalScrollRange() == 0) {
+                        if( small_info.getVisibility() == View.GONE)
+                            small_info.setVisibility(View.VISIBLE);
+                    }else {
+                        if( small_info.getVisibility() == View.VISIBLE)
+                            small_info.setVisibility(View.GONE);
                     }
-                });
-            }
+                    if (maxScrollSize == 0)
+                        maxScrollSize = appBarLayout.getTotalScrollRange();
+
+                    int percentage = (Math.abs(verticalOffset)) * 100 / maxScrollSize;
+
+                    if (percentage >= 20 && avatarShown) {
+                        avatarShown = false;
+
+                        account_pp.animate()
+                                .scaleY(0).scaleX(0)
+                                .setDuration(200)
+                                .start();
+                    }
+                    if (percentage <= 20 && !avatarShown) {
+                        avatarShown = true;
+                        account_pp.animate()
+                                .scaleY(1).scaleX(1)
+                                .start();
+                    }
+                }
+            });
         }else {
             if(  account != null && account.getAcct() != null)
                 setTitle(account.getAcct());
