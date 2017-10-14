@@ -25,6 +25,8 @@ import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -77,7 +79,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
     private Status initialStatus;
     public static int position;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private ListView lv_status;
+    private RecyclerView lv_status;
     private boolean isRefreshed;
     private TextView title;
     private ImageView pp_actionBar;
@@ -179,13 +181,18 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
                 new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, false,false, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
-        lv_status = (ListView) findViewById(R.id.lv_status);
+        lv_status = (RecyclerView) findViewById(R.id.lv_status);
+        final LinearLayoutManager mLayoutManager;
+        mLayoutManager = new LinearLayoutManager(this);
+        lv_status.setLayoutManager(mLayoutManager);
         lv_status.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
-
-                    if (lv_status.getLastVisiblePosition() == lv_status.getAdapter().getCount() -1 &&  lv_status.getFirstVisiblePosition() > 0 &&
+                    int visibleItemCount = mLayoutManager.getChildCount();
+                    int totalItemCount = mLayoutManager.getItemCount();
+                    int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+                    if (firstVisibleItem + visibleItemCount == lv_status.getAdapter().getItemCount() -1 &&  firstVisibleItem > 0 &&
                             lv_status.getChildAt(lv_status.getChildCount() - 1).getBottom() <= lv_status.getHeight()) {
 
                         swipeRefreshLayout.setRefreshing(true);
@@ -267,7 +274,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
         lv_status.setVisibility(View.VISIBLE);
         if( isRefreshed){
             position = statuses.size()-1;
-            lv_status.setSelection(position);
+            lv_status.scrollToPosition(position);
         }else {
             lv_status.smoothScrollToPosition(position);
         }

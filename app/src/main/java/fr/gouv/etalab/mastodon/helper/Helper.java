@@ -58,6 +58,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.SpannableString;
@@ -1525,6 +1526,15 @@ public class Helper {
                 item.setChecked(false);
             }
         }
+    }
+
+    /**
+     * Returns true if a ListView is at its top position
+     * @param listView ListView
+     * @return boolean
+     */
+    public static boolean listIsAtTop(RecyclerView listView) {
+        return listView.getChildCount() == 0 || listView.getChildAt(0).getTop() == 0;
     }
 
     /**

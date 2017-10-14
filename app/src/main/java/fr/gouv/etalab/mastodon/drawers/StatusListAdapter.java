@@ -34,6 +34,7 @@ import android.os.CountDownTimer;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
@@ -45,7 +46,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -105,14 +105,13 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class StatusListAdapter extends BaseAdapter implements OnPostActionInterface, OnTranslatedInterface, OnRetrieveFeedsInterface {
+public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnTranslatedInterface, OnRetrieveFeedsInterface {
 
     private Context context;
     private List<Status> statuses;
     private LayoutInflater layoutInflater;
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
-    private ViewHolder holder;
     private boolean isOnWifi;
     private int translator;
     private int behaviorWithAttachments;
@@ -126,6 +125,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     private List<Status> pins;
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
+        super();
         this.context = context;
         this.statuses = statuses;
         this.isOnWifi = isOnWifi;
@@ -141,23 +141,116 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
 
     @Override
-    public int getCount() {
-        return statuses.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return statuses.get(position);
-    }
-
-    @Override
     public long getItemId(int position) {
         return position;
     }
 
     @Override
-    public int getViewTypeCount() {
-        return 2;
+    public int getItemCount() {
+        return statuses.size();
+    }
+
+    private class ViewHolderEmpty extends RecyclerView.ViewHolder{
+        ViewHolderEmpty(View itemView) {
+            super(itemView);
+        }
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder{
+        LinearLayout status_content_container;
+        LinearLayout status_spoiler_container;
+        TextView status_spoiler;
+        Button status_spoiler_button;
+        CardView card_status_container;
+        TextView status_content;
+        TextView status_content_translated;
+        LinearLayout status_content_translated_container;
+        TextView status_account_username;
+        TextView status_account_displayname;
+        ImageView status_account_profile;
+        ImageView status_account_profile_boost;
+        ImageView status_account_profile_boost_by;
+        TextView status_favorite_count;
+        TextView status_reblog_count;
+        TextView status_toot_date;
+        TextView status_reblog_user;
+        Button status_show_more;
+        ImageView status_more;
+        LinearLayout status_document_container;
+        ImageView status_prev1;
+        ImageView status_prev2;
+        ImageView status_prev3;
+        ImageView status_prev4;
+        ImageView status_prev1_play;
+        ImageView status_prev2_play;
+        ImageView status_prev3_play;
+        ImageView status_prev4_play;
+        RelativeLayout status_prev4_container;
+        ImageView status_reply;
+        ImageView status_pin;
+        ImageView status_privacy;
+        FloatingActionButton status_translate;
+        LinearLayout status_container2;
+        LinearLayout status_container3;
+        LinearLayout main_container;
+        TextView yandex_translate;
+        TextView google_translate;
+        LinearLayout status_action_container;
+        LinearLayout status_replies;
+        LinearLayout status_replies_profile_pictures;
+        TextView status_replies_text;
+        LinearLayout loader_replies;
+
+        ImageView new_element;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+            loader_replies = itemView.findViewById(R.id.loader_replies);
+            card_status_container = itemView.findViewById(R.id.card_status_container);
+            status_document_container = (LinearLayout) itemView.findViewById(R.id.status_document_container);
+            status_content = (TextView) itemView.findViewById(R.id.status_content);
+            status_content_translated = (TextView) itemView.findViewById(R.id.status_content_translated);
+            status_account_username = (TextView) itemView.findViewById(R.id.status_account_username);
+            status_account_displayname = (TextView) itemView.findViewById(R.id.status_account_displayname);
+            status_account_profile = (ImageView) itemView.findViewById(R.id.status_account_profile);
+            status_account_profile_boost = (ImageView) itemView.findViewById(R.id.status_account_profile_boost);
+            status_account_profile_boost_by = (ImageView) itemView.findViewById(R.id.status_account_profile_boost_by);
+            status_favorite_count = (TextView) itemView.findViewById(R.id.status_favorite_count);
+            status_reblog_count = (TextView) itemView.findViewById(R.id.status_reblog_count);
+            status_pin = (ImageView) itemView.findViewById(R.id.status_pin);
+            status_toot_date = (TextView) itemView.findViewById(R.id.status_toot_date);
+            status_show_more = (Button) itemView.findViewById(R.id.status_show_more);
+            status_more = (ImageView) itemView.findViewById(R.id.status_more);
+            status_reblog_user = (TextView) itemView.findViewById(R.id.status_reblog_user);
+            status_prev1 = (ImageView) itemView.findViewById(R.id.status_prev1);
+            status_prev2 = (ImageView) itemView.findViewById(R.id.status_prev2);
+            status_prev3 = (ImageView) itemView.findViewById(R.id.status_prev3);
+            status_prev4 = (ImageView) itemView.findViewById(R.id.status_prev4);
+            status_prev1_play = (ImageView) itemView.findViewById(R.id.status_prev1_play);
+            status_prev2_play = (ImageView) itemView.findViewById(R.id.status_prev2_play);
+            status_prev3_play = (ImageView) itemView.findViewById(R.id.status_prev3_play);
+            status_prev4_play = (ImageView) itemView.findViewById(R.id.status_prev4_play);
+            status_container2 = (LinearLayout) itemView.findViewById(R.id.status_container2);
+            status_container3 = (LinearLayout) itemView.findViewById(R.id.status_container3);
+            status_prev4_container = (RelativeLayout) itemView.findViewById(R.id.status_prev4_container);
+            status_reply = (ImageView) itemView.findViewById(R.id.status_reply);
+            status_privacy = (ImageView) itemView.findViewById(R.id.status_privacy);
+            status_translate = (FloatingActionButton) itemView.findViewById(R.id.status_translate);
+            status_content_translated_container = (LinearLayout) itemView.findViewById(R.id.status_content_translated_container);
+            main_container = (LinearLayout) itemView.findViewById(R.id.main_container);
+            status_spoiler_container = (LinearLayout) itemView.findViewById(R.id.status_spoiler_container);
+            status_content_container = (LinearLayout) itemView.findViewById(R.id.status_content_container);
+            status_spoiler = (TextView) itemView.findViewById(R.id.status_spoiler);
+            status_spoiler_button = (Button) itemView.findViewById(R.id.status_spoiler_button);
+            yandex_translate = (TextView) itemView.findViewById(R.id.yandex_translate);
+            google_translate = (TextView) itemView.findViewById(R.id.google_translate);
+            status_replies = (LinearLayout) itemView.findViewById(R.id.status_replies);
+            status_replies_profile_pictures = (LinearLayout) itemView.findViewById(R.id.status_replies_profile_pictures);
+            status_replies_text = (TextView) itemView.findViewById(R.id.status_replies_text);
+            new_element = (ImageView) itemView.findViewById(R.id.new_element);
+            status_action_container = (LinearLayout) itemView.findViewById(R.id.status_action_container);
+
+        }
     }
 
     @Override
@@ -175,13 +268,23 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             return DISPLAYED_STATUS;
         }
     }
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if( viewType == DISPLAYED_STATUS)
+            return new ViewHolder(layoutInflater.inflate(R.layout.drawer_status, parent, false));
+        else
+            return new ViewHolderEmpty(layoutInflater.inflate(R.layout.drawer_status, parent, false));
+    }
+
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, final int position) {
 
-        if( getItemViewType(position) == HIDDEN_STATUS){
-            return new View(context);
+        if( viewHolder.getItemViewType() == HIDDEN_STATUS){
+
         }else {
+            final ViewHolder holder = (ViewHolder) viewHolder;
+            holder.card_status_container.setVisibility(View.VISIBLE);
             final Status status = statuses.get(position);
             imageLoader = ImageLoader.getInstance();
             File cacheDir = new File(context.getCacheDir(), context.getString(R.string.app_name));
@@ -197,57 +300,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                     .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 
-            if (convertView == null) {
-                convertView = layoutInflater.inflate(R.layout.drawer_status, parent, false);
-                holder = new ViewHolder();
-                holder.loader_replies = (LinearLayout) convertView.findViewById(R.id.loader_replies);
-                holder.card_status_container = (CardView) convertView.findViewById(R.id.card_status_container);
-                holder.status_document_container = (LinearLayout) convertView.findViewById(R.id.status_document_container);
-                holder.status_content = (TextView) convertView.findViewById(R.id.status_content);
-                holder.status_content_translated = (TextView) convertView.findViewById(R.id.status_content_translated);
-                holder.status_account_username = (TextView) convertView.findViewById(R.id.status_account_username);
-                holder.status_account_displayname = (TextView) convertView.findViewById(R.id.status_account_displayname);
-                holder.status_account_profile = (ImageView) convertView.findViewById(R.id.status_account_profile);
-                holder.status_account_profile_boost = (ImageView) convertView.findViewById(R.id.status_account_profile_boost);
-                holder.status_account_profile_boost_by = (ImageView) convertView.findViewById(R.id.status_account_profile_boost_by);
-                holder.status_favorite_count = (TextView) convertView.findViewById(R.id.status_favorite_count);
-                holder.status_reblog_count = (TextView) convertView.findViewById(R.id.status_reblog_count);
-                holder.status_pin = (ImageView) convertView.findViewById(R.id.status_pin);
-                holder.status_toot_date = (TextView) convertView.findViewById(R.id.status_toot_date);
-                holder.status_show_more = (Button) convertView.findViewById(R.id.status_show_more);
-                holder.status_more = (ImageView) convertView.findViewById(R.id.status_more);
-                holder.status_reblog_user = (TextView) convertView.findViewById(R.id.status_reblog_user);
-                holder.status_prev1 = (ImageView) convertView.findViewById(R.id.status_prev1);
-                holder.status_prev2 = (ImageView) convertView.findViewById(R.id.status_prev2);
-                holder.status_prev3 = (ImageView) convertView.findViewById(R.id.status_prev3);
-                holder.status_prev4 = (ImageView) convertView.findViewById(R.id.status_prev4);
-                holder.status_prev1_play = (ImageView) convertView.findViewById(R.id.status_prev1_play);
-                holder.status_prev2_play = (ImageView) convertView.findViewById(R.id.status_prev2_play);
-                holder.status_prev3_play = (ImageView) convertView.findViewById(R.id.status_prev3_play);
-                holder.status_prev4_play = (ImageView) convertView.findViewById(R.id.status_prev4_play);
-                holder.status_container2 = (LinearLayout) convertView.findViewById(R.id.status_container2);
-                holder.status_container3 = (LinearLayout) convertView.findViewById(R.id.status_container3);
-                holder.status_prev4_container = (RelativeLayout) convertView.findViewById(R.id.status_prev4_container);
-                holder.status_reply = (ImageView) convertView.findViewById(R.id.status_reply);
-                holder.status_privacy = (ImageView) convertView.findViewById(R.id.status_privacy);
-                holder.status_translate = (FloatingActionButton) convertView.findViewById(R.id.status_translate);
-                holder.status_content_translated_container = (LinearLayout) convertView.findViewById(R.id.status_content_translated_container);
-                holder.main_container = (LinearLayout) convertView.findViewById(R.id.main_container);
-                holder.status_spoiler_container = (LinearLayout) convertView.findViewById(R.id.status_spoiler_container);
-                holder.status_content_container = (LinearLayout) convertView.findViewById(R.id.status_content_container);
-                holder.status_spoiler = (TextView) convertView.findViewById(R.id.status_spoiler);
-                holder.status_spoiler_button = (Button) convertView.findViewById(R.id.status_spoiler_button);
-                holder.yandex_translate = (TextView) convertView.findViewById(R.id.yandex_translate);
-                holder.google_translate = (TextView) convertView.findViewById(R.id.google_translate);
-                holder.status_replies = (LinearLayout) convertView.findViewById(R.id.status_replies);
-                holder.status_replies_profile_pictures = (LinearLayout) convertView.findViewById(R.id.status_replies_profile_pictures);
-                holder.status_replies_text = (TextView) convertView.findViewById(R.id.status_replies_text);
-                holder.new_element = (ImageView) convertView.findViewById(R.id.new_element);
-                holder.status_action_container = (LinearLayout) convertView.findViewById(R.id.status_action_container);
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
 
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
@@ -902,7 +954,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
 
 
-            final View finalConvertView = convertView;
             final View attached = holder.status_more;
             holder.status_more.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -986,7 +1037,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
                                         @Override
                                         public void run() {
-                                            Bitmap bitmap = Helper.convertTootIntoBitmap(context, finalConvertView);
+                                            Bitmap bitmap = Helper.convertTootIntoBitmap(context, holder.card_status_container);
                                             status.setTakingScreenShot(false);
                                             statusListAdapter.notifyDataSetChanged();
                                             Intent intent = new Intent(context, TootActivity.class);
@@ -1086,14 +1137,17 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     }
                 }
             });
-            return convertView;
         }
-
     }
 
 
 
-    private void loadAttachments(final Status status, ViewHolder holder){
+
+
+
+
+    private void loadAttachments(final Status status, RecyclerView.ViewHolder viewHolder){
+        final ViewHolder holder = (ViewHolder) viewHolder;
         List<Attachment> attachments = status.getMedia_attachments();
         if( attachments != null && attachments.size() > 0){
             int i = 0;
@@ -1379,53 +1433,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     }
 
 
-    private class ViewHolder {
-        LinearLayout status_content_container;
-        LinearLayout status_spoiler_container;
-        TextView status_spoiler;
-        Button status_spoiler_button;
-        CardView card_status_container;
-        TextView status_content;
-        TextView status_content_translated;
-        LinearLayout status_content_translated_container;
-        TextView status_account_username;
-        TextView status_account_displayname;
-        ImageView status_account_profile;
-        ImageView status_account_profile_boost;
-        ImageView status_account_profile_boost_by;
-        TextView status_favorite_count;
-        TextView status_reblog_count;
-        TextView status_toot_date;
-        TextView status_reblog_user;
-        Button status_show_more;
-        ImageView status_more;
-        LinearLayout status_document_container;
-        ImageView status_prev1;
-        ImageView status_prev2;
-        ImageView status_prev3;
-        ImageView status_prev4;
-        ImageView status_prev1_play;
-        ImageView status_prev2_play;
-        ImageView status_prev3_play;
-        ImageView status_prev4_play;
-        RelativeLayout status_prev4_container;
-        ImageView status_reply;
-        ImageView status_pin;
-        ImageView status_privacy;
-        FloatingActionButton status_translate;
-        LinearLayout status_container2;
-        LinearLayout status_container3;
-        LinearLayout main_container;
-        TextView yandex_translate;
-        TextView google_translate;
-        LinearLayout status_action_container;
-        LinearLayout status_replies;
-        LinearLayout status_replies_profile_pictures;
-        TextView status_replies_text;
-        LinearLayout loader_replies;
 
-        ImageView new_element;
-    }
 
 
 
