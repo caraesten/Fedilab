@@ -1063,7 +1063,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                             toot_content.setText(toot_content.getText().toString().replace(attachment.getText_url(), ""));
                             toot_space_left.setText(String.valueOf(toot_content.length()));
                             //Moves the cursor
-                            if (selectionBefore >= 0)
+                            if (selectionBefore >= 0 && selectionBefore < toot_content.length())
                                 toot_content.setSelection(selectionBefore);
                         }
                         ((ViewGroup) namebar.getParent()).removeView(namebar);
