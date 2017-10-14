@@ -84,8 +84,8 @@
                 <ImageButton
                     android:id="@+id/toot_picture"
                     android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@color/mastodonC4"
+                    android:layout_height="wrap_content"
+                    style="@style/Base.Widget.AppCompat.Button.Colored"
                     android:src="@drawable/ic_insert_photo"
                     tools:ignore="ContentDescription" />
                 <ImageButton
@@ -93,8 +93,8 @@
                     android:layout_marginStart="5dp"
                     android:id="@+id/toot_visibility"
                     android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@color/mastodonC4"
+                    android:layout_height="wrap_content"
+                    style="@style/Base.Widget.AppCompat.Button.Colored"
                     android:src="@drawable/ic_action_globe"
                     tools:ignore="ContentDescription" />
                 <Button
