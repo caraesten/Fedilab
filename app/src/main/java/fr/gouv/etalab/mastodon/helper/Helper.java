@@ -828,7 +828,6 @@ public class Helper {
                     if( currentSubmenu  == null)
                         continue;
                     final MenuItem item = currentSubmenu.add("@" + account.getAcct());
-                    //final MenuItem item = mainMenu.addSubMenu("@" + account.getAcct()).add("@" + account.getAcct());
                     ImageLoader imageLoader;
                     DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                             .cacheOnDisk(true).resetViewBeforeLoading(true).build();
