@@ -58,6 +58,7 @@ public class Status implements Parcelable {
     private boolean isTranslationShown = false;
     private boolean isNew = false;
     private boolean isTakingScreenShot = false;
+    private boolean isVisible = true;
 
     protected Status(Parcel in) {
         id = in.readString();
@@ -369,5 +370,13 @@ public class Status implements Parcelable {
 
     public void setTakingScreenShot(boolean takingScreenShot) {
         isTakingScreenShot = takingScreenShot;
+    }
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    public void setVisible(boolean visible) {
+        isVisible = visible;
     }
 }

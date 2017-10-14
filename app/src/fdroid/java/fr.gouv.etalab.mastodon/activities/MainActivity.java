@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity
     private String userIdService;
     private Intent streamingIntent;
     public static String lastHomeId = null, lastNotificationId = null;
-    boolean notif_follow, notif_add, notif_mention, notif_share;
+    boolean notif_follow, notif_add, notif_mention, notif_share, show_boosts, show_replies;
 
     public MainActivity() {
     }
@@ -298,6 +298,70 @@ public class MainActivity extends AppCompatActivity
                                     notif_share = !notif_share;
                                     editor.putBoolean(Helper.SET_NOTIF_SHARE, notif_share);
                                     itemBoost.setChecked(notif_share);
+                                    editor.apply();
+                                    break;
+                            }
+                            return false;
+                        }
+                    });
+                    popup.show();
+                }
+                return true;
+            }
+        });
+
+
+        tabStrip.getChildAt(0).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                //Only shown if the tab has focus
+                if( homeFragment != null && homeFragment.getUserVisibleHint()){
+                    PopupMenu popup = new PopupMenu(MainActivity.this, tabStrip.getChildAt(0));
+                    popup.getMenuInflater()
+                            .inflate(R.menu.option_filter_toots, popup.getMenu());
+                    Menu menu = popup.getMenu();
+                    final MenuItem itemShowBoosts = menu.findItem(R.id.action_show_boosts);
+                    final MenuItem itemShowReplies = menu.findItem(R.id.action_show_replies);
+
+                    show_boosts = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOSTS, true);
+                    show_replies = sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true);
+                    itemShowBoosts.setChecked(show_boosts);
+                    itemShowReplies.setChecked(show_replies);
+                    popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
+                        @Override
+                        public void onDismiss(PopupMenu menu) {
+                            if( homeFragment != null)
+                                homeFragment.refreshFilter();
+                        }
+                    });
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        public boolean onMenuItemClick(MenuItem item) {
+                            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+                            item.setActionView(new View(getApplicationContext()));
+                            item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                                @Override
+                                public boolean onMenuItemActionExpand(MenuItem item) {
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onMenuItemActionCollapse(MenuItem item) {
+                                    return false;
+                                }
+                            });
+                            switch (item.getItemId()) {
+                                case R.id.action_show_boosts:
+                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                    show_boosts = !show_boosts;
+                                    editor.putBoolean(Helper.SET_SHOW_BOOSTS, show_boosts);
+                                    itemShowBoosts.setChecked(show_boosts);
+                                    editor.apply();
+                                    break;
+                                case R.id.action_show_replies:
+                                    editor = sharedpreferences.edit();
+                                    show_replies = !show_replies;
+                                    editor.putBoolean(Helper.SET_SHOW_REPLIES, show_replies);
+                                    itemShowReplies.setChecked(show_replies);
                                     editor.apply();
                                     break;
                             }
@@ -538,7 +602,7 @@ public class MainActivity extends AppCompatActivity
                 .diskCache(new UnlimitedDiskCache(cacheDir))
                 .build();
         imageLoader.init(configImg);
-        options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(90)).cacheInMemory(false)
+        options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(20)).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -828,7 +892,8 @@ public class MainActivity extends AppCompatActivity
                     while (matcher.find()){
                         int matchStart = matcher.start(1);
                         int matchEnd = matcher.end();
-                        sharedText = sharedText.substring(matchStart, matchEnd);
+                        if(matchStart < matchEnd && sharedText.length() > matchEnd)
+                            sharedText = sharedText.substring(matchStart, matchEnd);
                     }
                     new RetrieveMetaDataAsyncTask(sharedText, MainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     Intent intentToot = new Intent(getApplicationContext(), TootActivity.class);
@@ -912,9 +977,9 @@ public class MainActivity extends AppCompatActivity
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_action_globe,R.color.dark_text);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_open,R.color.dark_text);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.dark_text);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_local_post_office,R.color.dark_text);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_retweet_black,R.color.dark_text);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_fav_black,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_retweet,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_favorite_border,R.color.dark_text);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_photo,R.color.dark_text);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_remove_red_eye,R.color.dark_text);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.dark_text);
@@ -924,9 +989,9 @@ public class MainActivity extends AppCompatActivity
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_action_globe,R.color.black);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_open,R.color.black);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_local_post_office,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_retweet_black,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_fav_black,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_retweet,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_favorite_border,R.color.black);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_photo,R.color.white);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_remove_red_eye,R.color.white);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.white);

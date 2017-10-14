@@ -17,6 +17,7 @@ package fr.gouv.etalab.mastodon.drawers;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.content.Context;
@@ -75,6 +76,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.helper.Helper;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
@@ -182,33 +184,33 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
                     typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_mention));
                 else
-                    typeString = String.format("@%s %s", notification.getAccount().getAcct(),context.getString(R.string.notif_mention));
+                    typeString = String.format("@%s %s", notification.getAccount().getUsername(),context.getString(R.string.notif_mention));
                 if( theme == Helper.THEME_DARK){
                     holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_1));
                 }else {
                     holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_1));
                 }
-                imgH = null;
+                imgH = ContextCompat.getDrawable(context, R.drawable.ic_chat_bubble_outline);
                 break;
             case "reblog":
                 holder.status_action_container.setVisibility(View.GONE);
                 if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
                     typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_reblog));
                 else
-                    typeString = String.format("@%s %s", notification.getAccount().getAcct(),context.getString(R.string.notif_reblog));
+                    typeString = String.format("@%s %s", notification.getAccount().getUsername(),context.getString(R.string.notif_reblog));
                 if( theme == Helper.THEME_DARK){
                     holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_2));
                 }else {
                     holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_2));
                 }
-                imgH = ContextCompat.getDrawable(context, R.drawable.ic_retweet_notif_header);
+                imgH = ContextCompat.getDrawable(context, R.drawable.ic_boost_header_notif);
                 break;
             case "favourite":
                 holder.status_action_container.setVisibility(View.GONE);
                 if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
                     typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_favourite));
                 else
-                    typeString = String.format("@%s %s", notification.getAccount().getAcct(),context.getString(R.string.notif_favourite));
+                    typeString = String.format("@%s %s", notification.getAccount().getUsername(),context.getString(R.string.notif_favourite));
                 if( theme == Helper.THEME_DARK){
                     holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_3));
                 }else {
@@ -221,7 +223,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
                     typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_follow));
                 else
-                    typeString = String.format("@%s %s", notification.getAccount().getAcct(),context.getString(R.string.notif_follow));
+                    typeString = String.format("@%s %s", notification.getAccount().getUsername(),context.getString(R.string.notif_follow));
                 if( theme == Helper.THEME_DARK){
                     holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_4));
                 }else {
@@ -230,7 +232,8 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 imgH = ContextCompat.getDrawable(context, R.drawable.ic_follow_notif_header);
                 break;
         }
-        changeDrawableColor(context, R.drawable.ic_retweet_notif_header,R.color.mastodonC4);
+        changeDrawableColor(context, R.drawable.ic_chat_bubble_outline, R.color.mastodonC4);
+        changeDrawableColor(context, R.drawable.ic_boost_header_notif,R.color.mastodonC4);
         changeDrawableColor(context, R.drawable.ic_fav_notif_header,R.color.mastodonC4);
         changeDrawableColor(context, R.drawable.ic_follow_notif_header,R.color.mastodonC4);
         holder.notification_type.setText(typeString);
@@ -247,7 +250,6 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
 
         holder.notification_status_content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
         holder.notification_type.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
-        holder.notification_account_username.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
         holder.status_date.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12*textSizePercent/100);
 
 
@@ -258,10 +260,9 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             changeDrawableColor(context, R.drawable.ic_action_globe,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_retweet,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_fav_black,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_delete,R.color.dark_text);
@@ -271,10 +272,9 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             changeDrawableColor(context, R.drawable.ic_action_globe,R.color.black);
             changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.black);
             changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_local_post_office,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_retweet_black,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.black);
             changeDrawableColor(context, R.drawable.ic_retweet,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_fav_black,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.black);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.black);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.black);
             changeDrawableColor(context, R.drawable.ic_delete,R.color.black);
@@ -286,17 +286,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 holder.status_document_container.setVisibility(View.GONE);
             else
                 holder.status_document_container.setVisibility(View.VISIBLE);
-            if( (status.getIn_reply_to_account_id() != null && !status.getIn_reply_to_account_id().equals("null")) || (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null")) ){
-                Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_reply);
-                img.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
-                holder.notification_account_username.setCompoundDrawables( img, null, null, null);
-            }else if( status.isReblogged()){
-                Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_retweet);
-                img.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
-                holder.notification_account_username.setCompoundDrawables( img, null, null, null);
-            }else{
-                holder.notification_account_username.setCompoundDrawables( null, null, null, null);
-            }
+
             String content = status.getContent();
             content = content.replaceAll("</p>","<br/><br/>");
             content = content.replaceAll("<p>","");
@@ -311,6 +301,9 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
             holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
             holder.status_date.setText(Helper.dateDiff(context, status.getCreated_at()));
+
+            Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/WorkSans-Regular.ttf");
+            holder.notification_status_content.setTypeface(tf);
 
             //Adds attachment -> disabled, to enable them uncomment the line below
             //loadAttachments(status, holder);
@@ -345,15 +338,27 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
 
 
                 Drawable imgFav, imgReblog;
-                if( status.isFavourited())
-                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_fav_yellow);
-                else
-                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_fav_black);
+                if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
+                    changeDrawableColor(context, R.drawable.ic_favorite,R.color.yellowicon);
+                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_favorite);
+                }else {
+                    if( theme == THEME_DARK)
+                        changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_text);
+                    else
+                        changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.black);
+                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_favorite_border);
+                }
 
-                if( status.isReblogged())
-                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_retweet_yellow);
-                else
-                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_retweet_black);
+                if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged())) {
+                    changeDrawableColor(context, R.drawable.ic_boost,R.color.yellowicon);
+                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost);
+                }else {
+                    if( theme == THEME_DARK)
+                        changeDrawableColor(context, R.drawable.ic_boost_border,R.color.dark_text);
+                    else
+                        changeDrawableColor(context, R.drawable.ic_boost_border,R.color.black);
+                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost_border);
+                }
 
                 imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
                 imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
@@ -417,7 +422,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                         holder.status_privacy.setImageResource(R.drawable.ic_action_lock_closed);
                         break;
                     case "direct":
-                        holder.status_privacy.setImageResource(R.drawable.ic_local_post_office);
+                        holder.status_privacy.setImageResource(R.drawable.ic_mail_outline);
                         break;
                 }
                 switch (status.getVisibility()){
@@ -447,7 +452,6 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
 
         }else {
             holder.notification_status_container.setVisibility(View.GONE);
-            holder.notification_account_username.setCompoundDrawables( null, null, null, null);
             holder.card_status_container.setOnClickListener(null);
         }
 
@@ -521,7 +525,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 displayConfirmationNotificationDialog(notification);
             }
         });
-        holder.notification_account_username.setText( String.format("@%s",notification.getAccount().getUsername()));
+        holder.notification_account_username.setVisibility(View.GONE);
 
         final View finalConvertView = convertView;
         final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);

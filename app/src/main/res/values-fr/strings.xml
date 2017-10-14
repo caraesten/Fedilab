@@ -64,7 +64,8 @@
     <string name="follow">Nouveaux⋅elles abonn⋅é⋅s</string>
     <string name="mention">Mentions</string>
     <string name="reblog">Partages</string>
-
+    <string name="show_boosts">Afficher les partages</string>
+    <string name="show_replies">Afficher les réponses</string>
     <!--- Menu -->
     <string name="home_menu">Accueil</string>
     <string name="local_menu">Fil public local</string>
