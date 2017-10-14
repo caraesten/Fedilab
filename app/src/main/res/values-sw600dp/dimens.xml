@@ -6,5 +6,5 @@
     <dimen name="activity_vertical_margin">30dp</dimen>
     <dimen name="activity_padding_top_header">16dp</dimen>
     <bool name="isTablet">true</bool>
-    <dimen name="layout_height_header">300dp</dimen>
+    <dimen name="layout_height_header">250dp</dimen>
 </resources>
