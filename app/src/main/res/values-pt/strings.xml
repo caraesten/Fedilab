@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">Mastalab</string>
     <string name="navigation_drawer_open">Abrir menu</string>
     <string name="navigation_drawer_close">Fechar menu</string>
 
@@ -64,6 +63,8 @@
     <string name="follow">Novos seguidores</string>
     <string name="mention">Menções</string>
     <string name="reblog">Compartilhamentos</string>
+    <string name="show_boosts">Show boosts</string>
+    <string name="show_replies">Show replies</string>
 
     <!--- Menu -->
     <string name="home_menu">Página inicial</string>
@@ -194,7 +195,6 @@
     <string name="about_code">Código-fonte: </string>
     <string name="about_code_action">Bitbucket</string>
     <string name="about_yandex">Tradução dos toots:</string>
-    <string name="about_yandex_action" translatable="false">Powered by Yandex.Translate</string>
     <string name="about_thekinrar">Busca de instâncias:</string>
     <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Designer do ícone:</string>
@@ -417,8 +417,6 @@
         - <b>PhotoView</b>: Para administrar imagens\n
         - <b>Gson</b> : Para administrar rascunhos
     </string>
-
-    <string name="yandex" translatable="false">&lt;a hreh="http://translate.yandex.com/">Powered by Yandex.Translate&lt;/a></string>
 
     <string name="privacy_API_yandex_title">Tradução de toots</string>
     <string name="privacy_API_yandex_authorizations">
