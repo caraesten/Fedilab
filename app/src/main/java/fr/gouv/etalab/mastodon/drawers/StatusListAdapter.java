@@ -349,19 +349,19 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             //Manages theme for icon colors
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
             if( theme == Helper.THEME_DARK){
-                changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_action_more,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_action_globe,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_boost_border,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_boost_header,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_action_pin_dark, R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_translate,R.color.dark_text);
+                changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_action_more,R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_action_globe,R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_boost_border,R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_boost_header,R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_action_pin_dark, R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_translate,R.color.dark_icon);
             }else {
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_action_more,R.color.black);
@@ -392,7 +392,13 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 holder.status_account_displayname.setCompoundDrawables( null, null, null, null);
             }
 
-
+            if( theme == THEME_DARK){
+                holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+            }else {
+                holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.black));
+                holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.black));
+            }
 
             String content;
             final String displayName;
@@ -614,31 +620,37 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
                 Drawable imgFav, imgReblog, imgPinned;
                 if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
-                    changeDrawableColor(context, R.drawable.ic_favorite,R.color.yellowicon);
+                    changeDrawableColor(context, R.drawable.ic_favorite,R.color.marked_icon);
                     imgFav = ContextCompat.getDrawable(context, R.drawable.ic_favorite);
                 }else {
                     if( theme == THEME_DARK)
-                        changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_text);
+                        changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_icon);
                     else
                         changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.black);
                     imgFav = ContextCompat.getDrawable(context, R.drawable.ic_favorite_border);
                 }
 
                 if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged())) {
-                    changeDrawableColor(context, R.drawable.ic_boost,R.color.yellowicon);
+                    changeDrawableColor(context, R.drawable.ic_boost,R.color.marked_icon);
                     imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost);
                 }else {
                     if( theme == THEME_DARK)
-                        changeDrawableColor(context, R.drawable.ic_boost_border,R.color.dark_text);
+                        changeDrawableColor(context, R.drawable.ic_boost_border,R.color.dark_icon);
                     else
                         changeDrawableColor(context, R.drawable.ic_boost_border,R.color.black);
                     imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost_border);
                 }
 
-                if( status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned()))
+                if( status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned())) {
+                    changeDrawableColor(context, R.drawable.ic_action_pin_yellow,R.color.marked_icon);
                     imgPinned = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_yellow);
-                else
+                }else {
+                    if( theme == THEME_DARK)
+                        changeDrawableColor(context, R.drawable.ic_action_pin_dark,R.color.dark_icon);
+                    else
+                        changeDrawableColor(context, R.drawable.ic_action_pin_dark,R.color.black);
                     imgPinned = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_dark);
+                }
 
                 imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
                 imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));

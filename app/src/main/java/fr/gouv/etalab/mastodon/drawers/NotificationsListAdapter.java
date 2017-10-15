@@ -255,17 +255,17 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
 
         //Manages theme for icon colors
         if( theme == Helper.THEME_DARK){
-            changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_action_more,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_retweet,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_delete,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_action_more,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_retweet,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_delete,R.color.dark_icon);
         }else {
             changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
             changeDrawableColor(context, R.drawable.ic_action_more,R.color.black);
@@ -338,22 +338,22 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
 
                 Drawable imgFav, imgReblog;
                 if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
-                    changeDrawableColor(context, R.drawable.ic_favorite,R.color.yellowicon);
+                    changeDrawableColor(context, R.drawable.ic_favorite,R.color.marked_icon);
                     imgFav = ContextCompat.getDrawable(context, R.drawable.ic_favorite);
                 }else {
                     if( theme == THEME_DARK)
-                        changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_text);
+                        changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_icon);
                     else
                         changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.black);
                     imgFav = ContextCompat.getDrawable(context, R.drawable.ic_favorite_border);
                 }
 
                 if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged())) {
-                    changeDrawableColor(context, R.drawable.ic_boost,R.color.yellowicon);
+                    changeDrawableColor(context, R.drawable.ic_boost,R.color.marked_icon);
                     imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost);
                 }else {
                     if( theme == THEME_DARK)
-                        changeDrawableColor(context, R.drawable.ic_boost_border,R.color.dark_text);
+                        changeDrawableColor(context, R.drawable.ic_boost_border,R.color.dark_icon);
                     else
                         changeDrawableColor(context, R.drawable.ic_boost_border,R.color.black);
                     imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost_border);
@@ -363,7 +363,13 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
                 holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
                 holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
-
+                if( theme == THEME_DARK){
+                    holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                    holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                }else {
+                    holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.black));
+                    holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.black));
+                }
 
                 if( status.getReblog() == null) {
                     if (status.getMedia_attachments().size() < 1) {
