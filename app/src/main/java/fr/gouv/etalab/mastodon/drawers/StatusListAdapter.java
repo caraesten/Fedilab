@@ -678,11 +678,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
                 holder.status_pin.setImageDrawable(imgPinned);
 
-                if( theme == Helper.THEME_LIGHT) {
-                    holder.status_show_more.setTextColor(ContextCompat.getColor(context, R.color.white));
-                    holder.status_spoiler_button.setTextColor(ContextCompat.getColor(context, R.color.white));
-                }
-
                 boolean isOwner = status.getAccount().getId().equals(userId);
 
                 // Pinning toots is only available on Mastodon 1._6_.0 instances.
