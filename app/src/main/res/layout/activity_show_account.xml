@@ -55,7 +55,18 @@
                 android:layout_marginEnd="10dp"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_marginBottom="5dp"
                 />
+            <ImageButton
+                android:id="@+id/account_menu"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_gravity="end|top"
+                android:src="@drawable/ic_more_white"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"/>
         </android.support.design.widget.CollapsingToolbarLayout>
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -131,8 +142,8 @@
                             android:layout_marginLeft="10dp"
                             android:visibility="gone"
                             android:id="@+id/account_followed_by"
-                            android:layout_gravity="center_vertical"
-                            android:gravity="center_vertical"
+                            android:layout_gravity="center"
+                            android:gravity="center"
                             android:textColor="?attr/colorAccent"
                             android:text="@string/followed_by"
                             android:maxLines="1"
@@ -143,8 +154,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginLeft="10dp"
                             android:visibility="gone"
-                            android:layout_gravity="center_vertical"
-                            android:gravity="center_vertical"
+                            android:layout_gravity="center"
+                            android:gravity="center"
                             android:textColor="?attr/colorAccent"
                             android:text="@string/request_sent"
                             android:maxLines="1"

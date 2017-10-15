@@ -295,15 +295,14 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
 
             SpannableString spannableString = Helper.clickableElements(context, content,
                     status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), true);
+            Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/DroidSans-Regular.ttf");
+            holder.notification_status_content.setTypeface(tf);
             holder.notification_status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
             holder.notification_status_content.setMovementMethod(null);
             holder.notification_status_content.setMovementMethod(LinkMovementMethod.getInstance());
             holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
             holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
             holder.status_date.setText(Helper.dateDiff(context, status.getCreated_at()));
-
-            Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/WorkSans-Regular.ttf");
-            holder.notification_status_content.setTypeface(tf);
 
             //Adds attachment -> disabled, to enable them uncomment the line below
             //loadAttachments(status, holder);
