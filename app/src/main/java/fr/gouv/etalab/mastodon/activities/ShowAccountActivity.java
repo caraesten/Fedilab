@@ -293,10 +293,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                         switch (item.getItemId()) {
                             case R.id.action_show_pinned:
                                 showPinned = !showPinned;
-                                if( showPinned )
-                                    item.setIcon(R.drawable.ic_clear_all);
-                                else
-                                    item.setIcon(R.drawable.ic_action_pin);
                                 if( tabLayout.getTabAt(0) != null)
                                     //noinspection ConstantConditions
                                     tabLayout.getTabAt(0).select();
@@ -305,10 +301,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                                 return true;
                             case R.id.action_show_media:
                                 showMediaOnly = !showMediaOnly;
-                                if( showMediaOnly )
-                                    item.setIcon(R.drawable.ic_clear_all);
-                                else
-                                    item.setIcon(R.drawable.ic_perm_media);
                                 if( tabLayout.getTabAt(0) != null)
                                     //noinspection ConstantConditions
                                     tabLayout.getTabAt(0).select();
@@ -537,10 +529,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                                 switch (item.getItemId()) {
                                     case R.id.action_show_pinned:
                                         showPinned = !showPinned;
-                                        if( showPinned )
-                                            item.setIcon(R.drawable.ic_clear_all);
-                                        else
-                                            item.setIcon(R.drawable.ic_action_pin);
                                         if( tabLayout.getTabAt(0) != null)
                                             //noinspection ConstantConditions
                                             tabLayout.getTabAt(0).select();
@@ -549,10 +537,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                                         break;
                                     case R.id.action_show_media:
                                         showMediaOnly = !showMediaOnly;
-                                        if( showMediaOnly )
-                                            item.setIcon(R.drawable.ic_clear_all);
-                                        else
-                                            item.setIcon(R.drawable.ic_perm_media);
                                         if( tabLayout.getTabAt(0) != null)
                                             //noinspection ConstantConditions
                                             tabLayout.getTabAt(0).select();
