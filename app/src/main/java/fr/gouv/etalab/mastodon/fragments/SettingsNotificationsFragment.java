@@ -309,10 +309,6 @@ public class SettingsNotificationsFragment extends Fragment {
             }
         }
 
-        if( theme == Helper.THEME_LIGHT) {
-            settings_time_from.setTextColor(ContextCompat.getColor(context, R.color.white));
-            settings_time_to.setTextColor(ContextCompat.getColor(context, R.color.white));
-        }
         return rootView;
     }
 
