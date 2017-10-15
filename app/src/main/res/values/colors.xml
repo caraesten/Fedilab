@@ -20,6 +20,8 @@
     <color name="header3D">#607D8B</color>
 
     <color name="dark_text">#f3f3f3</color>
+    <color name="dark_icon">#66708a</color>
+    <color name="marked_icon">#ca8f04</color>
     <color name="transparent">#00000000</color>
 
 
@@ -29,8 +31,6 @@
     <color name="white">#FFF</color>
     <color name="blue_light">#C5CAE9</color>
     <color name="light_grey">#E0E0E0</color>
-    <color name="darkicon">#424242</color>
-    <color name="yellowicon">#FDD835</color>
 
 
     <color name="background_image">#282c37</color>

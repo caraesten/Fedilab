@@ -33,14 +33,17 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.transition.Visibility;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -117,7 +120,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     private Relationship relationship;
     private boolean showMediaOnly, showPinned;
     private ImageView pp_actionBar;
-    private LinearLayout small_info;
     private ImageView header_edit_profile;
     private List<Status> pins;
     private String accountUrl;
@@ -152,7 +154,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         Bundle b = getIntent().getExtras();
         account_follow = (FloatingActionButton) findViewById(R.id.account_follow);
         account_follow_request = (TextView) findViewById(R.id.account_follow_request);
-        small_info = (LinearLayout) findViewById(R.id.small_info);
         header_edit_profile = (ImageView) findViewById(R.id.header_edit_profile);
         account_follow.setEnabled(false);
         if(b != null){
@@ -293,10 +294,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                         switch (item.getItemId()) {
                             case R.id.action_show_pinned:
                                 showPinned = !showPinned;
-                                if( showPinned )
-                                    item.setIcon(R.drawable.ic_clear_all);
-                                else
-                                    item.setIcon(R.drawable.ic_action_pin);
                                 if( tabLayout.getTabAt(0) != null)
                                     //noinspection ConstantConditions
                                     tabLayout.getTabAt(0).select();
@@ -305,10 +302,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                                 return true;
                             case R.id.action_show_media:
                                 showMediaOnly = !showMediaOnly;
-                                if( showMediaOnly )
-                                    item.setIcon(R.drawable.ic_clear_all);
-                                else
-                                    item.setIcon(R.drawable.ic_perm_media);
                                 if( tabLayout.getTabAt(0) != null)
                                     //noinspection ConstantConditions
                                     tabLayout.getTabAt(0).select();
@@ -448,27 +441,30 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
             appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
                 @Override
                 public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                    if (Math.abs(verticalOffset)-appBar.getTotalScrollRange() == 0) {
-                        if( small_info.getVisibility() == View.GONE)
-                            small_info.setVisibility(View.VISIBLE);
-                    }else {
-                        if( small_info.getVisibility() == View.VISIBLE)
-                            small_info.setVisibility(View.GONE);
+                    LinearLayout toolbarContent = findViewById(R.id.toolbar_content);
+                    if( toolbarContent != null) {
+                        if (Math.abs(verticalOffset) - appBar.getTotalScrollRange() == 0) {
+                            if (toolbarContent.getVisibility() == View.GONE)
+                                toolbarContent.setVisibility(View.VISIBLE);
+                        } else {
+                            if (toolbarContent.getVisibility() == View.VISIBLE)
+                                toolbarContent.setVisibility(View.GONE);
+                        }
                     }
                     if (maxScrollSize == 0)
                         maxScrollSize = appBarLayout.getTotalScrollRange();
 
                     int percentage = (Math.abs(verticalOffset)) * 100 / maxScrollSize;
 
-                    if (percentage >= 20 && avatarShown) {
+                    if (percentage >= 40 && avatarShown) {
                         avatarShown = false;
 
                         account_pp.animate()
                                 .scaleY(0).scaleX(0)
-                                .setDuration(200)
+                                .setDuration(400)
                                 .start();
                     }
-                    if (percentage <= 20 && !avatarShown) {
+                    if (percentage <= 40 && !avatarShown) {
                         avatarShown = true;
                         account_pp.animate()
                                 .scaleY(1).scaleX(1)
@@ -537,10 +533,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                                 switch (item.getItemId()) {
                                     case R.id.action_show_pinned:
                                         showPinned = !showPinned;
-                                        if( showPinned )
-                                            item.setIcon(R.drawable.ic_clear_all);
-                                        else
-                                            item.setIcon(R.drawable.ic_action_pin);
                                         if( tabLayout.getTabAt(0) != null)
                                             //noinspection ConstantConditions
                                             tabLayout.getTabAt(0).select();
@@ -549,10 +541,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                                         break;
                                     case R.id.action_show_media:
                                         showMediaOnly = !showMediaOnly;
-                                        if( showMediaOnly )
-                                            item.setIcon(R.drawable.ic_clear_all);
-                                        else
-                                            item.setIcon(R.drawable.ic_perm_media);
                                         if( tabLayout.getTabAt(0) != null)
                                             //noinspection ConstantConditions
                                             tabLayout.getTabAt(0).select();

@@ -17,15 +17,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,10 +30,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingFeedsAsyncTask;
@@ -139,7 +132,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         if( !comesFromSearch){
 
             //Hide account header when scrolling for ShowAccountActivity
-            if (hideHeader && Build.VERSION.SDK_INT >= 21)
+            if (hideHeader )
                 ViewCompat.setNestedScrollingEnabled(lv_status, true);
 
             lv_status.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -149,25 +142,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
                 }
                 public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                    if (hideHeader && Build.VERSION.SDK_INT < 21) {
-                        if(firstVisibleItem == 0 && Helper.listIsAtTop(lv_status)){
-                            Intent intent = new Intent(Helper.HEADER_ACCOUNT+instanceValue);
-                            intent.putExtra("hide", false);
-                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-                        }else if (view.getId() == lv_status.getId() && totalItemCount > visibleItemCount) {
-                            final int currentFirstVisibleItem = lv_status.getFirstVisiblePosition();
-                            if (currentFirstVisibleItem > lastFirstVisibleItem) {
-                                Intent intent = new Intent(Helper.HEADER_ACCOUNT + instanceValue);
-                                intent.putExtra("hide", true);
-                                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-                            } else if (currentFirstVisibleItem < lastFirstVisibleItem) {
-                                Intent intent = new Intent(Helper.HEADER_ACCOUNT + instanceValue);
-                                intent.putExtra("hide", false);
-                                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-                            }
-                            lastFirstVisibleItem = currentFirstVisibleItem;
-                        }
-                    }
                     if(firstVisibleItem + visibleItemCount == totalItemCount ) {
                         if(!flag_loading ) {
                             flag_loading = true;

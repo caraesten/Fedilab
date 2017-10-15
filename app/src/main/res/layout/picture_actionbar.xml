@@ -24,6 +24,7 @@
         android:layout_gravity="center_vertical"
         android:id="@+id/picture_actionbar"
         android:maxLines="1"
+        android:textColor="?attr/actionBarTextColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="14sp" />
