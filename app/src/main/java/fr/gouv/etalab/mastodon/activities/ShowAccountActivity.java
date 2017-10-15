@@ -456,15 +456,15 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
                     int percentage = (Math.abs(verticalOffset)) * 100 / maxScrollSize;
 
-                    if (percentage >= 20 && avatarShown) {
+                    if (percentage >= 40 && avatarShown) {
                         avatarShown = false;
 
                         account_pp.animate()
                                 .scaleY(0).scaleX(0)
-                                .setDuration(200)
+                                .setDuration(400)
                                 .start();
                     }
-                    if (percentage <= 20 && !avatarShown) {
+                    if (percentage <= 40 && !avatarShown) {
                         avatarShown = true;
                         account_pp.animate()
                                 .scaleY(1).scaleX(1)
