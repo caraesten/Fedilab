@@ -15,6 +15,7 @@ package fr.gouv.etalab.mastodon.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -35,8 +36,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.text.Html;
+import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.util.Patterns;
 import android.util.TypedValue;
@@ -75,7 +81,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
@@ -218,7 +226,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 holder.status_toot_date = (TextView) convertView.findViewById(R.id.status_toot_date);
                 holder.status_show_more = (Button) convertView.findViewById(R.id.status_show_more);
                 holder.status_more = (ImageView) convertView.findViewById(R.id.status_more);
-                holder.status_reblog_user = (TextView) convertView.findViewById(R.id.status_reblog_user);
                 holder.status_prev1 = (ImageView) convertView.findViewById(R.id.status_prev1);
                 holder.status_prev2 = (ImageView) convertView.findViewById(R.id.status_prev2);
                 holder.status_prev3 = (ImageView) convertView.findViewById(R.id.status_prev3);
@@ -303,7 +310,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             if( status.isNew())
                 holder.new_element.setVisibility(View.VISIBLE);
             else
-                holder.new_element.setVisibility(View.INVISIBLE);
+                holder.new_element.setVisibility(View.GONE);
             int iconSizePercent = sharedpreferences.getInt(Helper.SET_ICON_SIZE, 130);
             int textSizePercent = sharedpreferences.getInt(Helper.SET_TEXT_SIZE, 110);
             boolean trans_forced = sharedpreferences.getBoolean(Helper.SET_TRANS_FORCED, false);
@@ -316,7 +323,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
             holder.status_account_displayname.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
             holder.status_account_username.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12*textSizePercent/100);
-            holder.status_reblog_user.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
             holder.status_toot_date.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12*textSizePercent/100);
             holder.status_spoiler.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
             holder.status_content_translated.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
@@ -349,16 +355,16 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             //Manages theme for icon colors
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
             if( theme == Helper.THEME_DARK){
-                changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_action_more,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_action_globe,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_boost_border,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_boost_header,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_action_pin_dark, R.color.dark_text);
+                changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_action_more,R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_action_globe,R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_boost_border,R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_boost_header,R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_action_pin_dark, R.color.dark_icon);
                 changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_translate,R.color.dark_text);
@@ -380,42 +386,60 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
             //Redraws top icons (boost/reply)
             final float scale = context.getResources().getDisplayMetrics().density;
-            if( (status.getIn_reply_to_account_id()!= null && !status.getIn_reply_to_account_id().equals("null")) || (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null")) ){
-                Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_reply);
-                img.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
-                holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
-            }else if( status.getReblog() != null){
+            if( status.getReblog() != null){
                 Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_boost_header);
                 img.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
                 holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
+                holder.status_account_displayname.setVisibility(View.VISIBLE);
             }else{
-                holder.status_account_displayname.setCompoundDrawables( null, null, null, null);
+                holder.status_account_displayname.setVisibility(View.GONE);
             }
 
-
+            if( theme == THEME_DARK){
+                holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+            }else {
+                holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.black));
+                holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.black));
+                holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.black));
+                holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.black));
+            }
 
             String content;
             final String displayName;
-            final String username;
             final String ppurl;
+            String name;
             if( status.getReblog() != null){
                 content = status.getReblog().getContent();
                 displayName = Helper.shortnameToUnicode(status.getReblog().getAccount().getDisplay_name(), true);
-                username = status.getReblog().getAccount().getUsername();
-                holder.status_reblog_user.setText(displayName + " " +String.format("@%s",username));
                 ppurl = status.getReblog().getAccount().getAvatar();
-                holder.status_reblog_user.setVisibility(View.VISIBLE);
                 holder.status_account_displayname.setText(context.getResources().getString(R.string.reblog_by, status.getAccount().getUsername()));
-                holder.status_account_username.setText( "");
+                name = String.format("%s @%s",displayName,status.getReblog().getAccount().getAcct());
             }else {
                 ppurl = status.getAccount().getAvatar();
                 content = status.getContent();
                 displayName = Helper.shortnameToUnicode(status.getAccount().getDisplay_name(), true);
-                username = status.getAccount().getUsername();
-                holder.status_reblog_user.setVisibility(View.GONE);
-                holder.status_account_displayname.setText(displayName);
-                holder.status_account_username.setText(String.format("@%s",username));
+                name = String.format("%s @%s",displayName,status.getAccount().getAcct());
             }
+
+            Spannable wordtoSpan = new SpannableString(name);
+            if( theme == THEME_DARK) {
+                Pattern hashAcct;
+                if( status.getReblog() != null)
+                    hashAcct = Pattern.compile("\\s(@"+status.getReblog().getAccount().getAcct()+")");
+                else
+                    hashAcct = Pattern.compile("\\s(@"+status.getAccount().getAcct()+")");
+                Matcher matcherAcct = hashAcct.matcher(wordtoSpan);
+                while (matcherAcct.find()){
+                    int matchStart = matcherAcct.start(1);
+                    int matchEnd = matcherAcct.end();
+                    if( wordtoSpan.length() >= matchEnd && matchStart < matchEnd)
+                        wordtoSpan.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.dark_icon)), matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                }
+            }
+            holder.status_account_username.setText(wordtoSpan);
 
 
             if( status.getContent_translated() != null && status.getContent_translated().length() > 0){
@@ -571,7 +595,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     }
                 }
 
-                Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/WorkSans-Regular.ttf");
+                Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/DroidSans-Regular.ttf");
                 holder.status_content.setTypeface(tf);
 
                 //Toot was translated and user asked to see it
@@ -614,31 +638,37 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
                 Drawable imgFav, imgReblog, imgPinned;
                 if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
-                    changeDrawableColor(context, R.drawable.ic_favorite,R.color.yellowicon);
+                    changeDrawableColor(context, R.drawable.ic_favorite,R.color.marked_icon);
                     imgFav = ContextCompat.getDrawable(context, R.drawable.ic_favorite);
                 }else {
                     if( theme == THEME_DARK)
-                        changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_text);
+                        changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_icon);
                     else
                         changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.black);
                     imgFav = ContextCompat.getDrawable(context, R.drawable.ic_favorite_border);
                 }
 
                 if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged())) {
-                    changeDrawableColor(context, R.drawable.ic_boost,R.color.yellowicon);
+                    changeDrawableColor(context, R.drawable.ic_boost,R.color.marked_icon);
                     imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost);
                 }else {
                     if( theme == THEME_DARK)
-                        changeDrawableColor(context, R.drawable.ic_boost_border,R.color.dark_text);
+                        changeDrawableColor(context, R.drawable.ic_boost_border,R.color.dark_icon);
                     else
                         changeDrawableColor(context, R.drawable.ic_boost_border,R.color.black);
                     imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost_border);
                 }
 
-                if( status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned()))
+                if( status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned())) {
+                    changeDrawableColor(context, R.drawable.ic_action_pin_yellow,R.color.marked_icon);
                     imgPinned = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_yellow);
-                else
+                }else {
+                    if( theme == THEME_DARK)
+                        changeDrawableColor(context, R.drawable.ic_action_pin_dark,R.color.dark_icon);
+                    else
+                        changeDrawableColor(context, R.drawable.ic_action_pin_dark,R.color.black);
                     imgPinned = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_dark);
+                }
 
                 imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
                 imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
@@ -647,11 +677,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
                 holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
                 holder.status_pin.setImageDrawable(imgPinned);
-
-                if( theme == Helper.THEME_LIGHT) {
-                    holder.status_show_more.setTextColor(ContextCompat.getColor(context, R.color.white));
-                    holder.status_spoiler_button.setTextColor(ContextCompat.getColor(context, R.color.white));
-                }
 
                 boolean isOwner = status.getAccount().getId().equals(userId);
 
@@ -1398,7 +1423,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         TextView status_favorite_count;
         TextView status_reblog_count;
         TextView status_toot_date;
-        TextView status_reblog_user;
         Button status_show_more;
         ImageView status_more;
         LinearLayout status_document_container;

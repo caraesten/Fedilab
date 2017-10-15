@@ -972,14 +972,14 @@ public class MainActivity extends AppCompatActivity
                 SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
                 if( theme == Helper.THEME_DARK){
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_reply,R.color.dark_text);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_more,R.color.dark_text);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_globe,R.color.dark_text);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_open,R.color.dark_text);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.dark_text);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline,R.color.dark_text);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_retweet,R.color.dark_text);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_favorite_border,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_reply,R.color.dark_icon);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_more,R.color.dark_icon);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_globe,R.color.dark_icon);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_open,R.color.dark_icon);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.dark_icon);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline,R.color.dark_icon);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_retweet,R.color.dark_icon);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_favorite_border,R.color.dark_icon);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_photo,R.color.dark_text);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_remove_red_eye,R.color.dark_text);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.dark_text);

@@ -33,6 +33,7 @@
         android:layout_gravity="center_vertical"
         android:id="@+id/webview_title"
         android:maxLines="1"
+        android:textColor="?attr/actionBarTextColor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="12sp"

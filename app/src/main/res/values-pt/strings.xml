@@ -432,4 +432,5 @@
     <string name="thanks_text_dev">
         Agradecimentos a:
     </string>
+    <string name="action_open_in_web">Open in browser</string>
 </resources>

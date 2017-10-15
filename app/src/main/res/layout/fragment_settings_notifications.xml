@@ -135,6 +135,7 @@
                     android:layout_marginLeft="10dp"
                     android:focusableInTouchMode="false"
                     android:id="@+id/settings_time_from"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
@@ -147,6 +148,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="10dp"
                     android:focusableInTouchMode="false"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
                     android:id="@+id/settings_time_to"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
