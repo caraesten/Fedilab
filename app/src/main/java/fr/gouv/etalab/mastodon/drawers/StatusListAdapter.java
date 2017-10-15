@@ -38,7 +38,10 @@ import android.support.v7.widget.PopupMenu;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.util.Patterns;
@@ -78,7 +81,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
@@ -360,8 +365,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 changeDrawableColor(context, R.drawable.ic_boost_header,R.color.dark_icon);
                 changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_icon);
                 changeDrawableColor(context, R.drawable.ic_action_pin_dark, R.color.dark_icon);
-                changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_icon);
-                changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
+                changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_translate,R.color.dark_text);
             }else {
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
@@ -394,30 +399,45 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
             }else {
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.black));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.black));
                 holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.black));
+                holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.black));
             }
 
             String content;
             final String displayName;
             final String ppurl;
+            String name;
             if( status.getReblog() != null){
                 content = status.getReblog().getContent();
                 displayName = Helper.shortnameToUnicode(status.getReblog().getAccount().getDisplay_name(), true);
                 ppurl = status.getReblog().getAccount().getAvatar();
                 holder.status_account_displayname.setText(context.getResources().getString(R.string.reblog_by, status.getAccount().getUsername()));
+                name = String.format("%s @%s",displayName,status.getReblog().getAccount().getAcct());
             }else {
                 ppurl = status.getAccount().getAvatar();
                 content = status.getContent();
                 displayName = Helper.shortnameToUnicode(status.getAccount().getDisplay_name(), true);
+                name = String.format("%s @%s",displayName,status.getAccount().getAcct());
             }
-            String name = String.format("%s @%s",displayName,status.getAccount().getAcct());
+
             Spannable wordtoSpan = new SpannableString(name);
             if( theme == THEME_DARK) {
-                wordtoSpan.setSpan(new ForegroundColorSpan(Color.BLUE), 15, 30, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                wordtoSpan.setSpan(new ForegroundColorSpan(Color.RED), 5, 10, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                Pattern hashAcct;
+                if( status.getReblog() != null)
+                    hashAcct = Pattern.compile("\\s(@"+status.getReblog().getAccount().getAcct()+")");
+                else
+                    hashAcct = Pattern.compile("\\s(@"+status.getAccount().getAcct()+")");
+                Matcher matcherAcct = hashAcct.matcher(wordtoSpan);
+                while (matcherAcct.find()){
+                    int matchStart = matcherAcct.start(1);
+                    int matchEnd = matcherAcct.end();
+                    if( wordtoSpan.length() >= matchEnd && matchStart < matchEnd)
+                        wordtoSpan.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.dark_icon)), matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                }
             }
             holder.status_account_username.setText(wordtoSpan);
 
