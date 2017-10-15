@@ -15,6 +15,7 @@ package fr.gouv.etalab.mastodon.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -35,8 +36,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.text.Html;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.util.Patterns;
 import android.util.TypedValue;
@@ -218,7 +221,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 holder.status_toot_date = (TextView) convertView.findViewById(R.id.status_toot_date);
                 holder.status_show_more = (Button) convertView.findViewById(R.id.status_show_more);
                 holder.status_more = (ImageView) convertView.findViewById(R.id.status_more);
-                holder.status_reblog_user = (TextView) convertView.findViewById(R.id.status_reblog_user);
                 holder.status_prev1 = (ImageView) convertView.findViewById(R.id.status_prev1);
                 holder.status_prev2 = (ImageView) convertView.findViewById(R.id.status_prev2);
                 holder.status_prev3 = (ImageView) convertView.findViewById(R.id.status_prev3);
@@ -316,7 +318,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             holder.status_content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
             holder.status_account_displayname.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
             holder.status_account_username.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12*textSizePercent/100);
-            holder.status_reblog_user.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
             holder.status_toot_date.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12*textSizePercent/100);
             holder.status_spoiler.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
             holder.status_content_translated.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
@@ -361,7 +362,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 changeDrawableColor(context, R.drawable.ic_action_pin_dark, R.color.dark_icon);
                 changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_icon);
                 changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_icon);
-                changeDrawableColor(context, R.drawable.ic_translate,R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_translate,R.color.dark_text);
             }else {
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_action_more,R.color.black);
@@ -380,48 +381,45 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
             //Redraws top icons (boost/reply)
             final float scale = context.getResources().getDisplayMetrics().density;
-            if( (status.getIn_reply_to_account_id()!= null && !status.getIn_reply_to_account_id().equals("null")) || (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null")) ){
-                Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_reply);
-                img.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
-                holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
-            }else if( status.getReblog() != null){
+            if( status.getReblog() != null){
                 Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_boost_header);
                 img.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
                 holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
+                holder.status_account_displayname.setVisibility(View.VISIBLE);
             }else{
-                holder.status_account_displayname.setCompoundDrawables( null, null, null, null);
+                holder.status_account_displayname.setVisibility(View.GONE);
             }
 
             if( theme == THEME_DARK){
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
             }else {
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.black));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.black));
+                holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.black));
             }
 
             String content;
             final String displayName;
-            final String username;
             final String ppurl;
             if( status.getReblog() != null){
                 content = status.getReblog().getContent();
                 displayName = Helper.shortnameToUnicode(status.getReblog().getAccount().getDisplay_name(), true);
-                username = status.getReblog().getAccount().getUsername();
-                holder.status_reblog_user.setText(displayName + " " +String.format("@%s",username));
                 ppurl = status.getReblog().getAccount().getAvatar();
-                holder.status_reblog_user.setVisibility(View.VISIBLE);
                 holder.status_account_displayname.setText(context.getResources().getString(R.string.reblog_by, status.getAccount().getUsername()));
-                holder.status_account_username.setText( "");
             }else {
                 ppurl = status.getAccount().getAvatar();
                 content = status.getContent();
                 displayName = Helper.shortnameToUnicode(status.getAccount().getDisplay_name(), true);
-                username = status.getAccount().getUsername();
-                holder.status_reblog_user.setVisibility(View.GONE);
-                holder.status_account_displayname.setText(displayName);
-                holder.status_account_username.setText(String.format("@%s",username));
             }
+            String name = String.format("%s @%s",displayName,status.getAccount().getAcct());
+            Spannable wordtoSpan = new SpannableString(name);
+            if( theme == THEME_DARK) {
+                wordtoSpan.setSpan(new ForegroundColorSpan(Color.BLUE), 15, 30, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                wordtoSpan.setSpan(new ForegroundColorSpan(Color.RED), 5, 10, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+            holder.status_account_username.setText(wordtoSpan);
 
 
             if( status.getContent_translated() != null && status.getContent_translated().length() > 0){
@@ -1410,7 +1408,6 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         TextView status_favorite_count;
         TextView status_reblog_count;
         TextView status_toot_date;
-        TextView status_reblog_user;
         Button status_show_more;
         ImageView status_more;
         LinearLayout status_document_container;
