@@ -980,9 +980,9 @@ public class MainActivity extends AppCompatActivity
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline,R.color.dark_icon);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_retweet,R.color.dark_icon);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_favorite_border,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_photo,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_remove_red_eye,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.dark_icon);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_photo,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_remove_red_eye,R.color.dark_text);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.dark_text);
                 }else {
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_reply,R.color.black);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_action_more,R.color.black);
