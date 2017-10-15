@@ -569,7 +569,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     }
                 }
 
-                Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/WorkSans-Regular.ttf");
+                Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/DroidSans-Regular.ttf");
                 holder.status_content.setTypeface(tf);
 
                 //Toot was translated and user asked to see it
