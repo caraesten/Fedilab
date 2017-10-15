@@ -43,7 +43,7 @@ public class RetrieveSearchAccountsAsyncTask extends AsyncTask<Void, Void, Void>
     @Override
     protected Void doInBackground(Void... params) {
         API api = new API(context);
-        apiResponse = api.searchAccounts(query, 10);
+        apiResponse = api.searchAccounts(query, 20);
         return null;
     }
 
