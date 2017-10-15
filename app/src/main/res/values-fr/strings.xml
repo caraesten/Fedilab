@@ -433,4 +433,5 @@
     <string name="toast_pin">Le pouet a été épinglé !</string>
     <string name="toast_unpin">Le pouet a été désépinglé !</string>
     <string name="pins_cnt">Epinglés %d</string>
+    <string name="action_open_in_web">Ouvrir dans le navigateur</string>
 </resources>
