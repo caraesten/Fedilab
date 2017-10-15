@@ -125,7 +125,7 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
             holder.account_un.setText(String.format("@%s", account.getUsername() + "@" + instance));
             holder.account_dn.setVisibility(View.GONE);
         }else {
-            holder.account_un.setText(String.format("@%s", account.getUsername()));
+            holder.account_un.setText(String.format("@%s", account.getAcct()));
             holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
             holder.account_dn.setVisibility(View.VISIBLE);
         }
