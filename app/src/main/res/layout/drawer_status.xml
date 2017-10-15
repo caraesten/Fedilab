@@ -38,59 +38,65 @@
             android:layout_marginRight="5dp"
             android:orientation="horizontal"
             android:baselineAligned="false">
-            <RelativeLayout
+            <LinearLayout
                 android:layout_height="wrap_content"
                 android:layout_width="60dp"
+                android:orientation="vertical"
                 >
+                <RelativeLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    >
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/status_account_profile"
+                        tools:ignore="ContentDescription" />
+                    <ImageView
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerHorizontal="true"
+                        android:visibility="gone"
+                        android:id="@+id/status_account_profile_boost"
+                        tools:ignore="ContentDescription" />
+                    <ImageView
+                        android:id="@+id/status_account_profile_boost_by"
+                        android:layout_height="30dp"
+                        android:layout_width="30dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        style="?attr/shapeBorder"
+                        android:visibility="gone"
+                        tools:ignore="ContentDescription" />
+                </RelativeLayout>
+
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp"
-                    android:layout_centerHorizontal="true"
-                    android:id="@+id/status_account_profile"
-                    tools:ignore="ContentDescription" />
-                <ImageView
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerHorizontal="true"
-                    android:visibility="gone"
-                    android:id="@+id/status_account_profile_boost"
-                    tools:ignore="ContentDescription" />
-                <ImageView
-                    android:id="@+id/status_account_profile_boost_by"
-                    android:layout_height="30dp"
-                    android:layout_width="30dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    style="?attr/shapeBorder"
-                    android:visibility="gone"
-                    tools:ignore="ContentDescription" />
-                <ImageView
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="70dp"
                     android:id="@+id/new_element"
-                    android:visibility="invisible"
+                    android:visibility="gone"
                     android:src="@drawable/ic_fiber_new"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:ignore="ContentDescription" />
                 <android.support.design.widget.FloatingActionButton
-                    android:layout_below="@+id/new_element"
                     android:visibility="gone"
                     android:id="@+id/status_translate"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
                     app:fabSize="mini"
                     android:layout_marginTop="10dp"
                     app:srcCompat="@drawable/ic_translate" />
-            </RelativeLayout>
+            </LinearLayout>
             <LinearLayout
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"

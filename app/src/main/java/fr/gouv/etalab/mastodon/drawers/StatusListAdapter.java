@@ -310,7 +310,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             if( status.isNew())
                 holder.new_element.setVisibility(View.VISIBLE);
             else
-                holder.new_element.setVisibility(View.INVISIBLE);
+                holder.new_element.setVisibility(View.GONE);
             int iconSizePercent = sharedpreferences.getInt(Helper.SET_ICON_SIZE, 130);
             int textSizePercent = sharedpreferences.getInt(Helper.SET_TEXT_SIZE, 110);
             boolean trans_forced = sharedpreferences.getBoolean(Helper.SET_TRANS_FORCED, false);

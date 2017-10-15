@@ -263,9 +263,9 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_icon);
             changeDrawableColor(context, R.drawable.ic_retweet,R.color.dark_icon);
             changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_icon);
-            changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_icon);
-            changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_icon);
-            changeDrawableColor(context, R.drawable.ic_delete,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_delete,R.color.dark_text);
         }else {
             changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
             changeDrawableColor(context, R.drawable.ic_action_more,R.color.black);
