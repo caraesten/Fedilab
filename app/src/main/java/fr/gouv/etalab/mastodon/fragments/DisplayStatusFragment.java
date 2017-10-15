@@ -385,6 +385,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     retrieveMissingToots(statuses.get(0).getId());
             }
         }
+        int index = lv_status.getFirstVisiblePosition();
+        View v = lv_status.getChildAt(0);
+        int top = (v == null) ? 0 : v.getTop();
+        statusListAdapter.notifyDataSetChanged();
+        lv_status.setSelectionFromTop(index, top);
     }
 
     /**
