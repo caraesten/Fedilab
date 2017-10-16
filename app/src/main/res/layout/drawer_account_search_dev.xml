@@ -33,13 +33,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         tools:ignore="UseCompoundDrawables">
+
         <ImageView
-            android:layout_gravity="center_horizontal"
             android:id="@+id/account_pp"
-            android:layout_margin="10dp"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            tools:ignore="ContentDescription" />
+            android:layout_margin="10dp"
+            tools:ignore="ContentDescription"/>
         <LinearLayout
             android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
