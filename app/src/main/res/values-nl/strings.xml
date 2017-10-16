@@ -1,7 +1,6 @@
 <resources>
-    <string name="app_name" translatable="false">Mastalab</string>
     <string name="navigation_drawer_open">Menu openen</string>
-    <string name="navigation_drawer_close">Menu sluiten/string>
+    <string name="navigation_drawer_close">Menu sluiten</string>
 
     <string name="action_about">Over</string>
     <string name="action_about_instance">Over deze Mastodon-server</string>
@@ -209,7 +208,6 @@
     <string name="about_code">Broncode: </string>
     <string name="about_code_action">Bitbucket</string>
     <string name="about_yandex">Vertaling van toots:</string>
-    <string name="about_yandex_action" translatable="false">Powered by Yandex.Translate</string>
     <string name="about_thekinrar">Servers zoeken:</string>
     <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Ontwerper pictogram:</string>
@@ -433,8 +431,6 @@
         - <b>PhotoView</b>: To manage images\n
         - <b>Gson</b> : To save drafts
     </string>
-
-    <string name="yandex" translatable="false">&lt;a hreh="http://translate.yandex.com/">Powered by Yandex.Translate&lt;/a></string>
 
     <string name="privacy_API_yandex_title">Translation of toots</string>
     <string name="privacy_API_yandex_authorizations">
