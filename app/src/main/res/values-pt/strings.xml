@@ -232,7 +232,7 @@
         <item quantity="other">e outras %d notificações</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="one">e outro % toot para descobrir</item>
+        <item quantity="one">e outro %d toot para descobrir</item>
         <item quantity="other">e outros %d toots para descobrir</item>
     </plurals>
     <string name="delete_notification_ask">Excluir notificação?</string>
