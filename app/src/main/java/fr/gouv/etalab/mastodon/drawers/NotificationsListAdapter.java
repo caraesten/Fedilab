@@ -288,10 +288,12 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 holder.status_document_container.setVisibility(View.VISIBLE);
 
             String content = status.getContent();
-            content = content.replaceAll("</p>","<br/><br/>");
-            content = content.replaceAll("<p>","");
-            if( content.endsWith("<br/><br/>") )
-                content = content.substring(0,content.length() -10);
+            if( content != null) {
+                content = content.replaceAll("</p>", "<br/><br/>");
+                content = content.replaceAll("<p>", "");
+                if (content.endsWith("<br/><br/>"))
+                    content = content.substring(0, content.length() - 10);
+            }
 
             SpannableString spannableString = Helper.clickableElements(context, content,
                     status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), true);
