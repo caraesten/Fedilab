@@ -190,7 +190,6 @@
     <!-- About -->
     <string name="about_vesrion">Release %1$s</string>
     <string name="about_developer">Ontwikkelaar:</string>
-    <string name="about_developer_action">\@tschneider</string>
     <string name="about_license">Licentie: </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Broncode: </string>
