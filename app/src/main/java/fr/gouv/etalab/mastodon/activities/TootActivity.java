@@ -921,7 +921,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                             //Clear content
                             toot_content.setText("");
                             toot_cw_content.setText("");
-                            toot_space_left.setText(0);
+                            toot_space_left.setText("0");
                             if( attachments != null) {
                                 for (Attachment attachment : attachments) {
                                     View namebar = findViewById(Integer.parseInt(attachment.getId()));
