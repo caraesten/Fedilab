@@ -279,6 +279,13 @@ public class MediaActivity extends AppCompatActivity  {
         }
         imageView.setVisibility(View.GONE);
         preview_url = attachment.getPreview_url();
+        if( type.equals("unknown")){
+            preview_url = attachment.getRemote_url();
+            if( preview_url.endsWith(".png") || preview_url.endsWith(".jpg")|| preview_url.endsWith(".jpeg"))
+                type = "image";
+            if( preview_url.endsWith(".mp4"))
+                type = "video";
+        }
         switch (type){
             case "image":
                 imageLoader.displayImage(url, imageView, options, new SimpleImageLoadingListener(){

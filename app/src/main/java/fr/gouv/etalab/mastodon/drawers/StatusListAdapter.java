@@ -1178,8 +1178,10 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                         holder.status_prev4_play.setVisibility(View.VISIBLE);
                 }
                 String url = attachment.getPreview_url();
-                if( url == null || url.trim().equals("") || attachment.getType().equals("unknown"))
+                if( url == null || url.trim().equals("") )
                     url = attachment.getUrl();
+                else if( attachment.getType().equals("unknown"))
+                    url = attachment.getRemote_url();
                 if( !url.trim().contains("missing.png"))
                     imageLoader.displayImage(url, imageView, optionsAttachment);
                 final int finalPosition = position;
