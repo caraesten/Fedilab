@@ -1154,31 +1154,31 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 ImageView imageView;
                 if( i == 0) {
                     imageView = holder.status_prev1;
-                    if( attachment.getType().equals("image"))
+                    if( attachment.getType().equals("image") || attachment.getType().equals("unknown"))
                         holder.status_prev1_play.setVisibility(View.GONE);
                     else
                         holder.status_prev1_play.setVisibility(View.VISIBLE);
                 }else if( i == 1) {
                     imageView = holder.status_prev2;
-                    if( attachment.getType().equals("image"))
+                    if( attachment.getType().equals("image") || attachment.getType().equals("unknown"))
                         holder.status_prev2_play.setVisibility(View.GONE);
                     else
                         holder.status_prev2_play.setVisibility(View.VISIBLE);
                 }else if(i == 2) {
                     imageView = holder.status_prev3;
-                    if( attachment.getType().equals("image"))
+                    if( attachment.getType().equals("image") || attachment.getType().equals("unknown"))
                         holder.status_prev3_play.setVisibility(View.GONE);
                     else
                         holder.status_prev3_play.setVisibility(View.VISIBLE);
                 }else {
                     imageView = holder.status_prev4;
-                    if( attachment.getType().equals("image"))
+                    if( attachment.getType().equals("image") || attachment.getType().equals("unknown"))
                         holder.status_prev4_play.setVisibility(View.GONE);
                     else
                         holder.status_prev4_play.setVisibility(View.VISIBLE);
                 }
                 String url = attachment.getPreview_url();
-                if( url == null || url.trim().equals(""))
+                if( url == null || url.trim().equals("") || attachment.getType().equals("unknown"))
                     url = attachment.getUrl();
                 if( !url.trim().contains("missing.png"))
                     imageLoader.displayImage(url, imageView, optionsAttachment);
