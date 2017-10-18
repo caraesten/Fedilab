@@ -84,7 +84,6 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
         }
         return new JobRequest.Builder(HomeTimelineSyncJob.HOME_TIMELINE)
                 .setPeriodic(TimeUnit.MINUTES.toMillis(Helper.MINUTES_BETWEEN_HOME_TIMELINE), TimeUnit.MINUTES.toMillis(5))
-                .setPersisted(true)
                 .setUpdateCurrent(updateCurrent)
                 .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
                 .setRequirementsEnforced(false)

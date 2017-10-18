@@ -79,7 +79,6 @@ public class ScheduledTootsSyncJob extends Job {
 
         int jobId = new  JobRequest.Builder(ScheduledTootsSyncJob.SCHEDULED_TOOT)
                 .setExecutionWindow(startMs, endMs)
-                .setPersisted(true)
                 .setUpdateCurrent(false)
                 .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
                 .setRequirementsEnforced(false)

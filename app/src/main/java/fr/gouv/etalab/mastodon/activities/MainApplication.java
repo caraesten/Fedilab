@@ -32,7 +32,6 @@ public class MainApplication extends Application{
     public void onCreate() {
         super.onCreate();
         JobManager.create(this).addJobCreator(new ApplicationJob());
-        JobManager.instance().getConfig().setVerbose(false);
         NotificationsSyncJob.schedule(false);
         HomeTimelineSyncJob.schedule(false);
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
