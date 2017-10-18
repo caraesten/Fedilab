@@ -80,7 +80,7 @@ public class ScheduledTootsSyncJob extends Job {
         int jobId = new  JobRequest.Builder(ScheduledTootsSyncJob.SCHEDULED_TOOT)
                 .setExecutionWindow(startMs, endMs)
                 .setUpdateCurrent(false)
-                .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
+                .setRequiredNetworkType(JobRequest.NetworkType.METERED)
                 .setRequirementsEnforced(false)
                 .build()
                 .schedule();
