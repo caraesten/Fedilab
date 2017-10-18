@@ -189,7 +189,6 @@
     <!-- About -->
     <string name="about_vesrion">Versão %1$s</string>
     <string name="about_developer">Desenvolvedor:</string>
-    <string name="about_developer_action">\@tschneider</string>
     <string name="about_license">Licença: </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Código-fonte: </string>

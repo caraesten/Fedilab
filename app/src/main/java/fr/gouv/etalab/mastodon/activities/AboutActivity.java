@@ -153,7 +153,7 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
         accountSearchWebAdapterDeveloper = new AccountSearchDevAdapter(AboutActivity.this, developers);
         lv_developers.setAdapter(accountSearchWebAdapterDeveloper);
 
-        new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), "tschneider", "mastodon.etalab.gouv.fr", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), "tom79", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), "daycode", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), "PhotonQyv", "mastodon.xyz", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), "angrytux", "social.tchncs.de", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -187,7 +187,7 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
             account = accounts.get(0);
             account.setFollowing(true);
             switch (account.getUsername()) {
-                case "tschneider":
+                case "tom79":
                     developers.add(account);
                     accountSearchWebAdapterDeveloper.notifyDataSetChanged();
                     break;
