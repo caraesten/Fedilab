@@ -49,13 +49,16 @@ import mastodon.etalab.gouv.fr.mastodon.R;
  */
 public class CrossActions {
 
-    public static void doCrossAction(final Context context, final Status status, final API.StatusAction doAction, final BaseAdapter baseAdapter, final OnPostActionInterface onPostActionInterface, boolean limitedToOwner){
+
+    private static API.StatusAction doAction;
+
+    public static void doCrossAction(final Context context, final Status status, API.StatusAction makeAction, final BaseAdapter baseAdapter, final OnPostActionInterface onPostActionInterface, boolean limitedToOwner){
         List<Account> accounts = connectedAccounts(context, status, limitedToOwner);
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-
+        doAction = makeAction;
         boolean undoAction = (doAction == API.StatusAction.UNPIN || doAction == API.StatusAction.UNREBLOG || doAction == API.StatusAction.UNFAVOURITE );
         //Undo actions won't ask for choosing a user
-        if( accounts.size() == 1 || undoAction ) {
+        if( accounts.size() == 1 || (undoAction && limitedToOwner) ) {
 
             boolean confirmation = false;
             if( doAction == API.StatusAction.UNFAVOURITE || doAction == API.StatusAction.FAVOURITE)
@@ -82,6 +85,7 @@ public class CrossActions {
                 accountArray[i] = account;
                 i++;
             }
+
             builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -91,10 +95,17 @@ public class CrossActions {
             builderSingle.setAdapter(accountsSearchAdapter, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+
                     Account selectedAccount = accountArray[which];
                     String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                     SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                     Account loggedAccount = new AccountDAO(context, db).getAccountByID(userId);
+                    //Cross action can only be create elements (boost/fav)
+                    if( doAction == API.StatusAction.UNREBLOG)
+                        doAction = API.StatusAction.REBLOG;
+                    else if(  doAction == API.StatusAction.UNFAVOURITE)
+                        doAction = API.StatusAction.FAVOURITE;
+
                     if(loggedAccount.getInstance().equals(selectedAccount.getInstance())){
                         new PostActionAsyncTask(context, selectedAccount, doAction, status.getId(), onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }else{ //Account is from another instance
