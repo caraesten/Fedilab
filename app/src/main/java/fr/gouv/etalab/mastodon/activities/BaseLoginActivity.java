@@ -24,6 +24,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -74,6 +75,8 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
     private static boolean client_id_for_webview = false;
     private String instance;
     private AutoCompleteTextView login_instance;
+    private EditText login_uid;
+    private EditText login_passwd;
     boolean isLoadingInstance = false;
 
     @Override
@@ -94,8 +97,11 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
         }else {
             changeDrawableColor(getApplicationContext(), R.drawable.mastodon_icon, R.color.mastodonC3);
         }
-        final Button connectionButton = (Button) findViewById(R.id.login_button);
-        login_instance = (AutoCompleteTextView) findViewById(R.id.login_instance);
+        final Button connectionButton = findViewById(R.id.login_button);
+        login_instance = findViewById(R.id.login_instance);
+        login_uid = findViewById(R.id.login_uid);
+        login_passwd = findViewById(R.id.login_passwd);
+
 
         if( theme == Helper.THEME_LIGHT) {
            connectionButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
@@ -153,7 +159,7 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
 
 
         connectionButton.setEnabled(false);
-        login_two_step = (TextView) findViewById(R.id.login_two_step);
+        login_two_step = findViewById(R.id.login_two_step);
         login_two_step.setVisibility(View.GONE);
         login_two_step.setPaintFlags(login_two_step.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         login_two_step.setOnClickListener(new View.OnClickListener() {
@@ -181,7 +187,7 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        Button connectionButton = (Button) findViewById(R.id.login_button);
+        Button connectionButton = findViewById(R.id.login_button);
         if (login_instance.getText() != null && login_instance.getText().toString().length() > 0 && client_id_for_webview) {
             connectionButton.setEnabled(false);
             client_id_for_webview = false;
@@ -190,7 +196,7 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
     }
 
     private void retrievesClientId(){
-        final Button connectionButton = (Button) findViewById(R.id.login_button);
+        final Button connectionButton = findViewById(R.id.login_button);
         try {
             instance =  URLEncoder.encode(login_instance.getText().toString().trim(), "utf-8");
         } catch (UnsupportedEncodingException e) {
@@ -254,8 +260,6 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
                 requestParams.add(Helper.CLIENT_ID, sharedpreferences.getString(Helper.CLIENT_ID, null));
                 requestParams.add(Helper.CLIENT_SECRET, sharedpreferences.getString(Helper.CLIENT_SECRET, null));
                 requestParams.add("grant_type", "password");
-                EditText login_uid = (EditText) findViewById(R.id.login_uid);
-                EditText login_passwd = (EditText) findViewById(R.id.login_passwd);
                 requestParams.add("username",login_uid.getText().toString().trim());
                 requestParams.add("password",login_passwd.getText().toString().trim());
                 requestParams.add("scope"," read write follow");
