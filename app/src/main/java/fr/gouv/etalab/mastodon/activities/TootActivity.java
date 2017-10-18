@@ -1213,37 +1213,39 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             toot_content.setThreshold(1);
             toot_content.setAdapter(accountsListAdapter);
             final String oldContent = toot_content.getText().toString();
-            String[] searchA = oldContent.substring(0,currentCursorPosition).split("@");
-            if( searchA.length > 0 ) {
-                final String search = searchA[searchA.length - 1];
-                toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Account account = accounts.get(position);
-                        String deltaSearch = "";
-                        if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
-                            deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
-                        else {
-                            if (currentCursorPosition >= oldContent.length())
-                                deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
-                        }
+            if( oldContent.length() >= currentCursorPosition) {
+                String[] searchA = oldContent.substring(0, currentCursorPosition).split("@");
+                if (searchA.length > 0) {
+                    final String search = searchA[searchA.length - 1];
+                    toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Account account = accounts.get(position);
+                            String deltaSearch = "";
+                            if (currentCursorPosition - searchLength > 0 && currentCursorPosition < oldContent.length())
+                                deltaSearch = oldContent.substring(currentCursorPosition - searchLength, currentCursorPosition);
+                            else {
+                                if (currentCursorPosition >= oldContent.length())
+                                    deltaSearch = oldContent.substring(currentCursorPosition - searchLength, oldContent.length());
+                            }
 
-                        if (!search.equals(""))
-                            deltaSearch = deltaSearch.replace("@" + search, "");
-                        String newContent = oldContent.substring(0, currentCursorPosition - searchLength);
-                        newContent += deltaSearch;
-                        newContent += "@" + account.getAcct() + " ";
-                        int newPosition = newContent.length();
-                        if (currentCursorPosition < oldContent.length() - 1)
-                            newContent += oldContent.substring(currentCursorPosition, oldContent.length() - 1);
-                        toot_content.setText(newContent);
-                        toot_space_left.setText(String.valueOf(toot_content.length()));
-                        toot_content.setSelection(newPosition);
-                        AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, new ArrayList<Account>());
-                        toot_content.setThreshold(1);
-                        toot_content.setAdapter(accountsListAdapter);
-                    }
-                });
+                            if (!search.equals(""))
+                                deltaSearch = deltaSearch.replace("@" + search, "");
+                            String newContent = oldContent.substring(0, currentCursorPosition - searchLength);
+                            newContent += deltaSearch;
+                            newContent += "@" + account.getAcct() + " ";
+                            int newPosition = newContent.length();
+                            if (currentCursorPosition < oldContent.length() - 1)
+                                newContent += oldContent.substring(currentCursorPosition, oldContent.length() - 1);
+                            toot_content.setText(newContent);
+                            toot_space_left.setText(String.valueOf(toot_content.length()));
+                            toot_content.setSelection(newPosition);
+                            AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, new ArrayList<Account>());
+                            toot_content.setThreshold(1);
+                            toot_content.setAdapter(accountsListAdapter);
+                        }
+                    });
+                }
             }
         }
     }
