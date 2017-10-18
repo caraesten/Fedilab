@@ -33,20 +33,16 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.transition.Visibility;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -126,6 +122,9 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     private int maxScrollSize;
     private boolean avatarShown = true;
     private DisplayStatusFragment displayStatusFragment;
+    private CircleImageView account_pp;
+    private TextView account_dn;
+    private TextView account_un;
 
     public enum action{
         FOLLOW,
@@ -152,10 +151,13 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         instanceValue += 1;
         pins = new ArrayList<>();
         Bundle b = getIntent().getExtras();
-        account_follow = (FloatingActionButton) findViewById(R.id.account_follow);
-        account_follow_request = (TextView) findViewById(R.id.account_follow_request);
-        header_edit_profile = (ImageView) findViewById(R.id.header_edit_profile);
+        account_follow = findViewById(R.id.account_follow);
+        account_follow_request = findViewById(R.id.account_follow_request);
+        header_edit_profile = findViewById(R.id.header_edit_profile);
         account_follow.setEnabled(false);
+        account_pp = findViewById(R.id.account_pp);
+        account_dn = findViewById(R.id.account_dn);
+        account_un = findViewById(R.id.account_un);
         if(b != null){
             accountId = b.getString("accountId");
             new RetrieveRelationshipAsyncTask(getApplicationContext(), accountId,ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -189,12 +191,12 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
 
 
-        tabLayout = (TabLayout) findViewById(R.id.account_tabLayout);
+        tabLayout = findViewById(R.id.account_tabLayout);
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.following)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.followers)));
 
-        mPager = (ViewPager) findViewById(R.id.account_viewpager);
+        mPager = findViewById(R.id.account_viewpager);
         PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
 
@@ -246,7 +248,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
             }
         });
 
-        account_note = (TextView) findViewById(R.id.account_note);
+        account_note = findViewById(R.id.account_note);
 
         //Follow button
         account_follow.setOnClickListener(new View.OnClickListener() {
@@ -279,7 +281,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
 
 
-        final ImageButton account_menu = (ImageButton) findViewById(R.id.account_menu);
+        final ImageButton account_menu = findViewById(R.id.account_menu);
         account_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -356,9 +358,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         }
 
         accountUrl = account.getUrl();
-        final CircleImageView account_pp = (CircleImageView) findViewById(R.id.account_pp);
-        TextView account_dn = (TextView) findViewById(R.id.account_dn);
-        TextView account_un = (TextView) findViewById(R.id.account_un);
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_DARK){
@@ -380,7 +379,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         super.onLoadingComplete(imageUri, view, loadedImage);
-                        ImageView banner_pp = (ImageView) findViewById(R.id.banner_pp);
+                        ImageView banner_pp = findViewById(R.id.banner_pp);
                         Bitmap workingBitmap = Bitmap.createBitmap(loadedImage);
                         Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
                         Canvas canvas = new Canvas(mutableBitmap);
@@ -411,10 +410,10 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
 
         if( account != null){
-            TextView actionbar_title = (TextView) findViewById(R.id.show_account_title);
+            TextView actionbar_title = findViewById(R.id.show_account_title);
             if( account.getAcct() != null)
                 actionbar_title.setText(account.getAcct());
-            pp_actionBar = (ImageView) findViewById(R.id.pp_actionBar);
+            pp_actionBar = findViewById(R.id.pp_actionBar);
             String url = account.getAvatar();
             if( url.startsWith("/") ){
                 url = "https://" + Helper.getLiveInstance(getApplicationContext()) + account.getAvatar();
@@ -434,7 +433,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
 
                 }});
-            final AppBarLayout appBar = (AppBarLayout) findViewById(R.id.appBar);
+            final AppBarLayout appBar = findViewById(R.id.appBar);
             maxScrollSize = appBar.getTotalScrollRange();
 
 
@@ -619,7 +618,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
         //The authenticated account is followed by the account
         if( relationship.isFollowed_by()){
-            TextView account_followed_by = (TextView) findViewById(R.id.account_followed_by);
+            TextView account_followed_by = findViewById(R.id.account_followed_by);
             account_followed_by.setVisibility(View.VISIBLE);
         }
 
