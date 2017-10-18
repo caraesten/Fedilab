@@ -271,7 +271,7 @@ public class MediaActivity extends AppCompatActivity  {
         currentAction = action;
         final Attachment attachment = attachments.get(mediaPosition-1);
         String type = attachment.getType();
-        final String url = attachment.getUrl();
+        String url = attachment.getUrl();
         finalUrlDownload = url;
         videoView.setVisibility(View.GONE);
         if( videoView.isPlaying()) {
@@ -281,13 +281,17 @@ public class MediaActivity extends AppCompatActivity  {
         preview_url = attachment.getPreview_url();
         if( type.equals("unknown")){
             preview_url = attachment.getRemote_url();
-            if( preview_url.endsWith(".png") || preview_url.endsWith(".jpg")|| preview_url.endsWith(".jpeg"))
+            if( preview_url.endsWith(".png") || preview_url.endsWith(".jpg")|| preview_url.endsWith(".jpeg")) {
                 type = "image";
-            if( preview_url.endsWith(".mp4"))
+            }else if( preview_url.endsWith(".mp4")) {
                 type = "video";
+            }
+            url = attachment.getRemote_url();
+            attachment.setType(type);
         }
         switch (type){
             case "image":
+                final String finalUrl = url;
                 imageLoader.displayImage(url, imageView, options, new SimpleImageLoadingListener(){
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
@@ -299,7 +303,7 @@ public class MediaActivity extends AppCompatActivity  {
                     }
                     @Override
                     public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
-                        imageLoader.displayImage(url, imageView, options);
+                        imageLoader.displayImage(finalUrl, imageView, options);
                         loader.setVisibility(View.GONE);
                     }
                 });
@@ -336,6 +340,7 @@ public class MediaActivity extends AppCompatActivity  {
                         client.setSSLSocketFactory(mastalabSSLSocketFactory);
                         client.setUserAgent(USER_AGENT);
                         client.setConnectTimeout(120000); //120s timeout
+                        final String finalUrl1 = url;
                         client.get(url, null, new FileAsyncHttpResponseHandler(MediaActivity.this) {
                             @Override
                             public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
@@ -352,7 +357,7 @@ public class MediaActivity extends AppCompatActivity  {
                             public void onSuccess(int statusCode, Header[] headers, File response) {
                                 File dir = getCacheDir();
                                 File from = new File(dir, response.getName());
-                                File to = new File(dir, Helper.md5(url) + ".mp4");
+                                File to = new File(dir, Helper.md5(finalUrl1) + ".mp4");
                                 if (from.exists())
                                     //noinspection ResultOfMethodCallIgnored
                                     from.renameTo(to);
