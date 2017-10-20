@@ -51,6 +51,7 @@ public class Status implements Parcelable {
     private ArrayList<Attachment> media_attachments;
     private List<Status> replies;
     private List<Mention> mentions;
+    private List<Tag> emojis;
     private List<Tag> tags;
     private Application application;
     private String language;
@@ -378,5 +379,13 @@ public class Status implements Parcelable {
 
     public void setVisible(boolean visible) {
         isVisible = visible;
+    }
+
+    public List<Tag> getEmojis() {
+        return emojis;
+    }
+
+    public void setEmojis(List<Tag> emojis) {
+        this.emojis = emojis;
     }
 }
