@@ -445,7 +445,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             if( status.getContent_translated() != null && status.getContent_translated().length() > 0){
                 holder.status_content_translated.setMovementMethod(null);
                 SpannableString spannableStringTrans = Helper.clickableElements(context, status.getContent_translated(),
-                        status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), false);
+                        status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), status.getEmojis(), false);
                 holder.status_content_translated.setText(spannableStringTrans, TextView.BufferType.SPANNABLE);
                 holder.status_content_translated.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
@@ -472,7 +472,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 content = content.substring(0,content.length() -10);
             holder.status_content.setMovementMethod(null);
             final SpannableString spannableString = Helper.clickableElements(context,content,
-                    status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), true);
+                    status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), status.getEmojis(), true);
             holder.status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
             holder.status_content.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override

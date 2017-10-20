@@ -130,6 +130,7 @@ import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
@@ -1133,8 +1134,21 @@ public class Helper {
      * @param mentions List<Mention>
      * @return TextView
      */
-    public static SpannableString clickableElements(final Context context, String fullContent, List<Mention> mentions, boolean useHTML) {
+    public static SpannableString clickableElements(final Context context, String fullContent, List<Mention> mentions, List<Emojis> emojis, boolean useHTML) {
         SpannableString spannableString;
+
+
+        //Deals with custom emojis to change them in image
+        if( emojis != null && emojis.size() > 0 ) {
+            //Looping through accounts which are mentioned
+            for (final Emojis emoji : emojis) {
+                String targetedEmoji = ":" + emoji + ":";
+                if (fullContent.contains(targetedEmoji)) {
+                    fullContent = fullContent.replace(targetedEmoji, "<img src=\""+ emoji.getUrl()+"\" />");
+                }
+
+            }
+        }
         if( useHTML) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 spannableString = new SpannableString(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_LEGACY));
@@ -1210,6 +1224,7 @@ public class Helper {
 
             }
         }
+
         Matcher matcher = hashtagPattern.matcher(spannableString);
         while (matcher.find()){
             int matchStart = matcher.start(1);
