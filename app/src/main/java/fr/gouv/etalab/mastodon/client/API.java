@@ -1502,18 +1502,23 @@ public class API {
 
             //Retrieves emjis
             List<Emojis> emojiList = new ArrayList<>();
-            JSONArray emojisTag = resobj.getJSONArray("emojis");
-            if( arrayTag != null){
-                for(int j = 0 ; j < emojisTag.length() ; j++){
-                    JSONObject emojisObj = emojisTag.getJSONObject(j);
-                    Emojis emojis = new Emojis();
-                    emojis.setShortcode(emojisObj.get("shortcode").toString());
-                    emojis.setStatic_url(emojisObj.get("static_url").toString());
-                    emojis.setUrl(emojisObj.get("url").toString());
-                    emojiList.add(emojis);
+            try {
+                JSONArray emojisTag = resobj.getJSONArray("emojis");
+                if( arrayTag != null){
+                    for(int j = 0 ; j < emojisTag.length() ; j++){
+                        JSONObject emojisObj = emojisTag.getJSONObject(j);
+                        Emojis emojis = new Emojis();
+                        emojis.setShortcode(emojisObj.get("shortcode").toString());
+                        emojis.setStatic_url(emojisObj.get("static_url").toString());
+                        emojis.setUrl(emojisObj.get("url").toString());
+                        emojiList.add(emojis);
+                    }
                 }
+                status.setEmojis(emojiList);
+            }catch (Exception e){
+                status.setEmojis(new ArrayList<Emojis>());
             }
-            status.setEmojis(emojiList);
+
 
             status.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
             status.setContent(resobj.get("content").toString());

@@ -17,6 +17,8 @@ package fr.gouv.etalab.mastodon.client.Entities;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.SpannableString;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,6 +39,8 @@ public class Status implements Parcelable {
     private Status reblog;
     private String content;
     private String content_translated;
+    private SpannableString contents;
+    private SpannableString content_translateds;
     private Date created_at;
     private int reblogs_count;
     private int favourites_count;
@@ -56,6 +60,7 @@ public class Status implements Parcelable {
     private Application application;
     private String language;
     private boolean isTranslated = false;
+    private boolean isEmojiFound = false;
     private boolean isTranslationShown = false;
     private boolean isNew = false;
     private boolean isTakingScreenShot = false;
@@ -387,5 +392,29 @@ public class Status implements Parcelable {
 
     public void setEmojis(List<Emojis> emojis) {
         this.emojis = emojis;
+    }
+
+    public SpannableString getContents() {
+        return contents;
+    }
+
+    public void setContents(SpannableString contents) {
+        this.contents = contents;
+    }
+
+    public SpannableString getContent_translateds() {
+        return content_translateds;
+    }
+
+    public void setContent_translateds(SpannableString content_translateds) {
+        this.content_translateds = content_translateds;
+    }
+
+    public boolean isEmojiFound() {
+        return isEmojiFound;
+    }
+
+    public void setEmojiFound(boolean emojiFound) {
+        isEmojiFound = emojiFound;
     }
 }

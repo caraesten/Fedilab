@@ -71,6 +71,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnPostNotificationsActionInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
@@ -84,7 +85,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class NotificationsListAdapter extends BaseAdapter implements OnPostActionInterface, OnPostNotificationsActionInterface {
+public class NotificationsListAdapter extends BaseAdapter implements OnPostActionInterface, OnPostNotificationsActionInterface, OnRetrieveEmojiInterface {
 
     private Context context;
     private List<Notification> notifications;
@@ -295,8 +296,12 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                     content = content.substring(0, content.length() - 10);
             }
 
-            SpannableString spannableString = Helper.clickableElements(context, content,
-                    status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), status.getEmojis(), true);
+            SpannableString spannableString = Helper.clickableElements(context, status.getContent(),
+                    status.getReblog() != null?status.getReblog().getMentions():status.getMentions(),
+                    status.getReblog() != null?status.getReblog().getEmojis():status.getEmojis(),
+                    position,
+                    true, NotificationsListAdapter.this);
+
             Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/DroidSans-Regular.ttf");
             holder.notification_status_content.setTypeface(tf);
             holder.notification_status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
@@ -906,6 +911,15 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             holder.status_document_container.setVisibility(View.GONE);
         }
         holder.status_show_more.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onRetrieveEmoji(int position, SpannableString spannableString, Boolean error) {
+        notifications.get(position).getStatus().setContents(spannableString);
+        if( !notifications.get(position).getStatus().isEmojiFound()) {
+            notifications.get(position).getStatus().setEmojiFound(true);
+            notificationsListAdapter.notifyDataSetChanged();
+        }
     }
 
 

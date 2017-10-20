@@ -15,7 +15,6 @@ package fr.gouv.etalab.mastodon.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -39,11 +38,8 @@ import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.util.Patterns;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -83,7 +79,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
@@ -93,12 +88,14 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
+import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
 import fr.gouv.etalab.mastodon.translation.GoogleTranslateQuery;
@@ -114,7 +111,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class StatusListAdapter extends BaseAdapter implements OnPostActionInterface, OnTranslatedInterface, OnRetrieveFeedsInterface {
+public class StatusListAdapter extends BaseAdapter implements OnPostActionInterface, OnTranslatedInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface {
 
     private Context context;
     private List<Status> statuses;
@@ -444,8 +441,11 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
             if( status.getContent_translated() != null && status.getContent_translated().length() > 0){
                 holder.status_content_translated.setMovementMethod(null);
-                SpannableString spannableStringTrans = Helper.clickableElements(context, status.getContent_translated(),
-                        status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), status.getEmojis(), false);
+                SpannableString spannableStringTrans = Helper.clickableElements(context,status.getContent_translated(),
+                        status.getReblog() != null?status.getReblog().getMentions():status.getMentions(),
+                        status.getReblog() != null?status.getReblog().getEmojis():status.getEmojis(),
+                        position,
+                        true, StatusListAdapter.this);
                 holder.status_content_translated.setText(spannableStringTrans, TextView.BufferType.SPANNABLE);
                 holder.status_content_translated.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
@@ -472,8 +472,14 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 content = content.substring(0,content.length() -10);
             holder.status_content.setMovementMethod(null);
             final SpannableString spannableString = Helper.clickableElements(context,content,
-                    status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), status.getEmojis(), true);
+                    status.getReblog() != null?status.getReblog().getMentions():status.getMentions(),
+                    status.getReblog() != null?status.getReblog().getEmojis():status.getEmojis(),
+                    position,
+                    true, StatusListAdapter.this);
             holder.status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
+            if( status.getContents() != null){
+                holder.status_content.setText(status.getContents(), TextView.BufferType.SPANNABLE);
+            }
             holder.status_content.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -481,6 +487,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     return false;
                 }
             });
+            List<Emojis> emojis = status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis();
+
             holder.status_content.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -1317,6 +1325,16 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }
     }
 
+
+    @Override
+    public void onRetrieveEmoji(int position, SpannableString spannableString, Boolean error) {
+        statuses.get(position).setContents(spannableString);
+        if( !statuses.get(position).isEmojiFound()) {
+            statuses.get(position).setEmojiFound(true);
+            statusListAdapter.notifyDataSetChanged();
+        }
+    }
+
     @Override
     public void onTranslatedTextview(int position, String translatedResult, Boolean error) {
         if( error){
@@ -1406,6 +1424,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         aJsonString = URLDecoder.decode(aJsonString, "UTF-8");
         return aJsonString;
     }
+
+
 
 
     private class ViewHolder {
