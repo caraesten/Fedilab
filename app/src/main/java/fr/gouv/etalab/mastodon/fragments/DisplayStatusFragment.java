@@ -74,8 +74,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private int behaviorWithAttachments;
     private boolean showMediaOnly, showPinned;
     private int positionSpinnerTrans;
-    private boolean hideHeader;
-    private String instanceValue;
     private String lastReadStatus;
     private Intent streamingFederatedIntent, streamingLocalIntent;
 
@@ -86,18 +84,17 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_status, container, false);
         statuses = new ArrayList<>();
-
+        knownId = new ArrayList<>();
         context = getContext();
         Bundle bundle = this.getArguments();
         boolean comesFromSearch = false;
-        hideHeader = false;
+        boolean hideHeader = false;
         showMediaOnly = false;
         showPinned = false;
         if (bundle != null) {
             type = (RetrieveFeedsAsyncTask.Type) bundle.get("type");
             targetedId = bundle.getString("targetedId", null);
             tag = bundle.getString("tag", null);
-            instanceValue = bundle.getString("hideHeaderValue", null);
             hideHeader = bundle.getBoolean("hideHeader", false);
             showMediaOnly = bundle.getBoolean("showMediaOnly",false);
             showPinned = bundle.getBoolean("showPinned",false);
@@ -119,15 +116,15 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         isOnWifi = Helper.isOnWIFI(context);
         positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
-        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
+        swipeRefreshLayout = rootView.findViewById(R.id.swipeContainer);
         behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         if( type == RetrieveFeedsAsyncTask.Type.HOME)
             lastReadStatus = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
-        lv_status = (ListView) rootView.findViewById(R.id.lv_status);
-        mainLoader = (RelativeLayout) rootView.findViewById(R.id.loader);
-        nextElementLoader = (RelativeLayout) rootView.findViewById(R.id.loading_next_status);
-        textviewNoAction = (RelativeLayout) rootView.findViewById(R.id.no_action);
+        lv_status = rootView.findViewById(R.id.lv_status);
+        mainLoader = rootView.findViewById(R.id.loader);
+        nextElementLoader = rootView.findViewById(R.id.loading_next_status);
+        textviewNoAction = rootView.findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
         statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
@@ -135,11 +132,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         if( !comesFromSearch){
 
             //Hide account header when scrolling for ShowAccountActivity
-            if (hideHeader )
+            if (hideHeader)
                 ViewCompat.setNestedScrollingEnabled(lv_status, true);
 
             lv_status.setOnScrollListener(new AbsListView.OnScrollListener() {
-                int lastFirstVisibleItem = 0;
                 @Override
                 public void onScrollStateChanged(AbsListView view, int scrollState) {
 

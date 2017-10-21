@@ -112,7 +112,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     private TabLayout tabLayout;
     private TextView account_note, account_follow_request;
     private String userId;
-    private static int instanceValue = 0;
     private Relationship relationship;
     private boolean showMediaOnly, showPinned;
     private ImageView pp_actionBar;
@@ -148,7 +147,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         }
         setContentView(R.layout.activity_show_account);
         setTitle("");
-        instanceValue += 1;
         pins = new ArrayList<>();
         Bundle b = getIntent().getExtras();
         account_follow = findViewById(R.id.account_follow);
@@ -673,7 +671,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                     bundle.putBoolean("hideHeader",true);
                     bundle.putBoolean("showMediaOnly",showMediaOnly);
                     bundle.putBoolean("showPinned",showPinned);
-                    bundle.putString("hideHeaderValue",String.valueOf(instanceValue));
                     displayStatusFragment.setArguments(bundle);
                     return displayStatusFragment;
                 case 1:
@@ -681,7 +678,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                     bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWING);
                     bundle.putString("targetedId", accountId);
                     bundle.putBoolean("hideHeader",true);
-                    bundle.putString("hideHeaderValue",String.valueOf(instanceValue));
                     displayAccountsFragment.setArguments(bundle);
                     return displayAccountsFragment;
                 case 2:
@@ -689,7 +685,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                     bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWERS);
                     bundle.putString("targetedId", accountId);
                     bundle.putBoolean("hideHeader",true);
-                    bundle.putString("hideHeaderValue",String.valueOf(instanceValue));
                     displayAccountsFragment.setArguments(bundle);
                     return displayAccountsFragment;
             }
