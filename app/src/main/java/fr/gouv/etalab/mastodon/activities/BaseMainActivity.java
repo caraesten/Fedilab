@@ -178,11 +178,11 @@ public abstract class BaseMainActivity extends AppCompatActivity
         Helper.canPin = false;
         Helper.fillMapEmoji(getApplicationContext());
         //Here, the user is authenticated
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbarTitle  = (TextView) toolbar.findViewById(R.id.toolbar_title);
-        toolbar_search = (SearchView) toolbar.findViewById(R.id.toolbar_search);
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        toolbarTitle  = toolbar.findViewById(R.id.toolbar_title);
+        toolbar_search = toolbar.findViewById(R.id.toolbar_search);
+        tabLayout = findViewById(R.id.tabLayout);
         TabLayout.Tab tabHome = tabLayout.newTab();
         TabLayout.Tab tabNotif = tabLayout.newTab();
         TabLayout.Tab tabLocal = tabLayout.newTab();
@@ -193,23 +193,23 @@ public abstract class BaseMainActivity extends AppCompatActivity
         tabPublic.setCustomView(R.layout.tab_badge);
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
-        ImageView iconHome = (ImageView) tabHome.getCustomView().findViewById(R.id.tab_icon);
+        ImageView iconHome = tabHome.getCustomView().findViewById(R.id.tab_icon);
         iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
         iconHome.setImageResource(R.drawable.ic_action_home_tl);
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
-        ImageView iconNotif = (ImageView) tabNotif.getCustomView().findViewById(R.id.tab_icon);
+        ImageView iconNotif = tabNotif.getCustomView().findViewById(R.id.tab_icon);
         iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
         iconNotif.setImageResource(R.drawable.ic_notifications_tl);
 
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
-        ImageView iconLocal = (ImageView) tabLocal.getCustomView().findViewById(R.id.tab_icon);
+        ImageView iconLocal = tabLocal.getCustomView().findViewById(R.id.tab_icon);
         iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
         iconLocal.setImageResource(R.drawable.ic_action_users_tl);
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
-        ImageView iconGlobal = (ImageView) tabPublic.getCustomView().findViewById(R.id.tab_icon);
+        ImageView iconGlobal = tabPublic.getCustomView().findViewById(R.id.tab_icon);
         iconGlobal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
         iconGlobal.setImageResource(R.drawable.ic_action_globe_tl);
 
@@ -375,14 +375,14 @@ public abstract class BaseMainActivity extends AppCompatActivity
             }
         });
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = findViewById(R.id.viewpager);
         int countPage = 2;
         if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true))
             countPage++;
         if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true))
             countPage++;
         viewPager.setOffscreenPageLimit(countPage);
-        main_app_container = (RelativeLayout) findViewById(R.id.main_app_container);
+        main_app_container = findViewById(R.id.main_app_container);
         PagerAdapter adapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
@@ -406,7 +406,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
                     toot.setVisibility(View.VISIBLE);
                 else
                     toot.setVisibility(View.GONE);
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                DrawerLayout drawer = findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
             }
 
@@ -421,7 +421,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
                     viewPager.setVisibility(View.VISIBLE);
                     Helper.switchLayout(BaseMainActivity.this);
                     main_app_container.setVisibility(View.GONE);
-                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    DrawerLayout drawer = findViewById(R.id.drawer_layout);
                     drawer.closeDrawer(GravityCompat.START);
                 }
                 if( tab.getPosition() != 1 )
@@ -454,7 +454,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
             }
         });
 
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -580,7 +580,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
         //Defines the current locale of the device in a static variable
         currentLocale = Helper.currentLocale(getApplicationContext());
 
-        toot = (FloatingActionButton) findViewById(R.id.toot);
+        toot = findViewById(R.id.toot);
         toot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -606,12 +606,12 @@ public abstract class BaseMainActivity extends AppCompatActivity
         options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(20)).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 
-        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        final DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.setDrawerIndicatorEnabled(false);
-        ImageView iconbar = (ImageView) toolbar.findViewById(R.id.iconbar);
+        ImageView iconbar = toolbar.findViewById(R.id.iconbar);
         iconbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -621,7 +621,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
         Helper.loadPictureIcon(BaseMainActivity.this, account.getAvatar(),iconbar);
         headerLayout = navigationView.getHeaderView(0);
         mamageNewIntent(getIntent());
-        final ImageView menuMore = (ImageView) headerLayout.findViewById(R.id.header_option_menu);
+        final ImageView menuMore = headerLayout.findViewById(R.id.header_option_menu);
         menuMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -695,10 +695,10 @@ public abstract class BaseMainActivity extends AppCompatActivity
                                 @SuppressLint("InflateParams") View popup_quick_settings = getLayoutInflater().inflate( R.layout.popup_text_size, null );
                                 builder.setView(popup_quick_settings);
 
-                                SeekBar set_text_size = (SeekBar) popup_quick_settings.findViewById(R.id.set_text_size);
-                                SeekBar set_icon_size = (SeekBar) popup_quick_settings.findViewById(R.id.set_icon_size);
-                                final TextView set_text_size_value = (TextView) popup_quick_settings.findViewById(R.id.set_text_size_value);
-                                final TextView set_icon_size_value = (TextView) popup_quick_settings.findViewById(R.id.set_icon_size_value);
+                                SeekBar set_text_size = popup_quick_settings.findViewById(R.id.set_text_size);
+                                SeekBar set_icon_size = popup_quick_settings.findViewById(R.id.set_icon_size);
+                                final TextView set_text_size_value = popup_quick_settings.findViewById(R.id.set_text_size_value);
+                                final TextView set_icon_size_value = popup_quick_settings.findViewById(R.id.set_icon_size_value);
                                 set_text_size_value.setText(String.format("%s%%",String.valueOf(textSize)));
                                 set_icon_size_value.setText(String.format("%s%%",String.valueOf(iconSize)));
 
@@ -764,7 +764,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
             navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
         }
 
-        LinearLayout owner_container = (LinearLayout) headerLayout.findViewById(R.id.main_header_container);
+        LinearLayout owner_container = headerLayout.findViewById(R.id.main_header_container);
         owner_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -792,8 +792,8 @@ public abstract class BaseMainActivity extends AppCompatActivity
             @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.popup_quick_settings, null);
             dialogBuilder.setView(dialogView);
 
-            final SwitchCompat set_push_hometimeline = (SwitchCompat) dialogView.findViewById(R.id.set_push_hometimeline);
-            final SwitchCompat set_push_notification = (SwitchCompat) dialogView.findViewById(R.id.set_push_notification);
+            final SwitchCompat set_push_hometimeline = dialogView.findViewById(R.id.set_push_hometimeline);
+            final SwitchCompat set_push_notification = dialogView.findViewById(R.id.set_push_notification);
             boolean notif_hometimeline = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, true);
             boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
             boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
@@ -851,7 +851,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
         String userIdIntent;
         boolean matchingIntent = false;
         if( extras.containsKey(INTENT_ACTION) ){
-            final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            final NavigationView navigationView = findViewById(R.id.nav_view);
             userIdIntent = extras.getString(PREF_KEY_ID); //Id of the account in the intent
             if (extras.getInt(INTENT_ACTION) == NOTIFICATION_INTENT){
                 changeUser(BaseMainActivity.this, userIdIntent, false); //Connects the account which is related to the notification
@@ -946,7 +946,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -968,7 +968,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 viewPager.setVisibility(View.VISIBLE);
                 tabLayout.setVisibility(View.VISIBLE);
                 toolbarTitle.setVisibility(View.GONE);
-                final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                final NavigationView navigationView = findViewById(R.id.nav_view);
                 unCheckAllMenuItems(navigationView);
                 toot.setVisibility(View.VISIBLE);
                 //Manages theme for icon colors
@@ -1079,8 +1079,10 @@ public abstract class BaseMainActivity extends AppCompatActivity
                             homeFragment.refresh(status);
                         }
                     } else if (eventStreaming == StreamingService.EventStreaming.DELETE) {
+                        //noinspection unused
                         String id = b.getString("id");
                         if (notificationsFragment != null) {
+                            //noinspection StatementWithEmptyBody
                             if (notificationsFragment.getUserVisibleHint()) {
 
                             } else {
@@ -1140,7 +1142,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
             startActivity(remoteFollow);
             return false;
         }
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView navigationView = findViewById(R.id.nav_view);
         unCheckAllMenuItems(navigationView);
         item.setChecked(true);
         //Remove the search bar
@@ -1210,7 +1212,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
         }
 
         populateTitleWithTag(fragmentTag, item.getTitle().toString(), item.getItemId());
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -1252,6 +1254,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        //noinspection StatementWithEmptyBody
         if (requestCode == ERROR_DIALOG_REQUEST_CODE) {
             // Adding a fragment via GooglePlayServicesUtil.showErrorDialogFragment
             // before the instance state is restored throws an error. So instead,
@@ -1320,7 +1323,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.LOCAL);
                     statusFragment.setArguments(bundle);
                     return statusFragment;
-            }else if( position == 2 && !display_local){
+            }else if(position == 2){
                     statusFragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
                     statusFragment.setArguments(bundle);
@@ -1372,7 +1375,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
         View tabHome = tabLayout.getTabAt(0).getCustomView();
         if( tabHome == null)
             return;
-        TextView tabCounterHome = (TextView) tabHome.findViewById(R.id.tab_counter);
+        TextView tabCounterHome = tabHome.findViewById(R.id.tab_counter);
         tabCounterHome.setText(String.valueOf(countNewStatus));
         if( countNewStatus> 0){
             //New data are available
@@ -1390,7 +1393,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
         View tabNotif = tabLayout.getTabAt(1).getCustomView();
         if( tabNotif == null)
             return;
-        TextView tabCounterNotif = (TextView) tabNotif.findViewById(R.id.tab_counter);
+        TextView tabCounterNotif = tabNotif.findViewById(R.id.tab_counter);
         tabCounterNotif.setText(String.valueOf(countNewNotifications));
         if( countNewNotifications > 0){
             tabCounterNotif.setVisibility(View.VISIBLE);
@@ -1399,17 +1402,10 @@ public abstract class BaseMainActivity extends AppCompatActivity
         }
     }
 
-    public static boolean isActivityVisible() {
-        return activityVisible;
-    }
-
     private static void activityResumed() {
-        activityVisible = true;
     }
 
     private static void activityPaused() {
-        activityVisible = false;
     }
 
-    private static boolean activityVisible;
 }
