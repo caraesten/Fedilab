@@ -79,7 +79,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
     private ListView lv_status;
     private boolean isRefreshed;
     private ImageView pp_actionBar;
-    public static int position;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -237,7 +237,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
         int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
-        position = 0;
+        int position = 0;
         boolean positionFound = false;
         List<Status> statuses = new ArrayList<>();
         if( statusFirst != null)
@@ -266,7 +266,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
             }
         }
         RelativeLayout loader = findViewById(R.id.loader);
-        StatusListAdapter statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, RetrieveFeedsAsyncTask.Type.CONTEXT, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
+        StatusListAdapter statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, position, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
         lv_status.setAdapter(statusListAdapter);
         statusListAdapter.notifyDataSetChanged();
         loader.setVisibility(View.GONE);

@@ -40,7 +40,6 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.util.Patterns;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -130,6 +129,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     private final int HIDDEN_STATUS = 0;
     private final int DISPLAYED_STATUS = 1;
     private List<Status> pins;
+    private int conversationPosition;
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
         this.context = context;
@@ -144,7 +144,19 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         pins = new ArrayList<>();
     }
 
-
+    public StatusListAdapter(Context context, int position, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
+        this.context = context;
+        this.statuses = statuses;
+        this.isOnWifi = isOnWifi;
+        this.behaviorWithAttachments = behaviorWithAttachments;
+        layoutInflater = LayoutInflater.from(this.context);
+        statusListAdapter = this;
+        this.type = RetrieveFeedsAsyncTask.Type.CONTEXT;
+        this.conversationPosition = position;
+        this.targetedId = targetedId;
+        this.translator = translator;
+        pins = new ArrayList<>();
+    }
 
     @Override
     public int getCount() {
@@ -736,13 +748,13 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 });
             }else {
                 if( theme == Helper.THEME_LIGHT){
-                    if( position == ShowConversationActivity.position){
+                    if( position == conversationPosition){
                         holder.main_container.setBackgroundResource(R.color.mastodonC3_);
                     }else {
                         holder.main_container.setBackgroundResource(R.color.mastodonC3__);
                     }
                 }else {
-                    if( position == ShowConversationActivity.position){
+                    if( position == conversationPosition){
                         holder.main_container.setBackgroundResource(R.color.mastodonC1___);
                     }else {
                         holder.main_container.setBackgroundResource(R.color.mastodonC1_);
