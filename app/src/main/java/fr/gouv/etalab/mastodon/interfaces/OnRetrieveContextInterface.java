@@ -17,11 +17,12 @@ package fr.gouv.etalab.mastodon.interfaces;
 
 import fr.gouv.etalab.mastodon.client.Entities.Context;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
 
 /**
  * Created by Thomas on 04/05/2017.
  * Interface when a context for a status has been retrieved
  */
 public interface OnRetrieveContextInterface {
-    void onRetrieveContext(Context context, Error error);
+    void onRetrieveContext(Context context, Status statusFirst, Error error);
 }
