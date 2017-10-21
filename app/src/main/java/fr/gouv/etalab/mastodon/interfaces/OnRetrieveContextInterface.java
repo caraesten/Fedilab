@@ -23,5 +23,5 @@ import fr.gouv.etalab.mastodon.client.Entities.Error;
  * Interface when a context for a status has been retrieved
  */
 public interface OnRetrieveContextInterface {
-    void onRetrieveFeeds(Context context, Error error);
+    void onRetrieveContext(Context context, Error error);
 }
