@@ -16,8 +16,11 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveContextInterface;
 
 
@@ -30,6 +33,7 @@ public class RetrieveContextAsyncTask extends AsyncTask<Void, Void, Void> {
 
     private Context context;
     private String statusId;
+    private fr.gouv.etalab.mastodon.client.Entities.Status statusFirst;
     private fr.gouv.etalab.mastodon.client.Entities.Context statusContext;
     private OnRetrieveContextInterface listener;
     private API api;
@@ -46,6 +50,7 @@ public class RetrieveContextAsyncTask extends AsyncTask<Void, Void, Void> {
         statusContext = api.getStatusContext(statusId);
         //Retrieves the first toot
         if( statusContext.getAncestors().size() > 0 ) {
+            statusFirst = statusContext.getAncestors().get(0);
             statusContext = api.getStatusContext(statusContext.getAncestors().get(0).getId());
         }
         return null;
@@ -53,7 +58,7 @@ public class RetrieveContextAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveFeeds(statusContext, api.getError());
+        listener.onRetrieveContext(statusContext, statusFirst, api.getError());
     }
 
 }

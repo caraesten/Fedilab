@@ -79,7 +79,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
     private ListView lv_status;
     private boolean isRefreshed;
     private ImageView pp_actionBar;
-
+    public static int position;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -224,7 +224,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
     }
 
     @Override
-    public void onRetrieveFeeds(Context context, Error error) {
+    public void onRetrieveContext(Context context, Status statusFirst, Error error) {
         swipeRefreshLayout.setRefreshing(false);
         if( error != null){
             final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
@@ -237,25 +237,32 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
         int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
-        int position = 0;
+        position = 0;
         boolean positionFound = false;
         List<Status> statuses = new ArrayList<>();
+        if( statusFirst != null)
+            statuses.add(0, statusFirst);
         if( context.getAncestors() != null && context.getAncestors().size() > 0){
             for(Status status: context.getAncestors()){
                 statuses.add(status);
-                if( status.getId().equals(initialStatus.getId()))
-                    positionFound =true;
                 if( !positionFound)
                     position++;
+                if( status.getId().equals(initialStatus.getId()))
+                    positionFound = true;
+
             }
+        }else if( statusFirst == null){
+            statuses.add(0, initialStatus);
+            positionFound = true;
         }
         if( context.getDescendants() != null && context.getDescendants().size() > 0){
             for(Status status: context.getDescendants()){
                 statuses.add(status);
-                if( status.getId().equals(initialStatus.getId()))
-                    positionFound =true;
                 if( !positionFound)
                     position++;
+                if( status.getId().equals(initialStatus.getId()))
+                    positionFound = true;
+
             }
         }
         RelativeLayout loader = findViewById(R.id.loader);
