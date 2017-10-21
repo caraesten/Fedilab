@@ -304,7 +304,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         if( type == RetrieveFeedsAsyncTask.Type.HOME) {
             if (context == null)
                 return;
-            if (status != null) {
+            if (status != null && !knownId.contains(status.getId())) {
                 //Update the id of the last toot retrieved
                 MainActivity.lastHomeId = status.getId();
                 int index = lv_status.getFirstVisiblePosition() + 1;
@@ -325,16 +325,19 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }else if(type == RetrieveFeedsAsyncTask.Type.PUBLIC || type == RetrieveFeedsAsyncTask.Type.LOCAL){
             if (context == null)
                 return;
-            //Avoids the array to be too big...
-            if (status != null) {
+            if (status != null && !knownId.contains(status.getId())) {
+                status.setReplies(new ArrayList<Status>());
+                status.setNew(false);
                 if (lv_status.getFirstVisiblePosition() == 0) {
-                    status.setReplies(new ArrayList<Status>());
-                    status.setNew(false);
                     statuses.add(0, status);
                     statusListAdapter.notifyDataSetChanged();
                 } else {
-                    status.setReplies(new ArrayList<Status>());
+                    int index = lv_status.getFirstVisiblePosition() + 1;
+                    View v = lv_status.getChildAt(0);
+                    int top = (v == null) ? 0 : v.getTop();
                     statuses.add(0, status);
+                    statusListAdapter.notifyDataSetChanged();
+                    lv_status.setSelectionFromTop(index, top);
                 }
                 knownId.add(0, status.getId());
                 if (textviewNoAction.getVisibility() == View.VISIBLE)
