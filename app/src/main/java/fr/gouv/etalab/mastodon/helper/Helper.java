@@ -1134,7 +1134,7 @@ public class Helper {
      * @param mentions List<Mention>
      * @return TextView
      */
-    public static SpannableString clickableElements(final Context context, String fullContent, List<Mention> mentions, List<Emojis> emojis, final int position, boolean useHTML, final OnRetrieveEmojiInterface listener) {
+    public static SpannableString clickableElements(final Context context, String fullContent, List<Mention> mentions, final List<Emojis> emojis, final int position, boolean useHTML, final OnRetrieveEmojiInterface listener) {
         final SpannableString spannableString;
 
         if( useHTML) {
@@ -1182,7 +1182,19 @@ public class Helper {
             }
         }
 
-        if( emoji != null && emojis.size() > 0 ) {
+        if( emojis != null && emojis.size() > 0 ) {
+            final int[] i = {0};
+            int emojiToSearch = 0;
+            for (final Emojis emoji : emojis) {
+                final String targetedEmoji = ":" + emoji.getShortcode() + ":";
+                for(int startPosition = -1 ; (startPosition = spannableString.toString().indexOf(targetedEmoji, startPosition + 1)) != -1 ; startPosition++){
+                    emojiToSearch++;
+                }
+            }
+            ImageLoader imageLoader;
+            DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
+                    .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+            imageLoader = ImageLoader.getInstance();
             for (final Emojis emoji : emojis) {
                 final String targetedEmoji = ":" + emoji.getShortcode() + ":";
                 if (spannableString.toString().contains(targetedEmoji)) {
@@ -1190,9 +1202,9 @@ public class Helper {
                     for(int startPosition = -1 ; (startPosition = spannableString.toString().indexOf(targetedEmoji, startPosition + 1)) != -1 ; startPosition++){
                         final int endPosition = startPosition + targetedEmoji.length();
                         final int finalStartPosition = startPosition;
-                        ImageLoader imageLoader = ImageLoader.getInstance();
                         NonViewAware imageAware = new NonViewAware(new ImageSize(50, 50), ViewScaleType.CROP);
-                        imageLoader.displayImage(emoji.getUrl(), imageAware, new SimpleImageLoadingListener() {
+                        final int finalEmojiToSearch = emojiToSearch;
+                        imageLoader.displayImage(emoji.getUrl(), imageAware, options, new SimpleImageLoadingListener() {
                             @Override
                             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                                 super.onLoadingComplete(imageUri, view, loadedImage);
@@ -1201,14 +1213,18 @@ public class Helper {
                                                 Bitmap.createScaledBitmap(loadedImage, (int)Helper.convertDpToPixel(20, context),
                                                         (int)Helper.convertDpToPixel(20, context), false)), finalStartPosition,
                                         endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-                                listener.onRetrieveEmoji(position, spannableString, false);
+                                i[0]++;
+                                if( i[0] == finalEmojiToSearch)
+                                    listener.onRetrieveEmoji(position, spannableString, false);
                             }
                             @Override
                             public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason) {
+                                i[0]++;
                             }
                         });
                     }
                 }
+
             }
         }
 
