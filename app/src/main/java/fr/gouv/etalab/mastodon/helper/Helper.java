@@ -1134,7 +1134,7 @@ public class Helper {
      * @param mentions List<Mention>
      * @return TextView
      */
-    public static SpannableString clickableElements(final Context context, String fullContent, List<Mention> mentions, List<Emojis> emojis, final int position, boolean useHTML, final OnRetrieveEmojiInterface listener) {
+    public static SpannableString clickableElements(final Context context, String fullContent, List<Mention> mentions, final List<Emojis> emojis, final int position, boolean useHTML, final OnRetrieveEmojiInterface listener) {
         final SpannableString spannableString;
 
         if( useHTML) {
@@ -1183,6 +1183,7 @@ public class Helper {
         }
 
         if( emoji != null && emojis.size() > 0 ) {
+            final int[] i = {0};
             for (final Emojis emoji : emojis) {
                 final String targetedEmoji = ":" + emoji.getShortcode() + ":";
                 if (spannableString.toString().contains(targetedEmoji)) {
@@ -1201,7 +1202,9 @@ public class Helper {
                                                 Bitmap.createScaledBitmap(loadedImage, (int)Helper.convertDpToPixel(20, context),
                                                         (int)Helper.convertDpToPixel(20, context), false)), finalStartPosition,
                                         endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-                                listener.onRetrieveEmoji(position, spannableString, false);
+                                i[0]++;
+                                if( i[0] == emojis.size())
+                                    listener.onRetrieveEmoji(position, spannableString, false);
                             }
                             @Override
                             public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason) {
@@ -1209,6 +1212,7 @@ public class Helper {
                         });
                     }
                 }
+
             }
         }
 
