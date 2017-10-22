@@ -12,16 +12,15 @@
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
-package fr.gouv.etalab.mastodon.activities;
+package fr.gouv.etalab.mastodon.interfaces;
+
+import android.text.SpannableString;
+
 
 /**
- * Created by Thomas on 23/04/2017.
- * Login activity class which handles the connection
+ * Created by Thomas on 19/10/2017.
+ * Interface when retrieving emojis
  */
-
-public class LoginActivity extends BaseLoginActivity {
-    @Override
-    protected void installProviders() {
-        // do nothing
-    }
+public interface OnRetrieveEmojiInterface {
+    void onRetrieveEmoji(int position, SpannableString spannableString, Boolean error);
 }

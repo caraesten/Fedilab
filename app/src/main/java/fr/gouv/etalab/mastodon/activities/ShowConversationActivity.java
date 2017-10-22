@@ -75,7 +75,6 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
 
     private String statusId;
     private Status initialStatus;
-    public static int position;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ListView lv_status;
     private boolean isRefreshed;
@@ -100,10 +99,10 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
             View view = inflater.inflate(R.layout.conversation_action_bar, null);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-            TextView title = (TextView) actionBar.getCustomView().findViewById(R.id.toolbar_title);
-            pp_actionBar = (ImageView) actionBar.getCustomView().findViewById(R.id.pp_actionBar);
+            TextView title = actionBar.getCustomView().findViewById(R.id.toolbar_title);
+            pp_actionBar = actionBar.getCustomView().findViewById(R.id.pp_actionBar);
             title.setText(R.string.conversation);
-            ImageView close_conversation = (ImageView) actionBar.getCustomView().findViewById(R.id.close_conversation);
+            ImageView close_conversation = actionBar.getCustomView().findViewById(R.id.close_conversation);
             if( close_conversation != null){
                 close_conversation.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -159,7 +158,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
             finish();
         isRefreshed = false;
 
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        swipeRefreshLayout = findViewById(R.id.swipeContainer);
         new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, false,false, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
@@ -172,7 +171,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
                 new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, false,false, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
-        lv_status = (ListView) findViewById(R.id.lv_status);
+        lv_status = findViewById(R.id.lv_status);
         lv_status.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -225,7 +224,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
     }
 
     @Override
-    public void onRetrieveFeeds(Context context, Error error) {
+    public void onRetrieveContext(Context context, Status statusFirst, Error error) {
         swipeRefreshLayout.setRefreshing(false);
         if( error != null){
             final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
@@ -238,22 +237,36 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
         int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
-        position = 0;
+        int position = 0;
+        boolean positionFound = false;
         List<Status> statuses = new ArrayList<>();
+        if( statusFirst != null)
+            statuses.add(0, statusFirst);
         if( context.getAncestors() != null && context.getAncestors().size() > 0){
             for(Status status: context.getAncestors()){
                 statuses.add(status);
-                position++;
+                if( !positionFound)
+                    position++;
+                if( status.getId().equals(initialStatus.getId()))
+                    positionFound = true;
+
             }
+        }else if( statusFirst == null){
+            statuses.add(0, initialStatus);
+            positionFound = true;
         }
-        statuses.add(initialStatus);
         if( context.getDescendants() != null && context.getDescendants().size() > 0){
             for(Status status: context.getDescendants()){
                 statuses.add(status);
+                if( !positionFound)
+                    position++;
+                if( status.getId().equals(initialStatus.getId()))
+                    positionFound = true;
+
             }
         }
-        RelativeLayout loader = (RelativeLayout) findViewById(R.id.loader);
-        StatusListAdapter statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, RetrieveFeedsAsyncTask.Type.CONTEXT, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
+        RelativeLayout loader = findViewById(R.id.loader);
+        StatusListAdapter statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, position, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
         lv_status.setAdapter(statusListAdapter);
         statusListAdapter.notifyDataSetChanged();
         loader.setVisibility(View.GONE);

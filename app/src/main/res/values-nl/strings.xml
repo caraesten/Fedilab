@@ -1,0 +1,436 @@
+<resources>
+    <string name="navigation_drawer_open">Menu openen</string>
+    <string name="navigation_drawer_close">Menu sluiten</string>
+
+    <string name="action_about">Over</string>
+    <string name="action_about_instance">Over deze Mastodon-server</string>
+    <string name="action_privacy">Privacy</string>
+    <string name="action_cache">Buffer</string>
+    <string name="action_logout">Uitloggen</string>
+    <string name="login">Inloggen</string>
+
+    <!-- common -->
+    <string name="close">Sluiten</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nee</string>
+    <string name="cancel">Annuleren</string>
+    <string name="download">Downloaden</string>
+    <string name="download_file">%1$s downloaden</string>
+    <string name="download_over">Downloaden voltooid</string>
+    <string name="save_file">%1$s opslaan</string>
+    <string name="save_over">Media opgeslagen</string>
+    <string name="download_from">Bestand: %1$s</string>
+    <string name="password">Wachtwoord</string>
+    <string name="email">E-mail</string>
+    <string name="accounts">Accounts</string>
+    <string name="toots">Toots</string>
+    <string name="tags">Tags</string>
+    <string name="token">Aanmeldcode</string>
+    <string name="save">Opslaan</string>
+    <string name="restore">Herstellen</string>
+    <string name="two_factor_authentification">Tweestapsverificatie?</string>
+    <string name="other_instance">Andere Mastodon-server dan mastodon.social?</string>
+    <string name="no_result">Geen resultaten!</string>
+    <string name="instance">Mastodon-server</string>
+    <string name="instance_example">Server: bv. mastodon.social</string>
+    <string name="toast_account_changed">Werkt nu met account %1$s</string>
+    <string name="add_account">Account toevoegen</string>
+    <string name="clipboard">De inhoud van deze toot is naar het klembord gekopieerd</string>
+    <string name="change">Veranderen</string>
+    <string name="choose_picture">Kies een afbeelding…</string>
+    <string name="clear">Leegmaken</string>
+    <string name="microphone">Microfoon</string>
+    <string name="speech_prompt">Zeg naar iets</string>
+    <string name="speech_not_supported">Sorry! Jouw apparaat ondersteund geen geluidsinvoer!</string>
+    <string name="delete_all">Alles verwijderen</string>
+    <string name="translate_toot">Deze toot vertalen.</string>
+    <string name="schedule">Inplannen</string>
+    <string name="text_size">Tekst- en pictogramgrootte</string>
+    <string name="text_size_change">De huidige tekstgrootte veranderen:</string>
+    <string name="icon_size_change">De huidige pictogramgrootte veranderen:</string>
+    <string name="next">Volgende</string>
+    <string name="previous">Vorige</string>
+    <string name="open_with">Open met</string>
+    <string name="validate">Bevestigen</string>
+    <string name="media">Media</string>
+    <string name="share_with">Delen met</string>
+    <string name="shared_via">Gedeeld via Mastalab</string>
+    <string name="replies">Reacties</string>
+    <string name="username">Gebruikersnaam</string>
+    <string name="drafts">Concepten</string>
+    <string name="new_data">Nieuwe gegevens beschikbaar! Wil je deze tonen?</string>
+    <string name="favourite">Favorieten</string>
+    <string name="follow">Nieuwe volgers</string>
+    <string name="mention">Meldingen</string>
+    <string name="reblog">Boosts</string>
+    <string name="show_boosts">Boosts tonen</string>
+    <string name="show_replies">Reacties tonen</string>
+    <string name="action_open_in_web">Open in webbrowser</string>
+
+    <!--- Menu -->
+    <string name="home_menu">Start</string>
+    <string name="local_menu">Lokale tijdlijn</string>
+    <string name="global_menu">Globale tijdlijn</string>
+    <string name="neutral_menu_title">Opties</string>
+    <string name="favorites_menu">Favorieten</string>
+    <string name="communication_menu_title">Communicatie</string>
+    <string name="muted_menu">Genegeerde gebruikers</string>
+    <string name="blocked_menu">Geblokkeerde gebruikers</string>
+    <string name="remote_follow_menu">Extern volgen</string>
+    <string name="notifications">Meldingen</string>
+    <string name="follow_request">Volgverzoeken</string>
+    <string name="optimization">Optimalisatie</string>
+    <string name="settings">Instellingen</string>
+    <string name="profile">Profiel</string>
+    <string name="make_a_choice">Wat wil je doen?</string>
+    <string name="delete_account_title">Account verwijderen</string>
+    <string name="delete_account_message">Account %1$s uit deze app verwijderen?</string>
+    <string name="send_email">E-mail verzenden</string>
+    <string name="choose_file">Kies een bestand</string>
+    <string name="choose_file_error">Geen bestandsbeheerder gevonden!</string>
+    <string name="click_to_change">Op het pad klikken om het te veranderen</string>
+    <string name="failed">Mislukt!</string>
+    <string name="scheduled_toots">Ingeplande toots</string>
+    <!-- Status -->
+    <string name="no_status">Geen toot om weer te geven</string>
+    <string name="fav_added">De toot is aan jouw favorieten toegevoegd</string>
+    <string name="fav_removed">De toot is uit jouw favorieten verwijderd!</string>
+    <string name="reblog_added">De toot is geboost!</string>
+    <string name="reblog_removed">De toot is niet meer geboost!</string>
+    <string name="reblog_by">Gedeeld via %1$s</string>
+
+
+    <string name="favourite_add">Deze toot aan jouw favorieten toevoegen?</string>
+    <string name="favourite_remove">Deze toot uit jouw favorieten verwijderen?</string>
+    <string name="reblog_add">Deze toot boosten?</string>
+    <string name="reblog_remove">Deze toot niet meer boosten?</string>
+    <string name="pin_add">Deze toot aan jouw profielpagina vastmaken?</string>
+    <string name="pin_remove">Deze toot van profielpagina losmaken?</string>
+
+
+
+    <string name="more_action_1">Negeren</string>
+    <string name="more_action_2">Blokkeren</string>
+    <string name="more_action_3">Rapporteren</string>
+    <string name="more_action_4">Verwijderen</string>
+    <string name="more_action_5">Kopiëren</string>
+    <string name="more_action_6">Delen</string>
+    <string name="more_action_7">Vermelden</string>
+    <string-array name="more_action_confirm">
+        <item>Account negeren?</item>
+        <item>Account blokkeren?</item>
+        <item>Toot rapporteren?</item>
+    </string-array>
+
+    <string-array name="more_action_owner_confirm">
+        <item>Toot verwijderen?</item>
+    </string-array>
+
+    <plurals name="preview_replies">
+        <item quantity="one">%d reactie</item>
+        <item quantity="other">%d reacties</item>
+    </plurals>
+    <!-- Date -->
+    <plurals name="date_seconds">
+        <item quantity="one">%d seconde geleden</item>
+        <item quantity="other">%d seconden geleden</item>
+    </plurals>
+    <plurals name="date_minutes">
+        <item quantity="one">%d minuut geleden</item>
+        <item quantity="other">%d minuten geleden</item>
+    </plurals>
+    <plurals name="date_hours">
+        <item quantity="one">%d uur geleden</item>
+        <item quantity="other">%d uur geleden</item>
+    </plurals>
+    <string name="date_yesterday">Gisteren</string>
+    <string name="date_day_before_yesterday">Eergisteren</string>
+    <string name="date_day">%d dagen geleden</string>
+    <plurals name="date_month">
+        <item quantity="one">%d maand geleden</item>
+        <item quantity="other">%d maanden geleden</item>
+    </plurals>
+    <plurals name="date_year">
+        <item quantity="one">Een jaar geleden</item>
+        <item quantity="other">%d jaar geleden</item>
+    </plurals>
+
+    <!-- TOOT -->
+    <string name="toot_cw_placeholder">Waarschuwing</string>
+    <string name="toot_placeholder">Wat wil je kwijt?</string>
+    <string name="toot_it">TOOT!</string>
+    <string name="cw">cw</string>
+    <string name="toot_title">Schrijf een toot</string>
+    <string name="toot_title_reply">Reageer op een toot</string>
+    <string name="toot_no_space">Je hebt de limiet van 500 tekens bereikt!</string>
+    <string name="toot_select_image">Kies een afbeelding of video</string>
+    <string name="toot_select_image_error">Tijdens het kiezen van een afbeelding of video heeft zich een fout voorgedaan!</string>
+    <string name="toot_delete_media">Media verwijderen?</string>
+    <string name="toot_error_no_content">Jouw toot is leeg!</string>
+    <string name="toot_visibility_tilte">Zichtbaarheid van toot</string>
+    <string name="toots_visibility_tilte">Standaard zichtbaarheid van toot: </string>
+    <string name="toot_sent">De toot is verzonden!</string>
+    <string name="toot_reply_content_title">Je reageert op deze toot:</string>
+    <string name="toot_sensitive">Gevoelige inhoud?</string>
+    <string-array name="toot_visibility">
+        <item>Op openbare tijdlijnen tonen</item>
+        <item>Niet op openbare tijdlijnen tonen</item>
+        <item>Alleen aan volgers tonen</item>
+        <item>Alleen aan vermelde gebruikers tonen</item>
+    </string-array>
+
+    <string name="no_draft">Geen concepten!</string>
+    <string name="choose_toot">Kies een toot</string>
+    <string name="choose_accounts">Kies een account</string>
+    <string name="remove_draft">Concept verwijderen?</string>
+    <string name="show_reply">Klik om de oorspronkelijke toot te tonen</string>
+    <!-- Instance -->
+    <string name="instance_no_description">Geen beschrijving beschikbaar!</string>
+
+    <!-- About -->
+    <string name="about_vesrion">Release %1$s</string>
+    <string name="about_developer">Ontwikkelaar:</string>
+    <string name="about_license">Licentie: </string>
+    <string name="about_license_action">GNU GPL V3</string>
+    <string name="about_code">Broncode: </string>
+    <string name="about_code_action">Bitbucket</string>
+    <string name="about_yandex">Vertaling van toots:</string>
+    <string name="about_thekinrar">Servers zoeken:</string>
+    <string name="about_thekinrar_action">instances.social</string>
+    <string name="thanks_text_logo">Ontwerper pictogram:</string>
+
+    <!-- Conversation -->
+    <string name="conversation">Conversatie</string>
+
+    <!-- Accounts -->
+    <string name="no_accounts">Geen account om weer te geven</string>
+    <string name="no_follow_request">Geen volgverzoeken</string>
+    <string name="status_cnt">Toots \n %d</string>
+    <string name="following_cnt">Volgt \n %d</string>
+    <string name="followers_cnt">Volgers \n %d</string>
+    <string name="pins_cnt">Vastgezet \n %d</string>
+    <string name="authorize">Goedkeuren</string>
+    <string name="reject">Afkeuren</string>
+
+
+    <!-- Scheduled toots -->
+    <string name="no_scheduled_toots">Geen ingeplande toots!</string>
+    <string name="no_scheduled_toots_indications">Schrijf een toot en kies dan <b>Inplannen</b> in het menu rechtsboven.</string>
+    <string name="remove_scheduled">Ingeplande toot verwijderent?</string>
+    <string name="media_count">Media: %d</string>
+    <string name="toot_scheduled">De toot is ingepland!</string>
+    <string name="toot_scheduled_date">De toot moet wel in de toekomst ingepland worden!</string>
+    <string name="warning_battery">Energiebesparing is ingeschakeld! Het inplannen werkt mogelijk niet zoals verwacht.</string>
+    <!-- Notifications -->
+    <string name="no_notifications">Je hebt nog geen meldingen</string>
+    <string name="notif_mention">vermeldde jou</string>
+    <string name="notif_reblog">boostte jouw toot</string>
+    <string name="notif_favourite">markeerde jouw toot als favoriet</string>
+    <string name="notif_follow">volgt jou nu</string>
+    <string name="notif_pouet">Nieuwe toot van %1$s</string>
+    <plurals name="other_notifications">
+        <item quantity="one">en één andere melding</item>
+        <item quantity="other">en %d andere meldingen</item>
+    </plurals>
+    <plurals name="other_notif_hometimeline">
+        <item quantity="one">en één andere toot</item>
+        <item quantity="other">en %d andere toots</item>
+    </plurals>
+    <string name="delete_notification_ask">Deze melding verwijderen?</string>
+    <string name="delete_notification_ask_all">Alle meldingen verwijderen?</string>
+    <string name="delete_notification">De melding is verwijderd!</string>
+    <string name="delete_notification_all">Alle meldingen zijn verwijderd!</string>
+    <!-- HEADER -->
+    <string name="following">Volgt</string>
+    <string name="followers">Volgers</string>
+    <string name="pinned_toots">Vastgezet</string>
+    <!-- TOAST -->
+    <string name="client_error">Niet in staat om client-id te verkrijgen!</string>
+    <string name="no_internet">Geen internetverbinding!</string>
+    <string name="toast_block">Account is geblokkeerd!</string>
+    <string name="toast_unblock">Account is gedeblokkeerd!</string>
+    <string name="toast_mute">Account wordt nu genegeerd!</string>
+    <string name="toast_unmute">Account wordt niet meer genegeerd!</string>
+    <string name="toast_follow">Account wordt nu gevolgd!</string>
+    <string name="toast_unfollow">Account wordt niet meer gevolgd!</string>
+    <string name="toast_reblog">Toot is geboost!</string>
+    <string name="toast_unreblog">Toot wordt niet meer geboost!</string>
+    <string name="toast_favourite">Toot is als favoriet gemarkeerd!</string>
+    <string name="toast_unfavourite">Toot is niet meer als favoriet gemarkeerd!</string>
+    <string name="toast_report">Toot is gerapporteerd!</string>
+    <string name="toast_unstatus">Toot is verwijderd!</string>
+    <string name="toast_pin">Toot is vastgezet!</string>
+    <string name="toast_unpin">Toot is losgemaakt!</string>
+    <string name="toast_error">Oeps! Er ging wat mis!</string>
+    <string name="toast_code_error">Er ging wat mis! De Mastodon-server gaf geen autorisatiecode terug!</string>
+    <string name="toast_error_instance">De domeinnaam van de Mastodon-server is onjuist!</string>
+    <string name="toast_error_loading_account">Er ging wat mis tijdens het omschakelen van accounts!</string>
+    <string name="toast_error_search">Er ging wat mis tijdens het zoeken!</string>
+    <string name="toast_error_login">Kan niet inloggen!</string>
+    <string name="toast_update_credential_ok">De profielgegevens zijn opgeslagen!</string>
+    <string name="nothing_to_do">Er valt niets te doen</string>
+    <string name="toast_saved">Media is opgeslagen!</string>
+    <string name="toast_error_translate">Er ging wat mis tijdens het vertalen!</string>
+    <string name="toast_toot_saved">Concept opgeslagen!</string>
+    <string name="toast_error_char_limit">Weet je zeker dat je op deze Mastodon-server zoveel karakters  mag gebruiken? Standaard is er een limiet van 500 karakters.</string>
+    <string name="toast_visibility_changed">Zichtbaarheid toots van account %1$s is veranderd</string>
+    <string name="toast_empty_search">Server- en gebruikersnaam kunnen niet leeg blijven!</string>
+    <!-- Settings -->
+    <string name="settings_title_optimisation">Optimalisatie laden van gegevens</string>
+    <string name="set_toots_page">Aantal toots per keer</string>
+    <string name="set_accounts_page">Aantal accounts per keer</string>
+    <string name="set_notifications_page">Aantal meldingen per keer</string>
+    <string name="set_attachment_always">Altijd</string>
+    <string name="set_attachment_wifi">Wifi</string>
+    <string name="set_attachment_ask">Vragen</string>
+    <string name="set_attachment_action">Media laden</string>
+    <string name="load_attachment">Laad de afbeeldingen of video</string>
+    <string name="load_attachment_spoiler">Meer tonen</string>
+    <string name="load_sensitive_attachment">Gevoelige inhoud</string>
+    <string name="set_display_reply">Vorig bericht in reacties tonen</string>
+    <string name="set_display_local">Lokale tijdlijn tonen</string>
+    <string name="set_display_global">Globale tijdlijn tonen</string>
+    <string name="set_folder_title">Downloadlocatie: </string>
+    <string name="set_auto_store_toot">Concepten automatisch opslaan</string>
+    <string name="set_bubble_counter">Aantal nieuwe toots bovenaan tijdlijn tonen</string>
+    <string name="set_auto_add_media_url">URL van afbeelding of video aan toot toevoegen</string>
+    <string name="settings_title_notifications">Meldingen beheren</string>
+    <string name="set_notif_follow">Geef een melding wanneer iemand jou volgt</string>
+    <string name="set_notif_follow_ask">Geef een melding van een volgverzoek</string>
+    <string name="set_notif_follow_share">Geef een melding wanneer jouw toot is geboost</string>
+    <string name="set_notif_follow_add">Geef een melding wanneer jouw toot als favoriet is gemarkeerd</string>
+    <string name="set_notif_follow_mention">Geef een melding wanneer iemand jou vermeldt</string>
+    <string name="set_share_validation">Vraag voor het boosten een bevestiging</string>
+    <string name="set_share_validation_fav">Vraag voor het markeren als favoriet een bevestiging</string>
+    <string name="settings_title_more_options">Geavanceerde instellingen</string>
+    <string name="set_wifi_only">Alleen met Wifi meldingen tonen</string>
+    <string name="set_notify">Meldingen?</string>
+    <string name="set_notif_silent">Stille meldingen</string>
+    <string name="set_night_mode">Donker thema</string>
+    <string name="set_nsfw_timeout">Hoe lang gevoelige inhoud blijven tonen (in seconden, 0 is onbeperkt)</string>
+    <string name="settings_title_profile">Profiel bewerken</string>
+    <string name="set_profile_description">Bio…</string>
+    <string name="set_save_changes">Wijzigingen opslaan</string>
+    <string name="set_header_picture_overlay">Omslagfoto kiezen</string>
+    <string name="set_preview_reply">Aantal reacties per toot op jouw start-tijdlijn tonen</string>
+    <string name="set_preview_reply_pp">Avatars bij aantal reacties tonen?</string>
+    <string name="set_multiaccount_actions">Interactie tussen ingestelde accounts toestaan?</string>
+    <string name="note_no_space">Je hebt het limiet van 160 karakters bereikt!</string>
+    <string name="username_no_space">Je hebt het limiet van 30 karakters bereikt!</string>
+
+    <string name="settings_title_hour">Op welk moment van de dag zijn meldingen toegestaan:</string>
+    <string name="settings_time_from">Tussen</string>
+    <string name="settings_time_to">en</string>
+    <string name="settings_time_greater">Dit tijdstip moet na %1$s zijn</string>
+    <string name="settings_time_lower">Dit tijdstip moet voor %1$s zijn</string>
+    <string name="settings_hour_init">Begintijd</string>
+    <string name="settings_hour_end">Eindtijd</string>
+    <string name="embedded_browser">Gebruik de ingebouwde webbrowser</string>
+    <string name="use_javascript">Javascript toegestaan</string>
+    <string name="use_cookies">Cookies van derden accepteren</string>
+    <string name="settings_ui_layout">Lay-out voor tijdlijnen: </string>
+    <string-array name="settings_menu_tabs">
+        <item>Tabs</item>
+        <item>Menu</item>
+        <item>Tabs en menu</item>
+    </string-array>
+
+    <string-array name="settings_translation">
+        <item>Yandex</item>
+        <item>Google</item>
+        <item>Nee</item>
+    </string-array>
+
+    <string name="set_led_colour">LED-kleur instellen:</string>
+
+    <string-array name="led_colours">
+        <item>Blaauw</item>
+        <item>Cyaan</item>
+        <item>Magenta</item>
+        <item>Groen</item>
+        <item>Rood</item>
+        <item>Geel</item>
+        <item>Wit</item>
+    </string-array>
+
+    <string name="set_title_news">Nieuwe toots</string>
+    <string name="set_notification_news">Geef een melding van nieuwe toots op jouw start-tijdlijn</string>
+    <string name="set_show_error_messages">Toon foutmeldingen</string>
+    <string name="action_follow">Volgen</string>
+    <string name="action_unfollow">Ontvolgen</string>
+    <string name="action_block">Blokkeren</string>
+    <string name="action_unblock">Deblokkeren</string>
+    <string name="action_mute">Negeren</string>
+    <string name="action_no_action">Geen actie</string>
+    <string name="action_unmute">Niet meer negeren</string>
+    <string name="request_sent">Verzoek verzonden</string>
+    <string name="followed_by">Volgt jou</string>
+
+    <string name="action_search">Zoeken</string>
+
+    <!-- Quick settings for notifications -->
+    <string name="settings_popup_title">Pushmeldingen</string>
+    <string name="settings_popup_message">
+        Bevestig de pushmeldingen die jij wilt ontvangen.
+        Je kan deze later in- en uitschakelen in jouw instellingen (onder meldingen).
+    </string>
+    <string name="settings_popup_timeline">Voor ongelezen toots in jouw start-tijdlijn?</string>
+    <string name="settings_popup_notification">Voor ongelezen meldingen?</string>
+    <!-- CACHE -->
+    <string name="cache_title">Buffer leegmaken</string>
+    <string name="cache_message">De buffer bevat %1$s aan gegevens.\n\nWil je dit verwijderen?</string>
+    <string name="cache_units">Mb</string>
+    <string name="toast_cache_clear">De buffer is leeggemaakt! Er is %1$s vrijgekomen</string>
+
+    <!-- PRIVACY -->
+    <string name="privacy_data_title">Recorded data:</string>
+    <string name="privacy_data">
+        Only basic information from accounts are stored on the device.
+        These data are strictly confidential and can only be used by the application.
+        Deleting the application immediately removes these data.\n
+        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
+    </string>
+
+    <string name="privacy_authorizations_title">Permissions:</string>
+    <string name="privacy_authorizations">
+        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
+        - <b>INTERNET</b>: Used for queries to an instance.\n
+        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
+        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
+        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
+        - <b>WAKE_LOCK</b>: Used during the notification service.
+    </string>
+
+    <string name="privacy_API_authorizations_title">API permissions:</string>
+    <string name="privacy_API_authorizations">
+        - <b>Read</b>: Read data.\n
+        - <b>Write</b>: Post statuses and upload media for statuses.\n
+        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
+        <b>&#9888; These actions are carried out only when user requests them.</b>
+    </string>
+    <string name="privacy_API_title">Tracking and Libraries:</string>
+    <string name="privacy_API">
+        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
+        The use of libraries is minimized: \n
+        - <b>Android Asynchronous Http Client</b>: To manage queries\n
+        - <b>Universal Image Loader</b>: To manage media\n
+        - <b>Android-Job</b>: To manage services\n
+        - <b>PhotoView</b>: To manage images\n
+        - <b>Gson</b> : To save drafts
+    </string>
+
+    <string name="privacy_API_yandex_title">Translation of toots</string>
+    <string name="privacy_API_yandex_authorizations">
+        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
+        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
+    </string>
+
+
+    <string name="thanks_text">
+        Met dank aan Stéphane voor het logo.
+    </string>
+
+    <string name="thanks_text_dev">
+        Met dank aan:
+    </string>
+</resources>

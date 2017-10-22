@@ -14,14 +14,12 @@ package fr.gouv.etalab.mastodon.fragments;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -66,7 +64,6 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
     private String targetedId;
     private boolean swiped;
     private ListView lv_accounts;
-    private String instanceValue;
     boolean hideHeader;
 
     @Override
@@ -83,7 +80,6 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
             type = (RetrieveAccountsAsyncTask.Type) bundle.get("type");
             targetedId = bundle.getString("targetedId", null);
             hideHeader = bundle.getBoolean("hideHeader", false);
-            instanceValue = bundle.getString("hideHeaderValue", null);
             if( bundle.containsKey("accounts")){
                 ArrayList<Parcelable> accountsReceived = bundle.getParcelableArrayList("accounts");
                 assert accountsReceived != null;
@@ -98,13 +94,12 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         flag_loading = true;
         swiped = false;
 
-        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        lv_accounts = (ListView) rootView.findViewById(R.id.lv_accounts);
+        swipeRefreshLayout = rootView.findViewById(R.id.swipeContainer);
+        lv_accounts = rootView.findViewById(R.id.lv_accounts);
 
-        mainLoader = (RelativeLayout) rootView.findViewById(R.id.loader);
-        nextElementLoader = (RelativeLayout) rootView.findViewById(R.id.loading_next_accounts);
-        textviewNoAction = (RelativeLayout) rootView.findViewById(R.id.no_action);
+        mainLoader = rootView.findViewById(R.id.loader);
+        nextElementLoader = rootView.findViewById(R.id.loading_next_accounts);
+        textviewNoAction = rootView.findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
         accountsListAdapter = new AccountsListAdapter(context, type, targetedId, this.accounts);
@@ -115,31 +110,11 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
             if (hideHeader && Build.VERSION.SDK_INT >= 21)
                 ViewCompat.setNestedScrollingEnabled(lv_accounts, true);
             lv_accounts.setOnScrollListener(new AbsListView.OnScrollListener() {
-                int lastFirstVisibleItem = 0;
                 @Override
                 public void onScrollStateChanged(AbsListView view, int scrollState) {
 
                 }
                 public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                    if (hideHeader && Build.VERSION.SDK_INT < 21) {
-                        if(firstVisibleItem == 0 && Helper.listIsAtTop(lv_accounts)){
-                            Intent intent = new Intent(Helper.HEADER_ACCOUNT+instanceValue);
-                            intent.putExtra("hide", false);
-                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-                        }else if (view.getId() == lv_accounts.getId() && totalItemCount > visibleItemCount) {
-                            final int currentFirstVisibleItem = lv_accounts.getFirstVisiblePosition();
-                            if (currentFirstVisibleItem > lastFirstVisibleItem) {
-                                Intent intent = new Intent(Helper.HEADER_ACCOUNT + instanceValue);
-                                intent.putExtra("hide", true);
-                                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-                            } else if (currentFirstVisibleItem < lastFirstVisibleItem) {
-                                Intent intent = new Intent(Helper.HEADER_ACCOUNT + instanceValue);
-                                intent.putExtra("hide", false);
-                                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-                            }
-                            lastFirstVisibleItem = currentFirstVisibleItem;
-                        }
-                    }
                     if (firstVisibleItem + visibleItemCount == totalItemCount) {
                         if (!flag_loading) {
                             flag_loading = true;

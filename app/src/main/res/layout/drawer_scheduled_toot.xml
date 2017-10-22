@@ -84,6 +84,7 @@
                     android:layout_marginLeft="10dp"
                     android:focusableInTouchMode="false"
                     android:id="@+id/scheduled_toot_date"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 

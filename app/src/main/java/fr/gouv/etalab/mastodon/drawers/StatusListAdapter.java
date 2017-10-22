@@ -15,7 +15,6 @@ package fr.gouv.etalab.mastodon.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -39,11 +38,8 @@ import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.util.Patterns;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -83,7 +79,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
@@ -99,6 +94,7 @@ import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
 import fr.gouv.etalab.mastodon.translation.GoogleTranslateQuery;
@@ -114,13 +110,13 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class StatusListAdapter extends BaseAdapter implements OnPostActionInterface, OnTranslatedInterface, OnRetrieveFeedsInterface {
+public class StatusListAdapter extends BaseAdapter implements OnPostActionInterface, OnTranslatedInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface {
 
     private Context context;
     private List<Status> statuses;
     private LayoutInflater layoutInflater;
     private ImageLoader imageLoader;
-    private DisplayImageOptions options, optionsAttachment;
+    private DisplayImageOptions optionsAttachment;
     private ViewHolder holder;
     private boolean isOnWifi;
     private int translator;
@@ -133,6 +129,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
     private final int HIDDEN_STATUS = 0;
     private final int DISPLAYED_STATUS = 1;
     private List<Status> pins;
+    private int conversationPosition;
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
         this.context = context;
@@ -147,7 +144,19 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         pins = new ArrayList<>();
     }
 
-
+    public StatusListAdapter(Context context, int position, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
+        this.context = context;
+        this.statuses = statuses;
+        this.isOnWifi = isOnWifi;
+        this.behaviorWithAttachments = behaviorWithAttachments;
+        layoutInflater = LayoutInflater.from(this.context);
+        statusListAdapter = this;
+        this.type = RetrieveFeedsAsyncTask.Type.CONTEXT;
+        this.conversationPosition = position;
+        this.targetedId = targetedId;
+        this.translator = translator;
+        pins = new ArrayList<>();
+    }
 
     @Override
     public int getCount() {
@@ -190,7 +199,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
         if( getItemViewType(position) == HIDDEN_STATUS){
             return new View(context);
-        }else {
+        }else if( getItemViewType(position) == DISPLAYED_STATUS){
             final Status status = statuses.get(position);
             imageLoader = ImageLoader.getInstance();
             File cacheDir = new File(context.getCacheDir(), context.getString(R.string.app_name));
@@ -203,56 +212,56 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     .build();
             if( !imageLoader.isInited())
                 imageLoader.init(configImg);
-            options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(10)).cacheInMemory(false)
+            DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(10)).cacheInMemory(false)
                     .cacheOnDisk(true).resetViewBeforeLoading(true).build();
             optionsAttachment = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                     .cacheOnDisk(true).resetViewBeforeLoading(true).build();
             if (convertView == null) {
                 convertView = layoutInflater.inflate(R.layout.drawer_status, parent, false);
                 holder = new ViewHolder();
-                holder.loader_replies = (LinearLayout) convertView.findViewById(R.id.loader_replies);
-                holder.card_status_container = (CardView) convertView.findViewById(R.id.card_status_container);
-                holder.status_document_container = (LinearLayout) convertView.findViewById(R.id.status_document_container);
-                holder.status_content = (TextView) convertView.findViewById(R.id.status_content);
-                holder.status_content_translated = (TextView) convertView.findViewById(R.id.status_content_translated);
-                holder.status_account_username = (TextView) convertView.findViewById(R.id.status_account_username);
-                holder.status_account_displayname = (TextView) convertView.findViewById(R.id.status_account_displayname);
-                holder.status_account_profile = (ImageView) convertView.findViewById(R.id.status_account_profile);
-                holder.status_account_profile_boost = (ImageView) convertView.findViewById(R.id.status_account_profile_boost);
-                holder.status_account_profile_boost_by = (ImageView) convertView.findViewById(R.id.status_account_profile_boost_by);
-                holder.status_favorite_count = (TextView) convertView.findViewById(R.id.status_favorite_count);
-                holder.status_reblog_count = (TextView) convertView.findViewById(R.id.status_reblog_count);
-                holder.status_pin = (ImageView) convertView.findViewById(R.id.status_pin);
-                holder.status_toot_date = (TextView) convertView.findViewById(R.id.status_toot_date);
-                holder.status_show_more = (Button) convertView.findViewById(R.id.status_show_more);
-                holder.status_more = (ImageView) convertView.findViewById(R.id.status_more);
-                holder.status_prev1 = (ImageView) convertView.findViewById(R.id.status_prev1);
-                holder.status_prev2 = (ImageView) convertView.findViewById(R.id.status_prev2);
-                holder.status_prev3 = (ImageView) convertView.findViewById(R.id.status_prev3);
-                holder.status_prev4 = (ImageView) convertView.findViewById(R.id.status_prev4);
-                holder.status_prev1_play = (ImageView) convertView.findViewById(R.id.status_prev1_play);
-                holder.status_prev2_play = (ImageView) convertView.findViewById(R.id.status_prev2_play);
-                holder.status_prev3_play = (ImageView) convertView.findViewById(R.id.status_prev3_play);
-                holder.status_prev4_play = (ImageView) convertView.findViewById(R.id.status_prev4_play);
-                holder.status_container2 = (LinearLayout) convertView.findViewById(R.id.status_container2);
-                holder.status_container3 = (LinearLayout) convertView.findViewById(R.id.status_container3);
-                holder.status_prev4_container = (RelativeLayout) convertView.findViewById(R.id.status_prev4_container);
-                holder.status_reply = (ImageView) convertView.findViewById(R.id.status_reply);
-                holder.status_privacy = (ImageView) convertView.findViewById(R.id.status_privacy);
-                holder.status_translate = (FloatingActionButton) convertView.findViewById(R.id.status_translate);
-                holder.status_content_translated_container = (LinearLayout) convertView.findViewById(R.id.status_content_translated_container);
-                holder.main_container = (LinearLayout) convertView.findViewById(R.id.main_container);
-                holder.status_spoiler_container = (LinearLayout) convertView.findViewById(R.id.status_spoiler_container);
-                holder.status_content_container = (LinearLayout) convertView.findViewById(R.id.status_content_container);
-                holder.status_spoiler = (TextView) convertView.findViewById(R.id.status_spoiler);
-                holder.status_spoiler_button = (Button) convertView.findViewById(R.id.status_spoiler_button);
-                holder.yandex_translate = (TextView) convertView.findViewById(R.id.yandex_translate);
-                holder.google_translate = (TextView) convertView.findViewById(R.id.google_translate);
-                holder.status_replies = (LinearLayout) convertView.findViewById(R.id.status_replies);
-                holder.status_replies_profile_pictures = (LinearLayout) convertView.findViewById(R.id.status_replies_profile_pictures);
-                holder.status_replies_text = (TextView) convertView.findViewById(R.id.status_replies_text);
-                holder.new_element = (ImageView) convertView.findViewById(R.id.new_element);
-                holder.status_action_container = (LinearLayout) convertView.findViewById(R.id.status_action_container);
+                holder.loader_replies = convertView.findViewById(R.id.loader_replies);
+                holder.card_status_container = convertView.findViewById(R.id.card_status_container);
+                holder.status_document_container =  convertView.findViewById(R.id.status_document_container);
+                holder.status_content = convertView.findViewById(R.id.status_content);
+                holder.status_content_translated = convertView.findViewById(R.id.status_content_translated);
+                holder.status_account_username = convertView.findViewById(R.id.status_account_username);
+                holder.status_account_displayname = convertView.findViewById(R.id.status_account_displayname);
+                holder.status_account_profile = convertView.findViewById(R.id.status_account_profile);
+                holder.status_account_profile_boost = convertView.findViewById(R.id.status_account_profile_boost);
+                holder.status_account_profile_boost_by = convertView.findViewById(R.id.status_account_profile_boost_by);
+                holder.status_favorite_count = convertView.findViewById(R.id.status_favorite_count);
+                holder.status_reblog_count = convertView.findViewById(R.id.status_reblog_count);
+                holder.status_pin = convertView.findViewById(R.id.status_pin);
+                holder.status_toot_date = convertView.findViewById(R.id.status_toot_date);
+                holder.status_show_more = convertView.findViewById(R.id.status_show_more);
+                holder.status_more = convertView.findViewById(R.id.status_more);
+                holder.status_prev1 = convertView.findViewById(R.id.status_prev1);
+                holder.status_prev2 = convertView.findViewById(R.id.status_prev2);
+                holder.status_prev3 = convertView.findViewById(R.id.status_prev3);
+                holder.status_prev4 = convertView.findViewById(R.id.status_prev4);
+                holder.status_prev1_play = convertView.findViewById(R.id.status_prev1_play);
+                holder.status_prev2_play = convertView.findViewById(R.id.status_prev2_play);
+                holder.status_prev3_play = convertView.findViewById(R.id.status_prev3_play);
+                holder.status_prev4_play = convertView.findViewById(R.id.status_prev4_play);
+                holder.status_container2 = convertView.findViewById(R.id.status_container2);
+                holder.status_container3 = convertView.findViewById(R.id.status_container3);
+                holder.status_prev4_container = convertView.findViewById(R.id.status_prev4_container);
+                holder.status_reply = convertView.findViewById(R.id.status_reply);
+                holder.status_privacy = convertView.findViewById(R.id.status_privacy);
+                holder.status_translate = convertView.findViewById(R.id.status_translate);
+                holder.status_content_translated_container = convertView.findViewById(R.id.status_content_translated_container);
+                holder.main_container = convertView.findViewById(R.id.main_container);
+                holder.status_spoiler_container = convertView.findViewById(R.id.status_spoiler_container);
+                holder.status_content_container = convertView.findViewById(R.id.status_content_container);
+                holder.status_spoiler = convertView.findViewById(R.id.status_spoiler);
+                holder.status_spoiler_button = convertView.findViewById(R.id.status_spoiler_button);
+                holder.yandex_translate = convertView.findViewById(R.id.yandex_translate);
+                holder.google_translate = convertView.findViewById(R.id.google_translate);
+                holder.status_replies = convertView.findViewById(R.id.status_replies);
+                holder.status_replies_profile_pictures = convertView.findViewById(R.id.status_replies_profile_pictures);
+                holder.status_replies_text = convertView.findViewById(R.id.status_replies_text);
+                holder.new_element = convertView.findViewById(R.id.new_element);
+                holder.status_action_container = convertView.findViewById(R.id.status_action_container);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -444,8 +453,11 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
 
             if( status.getContent_translated() != null && status.getContent_translated().length() > 0){
                 holder.status_content_translated.setMovementMethod(null);
-                SpannableString spannableStringTrans = Helper.clickableElements(context, status.getContent_translated(),
-                        status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), false);
+                SpannableString spannableStringTrans = Helper.clickableElements(context,status.getContent_translated(),
+                        status.getReblog() != null?status.getReblog().getMentions():status.getMentions(),
+                        status.getReblog() != null?status.getReblog().getEmojis():status.getEmojis(),
+                        position,
+                        true, StatusListAdapter.this);
                 holder.status_content_translated.setText(spannableStringTrans, TextView.BufferType.SPANNABLE);
                 holder.status_content_translated.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
@@ -466,14 +478,22 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 });
                 holder.status_content_translated.setMovementMethod(LinkMovementMethod.getInstance());
             }
-            content = content.replaceAll("</p>","<br/><br/>");
-            content = content.replaceAll("<p>","");
-            if( content.endsWith("<br/><br/>") )
-                content = content.substring(0,content.length() -10);
-            holder.status_content.setMovementMethod(null);
-            final SpannableString spannableString = Helper.clickableElements(context,content,
-                    status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), true);
-            holder.status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
+
+            if( status.getContents() != null){
+                holder.status_content.setText(status.getContents(), TextView.BufferType.SPANNABLE);
+            }else{
+                content = content.replaceAll("</p>","<br/><br/>");
+                content = content.replaceAll("<p>","");
+                if( content.endsWith("<br/><br/>") )
+                    content = content.substring(0,content.length() -10);
+                holder.status_content.setMovementMethod(null);
+                final SpannableString spannableString = Helper.clickableElements(context,content,
+                        status.getReblog() != null?status.getReblog().getMentions():status.getMentions(),
+                        status.getReblog() != null?status.getReblog().getEmojis():status.getEmojis(),
+                        position,
+                        true, StatusListAdapter.this);
+                holder.status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
+            }
             holder.status_content.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -481,6 +501,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                     return false;
                 }
             });
+
             holder.status_content.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -727,13 +748,13 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 });
             }else {
                 if( theme == Helper.THEME_LIGHT){
-                    if( position == ShowConversationActivity.position){
+                    if( position == conversationPosition){
                         holder.main_container.setBackgroundResource(R.color.mastodonC3_);
                     }else {
                         holder.main_container.setBackgroundResource(R.color.mastodonC3__);
                     }
                 }else {
-                    if( position == ShowConversationActivity.position){
+                    if( position == conversationPosition){
                         holder.main_container.setBackgroundResource(R.color.mastodonC1___);
                     }else {
                         holder.main_container.setBackgroundResource(R.color.mastodonC1_);
@@ -1115,7 +1136,7 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
             });
             return convertView;
         }
-
+        return convertView;
     }
 
 
@@ -1154,32 +1175,34 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
                 ImageView imageView;
                 if( i == 0) {
                     imageView = holder.status_prev1;
-                    if( attachment.getType().equals("image"))
+                    if( attachment.getType().equals("image") || attachment.getType().equals("unknown"))
                         holder.status_prev1_play.setVisibility(View.GONE);
                     else
                         holder.status_prev1_play.setVisibility(View.VISIBLE);
                 }else if( i == 1) {
                     imageView = holder.status_prev2;
-                    if( attachment.getType().equals("image"))
+                    if( attachment.getType().equals("image") || attachment.getType().equals("unknown"))
                         holder.status_prev2_play.setVisibility(View.GONE);
                     else
                         holder.status_prev2_play.setVisibility(View.VISIBLE);
                 }else if(i == 2) {
                     imageView = holder.status_prev3;
-                    if( attachment.getType().equals("image"))
+                    if( attachment.getType().equals("image") || attachment.getType().equals("unknown"))
                         holder.status_prev3_play.setVisibility(View.GONE);
                     else
                         holder.status_prev3_play.setVisibility(View.VISIBLE);
                 }else {
                     imageView = holder.status_prev4;
-                    if( attachment.getType().equals("image"))
+                    if( attachment.getType().equals("image") || attachment.getType().equals("unknown"))
                         holder.status_prev4_play.setVisibility(View.GONE);
                     else
                         holder.status_prev4_play.setVisibility(View.VISIBLE);
                 }
                 String url = attachment.getPreview_url();
-                if( url == null || url.trim().equals(""))
+                if( url == null || url.trim().equals("") )
                     url = attachment.getUrl();
+                else if( attachment.getType().equals("unknown"))
+                    url = attachment.getRemote_url();
                 if( !url.trim().contains("missing.png"))
                     imageLoader.displayImage(url, imageView, optionsAttachment);
                 final int finalPosition = position;
@@ -1315,6 +1338,16 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         }
     }
 
+
+    @Override
+    public void onRetrieveEmoji(int position, SpannableString spannableString, Boolean error) {
+        statuses.get(position).setContents(spannableString);
+        if( !statuses.get(position).isEmojiFound()) {
+            statuses.get(position).setEmojiFound(true);
+            statusListAdapter.notifyDataSetChanged();
+        }
+    }
+
     @Override
     public void onTranslatedTextview(int position, String translatedResult, Boolean error) {
         if( error){
@@ -1404,6 +1437,8 @@ public class StatusListAdapter extends BaseAdapter implements OnPostActionInterf
         aJsonString = URLDecoder.decode(aJsonString, "UTF-8");
         return aJsonString;
     }
+
+
 
 
     private class ViewHolder {
