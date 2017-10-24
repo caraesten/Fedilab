@@ -14,6 +14,7 @@ package fr.gouv.etalab.mastodon.drawers;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Handler;
@@ -48,7 +49,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -117,8 +117,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private List<Status> statuses;
     private LayoutInflater layoutInflater;
     private ImageLoader imageLoader;
-    private DisplayImageOptions optionsAttachment;
-    private ViewHolder holder;
     private boolean isOnWifi;
     private int translator;
     private int behaviorWithAttachments;
@@ -226,47 +224,47 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             super(itemView);
             loader_replies = itemView.findViewById(R.id.loader_replies);
             card_status_container = itemView.findViewById(R.id.card_status_container);
-            status_document_container = (LinearLayout) itemView.findViewById(R.id.status_document_container);
-            status_content = (TextView) itemView.findViewById(R.id.status_content);
-            status_content_translated = (TextView) itemView.findViewById(R.id.status_content_translated);
-            status_account_username = (TextView) itemView.findViewById(R.id.status_account_username);
-            status_account_displayname = (TextView) itemView.findViewById(R.id.status_account_displayname);
-            status_account_profile = (ImageView) itemView.findViewById(R.id.status_account_profile);
-            status_account_profile_boost = (ImageView) itemView.findViewById(R.id.status_account_profile_boost);
-            status_account_profile_boost_by = (ImageView) itemView.findViewById(R.id.status_account_profile_boost_by);
-            status_favorite_count = (TextView) itemView.findViewById(R.id.status_favorite_count);
-            status_reblog_count = (TextView) itemView.findViewById(R.id.status_reblog_count);
-            status_pin = (ImageView) itemView.findViewById(R.id.status_pin);
-            status_toot_date = (TextView) itemView.findViewById(R.id.status_toot_date);
-            status_show_more = (Button) itemView.findViewById(R.id.status_show_more);
-            status_more = (ImageView) itemView.findViewById(R.id.status_more);
-            status_prev1 = (ImageView) itemView.findViewById(R.id.status_prev1);
-            status_prev2 = (ImageView) itemView.findViewById(R.id.status_prev2);
-            status_prev3 = (ImageView) itemView.findViewById(R.id.status_prev3);
-            status_prev4 = (ImageView) itemView.findViewById(R.id.status_prev4);
-            status_prev1_play = (ImageView) itemView.findViewById(R.id.status_prev1_play);
-            status_prev2_play = (ImageView) itemView.findViewById(R.id.status_prev2_play);
-            status_prev3_play = (ImageView) itemView.findViewById(R.id.status_prev3_play);
-            status_prev4_play = (ImageView) itemView.findViewById(R.id.status_prev4_play);
-            status_container2 = (LinearLayout) itemView.findViewById(R.id.status_container2);
-            status_container3 = (LinearLayout) itemView.findViewById(R.id.status_container3);
-            status_prev4_container = (RelativeLayout) itemView.findViewById(R.id.status_prev4_container);
-            status_reply = (ImageView) itemView.findViewById(R.id.status_reply);
-            status_privacy = (ImageView) itemView.findViewById(R.id.status_privacy);
-            status_translate = (FloatingActionButton) itemView.findViewById(R.id.status_translate);
-            status_content_translated_container = (LinearLayout) itemView.findViewById(R.id.status_content_translated_container);
-            main_container = (LinearLayout) itemView.findViewById(R.id.main_container);
-            status_spoiler_container = (LinearLayout) itemView.findViewById(R.id.status_spoiler_container);
-            status_content_container = (LinearLayout) itemView.findViewById(R.id.status_content_container);
-            status_spoiler = (TextView) itemView.findViewById(R.id.status_spoiler);
-            status_spoiler_button = (Button) itemView.findViewById(R.id.status_spoiler_button);
-            yandex_translate = (TextView) itemView.findViewById(R.id.yandex_translate);
-            google_translate = (TextView) itemView.findViewById(R.id.google_translate);
-            status_replies = (LinearLayout) itemView.findViewById(R.id.status_replies);
-            status_replies_profile_pictures = (LinearLayout) itemView.findViewById(R.id.status_replies_profile_pictures);
-            status_replies_text = (TextView) itemView.findViewById(R.id.status_replies_text);
-            new_element = (ImageView) itemView.findViewById(R.id.new_element);
-            status_action_container = (LinearLayout) itemView.findViewById(R.id.status_action_container);
+            status_document_container = itemView.findViewById(R.id.status_document_container);
+            status_content = itemView.findViewById(R.id.status_content);
+            status_content_translated = itemView.findViewById(R.id.status_content_translated);
+            status_account_username = itemView.findViewById(R.id.status_account_username);
+            status_account_displayname = itemView.findViewById(R.id.status_account_displayname);
+            status_account_profile = itemView.findViewById(R.id.status_account_profile);
+            status_account_profile_boost = itemView.findViewById(R.id.status_account_profile_boost);
+            status_account_profile_boost_by = itemView.findViewById(R.id.status_account_profile_boost_by);
+            status_favorite_count = itemView.findViewById(R.id.status_favorite_count);
+            status_reblog_count = itemView.findViewById(R.id.status_reblog_count);
+            status_pin = itemView.findViewById(R.id.status_pin);
+            status_toot_date = itemView.findViewById(R.id.status_toot_date);
+            status_show_more = itemView.findViewById(R.id.status_show_more);
+            status_more = itemView.findViewById(R.id.status_more);
+            status_prev1 = itemView.findViewById(R.id.status_prev1);
+            status_prev2 = itemView.findViewById(R.id.status_prev2);
+            status_prev3 = itemView.findViewById(R.id.status_prev3);
+            status_prev4 = itemView.findViewById(R.id.status_prev4);
+            status_prev1_play = itemView.findViewById(R.id.status_prev1_play);
+            status_prev2_play = itemView.findViewById(R.id.status_prev2_play);
+            status_prev3_play = itemView.findViewById(R.id.status_prev3_play);
+            status_prev4_play = itemView.findViewById(R.id.status_prev4_play);
+            status_container2 = itemView.findViewById(R.id.status_container2);
+            status_container3 = itemView.findViewById(R.id.status_container3);
+            status_prev4_container = itemView.findViewById(R.id.status_prev4_container);
+            status_reply = itemView.findViewById(R.id.status_reply);
+            status_privacy = itemView.findViewById(R.id.status_privacy);
+            status_translate = itemView.findViewById(R.id.status_translate);
+            status_content_translated_container = itemView.findViewById(R.id.status_content_translated_container);
+            main_container = itemView.findViewById(R.id.main_container);
+            status_spoiler_container = itemView.findViewById(R.id.status_spoiler_container);
+            status_content_container = itemView.findViewById(R.id.status_content_container);
+            status_spoiler = itemView.findViewById(R.id.status_spoiler);
+            status_spoiler_button = itemView.findViewById(R.id.status_spoiler_button);
+            yandex_translate = itemView.findViewById(R.id.yandex_translate);
+            google_translate = itemView.findViewById(R.id.google_translate);
+            status_replies = itemView.findViewById(R.id.status_replies);
+            status_replies_profile_pictures = itemView.findViewById(R.id.status_replies_profile_pictures);
+            status_replies_text = itemView.findViewById(R.id.status_replies_text);
+            new_element = itemView.findViewById(R.id.new_element);
+            status_action_container = itemView.findViewById(R.id.status_action_container);
 
         }
     }
@@ -292,12 +290,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         if( viewType == DISPLAYED_STATUS)
             return new ViewHolder(layoutInflater.inflate(R.layout.drawer_status, parent, false));
         else
-            return new ViewHolderEmpty(layoutInflater.inflate(R.layout.drawer_status, parent, false));
+            return new ViewHolderEmpty(layoutInflater.inflate(R.layout.drawer_empty, parent, false));
     }
 
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, @SuppressLint("RecyclerView") final int position) {
 
         if( viewHolder.getItemViewType() == HIDDEN_STATUS){
 
@@ -1262,6 +1260,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     url = attachment.getUrl();
                 else if( attachment.getType().equals("unknown"))
                     url = attachment.getRemote_url();
+                DisplayImageOptions optionsAttachment = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
+                        .cacheOnDisk(true).resetViewBeforeLoading(true).build();
                 if( !url.trim().contains("missing.png"))
                     imageLoader.displayImage(url, imageView, optionsAttachment);
                 final int finalPosition = position;

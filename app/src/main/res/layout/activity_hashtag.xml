@@ -27,14 +27,14 @@
         android:layout_width="match_parent"
         android:id="@+id/swipeContainer"
         android:layout_height="match_parent">
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/lv_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none"
             android:divider="@null"
             >
-        </ListView>
+        </android.support.v7.widget.RecyclerView>
     </android.support.v4.widget.SwipeRefreshLayout>
     <RelativeLayout
         android:id="@+id/no_action"
