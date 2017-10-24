@@ -39,7 +39,6 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                app:layout_scrollFlags="scroll|enterAlways"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorPrimary"
                 android:theme="@style/AppThemeDark_NoActionBar"
@@ -111,15 +110,6 @@
             tools:context="fr.gouv.etalab.mastodon.activities.MainActivity"
             >
         </RelativeLayout>
-        <android.support.v7.widget.Toolbar
-            app:layout_scrollFlags="scroll|enterAlways"
-            android:id="@+id/toolbarBottom"
-            android:layout_gravity="bottom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:theme="@style/AppThemeDark_NoActionBar"
-            app:popupTheme="?attr/popupOverlay"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/toot"
