@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
@@ -39,7 +40,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -85,7 +85,8 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class NotificationsListAdapter extends BaseAdapter implements OnPostActionInterface, OnPostNotificationsActionInterface, OnRetrieveEmojiInterface {
+
+public class NotificationsListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnPostNotificationsActionInterface, OnRetrieveEmojiInterface {
 
     private Context context;
     private List<Notification> notifications;
@@ -109,65 +110,18 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
     }
 
-
+    
 
     @Override
-    public int getCount() {
-        return notifications.size();
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ViewHolder(layoutInflater.inflate(R.layout.drawer_notification, parent, false));
     }
 
     @Override
-    public Object getItem(int position) {
-        return notifications.get(position);
-    }
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-
+        final NotificationsListAdapter.ViewHolder holder = (NotificationsListAdapter.ViewHolder) viewHolder;
         final Notification notification = notifications.get(position);
-        final ViewHolder holder;
-        if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.drawer_notification, parent, false);
-            holder = new ViewHolder();
-            holder.card_status_container = (CardView) convertView.findViewById(R.id.card_status_container);
-            holder.notification_status_container = (LinearLayout) convertView.findViewById(R.id.notification_status_container);
-            holder.status_document_container = (LinearLayout) convertView.findViewById(R.id.status_document_container);
-            holder.notification_status_content = (TextView) convertView.findViewById(R.id.notification_status_content);
-            holder.notification_account_username = (TextView) convertView.findViewById(R.id.notification_account_username);
-            holder.notification_type = (TextView) convertView.findViewById(R.id.notification_type);
-            holder.notification_account_profile = (ImageView) convertView.findViewById(R.id.notification_account_profile);
-            holder.status_favorite_count = (TextView) convertView.findViewById(R.id.status_favorite_count);
-            holder.status_reblog_count = (TextView) convertView.findViewById(R.id.status_reblog_count);
-            holder.status_date = (TextView) convertView.findViewById(R.id.status_date);
-            holder.status_reply = (ImageView) convertView.findViewById(R.id.status_reply);
-            holder.status_privacy = (ImageView) convertView.findViewById(R.id.status_privacy);
-            holder.notification_delete = (ImageView) convertView.findViewById(R.id.notification_delete);
-
-            holder.status_show_more = (Button) convertView.findViewById(R.id.status_show_more);
-            holder.status_prev1 = (ImageView) convertView.findViewById(R.id.status_prev1);
-            holder.status_prev2 = (ImageView) convertView.findViewById(R.id.status_prev2);
-            holder.status_prev3 = (ImageView) convertView.findViewById(R.id.status_prev3);
-            holder.status_prev4 = (ImageView) convertView.findViewById(R.id.status_prev4);
-            holder.status_prev1_play = (ImageView) convertView.findViewById(R.id.status_prev1_play);
-            holder.status_prev2_play = (ImageView) convertView.findViewById(R.id.status_prev2_play);
-            holder.status_prev3_play = (ImageView) convertView.findViewById(R.id.status_prev3_play);
-            holder.status_prev4_play = (ImageView) convertView.findViewById(R.id.status_prev4_play);
-            holder.status_container2 = (LinearLayout) convertView.findViewById(R.id.status_container2);
-            holder.status_container3 = (LinearLayout) convertView.findViewById(R.id.status_container3);
-            holder.status_prev4_container = (RelativeLayout) convertView.findViewById(R.id.status_prev4_container);
-            holder.status_action_container = (LinearLayout) convertView.findViewById(R.id.status_action_container);
-            holder.status_more = (ImageView) convertView.findViewById(R.id.status_more);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         int iconSizePercent = sharedpreferences.getInt(Helper.SET_ICON_SIZE, 130);
@@ -296,7 +250,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                     content = content.substring(0, content.length() - 10);
             }
 
-            SpannableString spannableString = Helper.clickableElements(context, status.getContent(),
+            SpannableString spannableString = Helper.clickableElements(context, content,
                     status.getReblog() != null?status.getReblog().getMentions():status.getMentions(),
                     status.getReblog() != null?status.getReblog().getEmojis():status.getEmojis(),
                     position,
@@ -539,7 +493,6 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
         });
         holder.notification_account_username.setVisibility(View.GONE);
 
-        final View finalConvertView = convertView;
         final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         final View attached = holder.status_more;
         holder.status_more.setOnClickListener(new View.OnClickListener() {
@@ -628,7 +581,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
 
                                             @Override
                                             public void run() {
-                                                Bitmap bitmap = Helper.convertTootIntoBitmap(context, finalConvertView);
+                                                Bitmap bitmap = Helper.convertTootIntoBitmap(context, holder.notification_status_container);
                                                 status.setTakingScreenShot(false);
                                                 notificationsListAdapter.notifyDataSetChanged();
                                                 Intent intent = new Intent(context, TootActivity.class);
@@ -709,7 +662,17 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
 
         //Profile picture
         imageLoader.displayImage(notification.getAccount().getAvatar(), holder.notification_account_profile, options);
-        return convertView;
+
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemCount() {
+        return notifications.size();
     }
 
 
@@ -923,7 +886,8 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
     }
 
 
-    private class ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
+
         CardView card_status_container;
         TextView notification_status_content;
         TextView notification_type;
@@ -951,6 +915,37 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
         LinearLayout status_container3;
         LinearLayout notification_status_container;
         ImageView status_privacy;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            card_status_container = itemView.findViewById(R.id.card_status_container);
+            notification_status_container = itemView.findViewById(R.id.notification_status_container);
+            status_document_container = itemView.findViewById(R.id.status_document_container);
+            notification_status_content = itemView.findViewById(R.id.notification_status_content);
+            notification_account_username = itemView.findViewById(R.id.notification_account_username);
+            notification_type = itemView.findViewById(R.id.notification_type);
+            notification_account_profile = itemView.findViewById(R.id.notification_account_profile);
+            status_favorite_count = itemView.findViewById(R.id.status_favorite_count);
+            status_reblog_count = itemView.findViewById(R.id.status_reblog_count);
+            status_date = itemView.findViewById(R.id.status_date);
+            status_reply = itemView.findViewById(R.id.status_reply);
+            status_privacy = itemView.findViewById(R.id.status_privacy);
+            notification_delete = itemView.findViewById(R.id.notification_delete);
+            status_show_more = itemView.findViewById(R.id.status_show_more);
+            status_prev1 = itemView.findViewById(R.id.status_prev1);
+            status_prev2 = itemView.findViewById(R.id.status_prev2);
+            status_prev3 = itemView.findViewById(R.id.status_prev3);
+            status_prev4 = itemView.findViewById(R.id.status_prev4);
+            status_prev1_play = itemView.findViewById(R.id.status_prev1_play);
+            status_prev2_play = itemView.findViewById(R.id.status_prev2_play);
+            status_prev3_play = itemView.findViewById(R.id.status_prev3_play);
+            status_prev4_play = itemView.findViewById(R.id.status_prev4_play);
+            status_container2 = itemView.findViewById(R.id.status_container2);
+            status_container3 = itemView.findViewById(R.id.status_container3);
+            status_prev4_container = itemView.findViewById(R.id.status_prev4_container);
+            status_action_container = itemView.findViewById(R.id.status_action_container);
+            status_more = itemView.findViewById(R.id.status_more);
+        }
     }
 
 }
