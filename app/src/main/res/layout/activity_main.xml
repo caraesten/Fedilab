@@ -32,7 +32,6 @@
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBar"
-            app:layout_scrollFlags="scroll|snap"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/AppTheme.AppBarOverlay"
@@ -40,6 +39,7 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
+                app:layout_scrollFlags="scroll|enterAlways"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorPrimary"
                 android:theme="@style/AppThemeDark_NoActionBar"
@@ -112,7 +112,7 @@
             >
         </RelativeLayout>
         <android.support.v7.widget.Toolbar
-            app:layout_scrollFlags="scroll|snap"
+            app:layout_scrollFlags="scroll|enterAlways"
             android:id="@+id/toolbarBottom"
             android:layout_gravity="bottom"
             android:layout_width="match_parent"

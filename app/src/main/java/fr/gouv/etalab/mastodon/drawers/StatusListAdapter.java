@@ -193,7 +193,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         TextView status_favorite_count;
         TextView status_reblog_count;
         TextView status_toot_date;
-        TextView status_reblog_user;
         Button status_show_more;
         ImageView status_more;
         LinearLayout status_document_container;
@@ -241,7 +240,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_toot_date = (TextView) itemView.findViewById(R.id.status_toot_date);
             status_show_more = (Button) itemView.findViewById(R.id.status_show_more);
             status_more = (ImageView) itemView.findViewById(R.id.status_more);
-            status_reblog_user = (TextView) itemView.findViewById(R.id.status_reblog_user);
             status_prev1 = (ImageView) itemView.findViewById(R.id.status_prev1);
             status_prev2 = (ImageView) itemView.findViewById(R.id.status_prev2);
             status_prev3 = (ImageView) itemView.findViewById(R.id.status_prev3);
@@ -480,9 +478,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 content = status.getReblog().getContent();
                 displayName = Helper.shortnameToUnicode(status.getReblog().getAccount().getDisplay_name(), true);
                 username = status.getReblog().getAccount().getUsername();
-                holder.status_reblog_user.setText(displayName + " " +String.format("@%s",username));
+                holder.status_account_displayname.setText(displayName + " " +String.format("@%s",username));
                 ppurl = status.getReblog().getAccount().getAvatar();
-                holder.status_reblog_user.setVisibility(View.VISIBLE);
+                holder.status_account_displayname.setVisibility(View.VISIBLE);
                 holder.status_account_displayname.setText(context.getResources().getString(R.string.reblog_by, status.getAccount().getUsername()));
                 name = String.format("%s @%s",displayName,status.getReblog().getAccount().getAcct());
             }else {
@@ -1014,7 +1012,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
 
-            final View finalConvertView = convertView;
             final View attached = holder.status_more;
             holder.status_more.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -1098,7 +1095,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
                                         @Override
                                         public void run() {
-                                            Bitmap bitmap = Helper.convertTootIntoBitmap(context, finalConvertView);
+                                            Bitmap bitmap = Helper.convertTootIntoBitmap(context, holder.status_content_container);
                                             status.setTakingScreenShot(false);
                                             statusListAdapter.notifyDataSetChanged();
                                             Intent intent = new Intent(context, TootActivity.class);
