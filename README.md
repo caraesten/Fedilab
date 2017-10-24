@@ -79,7 +79,7 @@ The number of libraries is minimized and it does not use tracking tools. The sou
 * Disable the built-in browser in settings
 
 
-Developer: [@tschneider](https://mastodon.etalab.gouv.fr/@tschneider)
+Developer: [@tom79](https://mastodon.social/@tom79)
 
 
 

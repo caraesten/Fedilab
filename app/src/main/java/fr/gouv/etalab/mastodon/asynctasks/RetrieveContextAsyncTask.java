@@ -30,6 +30,7 @@ public class RetrieveContextAsyncTask extends AsyncTask<Void, Void, Void> {
 
     private Context context;
     private String statusId;
+    private fr.gouv.etalab.mastodon.client.Entities.Status statusFirst;
     private fr.gouv.etalab.mastodon.client.Entities.Context statusContext;
     private OnRetrieveContextInterface listener;
     private API api;
@@ -44,12 +45,17 @@ public class RetrieveContextAsyncTask extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... params) {
         api = new API(context);
         statusContext = api.getStatusContext(statusId);
+        //Retrieves the first toot
+        if( statusContext.getAncestors().size() > 0 ) {
+            statusFirst = statusContext.getAncestors().get(0);
+            statusContext = api.getStatusContext(statusContext.getAncestors().get(0).getId());
+        }
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveFeeds(statusContext, api.getError());
+        listener.onRetrieveContext(statusContext, statusFirst, api.getError());
     }
 
 }

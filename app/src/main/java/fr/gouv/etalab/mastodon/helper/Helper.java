@@ -18,12 +18,13 @@ package fr.gouv.etalab.mastodon.helper;
 
 
 import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.graphics.Color;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.RequiresApi;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.PendingIntent;
@@ -57,20 +58,20 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
+import android.text.style.ImageSpan;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.MimeTypeMap;
@@ -90,7 +91,10 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
+import com.nostra13.universalimageloader.core.assist.ViewScaleType;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.nostra13.universalimageloader.core.imageaware.NonViewAware;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
@@ -108,7 +112,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -125,16 +128,15 @@ import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.LoginActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
-import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
-import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
-import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -612,7 +614,14 @@ public class Helper {
         intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         // build notification
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
+        String channelId = "channel_"+ String.valueOf(notificationId);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channelId, title, NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            mNotificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(R.drawable.notification_icon)
                 .setTicker(message)
                 .setWhen(System.currentTimeMillis())
@@ -1124,6 +1133,7 @@ public class Helper {
     }
 
 
+
     /**
      * Check if the status contents mentions & tags and fills the content with ClickableSpan
      * Click on account => ShowAccountActivity
@@ -1133,8 +1143,9 @@ public class Helper {
      * @param mentions List<Mention>
      * @return TextView
      */
-    public static SpannableString clickableElements(final Context context, String fullContent, List<Mention> mentions, boolean useHTML) {
-        SpannableString spannableString;
+    public static SpannableString clickableElements(final Context context, String fullContent, List<Mention> mentions, final List<Emojis> emojis, final int position, boolean useHTML, final OnRetrieveEmojiInterface listener) {
+        final SpannableString spannableString;
+
         if( useHTML) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 spannableString = new SpannableString(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_LEGACY));
@@ -1179,6 +1190,53 @@ public class Helper {
 
             }
         }
+
+        if( emojis != null && emojis.size() > 0 ) {
+            final int[] i = {0};
+            int emojiToSearch = 0;
+            for (final Emojis emoji : emojis) {
+                final String targetedEmoji = ":" + emoji.getShortcode() + ":";
+                for(int startPosition = -1 ; (startPosition = spannableString.toString().indexOf(targetedEmoji, startPosition + 1)) != -1 ; startPosition++){
+                    emojiToSearch++;
+                }
+            }
+            ImageLoader imageLoader;
+            DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
+                    .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+            imageLoader = ImageLoader.getInstance();
+            for (final Emojis emoji : emojis) {
+                final String targetedEmoji = ":" + emoji.getShortcode() + ":";
+                if (spannableString.toString().contains(targetedEmoji)) {
+                    //emojis can be used several times so we have to loop
+                    for(int startPosition = -1 ; (startPosition = spannableString.toString().indexOf(targetedEmoji, startPosition + 1)) != -1 ; startPosition++){
+                        final int endPosition = startPosition + targetedEmoji.length();
+                        final int finalStartPosition = startPosition;
+                        NonViewAware imageAware = new NonViewAware(new ImageSize(50, 50), ViewScaleType.CROP);
+                        final int finalEmojiToSearch = emojiToSearch;
+                        imageLoader.displayImage(emoji.getUrl(), imageAware, options, new SimpleImageLoadingListener() {
+                            @Override
+                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                                super.onLoadingComplete(imageUri, view, loadedImage);
+                                spannableString.setSpan(
+                                        new ImageSpan(context,
+                                                Bitmap.createScaledBitmap(loadedImage, (int)Helper.convertDpToPixel(20, context),
+                                                        (int)Helper.convertDpToPixel(20, context), false)), finalStartPosition,
+                                        endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                i[0]++;
+                                if( i[0] == finalEmojiToSearch)
+                                    listener.onRetrieveEmoji(position, spannableString, false);
+                            }
+                            @Override
+                            public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason) {
+                                i[0]++;
+                            }
+                        });
+                    }
+                }
+
+            }
+        }
+
         //Deals with mention to make them clickable
         if( mentions != null && mentions.size() > 0 ) {
             //Looping through accounts which are mentioned
@@ -1230,6 +1288,7 @@ public class Helper {
                 }
             }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
+
         return spannableString;
     }
 
