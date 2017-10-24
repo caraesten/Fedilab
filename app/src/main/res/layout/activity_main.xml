@@ -32,6 +32,7 @@
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBar"
+            app:layout_scrollFlags="scroll|snap"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/AppTheme.AppBarOverlay"
@@ -94,7 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:context="mastodon.etalab.gouv.fr.mastodon.fr.etalab.gouv.fr.mastodon.activities.MainActivity"
+            tools:context="fr.gouv.etalab.mastodon.activities.MainActivity"
             >
         </android.support.v4.view.ViewPager>
 
@@ -107,10 +108,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:context="mastodon.etalab.gouv.fr.mastodon.fr.etalab.gouv.fr.mastodon.activities.MainActivity"
+            tools:context="fr.gouv.etalab.mastodon.activities.MainActivity"
             >
         </RelativeLayout>
-
+        <android.support.v7.widget.Toolbar
+            app:layout_scrollFlags="scroll|snap"
+            android:id="@+id/toolbarBottom"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/AppThemeDark_NoActionBar"
+            app:popupTheme="?attr/popupOverlay"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/toot"
