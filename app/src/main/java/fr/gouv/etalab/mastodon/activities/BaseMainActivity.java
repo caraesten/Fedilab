@@ -179,7 +179,9 @@ public abstract class BaseMainActivity extends AppCompatActivity
         Helper.fillMapEmoji(getApplicationContext());
         //Here, the user is authenticated
         Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbarBottom = findViewById(R.id.toolbarBottom);
         setSupportActionBar(toolbar);
+        setSupportActionBar(toolbarBottom);
         toolbarTitle  = toolbar.findViewById(R.id.toolbar_title);
         toolbar_search = toolbar.findViewById(R.id.toolbar_search);
         tabLayout = findViewById(R.id.tabLayout);
