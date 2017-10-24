@@ -193,7 +193,6 @@
     <!-- About -->
     <string name="about_vesrion">Version %1$s</string>
     <string name="about_developer">Entwickler:</string>
-    <string name="about_developer_action">\\@tschneider</string>
     <string name="about_license">Lizenz:</string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Quellcode:</string>
@@ -426,4 +425,5 @@
 
     <string name="thanks_text_dev">Danke an:</string>
     <string name="set_multiaccount_actions">Erlauben Interaktionen zwischen den accounts?</string>
+    <string name="action_open_in_web">Im Browser öffnen</string>
 </resources>

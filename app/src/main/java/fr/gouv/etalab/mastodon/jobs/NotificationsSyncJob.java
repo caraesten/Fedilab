@@ -85,9 +85,9 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
 
         return new JobRequest.Builder(NotificationsSyncJob.NOTIFICATION_REFRESH)
                 .setPeriodic(TimeUnit.MINUTES.toMillis(Helper.MINUTES_BETWEEN_NOTIFICATIONS_REFRESH), TimeUnit.MINUTES.toMillis(5))
-                .setPersisted(true)
                 .setUpdateCurrent(updateCurrent)
-                .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
+                .setRequiredNetworkType(JobRequest.NetworkType.METERED)
+                .setRequiresBatteryNotLow(true)
                 .setRequirementsEnforced(false)
                 .build()
                 .schedule();

@@ -71,6 +71,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnPostNotificationsActionInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
@@ -84,7 +85,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class NotificationsListAdapter extends BaseAdapter implements OnPostActionInterface, OnPostNotificationsActionInterface {
+public class NotificationsListAdapter extends BaseAdapter implements OnPostActionInterface, OnPostNotificationsActionInterface, OnRetrieveEmojiInterface {
 
     private Context context;
     private List<Notification> notifications;
@@ -255,14 +256,14 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
 
         //Manages theme for icon colors
         if( theme == Helper.THEME_DARK){
-            changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_action_more,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_retweet,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_action_more,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_retweet,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_icon);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_delete,R.color.dark_text);
@@ -288,22 +289,27 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 holder.status_document_container.setVisibility(View.VISIBLE);
 
             String content = status.getContent();
-            content = content.replaceAll("</p>","<br/><br/>");
-            content = content.replaceAll("<p>","");
-            if( content.endsWith("<br/><br/>") )
-                content = content.substring(0,content.length() -10);
+            if( content != null) {
+                content = content.replaceAll("</p>", "<br/><br/>");
+                content = content.replaceAll("<p>", "");
+                if (content.endsWith("<br/><br/>"))
+                    content = content.substring(0, content.length() - 10);
+            }
 
-            SpannableString spannableString = Helper.clickableElements(context, content,
-                    status.getReblog() != null?status.getReblog().getMentions():status.getMentions(), true);
+            SpannableString spannableString = Helper.clickableElements(context, status.getContent(),
+                    status.getReblog() != null?status.getReblog().getMentions():status.getMentions(),
+                    status.getReblog() != null?status.getReblog().getEmojis():status.getEmojis(),
+                    position,
+                    true, NotificationsListAdapter.this);
+
+            Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/DroidSans-Regular.ttf");
+            holder.notification_status_content.setTypeface(tf);
             holder.notification_status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
             holder.notification_status_content.setMovementMethod(null);
             holder.notification_status_content.setMovementMethod(LinkMovementMethod.getInstance());
             holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
             holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
             holder.status_date.setText(Helper.dateDiff(context, status.getCreated_at()));
-
-            Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/WorkSans-Regular.ttf");
-            holder.notification_status_content.setTypeface(tf);
 
             //Adds attachment -> disabled, to enable them uncomment the line below
             //loadAttachments(status, holder);
@@ -339,22 +345,22 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
 
                 Drawable imgFav, imgReblog;
                 if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
-                    changeDrawableColor(context, R.drawable.ic_favorite,R.color.yellowicon);
+                    changeDrawableColor(context, R.drawable.ic_favorite,R.color.marked_icon);
                     imgFav = ContextCompat.getDrawable(context, R.drawable.ic_favorite);
                 }else {
                     if( theme == THEME_DARK)
-                        changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_text);
+                        changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_icon);
                     else
                         changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.black);
                     imgFav = ContextCompat.getDrawable(context, R.drawable.ic_favorite_border);
                 }
 
                 if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged())) {
-                    changeDrawableColor(context, R.drawable.ic_boost,R.color.yellowicon);
+                    changeDrawableColor(context, R.drawable.ic_boost,R.color.marked_icon);
                     imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost);
                 }else {
                     if( theme == THEME_DARK)
-                        changeDrawableColor(context, R.drawable.ic_boost_border,R.color.dark_text);
+                        changeDrawableColor(context, R.drawable.ic_boost_border,R.color.dark_icon);
                     else
                         changeDrawableColor(context, R.drawable.ic_boost_border,R.color.black);
                     imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost_border);
@@ -364,7 +370,13 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
                 holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
                 holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
-
+                if( theme == THEME_DARK){
+                    holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                    holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                }else {
+                    holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.black));
+                    holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.black));
+                }
 
                 if( status.getReblog() == null) {
                     if (status.getMedia_attachments().size() < 1) {
@@ -760,40 +772,42 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             notifications.removeAll(notificationsToRemove);
             notificationsListAdapter.notifyDataSetChanged();
         }
-        if (statusAction == API.StatusAction.REBLOG) {
-            for (Notification notification : notifications) {
-                if (notification.getStatus().getId().equals(targetedId)) {
-                    notification.getStatus().setReblogs_count(notification.getStatus().getReblogs_count() + 1);
-                    break;
+        if( targetedId != null ) {
+            if (statusAction == API.StatusAction.REBLOG) {
+                for (Notification notification : notifications) {
+                    if (notification.getStatus() != null && notification.getStatus().getId().equals(targetedId)) {
+                        notification.getStatus().setReblogs_count(notification.getStatus().getReblogs_count() + 1);
+                        break;
+                    }
                 }
-            }
-            notificationsListAdapter.notifyDataSetChanged();
-        } else if (statusAction == API.StatusAction.UNREBLOG) {
-            for (Notification notification : notifications) {
-                if (notification.getStatus().getId().equals(targetedId)) {
-                    if (notification.getStatus().getReblogs_count() - 1 >= 0)
-                        notification.getStatus().setReblogs_count(notification.getStatus().getReblogs_count() - 1);
-                    break;
+                notificationsListAdapter.notifyDataSetChanged();
+            } else if (statusAction == API.StatusAction.UNREBLOG) {
+                for (Notification notification : notifications) {
+                    if (notification.getStatus() != null && notification.getStatus().getId().equals(targetedId)) {
+                        if (notification.getStatus().getReblogs_count() - 1 >= 0)
+                            notification.getStatus().setReblogs_count(notification.getStatus().getReblogs_count() - 1);
+                        break;
+                    }
                 }
-            }
-            notificationsListAdapter.notifyDataSetChanged();
-        } else if (statusAction == API.StatusAction.FAVOURITE) {
-            for (Notification notification : notifications) {
-                if (notification.getStatus().getId().equals(targetedId)) {
-                    notification.getStatus().setFavourites_count(notification.getStatus().getFavourites_count() + 1);
-                    break;
+                notificationsListAdapter.notifyDataSetChanged();
+            } else if (statusAction == API.StatusAction.FAVOURITE) {
+                for (Notification notification : notifications) {
+                    if (notification.getStatus() != null && notification.getStatus().getId().equals(targetedId)) {
+                        notification.getStatus().setFavourites_count(notification.getStatus().getFavourites_count() + 1);
+                        break;
+                    }
                 }
-            }
-            notificationsListAdapter.notifyDataSetChanged();
-        } else if (statusAction == API.StatusAction.UNFAVOURITE) {
-            for (Notification notification : notifications) {
-                if (notification.getStatus().getId().equals(targetedId)) {
-                    if (notification.getStatus().getFavourites_count() - 1 >= 0)
-                        notification.getStatus().setFavourites_count(notification.getStatus().getFavourites_count() - 1);
-                    break;
+                notificationsListAdapter.notifyDataSetChanged();
+            } else if (statusAction == API.StatusAction.UNFAVOURITE) {
+                for (Notification notification : notifications) {
+                    if (notification.getStatus() != null && notification.getStatus().getId().equals(targetedId)) {
+                        if (notification.getStatus().getFavourites_count() - 1 >= 0)
+                            notification.getStatus().setFavourites_count(notification.getStatus().getFavourites_count() - 1);
+                        break;
+                    }
                 }
+                notificationsListAdapter.notifyDataSetChanged();
             }
-            notificationsListAdapter.notifyDataSetChanged();
         }
     }
 
@@ -897,6 +911,15 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
             holder.status_document_container.setVisibility(View.GONE);
         }
         holder.status_show_more.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onRetrieveEmoji(int position, SpannableString spannableString, Boolean error) {
+        notifications.get(position).getStatus().setContents(spannableString);
+        if( !notifications.get(position).getStatus().isEmojiFound()) {
+            notifications.get(position).getStatus().setEmojiFound(true);
+            notificationsListAdapter.notifyDataSetChanged();
+        }
     }
 
 

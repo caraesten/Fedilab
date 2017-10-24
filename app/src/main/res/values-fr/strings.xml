@@ -189,7 +189,6 @@
     <!-- About -->
     <string name="about_vesrion">Version %1$s</string>
     <string name="about_developer">Développeur :</string>
-    <string name="about_developer_action">\@tschneider</string>
     <string name="about_license">Licence : </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Code source : </string>
@@ -433,4 +432,5 @@
     <string name="toast_pin">Le pouet a été épinglé !</string>
     <string name="toast_unpin">Le pouet a été désépinglé !</string>
     <string name="pins_cnt">Epinglés %d</string>
+    <string name="action_open_in_web">Ouvrir dans le navigateur</string>
 </resources>

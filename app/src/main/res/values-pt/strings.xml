@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">Mastalab</string>
     <string name="navigation_drawer_open">Abrir menu</string>
     <string name="navigation_drawer_close">Fechar menu</string>
 
@@ -64,6 +63,8 @@
     <string name="follow">Novos seguidores</string>
     <string name="mention">Menções</string>
     <string name="reblog">Compartilhamentos</string>
+    <string name="show_boosts">Show boosts</string>
+    <string name="show_replies">Show replies</string>
 
     <!--- Menu -->
     <string name="home_menu">Página inicial</string>
@@ -188,13 +189,11 @@
     <!-- About -->
     <string name="about_vesrion">Versão %1$s</string>
     <string name="about_developer">Desenvolvedor:</string>
-    <string name="about_developer_action">\@tschneider</string>
     <string name="about_license">Licença: </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Código-fonte: </string>
     <string name="about_code_action">Bitbucket</string>
     <string name="about_yandex">Tradução dos toots:</string>
-    <string name="about_yandex_action" translatable="false">Powered by Yandex.Translate</string>
     <string name="about_thekinrar">Busca de instâncias:</string>
     <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Designer do ícone:</string>
@@ -232,7 +231,7 @@
         <item quantity="other">e outras %d notificações</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="one">e outro % toot para descobrir</item>
+        <item quantity="one">e outro %d toot para descobrir</item>
         <item quantity="other">e outros %d toots para descobrir</item>
     </plurals>
     <string name="delete_notification_ask">Excluir notificação?</string>
@@ -418,8 +417,6 @@
         - <b>Gson</b> : Para administrar rascunhos
     </string>
 
-    <string name="yandex" translatable="false">&lt;a hreh="http://translate.yandex.com/">Powered by Yandex.Translate&lt;/a></string>
-
     <string name="privacy_API_yandex_title">Tradução de toots</string>
     <string name="privacy_API_yandex_authorizations">
         O aplicativo oferece a habilidade de traduzir toots usando o idioma do aparelho a API do Yandex.\n
@@ -434,4 +431,5 @@
     <string name="thanks_text_dev">
         Agradecimentos a:
     </string>
+    <string name="action_open_in_web">Open in browser</string>
 </resources>

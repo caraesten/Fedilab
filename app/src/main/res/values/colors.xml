@@ -20,6 +20,8 @@
     <color name="header3D">#607D8B</color>
 
     <color name="dark_text">#f3f3f3</color>
+    <color name="dark_icon">#66708a</color>
+    <color name="marked_icon">#ca8f04</color>
     <color name="transparent">#00000000</color>
 
 
@@ -29,8 +31,6 @@
     <color name="white">#FFF</color>
     <color name="blue_light">#C5CAE9</color>
     <color name="light_grey">#E0E0E0</color>
-    <color name="darkicon">#424242</color>
-    <color name="yellowicon">#FDD835</color>
 
 
     <color name="background_image">#282c37</color>
@@ -40,6 +40,7 @@
 
     <!-- Mastodon color scheme -->
     <color name="mastodonC1__">#585c67</color>
+    <color name="mastodonC1___">#454b5b</color>
     <color name="mastodonC1">#282c37</color>
     <color name="mastodonC1_">#313543</color>
     <color name="mastodonC2">#9baec8</color>
@@ -49,20 +50,6 @@
     <color name="mastodonC4__">#772b90d9</color>
     <color name="mastodonC4">#2b90d9</color>
     <color name="mastodonC4_">#1b80c9</color>
-
-
-    <color name="foreground_material_dark" >@color/mastodonC3__</color>
-    <color name="foreground_material_light">@color/mastodonC1</color>
-
-    <color name="background_material_dark">@color/mastodonC1</color>
-    <color name="background_material_light">@color/mastodonC3__</color>
-    <color name="background_floating_material_dark">@color/mastodonC1</color>
-    <color name="background_floating_material_light">@color/mastodonC3__</color>
-
-    <color name="primary_material_dark">@color/mastodonC1</color>
-    <color name="primary_material_light">@color/mastodonC3__</color>
-    <color name="primary_dark_material_dark">@color/mastodonC1</color>
-    <color name="primary_dark_material_light">@color/mastodonC3__</color>
 
 
     <!-- Primary & accent colors -->
@@ -76,7 +63,18 @@
     <color name="notif_light_3">#d9e1e8</color>
     <color name="notif_light_4">#c9d1d8</color>
 
-    <eat-comment />
+    <color name="foreground_material_dark" >@color/mastodonC3__</color>
+    <color name="foreground_material_light">@color/mastodonC1</color>
+
+    <color name="background_material_dark">@color/mastodonC1</color>
+    <color name="background_material_light">@color/mastodonC3__</color>
+    <color name="background_floating_material_dark">@color/mastodonC1</color>
+    <color name="background_floating_material_light">@color/mastodonC3__</color>
+
+    <color name="primary_material_dark">@color/mastodonC1</color>
+    <color name="primary_material_light">@color/mastodonC3__</color>
+    <color name="primary_dark_material_dark">@color/mastodonC1</color>
+    <color name="primary_dark_material_light">@color/mastodonC3__</color>
 
 
 </resources>

@@ -40,11 +40,14 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -109,16 +112,19 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     private TabLayout tabLayout;
     private TextView account_note, account_follow_request;
     private String userId;
-    private static int instanceValue = 0;
     private Relationship relationship;
     private boolean showMediaOnly, showPinned;
     private ImageView pp_actionBar;
-    private LinearLayout small_info;
     private ImageView header_edit_profile;
     private List<Status> pins;
     private String accountUrl;
     private int maxScrollSize;
     private boolean avatarShown = true;
+    private DisplayStatusFragment displayStatusFragment;
+    private CircleImageView account_pp;
+    private TextView account_dn;
+    private TextView account_un;
+
     public enum action{
         FOLLOW,
         UNFOLLOW,
@@ -141,14 +147,15 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         }
         setContentView(R.layout.activity_show_account);
         setTitle("");
-        instanceValue += 1;
         pins = new ArrayList<>();
         Bundle b = getIntent().getExtras();
-        account_follow = (FloatingActionButton) findViewById(R.id.account_follow);
-        account_follow_request = (TextView) findViewById(R.id.account_follow_request);
-        small_info = (LinearLayout) findViewById(R.id.small_info);
-        header_edit_profile = (ImageView) findViewById(R.id.header_edit_profile);
+        account_follow = findViewById(R.id.account_follow);
+        account_follow_request = findViewById(R.id.account_follow_request);
+        header_edit_profile = findViewById(R.id.header_edit_profile);
         account_follow.setEnabled(false);
+        account_pp = findViewById(R.id.account_pp);
+        account_dn = findViewById(R.id.account_dn);
+        account_un = findViewById(R.id.account_un);
         if(b != null){
             accountId = b.getString("accountId");
             new RetrieveRelationshipAsyncTask(getApplicationContext(), accountId,ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -182,12 +189,12 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
 
 
-        tabLayout = (TabLayout) findViewById(R.id.account_tabLayout);
+        tabLayout = findViewById(R.id.account_tabLayout);
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.following)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.followers)));
 
-        mPager = (ViewPager) findViewById(R.id.account_viewpager);
+        mPager = findViewById(R.id.account_viewpager);
         PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
 
@@ -226,7 +233,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 Fragment fragment = (Fragment) mPager.getAdapter().instantiateItem(mPager, tab.getPosition());
                 switch (tab.getPosition()){
                     case 0:
-                        DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
                         if( displayStatusFragment != null )
                             displayStatusFragment.scrollToTop();
                         break;
@@ -240,7 +246,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
             }
         });
 
-        account_note = (TextView) findViewById(R.id.account_note);
+        account_note = findViewById(R.id.account_note);
 
         //Follow button
         account_follow.setOnClickListener(new View.OnClickListener() {
@@ -268,6 +274,59 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 startActivity(intent);
             }
         });
+
+
+
+
+
+        final ImageButton account_menu = findViewById(R.id.account_menu);
+        account_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popup = new PopupMenu(ShowAccountActivity.this, account_menu);
+                popup.getMenuInflater()
+                        .inflate(R.menu.main_showaccount, popup.getMenu());
+                if( !Helper.canPin || !accountId.equals(userId)) {
+                    popup.getMenu().findItem(R.id.action_show_pinned).setVisible(false);
+                }
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_show_pinned:
+                                showPinned = !showPinned;
+                                if( tabLayout.getTabAt(0) != null)
+                                    //noinspection ConstantConditions
+                                    tabLayout.getTabAt(0).select();
+                                PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+                                mPager.setAdapter(mPagerAdapter);
+                                return true;
+                            case R.id.action_show_media:
+                                showMediaOnly = !showMediaOnly;
+                                if( tabLayout.getTabAt(0) != null)
+                                    //noinspection ConstantConditions
+                                    tabLayout.getTabAt(0).select();
+                                mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+                                mPager.setAdapter(mPagerAdapter);
+                                return true;
+                            case R.id.action_open_browser:
+                                if( accountUrl != null) {
+                                    Intent intent = new Intent(getApplicationContext(), WebviewActivity.class);
+                                    Bundle b = new Bundle();
+                                    if( !accountUrl.startsWith("http://") && ! accountUrl.startsWith("https://"))
+                                        accountUrl = "http://" + accountUrl;
+                                    b.putString("url", accountUrl);
+                                    intent.putExtras(b);
+                                    startActivity(intent);
+                                }
+                                return true;
+                            default:
+                                return true;
+                        }
+                    }
+                });
+                popup.show();
+            }
+        });
     }
 
 
@@ -284,67 +343,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         new RetrieveRelationshipAsyncTask(getApplicationContext(), accountId,ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main_showaccount, menu);
-        //TODO: if one day pinned toots from another account can be displayed, we need to remove the condition !accountId.equals(userId)
-        if( !Helper.canPin || !accountId.equals(userId)) {
-           menu.findItem(R.id.action_show_pinned).setVisible(false);
-        }
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            case R.id.action_show_pinned:
-                showPinned = !showPinned;
-                if( showPinned )
-                    item.setIcon(R.drawable.ic_clear_all);
-                else
-                    item.setIcon(R.drawable.ic_action_pin);
-                if( tabLayout.getTabAt(0) != null)
-                    //noinspection ConstantConditions
-                    tabLayout.getTabAt(0).select();
-                PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-                mPager.setAdapter(mPagerAdapter);
-                return true;
-            case R.id.action_show_media:
-                showMediaOnly = !showMediaOnly;
-                if( showMediaOnly )
-                    item.setIcon(R.drawable.ic_clear_all);
-                else
-                    item.setIcon(R.drawable.ic_perm_media);
-                if( tabLayout.getTabAt(0) != null)
-                    //noinspection ConstantConditions
-                    tabLayout.getTabAt(0).select();
-                mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-                mPager.setAdapter(mPagerAdapter);
-                return true;
-            case R.id.action_open_browser:
-                if( accountUrl != null) {
-                    Intent intent = new Intent(getApplicationContext(), WebviewActivity.class);
-                    Bundle b = new Bundle();
-                    if( !accountUrl.startsWith("http://") && ! accountUrl.startsWith("https://"))
-                        accountUrl = "http://" + accountUrl;
-                    b.putString("url", accountUrl);
-                    intent.putExtras(b);
-                    startActivity(intent);
-                }
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
-    }
 
     @Override
     public void onRetrieveAccount(Account account, Error error) {
@@ -357,9 +356,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         }
 
         accountUrl = account.getUrl();
-        final CircleImageView account_pp = (CircleImageView) findViewById(R.id.account_pp);
-        TextView account_dn = (TextView) findViewById(R.id.account_dn);
-        TextView account_un = (TextView) findViewById(R.id.account_un);
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_DARK){
@@ -381,7 +377,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         super.onLoadingComplete(imageUri, view, loadedImage);
-                        ImageView banner_pp = (ImageView) findViewById(R.id.banner_pp);
+                        ImageView banner_pp = findViewById(R.id.banner_pp);
                         Bitmap workingBitmap = Bitmap.createBitmap(loadedImage);
                         Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
                         Canvas canvas = new Canvas(mutableBitmap);
@@ -412,10 +408,10 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
 
         if( account != null){
-            TextView actionbar_title = (TextView) findViewById(R.id.show_account_title);
+            TextView actionbar_title = findViewById(R.id.show_account_title);
             if( account.getAcct() != null)
                 actionbar_title.setText(account.getAcct());
-            pp_actionBar = (ImageView) findViewById(R.id.pp_actionBar);
+            pp_actionBar = findViewById(R.id.pp_actionBar);
             String url = account.getAvatar();
             if( url.startsWith("/") ){
                 url = "https://" + Helper.getLiveInstance(getApplicationContext()) + account.getAvatar();
@@ -435,34 +431,37 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
 
                 }});
-            final AppBarLayout appBar = (AppBarLayout) findViewById(R.id.appBar);
+            final AppBarLayout appBar = findViewById(R.id.appBar);
             maxScrollSize = appBar.getTotalScrollRange();
 
 
             appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
                 @Override
                 public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                    if (Math.abs(verticalOffset)-appBar.getTotalScrollRange() == 0) {
-                        if( small_info.getVisibility() == View.GONE)
-                            small_info.setVisibility(View.VISIBLE);
-                    }else {
-                        if( small_info.getVisibility() == View.VISIBLE)
-                            small_info.setVisibility(View.GONE);
+                    LinearLayout toolbarContent = findViewById(R.id.toolbar_content);
+                    if( toolbarContent != null) {
+                        if (Math.abs(verticalOffset) - appBar.getTotalScrollRange() == 0) {
+                            if (toolbarContent.getVisibility() == View.GONE)
+                                toolbarContent.setVisibility(View.VISIBLE);
+                        } else {
+                            if (toolbarContent.getVisibility() == View.VISIBLE)
+                                toolbarContent.setVisibility(View.GONE);
+                        }
                     }
                     if (maxScrollSize == 0)
                         maxScrollSize = appBarLayout.getTotalScrollRange();
 
                     int percentage = (Math.abs(verticalOffset)) * 100 / maxScrollSize;
 
-                    if (percentage >= 20 && avatarShown) {
+                    if (percentage >= 40 && avatarShown) {
                         avatarShown = false;
 
                         account_pp.animate()
                                 .scaleY(0).scaleX(0)
-                                .setDuration(200)
+                                .setDuration(400)
                                 .start();
                     }
-                    if (percentage <= 20 && !avatarShown) {
+                    if (percentage <= 40 && !avatarShown) {
                         avatarShown = true;
                         account_pp.animate()
                                 .scaleY(1).scaleX(1)
@@ -488,9 +487,81 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 //noinspection ConstantConditions
                 tabLayout.getTabAt(2).setText(getString(R.string.followers_cnt, account.getFollowers_count()));
 
+                //Allows to filter by long click
+                final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
+                tabStrip.getChildAt(0).setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        PopupMenu popup = new PopupMenu(ShowAccountActivity.this, tabStrip.getChildAt(0));
+                        popup.getMenuInflater()
+                                .inflate(R.menu.option_filter_toots_account, popup.getMenu());
+                        Menu menu = popup.getMenu();
+
+                        if( !Helper.canPin || !accountId.equals(userId)) {
+                            popup.getMenu().findItem(R.id.action_show_pinned).setVisible(false);
+                        }
+                        final MenuItem itemShowPined = menu.findItem(R.id.action_show_pinned);
+                        final MenuItem itemShowMedia = menu.findItem(R.id.action_show_media);
+
+                        itemShowMedia.setChecked(showMediaOnly);
+                        itemShowPined.setChecked(showPinned);
+                        popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
+                            @Override
+                            public void onDismiss(PopupMenu menu) {
+                                if( displayStatusFragment != null)
+                                    displayStatusFragment.refreshFilter();
+                            }
+                        });
+                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            public boolean onMenuItemClick(MenuItem item) {
+                                item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+                                item.setActionView(new View(getApplicationContext()));
+                                item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                                    @Override
+                                    public boolean onMenuItemActionExpand(MenuItem item) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public boolean onMenuItemActionCollapse(MenuItem item) {
+                                        return false;
+                                    }
+                                });
+                                switch (item.getItemId()) {
+                                    case R.id.action_show_pinned:
+                                        showPinned = !showPinned;
+                                        if( tabLayout.getTabAt(0) != null)
+                                            //noinspection ConstantConditions
+                                            tabLayout.getTabAt(0).select();
+                                        PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+                                        mPager.setAdapter(mPagerAdapter);
+                                        break;
+                                    case R.id.action_show_media:
+                                        showMediaOnly = !showMediaOnly;
+                                        if( tabLayout.getTabAt(0) != null)
+                                            //noinspection ConstantConditions
+                                            tabLayout.getTabAt(0).select();
+                                        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+                                        mPager.setAdapter(mPagerAdapter);
+                                        break;
+                                }
+                                itemShowMedia.setChecked(showMediaOnly);
+                                itemShowPined.setChecked(showPinned);
+                                return false;
+                            }
+                        });
+                        popup.show();
+                        return true;
+                    }
+                });
+
+
             }
 
             imageLoader.displayImage(account.getAvatar(), account_pp, options);
+
+
+
         }
     }
 
@@ -545,7 +616,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
         //The authenticated account is followed by the account
         if( relationship.isFollowed_by()){
-            TextView account_followed_by = (TextView) findViewById(R.id.account_followed_by);
+            TextView account_followed_by = findViewById(R.id.account_followed_by);
             account_followed_by.setVisibility(View.VISIBLE);
         }
 
@@ -594,13 +665,12 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
             Bundle bundle = new Bundle();
             switch (position){
                 case 0:
-                    DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
+                    displayStatusFragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
                     bundle.putString("targetedId", accountId);
                     bundle.putBoolean("hideHeader",true);
                     bundle.putBoolean("showMediaOnly",showMediaOnly);
                     bundle.putBoolean("showPinned",showPinned);
-                    bundle.putString("hideHeaderValue",String.valueOf(instanceValue));
                     displayStatusFragment.setArguments(bundle);
                     return displayStatusFragment;
                 case 1:
@@ -608,7 +678,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                     bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWING);
                     bundle.putString("targetedId", accountId);
                     bundle.putBoolean("hideHeader",true);
-                    bundle.putString("hideHeaderValue",String.valueOf(instanceValue));
                     displayAccountsFragment.setArguments(bundle);
                     return displayAccountsFragment;
                 case 2:
@@ -616,11 +685,22 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                     bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWERS);
                     bundle.putString("targetedId", accountId);
                     bundle.putBoolean("hideHeader",true);
-                    bundle.putString("hideHeaderValue",String.valueOf(instanceValue));
                     displayAccountsFragment.setArguments(bundle);
                     return displayAccountsFragment;
             }
             return null;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
+            // save the appropriate reference depending on position
+            switch (position) {
+                case 0:
+                    displayStatusFragment = (DisplayStatusFragment) createdFragment;
+                    break;
+            }
+            return createdFragment;
         }
 
         @Override

@@ -7,8 +7,8 @@ android {
         applicationId "fr.gouv.etalab.mastodon"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 60
-        versionName "1.5.0"
+        versionCode 64
+        versionName "1.5.4"
     }
     buildTypes {
         release {
@@ -38,7 +38,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:26.0.2'
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-    compile 'com.evernote:android-job:1.1.11'
+    compile 'com.evernote:android-job:1.2.0'
     compile 'com.github.chrisbanes:PhotoView:2.0.0'
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'org.jsoup:jsoup:1.10.3'

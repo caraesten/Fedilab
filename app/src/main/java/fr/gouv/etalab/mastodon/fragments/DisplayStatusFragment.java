@@ -17,12 +17,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,10 +33,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingFeedsAsyncTask;
@@ -70,6 +64,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private StatusListAdapter statusListAdapter;
     private String max_id;
     private List<Status> statuses;
+    private ArrayList<String> knownId;
     private RetrieveFeedsAsyncTask.Type type;
     private RelativeLayout mainLoader, nextElementLoader, textviewNoAction;
     private boolean firstLoad;
@@ -82,8 +77,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private int behaviorWithAttachments;
     private boolean showMediaOnly, showPinned;
     private int positionSpinnerTrans;
-    private boolean hideHeader;
-    private String instanceValue;
     private String lastReadStatus;
     private Intent streamingFederatedIntent, streamingLocalIntent;
 
@@ -94,10 +87,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_status, container, false);
         statuses = new ArrayList<>();
+        knownId = new ArrayList<>();
         context = getContext();
         Bundle bundle = this.getArguments();
         boolean comesFromSearch = false;
-        hideHeader = false;
+        boolean hideHeader = false;
         showMediaOnly = false;
         showPinned = false;
         if (bundle != null) {
@@ -113,6 +107,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 assert statusesReceived != null;
                 for(Parcelable status: statusesReceived){
                     statuses.add((Status) status);
+                    knownId.add(((Status) status).getId());
                 }
                 comesFromSearch = true;
             }
@@ -125,15 +120,15 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         isOnWifi = Helper.isOnWIFI(context);
         positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
-        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
+        swipeRefreshLayout = rootView.findViewById(R.id.swipeContainer);
         behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         if( type == RetrieveFeedsAsyncTask.Type.HOME)
             lastReadStatus = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
-        lv_status = (RecyclerView) rootView.findViewById(R.id.lv_status);
-        mainLoader = (RelativeLayout) rootView.findViewById(R.id.loader);
-        nextElementLoader = (RelativeLayout) rootView.findViewById(R.id.loading_next_status);
-        textviewNoAction = (RelativeLayout) rootView.findViewById(R.id.no_action);
+        lv_status = rootView.findViewById(R.id.lv_status);
+        mainLoader =  rootView.findViewById(R.id.loader);
+        nextElementLoader = rootView.findViewById(R.id.loading_next_status);
+        textviewNoAction =  rootView.findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
         statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
@@ -141,7 +136,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         if( !comesFromSearch){
 
             //Hide account header when scrolling for ShowAccountActivity
-            if (hideHeader && Build.VERSION.SDK_INT >= 21)
+            if (hideHeader)
                 ViewCompat.setNestedScrollingEnabled(lv_status, true);
 
             final LinearLayoutManager mLayoutManager;
@@ -171,7 +166,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                             nextElementLoader.setVisibility(View.GONE);
                         }
                     }
-
                 }
             });
 
@@ -181,6 +175,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 public void onRefresh() {
                     max_id = null;
                     statuses = new ArrayList<>();
+                    knownId  = new ArrayList<>();
                     firstLoad = true;
                     flag_loading = true;
                     swiped = true;
@@ -244,9 +239,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        if( apiResponse.getError() != null && !apiResponse.getError().getError().startsWith("404 -")){
+        if( apiResponse.getError() != null ){
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
+            if( show_error_messages && !apiResponse.getError().getError().startsWith("404 -"))
                 Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
@@ -268,10 +263,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }
 
         if( statuses != null && statuses.size() > 0) {
-            ArrayList<String> knownId = new ArrayList<>();
-            for(Status st: this.statuses){
-                knownId.add(st.getId());
-            }
             for(Status tmpStatus: statuses){
                 if( !knownId.contains(tmpStatus.getId())) {
                     if( type == RetrieveFeedsAsyncTask.Type.HOME && firstLoad && lastReadStatus != null && Long.parseLong(tmpStatus.getId()) > Long.parseLong(lastReadStatus)){
@@ -281,6 +272,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         tmpStatus.setNew(false);
                     }
                     this.statuses.add(tmpStatus);
+                    knownId.add(tmpStatus.getId());
                 }
             }
 
@@ -322,26 +314,42 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         if( type == RetrieveFeedsAsyncTask.Type.HOME) {
             if (context == null)
                 return;
-            if (status != null) {
+            if (status != null && !knownId.contains(status.getId())) {
                 //Update the id of the last toot retrieved
                 MainActivity.lastHomeId = status.getId();
+                int index = lv_status.getFirstVisiblePosition() + 1;
+                View v = lv_status.getChildAt(0);
+                int top = (v == null) ? 0 : v.getTop();
                 status.setReplies(new ArrayList<Status>());
                 statuses.add(0,status);
+                knownId.add(0,status.getId());
                 SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 if( !status.getAccount().getId().equals(userId))
                     MainActivity.countNewStatus++;
                 statusListAdapter.notifyDataSetChanged();
+                lv_status.setSelectionFromTop(index, top);
                 if (textviewNoAction.getVisibility() == View.VISIBLE)
                     textviewNoAction.setVisibility(View.GONE);
             }
         }else if(type == RetrieveFeedsAsyncTask.Type.PUBLIC || type == RetrieveFeedsAsyncTask.Type.LOCAL){
             if (context == null)
                 return;
-            //Avoids the array to be too big...
-            if (status != null) {
+            if (status != null && !knownId.contains(status.getId())) {
                 status.setReplies(new ArrayList<Status>());
-                statuses.add(0, status);
+                status.setNew(false);
+                if (lv_status.getFirstVisiblePosition() == 0) {
+                    statuses.add(0, status);
+                    statusListAdapter.notifyDataSetChanged();
+                } else {
+                    int index = lv_status.getFirstVisiblePosition() + 1;
+                    View v = lv_status.getChildAt(0);
+                    int top = (v == null) ? 0 : v.getTop();
+                    statuses.add(0, status);
+                    statusListAdapter.notifyDataSetChanged();
+                    lv_status.setSelectionFromTop(index, top);
+                }
+                knownId.add(0, status.getId());
                 if (textviewNoAction.getVisibility() == View.VISIBLE)
                     textviewNoAction.setVisibility(View.GONE);
             }
@@ -352,7 +360,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
      * Refresh status in list
      */
     public void refreshFilter(){
+        int index = lv_status.getFirstVisiblePosition() + 1;
+        View v = lv_status.getChildAt(0);
+        int top = (v == null) ? 0 : v.getTop();
         statusListAdapter.notifyDataSetChanged();
+        lv_status.setSelectionFromTop(index, top);
     }
 
     @Override
@@ -385,6 +397,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     retrieveMissingToots(statuses.get(0).getId());
             }
         }
+        int index = lv_status.getFirstVisiblePosition();
+        View v = lv_status.getChildAt(0);
+        int top = (v == null) ? 0 : v.getTop();
+        statusListAdapter.notifyDataSetChanged();
+        lv_status.setSelectionFromTop(index, top);
     }
 
     /**
@@ -513,23 +530,41 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     @Override
     public void onRetrieveMissingFeeds(List<Status> statuses) {
         if( statuses != null && statuses.size() > 0) {
-            ArrayList<String> knownId = new ArrayList<>();
-            for (Status st : this.statuses) {
-                knownId.add(st.getId());
-            }
-            for (int i = statuses.size() - 1; i >= 0; i--) {
-                if (!knownId.contains(statuses.get(i).getId())) {
-                    if (type == RetrieveFeedsAsyncTask.Type.HOME)
-                        statuses.get(i).setNew(true);
-                    statuses.get(i).setReplies(new ArrayList<Status>());
-                    this.statuses.add(0, statuses.get(i));
-                    SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                    String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                    if (type == RetrieveFeedsAsyncTask.Type.HOME && !statuses.get(i).getAccount().getId().equals(userId))
-                        MainActivity.countNewStatus++;
+            if( lv_status.getFirstVisiblePosition() > 1 ) {
+                int index = lv_status.getFirstVisiblePosition() + statuses.size();
+                View v = lv_status.getChildAt(0);
+                int top = (v == null) ? 0 : v.getTop();
+                for (int i = statuses.size() - 1; i >= 0; i--) {
+                    if (!knownId.contains(statuses.get(i).getId())) {
+                        if (type == RetrieveFeedsAsyncTask.Type.HOME)
+                            statuses.get(i).setNew(true);
+                        knownId.add(0, statuses.get(i).getId());
+                        statuses.get(i).setReplies(new ArrayList<Status>());
+                        this.statuses.add(0, statuses.get(i));
+                        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                        if (type == RetrieveFeedsAsyncTask.Type.HOME && !statuses.get(i).getAccount().getId().equals(userId))
+                            MainActivity.countNewStatus++;
+                    }
                 }
+                statusListAdapter.notifyDataSetChanged();
+                lv_status.setSelectionFromTop(index, top);
+            }else {
+                for (int i = statuses.size() - 1; i >= 0; i--) {
+                    if (!knownId.contains(statuses.get(i).getId())) {
+                        if (type == RetrieveFeedsAsyncTask.Type.HOME)
+                            statuses.get(i).setNew(true);
+                        knownId.add(0,statuses.get(i).getId());
+                        statuses.get(i).setReplies(new ArrayList<Status>());
+                        this.statuses.add(0, statuses.get(i));
+                        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                        if (type == RetrieveFeedsAsyncTask.Type.HOME && !statuses.get(i).getAccount().getId().equals(userId))
+                            MainActivity.countNewStatus++;
+                    }
+                }
+                statusListAdapter.notifyDataSetChanged();
             }
-            statusListAdapter.notifyDataSetChanged();
             try {
                 ((MainActivity) context).updateHomeCounter();
             }catch (Exception ignored){}

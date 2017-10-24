@@ -44,12 +44,15 @@
                 android:id="@+id/login_instance"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:maxLines="1"
                 android:inputType="textWebEmailAddress"
                 android:hint="@string/instance_example"
                 />
             <EditText
                 android:id="@+id/login_uid"
                 android:layout_width="300dp"
+                android:maxLines="1"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:hint="@string/email"
@@ -57,6 +60,7 @@
             <EditText
                 android:id = "@+id/login_passwd"
                 android:inputType="textPassword"
+                android:maxLines="1"
                 android:hint="@string/password"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"

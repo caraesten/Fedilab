@@ -12,16 +12,39 @@
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
-package fr.gouv.etalab.mastodon.activities;
+package fr.gouv.etalab.mastodon.client.Entities;
 
 /**
- * Created by Thomas on 23/04/2017.
- * Login activity class which handles the connection
+ * Created by Thomas on 20/10/2017.
  */
 
-public class LoginActivity extends BaseLoginActivity {
-    @Override
-    protected void installProviders() {
-        // do nothing
+public class Emojis {
+
+    private String shortcode;
+    private String static_url;
+    private String url;
+
+    public String getShortcode() {
+        return shortcode;
+    }
+
+    public void setShortcode(String shortcode) {
+        this.shortcode = shortcode;
+    }
+
+    public String getStatic_url() {
+        return static_url;
+    }
+
+    public void setStatic_url(String static_url) {
+        this.static_url = static_url;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

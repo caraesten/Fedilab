@@ -1500,6 +1500,26 @@ public class API {
             }
             status.setTags(tags);
 
+            //Retrieves emjis
+            List<Emojis> emojiList = new ArrayList<>();
+            try {
+                JSONArray emojisTag = resobj.getJSONArray("emojis");
+                if( arrayTag != null){
+                    for(int j = 0 ; j < emojisTag.length() ; j++){
+                        JSONObject emojisObj = emojisTag.getJSONObject(j);
+                        Emojis emojis = new Emojis();
+                        emojis.setShortcode(emojisObj.get("shortcode").toString());
+                        emojis.setStatic_url(emojisObj.get("static_url").toString());
+                        emojis.setUrl(emojisObj.get("url").toString());
+                        emojiList.add(emojis);
+                    }
+                }
+                status.setEmojis(emojiList);
+            }catch (Exception e){
+                status.setEmojis(new ArrayList<Emojis>());
+            }
+
+
             status.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
             status.setContent(resobj.get("content").toString());
             status.setFavourites_count(Integer.valueOf(resobj.get("favourites_count").toString()));
