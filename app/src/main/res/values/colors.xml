@@ -22,6 +22,7 @@
     <color name="dark_text">#f3f3f3</color>
     <color name="dark_icon">#66708a</color>
     <color name="marked_icon">#ca8f04</color>
+    <color name="boost_icon">#2b90d9</color>
     <color name="transparent">#00000000</color>
 
 

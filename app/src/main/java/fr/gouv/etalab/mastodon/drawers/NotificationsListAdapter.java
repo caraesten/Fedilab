@@ -356,7 +356,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 }
 
                 if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged())) {
-                    changeDrawableColor(context, R.drawable.ic_boost,R.color.marked_icon);
+                    changeDrawableColor(context, R.drawable.ic_boost,R.color.boost_icon);
                     imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost);
                 }else {
                     if( theme == THEME_DARK)

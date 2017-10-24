@@ -125,7 +125,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private String targetedId;
     private HashMap<String, String> urlConversion;
     private HashMap<String, String> tagConversion;
-    private final int HIDDEN_STATUS = 0;
     private final int DISPLAYED_STATUS = 1;
     private List<Status> pins;
     private int conversationPosition;
@@ -274,6 +273,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         if( type == RetrieveFeedsAsyncTask.Type.HOME) {
             Status status = statuses.get(position);
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            int HIDDEN_STATUS = 0;
             if (status.getReblog() != null && !sharedpreferences.getBoolean(Helper.SET_SHOW_BOOSTS, true))
                 return HIDDEN_STATUS;
             else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true)) {
@@ -297,9 +297,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, @SuppressLint("RecyclerView") final int position) {
 
-        if( viewHolder.getItemViewType() == HIDDEN_STATUS){
-
-        }else {
+        if( viewHolder.getItemViewType() == DISPLAYED_STATUS){
             final ViewHolder holder = (ViewHolder) viewHolder;
             holder.card_status_container.setVisibility(View.VISIBLE);
             final Status status = statuses.get(position);
@@ -387,8 +385,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_spoiler.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
             holder.status_content_translated.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
 
-
-
             switch (translator)
             {
                 case Helper.TRANS_NONE:
@@ -408,9 +404,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.google_translate.setVisibility(View.GONE);
                     break;
             }
-
-
-
 
             //Manages theme for icon colors
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -725,7 +718,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
 
                 if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged())) {
-                    changeDrawableColor(context, R.drawable.ic_boost,R.color.marked_icon);
+                    changeDrawableColor(context, R.drawable.ic_boost,R.color.boost_icon);
                     imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost);
                 }else {
                     if( theme == THEME_DARK)
