@@ -40,17 +40,19 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|enterAlways"
                 android:background="?attr/colorPrimary"
                 android:theme="@style/AppThemeDark_NoActionBar"
                 app:popupTheme="?attr/popupOverlay">
                 <ImageView
                     android:id="@+id/iconbar"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     tools:ignore="ContentDescription" />
                 <LinearLayout
                     android:id="@+id/toolbar_search_container"
                     android:layout_width="match_parent"
+                    android:gravity="end"
                     android:layout_height="40dp"
                     android:orientation="horizontal">
                     <TextView
@@ -63,15 +65,6 @@
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
                         android:id="@+id/toolbar_title" />
-                    <android.support.design.widget.TabLayout
-                        android:id="@+id/tabLayout"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        app:tabGravity="fill"
-                        app:tabMaxWidth="0dp"
-                        android:layout_height="wrap_content"
-                        app:tabSelectedTextColor="?attr/colorAccent"
-                        />
                     <android.support.v7.widget.SearchView
                         android:background="@null"
                         android:id="@+id/toolbar_search"
@@ -87,7 +80,8 @@
 
 
         <!-- Framelayout to display Fragments -->
-        <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+        <android.support.v4.view.ViewPager
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/viewpager"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
@@ -111,13 +105,45 @@
             >
         </RelativeLayout>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/toot"
-            android:layout_width="wrap_content"
+
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarBottom"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            app:srcCompat="@drawable/ic_edit" />
+            android:background="?attr/colorPrimary"
+            android:layout_gravity="bottom"
+            android:theme="@style/AppThemeDark_NoActionBar"
+            app:popupTheme="?attr/popupOverlay">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tabLayout"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    app:tabGravity="fill"
+                    app:tabMaxWidth="0dp"
+                    android:layout_height="wrap_content"
+                    app:tabSelectedTextColor="?attr/colorAccent"
+                    />
+                <ImageButton
+                    android:id="@+id/toot"
+                    android:layout_width="30dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:background="@color/transparent"
+                    app:srcCompat="@drawable/ic_edit"
+                    android:contentDescription="@string/toot_it"/>
+            </LinearLayout>
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.CoordinatorLayout>
 

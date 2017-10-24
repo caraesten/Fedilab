@@ -28,7 +28,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -53,6 +52,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -117,7 +117,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 public abstract class BaseMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface {
 
-    private FloatingActionButton toot;
     private HashMap<String, String> tagTile = new HashMap<>();
     private HashMap<String, Integer> tagItem = new HashMap<>();
     private TextView toolbarTitle;
@@ -142,6 +141,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
     private Intent streamingIntent;
     public static String lastHomeId = null, lastNotificationId = null;
     boolean notif_follow, notif_add, notif_mention, notif_share, show_boosts, show_replies;
+    private Toolbar toolbarBottom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,6 +179,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
         Helper.fillMapEmoji(getApplicationContext());
         //Here, the user is authenticated
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbarBottom = findViewById(R.id.toolbarBottom);
         setSupportActionBar(toolbar);
         toolbarTitle  = toolbar.findViewById(R.id.toolbar_title);
         toolbar_search = toolbar.findViewById(R.id.toolbar_search);
@@ -402,10 +403,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 main_app_container.setVisibility(View.GONE);
                 viewPager.setVisibility(View.VISIBLE);
                 Helper.switchLayout(BaseMainActivity.this);
-                if( tab.getPosition() != 1 )
-                    toot.setVisibility(View.VISIBLE);
-                else
-                    toot.setVisibility(View.GONE);
                 DrawerLayout drawer = findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
             }
@@ -424,10 +421,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
                     DrawerLayout drawer = findViewById(R.id.drawer_layout);
                     drawer.closeDrawer(GravityCompat.START);
                 }
-                if( tab.getPosition() != 1 )
-                    toot.setVisibility(View.VISIBLE);
-                else
-                    toot.setVisibility(View.GONE);
                 Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
                 switch (tab.getPosition()){
                     case 0:
@@ -516,12 +509,12 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 if( main_app_container.getVisibility() == View.VISIBLE){
                     main_app_container.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.GONE);
-                    tabLayout.setVisibility(View.GONE);
+                    toolbarBottom.setVisibility(View.GONE);
                     toolbarTitle.setVisibility(View.VISIBLE);
                 }else {
                     main_app_container.setVisibility(View.GONE);
                     viewPager.setVisibility(View.VISIBLE);
-                    tabLayout.setVisibility(View.VISIBLE);
+                    toolbarBottom.setVisibility(View.VISIBLE);
                     toolbarTitle.setVisibility(View.GONE);
                 }
                 return false;
@@ -540,12 +533,12 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 if( main_app_container.getVisibility() == View.VISIBLE){
                     main_app_container.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.GONE);
-                    tabLayout.setVisibility(View.GONE);
+                    toolbarBottom.setVisibility(View.GONE);
                     toolbarTitle.setVisibility(View.VISIBLE);
                 }else {
                     main_app_container.setVisibility(View.GONE);
                     viewPager.setVisibility(View.VISIBLE);
-                    tabLayout.setVisibility(View.VISIBLE);
+                    toolbarBottom.setVisibility(View.VISIBLE);
                     toolbarTitle.setVisibility(View.GONE);
                 }
                 //your code here
@@ -559,17 +552,17 @@ public abstract class BaseMainActivity extends AppCompatActivity
                     if( main_app_container.getVisibility() == View.VISIBLE){
                         main_app_container.setVisibility(View.VISIBLE);
                         viewPager.setVisibility(View.GONE);
-                        tabLayout.setVisibility(View.GONE);
+                        toolbarBottom.setVisibility(View.GONE);
                         toolbarTitle.setVisibility(View.VISIBLE);
                     }else {
                         main_app_container.setVisibility(View.GONE);
                         viewPager.setVisibility(View.VISIBLE);
-                        tabLayout.setVisibility(View.VISIBLE);
+                        toolbarBottom.setVisibility(View.VISIBLE);
                         toolbarTitle.setVisibility(View.GONE);
                     }
                 }else {
                     toolbarTitle.setVisibility(View.GONE);
-                    tabLayout.setVisibility(View.GONE);
+                    toolbarBottom.setVisibility(View.GONE);
                 }
             }
         });
@@ -580,7 +573,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
         //Defines the current locale of the device in a static variable
         currentLocale = Helper.currentLocale(getApplicationContext());
 
-        toot = findViewById(R.id.toot);
+        ImageButton toot = findViewById(R.id.toot);
         toot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -772,12 +765,12 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 if( main_app_container.getVisibility() == View.VISIBLE){
                     main_app_container.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.GONE);
-                    tabLayout.setVisibility(View.GONE);
+                    toolbarBottom.setVisibility(View.GONE);
                     toolbarTitle.setVisibility(View.VISIBLE);
                 }else {
                     main_app_container.setVisibility(View.GONE);
                     viewPager.setVisibility(View.VISIBLE);
-                    tabLayout.setVisibility(View.VISIBLE);
+                    toolbarBottom.setVisibility(View.VISIBLE);
                     toolbarTitle.setVisibility(View.GONE);
                 }
             }
@@ -966,11 +959,10 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 Helper.switchLayout(BaseMainActivity.this);
                 main_app_container.setVisibility(View.GONE);
                 viewPager.setVisibility(View.VISIBLE);
-                tabLayout.setVisibility(View.VISIBLE);
+                toolbarBottom.setVisibility(View.VISIBLE);
                 toolbarTitle.setVisibility(View.GONE);
                 final NavigationView navigationView = findViewById(R.id.nav_view);
                 unCheckAllMenuItems(navigationView);
-                toot.setVisibility(View.VISIBLE);
                 //Manages theme for icon colors
                 SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -998,11 +990,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_photo,R.color.white);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_remove_red_eye,R.color.white);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.white);
-                }
-                switch (viewPager.getCurrentItem()){
-                    case 1:
-                        toot.setVisibility(View.GONE);
-                        break;
                 }
             }
 
@@ -1158,17 +1145,15 @@ public abstract class BaseMainActivity extends AppCompatActivity
 
         main_app_container.setVisibility(View.VISIBLE);
         viewPager.setVisibility(View.GONE);
-        tabLayout.setVisibility(View.GONE);
+        toolbarBottom.setVisibility(View.GONE);
         toolbarTitle.setVisibility(View.VISIBLE);
         if (id == R.id.nav_settings) {
-            toot.setVisibility(View.GONE);
             TabLayoutSettingsFragment tabLayoutSettingsFragment= new TabLayoutSettingsFragment();
             fragmentTag = "TABLAYOUT_SETTINGS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, tabLayoutSettingsFragment, fragmentTag).commit();
 
         } else if (id == R.id.nav_favorites) {
-            toot.setVisibility(View.GONE);
             statusFragment = new DisplayStatusFragment();
             bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.FAVOURITES);
             statusFragment.setArguments(bundle);
@@ -1176,7 +1161,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
         } else if (id == R.id.nav_blocked) {
-            toot.setVisibility(View.GONE);
             accountsFragment = new DisplayAccountsFragment();
             bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.BLOCKED);
             accountsFragment.setArguments(bundle);
@@ -1184,7 +1168,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, accountsFragment, fragmentTag).commit();
         }else if (id == R.id.nav_muted) {
-            toot.setVisibility(View.GONE);
             accountsFragment = new DisplayAccountsFragment();
             bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.MUTED);
             accountsFragment.setArguments(bundle);
@@ -1192,19 +1175,16 @@ public abstract class BaseMainActivity extends AppCompatActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, accountsFragment, fragmentTag).commit();
         }else if (id == R.id.nav_scheduled) {
-            toot.setVisibility(View.VISIBLE);
             DisplayScheduledTootsFragment displayScheduledTootsFragment = new DisplayScheduledTootsFragment();
             fragmentTag = "SCHEDULED";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayScheduledTootsFragment, fragmentTag).commit();
         }else if (id == R.id.nav_drafts) {
-            toot.setVisibility(View.VISIBLE);
             DisplayDraftsFragment displayDraftsFragment = new DisplayDraftsFragment();
             fragmentTag = "DRAFTS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayDraftsFragment, fragmentTag).commit();
         }else if( id == R.id.nav_follow_request){
-            toot.setVisibility(View.GONE);
             DisplayFollowRequestSentFragment followRequestSentFragment = new DisplayFollowRequestSentFragment();
             fragmentTag = "FOLLOW_REQUEST_SENT";
             fragmentManager.beginTransaction()
@@ -1304,7 +1284,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
             //Remove the search bar
             if( !toolbar_search.isIconified() ) {
                 toolbarTitle.setVisibility(View.VISIBLE);
-                tabLayout.setVisibility(View.VISIBLE);
+                toolbarBottom.setVisibility(View.VISIBLE);
                 toolbar_search.setIconified(true);
             }
             //Selection comes from another menu, no action to do
