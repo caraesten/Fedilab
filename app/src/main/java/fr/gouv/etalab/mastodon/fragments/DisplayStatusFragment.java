@@ -76,6 +76,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private int positionSpinnerTrans;
     private String lastReadStatus;
     private Intent streamingFederatedIntent, streamingLocalIntent;
+    LinearLayoutManager mLayoutManager;
 
     public DisplayStatusFragment(){
     }
@@ -129,15 +130,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         nextElementLoader.setVisibility(View.GONE);
         statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
         lv_status.setAdapter(statusListAdapter);
+        mLayoutManager = new LinearLayoutManager(context);
+        lv_status.setLayoutManager(mLayoutManager);
         if( !comesFromSearch){
 
             //Hide account header when scrolling for ShowAccountActivity
             if (hideHeader)
                 ViewCompat.setNestedScrollingEnabled(lv_status, true);
-
-            final LinearLayoutManager mLayoutManager;
-            mLayoutManager = new LinearLayoutManager(context);
-            lv_status.setLayoutManager(mLayoutManager);
 
             lv_status.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy)
@@ -331,7 +330,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 status.setReplies(new ArrayList<Status>());
                 status.setNew(false);
                 statuses.add(0, status);
-                statusListAdapter.notifyDataSetChanged();
+                int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+                if( firstVisibleItem > 0)
+                    statusListAdapter.notifyItemInserted(0);
+                else
+                    statusListAdapter.notifyDataSetChanged();
                 knownId.add(0, status.getId());
                 if (textviewNoAction.getVisibility() == View.VISIBLE)
                     textviewNoAction.setVisibility(View.GONE);
@@ -376,7 +379,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     retrieveMissingToots(statuses.get(0).getId());
             }
         }
-        statusListAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -505,11 +507,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     @Override
     public void onRetrieveMissingFeeds(List<Status> statuses) {
         if( statuses != null && statuses.size() > 0) {
+            int inserted = 0;
             for (int i = statuses.size() - 1; i >= 0; i--) {
                 if (!knownId.contains(statuses.get(i).getId())) {
                     if (type == RetrieveFeedsAsyncTask.Type.HOME)
                         statuses.get(i).setNew(true);
                     knownId.add(0,statuses.get(i).getId());
+                    inserted++;
                     statuses.get(i).setReplies(new ArrayList<Status>());
                     this.statuses.add(0, statuses.get(i));
                     SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -518,7 +522,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         MainActivity.countNewStatus++;
                 }
             }
-            statusListAdapter.notifyDataSetChanged();
+            statusListAdapter.notifyItemRangeInserted(0, inserted - 1);
             try {
                 ((MainActivity) context).updateHomeCounter();
             }catch (Exception ignored){}
