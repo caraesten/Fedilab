@@ -581,7 +581,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
                                             @Override
                                             public void run() {
-                                                Bitmap bitmap = Helper.convertTootIntoBitmap(context, holder.notification_status_container);
+                                                Bitmap bitmap = Helper.convertTootIntoBitmap(context, holder.getView());
                                                 status.setTakingScreenShot(false);
                                                 notificationsListAdapter.notifyDataSetChanged();
                                                 Intent intent = new Intent(context, TootActivity.class);
@@ -915,6 +915,10 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         LinearLayout status_container3;
         LinearLayout notification_status_container;
         ImageView status_privacy;
+
+        public View getView(){
+            return itemView;
+        }
 
         public ViewHolder(View itemView) {
             super(itemView);

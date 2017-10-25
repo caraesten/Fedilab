@@ -125,7 +125,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private String targetedId;
     private HashMap<String, String> urlConversion;
     private HashMap<String, String> tagConversion;
-    private final int HIDDEN_STATUS = 0;
     private final int DISPLAYED_STATUS = 1;
     private List<Status> pins;
     private int conversationPosition;
@@ -220,6 +219,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         ImageView new_element;
 
+        public View getView(){
+            return itemView;
+        }
+
         ViewHolder(View itemView) {
             super(itemView);
             loader_replies = itemView.findViewById(R.id.loader_replies);
@@ -274,6 +277,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         if( type == RetrieveFeedsAsyncTask.Type.HOME) {
             Status status = statuses.get(position);
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            int HIDDEN_STATUS = 0;
             if (status.getReblog() != null && !sharedpreferences.getBoolean(Helper.SET_SHOW_BOOSTS, true))
                 return HIDDEN_STATUS;
             else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true)) {
@@ -297,9 +301,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, @SuppressLint("RecyclerView") final int position) {
 
-        if( viewHolder.getItemViewType() == HIDDEN_STATUS){
-
-        }else {
+        if( viewHolder.getItemViewType() == DISPLAYED_STATUS){
             final ViewHolder holder = (ViewHolder) viewHolder;
             holder.card_status_container.setVisibility(View.VISIBLE);
             final Status status = statuses.get(position);
@@ -1093,7 +1095,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
                                         @Override
                                         public void run() {
-                                            Bitmap bitmap = Helper.convertTootIntoBitmap(context, holder.status_content_container);
+                                            Bitmap bitmap = Helper.convertTootIntoBitmap(context, holder.getView());
                                             status.setTakingScreenShot(false);
                                             statusListAdapter.notifyDataSetChanged();
                                             Intent intent = new Intent(context, TootActivity.class);

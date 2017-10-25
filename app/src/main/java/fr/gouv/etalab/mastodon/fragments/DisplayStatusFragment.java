@@ -319,7 +319,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 if( !status.getAccount().getId().equals(userId))
                     MainActivity.countNewStatus++;
-                statusListAdapter.notifyDataSetChanged();
+                int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+                if( firstVisibleItem > 0)
+                    statusListAdapter.notifyItemInserted(0);
+                else
+                    statusListAdapter.notifyDataSetChanged();
                 if (textviewNoAction.getVisibility() == View.VISIBLE)
                     textviewNoAction.setVisibility(View.GONE);
             }
