@@ -39,14 +39,12 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -97,18 +95,15 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cz.msebera.android.httpclient.Header;
-import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.PostStatusAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsForReplyAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UploadActionAsyncTask;
-import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
@@ -117,11 +112,9 @@ import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
-import fr.gouv.etalab.mastodon.client.Entities.Tag;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.drawers.AccountsSearchAdapter;
 import fr.gouv.etalab.mastodon.drawers.DraftsListAdapter;
-import fr.gouv.etalab.mastodon.drawers.TagsListAdapter;
 import fr.gouv.etalab.mastodon.drawers.TagsSearchAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostStatusActionInterface;
@@ -1551,14 +1544,15 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             account.setAcct(mention.getAcct());
             account.setAvatar(mention.getUrl());
             account.setUsername(mention.getUsername());
+            account.setDisplay_name(mention.getUsername());
             listItems.add("@"+mention.getAcct());
+            accounts.add(account);
             checkedValues[i] = toot_content.getText().toString().contains("@" + mention.getAcct());
             i++;
         }
         final CharSequence[] charSequenceItems = listItems.toArray(new CharSequence[listItems.size()]);
         final AlertDialog.Builder builderSingle = new AlertDialog.Builder(TootActivity.this);
         builderSingle.setTitle(getString(R.string.choose_accounts));
-        final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(getApplicationContext(), accounts, false);
         final Account[] accountArray = new Account[accounts.size()];
         i = 0;
         for(Account account: accounts){
@@ -1569,9 +1563,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                toot_content.setSelection(toot_content.getText().length());
             }
         });
-
         builderSingle.setMultiChoiceItems(charSequenceItems, checkedValues, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
