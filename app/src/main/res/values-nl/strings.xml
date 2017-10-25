@@ -433,4 +433,5 @@
     <string name="thanks_text_dev">
         Met dank aan:
     </string>
+    <string name="select_accounts">Select some accounts</string>
 </resources>

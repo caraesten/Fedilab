@@ -1544,7 +1544,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         }
         final AlertDialog.Builder builderSingle = new AlertDialog.Builder(TootActivity.this);
         AccountsReplyAdapter accountsReplyAdapter = new AccountsReplyAdapter(TootActivity.this, accounts, checkedValues);
-        builderSingle.setTitle(getString(R.string.choose_accounts)).setAdapter(accountsReplyAdapter, null);
+        builderSingle.setTitle(getString(R.string.select_accounts)).setAdapter(accountsReplyAdapter, null);
         builderSingle.setNegativeButton(R.string.validate, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

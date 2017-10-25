@@ -182,6 +182,7 @@
     <string name="no_draft">No draft!</string>
     <string name="choose_toot">Choose a toot</string>
     <string name="choose_accounts">Choose an account</string>
+    <string name="select_accounts">Select some accounts</string>
     <string name="remove_draft">Remove draft?</string>
     <string name="show_reply">Click on the button to display the original toot</string>
     <!-- Instance -->
