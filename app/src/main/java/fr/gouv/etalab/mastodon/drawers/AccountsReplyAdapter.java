@@ -105,7 +105,12 @@ public class AccountsReplyAdapter extends BaseAdapter{
         });
         holder.checkbox.setChecked(checked[position]);
         holder.account_dn.setText(String.format("@%s", account.getAcct()));
-
+        holder.account_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.checkbox.performClick();
+            }
+        });
         //Profile picture
         imageLoader.displayImage(account.getAvatar(), holder.account_pp, options);
 
