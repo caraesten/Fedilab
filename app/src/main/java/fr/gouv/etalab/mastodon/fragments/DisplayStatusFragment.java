@@ -24,6 +24,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -528,7 +529,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
             statusListAdapter.notifyItemRangeInserted(0, inserted - 1);
             try {
-                ((MainActivity) context).updateHomeCounter();
+                if( type == RetrieveFeedsAsyncTask.Type.HOME)
+                    ((MainActivity) context).updateHomeCounter();
+                else
+                    ((MainActivity) context).updateTimeLine(type, inserted);
             }catch (Exception ignored){}
         }
     }

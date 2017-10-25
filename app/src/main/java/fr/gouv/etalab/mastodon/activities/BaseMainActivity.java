@@ -438,10 +438,16 @@ public abstract class BaseMainActivity extends AppCompatActivity
                             displayStatusFragment.scrollToTop();
                         break;
                     case 2:
+                        if( display_local)
+                            updateTimeLine(RetrieveFeedsAsyncTask.Type.LOCAL,0);
+                        else if( display_global)
+                            updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC,0);
+                        break;
                     case 3:
                         displayStatusFragment = ((DisplayStatusFragment) fragment);
                         if( displayStatusFragment != null )
                             displayStatusFragment.scrollToTop();
+                        updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC,0);
                         break;
                     case 1:
                         DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
@@ -1383,6 +1389,41 @@ public abstract class BaseMainActivity extends AppCompatActivity
             tabCounterHome.setVisibility(View.VISIBLE);
         }else {
             tabCounterHome.setVisibility(View.GONE);
+        }
+    }
+
+    public void updateTimeLine(RetrieveFeedsAsyncTask.Type type, int value){
+        if( type == RetrieveFeedsAsyncTask.Type.LOCAL){
+            if( tabLayout.getTabAt(2) != null && display_local){
+                View tabLocal = tabLayout.getTabAt(2).getCustomView();
+                TextView tabCounterLocal = tabLocal.findViewById(R.id.tab_counter);
+                tabCounterLocal.setText(String.valueOf(value));
+                if( value > 0){
+                    tabCounterLocal.setVisibility(View.VISIBLE);
+                }else {
+                    tabCounterLocal.setVisibility(View.GONE);
+                }
+            }
+        }else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC){
+            if( tabLayout.getTabAt(3) != null && display_local){
+                View tabPublic = tabLayout.getTabAt(3).getCustomView();
+                TextView tabCounterPublic = tabPublic.findViewById(R.id.tab_counter);
+                tabCounterPublic.setText(String.valueOf(value));
+                if( value > 0){
+                    tabCounterPublic.setVisibility(View.VISIBLE);
+                }else {
+                    tabCounterPublic.setVisibility(View.GONE);
+                }
+            }else if( tabLayout.getTabAt(2) != null && !display_local && display_global){
+                View tabPublic = tabLayout.getTabAt(2).getCustomView();
+                TextView tabCounterPublic = tabPublic.findViewById(R.id.tab_counter);
+                tabCounterPublic.setText(String.valueOf(value));
+                if( value > 0){
+                    tabCounterPublic.setVisibility(View.VISIBLE);
+                }else {
+                    tabCounterPublic.setVisibility(View.GONE);
+                }
+            }
         }
     }
 
