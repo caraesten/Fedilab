@@ -15,13 +15,19 @@
 package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
 import java.util.ArrayList;
 
 import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountsReplyInterface;
+import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 
 /**
@@ -51,7 +57,6 @@ public class RetrieveAccountsForReplyAsyncTask extends AsyncTask<Void, Void, Voi
         addedAccounts = new ArrayList<>();
         //Retrieves the first toot
         if( statusContext.getAncestors().size() > 0 ) {
-            fr.gouv.etalab.mastodon.client.Entities.Status statusFirst = statusContext.getAncestors().get(0);
             statusContext = api.getStatusContext(statusContext.getAncestors().get(0).getId());
         }
         if( status != null){
@@ -84,7 +89,11 @@ public class RetrieveAccountsForReplyAsyncTask extends AsyncTask<Void, Void, Voi
     }
 
     private boolean canBeAdded(String acct){
-        return acct != null && !acct.equals(status.getAccount().getAcct()) && !addedAccounts.contains(acct);
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
+        return acct != null && !acct.equals(currentAccount.getAcct()) && !addedAccounts.contains(acct);
     }
 
     @Override

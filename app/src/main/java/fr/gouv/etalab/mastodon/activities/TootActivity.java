@@ -97,6 +97,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -770,9 +771,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                         dialog.dismiss();
                     }
                 });
-                alert.setPositiveButton(R.string.accounts, new DialogInterface.OnClickListener() {
+                alert.setNegativeButton(R.string.accounts, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        new RetrieveAccountsForReplyAsyncTask(getApplicationContext(), tootReply, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        new RetrieveAccountsForReplyAsyncTask(getApplicationContext(), tootReply.getReblog() != null?tootReply.getReblog():tootReply, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         dialog.dismiss();
                     }
                 });
@@ -1542,33 +1543,43 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     @Override
     public void onRetrieveAccountsReply(ArrayList<Mention> mentions) {
         ArrayList<Account> accounts = new ArrayList<>();
+        List<String> listItems = new ArrayList<>();
+        final boolean[] checkedValues = new boolean[mentions.size()];
+        int i = 0;
         for(Mention mention: mentions) {
             Account account = new Account();
             account.setAcct(mention.getAcct());
             account.setAvatar(mention.getUrl());
             account.setUsername(mention.getUsername());
+            listItems.add("@"+mention.getAcct());
+            checkedValues[i] = toot_content.getText().toString().contains("@" + mention.getAcct());
+            i++;
         }
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(TootActivity.this);
+        final CharSequence[] charSequenceItems = listItems.toArray(new CharSequence[listItems.size()]);
+        final AlertDialog.Builder builderSingle = new AlertDialog.Builder(TootActivity.this);
         builderSingle.setTitle(getString(R.string.choose_accounts));
         final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(getApplicationContext(), accounts, false);
         final Account[] accountArray = new Account[accounts.size()];
-        int i = 0;
+        i = 0;
         for(Account account: accounts){
             accountArray[i] = account;
             i++;
         }
-        builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+        builderSingle.setNegativeButton(R.string.validate, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
-        builderSingle.setAdapter(accountsSearchAdapter, new DialogInterface.OnClickListener() {
+
+        builderSingle.setMultiChoiceItems(charSequenceItems, checkedValues, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Account selectedAccount = accountArray[which];
-                
-                dialog.dismiss();
+            public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
+                if (isChecked) {
+                    toot_content.setText(charSequenceItems[indexSelected] + " " + toot_content.getText());
+                } else {
+                    toot_content.setText(toot_content.getText().toString().replaceAll("\\s*" +charSequenceItems[indexSelected], ""));
+                }
             }
         });
         builderSingle.show();
