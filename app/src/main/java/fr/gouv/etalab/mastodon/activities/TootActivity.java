@@ -101,10 +101,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cz.msebera.android.httpclient.Header;
+import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.PostStatusAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsForReplyAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UploadActionAsyncTask;
+import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
@@ -121,6 +124,7 @@ import fr.gouv.etalab.mastodon.drawers.TagsListAdapter;
 import fr.gouv.etalab.mastodon.drawers.TagsSearchAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostStatusActionInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountsReplyInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchInterface;
@@ -139,7 +143,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Toot activity class
  */
 
-public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface {
+public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveAccountsReplyInterface {
 
 
     private String visibility;
@@ -763,6 +767,12 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     input.setText(Html.fromHtml(content));
                 alert.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.dismiss();
+                    }
+                });
+                alert.setPositiveButton(R.string.accounts, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        new RetrieveAccountsForReplyAsyncTask(getApplicationContext(), tootReply, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         dialog.dismiss();
                     }
                 });
@@ -1529,4 +1539,38 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     }
 
 
+    @Override
+    public void onRetrieveAccountsReply(ArrayList<Mention> mentions) {
+        ArrayList<Account> accounts = new ArrayList<>();
+        for(Mention mention: mentions) {
+            Account account = new Account();
+            account.setAcct(mention.getAcct());
+            account.setAvatar(mention.getUrl());
+            account.setUsername(mention.getUsername());
+        }
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(TootActivity.this);
+        builderSingle.setTitle(getString(R.string.choose_accounts));
+        final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(getApplicationContext(), accounts, false);
+        final Account[] accountArray = new Account[accounts.size()];
+        int i = 0;
+        for(Account account: accounts){
+            accountArray[i] = account;
+            i++;
+        }
+        builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builderSingle.setAdapter(accountsSearchAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Account selectedAccount = accountArray[which];
+                
+                dialog.dismiss();
+            }
+        });
+        builderSingle.show();
+    }
 }
