@@ -193,7 +193,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 
-            ImageView close_toot = (ImageView) actionBar.getCustomView().findViewById(R.id.close_toot);
+            ImageView close_toot = actionBar.getCustomView().findViewById(R.id.close_toot);
             close_toot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -202,9 +202,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     finish();
                 }
             });
-            title = (TextView) actionBar.getCustomView().findViewById(R.id.toolbar_title);
-            pp_actionBar = (ImageView) actionBar.getCustomView().findViewById(R.id.pp_actionBar);
-            pp_progress = (ProgressBar) actionBar.getCustomView().findViewById(R.id.pp_progress);
+            title = actionBar.getCustomView().findViewById(R.id.toolbar_title);
+            pp_actionBar = actionBar.getCustomView().findViewById(R.id.pp_actionBar);
+            pp_progress = actionBar.getCustomView().findViewById(R.id.pp_progress);
 
         }
 
@@ -224,22 +224,22 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 
-        toot_it = (Button) findViewById(R.id.toot_it);
-        Button toot_cw = (Button) findViewById(R.id.toot_cw);
-        toot_space_left = (TextView) findViewById(R.id.toot_space_left);
-        toot_visibility = (ImageButton) findViewById(R.id.toot_visibility);
-        toot_picture = (ImageButton) findViewById(R.id.toot_picture);
-        loading_picture = (ProgressBar) findViewById(R.id.loading_picture);
-        toot_picture_container = (LinearLayout) findViewById(R.id.toot_picture_container);
-        toot_content = (AutoCompleteTextView) findViewById(R.id.toot_content);
+        toot_it = findViewById(R.id.toot_it);
+        Button toot_cw = findViewById(R.id.toot_cw);
+        toot_space_left = findViewById(R.id.toot_space_left);
+        toot_visibility = findViewById(R.id.toot_visibility);
+        toot_picture = findViewById(R.id.toot_picture);
+        loading_picture = findViewById(R.id.loading_picture);
+        toot_picture_container = findViewById(R.id.toot_picture_container);
+        toot_content = findViewById(R.id.toot_content);
         int newInputType = toot_content.getInputType() & (toot_content.getInputType() ^ InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
         toot_content.setInputType(newInputType);
-        toot_cw_content = (EditText) findViewById(R.id.toot_cw_content);
-        picture_scrollview = (HorizontalScrollView) findViewById(R.id.picture_scrollview);
-        toot_sensitive = (CheckBox) findViewById(R.id.toot_sensitive);
-        //search_small_container = (LinearLayout) findViewById(R.id.search_small_container);
+        toot_cw_content = findViewById(R.id.toot_cw_content);
+        picture_scrollview = findViewById(R.id.picture_scrollview);
+        toot_sensitive = findViewById(R.id.toot_sensitive);
 
-        drawer_layout = (LinearLayout) findViewById(R.id.drawer_layout);
+
+        drawer_layout = findViewById(R.id.drawer_layout);
         drawer_layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -861,13 +861,13 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 dialogBuilder.setView(dialogView);
                 final AlertDialog alertDialog = dialogBuilder.create();
 
-                final DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.date_picker);
-                final TimePicker timePicker = (TimePicker) dialogView.findViewById(R.id.time_picker);
+                final DatePicker datePicker = dialogView.findViewById(R.id.date_picker);
+                final TimePicker timePicker = dialogView.findViewById(R.id.time_picker);
                 timePicker.setIs24HourView(true);
-                Button date_time_cancel = (Button) dialogView.findViewById(R.id.date_time_cancel);
-                final ImageButton date_time_previous = (ImageButton) dialogView.findViewById(R.id.date_time_previous);
-                final ImageButton date_time_next = (ImageButton) dialogView.findViewById(R.id.date_time_next);
-                final ImageButton date_time_set = (ImageButton) dialogView.findViewById(R.id.date_time_set);
+                Button date_time_cancel = dialogView.findViewById(R.id.date_time_cancel);
+                final ImageButton date_time_previous = dialogView.findViewById(R.id.date_time_previous);
+                final ImageButton date_time_next = dialogView.findViewById(R.id.date_time_next);
+                final ImageButton date_time_set = dialogView.findViewById(R.id.date_time_set);
 
                 //Buttons management
                 date_time_cancel.setOnClickListener(new View.OnClickListener() {
@@ -1319,7 +1319,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         if( childCount > 0 ){
             for(int i = 0 ; i < childCount ; i++){
                 if( toot_picture_container.getChildAt(i) instanceof ImageView)
-                    toRemove.add((ImageView) toot_picture_container.getChildAt(i));
+                    toRemove.add((ImageView)toot_picture_container.getChildAt(i));
             }
             if( toRemove.size() > 0){
                 for(ImageView imageView: toRemove)
@@ -1553,6 +1553,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         final CharSequence[] charSequenceItems = listItems.toArray(new CharSequence[listItems.size()]);
         final AlertDialog.Builder builderSingle = new AlertDialog.Builder(TootActivity.this);
         builderSingle.setTitle(getString(R.string.choose_accounts));
+        //noinspection MismatchedReadAndWriteOfArray
         final Account[] accountArray = new Account[accounts.size()];
         i = 0;
         for(Account account: accounts){
