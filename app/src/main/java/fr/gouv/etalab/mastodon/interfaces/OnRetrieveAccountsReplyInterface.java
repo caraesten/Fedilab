@@ -16,12 +16,13 @@ package fr.gouv.etalab.mastodon.interfaces;
 
 
 import java.util.ArrayList;
-import fr.gouv.etalab.mastodon.client.Entities.Mention;
+
+import fr.gouv.etalab.mastodon.client.Entities.Account;
 
 /**
  * Created by Thomas on 25/10/2017.
  * Interface when accounts of a conversation have been retrieved
  */
 public interface OnRetrieveAccountsReplyInterface {
-    void onRetrieveAccountsReply(ArrayList<Mention> mentions);
+    void onRetrieveAccountsReply(ArrayList<Account> accounts);
 }

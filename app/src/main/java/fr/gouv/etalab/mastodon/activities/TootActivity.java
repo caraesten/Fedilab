@@ -113,6 +113,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
+import fr.gouv.etalab.mastodon.drawers.AccountsReplyAdapter;
 import fr.gouv.etalab.mastodon.drawers.AccountsSearchAdapter;
 import fr.gouv.etalab.mastodon.drawers.DraftsListAdapter;
 import fr.gouv.etalab.mastodon.drawers.TagsSearchAdapter;
@@ -1534,32 +1535,16 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
 
     @Override
-    public void onRetrieveAccountsReply(ArrayList<Mention> mentions) {
-        ArrayList<Account> accounts = new ArrayList<>();
-        List<String> listItems = new ArrayList<>();
-        final boolean[] checkedValues = new boolean[mentions.size()];
+    public void onRetrieveAccountsReply(ArrayList<Account> accounts) {
+        final boolean[] checkedValues = new boolean[accounts.size()];
         int i = 0;
-        for(Mention mention: mentions) {
-            Account account = new Account();
-            account.setAcct(mention.getAcct());
-            account.setAvatar(mention.getUrl());
-            account.setUsername(mention.getUsername());
-            account.setDisplay_name(mention.getUsername());
-            listItems.add("@"+mention.getAcct());
-            accounts.add(account);
-            checkedValues[i] = toot_content.getText().toString().contains("@" + mention.getAcct());
+        for(Account account: accounts) {
+            checkedValues[i] = toot_content.getText().toString().contains("@" + account.getAcct());
             i++;
         }
-        final CharSequence[] charSequenceItems = listItems.toArray(new CharSequence[listItems.size()]);
         final AlertDialog.Builder builderSingle = new AlertDialog.Builder(TootActivity.this);
-        builderSingle.setTitle(getString(R.string.choose_accounts));
-        //noinspection MismatchedReadAndWriteOfArray
-        final Account[] accountArray = new Account[accounts.size()];
-        i = 0;
-        for(Account account: accounts){
-            accountArray[i] = account;
-            i++;
-        }
+        AccountsReplyAdapter accountsReplyAdapter = new AccountsReplyAdapter(TootActivity.this, accounts, checkedValues);
+        builderSingle.setTitle(getString(R.string.choose_accounts)).setAdapter(accountsReplyAdapter, null);
         builderSingle.setNegativeButton(R.string.validate, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -1567,16 +1552,15 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 toot_content.setSelection(toot_content.getText().length());
             }
         });
-        builderSingle.setMultiChoiceItems(charSequenceItems, checkedValues, new DialogInterface.OnMultiChoiceClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
-                if (isChecked) {
-                    toot_content.setText(charSequenceItems[indexSelected] + " " + toot_content.getText());
-                } else {
-                    toot_content.setText(toot_content.getText().toString().replaceAll("\\s*" +charSequenceItems[indexSelected], ""));
-                }
-            }
-        });
         builderSingle.show();
+    }
+
+    public void changeAccountReply(boolean isChecked, String acct){
+        if (isChecked) {
+            if( !toot_content.getText().toString().contains(acct))
+                toot_content.setText(acct + " " + toot_content.getText());
+        } else {
+            toot_content.setText(toot_content.getText().toString().replaceAll("\\s*" +acct, ""));
+        }
     }
 }

@@ -18,12 +18,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.util.ArrayList;
 
 import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
+import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountsReplyInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -42,11 +45,13 @@ public class RetrieveAccountsForReplyAsyncTask extends AsyncTask<Void, Void, Voi
     private OnRetrieveAccountsReplyInterface listener;
     private ArrayList<Mention> mentions;
     private ArrayList<String> addedAccounts;
+    private ArrayList<Account> accounts;
 
     public RetrieveAccountsForReplyAsyncTask(Context context, fr.gouv.etalab.mastodon.client.Entities.Status status, OnRetrieveAccountsReplyInterface onRetrieveAccountsReplyInterface){
         this.context = context;
         this.status = status;
         this.listener = onRetrieveAccountsReplyInterface;
+        this.accounts = new ArrayList<>();
     }
 
     @Override
@@ -85,6 +90,12 @@ public class RetrieveAccountsForReplyAsyncTask extends AsyncTask<Void, Void, Voi
                 }
             }
         }
+        for( Mention mention: mentions){
+            Results accountSearch = api.search(mention.getUrl());
+            if( accountSearch != null && accountSearch.getAccounts() != null && accountSearch.getAccounts().size() == 1)
+                accounts.add(accountSearch.getAccounts().get(0));
+
+        }
         return null;
     }
 
@@ -98,7 +109,7 @@ public class RetrieveAccountsForReplyAsyncTask extends AsyncTask<Void, Void, Voi
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveAccountsReply(mentions);
+        listener.onRetrieveAccountsReply(accounts);
     }
 
 }
