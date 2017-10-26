@@ -442,6 +442,9 @@ public abstract class BaseMainActivity extends AppCompatActivity
                             updateTimeLine(RetrieveFeedsAsyncTask.Type.LOCAL,0);
                         else if( display_global)
                             updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC,0);
+                        displayStatusFragment = ((DisplayStatusFragment) fragment);
+                        if( displayStatusFragment != null )
+                            displayStatusFragment.scrollToTop();
                         break;
                     case 3:
                         displayStatusFragment = ((DisplayStatusFragment) fragment);
