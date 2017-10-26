@@ -42,6 +42,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.util.Patterns;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -933,13 +934,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 i++;
                             }
                             if (translator == Helper.TRANS_YANDEX)
-                                new YandexQuery(StatusListAdapter.this).getYandexTextview(position, text, currentLocale);
+                                new YandexQuery(StatusListAdapter.this).getYandexTextview(status, text, currentLocale);
                             else if( translator == Helper.TRANS_GOOGLE) {
 
                                 while( text.charAt(text.length() -1) == '\n' && text.length() > 0)
                                     text = text.substring(0, text.length() -1);
                                 text += ".";
-                                new GoogleTranslateQuery(StatusListAdapter.this).getGoogleTextview(position, text.trim(), currentLocale);
+                                new GoogleTranslateQuery(StatusListAdapter.this).getGoogleTextview(status, text.trim(), currentLocale);
                             }
                         }else {
                             status.setTranslationShown(!status.isTranslationShown());
@@ -1410,10 +1411,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     }
 
     @Override
-    public void onTranslatedTextview(int position, String translatedResult, Boolean error) {
+    public void onTranslatedTextview(Status status, String translatedResult, Boolean error) {
         if( error){
             Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
-        }else if( statuses.size() > position) {
+        }else {
             try {
                 String aJsonString = null;
                 if (translator == Helper.TRANS_YANDEX)
@@ -1434,9 +1435,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     aJsonString = aJsonString.replace(pair.getKey().toString(), pair.getValue().toString());
                     itT.remove();
                 }
-                statuses.get(position).setTranslated(true);
-                statuses.get(position).setTranslationShown(true);
-                statuses.get(position).setContent_translated(aJsonString);
+                status.setTranslated(true);
+                status.setTranslationShown(true);
+                status.setContent_translated(aJsonString);
                 statusListAdapter.notifyDataSetChanged();
             } catch (JSONException | UnsupportedEncodingException | IllegalArgumentException e) {
                 e.printStackTrace();
