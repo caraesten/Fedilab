@@ -219,6 +219,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         ImageView new_element;
 
+        public View getView(){
+            return itemView;
+        }
+
         ViewHolder(View itemView) {
             super(itemView);
             loader_replies = itemView.findViewById(R.id.loader_replies);
@@ -1086,7 +1090,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
                                         @Override
                                         public void run() {
-                                            Bitmap bitmap = Helper.convertTootIntoBitmap(context, holder.status_content_container);
+                                            Bitmap bitmap = Helper.convertTootIntoBitmap(context, holder.getView());
                                             status.setTakingScreenShot(false);
                                             statusListAdapter.notifyDataSetChanged();
                                             Intent intent = new Intent(context, TootActivity.class);

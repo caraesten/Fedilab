@@ -426,4 +426,5 @@
     <string name="thanks_text_dev">Danke an:</string>
     <string name="set_multiaccount_actions">Erlauben Interaktionen zwischen den accounts?</string>
     <string name="action_open_in_web">Im Browser öffnen</string>
+    <string name="select_accounts">Select some accounts</string>
 </resources>

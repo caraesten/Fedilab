@@ -24,6 +24,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -319,7 +320,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 if( !status.getAccount().getId().equals(userId))
                     MainActivity.countNewStatus++;
-                statusListAdapter.notifyDataSetChanged();
+                int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+                if( firstVisibleItem > 0)
+                    statusListAdapter.notifyItemInserted(0);
+                else
+                    statusListAdapter.notifyDataSetChanged();
                 if (textviewNoAction.getVisibility() == View.VISIBLE)
                     textviewNoAction.setVisibility(View.GONE);
             }
@@ -524,7 +529,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
             statusListAdapter.notifyItemRangeInserted(0, inserted - 1);
             try {
-                ((MainActivity) context).updateHomeCounter();
+                if( type == RetrieveFeedsAsyncTask.Type.HOME)
+                    ((MainActivity) context).updateHomeCounter();
+                else
+                    ((MainActivity) context).updateTimeLine(type, inserted);
             }catch (Exception ignored){}
         }
     }
