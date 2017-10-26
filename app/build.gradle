@@ -10,6 +10,7 @@ android {
         versionCode 64
         versionName "1.5.4"
     }
+    flavorDimensions "default"
     buildTypes {
         release {
             minifyEnabled false
