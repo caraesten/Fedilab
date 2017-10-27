@@ -435,6 +435,9 @@ public abstract class BaseMainActivity extends AppCompatActivity
                             updateTimeLine(RetrieveFeedsAsyncTask.Type.LOCAL,0);
                         else if( display_global)
                             updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC,0);
+                        displayStatusFragment = ((DisplayStatusFragment) fragment);
+                        if( displayStatusFragment != null )
+                            displayStatusFragment.scrollToTop();
                         break;
                     case 3:
                         displayStatusFragment = ((DisplayStatusFragment) fragment);
@@ -506,6 +509,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
             public boolean onQueryTextSubmit(String query) {
                 //Hide keyboard
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                assert imm != null;
                 imm.hideSoftInputFromWindow(toolbar_search.getWindowToken(), 0);
                 Intent intent = new Intent(BaseMainActivity.this, SearchResultActivity.class);
                 intent.putExtra("search", query);
@@ -840,15 +844,14 @@ public abstract class BaseMainActivity extends AppCompatActivity
      * Manages new intents
      * @param intent Intent - intent related to a notification in top bar
      */
-    private boolean mamageNewIntent(Intent intent){
+    private void mamageNewIntent(Intent intent){
         if( intent == null || intent.getExtras() == null )
-            return false;
+            return;
 
         String action = intent.getAction();
         String type = intent.getType();
         Bundle extras = intent.getExtras();
         String userIdIntent;
-        boolean matchingIntent = false;
         if( extras.containsKey(INTENT_ACTION) ){
             final NavigationView navigationView = findViewById(R.id.nav_view);
             userIdIntent = extras.getString(PREF_KEY_ID); //Id of the account in the intent
@@ -858,7 +861,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 if( tabLayout.getTabAt(1) != null)
                     //noinspection ConstantConditions
                     tabLayout.getTabAt(1).select();
-                matchingIntent = true;
             }else if( extras.getInt(INTENT_ACTION) == HOME_TIMELINE_INTENT){
                 changeUser(BaseMainActivity.this, userIdIntent, true); //Connects the account which is related to the notification
             }else if( extras.getInt(INTENT_ACTION) == CHANGE_THEME_INTENT){
@@ -866,7 +868,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 navigationView.setCheckedItem(R.id.nav_settings);
                 navigationView.getMenu().performIdentifierAction(R.id.nav_settings, 0);
                 toolbarTitle.setText(R.string.settings);
-                matchingIntent = true;
             }else if( extras.getInt(INTENT_ACTION) == CHANGE_USER_INTENT){
                 unCheckAllMenuItems(navigationView);
                 if( tabLayout.getTabAt(0) != null)
@@ -875,7 +876,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 if( !toolbar_search.isIconified() ) {
                     toolbar_search.setIconified(true);
                 }
-                matchingIntent = true;
             }
         }else if( Intent.ACTION_SEND.equals(action) && type != null ) {
             if ("text/plain".equals(type)) {
@@ -940,7 +940,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
         intent.setAction("");
         intent.setData(null);
         intent.setFlags(0);
-        return matchingIntent;
     }
 
     @Override
@@ -1029,6 +1028,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
             @Override
             public void onReceive(Context context, Intent intent) {
                 Bundle b = intent.getExtras();
+                assert b != null;
                 userIdService = b.getString("userIdService", null);
                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 if( userIdService != null && userIdService.equals(userId)) {
@@ -1043,6 +1043,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
             @Override
             public void onReceive(Context context, Intent intent) {
                 Bundle b = intent.getExtras();
+                assert b != null;
                 userIdService = b.getString("userIdService", null);
                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 if( userIdService != null && userIdService.equals(userId)) {
@@ -1058,6 +1059,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
             public void onReceive(Context context, Intent intent) {
                 Bundle b = intent.getExtras();
                 StreamingService.EventStreaming eventStreaming = (StreamingService.EventStreaming) intent.getSerializableExtra("eventStreaming");
+                assert b != null;
                 userIdService = b.getString("userIdService", null);
                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 if( userIdService != null && userIdService.equals(userId)) {
@@ -1270,6 +1272,10 @@ public abstract class BaseMainActivity extends AppCompatActivity
             return;
         Version currentVersion = new Version(apiResponse.getInstance().getVersion());
         Version minVersion = new Version("1.6");
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(Helper.INSTANCE_VERSION, apiResponse.getInstance().getVersion());
+        editor.apply();
         Helper.canPin = (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion));
     }
 
@@ -1372,10 +1378,12 @@ public abstract class BaseMainActivity extends AppCompatActivity
         }
     }
 
+    @SuppressWarnings("ConstantConditions")
     public void updateTimeLine(RetrieveFeedsAsyncTask.Type type, int value){
         if( type == RetrieveFeedsAsyncTask.Type.LOCAL){
             if( tabLayout.getTabAt(2) != null && display_local){
                 View tabLocal = tabLayout.getTabAt(2).getCustomView();
+                assert tabLocal != null;
                 TextView tabCounterLocal = tabLocal.findViewById(R.id.tab_counter);
                 tabCounterLocal.setText(String.valueOf(value));
                 if( value > 0){
@@ -1387,6 +1395,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
         }else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC){
             if( tabLayout.getTabAt(3) != null && display_local){
                 View tabPublic = tabLayout.getTabAt(3).getCustomView();
+                assert tabPublic != null;
                 TextView tabCounterPublic = tabPublic.findViewById(R.id.tab_counter);
                 tabCounterPublic.setText(String.valueOf(value));
                 if( value > 0){
@@ -1396,6 +1405,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 }
             }else if( tabLayout.getTabAt(2) != null && !display_local && display_global){
                 View tabPublic = tabLayout.getTabAt(2).getCustomView();
+                assert tabPublic != null;
                 TextView tabCounterPublic = tabPublic.findViewById(R.id.tab_counter);
                 tabCounterPublic.setText(String.valueOf(value));
                 if( value > 0){

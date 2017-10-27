@@ -25,8 +25,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -37,7 +35,6 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
-import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -90,17 +87,17 @@ public class HashTagActivity extends AppCompatActivity implements OnRetrieveFeed
         flag_loading = true;
         firstLoad = true;
         boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        swipeRefreshLayout = findViewById(R.id.swipeContainer);
 
 
         int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
 
 
-        final RecyclerView lv_status = (RecyclerView) findViewById(R.id.lv_status);
+        final RecyclerView lv_status = findViewById(R.id.lv_status);
         tootsPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
-        mainLoader = (RelativeLayout) findViewById(R.id.loader);
-        nextElementLoader = (RelativeLayout) findViewById(R.id.loading_next_status);
-        textviewNoAction = (RelativeLayout) findViewById(R.id.no_action);
+        mainLoader = findViewById(R.id.loader);
+        nextElementLoader = findViewById(R.id.loading_next_status);
+        textviewNoAction = findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
         int positionSpinnerTrans = (sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX));
@@ -187,9 +184,7 @@ public class HashTagActivity extends AppCompatActivity implements OnRetrieveFeed
         else
             max_id = null;
         if( statuses != null) {
-            for(Status tmpStatus: statuses){
-                this.statuses.add(tmpStatus);
-            }
+            this.statuses.addAll(statuses);
             statusListAdapter.notifyDataSetChanged();
         }
         swipeRefreshLayout.setRefreshing(false);

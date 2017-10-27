@@ -30,6 +30,7 @@ public class Attachment implements Parcelable {
     private String remote_url;
     private String preview_url;
     private String text_url;
+    private String description;
 
     public Attachment(Parcel in) {
         id = in.readString();
@@ -38,6 +39,7 @@ public class Attachment implements Parcelable {
         remote_url = in.readString();
         preview_url = in.readString();
         text_url = in.readString();
+        description = in.readString();
     }
 
     public static final Creator<Attachment> CREATOR = new Creator<Attachment>() {
@@ -117,5 +119,14 @@ public class Attachment implements Parcelable {
         dest.writeString(remote_url);
         dest.writeString(preview_url);
         dest.writeString(text_url);
+        dest.writeString(description);
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -61,8 +61,8 @@ public class SearchResultActivity extends AppCompatActivity implements OnRetriev
         }
         setContentView(R.layout.activity_search_result);
 
-        loader = (RelativeLayout) findViewById(R.id.loader);
-        lv_search = (ListView) findViewById(R.id.lv_search);
+        loader = findViewById(R.id.loader);
+        lv_search = findViewById(R.id.lv_search);
 
         Bundle b = getIntent().getExtras();
         if(b != null){
@@ -107,7 +107,7 @@ public class SearchResultActivity extends AppCompatActivity implements OnRetriev
             return;
         }
         if( results == null || (results.getAccounts().size() == 0 && results.getStatuses().size() == 0 && results.getHashtags().size() == 0)){
-            RelativeLayout no_result = (RelativeLayout) findViewById(R.id.no_result);
+            RelativeLayout no_result = findViewById(R.id.no_result);
             no_result.setVisibility(View.VISIBLE);
             return;
         }

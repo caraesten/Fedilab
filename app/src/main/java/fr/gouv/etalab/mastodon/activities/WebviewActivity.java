@@ -76,8 +76,8 @@ public class WebviewActivity extends AppCompatActivity {
        webView = Helper.initializeWebview(WebviewActivity.this, R.id.webview);
 
         setTitle("");
-        FrameLayout webview_container = (FrameLayout) findViewById(R.id.webview_container);
-        final ViewGroup videoLayout = (ViewGroup) findViewById(R.id.videoLayout); // Your own view, read class comments
+        FrameLayout webview_container = findViewById(R.id.webview_container);
+        final ViewGroup videoLayout = findViewById(R.id.videoLayout); // Your own view, read class comments
 
         MastalabWebChromeClient mastalabWebChromeClient = new MastalabWebChromeClient(WebviewActivity.this,  webView, webview_container, videoLayout);
         mastalabWebChromeClient.setOnToggledFullscreen(new MastalabWebChromeClient.ToggledFullscreenCallback() {

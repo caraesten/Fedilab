@@ -16,6 +16,9 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+
+import java.lang.ref.WeakReference;
+
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveHomeTimelineServiceInterface;
@@ -27,16 +30,16 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveHomeTimelineServiceInterface
 
 public class RetrieveHomeTimelineServiceAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private Context context;
     private APIResponse apiResponse;
     private String since_id;
     private String acct, userId;
     private OnRetrieveHomeTimelineServiceInterface listener;
     private String instance;
     private String token;
+    private WeakReference<Context> contextReference;
 
     public RetrieveHomeTimelineServiceAsyncTask(Context context, String instance, String token, String since_id, String acct, String userId, OnRetrieveHomeTimelineServiceInterface onRetrieveHomeTimelineServiceInterface){
-        this.context = context;
+        this.contextReference = new WeakReference<>(context);
         this.since_id = since_id;
         this.listener = onRetrieveHomeTimelineServiceInterface;
         this.acct = acct;
@@ -47,7 +50,7 @@ public class RetrieveHomeTimelineServiceAsyncTask extends AsyncTask<Void, Void, 
 
     @Override
     protected Void doInBackground(Void... params) {
-        API api = new API(context, instance, token);
+        API api = new API(this.contextReference.get(), instance, token);
         apiResponse = api.getHomeTimelineSinceId(since_id);
         return null;
     }

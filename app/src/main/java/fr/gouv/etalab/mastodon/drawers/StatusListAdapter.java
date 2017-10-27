@@ -46,7 +46,6 @@ import android.util.Patterns;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -473,7 +472,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 content = status.getReblog().getContent();
                 displayName = Helper.shortnameToUnicode(status.getReblog().getAccount().getDisplay_name(), true);
                 username = status.getReblog().getAccount().getUsername();
-                holder.status_account_displayname.setText(displayName + " " +String.format("@%s",username));
+                holder.status_account_displayname.setText(String.format("%s @%s",displayName, username));
                 ppurl = status.getReblog().getAccount().getAvatar();
                 holder.status_account_displayname.setVisibility(View.VISIBLE);
                 holder.status_account_displayname.setText(context.getResources().getString(R.string.reblog_by, status.getAccount().getUsername()));
@@ -518,16 +517,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         return false;
                     }
                 });
-                holder.status_content_translated.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                            holder.status_content_translated.setFocusableInTouchMode(false);
-                            holder.status_content_translated.clearFocus();
-                        }
-                        return false;
-                    }
-                });
                 holder.status_content_translated.setMovementMethod(LinkMovementMethod.getInstance());
             }
 
@@ -554,17 +543,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             });
 
-            holder.status_content.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        holder.status_content.setFocusableInTouchMode(false);
-                        holder.status_content.clearFocus();
-                    }
-                    return false;
-                }
-            });
             holder.status_content.setMovementMethod(LinkMovementMethod.getInstance());
 
             if( status.getReblog() == null)
@@ -928,13 +906,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 i++;
                             }
                             if (translator == Helper.TRANS_YANDEX)
-                                new YandexQuery(StatusListAdapter.this).getYandexTextview(position, text, currentLocale);
+                                new YandexQuery(StatusListAdapter.this).getYandexTextview(status, text, currentLocale);
                             else if( translator == Helper.TRANS_GOOGLE) {
 
                                 while( text.charAt(text.length() -1) == '\n' && text.length() > 0)
                                     text = text.substring(0, text.length() -1);
                                 text += ".";
-                                new GoogleTranslateQuery(StatusListAdapter.this).getGoogleTextview(position, text.trim(), currentLocale);
+                                new GoogleTranslateQuery(StatusListAdapter.this).getGoogleTextview(status, text.trim(), currentLocale);
                             }
                         }else {
                             status.setTranslationShown(!status.isTranslationShown());
@@ -1072,8 +1050,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         //noinspection deprecation
                                         content = Html.fromHtml(status.getContent()).toString();
                                     ClipData clip = ClipData.newPlainText(Helper.CLIP_BOARD, content);
-                                    clipboard.setPrimaryClip(clip);
-                                    Toast.makeText(context,R.string.clipboard,Toast.LENGTH_LONG).show();
+                                    if( clipboard != null) {
+                                        clipboard.setPrimaryClip(clip);
+                                        Toast.makeText(context, R.string.clipboard, Toast.LENGTH_LONG).show();
+                                    }
                                     return true;
                                 case R.id.action_share:
                                     Intent sendIntent = new Intent(Intent.ACTION_SEND);
@@ -1262,6 +1242,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 if( !url.trim().contains("missing.png"))
                     imageLoader.displayImage(url, imageView, optionsAttachment);
                 final int finalPosition = position;
+                if( attachment.getDescription() != null && !attachment.getDescription().equals("null"))
+                    imageView.setContentDescription(attachment.getDescription());
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -1405,10 +1387,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     }
 
     @Override
-    public void onTranslatedTextview(int position, String translatedResult, Boolean error) {
+    public void onTranslatedTextview(Status status, String translatedResult, Boolean error) {
         if( error){
             Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
-        }else if( statuses.size() > position) {
+        }else {
             try {
                 String aJsonString = null;
                 if (translator == Helper.TRANS_YANDEX)
@@ -1429,9 +1411,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     aJsonString = aJsonString.replace(pair.getKey().toString(), pair.getValue().toString());
                     itT.remove();
                 }
-                statuses.get(position).setTranslated(true);
-                statuses.get(position).setTranslationShown(true);
-                statuses.get(position).setContent_translated(aJsonString);
+                status.setTranslated(true);
+                status.setTranslationShown(true);
+                status.setContent_translated(aJsonString);
                 statusListAdapter.notifyDataSetChanged();
             } catch (JSONException | UnsupportedEncodingException | IllegalArgumentException e) {
                 e.printStackTrace();
@@ -1461,25 +1443,25 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private String googleTranslateToText(String text) throws JSONException, UnsupportedEncodingException{
 
         int i = 0;
-        String aJsonString = "";
+        StringBuilder aJsonString = new StringBuilder();
         while( i < new JSONArray(new JSONArray(text).get(0).toString()).length() ) {
-            aJsonString += new JSONArray(new JSONArray(new JSONArray(text).get(0).toString()).get(i).toString()).get(0).toString();
+            aJsonString.append(new JSONArray(new JSONArray(new JSONArray(text).get(0).toString()).get(i).toString()).get(0).toString());
             i++;
         }
         //Some fixes due to translation with Google
-        aJsonString = aJsonString.trim();
-        aJsonString = aJsonString.replace("< / ","</");
-        aJsonString = aJsonString.replace("</ ","</");
-        aJsonString = aJsonString.replace("> ",">");
-        aJsonString = aJsonString.replace(" <","<");
-        aJsonString = aJsonString.replace(" // ","//");
-        aJsonString = aJsonString.replace("// ","//");
-        aJsonString = aJsonString.replace(" //","//");
-        aJsonString = aJsonString.replace(" www .","www.");
-        aJsonString = aJsonString.replace("www .","www.");
+        aJsonString = new StringBuilder(aJsonString.toString().trim());
+        aJsonString = new StringBuilder(aJsonString.toString().replace("< / ", "</"));
+        aJsonString = new StringBuilder(aJsonString.toString().replace("</ ", "</"));
+        aJsonString = new StringBuilder(aJsonString.toString().replace("> ", ">"));
+        aJsonString = new StringBuilder(aJsonString.toString().replace(" <", "<"));
+        aJsonString = new StringBuilder(aJsonString.toString().replace(" // ", "//"));
+        aJsonString = new StringBuilder(aJsonString.toString().replace("// ", "//"));
+        aJsonString = new StringBuilder(aJsonString.toString().replace(" //", "//"));
+        aJsonString = new StringBuilder(aJsonString.toString().replace(" www .", "www."));
+        aJsonString = new StringBuilder(aJsonString.toString().replace("www .", "www."));
 
         // This one might cause more trouble than it's worth
-        aJsonString = aJsonString.replaceAll("\\* \\.", "*.");
+        aJsonString = new StringBuilder(aJsonString.toString().replaceAll("\\* \\.", "*."));
 
         /*
             Noticed that sometimes the special tags were getting messed up by Google,
@@ -1487,11 +1469,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             But, pre-planning might save some time later...
          */
-        aJsonString = aJsonString.replaceAll("__\\s?(u|t)\\s?(\\d+)\\s?__", "__$1$2__");
-        aJsonString = aJsonString.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
-        aJsonString = aJsonString.replaceAll("\\+", "%2B");
-        aJsonString = URLDecoder.decode(aJsonString, "UTF-8");
-        return aJsonString;
+        aJsonString = new StringBuilder(aJsonString.toString().replaceAll("__\\s?([ut])\\s?(\\d+)\\s?__", "__$1$2__"));
+        aJsonString = new StringBuilder(aJsonString.toString().replaceAll("%(?![0-9a-fA-F]{2})", "%25"));
+        aJsonString = new StringBuilder(aJsonString.toString().replaceAll("\\+", "%2B"));
+        aJsonString = new StringBuilder(URLDecoder.decode(aJsonString.toString(), "UTF-8"));
+        return aJsonString.toString();
     }
 
 

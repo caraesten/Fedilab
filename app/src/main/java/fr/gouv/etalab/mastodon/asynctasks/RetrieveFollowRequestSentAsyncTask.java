@@ -17,6 +17,8 @@ package fr.gouv.etalab.mastodon.asynctasks;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import java.lang.ref.WeakReference;
+
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountsInterface;
@@ -29,14 +31,14 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountsInterface;
 
 public class RetrieveFollowRequestSentAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private Context context;
+
     private APIResponse apiResponse;
     private String max_id;
     private OnRetrieveAccountsInterface listener;
-
+    private WeakReference<Context> contextReference;
 
     public RetrieveFollowRequestSentAsyncTask(Context context, String max_id, OnRetrieveAccountsInterface onRetrieveAccountsInterface){
-        this.context = context;
+        this.contextReference = new WeakReference<>(context);
         this.max_id = max_id;
         this.listener = onRetrieveAccountsInterface;
     }
@@ -44,7 +46,7 @@ public class RetrieveFollowRequestSentAsyncTask extends AsyncTask<Void, Void, Vo
     @Override
     protected Void doInBackground(Void... params) {
 
-        apiResponse = new API(context).getFollowRequest(max_id);
+        apiResponse = new API(this.contextReference.get()).getFollowRequest(max_id);
         return null;
     }
 

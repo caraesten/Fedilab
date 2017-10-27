@@ -16,6 +16,9 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+
+import java.lang.ref.WeakReference;
+
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountsInterface;
@@ -28,12 +31,12 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountsInterface;
 
 public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private Context context;
     private Type action;
     private APIResponse apiResponse;
     private String max_id;
     private OnRetrieveAccountsInterface listener;
     private String targetedId;
+    private WeakReference<Context> contextReference;
 
     public enum Type{
         BLOCKED,
@@ -43,7 +46,7 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
     }
 
     public RetrieveAccountsAsyncTask(Context context, Type action, String targetedId, String max_id, OnRetrieveAccountsInterface onRetrieveAccountsInterface){
-        this.context = context;
+        this.contextReference = new WeakReference<>(context);
         this.action = action;
         this.max_id = max_id;
         this.listener = onRetrieveAccountsInterface;
@@ -51,7 +54,7 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
     }
 
     public RetrieveAccountsAsyncTask(Context context, Type action, String max_id, OnRetrieveAccountsInterface onRetrieveAccountsInterface){
-        this.context = context;
+        this.contextReference = new WeakReference<>(context);
         this.action = action;
         this.max_id = max_id;
         this.listener = onRetrieveAccountsInterface;
@@ -60,7 +63,7 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
 
-        API api = new API(context);
+        API api = new API(this.contextReference.get());
         switch (action){
             case BLOCKED:
                 apiResponse = api.getBlocks(max_id);

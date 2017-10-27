@@ -1300,6 +1300,42 @@ public class API {
 
 
     /**
+     * Changes media description
+     * @param mediaId String
+     *  @param description String
+     * @return Attachment
+     */
+    public Attachment updateDescription(String mediaId, String description){
+
+        RequestParams params = new RequestParams();
+        params.put("description", description);
+        put(String.format("/media/%s", mediaId), 240000, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                attachment = parseAttachmentResponse(response);
+            }
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                try {
+                    attachment = parseAttachmentResponse(response.getJSONObject(0));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
+                setError(statusCode, error);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
+                setError(statusCode, error);
+            }
+        });
+        return attachment;
+    }
+
+    /**
      * Retrieves Accounts and feeds when searching *synchronously*
      *
      * @param query  String search
@@ -1694,6 +1730,9 @@ public class API {
             attachment.setId(resobj.get("id").toString());
             attachment.setType(resobj.get("type").toString());
             attachment.setUrl(resobj.get("url").toString());
+            try {
+                attachment.setDescription(resobj.get("description").toString());
+            }catch (JSONException ignore){}
             try{
                 attachment.setRemote_url(resobj.get("remote_url").toString());
             }catch (JSONException ignore){}
@@ -1797,6 +1836,21 @@ public class API {
             mastalabSSLSocketFactory.setHostnameVerifier(MastalabSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
             client.setSSLSocketFactory(mastalabSSLSocketFactory);
             client.post(getAbsoluteUrl(action), params, responseHandler);
+        } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
+            Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+    }
+
+    private void put(String action, int timeout, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        try {
+            client.setConnectTimeout(timeout);
+            client.setUserAgent(USER_AGENT);
+            client.addHeader("Authorization", "Bearer "+prefKeyOauthTokenT);
+            MastalabSSLSocketFactory mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());
+            mastalabSSLSocketFactory.setHostnameVerifier(MastalabSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+            client.setSSLSocketFactory(mastalabSSLSocketFactory);
+            client.put(getAbsoluteUrl(action), params, responseHandler);
         } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
             Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();
             e.printStackTrace();

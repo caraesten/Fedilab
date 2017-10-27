@@ -36,7 +36,6 @@ import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,7 +92,6 @@ public class EditProfileActivity extends AppCompatActivity implements OnRetrieve
     private static final int PICK_IMAGE_PROFILE = 6545;
     private String profile_picture, header_picture, profile_username, profile_note;
     private Bitmap profile_picture_bmp, profile_header_bmp;
-    private TextView title;
     private ImageView pp_actionBar;
 
     @Override
@@ -112,13 +110,14 @@ public class EditProfileActivity extends AppCompatActivity implements OnRetrieve
         ActionBar actionBar = getSupportActionBar();
         if( actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(android.content.Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.conversation_action_bar, null);
+            assert inflater != null;
+            @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.conversation_action_bar, null);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-            title = (TextView) actionBar.getCustomView().findViewById(R.id.toolbar_title);
-            pp_actionBar = (ImageView) actionBar.getCustomView().findViewById(R.id.pp_actionBar);
+            TextView title = actionBar.getCustomView().findViewById(R.id.toolbar_title);
+            pp_actionBar = actionBar.getCustomView().findViewById(R.id.pp_actionBar);
             title.setText(R.string.settings_title_profile);
-            ImageView close_conversation = (ImageView) actionBar.getCustomView().findViewById(R.id.close_conversation);
+            ImageView close_conversation = actionBar.getCustomView().findViewById(R.id.close_conversation);
             if( close_conversation != null){
                 close_conversation.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -172,14 +171,14 @@ public class EditProfileActivity extends AppCompatActivity implements OnRetrieve
 
             }});
 
-        set_profile_name = (EditText) findViewById(R.id.set_profile_name);
-        set_profile_description = (EditText) findViewById(R.id.set_profile_description);
-        set_profile_picture = (ImageView) findViewById(R.id.set_profile_picture);
-        set_header_picture = (ImageView) findViewById(R.id.set_header_picture);
-        set_change_profile_picture = (Button) findViewById(R.id.set_change_profile_picture);
-        set_change_header_picture = (Button) findViewById(R.id.set_change_header_picture);
-        set_profile_save = (Button) findViewById(R.id.set_profile_save);
-        set_header_picture_overlay = (TextView) findViewById(R.id.set_header_picture_overlay);
+        set_profile_name = findViewById(R.id.set_profile_name);
+        set_profile_description = findViewById(R.id.set_profile_description);
+        set_profile_picture = findViewById(R.id.set_profile_picture);
+        set_header_picture = findViewById(R.id.set_header_picture);
+        set_change_profile_picture = findViewById(R.id.set_change_profile_picture);
+        set_change_header_picture = findViewById(R.id.set_change_header_picture);
+        set_profile_save = findViewById(R.id.set_profile_save);
+        set_header_picture_overlay = findViewById(R.id.set_header_picture_overlay);
 
         set_profile_save.setEnabled(false);
         set_change_header_picture.setEnabled(false);
@@ -315,10 +314,10 @@ public class EditProfileActivity extends AppCompatActivity implements OnRetrieve
                 @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.dialog_profile, null);
                 dialogBuilder.setView(dialogView);
 
-                ImageView back_ground_image = (ImageView) dialogView.findViewById(R.id.back_ground_image);
-                ImageView dialog_profile_picture = (ImageView) dialogView.findViewById(R.id.dialog_profile_picture);
-                TextView dialog_profile_name = (TextView) dialogView.findViewById(R.id.dialog_profile_name);
-                TextView dialog_profile_description = (TextView) dialogView.findViewById(R.id.dialog_profile_description);
+                ImageView back_ground_image = dialogView.findViewById(R.id.back_ground_image);
+                ImageView dialog_profile_picture = dialogView.findViewById(R.id.dialog_profile_picture);
+                TextView dialog_profile_name = dialogView.findViewById(R.id.dialog_profile_name);
+                TextView dialog_profile_description = dialogView.findViewById(R.id.dialog_profile_description);
 
                 if( profile_username != null)
                     dialog_profile_name.setText(profile_username);
@@ -386,6 +385,7 @@ public class EditProfileActivity extends AppCompatActivity implements OnRetrieve
                 return;
             }
             try {
+                //noinspection ConstantConditions
                 InputStream inputStream = getApplicationContext().getContentResolver().openInputStream(data.getData());
                 BufferedInputStream bufferedInputStream;
                 if (inputStream != null) {
@@ -412,7 +412,7 @@ public class EditProfileActivity extends AppCompatActivity implements OnRetrieve
                 return;
             }
             try {
-                InputStream inputStream = getApplicationContext().getContentResolver().openInputStream(data.getData());
+                @SuppressWarnings("ConstantConditions") InputStream inputStream = getApplicationContext().getContentResolver().openInputStream(data.getData());
                 BufferedInputStream bufferedInputStream;
                 if (inputStream != null) {
                     bufferedInputStream = new BufferedInputStream(inputStream);
