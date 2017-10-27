@@ -1300,6 +1300,42 @@ public class API {
 
 
     /**
+     * Changes media description
+     * @param mediaId String
+     *  @param description String
+     * @return Attachment
+     */
+    public Attachment updateDescription(String mediaId, String description){
+
+        RequestParams params = new RequestParams();
+        params.put("description", description);
+        post(String.format("/media/%s", mediaId), 240000, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                attachment = parseAttachmentResponse(response);
+            }
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                try {
+                    attachment = parseAttachmentResponse(response.getJSONObject(0));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
+                setError(statusCode, error);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
+                setError(statusCode, error);
+            }
+        });
+        return attachment;
+    }
+
+    /**
      * Retrieves Accounts and feeds when searching *synchronously*
      *
      * @param query  String search
