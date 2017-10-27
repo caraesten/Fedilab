@@ -193,6 +193,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         ActionBar actionBar = getSupportActionBar();
         if( actionBar != null ){
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            assert inflater != null;
             @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.toot_action_bar, null);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -202,6 +203,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 @Override
                 public void onClick(View v) {
                     InputMethodManager inputMethodManager = (InputMethodManager)  getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    assert inputMethodManager != null;
                     inputMethodManager.hideSoftInputFromWindow(toot_content.getWindowToken(), 0);
                     finish();
                 }
@@ -550,6 +552,18 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         String patternTag = "^(.|\\s)*(\\#([\\w-]{2,}))$";
         final Pattern tPattern = Pattern.compile(patternTag);
 
+        toot_cw_content.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                int totalChar = toot_cw_content.length() + toot_content.length();
+                toot_space_left.setText(String.valueOf(totalChar));
+            }
+        });
+
         toot_content.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -607,32 +621,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 toot_space_left.setText(String.valueOf(totalChar));
             }
         });
-        //Allow scroll of the EditText though it's embedded in a scrollview
-        toot_content.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (v.getId() == R.id.toot_content) {
-                    v.getParent().requestDisallowInterceptTouchEvent(true);
-                    switch (event.getAction() & MotionEvent.ACTION_MASK) {
-                        case MotionEvent.ACTION_UP:
-                            v.getParent().requestDisallowInterceptTouchEvent(false);
-                            break;
-                    }
-                }
-                return false;
-            }
-        });
-        toot_cw_content.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-            @Override
-            public void afterTextChanged(Editable s) {
-                int totalChar = toot_cw_content.length() + toot_content.length();
-                toot_space_left.setText(String.valueOf(totalChar));
-            }
-        });
+
+
         if( restored != -1 ){
             restoreToot(restored);
         }
@@ -720,6 +710,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 return;
             }
             try {
+                //noinspection ConstantConditions
                 InputStream inputStream = getContentResolver().openInputStream(data.getData());
                 toot_picture_container.setVisibility(View.VISIBLE);
                 loading_picture.setVisibility(View.VISIBLE);

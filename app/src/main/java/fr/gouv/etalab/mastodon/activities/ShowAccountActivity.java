@@ -363,42 +363,40 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         }else {
             changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.mastodonC4);
         }
-        if( account!= null) {
-            String urlHeader = account.getHeader();
-            if (urlHeader.startsWith("/")) {
-                urlHeader = "https://" + Helper.getLiveInstance(ShowAccountActivity.this) + account.getHeader();
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && !urlHeader.contains("missing.png")) {
+        String urlHeader = account.getHeader();
+        if (urlHeader.startsWith("/")) {
+            urlHeader = "https://" + Helper.getLiveInstance(ShowAccountActivity.this) + account.getHeader();
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && !urlHeader.contains("missing.png")) {
 
-                DisplayImageOptions optionNew = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                        .cacheOnDisk(true).resetViewBeforeLoading(true).build();
-                imageLoader.loadImage(urlHeader, optionNew, new SimpleImageLoadingListener() {
-                    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        super.onLoadingComplete(imageUri, view, loadedImage);
-                        ImageView banner_pp = findViewById(R.id.banner_pp);
-                        Bitmap workingBitmap = Bitmap.createBitmap(loadedImage);
-                        Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
-                        Canvas canvas = new Canvas(mutableBitmap);
-                        Paint p = new Paint(Color.BLACK);
-                        ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);
-                        p.setColorFilter(filter);
-                        canvas.drawBitmap(mutableBitmap, new Matrix(), p);
-                        BitmapDrawable background = new BitmapDrawable(getResources(), mutableBitmap);
-                        banner_pp.setImageDrawable(background);
-                    }
+            DisplayImageOptions optionNew = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
+                    .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+            imageLoader.loadImage(urlHeader, optionNew, new SimpleImageLoadingListener() {
+                @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    super.onLoadingComplete(imageUri, view, loadedImage);
+                    ImageView banner_pp = findViewById(R.id.banner_pp);
+                    Bitmap workingBitmap = Bitmap.createBitmap(loadedImage);
+                    Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
+                    Canvas canvas = new Canvas(mutableBitmap);
+                    Paint p = new Paint(Color.BLACK);
+                    ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);
+                    p.setColorFilter(filter);
+                    canvas.drawBitmap(mutableBitmap, new Matrix(), p);
+                    BitmapDrawable background = new BitmapDrawable(getResources(), mutableBitmap);
+                    banner_pp.setImageDrawable(background);
+                }
 
-                    @Override
-                    public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason) {
+                @Override
+                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
 
-                    }
-                });
-            }
+                }
+            });
         }
         //Redraws icon for locked accounts
         final float scale = getResources().getDisplayMetrics().density;
-        if( account != null && account.isLocked()){
+        if(account.isLocked()){
             Drawable img = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_action_lock_closed);
             img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (20 * scale + 0.5f));
             account_dn.setCompoundDrawables( img, null, null, null);
@@ -407,170 +405,160 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         }
 
 
-        if( account != null){
-            TextView actionbar_title = findViewById(R.id.show_account_title);
-            if( account.getAcct() != null)
-                actionbar_title.setText(account.getAcct());
-            pp_actionBar = findViewById(R.id.pp_actionBar);
-            String url = account.getAvatar();
-            if( url.startsWith("/") ){
-                url = "https://" + Helper.getLiveInstance(getApplicationContext()) + account.getAvatar();
+        TextView actionbar_title = findViewById(R.id.show_account_title);
+        if( account.getAcct() != null)
+            actionbar_title.setText(account.getAcct());
+        pp_actionBar = findViewById(R.id.pp_actionBar);
+        String url = account.getAvatar();
+        if( url.startsWith("/") ){
+            url = "https://" + Helper.getLiveInstance(getApplicationContext()) + account.getAvatar();
+        }
+        DisplayImageOptions optionsPP = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
+                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+        imageLoader.loadImage(url, optionsPP, new SimpleImageLoadingListener(){
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                super.onLoadingComplete(imageUri, view, loadedImage);
+                BitmapDrawable ppDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(loadedImage, (int) Helper.convertDpToPixel(25, getApplicationContext()), (int) Helper.convertDpToPixel(25, getApplicationContext()), true));
+                if( pp_actionBar != null){
+                    pp_actionBar.setImageDrawable(ppDrawable);
+                }
             }
-            DisplayImageOptions optionsPP = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                    .cacheOnDisk(true).resetViewBeforeLoading(true).build();
-            imageLoader.loadImage(url, optionsPP, new SimpleImageLoadingListener(){
-                @Override
-                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    super.onLoadingComplete(imageUri, view, loadedImage);
-                    BitmapDrawable ppDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(loadedImage, (int) Helper.convertDpToPixel(25, getApplicationContext()), (int) Helper.convertDpToPixel(25, getApplicationContext()), true));
-                    if( pp_actionBar != null){
-                        pp_actionBar.setImageDrawable(ppDrawable);
+            @Override
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason){
+
+            }});
+        final AppBarLayout appBar = findViewById(R.id.appBar);
+        maxScrollSize = appBar.getTotalScrollRange();
+
+
+        appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                LinearLayout toolbarContent = findViewById(R.id.toolbar_content);
+                if( toolbarContent != null) {
+                    if (Math.abs(verticalOffset) - appBar.getTotalScrollRange() == 0) {
+                        if (toolbarContent.getVisibility() == View.GONE)
+                            toolbarContent.setVisibility(View.VISIBLE);
+                    } else {
+                        if (toolbarContent.getVisibility() == View.VISIBLE)
+                            toolbarContent.setVisibility(View.GONE);
                     }
                 }
+                if (maxScrollSize == 0)
+                    maxScrollSize = appBarLayout.getTotalScrollRange();
+
+                int percentage = (Math.abs(verticalOffset)) * 100 / maxScrollSize;
+
+                if (percentage >= 40 && avatarShown) {
+                    avatarShown = false;
+
+                    account_pp.animate()
+                            .scaleY(0).scaleX(0)
+                            .setDuration(400)
+                            .start();
+                }
+                if (percentage <= 40 && !avatarShown) {
+                    avatarShown = true;
+                    account_pp.animate()
+                            .scaleY(1).scaleX(1)
+                            .start();
+                }
+            }
+        });
+        account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
+        account_un.setText(String.format("@%s", account.getAcct()));
+        SpannableString spannableString = Helper.clickableElementsDescription(ShowAccountActivity.this, account.getNote());
+        account_note.setText(spannableString, TextView.BufferType.SPANNABLE);
+        account_note.setMovementMethod(LinkMovementMethod.getInstance());
+        if (tabLayout.getTabAt(0) != null && tabLayout.getTabAt(1) != null && tabLayout.getTabAt(2) != null) {
+            //noinspection ConstantConditions
+            tabLayout.getTabAt(0).setText(getString(R.string.status_cnt, account.getStatuses_count()));
+            //noinspection ConstantConditions
+            tabLayout.getTabAt(1).setText(getString(R.string.following_cnt, account.getFollowing_count()));
+            //noinspection ConstantConditions
+            tabLayout.getTabAt(2).setText(getString(R.string.followers_cnt, account.getFollowers_count()));
+
+            //Allows to filter by long click
+            final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
+            tabStrip.getChildAt(0).setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
+                public boolean onLongClick(View v) {
+                    PopupMenu popup = new PopupMenu(ShowAccountActivity.this, tabStrip.getChildAt(0));
+                    popup.getMenuInflater()
+                            .inflate(R.menu.option_filter_toots_account, popup.getMenu());
+                    Menu menu = popup.getMenu();
 
-                }});
-            final AppBarLayout appBar = findViewById(R.id.appBar);
-            maxScrollSize = appBar.getTotalScrollRange();
+                    if( !Helper.canPin || !accountId.equals(userId)) {
+                        popup.getMenu().findItem(R.id.action_show_pinned).setVisible(false);
+                    }
+                    final MenuItem itemShowPined = menu.findItem(R.id.action_show_pinned);
+                    final MenuItem itemShowMedia = menu.findItem(R.id.action_show_media);
 
-
-            appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-                @Override
-                public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                    LinearLayout toolbarContent = findViewById(R.id.toolbar_content);
-                    if( toolbarContent != null) {
-                        if (Math.abs(verticalOffset) - appBar.getTotalScrollRange() == 0) {
-                            if (toolbarContent.getVisibility() == View.GONE)
-                                toolbarContent.setVisibility(View.VISIBLE);
-                        } else {
-                            if (toolbarContent.getVisibility() == View.VISIBLE)
-                                toolbarContent.setVisibility(View.GONE);
+                    itemShowMedia.setChecked(showMediaOnly);
+                    itemShowPined.setChecked(showPinned);
+                    popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
+                        @Override
+                        public void onDismiss(PopupMenu menu) {
+                            if( displayStatusFragment != null)
+                                displayStatusFragment.refreshFilter();
                         }
-                    }
-                    if (maxScrollSize == 0)
-                        maxScrollSize = appBarLayout.getTotalScrollRange();
+                    });
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        public boolean onMenuItemClick(MenuItem item) {
+                            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+                            item.setActionView(new View(getApplicationContext()));
+                            item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                                @Override
+                                public boolean onMenuItemActionExpand(MenuItem item) {
+                                    return false;
+                                }
 
-                    int percentage = (Math.abs(verticalOffset)) * 100 / maxScrollSize;
-
-                    if (percentage >= 40 && avatarShown) {
-                        avatarShown = false;
-
-                        account_pp.animate()
-                                .scaleY(0).scaleX(0)
-                                .setDuration(400)
-                                .start();
-                    }
-                    if (percentage <= 40 && !avatarShown) {
-                        avatarShown = true;
-                        account_pp.animate()
-                                .scaleY(1).scaleX(1)
-                                .start();
-                    }
+                                @Override
+                                public boolean onMenuItemActionCollapse(MenuItem item) {
+                                    return false;
+                                }
+                            });
+                            switch (item.getItemId()) {
+                                case R.id.action_show_pinned:
+                                    showPinned = !showPinned;
+                                    if( tabLayout.getTabAt(0) != null)
+                                        //noinspection ConstantConditions
+                                        tabLayout.getTabAt(0).select();
+                                    PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+                                    mPager.setAdapter(mPagerAdapter);
+                                    break;
+                                case R.id.action_show_media:
+                                    showMediaOnly = !showMediaOnly;
+                                    if( tabLayout.getTabAt(0) != null)
+                                        //noinspection ConstantConditions
+                                        tabLayout.getTabAt(0).select();
+                                    mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+                                    mPager.setAdapter(mPagerAdapter);
+                                    break;
+                            }
+                            itemShowMedia.setChecked(showMediaOnly);
+                            itemShowPined.setChecked(showPinned);
+                            return false;
+                        }
+                    });
+                    popup.show();
+                    return true;
                 }
             });
-        }else {
-            if(  account != null && account.getAcct() != null)
-                setTitle(account.getAcct());
-        }
-        if( account != null){
-            account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
-            account_un.setText(String.format("@%s", account.getAcct()));
-            SpannableString spannableString = Helper.clickableElementsDescription(ShowAccountActivity.this, account.getNote());
-            account_note.setText(spannableString, TextView.BufferType.SPANNABLE);
-            account_note.setMovementMethod(LinkMovementMethod.getInstance());
-            if (tabLayout.getTabAt(0) != null && tabLayout.getTabAt(1) != null && tabLayout.getTabAt(2) != null) {
-                //noinspection ConstantConditions
-                tabLayout.getTabAt(0).setText(getString(R.string.status_cnt, account.getStatuses_count()));
-                //noinspection ConstantConditions
-                tabLayout.getTabAt(1).setText(getString(R.string.following_cnt, account.getFollowing_count()));
-                //noinspection ConstantConditions
-                tabLayout.getTabAt(2).setText(getString(R.string.followers_cnt, account.getFollowers_count()));
-
-                //Allows to filter by long click
-                final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
-                tabStrip.getChildAt(0).setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        PopupMenu popup = new PopupMenu(ShowAccountActivity.this, tabStrip.getChildAt(0));
-                        popup.getMenuInflater()
-                                .inflate(R.menu.option_filter_toots_account, popup.getMenu());
-                        Menu menu = popup.getMenu();
-
-                        if( !Helper.canPin || !accountId.equals(userId)) {
-                            popup.getMenu().findItem(R.id.action_show_pinned).setVisible(false);
-                        }
-                        final MenuItem itemShowPined = menu.findItem(R.id.action_show_pinned);
-                        final MenuItem itemShowMedia = menu.findItem(R.id.action_show_media);
-
-                        itemShowMedia.setChecked(showMediaOnly);
-                        itemShowPined.setChecked(showPinned);
-                        popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
-                            @Override
-                            public void onDismiss(PopupMenu menu) {
-                                if( displayStatusFragment != null)
-                                    displayStatusFragment.refreshFilter();
-                            }
-                        });
-                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                            public boolean onMenuItemClick(MenuItem item) {
-                                item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
-                                item.setActionView(new View(getApplicationContext()));
-                                item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
-                                    @Override
-                                    public boolean onMenuItemActionExpand(MenuItem item) {
-                                        return false;
-                                    }
-
-                                    @Override
-                                    public boolean onMenuItemActionCollapse(MenuItem item) {
-                                        return false;
-                                    }
-                                });
-                                switch (item.getItemId()) {
-                                    case R.id.action_show_pinned:
-                                        showPinned = !showPinned;
-                                        if( tabLayout.getTabAt(0) != null)
-                                            //noinspection ConstantConditions
-                                            tabLayout.getTabAt(0).select();
-                                        PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-                                        mPager.setAdapter(mPagerAdapter);
-                                        break;
-                                    case R.id.action_show_media:
-                                        showMediaOnly = !showMediaOnly;
-                                        if( tabLayout.getTabAt(0) != null)
-                                            //noinspection ConstantConditions
-                                            tabLayout.getTabAt(0).select();
-                                        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-                                        mPager.setAdapter(mPagerAdapter);
-                                        break;
-                                }
-                                itemShowMedia.setChecked(showMediaOnly);
-                                itemShowPined.setChecked(showPinned);
-                                return false;
-                            }
-                        });
-                        popup.show();
-                        return true;
-                    }
-                });
-
-
-            }
-
-            imageLoader.displayImage(account.getAvatar(), account_pp, options);
-
 
 
         }
+
+        imageLoader.displayImage(account.getAvatar(), account_pp, options);
+
+
     }
 
     @Override
     public void onRetrieveFeedsAccount(List<Status> statuses) {
         if( statuses != null) {
-            for(Status tmpStatus: statuses){
-                this.statuses.add(tmpStatus);
-            }
+            this.statuses.addAll(statuses);
             statusListAdapter.notifyDataSetChanged();
         }
     }
@@ -588,10 +576,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         pins = apiResponse.getStatuses();
         if (pins != null && pins.size() > 0) {
             if( pins.get(0).isPinned()) {
-
-                for (Status pin : pins) {
-                    this.statuses.add(pin);
-                }
+                this.statuses.addAll(pins);
                 //noinspection ConstantConditions
                 tabLayout.getTabAt(3).setText(getString(R.string.pins_cnt, pins.size()));
                 statusListAdapter.notifyDataSetChanged();

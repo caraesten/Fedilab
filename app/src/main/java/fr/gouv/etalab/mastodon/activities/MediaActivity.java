@@ -119,13 +119,14 @@ public class MediaActivity extends AppCompatActivity  {
         }
         setContentView(R.layout.activity_media);
         attachments = getIntent().getParcelableArrayListExtra("mediaArray");
-        mediaPosition = getIntent().getExtras().getInt("position", 1);
+        if( getIntent().getExtras() != null)
+            mediaPosition = getIntent().getExtras().getInt("position", 1);
         if( attachments == null || attachments.size() == 0)
             finish();
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        RelativeLayout main_container_media = (RelativeLayout) findViewById(R.id.main_container_media);
+        RelativeLayout main_container_media = findViewById(R.id.main_container_media);
         if( theme == Helper.THEME_LIGHT){
             main_container_media.setBackgroundResource(R.color.mastodonC2);
         }else {
@@ -135,11 +136,11 @@ public class MediaActivity extends AppCompatActivity  {
         changeDrawableColor(getApplicationContext(), R.drawable.ic_prev_pic,R.color.mastodonC4);
 
         canSwipe = true;
-        loader = (RelativeLayout) findViewById(R.id.loader);
-        imageView = (PhotoView) findViewById(R.id.media_picture);
-        videoView = (VideoView) findViewById(R.id.media_video);
-        prev = (ImageView) findViewById(R.id.media_prev);
-        next = (ImageView) findViewById(R.id.media_next);
+        loader = findViewById(R.id.loader);
+        imageView = findViewById(R.id.media_picture);
+        videoView = findViewById(R.id.media_video);
+        prev = findViewById(R.id.media_prev);
+        next = findViewById(R.id.media_next);
         prev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,7 +162,7 @@ public class MediaActivity extends AppCompatActivity  {
             }
         });
 
-        progress = (TextView) findViewById(R.id.loader_progress);
+        progress = findViewById(R.id.loader_progress);
         setTitle("");
 
         isHiding = false;
@@ -399,7 +400,7 @@ public class MediaActivity extends AppCompatActivity  {
         ActionBar actionBar = getSupportActionBar();
         if( actionBar != null){
             @SuppressLint("InflateParams") View picture_actionbar = mInflater.inflate(R.layout.picture_actionbar, null);
-            TextView picture_actionbar_title = (TextView) picture_actionbar.findViewById(R.id.picture_actionbar);
+            TextView picture_actionbar_title = picture_actionbar.findViewById(R.id.picture_actionbar);
             picture_actionbar_title.setText(filename);
             actionBar.setCustomView(picture_actionbar);
             actionBar.setDisplayShowCustomEnabled(true);

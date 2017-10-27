@@ -128,6 +128,7 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
         ActionBar actionBar = getSupportActionBar();
         if( actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(android.content.Context.LAYOUT_INFLATER_SERVICE);
+            assert inflater != null;
             @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.conversation_action_bar, null);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -253,6 +254,7 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
                     screen_name = screen_name.substring(1);
                 new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), screen_name, instance_name, RemoteFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                assert imm != null;
                 imm.hideSoftInputFromWindow(rf_search.getWindowToken(), 0);
             }
         });
