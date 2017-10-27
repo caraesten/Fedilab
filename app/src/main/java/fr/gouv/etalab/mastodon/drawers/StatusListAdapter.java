@@ -46,7 +46,6 @@ import android.util.Patterns;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -1449,25 +1448,25 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private String googleTranslateToText(String text) throws JSONException, UnsupportedEncodingException{
 
         int i = 0;
-        String aJsonString = "";
+        StringBuilder aJsonString = new StringBuilder();
         while( i < new JSONArray(new JSONArray(text).get(0).toString()).length() ) {
-            aJsonString += new JSONArray(new JSONArray(new JSONArray(text).get(0).toString()).get(i).toString()).get(0).toString();
+            aJsonString.append(new JSONArray(new JSONArray(new JSONArray(text).get(0).toString()).get(i).toString()).get(0).toString());
             i++;
         }
         //Some fixes due to translation with Google
-        aJsonString = aJsonString.trim();
-        aJsonString = aJsonString.replace("< / ","</");
-        aJsonString = aJsonString.replace("</ ","</");
-        aJsonString = aJsonString.replace("> ",">");
-        aJsonString = aJsonString.replace(" <","<");
-        aJsonString = aJsonString.replace(" // ","//");
-        aJsonString = aJsonString.replace("// ","//");
-        aJsonString = aJsonString.replace(" //","//");
-        aJsonString = aJsonString.replace(" www .","www.");
-        aJsonString = aJsonString.replace("www .","www.");
+        aJsonString = new StringBuilder(aJsonString.toString().trim());
+        aJsonString = new StringBuilder(aJsonString.toString().replace("< / ", "</"));
+        aJsonString = new StringBuilder(aJsonString.toString().replace("</ ", "</"));
+        aJsonString = new StringBuilder(aJsonString.toString().replace("> ", ">"));
+        aJsonString = new StringBuilder(aJsonString.toString().replace(" <", "<"));
+        aJsonString = new StringBuilder(aJsonString.toString().replace(" // ", "//"));
+        aJsonString = new StringBuilder(aJsonString.toString().replace("// ", "//"));
+        aJsonString = new StringBuilder(aJsonString.toString().replace(" //", "//"));
+        aJsonString = new StringBuilder(aJsonString.toString().replace(" www .", "www."));
+        aJsonString = new StringBuilder(aJsonString.toString().replace("www .", "www."));
 
         // This one might cause more trouble than it's worth
-        aJsonString = aJsonString.replaceAll("\\* \\.", "*.");
+        aJsonString = new StringBuilder(aJsonString.toString().replaceAll("\\* \\.", "*."));
 
         /*
             Noticed that sometimes the special tags were getting messed up by Google,
@@ -1475,11 +1474,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             But, pre-planning might save some time later...
          */
-        aJsonString = aJsonString.replaceAll("__\\s?(u|t)\\s?(\\d+)\\s?__", "__$1$2__");
-        aJsonString = aJsonString.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
-        aJsonString = aJsonString.replaceAll("\\+", "%2B");
-        aJsonString = URLDecoder.decode(aJsonString, "UTF-8");
-        return aJsonString;
+        aJsonString = new StringBuilder(aJsonString.toString().replaceAll("__\\s?([ut])\\s?(\\d+)\\s?__", "__$1$2__"));
+        aJsonString = new StringBuilder(aJsonString.toString().replaceAll("%(?![0-9a-fA-F]{2})", "%25"));
+        aJsonString = new StringBuilder(aJsonString.toString().replaceAll("\\+", "%2B"));
+        aJsonString = new StringBuilder(URLDecoder.decode(aJsonString.toString(), "UTF-8"));
+        return aJsonString.toString();
     }
 
 
