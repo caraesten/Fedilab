@@ -17,6 +17,8 @@ package fr.gouv.etalab.mastodon.asynctasks;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import java.lang.ref.WeakReference;
+
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
@@ -30,13 +32,13 @@ import fr.gouv.etalab.mastodon.interfaces.OnPostNotificationsActionInterface;
 
 public class PostNotificationsAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private Context context;
     private OnPostNotificationsActionInterface listener;
     private APIResponse apiResponse;
     private Notification notification;
+    private WeakReference<Context> contextReference;
 
     public PostNotificationsAsyncTask(Context context, Notification notification, OnPostNotificationsActionInterface onPostNotificationsActionInterface){
-        this.context = context;
+        this.contextReference = new WeakReference<>(context);
         this.listener = onPostNotificationsActionInterface;
         this.notification = notification;
     }
@@ -44,9 +46,9 @@ public class PostNotificationsAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         if( notification  != null)
-            apiResponse = new API(context).postNoticationAction(notification.getId());
+            apiResponse = new API(this.contextReference.get()).postNoticationAction(notification.getId());
         else //Delete all notifications
-            apiResponse = new API(context).postNoticationAction(null);
+            apiResponse = new API(this.contextReference.get()).postNoticationAction(null);
         return null;
     }
 

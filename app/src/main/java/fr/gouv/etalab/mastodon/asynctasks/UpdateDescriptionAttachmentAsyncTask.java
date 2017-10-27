@@ -20,39 +20,40 @@ import android.os.AsyncTask;
 import java.lang.ref.WeakReference;
 
 import fr.gouv.etalab.mastodon.client.API;
-import fr.gouv.etalab.mastodon.client.APIResponse;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
+import fr.gouv.etalab.mastodon.client.Entities.Attachment;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
 
 
 /**
- * Created by Thomas on 25/05/2017.
- * Retrieves accounts from search (ie: starting with @ when writing a toot)
+ * Created by Thomas on 27/10/2017.
+ * Updates media description
  */
 
-public class RetrieveSearchAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
+public class UpdateDescriptionAttachmentAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private String query;
-    private APIResponse apiResponse;
-    private OnRetrieveSearcAccountshInterface listener;
+    private OnRetrieveAttachmentInterface listener;
+    private Attachment attachment;
+    private String mediaId, description;
+    private API api;
     private WeakReference<Context> contextReference;
 
-    public RetrieveSearchAccountsAsyncTask(Context context, String query, OnRetrieveSearcAccountshInterface onRetrieveSearcAccountshInterface){
+    public UpdateDescriptionAttachmentAsyncTask(Context context, String mediaId, String description, OnRetrieveAttachmentInterface onRetrieveAttachmentInterface){
         this.contextReference = new WeakReference<>(context);
-        this.query = query;
-        this.listener = onRetrieveSearcAccountshInterface;
+        this.listener = onRetrieveAttachmentInterface;
+        this.description = description;
+        this.mediaId = mediaId;
     }
-
 
     @Override
     protected Void doInBackground(Void... params) {
-        API api = new API(this.contextReference.get());
-        apiResponse = api.searchAccounts(query, 20);
+        api = new API(this.contextReference.get());
+        attachment = api.updateDescription(mediaId, description);
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveSearchAccounts(apiResponse);
+        listener.onRetrieveAttachment(attachment, api.getError());
     }
 
 }

@@ -432,4 +432,6 @@
         Agradecimentos a:
     </string>
     <string name="action_open_in_web">Open in browser</string>
+    <string name="select_accounts">Select some accounts</string>
+    <string name="upload_form_description">Describe for the visually impaired</string>
 </resources>

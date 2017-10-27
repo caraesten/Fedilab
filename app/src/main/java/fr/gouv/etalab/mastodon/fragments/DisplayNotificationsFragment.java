@@ -19,12 +19,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -60,9 +59,10 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private boolean firstLoad;
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean swiped;
-    private ListView lv_notifications;
+    private RecyclerView lv_notifications;
     private String lastReadNotifications;
     private String userId;
+    LinearLayoutManager mLayoutManager;
 
     public DisplayNotificationsFragment(){
     }
@@ -78,12 +78,12 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         notifications = new ArrayList<>();
         swiped = false;
 
-        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
+        swipeRefreshLayout = rootView.findViewById(R.id.swipeContainer);
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        lv_notifications = (ListView) rootView.findViewById(R.id.lv_notifications);
-        mainLoader = (RelativeLayout) rootView.findViewById(R.id.loader);
-        nextElementLoader = (RelativeLayout) rootView.findViewById(R.id.loading_next_notifications);
-        textviewNoAction = (RelativeLayout) rootView.findViewById(R.id.no_action);
+        lv_notifications = rootView.findViewById(R.id.lv_notifications);
+        mainLoader = rootView.findViewById(R.id.loader);
+        nextElementLoader = rootView.findViewById(R.id.loading_next_notifications);
+        textviewNoAction = rootView.findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
         boolean isOnWifi = Helper.isOnWIFI(context);
@@ -92,21 +92,24 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         lastReadNotifications = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
         notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments,this.notifications);
         lv_notifications.setAdapter(notificationsListAdapter);
-        lv_notifications.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-            }
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-                if(firstVisibleItem + visibleItemCount == totalItemCount ) {
-                    if(!flag_loading ) {
-                        flag_loading = true;
-                        asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, max_id, null, null,DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        nextElementLoader.setVisibility(View.VISIBLE);
+        mLayoutManager = new LinearLayoutManager(context);
+        lv_notifications.setLayoutManager(mLayoutManager);
+        lv_notifications.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                if(dy > 0) {
+                    int visibleItemCount = mLayoutManager.getChildCount();
+                    int totalItemCount = mLayoutManager.getItemCount();
+                    int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+                    if (firstVisibleItem + visibleItemCount == totalItemCount) {
+                        if (!flag_loading) {
+                            flag_loading = true;
+                            asyncTask = new RetrieveNotificationsAsyncTask(context, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            nextElementLoader.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+                        nextElementLoader.setVisibility(View.GONE);
                     }
-                } else {
-                    nextElementLoader.setVisibility(View.GONE);
                 }
             }
         });
@@ -256,13 +259,13 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         if( notification != null){
             //Update the id of the last notification retrieved
             MainActivity.lastNotificationId = notification.getId();
-            int index = lv_notifications.getFirstVisiblePosition() + 1;
-            View v = lv_notifications.getChildAt(0);
-            int top = (v == null) ? 0 : v.getTop();
             notifications.add(0, notification);
             MainActivity.countNewNotifications++;
-            notificationsListAdapter.notifyDataSetChanged();
-            lv_notifications.setSelectionFromTop(index, top);
+            int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+            if( firstVisibleItem > 0)
+                notificationsListAdapter.notifyItemInserted(0);
+            else
+                notificationsListAdapter.notifyDataSetChanged();
             if( textviewNoAction.getVisibility() == View.VISIBLE)
                 textviewNoAction.setVisibility(View.GONE);
         }

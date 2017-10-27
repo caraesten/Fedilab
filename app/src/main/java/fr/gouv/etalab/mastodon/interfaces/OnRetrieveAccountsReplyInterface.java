@@ -14,12 +14,15 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.interfaces;
 
-import fr.gouv.etalab.mastodon.client.Entities.Status;
+
+import java.util.ArrayList;
+
+import fr.gouv.etalab.mastodon.client.Entities.Account;
 
 /**
- * Created by Thomas on 03/07/2017.
- * Yandex client API Handler
+ * Created by Thomas on 25/10/2017.
+ * Interface when accounts of a conversation have been retrieved
  */
-public interface OnTranslatedInterface {
-    void onTranslatedTextview(Status status, String translatedResult, Boolean error);
+public interface OnRetrieveAccountsReplyInterface {
+    void onRetrieveAccountsReply(ArrayList<Account> accounts);
 }

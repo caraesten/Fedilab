@@ -94,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:context="mastodon.etalab.gouv.fr.mastodon.fr.etalab.gouv.fr.mastodon.activities.MainActivity"
+            tools:context="fr.gouv.etalab.mastodon.activities.MainActivity"
             >
         </android.support.v4.view.ViewPager>
 
@@ -107,10 +107,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:context="mastodon.etalab.gouv.fr.mastodon.fr.etalab.gouv.fr.mastodon.activities.MainActivity"
+            tools:context="fr.gouv.etalab.mastodon.activities.MainActivity"
             >
         </RelativeLayout>
-
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/toot"

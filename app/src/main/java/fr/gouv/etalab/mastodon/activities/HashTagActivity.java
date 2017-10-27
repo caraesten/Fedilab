@@ -21,10 +21,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -87,17 +87,17 @@ public class HashTagActivity extends AppCompatActivity implements OnRetrieveFeed
         flag_loading = true;
         firstLoad = true;
         boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        swipeRefreshLayout = findViewById(R.id.swipeContainer);
 
 
         int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
 
 
-        final ListView lv_status = (ListView) findViewById(R.id.lv_status);
+        final RecyclerView lv_status = findViewById(R.id.lv_status);
         tootsPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
-        mainLoader = (RelativeLayout) findViewById(R.id.loader);
-        nextElementLoader = (RelativeLayout) findViewById(R.id.loading_next_status);
-        textviewNoAction = (RelativeLayout) findViewById(R.id.no_action);
+        mainLoader = findViewById(R.id.loader);
+        nextElementLoader = findViewById(R.id.loading_next_status);
+        textviewNoAction = findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
         int positionSpinnerTrans = (sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX));
@@ -123,23 +123,28 @@ public class HashTagActivity extends AppCompatActivity implements OnRetrieveFeed
                     R.color.colorPrimaryD,
                     R.color.colorPrimaryDarkD);
         }
+        final LinearLayoutManager mLayoutManager;
+        mLayoutManager = new LinearLayoutManager(this);
+        lv_status.setLayoutManager(mLayoutManager);
+        lv_status.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                if(dy > 0){
+                    int visibleItemCount = mLayoutManager.getChildCount();
+                    int totalItemCount = mLayoutManager.getItemCount();
+                    int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+                    if(firstVisibleItem + visibleItemCount == totalItemCount ) {
+                        if(!flag_loading ) {
+                            flag_loading = true;
+                            new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.TAG, tag,null, max_id, HashTagActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
-        lv_status.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-            }
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if(firstVisibleItem + visibleItemCount == totalItemCount ) {
-                    if(!flag_loading ) {
-                        flag_loading = true;
-                        new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.TAG, tag,null, max_id, HashTagActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
-                        nextElementLoader.setVisibility(View.VISIBLE);
+                            nextElementLoader.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+                        nextElementLoader.setVisibility(View.GONE);
                     }
-                } else {
-                    nextElementLoader.setVisibility(View.GONE);
                 }
+
             }
         });
         new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.TAG, tag,null, max_id, HashTagActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -179,9 +184,7 @@ public class HashTagActivity extends AppCompatActivity implements OnRetrieveFeed
         else
             max_id = null;
         if( statuses != null) {
-            for(Status tmpStatus: statuses){
-                this.statuses.add(tmpStatus);
-            }
+            this.statuses.addAll(statuses);
             statusListAdapter.notifyDataSetChanged();
         }
         swipeRefreshLayout.setRefreshing(false);

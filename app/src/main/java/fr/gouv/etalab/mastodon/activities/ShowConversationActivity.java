@@ -15,6 +15,7 @@
 package fr.gouv.etalab.mastodon.activities;
 
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -25,13 +26,14 @@ import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -76,7 +78,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
     private String statusId;
     private Status initialStatus;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private ListView lv_status;
+    private RecyclerView lv_status;
     private boolean isRefreshed;
     private ImageView pp_actionBar;
 
@@ -96,7 +98,8 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
         ActionBar actionBar = getSupportActionBar();
         if( actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(android.content.Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.conversation_action_bar, null);
+            assert inflater != null;
+            @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.conversation_action_bar, null);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             TextView title = actionBar.getCustomView().findViewById(R.id.toolbar_title);
@@ -172,12 +175,16 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
             }
         });
         lv_status = findViewById(R.id.lv_status);
+        final LinearLayoutManager mLayoutManager;
+        mLayoutManager = new LinearLayoutManager(this);
+        lv_status.setLayoutManager(mLayoutManager);
         lv_status.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
-
-                    if (lv_status.getLastVisiblePosition() == lv_status.getAdapter().getCount() -1 &&  lv_status.getFirstVisiblePosition() > 0 &&
+                    int visibleItemCount = mLayoutManager.getChildCount();
+                    int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+                    if (firstVisibleItem + visibleItemCount == lv_status.getAdapter().getItemCount() -1 &&  firstVisibleItem > 0 &&
                             lv_status.getChildAt(lv_status.getChildCount() - 1).getBottom() <= lv_status.getHeight()) {
 
                         swipeRefreshLayout.setRefreshing(true);
@@ -273,7 +280,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
         lv_status.setVisibility(View.VISIBLE);
         if( isRefreshed){
             position = statuses.size()-1;
-            lv_status.setSelection(position);
+            lv_status.scrollToPosition(position);
         }else {
             lv_status.smoothScrollToPosition(position);
         }

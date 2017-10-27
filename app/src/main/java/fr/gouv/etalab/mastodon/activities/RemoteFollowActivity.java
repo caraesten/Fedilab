@@ -40,7 +40,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,7 +64,6 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRelationshipAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
@@ -75,7 +73,8 @@ import fr.gouv.etalab.mastodon.client.Entities.Relationship;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.KinrarClient;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
-import fr.gouv.etalab.mastodon.drawers.AccountsListAdapter;
+import fr.gouv.etalab.mastodon.drawers.AccountSearchDevAdapter;
+import fr.gouv.etalab.mastodon.helper.ExpandableHeightListView;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRelationshipInterface;
@@ -98,7 +97,7 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
     private EditText rf_username;
     private TextView rf_no_result;
     private Button rf_search;
-    private ListView lv_account;
+    private ExpandableHeightListView lv_account;
     private RelativeLayout loader;
     private boolean isLoadingInstance;
     private String instance_name, screen_name;
@@ -115,12 +114,12 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
         }
         setContentView(R.layout.activity_remote_follow);
 
-        rf_instance = (AutoCompleteTextView) findViewById(R.id.rf_instance);
-        rf_username = (EditText) findViewById(R.id.rf_username);
-        rf_search = (Button) findViewById(R.id.rf_search);
-        loader = (RelativeLayout) findViewById(R.id.loader);
-        lv_account = (ListView) findViewById(R.id.lv_account);
-        rf_no_result = (TextView) findViewById(R.id.rf_no_result);
+        rf_instance = findViewById(R.id.rf_instance);
+        rf_username = findViewById(R.id.rf_username);
+        rf_search = findViewById(R.id.rf_search);
+        loader = findViewById(R.id.loader);
+        lv_account = findViewById(R.id.lv_account);
+        rf_no_result = findViewById(R.id.rf_no_result);
         if( theme == Helper.THEME_LIGHT) {
             rf_search.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
         }
@@ -128,13 +127,14 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
         ActionBar actionBar = getSupportActionBar();
         if( actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(android.content.Context.LAYOUT_INFLATER_SERVICE);
+            assert inflater != null;
             @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.conversation_action_bar, null);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-            TextView title = (TextView) actionBar.getCustomView().findViewById(R.id.toolbar_title);
-            pp_actionBar = (ImageView) actionBar.getCustomView().findViewById(R.id.pp_actionBar);
+            TextView title = actionBar.getCustomView().findViewById(R.id.toolbar_title);
+            pp_actionBar = actionBar.getCustomView().findViewById(R.id.pp_actionBar);
             title.setText(R.string.remote_follow_menu);
-            ImageView close_conversation = (ImageView) actionBar.getCustomView().findViewById(R.id.close_conversation);
+            ImageView close_conversation = actionBar.getCustomView().findViewById(R.id.close_conversation);
             if( close_conversation != null){
                 close_conversation.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -253,6 +253,7 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
                     screen_name = screen_name.substring(1);
                 new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), screen_name, instance_name, RemoteFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                assert imm != null;
                 imm.hideSoftInputFromWindow(rf_search.getWindowToken(), 0);
             }
         });
@@ -287,8 +288,7 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
         if( accounts != null && accounts.size() > 0){
             account = accounts.get(0);
             selectedAccount.add(account);
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            AccountsListAdapter accountSearchWebAdapter = new AccountsListAdapter(RemoteFollowActivity.this, RetrieveAccountsAsyncTask.Type.FOLLOWERS, userId, selectedAccount);
+            AccountSearchDevAdapter accountSearchWebAdapter = new AccountSearchDevAdapter(RemoteFollowActivity.this, selectedAccount);
             lv_account.setAdapter(accountSearchWebAdapter);
             lv_account.setVisibility(View.VISIBLE);
             new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),RemoteFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);

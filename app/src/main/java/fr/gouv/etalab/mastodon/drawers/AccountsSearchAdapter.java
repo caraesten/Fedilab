@@ -36,6 +36,7 @@ import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import java.util.ArrayList;
 import java.util.List;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -67,7 +68,6 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
         this.owner = false;
     }
-
     public AccountsSearchAdapter(Context context, List<Account> accounts, boolean owner){
         super(context, android.R.layout.simple_list_item_1, accounts);
         this.accounts = accounts;
@@ -80,6 +80,7 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
         this.owner = owner;
     }
+
 
     @Override
     public int getCount() {

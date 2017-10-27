@@ -14,14 +14,11 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.translation;
 
-import android.util.Log;
-
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.json.JSONException;
-
 import cz.msebera.android.httpclient.Header;
-import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
 
 /**
@@ -37,7 +34,7 @@ public class GoogleTranslateQuery {
         this.listener = listenner;
     }
 
-    public void getGoogleTextview(final int position, final String text, final String toLanguage) throws JSONException {
+    public void getGoogleTextview(final Status status, final String text, final String toLanguage) throws JSONException {
 
         GoogleTranslateClient.get(text, toLanguage, new AsyncHttpResponseHandler() {
             @Override
@@ -47,12 +44,12 @@ public class GoogleTranslateQuery {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] response) {
                 String str_response = new String(response);
-                listener.onTranslatedTextview(position, str_response,false);
+                listener.onTranslatedTextview(status, str_response,false);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-                listener.onTranslatedTextview(position,  null, true);
+                listener.onTranslatedTextview(status,  null, true);
             }
 
         });

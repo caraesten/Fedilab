@@ -17,6 +17,8 @@ package fr.gouv.etalab.mastodon.asynctasks;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import java.lang.ref.WeakReference;
+
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchInterface;
@@ -29,14 +31,14 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchInterface;
 
 public class RetrieveSearchAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private Context context;
     private String query;
     private Results results;
     private OnRetrieveSearchInterface listener;
     private API api;
+    private WeakReference<Context> contextReference;
 
     public RetrieveSearchAsyncTask(Context context, String query, OnRetrieveSearchInterface onRetrieveSearchInterface){
-        this.context = context;
+        this.contextReference = new WeakReference<>(context);
         this.query = query;
         this.listener = onRetrieveSearchInterface;
     }
@@ -44,7 +46,7 @@ public class RetrieveSearchAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        api = new API(context);
+        api = new API(this.contextReference.get());
         results = api.search(query);
         return null;
     }

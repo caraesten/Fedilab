@@ -17,6 +17,8 @@ package fr.gouv.etalab.mastodon.asynctasks;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import java.lang.ref.WeakReference;
+
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountInterface;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -29,21 +31,22 @@ import fr.gouv.etalab.mastodon.client.Entities.Account;
 
 public class RetrieveAccountAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private Context context;
+
     private String targetedId;
     private Account account;
     private OnRetrieveAccountInterface listener;
     private API api;
+    private WeakReference<Context> contextReference;
 
     public RetrieveAccountAsyncTask(Context context, String targetedId, OnRetrieveAccountInterface onRetrieveAccountInterface){
-        this.context = context;
+        this.contextReference = new WeakReference<>(context);
         this.targetedId = targetedId;
         this.listener = onRetrieveAccountInterface;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        api = new API(context);
+        api = new API(this.contextReference.get());
         account = api.getAccount(targetedId);
         return null;
     }
