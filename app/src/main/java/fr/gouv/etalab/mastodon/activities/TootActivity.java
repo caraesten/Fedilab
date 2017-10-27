@@ -1039,7 +1039,31 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     imageView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            AlertDialog.Builder builderInner = new AlertDialog.Builder(TootActivity.this);
+                            builderInner.setTitle(R.string.upload_form_description);
+                            //Text for report
+                            EditText input = null;
+                            input = new EditText(TootActivity.this);
+                            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.MATCH_PARENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT);
+                            input.setLayoutParams(lp);
+                            builderInner.setView(input);
+                            builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog,int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            final EditText finalInput = input;
+                            builderInner.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog,int which) {
 
+                                    dialog.dismiss();
+                                }
+                            });
+                            builderInner.show();
                         }
                     });
                 }
