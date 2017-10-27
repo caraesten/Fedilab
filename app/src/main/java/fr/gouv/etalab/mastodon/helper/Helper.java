@@ -58,9 +58,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -69,13 +67,11 @@ import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.MimeTypeMap;
@@ -264,7 +260,6 @@ public class Helper {
     public static final String INTENT_ACTION = "intent_action";
 
     //Receiver
-    public static final String HEADER_ACCOUNT = "header_account";
     public static final String RECEIVE_DATA = "receive_data";
     public static final String RECEIVE_FEDERATED_DATA = "receive_federated_data";
     public static final String RECEIVE_LOCAL_DATA = "receive_local_data";
@@ -283,7 +278,7 @@ public class Helper {
             "(?i)\\b((?:[a-z][\\w-]+:(?:/{1,3}|[a-z0-9%])|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,10}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))",
             Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 
-    public static final Pattern hashtagPattern = Pattern.compile("(#[\\w_À-ú-]{1,})");
+    public static final Pattern hashtagPattern = Pattern.compile("(#[\\w_À-ú-]+)");
     /**
      * Converts emojis in input to unicode
      * @param input String
@@ -344,8 +339,11 @@ public class Helper {
      *  Check if the user is connected to Internet
      * @return boolean
      */
+    @SuppressWarnings("unused")
     public static boolean isConnectedToInternet(Context context, String instance) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if( cm == null)
+            return true;
         NetworkInfo ni = cm.getActiveNetworkInfo();
         if ( ni != null && ni.isConnected()) {
             try {
@@ -463,6 +461,7 @@ public class Helper {
      */
     public static boolean isOnWIFI(Context context) {
         ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert connManager != null;
         NetworkInfo activeNetwork = connManager.getActiveNetworkInfo();
         return (activeNetwork != null && activeNetwork.getType() == ConnectivityManager.TYPE_WIFI);
     }
@@ -622,6 +621,7 @@ public class Helper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(channelId, title, NotificationManager.IMPORTANCE_DEFAULT);
             NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            assert mNotificationManager != null;
             mNotificationManager.createNotificationChannel(channel);
         }
 
@@ -804,10 +804,10 @@ public class Helper {
      */
     public static void menuAccounts(final Activity activity){
 
-        final NavigationView navigationView = (NavigationView) activity.findViewById(R.id.nav_view);
+        final NavigationView navigationView = activity.findViewById(R.id.nav_view);
         SharedPreferences mSharedPreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String currrentUserId = mSharedPreferences.getString(Helper.PREF_KEY_ID, null);
-        final ImageView arrow  = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.owner_accounts);
+        final ImageView arrow  = navigationView.getHeaderView(0).findViewById(R.id.owner_accounts);
         if( currrentUserId == null)
             return;
 
@@ -886,7 +886,7 @@ public class Helper {
                         }
                     });
                     item.setActionView(R.layout.update_account);
-                    ImageView deleteButton = (ImageView) item.getActionView().findViewById(R.id.account_remove_button);
+                    ImageView deleteButton = item.getActionView().findViewById(R.id.account_remove_button);
                     deleteButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -941,7 +941,7 @@ public class Helper {
     public static void changeUser(Activity activity, String userID, boolean checkItem) {
 
 
-        final NavigationView navigationView = (NavigationView) activity.findViewById(R.id.nav_view);
+        final NavigationView navigationView = activity.findViewById(R.id.nav_view);
         navigationView.getMenu().clear();
         MainActivity.lastNotificationId = null;
         MainActivity.lastHomeId = null;
@@ -958,7 +958,6 @@ public class Helper {
             navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
         }
         SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        String oldUserId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, account.getToken());
         editor.putString(Helper.PREF_KEY_ID, account.getId());
@@ -972,7 +971,8 @@ public class Helper {
     }
 
 
-    public static Bitmap getRoundedCornerBitmap(Bitmap bitmap,int roundPixelSize) {
+    @SuppressWarnings("SameParameterValue")
+    public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int roundPixelSize) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(output);
         final Paint paint = new Paint();
@@ -1023,11 +1023,11 @@ public class Helper {
      * @param options DisplayImageOptions - current configuration of ImageLoader
      */
     public static void updateHeaderAccountInfo(final Activity activity, final Account account, final View headerLayout, ImageLoader imageLoader, DisplayImageOptions options){
-        ImageView profilePicture = (ImageView) headerLayout.findViewById(R.id.profilePicture);
+        ImageView profilePicture = headerLayout.findViewById(R.id.profilePicture);
 
-        TextView username = (TextView) headerLayout.findViewById(R.id.username);
-        TextView displayedName = (TextView) headerLayout.findViewById(R.id.displayedName);
-        ImageView header_edit_profile = (ImageView) headerLayout.findViewById(R.id.header_edit_profile);
+        TextView username = headerLayout.findViewById(R.id.username);
+        TextView displayedName = headerLayout.findViewById(R.id.displayedName);
+        ImageView header_edit_profile = headerLayout.findViewById(R.id.header_edit_profile);
         header_edit_profile.setOnClickListener(null);
         if( account == null ) {
             Helper.logout(activity);
@@ -1055,7 +1055,7 @@ public class Helper {
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         super.onLoadingComplete(imageUri, view, loadedImage);
-                        LinearLayout main_header_container = (LinearLayout) headerLayout.findViewById(R.id.main_header_container);
+                        LinearLayout main_header_container = headerLayout.findViewById(R.id.main_header_container);
                         Bitmap workingBitmap = Bitmap.createBitmap(loadedImage);
                         Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
                         Canvas canvas = new Canvas(mutableBitmap);
@@ -1070,7 +1070,7 @@ public class Helper {
 
                     @Override
                     public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason) {
-                        LinearLayout main_header_container = (LinearLayout) headerLayout.findViewById(R.id.main_header_container);
+                        LinearLayout main_header_container = headerLayout.findViewById(R.id.main_header_container);
                         main_header_container.setBackgroundResource(R.drawable.side_nav_bar);
                     }
                 });
@@ -1369,7 +1369,7 @@ public class Helper {
 
     public static WebView initializeWebview(Activity activity, int webviewId){
 
-        WebView webView = (WebView) activity.findViewById(webviewId);
+        WebView webView = activity.findViewById(webviewId);
         final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean javascript = sharedpreferences.getBoolean(Helper.SET_JAVASCRIPT, true);
 
@@ -1615,8 +1615,8 @@ public class Helper {
     public static void switchLayout(Activity activity){
         //Check if the class calling the method is an instance of MainActivity
         final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        final NavigationView navigationView = (NavigationView) activity.findViewById(R.id.nav_view);
-        android.support.design.widget.TabLayout tableLayout = (android.support.design.widget.TabLayout) activity.findViewById(R.id.tabLayout);
+        final NavigationView navigationView = activity.findViewById(R.id.nav_view);
+        android.support.design.widget.TabLayout tableLayout = activity.findViewById(R.id.tabLayout);
         String userID = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(activity,db).getAccountByID(userID);
@@ -1641,15 +1641,15 @@ public class Helper {
      */
     public static Bitmap convertTootIntoBitmap(Context context, View view) {
 
-        int new_element_v = 0, notification_delete_v = 0;
+        int new_element_v = View.VISIBLE, notification_delete_v = View.VISIBLE;
         //Removes some elements
-        ImageView new_element = (ImageView) view.findViewById(R.id.new_element);
+        ImageView new_element = view.findViewById(R.id.new_element);
         if( new_element != null) {
             new_element_v = new_element.getVisibility();
             new_element.setVisibility(View.GONE);
         }
 
-        ImageView notification_delete = (ImageView) view.findViewById(R.id.notification_delete);
+        ImageView notification_delete = view.findViewById(R.id.notification_delete);
         if( notification_delete != null) {
             notification_delete_v = notification_delete.getVisibility();
             notification_delete.setVisibility(View.GONE);
