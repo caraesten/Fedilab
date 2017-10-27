@@ -58,7 +58,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -80,7 +79,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -575,6 +573,7 @@ public class Helper {
                         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
                         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                         DownloadManager dm = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
+                        assert dm != null;
                         dm.enqueue(request);
                         dialog.dismiss();
                     }
@@ -750,8 +749,10 @@ public class Helper {
      */
     public static void copy(File src, File dst) throws IOException {
         InputStream in = new FileInputStream(src);
+        //noinspection TryFinallyCanBeTryWithResources
         try {
             OutputStream out = new FileOutputStream(dst);
+            //noinspection TryFinallyCanBeTryWithResources
             try {
                 byte[] buf = new byte[1024];
                 int len;
@@ -972,7 +973,7 @@ public class Helper {
 
 
     @SuppressWarnings("SameParameterValue")
-    public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int roundPixelSize) {
+    private static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int roundPixelSize) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(output);
         final Paint paint = new Paint();
@@ -1147,6 +1148,7 @@ public class Helper {
      * @param mentions List<Mention>
      * @return TextView
      */
+    @SuppressWarnings("SameParameterValue")
     public static SpannableString clickableElements(final Context context, String fullContent, List<Mention> mentions, final List<Emojis> emojis, final int position, boolean useHTML, final OnRetrieveEmojiInterface listener) {
         final SpannableString spannableString;
 
@@ -1418,9 +1420,9 @@ public class Helper {
             // Create Hex String
             StringBuilder hexString = new StringBuilder();
             for (byte aMessageDigest : messageDigest) {
-                String h = Integer.toHexString(0xFF & aMessageDigest);
+                StringBuilder h = new StringBuilder(Integer.toHexString(0xFF & aMessageDigest));
                 while (h.length() < 2)
-                    h = "0" + h;
+                    h.insert(0, "0");
                 hexString.append(h);
             }
             return hexString.toString();
@@ -1587,24 +1589,6 @@ public class Helper {
                 item.setChecked(false);
             }
         }
-    }
-
-    /**
-     * Returns true if a ListView is at its top position
-     * @param listView ListView
-     * @return boolean
-     */
-    public static boolean listIsAtTop(RecyclerView listView) {
-        return listView.getChildCount() == 0 || listView.getChildAt(0).getTop() == 0;
-    }
-
-    /**
-     * Returns true if a ListView is at its top position
-     * @param listView ListView
-     * @return boolean
-     */
-    public static boolean listIsAtTop(ListView listView) {
-        return listView.getChildCount() == 0 || listView.getChildAt(0).getTop() == 0;
     }
 
 
