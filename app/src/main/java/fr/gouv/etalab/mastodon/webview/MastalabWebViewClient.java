@@ -13,6 +13,7 @@ package fr.gouv.etalab.mastodon.webview;
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.support.v7.app.ActionBar;
@@ -51,8 +52,8 @@ public class MastalabWebViewClient extends WebViewClient {
         ActionBar actionBar = ((AppCompatActivity) activity).getSupportActionBar();
         LayoutInflater mInflater = LayoutInflater.from(activity);
         if( actionBar != null){
-            View webview_actionbar = mInflater.inflate(R.layout.webview_actionbar, null);
-            TextView webview_title = (TextView) webview_actionbar.findViewById(R.id.webview_title);
+            @SuppressLint("InflateParams") View webview_actionbar = mInflater.inflate(R.layout.webview_actionbar, null);
+            TextView webview_title = webview_actionbar.findViewById(R.id.webview_title);
             webview_title.setText(url);
             actionBar.setCustomView(webview_actionbar);
             actionBar.setDisplayShowCustomEnabled(true);

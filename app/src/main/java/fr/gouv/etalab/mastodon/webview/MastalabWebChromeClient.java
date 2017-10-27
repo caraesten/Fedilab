@@ -13,6 +13,7 @@ package fr.gouv.etalab.mastodon.webview;
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
@@ -59,7 +60,7 @@ public class MastalabWebChromeClient extends WebChromeClient implements MediaPla
             this.activity = activity;
             this.isVideoFullscreen = false;
             this.webView = webView;
-            this.pbar = (ProgressBar) activity.findViewById(R.id.progress_bar);
+            this.pbar = activity.findViewById(R.id.progress_bar);
             this.activityNonVideoView = activityNonVideoView;
             this.activityVideoView = activityVideoView;
         }
@@ -84,10 +85,10 @@ public class MastalabWebChromeClient extends WebChromeClient implements MediaPla
             LayoutInflater mInflater = LayoutInflater.from(activity);
             ActionBar actionBar = ((AppCompatActivity) activity).getSupportActionBar();
             if( actionBar != null){
-                View webview_actionbar = mInflater.inflate(R.layout.webview_actionbar, null);
-                TextView webview_title = (TextView) webview_actionbar.findViewById(R.id.webview_title);
+                @SuppressLint("InflateParams") View webview_actionbar = mInflater.inflate(R.layout.webview_actionbar, null);
+                TextView webview_title = webview_actionbar.findViewById(R.id.webview_title);
                 webview_title.setText(view.getTitle());
-                ImageView webview_favicon = (ImageView) webview_actionbar.findViewById(R.id.webview_favicon);
+                ImageView webview_favicon = webview_actionbar.findViewById(R.id.webview_favicon);
                 if( icon != null)
                     webview_favicon.setImageBitmap(icon);
                 actionBar.setCustomView(webview_actionbar);
@@ -113,6 +114,7 @@ public class MastalabWebChromeClient extends WebChromeClient implements MediaPla
     public void onShowCustomView(View view, WebChromeClient.CustomViewCallback callback) {
         if (view instanceof FrameLayout) {
             if( ((AppCompatActivity) activity).getSupportActionBar() != null)
+                //noinspection ConstantConditions
                 ((AppCompatActivity) activity).getSupportActionBar().hide();
             // A video wants to be shown
             FrameLayout frameLayout = (FrameLayout) view;
@@ -176,6 +178,7 @@ public class MastalabWebChromeClient extends WebChromeClient implements MediaPla
     @Override
     public void onHideCustomView() {
         if( ((AppCompatActivity) activity).getSupportActionBar() != null)
+            //noinspection ConstantConditions
             ((AppCompatActivity) activity).getSupportActionBar().show();
         // This method should be manually called on video end in all cases because it's not always called automatically.
         // This method must be manually called on back key press (from this class' onBackPressed() method).
