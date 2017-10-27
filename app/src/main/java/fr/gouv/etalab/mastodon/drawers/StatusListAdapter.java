@@ -523,16 +523,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         return false;
                     }
                 });
-                holder.status_content_translated.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                            holder.status_content_translated.setFocusableInTouchMode(false);
-                            holder.status_content_translated.clearFocus();
-                        }
-                        return false;
-                    }
-                });
                 holder.status_content_translated.setMovementMethod(LinkMovementMethod.getInstance());
             }
 
@@ -559,17 +549,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             });
 
-            holder.status_content.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        holder.status_content.setFocusableInTouchMode(false);
-                        holder.status_content.clearFocus();
-                    }
-                    return false;
-                }
-            });
             holder.status_content.setMovementMethod(LinkMovementMethod.getInstance());
 
             if( status.getReblog() == null)
