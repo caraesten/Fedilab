@@ -43,6 +43,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -103,6 +104,7 @@ import fr.gouv.etalab.mastodon.asynctasks.PostStatusAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsForReplyAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateDescriptionAttachmentAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UploadActionAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -998,81 +1000,97 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             toot_picture.setEnabled(true);
             return;
         }
-        toot_picture_container.setVisibility(View.VISIBLE);
-        if( attachment != null ){
-            String url = attachment.getPreview_url();
-            if( url == null || url.trim().equals(""))
-                url = attachment.getUrl();
-
-            final ImageView imageView = new ImageView(getApplicationContext());
-            imageView.setId(Integer.parseInt(attachment.getId()));
-            imageLoader.displayImage(url, imageView, options);
-            LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-            imParams.setMargins(20, 5, 20, 5);
-            imParams.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
-            imageView.setAdjustViewBounds(true);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, true);
-            if( show_media_urls) {
-                //Adds the shorter text_url of attachment at the end of the toot 
-                int selectionBefore = toot_content.getSelectionStart();
-                toot_content.setText(toot_content.getText().toString() + "\n" + attachment.getText_url());
-                toot_space_left.setText(String.valueOf(toot_content.length()));
-                //Moves the cursor
-                if (selectionBefore >= 0)
-                    toot_content.setSelection(selectionBefore);
+        boolean alreadyAdded = false;
+        int index = 0;
+        for(Attachment attach_: this.attachments){
+            if( attach_.getId().equals(attachment.getId())){
+                alreadyAdded = true;
+                break;
             }
-            toot_picture_container.addView(imageView, attachments.size(), imParams);
-            imageView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    showRemove(imageView.getId());
-                    return false;
-                }
-            });
-            String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION, null);
-            if( instanceVersion != null) {
-                Version currentVersion = new Version(instanceVersion);
-                Version minVersion = new Version("2.0");
-                if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
-                    imageView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            AlertDialog.Builder builderInner = new AlertDialog.Builder(TootActivity.this);
-                            builderInner.setTitle(R.string.upload_form_description);
-                            //Text for report
-                            EditText input = null;
-                            input = new EditText(TootActivity.this);
-                            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                                    LinearLayout.LayoutParams.MATCH_PARENT,
-                                    LinearLayout.LayoutParams.WRAP_CONTENT);
-                            input.setLayoutParams(lp);
-                            builderInner.setView(input);
-                            builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog,int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                            final EditText finalInput = input;
-                            builderInner.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog,int which) {
+            index++;
+        }
+        if( !alreadyAdded){
+            toot_picture_container.setVisibility(View.VISIBLE);
+            if( attachment != null ) {
+                String url = attachment.getPreview_url();
+                if (url == null || url.trim().equals(""))
+                    url = attachment.getUrl();
 
-                                    dialog.dismiss();
-                                }
-                            });
-                            builderInner.show();
-                        }
-                    });
+                final ImageView imageView = new ImageView(getApplicationContext());
+                imageView.setId(Integer.parseInt(attachment.getId()));
+                imageLoader.displayImage(url, imageView, options);
+                LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                imParams.setMargins(20, 5, 20, 5);
+                imParams.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
+                imageView.setAdjustViewBounds(true);
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, true);
+                if (show_media_urls) {
+                    //Adds the shorter text_url of attachment at the end of the toot 
+                    int selectionBefore = toot_content.getSelectionStart();
+                    toot_content.setText(toot_content.getText().toString() + "\n" + attachment.getText_url());
+                    toot_space_left.setText(String.valueOf(toot_content.length()));
+                    //Moves the cursor
+                    if (selectionBefore >= 0)
+                        toot_content.setSelection(selectionBefore);
+                }
+                toot_picture_container.addView(imageView, attachments.size(), imParams);
+                imageView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        showRemove(imageView.getId());
+                        return false;
+                    }
+                });
+                String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION, null);
+                if (instanceVersion != null) {
+                    Version currentVersion = new Version(instanceVersion);
+                    Version minVersion = new Version("2.0");
+                    if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
+                        imageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                AlertDialog.Builder builderInner = new AlertDialog.Builder(TootActivity.this);
+                                builderInner.setTitle(R.string.upload_form_description);
+                                //Text for report
+                                EditText input = null;
+                                input = new EditText(TootActivity.this);
+                                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                        LinearLayout.LayoutParams.MATCH_PARENT,
+                                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                                input.setLayoutParams(lp);
+                                builderInner.setView(input);
+                                builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                                final EditText finalInput = input;
+                                finalInput.setFilters(new InputFilter[]{new InputFilter.LengthFilter(420)});
+                                builderInner.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        new UpdateDescriptionAttachmentAsyncTask(getApplicationContext(), attachment.getId(), finalInput.getText().toString(), TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                        dialog.dismiss();
+                                    }
+                                });
+                                builderInner.show();
+                            }
+                        });
+                    }
+                }
+                attachments.add(attachment);
+                if (attachments.size() < 4)
+                    toot_picture.setEnabled(true);
+                toot_sensitive.setVisibility(View.VISIBLE);
+                picture_scrollview.setVisibility(View.VISIBLE);
+            }else {
+                if( attachments.size() > index && attachment.getDescription() != null) {
+                    attachments.get(index).setDescription(attachment.getDescription());
                 }
             }
-            attachments.add(attachment);
-            if( attachments.size() < 4)
-                toot_picture.setEnabled(true);
-            toot_sensitive.setVisibility(View.VISIBLE);
-            picture_scrollview.setVisibility(View.VISIBLE);
         }
     }
 
