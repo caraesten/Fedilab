@@ -42,7 +42,6 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.util.Patterns;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -479,7 +478,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 content = status.getReblog().getContent();
                 displayName = Helper.shortnameToUnicode(status.getReblog().getAccount().getDisplay_name(), true);
                 username = status.getReblog().getAccount().getUsername();
-                holder.status_account_displayname.setText(displayName + " " +String.format("@%s",username));
+                holder.status_account_displayname.setText(String.format("%s @%s",displayName, username));
                 ppurl = status.getReblog().getAccount().getAvatar();
                 holder.status_account_displayname.setVisibility(View.VISIBLE);
                 holder.status_account_displayname.setText(context.getResources().getString(R.string.reblog_by, status.getAccount().getUsername()));
@@ -1078,8 +1077,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         //noinspection deprecation
                                         content = Html.fromHtml(status.getContent()).toString();
                                     ClipData clip = ClipData.newPlainText(Helper.CLIP_BOARD, content);
-                                    clipboard.setPrimaryClip(clip);
-                                    Toast.makeText(context,R.string.clipboard,Toast.LENGTH_LONG).show();
+                                    if( clipboard != null) {
+                                        clipboard.setPrimaryClip(clip);
+                                        Toast.makeText(context, R.string.clipboard, Toast.LENGTH_LONG).show();
+                                    }
                                     return true;
                                 case R.id.action_share:
                                     Intent sendIntent = new Intent(Intent.ACTION_SEND);
