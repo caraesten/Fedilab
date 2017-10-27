@@ -17,6 +17,9 @@ package fr.gouv.etalab.mastodon.asynctasks;
 import android.app.Activity;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+
+import java.lang.ref.WeakReference;
+
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -28,18 +31,18 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 public class RemoveAccountAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private Activity activity;
+    private WeakReference<Activity> activityReference;
     private Account account;
 
     public RemoveAccountAsyncTask(Activity activity, Account account){
-        this.activity = activity;
+        activityReference = new WeakReference<>(activity);
         this.account = account;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        new AccountDAO(activity, db).removeUser(account);
+        SQLiteDatabase db = Sqlite.getInstance(activityReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        new AccountDAO(activityReference.get(), db).removeUser(account);
         return null;
     }
 

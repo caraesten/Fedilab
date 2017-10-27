@@ -18,6 +18,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+
+import java.lang.ref.WeakReference;
+
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -32,28 +35,29 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 public class UpdateAccountInfoByIDAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private Context context;
+
     private OnUpdateAccountInfoInterface listener;
+    private WeakReference<Context> contextReference;
 
     public UpdateAccountInfoByIDAsyncTask(Context context, OnUpdateAccountInfoInterface onUpdateAccountInfoInterface){
-        this.context = context;
+        this.contextReference = new WeakReference<>(context);
         this.listener = onUpdateAccountInfoInterface;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
 
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = this.contextReference.get().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        Account account = new API(context).getAccount(userId);
-        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        boolean userExists = new AccountDAO(context, db).userExist(account);
+        Account account = new API(this.contextReference.get()).getAccount(userId);
+        SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        boolean userExists = new AccountDAO(this.contextReference.get(), db).userExist(account);
         if( userExists) {
-            Account accountDb = new AccountDAO(context, db).getAccountByID(userId);
+            Account accountDb = new AccountDAO(this.contextReference.get(), db).getAccountByID(userId);
             if( accountDb != null){
                 account.setInstance(accountDb.getInstance());
                 account.setToken(accountDb.getToken());
-                new AccountDAO(context, db).updateAccount(account);
+                new AccountDAO(this.contextReference.get(), db).updateAccount(account);
             }
         }
         return null;

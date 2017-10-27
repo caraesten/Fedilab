@@ -18,12 +18,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
-import android.util.Log;
-
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-
 import fr.gouv.etalab.mastodon.client.API;
-import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
@@ -40,15 +37,14 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 public class RetrieveAccountsForReplyAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private Context context;
     private fr.gouv.etalab.mastodon.client.Entities.Status status;
     private OnRetrieveAccountsReplyInterface listener;
-    private ArrayList<Mention> mentions;
     private ArrayList<String> addedAccounts;
     private ArrayList<Account> accounts;
+    private WeakReference<Context> contextReference;
 
     public RetrieveAccountsForReplyAsyncTask(Context context, fr.gouv.etalab.mastodon.client.Entities.Status status, OnRetrieveAccountsReplyInterface onRetrieveAccountsReplyInterface){
-        this.context = context;
+        this.contextReference = new WeakReference<>(context);
         this.status = status;
         this.listener = onRetrieveAccountsReplyInterface;
         this.accounts = new ArrayList<>();
@@ -56,9 +52,9 @@ public class RetrieveAccountsForReplyAsyncTask extends AsyncTask<Void, Void, Voi
 
     @Override
     protected Void doInBackground(Void... params) {
-        API api = new API(context);
+        API api = new API(this.contextReference.get());
         fr.gouv.etalab.mastodon.client.Entities.Context statusContext = api.getStatusContext(status.getId());
-        mentions = new ArrayList<>();
+        ArrayList<Mention> mentions = new ArrayList<>();
         addedAccounts = new ArrayList<>();
         //Retrieves the first toot
         if( statusContext.getAncestors().size() > 0 ) {
@@ -100,10 +96,10 @@ public class RetrieveAccountsForReplyAsyncTask extends AsyncTask<Void, Void, Voi
     }
 
     private boolean canBeAdded(String acct){
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        final SharedPreferences sharedpreferences = this.contextReference.get().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
+        Account currentAccount = new AccountDAO(this.contextReference.get(), db).getAccountByID(userId);
         return acct != null && !acct.equals(currentAccount.getAcct()) && !addedAccounts.contains(acct);
     }
 

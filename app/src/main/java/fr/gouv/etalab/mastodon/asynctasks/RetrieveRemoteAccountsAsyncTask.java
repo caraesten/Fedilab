@@ -16,6 +16,9 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+
+import java.lang.ref.WeakReference;
+
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
@@ -30,20 +33,20 @@ public class RetrieveRemoteAccountsAsyncTask extends AsyncTask<Void, Void, Void>
 
     private OnRetrieveRemoteAccountInterface listener;
     private String url;
-    private Context context;
     private Results results;
+    private WeakReference<Context> contextReference;
 
     public RetrieveRemoteAccountsAsyncTask(Context context, String username, String instance, OnRetrieveRemoteAccountInterface onRetrieveRemoteAccountInterface){
         this.url = "https://" + instance  + "/@" + username;
         this.listener = onRetrieveRemoteAccountInterface;
-        this.context = context;
+        this.contextReference = new WeakReference<>(context);
     }
 
 
 
     @Override
     protected Void doInBackground(Void... params) {
-        API api = new API(context);
+        API api = new API(this.contextReference.get());
         results = api.search(this.url);
         return null;
     }

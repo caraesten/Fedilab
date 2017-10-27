@@ -18,6 +18,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import java.io.InputStream;
+import java.lang.ref.WeakReference;
 
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
@@ -31,21 +32,21 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
 
 public class UploadActionAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private Context context;
     private OnRetrieveAttachmentInterface listener;
     private Attachment attachment;
     private InputStream inputStream;
     private API api;
+    private WeakReference<Context> contextReference;
 
     public UploadActionAsyncTask(Context context, InputStream inputStream, OnRetrieveAttachmentInterface onRetrieveAttachmentInterface){
-        this.context = context;
+        this.contextReference = new WeakReference<>(context);
         this.listener = onRetrieveAttachmentInterface;
         this.inputStream = inputStream;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        api = new API(context);
+        api = new API(this.contextReference.get());
         attachment = api.uploadMedia(inputStream);
         return null;
     }

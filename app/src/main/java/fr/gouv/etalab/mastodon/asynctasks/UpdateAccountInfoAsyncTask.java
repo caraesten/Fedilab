@@ -20,6 +20,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+
+import java.lang.ref.WeakReference;
+
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -34,36 +37,36 @@ import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 
 public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private Context context;
     private String token;
     private String instance;
+    private WeakReference<Context> contextReference;
 
     public UpdateAccountInfoAsyncTask(Context context, String token, String instance){
-        this.context = context;
+        this.contextReference = new WeakReference<>(context);
         this.token = token;
         this.instance = instance;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        Account account = new API(context, instance, null).verifyCredentials();
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        Account account = new API(this.contextReference.get(), instance, null).verifyCredentials();
+        SharedPreferences sharedpreferences = this.contextReference.get().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( token == null) {
             token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         }
         account.setToken(token);
         //TODO: remove this static value to allow other instances
         account.setInstance(instance);
-        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        boolean userExists = new AccountDAO(context, db).userExist(account);
+        SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        boolean userExists = new AccountDAO(this.contextReference.get(), db).userExist(account);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Helper.PREF_KEY_ID, account.getId());
         editor.apply();
         if( userExists)
-            new AccountDAO(context, db).updateAccount(account);
+            new AccountDAO(this.contextReference.get(), db).updateAccount(account);
         else {
             if( account.getUsername() != null && account.getCreated_at() != null)
-                new AccountDAO(context, db).insertAccount(account);
+                new AccountDAO(this.contextReference.get(), db).insertAccount(account);
         }
         return null;
     }
@@ -71,10 +74,10 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void result) {
 
-        Intent mainActivity = new Intent(context, MainActivity.class);
+        Intent mainActivity = new Intent(this.contextReference.get(), MainActivity.class);
         mainActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(mainActivity);
-        ((Activity) context).finish();
+        this.contextReference.get().startActivity(mainActivity);
+        ((Activity) this.contextReference.get()).finish();
 
     }
 
