@@ -112,6 +112,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
+import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.drawers.AccountsReplyAdapter;
 import fr.gouv.etalab.mastodon.drawers.AccountsSearchAdapter;
@@ -1023,12 +1024,26 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     toot_content.setSelection(selectionBefore);
             }
             toot_picture_container.addView(imageView, attachments.size(), imParams);
-            imageView.setOnClickListener(new View.OnClickListener() {
+            imageView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public void onClick(View v) {
+                public boolean onLongClick(View view) {
                     showRemove(imageView.getId());
+                    return false;
                 }
             });
+            String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION, null);
+            if( instanceVersion != null) {
+                Version currentVersion = new Version(instanceVersion);
+                Version minVersion = new Version("2.0");
+                if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
+                    imageView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                        }
+                    });
+                }
+            }
             attachments.add(attachment);
             if( attachments.size() < 4)
                 toot_picture.setEnabled(true);

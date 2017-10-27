@@ -217,7 +217,7 @@ public class Helper {
     public static final String SET_LED_COLOUR = "set_led_colour";
     public static final String SET_SHOW_BOOSTS = "set_show_boost";
     public static final String SET_SHOW_REPLIES = "set_show_replies";
-
+    public static final String INSTANCE_VERSION = "instance_version";
 
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;

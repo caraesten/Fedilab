@@ -1293,6 +1293,10 @@ public abstract class BaseMainActivity extends AppCompatActivity
             return;
         Version currentVersion = new Version(apiResponse.getInstance().getVersion());
         Version minVersion = new Version("1.6");
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(Helper.INSTANCE_VERSION, apiResponse.getInstance().getVersion());
+        editor.apply();
         Helper.canPin = (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion));
     }
 
