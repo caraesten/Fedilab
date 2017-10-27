@@ -1694,6 +1694,9 @@ public class API {
             attachment.setId(resobj.get("id").toString());
             attachment.setType(resobj.get("type").toString());
             attachment.setUrl(resobj.get("url").toString());
+            try {
+                attachment.setDescription(resobj.get("description").toString());
+            }catch (JSONException ignore){}
             try{
                 attachment.setRemote_url(resobj.get("remote_url").toString());
             }catch (JSONException ignore){}
