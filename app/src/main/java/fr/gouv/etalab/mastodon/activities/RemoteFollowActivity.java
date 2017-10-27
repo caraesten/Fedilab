@@ -28,7 +28,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -65,7 +64,6 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRelationshipAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
@@ -75,7 +73,8 @@ import fr.gouv.etalab.mastodon.client.Entities.Relationship;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.KinrarClient;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
-import fr.gouv.etalab.mastodon.drawers.AccountsListAdapter;
+import fr.gouv.etalab.mastodon.drawers.AccountSearchDevAdapter;
+import fr.gouv.etalab.mastodon.helper.ExpandableHeightListView;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRelationshipInterface;
@@ -98,7 +97,7 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
     private EditText rf_username;
     private TextView rf_no_result;
     private Button rf_search;
-    private RecyclerView lv_account;
+    private ExpandableHeightListView lv_account;
     private RelativeLayout loader;
     private boolean isLoadingInstance;
     private String instance_name, screen_name;
@@ -289,8 +288,7 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
         if( accounts != null && accounts.size() > 0){
             account = accounts.get(0);
             selectedAccount.add(account);
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            AccountsListAdapter accountSearchWebAdapter = new AccountsListAdapter(RemoteFollowActivity.this, RetrieveAccountsAsyncTask.Type.FOLLOWERS, userId, selectedAccount);
+            AccountSearchDevAdapter accountSearchWebAdapter = new AccountSearchDevAdapter(RemoteFollowActivity.this, selectedAccount);
             lv_account.setAdapter(accountSearchWebAdapter);
             lv_account.setVisibility(View.VISIBLE);
             new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),RemoteFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
