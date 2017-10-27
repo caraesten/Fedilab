@@ -1069,7 +1069,11 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                                 });
                                 final EditText finalInput = input;
                                 finalInput.setFilters(new InputFilter[]{new InputFilter.LengthFilter(420)});
-                                builderInner.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                if( attachment.getDescription() != null && !attachment.getDescription().equals("null")) {
+                                    finalInput.setText(attachment.getDescription());
+                                    finalInput.setSelection(finalInput.getText().length());
+                                }
+                                builderInner.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         new UpdateDescriptionAttachmentAsyncTask(getApplicationContext(), attachment.getId(), finalInput.getText().toString(), TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -1086,10 +1090,10 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     toot_picture.setEnabled(true);
                 toot_sensitive.setVisibility(View.VISIBLE);
                 picture_scrollview.setVisibility(View.VISIBLE);
-            }else {
-                if( attachments.size() > index && attachment.getDescription() != null) {
-                    attachments.get(index).setDescription(attachment.getDescription());
-                }
+            }
+        }else {
+            if( attachments.size() > index && attachment.getDescription() != null) {
+                attachments.get(index).setDescription(attachment.getDescription());
             }
         }
     }
