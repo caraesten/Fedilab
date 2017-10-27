@@ -28,7 +28,7 @@
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="mastodon.etalab.gouv.fr.mastodon.fr.etalab.gouv.fr.mastodon.activities.MainActivity">
+        tools:context="fr.gouv.etalab.mastodon.activities.MainActivity">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBar"
