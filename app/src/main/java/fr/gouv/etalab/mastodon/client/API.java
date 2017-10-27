@@ -1309,7 +1309,7 @@ public class API {
 
         RequestParams params = new RequestParams();
         params.put("description", description);
-        post(String.format("/media/%s", mediaId), 240000, params, new JsonHttpResponseHandler() {
+        put(String.format("/media/%s", mediaId), 240000, params, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -1836,6 +1836,21 @@ public class API {
             mastalabSSLSocketFactory.setHostnameVerifier(MastalabSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
             client.setSSLSocketFactory(mastalabSSLSocketFactory);
             client.post(getAbsoluteUrl(action), params, responseHandler);
+        } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
+            Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+    }
+
+    private void put(String action, int timeout, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        try {
+            client.setConnectTimeout(timeout);
+            client.setUserAgent(USER_AGENT);
+            client.addHeader("Authorization", "Bearer "+prefKeyOauthTokenT);
+            MastalabSSLSocketFactory mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());
+            mastalabSSLSocketFactory.setHostnameVerifier(MastalabSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+            client.setSSLSocketFactory(mastalabSSLSocketFactory);
+            client.put(getAbsoluteUrl(action), params, responseHandler);
         } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
             Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();
             e.printStackTrace();
