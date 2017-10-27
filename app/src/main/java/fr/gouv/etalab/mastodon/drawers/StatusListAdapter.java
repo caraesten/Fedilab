@@ -1268,6 +1268,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 if( !url.trim().contains("missing.png"))
                     imageLoader.displayImage(url, imageView, optionsAttachment);
                 final int finalPosition = position;
+                if( attachment.getDescription() != null && !attachment.getDescription().equals("null"))
+                    imageView.setContentDescription(attachment.getDescription());
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
