@@ -21,10 +21,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
     style="?attr/cardStyle"
-
-    android:layout_marginTop="10dp"
+    android:layout_marginBottom="4dp"
     card_view:cardPreventCornerOverlap="true"
-    app:cardUseCompatPadding="true">
+    card_view:cardUseCompatPadding="true">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
