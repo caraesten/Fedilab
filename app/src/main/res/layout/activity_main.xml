@@ -46,8 +46,8 @@
                 app:popupTheme="?attr/popupOverlay">
                 <ImageView
                     android:id="@+id/iconbar"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     tools:ignore="ContentDescription" />
                 <LinearLayout
                     android:id="@+id/toolbar_search_container"
