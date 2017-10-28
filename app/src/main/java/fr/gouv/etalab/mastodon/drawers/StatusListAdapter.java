@@ -86,6 +86,7 @@ import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveRepliesAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
@@ -97,6 +98,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
 import fr.gouv.etalab.mastodon.translation.GoogleTranslateQuery;
 import fr.gouv.etalab.mastodon.translation.YandexQuery;
@@ -111,7 +113,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnTranslatedInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface {
+public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnTranslatedInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface {
 
     private Context context;
     private List<Status> statuses;
@@ -165,6 +167,24 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @Override
     public int getItemCount() {
         return statuses.size();
+    }
+
+    @Override
+    public void onRetrieveReplies(APIResponse apiResponse) {
+        if( apiResponse.getError() != null || apiResponse.getStatuses() == null || apiResponse.getStatuses().size() == 0){
+            return;
+        }
+        List<Status> modifiedStatus = apiResponse.getStatuses();
+        for(Status stmp: modifiedStatus){
+            for(Status status: statuses){
+                if( status.getId().equals(stmp.getId()))
+                    if( stmp.getReplies() != null )
+                        status.setReplies(stmp.getReplies());
+                    else
+                        status.setReplies(new ArrayList<Status>());
+            }
+        }
+        statusListAdapter.notifyDataSetChanged();
     }
 
     private class ViewHolderEmpty extends RecyclerView.ViewHolder{
@@ -317,8 +337,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(10)).cacheInMemory(false)
                     .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 
-
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            //Retrieves replies
+            if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
+                boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);
+                //Retrieves attached replies to a toot
+                if (showPreview && status.getReplies() == null) {
+                    new RetrieveRepliesAsyncTask(context, status, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
+            }
+
 
             final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
 

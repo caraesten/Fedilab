@@ -16,11 +16,9 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.SystemClock;
-
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
-
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
@@ -35,12 +33,12 @@ public class RetrieveRepliesAsyncTask extends AsyncTask<Void, Void, Void> {
 
     private APIResponse apiResponse;
     private OnRetrieveRepliesInterface listener;
-    private List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses;
+    private fr.gouv.etalab.mastodon.client.Entities.Status status;
     private WeakReference<Context> contextReference;
 
-    public RetrieveRepliesAsyncTask(Context context, List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses, OnRetrieveRepliesInterface onRetrieveRepliesInterface){
+    public RetrieveRepliesAsyncTask(Context context, fr.gouv.etalab.mastodon.client.Entities.Status status, OnRetrieveRepliesInterface onRetrieveRepliesInterface){
         this.contextReference = new WeakReference<>(context);
-        this.statuses = statuses;
+        this.status = status;
         this.listener = onRetrieveRepliesInterface;
     }
 
@@ -48,12 +46,11 @@ public class RetrieveRepliesAsyncTask extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... params) {
 
         API api = new API(this.contextReference.get());
-        for (fr.gouv.etalab.mastodon.client.Entities.Status status : statuses) {
-            fr.gouv.etalab.mastodon.client.Entities.Context statusContext = api.getStatusContext((status.getReblog() != null) ? status.getReblog().getId() : status.getId());
-            SystemClock.sleep(25);
-            status.setReplies(statusContext.getDescendants());
-        }
+        fr.gouv.etalab.mastodon.client.Entities.Context statusContext = api.getStatusContext((status.getReblog() != null) ? status.getReblog().getId() : status.getId());
+        status.setReplies(statusContext.getDescendants());
         apiResponse = new APIResponse();
+        List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = new ArrayList<>();
+        statuses.add(status);
         apiResponse.setStatuses(statuses);
         return null;
     }
