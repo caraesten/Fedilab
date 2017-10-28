@@ -175,16 +175,19 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             return;
         }
         List<Status> modifiedStatus = apiResponse.getStatuses();
-        for(Status stmp: modifiedStatus){
+        int position = 0;
+        if( modifiedStatus != null && modifiedStatus.size() == 1){
             for(Status status: statuses){
-                if( status.getId().equals(stmp.getId()))
-                    if( stmp.getReplies() != null )
-                        status.setReplies(stmp.getReplies());
+                if( status.getId().equals(modifiedStatus.get(0).getId())) {
+                    if (modifiedStatus.get(0).getReplies() != null)
+                        status.setReplies(modifiedStatus.get(0).getReplies());
                     else
                         status.setReplies(new ArrayList<Status>());
+                    statusListAdapter.notifyItemChanged(position);
+                }
+                position++;
             }
         }
-        statusListAdapter.notifyDataSetChanged();
     }
 
     private class ViewHolderEmpty extends RecyclerView.ViewHolder{
