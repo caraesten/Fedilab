@@ -366,7 +366,7 @@ public class SettingsFragment extends Fragment {
                     set_toot_visibility.setImageResource(R.drawable.ic_public);
                     break;
                 case "unlisted":
-                    set_toot_visibility.setImageResource(R.drawable.ic_action_lock_open);
+                    set_toot_visibility.setImageResource(R.drawable.ic_lock_open);
                     break;
                 case "private":
                     set_toot_visibility.setImageResource(R.drawable.ic_lock_outline);
@@ -406,7 +406,7 @@ public class SettingsFragment extends Fragment {
                                 break;
                             case 1:
                                 visibility = "unlisted";
-                                set_toot_visibility.setImageResource(R.drawable.ic_action_lock_open);
+                                set_toot_visibility.setImageResource(R.drawable.ic_lock_open);
                                 break;
                             case 2:
                                 visibility = "private";
@@ -479,12 +479,12 @@ public class SettingsFragment extends Fragment {
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_DARK){
             changeDrawableColor(context, R.drawable.ic_public,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_lock_open,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_text);
         }else {
             changeDrawableColor(context, R.drawable.ic_public,R.color.white);
-            changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.white);
+            changeDrawableColor(context, R.drawable.ic_lock_open,R.color.white);
             changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.white);
             changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.white);
         }

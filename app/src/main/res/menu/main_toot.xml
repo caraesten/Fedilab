@@ -9,7 +9,7 @@
     <item
         android:id="@+id/action_microphone"
         android:title="@string/microphone"
-        android:icon="@drawable/ic_action_mic"
+        android:icon="@drawable/ic_mic"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_store"

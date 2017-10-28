@@ -981,9 +981,9 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
                 if( theme == Helper.THEME_DARK){
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_reply,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_more,R.color.dark_icon);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_more_horiz,R.color.dark_icon);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_public,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_open,R.color.dark_icon);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_open,R.color.dark_icon);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.dark_icon);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline,R.color.dark_icon);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_retweet,R.color.dark_icon);
@@ -993,9 +993,9 @@ public abstract class BaseMainActivity extends AppCompatActivity
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.dark_text);
                 }else {
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_reply,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_more,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_more_horiz,R.color.black);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_public,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_open,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_open,R.color.black);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.black);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline,R.color.black);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_retweet,R.color.black);

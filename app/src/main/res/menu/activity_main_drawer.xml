@@ -49,7 +49,7 @@
                         android:title="@string/blocked_menu" />
                     <item
                         android:id="@+id/nav_muted"
-                        android:icon="@drawable/ic_action_volume_mute"
+                        android:icon="@drawable/ic_volume_mute"
                         android:title="@string/muted_menu" />
                 </group>
             </menu>
