@@ -20,7 +20,6 @@ import android.content.SharedPreferences;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.SwitchCompat;
 
 import android.view.LayoutInflater;
@@ -72,9 +71,9 @@ public class SettingsNotificationsFragment extends Fragment {
         }
 
         boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
-        final SwitchCompat switchCompatNotify = (SwitchCompat) rootView.findViewById(R.id.set_notify);
+        final SwitchCompat switchCompatNotify = rootView.findViewById(R.id.set_notify);
         switchCompatNotify.setChecked(notify);
-        final LinearLayout notification_settings = (LinearLayout) rootView.findViewById(R.id.notification_settings);
+        final LinearLayout notification_settings = rootView.findViewById(R.id.notification_settings);
         if( notify)
             notification_settings.setVisibility(View.VISIBLE);
         else
@@ -109,19 +108,19 @@ public class SettingsNotificationsFragment extends Fragment {
         final String time_to = sharedpreferences.getString(Helper.SET_TIME_TO, "22:00");
 
 
-        final CheckBox set_notif_follow = (CheckBox) rootView.findViewById(R.id.set_notif_follow);
-        final CheckBox set_notif_follow_add = (CheckBox) rootView.findViewById(R.id.set_notif_follow_add);
-        final CheckBox set_notif_follow_ask = (CheckBox) rootView.findViewById(R.id.set_notif_follow_ask);
-        final CheckBox set_notif_follow_mention = (CheckBox) rootView.findViewById(R.id.set_notif_follow_mention);
-        final CheckBox set_notif_follow_share = (CheckBox) rootView.findViewById(R.id.set_notif_follow_share);
+        final CheckBox set_notif_follow = rootView.findViewById(R.id.set_notif_follow);
+        final CheckBox set_notif_follow_add = rootView.findViewById(R.id.set_notif_follow_add);
+        final CheckBox set_notif_follow_ask = rootView.findViewById(R.id.set_notif_follow_ask);
+        final CheckBox set_notif_follow_mention = rootView.findViewById(R.id.set_notif_follow_mention);
+        final CheckBox set_notif_follow_share = rootView.findViewById(R.id.set_notif_follow_share);
 
-        final CheckBox set_notif_hometimeline = (CheckBox) rootView.findViewById(R.id.set_notif_hometimeline);
+        final CheckBox set_notif_hometimeline = rootView.findViewById(R.id.set_notif_hometimeline);
 
-        final SwitchCompat switchCompatWIFI = (SwitchCompat) rootView.findViewById(R.id.set_wifi_only);
-        final SwitchCompat switchCompatSilent = (SwitchCompat) rootView.findViewById(R.id.set_silence);
+        final SwitchCompat switchCompatWIFI = rootView.findViewById(R.id.set_wifi_only);
+        final SwitchCompat switchCompatSilent = rootView.findViewById(R.id.set_silence);
 
-        final Button settings_time_from = (Button) rootView.findViewById(R.id.settings_time_from);
-        final Button settings_time_to = (Button) rootView.findViewById(R.id.settings_time_to);
+        final Button settings_time_from = rootView.findViewById(R.id.settings_time_from);
+        final Button settings_time_to = rootView.findViewById(R.id.settings_time_to);
 
         settings_time_from.setText(time_from);
         settings_time_to.setText(time_to);
@@ -250,8 +249,8 @@ public class SettingsNotificationsFragment extends Fragment {
             }
         });
 
-        final Spinner led_colour_spinner = (Spinner) rootView.findViewById(R.id.led_colour_spinner);
-        final TextView ledLabel = (TextView) rootView.findViewById(R.id.set_led_colour_label);
+        final Spinner led_colour_spinner = rootView.findViewById(R.id.led_colour_spinner);
+        final TextView ledLabel = rootView.findViewById(R.id.set_led_colour_label);
 
         switchCompatSilent.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

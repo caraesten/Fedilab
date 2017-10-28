@@ -39,11 +39,11 @@ public class TabLayoutSettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.tablayout_settings, container, false);
 
-        TabLayout tabLayout = (TabLayout) inflatedView.findViewById(R.id.tabLayout);
+        TabLayout tabLayout = inflatedView.findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.settings)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.notifications)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.optimization)));
-        final ViewPager viewPager = (ViewPager) inflatedView.findViewById(R.id.viewpager);
+        final ViewPager viewPager = inflatedView.findViewById(R.id.viewpager);
 
         viewPager.setAdapter(new PagerAdapter
                 (getChildFragmentManager(), tabLayout.getTabCount()));

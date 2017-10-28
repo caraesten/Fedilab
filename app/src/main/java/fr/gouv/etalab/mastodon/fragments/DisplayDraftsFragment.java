@@ -47,10 +47,10 @@ public class DisplayDraftsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_drafts, container, false);
         context = getContext();
 
-        ListView lv_draft_toots = (ListView) rootView.findViewById(R.id.lv_draft_toots);
+        ListView lv_draft_toots = rootView.findViewById(R.id.lv_draft_toots);
 
-        RelativeLayout mainLoader = (RelativeLayout) rootView.findViewById(R.id.loader);
-        RelativeLayout textviewNoAction = (RelativeLayout) rootView.findViewById(R.id.no_action);
+        RelativeLayout mainLoader = rootView.findViewById(R.id.loader);
+        RelativeLayout textviewNoAction = rootView.findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
 
         final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
