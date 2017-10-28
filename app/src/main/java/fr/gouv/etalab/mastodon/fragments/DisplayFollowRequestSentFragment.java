@@ -72,14 +72,14 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
         flag_loading = true;
         swiped = false;
 
-        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
+        swipeRefreshLayout = rootView.findViewById(R.id.swipeContainer);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         accountPerPage = sharedpreferences.getInt(Helper.SET_ACCOUNTS_PER_PAGE, 40);
-        lv_accounts = (ListView) rootView.findViewById(R.id.lv_accounts);
-        no_action_text = (TextView) rootView.findViewById(R.id.no_action_text);
-        mainLoader = (RelativeLayout) rootView.findViewById(R.id.loader);
-        nextElementLoader = (RelativeLayout) rootView.findViewById(R.id.loading_next_accounts);
-        textviewNoAction = (RelativeLayout) rootView.findViewById(R.id.no_action);
+        lv_accounts = rootView.findViewById(R.id.lv_accounts);
+        no_action_text = rootView.findViewById(R.id.no_action_text);
+        mainLoader = rootView.findViewById(R.id.loader);
+        nextElementLoader = rootView.findViewById(R.id.loading_next_accounts);
+        textviewNoAction = rootView.findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
         accountsFollowRequestAdapter = new AccountsFollowRequestAdapter(context, this.accounts);
@@ -116,7 +116,6 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
                 asyncTask = new RetrieveFollowRequestSentAsyncTask(context, max_id, DisplayFollowRequestSentFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
                 R.color.mastodonC2,
                 R.color.mastodonC3);
@@ -177,9 +176,7 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
             swiped = false;
         }
         if( accounts != null && accounts.size() > 0) {
-            for(Account tmpAccount: accounts){
-                this.accounts.add(tmpAccount);
-            }
+            this.accounts.addAll(accounts);
             accountsFollowRequestAdapter.notifyDataSetChanged();
         }
         swipeRefreshLayout.setRefreshing(false);

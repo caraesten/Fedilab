@@ -166,8 +166,6 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         return rootView;
     }
 
-
-
     @Override
     public void onCreate(Bundle saveInstance)
     {
@@ -220,9 +218,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
             swiped = false;
         }
         if( accounts != null && accounts.size() > 0) {
-            for(Account tmpAccount: accounts){
-                this.accounts.add(tmpAccount);
-            }
+            this.accounts.addAll(accounts);
             accountsListAdapter.notifyDataSetChanged();
         }
         swipeRefreshLayout.setRefreshing(false);

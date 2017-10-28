@@ -65,11 +65,11 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
         View rootView = inflater.inflate(R.layout.fragment_scheduled_toots, container, false);
         context = getContext();
 
-        lv_scheduled_toots = (ListView) rootView.findViewById(R.id.lv_scheduled_toots);
+        lv_scheduled_toots = rootView.findViewById(R.id.lv_scheduled_toots);
 
-        mainLoader = (RelativeLayout) rootView.findViewById(R.id.loader);
-        warning_battery_message = (TextView) rootView.findViewById(R.id.warning_battery_message);
-        textviewNoAction = (RelativeLayout) rootView.findViewById(R.id.no_action);
+        mainLoader = rootView.findViewById(R.id.loader);
+        warning_battery_message = rootView.findViewById(R.id.warning_battery_message);
+        textviewNoAction = rootView.findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
 
         //Removes all scheduled toots that have sent
@@ -90,7 +90,7 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
             //Battery saver is one and user never asked to stop showing the message
             changeDrawableColor(context, R.drawable.ic_action_warning, R.color.mastodonC4);
             changeDrawableColor(context, R.drawable.ic_cancel, R.color.mastodonC4);
-            if( powerManager.isPowerSaveMode() && sharedpreferences.getBoolean(Helper.SHOW_BATTERY_SAVER_MESSAGE,true)){
+            if( powerManager != null && powerManager.isPowerSaveMode() && sharedpreferences.getBoolean(Helper.SHOW_BATTERY_SAVER_MESSAGE,true)){
                 warning_battery_message.setVisibility(View.VISIBLE);
             }else {
                 warning_battery_message.setVisibility(View.GONE);

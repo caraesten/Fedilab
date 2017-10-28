@@ -135,14 +135,14 @@ public class SearchListAdapter extends BaseAdapter {
             if (v == null) {
                 v = layoutInflater.inflate(R.layout.drawer_status_main_search, parent, false);
                 holder = new ViewHolderStatus();
-                holder.status_content = (TextView) v.findViewById(R.id.status_content);
-                holder.status_account_username = (TextView) v.findViewById(R.id.status_account_username);
-                holder.status_account_displayname = (TextView) v.findViewById(R.id.status_account_displayname);
-                holder.status_account_profile = (ImageView) v.findViewById(R.id.status_account_profile);
-                holder.status_toot_date = (TextView) v.findViewById(R.id.status_toot_date);
-                holder.status_reblog_user = (TextView) v.findViewById(R.id.status_reblog_user);
-                holder.main_container = (LinearLayout) v.findViewById(R.id.main_container);
-                holder.status_search_title = (TextView) v.findViewById(R.id.status_search_title);
+                holder.status_content = v.findViewById(R.id.status_content);
+                holder.status_account_username = v.findViewById(R.id.status_account_username);
+                holder.status_account_displayname = v.findViewById(R.id.status_account_displayname);
+                holder.status_account_profile = v.findViewById(R.id.status_account_profile);
+                holder.status_toot_date = v.findViewById(R.id.status_toot_date);
+                holder.status_reblog_user = v.findViewById(R.id.status_reblog_user);
+                holder.main_container = v.findViewById(R.id.main_container);
+                holder.status_search_title = v.findViewById(R.id.status_search_title);
                 v.setTag(holder);
             } else {
                 holder = (ViewHolderStatus) v.getTag();
@@ -180,7 +180,7 @@ public class SearchListAdapter extends BaseAdapter {
                 content = status.getReblog().getContent();
                 displayName = Helper.shortnameToUnicode(status.getReblog().getAccount().getDisplay_name(), true);
                 username = status.getReblog().getAccount().getUsername();
-                holder.status_reblog_user.setText(displayName + " " +String.format("@%s",username));
+                holder.status_reblog_user.setText(String.format("%s @%s",displayName, username));
                 ppurl = status.getReblog().getAccount().getAvatar();
                 holder.status_reblog_user.setVisibility(View.VISIBLE);
                 holder.status_account_displayname.setText(context.getResources().getString(R.string.reblog_by, status.getAccount().getAcct()));
@@ -227,16 +227,16 @@ public class SearchListAdapter extends BaseAdapter {
             if (v == null) {
                 v = layoutInflater.inflate(R.layout.drawer_account_main_search, parent, false);
                 holder = new ViewHolderAccounts();
-                holder.account_pp = (ImageView) v.findViewById(R.id.account_pp);
-                holder.account_dn = (TextView) v.findViewById(R.id.account_dn);
-                holder.account_ac = (TextView) v.findViewById(R.id.account_ac);
-                holder.account_un = (TextView) v.findViewById(R.id.account_un);
+                holder.account_pp = v.findViewById(R.id.account_pp);
+                holder.account_dn = v.findViewById(R.id.account_dn);
+                holder.account_ac = v.findViewById(R.id.account_ac);
+                holder.account_un = v.findViewById(R.id.account_un);
 
-                holder.account_sc = (TextView) v.findViewById(R.id.account_sc);
-                holder.account_fgc = (TextView) v.findViewById(R.id.account_fgc);
-                holder.account_frc = (TextView) v.findViewById(R.id.account_frc);
-                holder.account_search_title = (TextView) v.findViewById(R.id.account_search_title);
-                holder.main_container = (LinearLayout) v.findViewById(R.id.main_container);
+                holder.account_sc = v.findViewById(R.id.account_sc);
+                holder.account_fgc = v.findViewById(R.id.account_fgc);
+                holder.account_frc = v.findViewById(R.id.account_frc);
+                holder.account_search_title = v.findViewById(R.id.account_search_title);
+                holder.main_container = v.findViewById(R.id.main_container);
                 v.setTag(holder);
             } else {
                 holder = (ViewHolderAccounts) v.getTag();
@@ -279,8 +279,8 @@ public class SearchListAdapter extends BaseAdapter {
             if (v == null) {
                 v = layoutInflater.inflate(R.layout.drawer_tag, parent, false);
                 holder = new ViewHolderTag();
-                holder.tag_name = (TextView) v.findViewById(R.id.tag_name);
-                holder.tag_search_title = (TextView) v.findViewById(R.id.tag_search_title);
+                holder.tag_name = v.findViewById(R.id.tag_name);
+                holder.tag_search_title = v.findViewById(R.id.tag_search_title);
                 v.setTag(holder);
             } else {
                 holder = (ViewHolderTag) v.getTag();

@@ -374,6 +374,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     retrieveMissingToots(statuses.get(0).getId());
             }
         }
+        int visibleItemCount = mLayoutManager.getChildCount();
+        int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+        for(int i = firstVisibleItem ; i <= firstVisibleItem + visibleItemCount ; i++){
+            statusListAdapter.notifyItemChanged(i);
+        }
     }
 
     /**
