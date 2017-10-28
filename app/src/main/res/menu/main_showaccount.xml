@@ -16,4 +16,14 @@
         android:title="@string/media"
         android:icon="@drawable/ic_perm_media"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_mute"
+        android:title="@string/more_action_1"
+        android:icon="@drawable/ic_mute_white"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_block"
+        android:title="@string/more_action_2"
+        android:icon="@drawable/ic_block_white"
+        app:showAsAction="ifRoom" />
 </menu>
