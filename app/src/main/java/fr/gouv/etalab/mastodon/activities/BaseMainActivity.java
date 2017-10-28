@@ -36,6 +36,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
@@ -146,7 +147,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
 
@@ -987,7 +987,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.dark_icon);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline,R.color.dark_icon);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_retweet,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_favorite_border,R.color.dark_icon);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_star_border,R.color.dark_icon);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_photo,R.color.dark_text);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_remove_red_eye,R.color.dark_text);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.dark_text);
@@ -999,7 +999,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.black);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline,R.color.black);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_retweet,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_favorite_border,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_star_border,R.color.black);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_photo,R.color.white);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_remove_red_eye,R.color.white);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.white);

@@ -1441,6 +1441,8 @@ public class Helper {
      */
     public static Drawable changeDrawableColor(Context context, int drawable, int hexaColor){
         Drawable mDrawable = ContextCompat.getDrawable(context, drawable);
+        int color = Color.parseColor(context.getString(hexaColor));
+        mDrawable.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
         DrawableCompat.setTint(mDrawable, ContextCompat.getColor(context, hexaColor));
         return mDrawable;
     }

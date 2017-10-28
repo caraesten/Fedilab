@@ -413,9 +413,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, R.drawable.ic_lock_open,R.color.dark_icon);
                 changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.dark_icon);
                 changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_icon);
-                changeDrawableColor(context, R.drawable.ic_boost_border,R.color.dark_icon);
-                changeDrawableColor(context, R.drawable.ic_boost_header,R.color.dark_icon);
-                changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
                 changeDrawableColor(context, R.drawable.ic_action_pin_dark, R.color.dark_icon);
                 changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
@@ -427,9 +426,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, R.drawable.ic_lock_open,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_boost_border,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_boost_header,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.black);
+                changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
+                changeDrawableColor(context, R.drawable.ic_star_border,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_action_pin_dark, R.color.black);
                 changeDrawableColor(context, R.drawable.ic_photo,R.color.white);
                 changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.white);
@@ -439,7 +437,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             //Redraws top icons (boost/reply)
             final float scale = context.getResources().getDisplayMetrics().density;
             if( status.getReblog() != null){
-                Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_boost_header);
+                Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
                 img.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
                 holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
                 holder.status_account_displayname.setVisibility(View.VISIBLE);
@@ -687,25 +685,25 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
                 Drawable imgFav, imgReblog, imgPinned, imgReply;
                 if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
-                    changeDrawableColor(context, R.drawable.ic_favorite,R.color.marked_icon);
-                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_favorite);
+                    changeDrawableColor(context, R.drawable.ic_star,R.color.marked_icon);
+                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star);
                 }else {
                     if( theme == THEME_DARK)
-                        changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_icon);
+                        changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
                     else
-                        changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.black);
-                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_favorite_border);
+                        changeDrawableColor(context, R.drawable.ic_star_border,R.color.black);
+                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star_border);
                 }
 
                 if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged())) {
-                    changeDrawableColor(context, R.drawable.ic_boost,R.color.boost_icon);
-                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost);
+                    changeDrawableColor(context, R.drawable.ic_repeat,R.color.boost_icon);
+                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
                 }else {
                     if( theme == THEME_DARK)
-                        changeDrawableColor(context, R.drawable.ic_boost_border,R.color.dark_icon);
+                        changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
                     else
-                        changeDrawableColor(context, R.drawable.ic_boost_border,R.color.black);
-                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost_border);
+                        changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
+                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
                 }
 
                 if( status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned())) {

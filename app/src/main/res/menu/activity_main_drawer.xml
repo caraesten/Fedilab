@@ -41,7 +41,7 @@
                         android:title="@string/settings" />
                     <item
                         android:id="@+id/nav_favorites"
-                        android:icon="@drawable/ic_favorite_menu"
+                        android:icon="@drawable/ic_star_menu"
                         android:title="@string/favorites_menu" />
                     <item
                         android:id="@+id/nav_blocked"

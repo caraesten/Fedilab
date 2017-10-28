@@ -160,7 +160,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 }else {
                     holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_2));
                 }
-                imgH = ContextCompat.getDrawable(context, R.drawable.ic_boost_header_notif);
+                imgH = ContextCompat.getDrawable(context, R.drawable.ic_repeat_head);
                 holder.main_container_trans.setVisibility(View.VISIBLE);
                 break;
             case "favourite":
@@ -174,7 +174,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 }else {
                     holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_3));
                 }
-                imgH = ContextCompat.getDrawable(context, R.drawable.ic_fav_notif_header);
+                imgH = ContextCompat.getDrawable(context, R.drawable.ic_star_border_header);
                 holder.main_container_trans.setVisibility(View.VISIBLE);
                 break;
             case "follow":
@@ -193,8 +193,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 break;
         }
         changeDrawableColor(context, R.drawable.ic_chat_bubble_outline, R.color.mastodonC4);
-        changeDrawableColor(context, R.drawable.ic_boost_header_notif,R.color.mastodonC4);
-        changeDrawableColor(context, R.drawable.ic_fav_notif_header,R.color.mastodonC4);
+        changeDrawableColor(context, R.drawable.ic_repeat_head,R.color.mastodonC4);
+        changeDrawableColor(context, R.drawable.ic_star_border_header,R.color.mastodonC4);
         changeDrawableColor(context, R.drawable.ic_follow_notif_header,R.color.mastodonC4);
         holder.notification_type.setText(typeString);
         if( imgH != null) {
@@ -222,7 +222,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.dark_icon);
             changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_icon);
             changeDrawableColor(context, R.drawable.ic_retweet,R.color.dark_icon);
-            changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_delete,R.color.dark_text);
@@ -234,7 +234,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.black);
             changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.black);
             changeDrawableColor(context, R.drawable.ic_retweet,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_star_border,R.color.black);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.black);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.black);
             changeDrawableColor(context, R.drawable.ic_delete,R.color.black);
@@ -304,25 +304,25 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
                 Drawable imgFav, imgReblog;
                 if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
-                    changeDrawableColor(context, R.drawable.ic_favorite,R.color.marked_icon);
-                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_favorite);
+                    changeDrawableColor(context, R.drawable.ic_star,R.color.marked_icon);
+                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star);
                 }else {
                     if( theme == THEME_DARK)
-                        changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_icon);
+                        changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
                     else
-                        changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.black);
-                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_favorite_border);
+                        changeDrawableColor(context, R.drawable.ic_star_border,R.color.black);
+                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star_border);
                 }
 
                 if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged())) {
-                    changeDrawableColor(context, R.drawable.ic_boost,R.color.boost_icon);
-                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost);
+                    changeDrawableColor(context, R.drawable.ic_repeat_boost,R.color.boost_icon);
+                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat_boost);
                 }else {
                     if( theme == THEME_DARK)
-                        changeDrawableColor(context, R.drawable.ic_boost_border,R.color.dark_icon);
+                        changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
                     else
-                        changeDrawableColor(context, R.drawable.ic_boost_border,R.color.black);
-                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost_border);
+                        changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
+                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
                 }
 
                 imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
