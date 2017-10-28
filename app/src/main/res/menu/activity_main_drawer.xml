@@ -13,15 +13,15 @@
                         android:visible="false"/>
                     <item
                         android:id="@+id/nav_scheduled"
-                        android:icon="@drawable/ic_schedule_black"
+                        android:icon="@drawable/ic_schedule"
                         android:title="@string/scheduled_toots" />
                     <item
                         android:id="@+id/nav_drafts"
-                        android:icon="@drawable/ic_mode_edit"
+                        android:icon="@drawable/ic_save_white"
                         android:title="@string/drafts" />
                     <item
                         android:id="@+id/nav_remote_follow"
-                        android:icon="@drawable/ic_remote_follow"
+                        android:icon="@drawable/ic_person_add"
                         android:title="@string/remote_follow_menu" />
                     <item
                         android:id="@+id/nav_follow_request"
@@ -41,7 +41,7 @@
                         android:title="@string/settings" />
                     <item
                         android:id="@+id/nav_favorites"
-                        android:icon="@drawable/ic_favorite_menu"
+                        android:icon="@drawable/ic_star_menu"
                         android:title="@string/favorites_menu" />
                     <item
                         android:id="@+id/nav_blocked"
@@ -49,7 +49,7 @@
                         android:title="@string/blocked_menu" />
                     <item
                         android:id="@+id/nav_muted"
-                        android:icon="@drawable/ic_action_volume_mute"
+                        android:icon="@drawable/ic_volume_mute"
                         android:title="@string/muted_menu" />
                 </group>
             </menu>

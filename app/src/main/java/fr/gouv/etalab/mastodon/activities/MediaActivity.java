@@ -132,8 +132,8 @@ public class MediaActivity extends AppCompatActivity  {
         }else {
             main_container_media.setBackgroundResource(R.color.mastodonC1__);
         }
-        changeDrawableColor(getApplicationContext(), R.drawable.ic_next_pic,R.color.mastodonC4);
-        changeDrawableColor(getApplicationContext(), R.drawable.ic_prev_pic,R.color.mastodonC4);
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_last_page,R.color.mastodonC4);
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_first_page,R.color.mastodonC4);
 
         canSwipe = true;
         loader = findViewById(R.id.loader);

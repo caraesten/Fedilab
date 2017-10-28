@@ -4,6 +4,6 @@
     <item
         android:id="@+id/action_go"
         android:title="@string/open_with"
-        android:icon="@drawable/ic_action_goright"
+        android:icon="@drawable/ic_open_with"
         app:showAsAction="always" />
 </menu>

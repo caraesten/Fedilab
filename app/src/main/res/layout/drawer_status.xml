@@ -426,7 +426,7 @@
                     android:id="@+id/status_more"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/ic_action_more"
+                    android:src="@drawable/ic_more_horiz"
                     tools:ignore="ContentDescription" />
             </LinearLayout>
         </LinearLayout>

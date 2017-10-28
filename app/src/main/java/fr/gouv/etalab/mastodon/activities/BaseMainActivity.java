@@ -36,6 +36,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
@@ -147,7 +148,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
 
         installProviders();
@@ -195,28 +195,28 @@ public abstract class BaseMainActivity extends AppCompatActivity
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconHome = tabHome.getCustomView().findViewById(R.id.tab_icon);
         iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-        iconHome.setImageResource(R.drawable.ic_action_home_tl);
+        iconHome.setImageResource(R.drawable.ic_home);
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconNotif = tabNotif.getCustomView().findViewById(R.id.tab_icon);
         iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-        iconNotif.setImageResource(R.drawable.ic_notifications_tl);
+        iconNotif.setImageResource(R.drawable.ic_notifications);
 
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconLocal = tabLocal.getCustomView().findViewById(R.id.tab_icon);
         iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-        iconLocal.setImageResource(R.drawable.ic_action_users_tl);
+        iconLocal.setImageResource(R.drawable.ic_people);
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconGlobal = tabPublic.getCustomView().findViewById(R.id.tab_icon);
         iconGlobal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-        iconGlobal.setImageResource(R.drawable.ic_action_globe_tl);
+        iconGlobal.setImageResource(R.drawable.ic_public);
 
-        changeDrawableColor(getApplicationContext(), R.drawable.ic_action_home_tl,R.color.dark_text);
-        changeDrawableColor(getApplicationContext(), R.drawable.ic_notifications_tl,R.color.dark_text);
-        changeDrawableColor(getApplicationContext(), R.drawable.ic_action_users_tl,R.color.dark_text);
-        changeDrawableColor(getApplicationContext(), R.drawable.ic_action_globe_tl,R.color.dark_text);
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_home,R.color.dark_text);
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_notifications,R.color.dark_text);
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_people,R.color.dark_text);
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_public,R.color.dark_text);
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
@@ -981,25 +981,25 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
                 if( theme == Helper.THEME_DARK){
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_reply,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_more,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_globe,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_open,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.dark_icon);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_more_horiz,R.color.dark_icon);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_public,R.color.dark_icon);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_open,R.color.dark_icon);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.dark_icon);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline,R.color.dark_icon);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_retweet,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_favorite_border,R.color.dark_icon);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_star_border,R.color.dark_icon);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_photo,R.color.dark_text);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_remove_red_eye,R.color.dark_text);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.dark_text);
                 }else {
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_reply,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_more,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_globe,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_open,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_more_horiz,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_public,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_open,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.black);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline,R.color.black);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_retweet,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_favorite_border,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_star_border,R.color.black);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_photo,R.color.white);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_remove_red_eye,R.color.white);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.white);

@@ -88,7 +88,7 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
             final PowerManager powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             //Battery saver is one and user never asked to stop showing the message
-            changeDrawableColor(context, R.drawable.ic_action_warning, R.color.mastodonC4);
+            changeDrawableColor(context, R.drawable.ic_report, R.color.mastodonC4);
             changeDrawableColor(context, R.drawable.ic_cancel, R.color.mastodonC4);
             if( powerManager != null && powerManager.isPowerSaveMode() && sharedpreferences.getBoolean(Helper.SHOW_BATTERY_SAVER_MESSAGE,true)){
                 warning_battery_message.setVisibility(View.VISIBLE);

@@ -15,6 +15,7 @@
 package fr.gouv.etalab.mastodon.activities;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -39,6 +40,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.text.SpannableString;
@@ -124,6 +126,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     private CircleImageView account_pp;
     private TextView account_dn;
     private TextView account_un;
+    private Account account;
 
     public enum action{
         FOLLOW,
@@ -133,7 +136,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     }
 
     private action doAction;
-
+    private API.StatusAction doActionAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -283,14 +286,28 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         account_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupMenu popup = new PopupMenu(ShowAccountActivity.this, account_menu);
+                if( account == null)
+                    return;
+                final PopupMenu popup = new PopupMenu(ShowAccountActivity.this, account_menu);
                 popup.getMenuInflater()
                         .inflate(R.menu.main_showaccount, popup.getMenu());
                 if( !Helper.canPin || !accountId.equals(userId)) {
                     popup.getMenu().findItem(R.id.action_show_pinned).setVisible(false);
                 }
+                final String[] stringArrayConf;
+                final boolean isOwner = account.getId().equals(userId);
+                if( isOwner) {
+                    popup.getMenu().findItem(R.id.action_block).setVisible(false);
+                    popup.getMenu().findItem(R.id.action_mute).setVisible(false);
+                    stringArrayConf =  getResources().getStringArray(R.array.more_action_owner_confirm);
+                }else {
+                    popup.getMenu().findItem(R.id.action_block).setVisible(true);
+                    popup.getMenu().findItem(R.id.action_mute).setVisible(true);
+                    stringArrayConf =  getResources().getStringArray(R.array.more_action_confirm);
+                }
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
+                        AlertDialog.Builder builderInner;
                         switch (item.getItemId()) {
                             case R.id.action_show_pinned:
                                 showPinned = !showPinned;
@@ -319,9 +336,34 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                                     startActivity(intent);
                                 }
                                 return true;
+                            case R.id.action_mute:
+                                builderInner = new AlertDialog.Builder(ShowAccountActivity.this);
+                                builderInner.setTitle(stringArrayConf[0]);
+                                doActionAccount = API.StatusAction.MUTE;
+                                break;
+                            case R.id.action_block:
+                                builderInner = new AlertDialog.Builder(ShowAccountActivity.this);
+                                builderInner.setTitle(stringArrayConf[1]);
+                                doActionAccount = API.StatusAction.BLOCK;
+                                break;
                             default:
                                 return true;
                         }
+                        builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        builderInner.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,int which) {
+                                new PostActionAsyncTask(getApplicationContext(), doActionAccount, account.getId(), ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                dialog.dismiss();
+                            }
+                        });
+                        builderInner.show();
+                        return true;
                     }
                 });
                 popup.show();
@@ -354,14 +396,14 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                 Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
-
+        this.account = account;
         accountUrl = account.getUrl();
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_DARK){
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.mastodonC4);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.mastodonC4);
         }else {
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.mastodonC4);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.mastodonC4);
         }
         String urlHeader = account.getHeader();
         if (urlHeader.startsWith("/")) {
@@ -397,7 +439,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         //Redraws icon for locked accounts
         final float scale = getResources().getDisplayMetrics().density;
         if(account.isLocked()){
-            Drawable img = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_action_lock_closed);
+            Drawable img = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_lock_outline);
             img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (20 * scale + 0.5f));
             account_dn.setCompoundDrawables( img, null, null, null);
         }else{
@@ -616,7 +658,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
             account_follow.setVisibility(View.GONE);
             header_edit_profile.setVisibility(View.VISIBLE);
         }else if( relationship.isBlocking()){
-            account_follow.setImageResource(R.drawable.ic_unlock_alt);
+            account_follow.setImageResource(R.drawable.ic_lock_open);
             doAction = action.UNBLOCK;
             account_follow.setVisibility(View.VISIBLE);
         }else if( relationship.isRequested()){

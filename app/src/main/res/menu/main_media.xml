@@ -4,6 +4,6 @@
     <item
         android:id="@+id/action_download"
         android:title="@string/download"
-        android:icon="@drawable/ic_save"
+        android:icon="@drawable/ic_save_white"
         app:showAsAction="always" />
 </menu>
