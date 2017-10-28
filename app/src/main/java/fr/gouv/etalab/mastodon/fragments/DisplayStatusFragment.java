@@ -24,7 +24,6 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,12 +34,10 @@ import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingFeedsAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveRepliesAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMissingFeedsInterface;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
 import fr.gouv.etalab.mastodon.services.StreamingFederatedTimelineService;
 import fr.gouv.etalab.mastodon.services.StreamingLocalTimelineService;
 import mastodon.etalab.gouv.fr.mastodon.R;
@@ -53,7 +50,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
  * Created by Thomas on 24/04/2017.
  * Fragment to display content related to status
  */
-public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsInterface, OnRetrieveRepliesInterface, OnRetrieveMissingFeedsInterface {
+public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsInterface, OnRetrieveMissingFeedsInterface {
 
 
     private boolean flag_loading;
@@ -291,14 +288,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
 
-        //Retrieves replies
-        if(statuses != null && statuses.size()  > 0 && type == RetrieveFeedsAsyncTask.Type.HOME ) {
-            boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);
-            //Retrieves attached replies to a toot
-            if (showPreview) {
-                new RetrieveRepliesAsyncTask(context, statuses, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            }
-        }
+
     }
 
     /**
@@ -489,24 +479,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 editor.apply();
             }
         }
-    }
-
-    @Override
-    public void onRetrieveReplies(APIResponse apiResponse) {
-        if( apiResponse.getError() != null || apiResponse.getStatuses() == null || apiResponse.getStatuses().size() == 0){
-            return;
-        }
-        List<Status> modifiedStatus = apiResponse.getStatuses();
-        for(Status stmp: modifiedStatus){
-            for(Status status: statuses){
-                if( status.getId().equals(stmp.getId()))
-                    if( stmp.getReplies() != null )
-                        status.setReplies(stmp.getReplies());
-                    else
-                        status.setReplies(new ArrayList<Status>());
-            }
-        }
-        statusListAdapter.notifyDataSetChanged();
     }
 
     @Override

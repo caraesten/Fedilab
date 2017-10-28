@@ -52,6 +52,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -85,6 +86,7 @@ import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveRepliesAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
@@ -96,6 +98,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
 import fr.gouv.etalab.mastodon.translation.GoogleTranslateQuery;
 import fr.gouv.etalab.mastodon.translation.YandexQuery;
@@ -110,7 +113,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnTranslatedInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface {
+public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnTranslatedInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface {
 
     private Context context;
     private List<Status> statuses;
@@ -166,6 +169,27 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         return statuses.size();
     }
 
+    @Override
+    public void onRetrieveReplies(APIResponse apiResponse) {
+        if( apiResponse.getError() != null || apiResponse.getStatuses() == null || apiResponse.getStatuses().size() == 0){
+            return;
+        }
+        List<Status> modifiedStatus = apiResponse.getStatuses();
+        int position = 0;
+        if( modifiedStatus != null && modifiedStatus.size() == 1){
+            for(Status status: statuses){
+                if( status.getId().equals(modifiedStatus.get(0).getId())) {
+                    if (modifiedStatus.get(0).getReplies() != null)
+                        status.setReplies(modifiedStatus.get(0).getReplies());
+                    else
+                        status.setReplies(new ArrayList<Status>());
+                    statusListAdapter.notifyItemChanged(position);
+                }
+                position++;
+            }
+        }
+    }
+
     private class ViewHolderEmpty extends RecyclerView.ViewHolder{
         ViewHolderEmpty(View itemView) {
             super(itemView);
@@ -201,7 +225,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ImageView status_prev3_play;
         ImageView status_prev4_play;
         RelativeLayout status_prev4_container;
-        ImageView status_reply;
+        TextView status_reply;
         ImageView status_pin;
         ImageView status_privacy;
         FloatingActionButton status_translate;
@@ -213,8 +237,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         LinearLayout status_action_container;
         LinearLayout status_replies;
         LinearLayout status_replies_profile_pictures;
-        TextView status_replies_text;
-        LinearLayout loader_replies;
+        ProgressBar loader_replies;
 
         ImageView new_element;
 
@@ -264,7 +287,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             google_translate = itemView.findViewById(R.id.google_translate);
             status_replies = itemView.findViewById(R.id.status_replies);
             status_replies_profile_pictures = itemView.findViewById(R.id.status_replies_profile_pictures);
-            status_replies_text = itemView.findViewById(R.id.status_replies_text);
             new_element = itemView.findViewById(R.id.new_element);
             status_action_container = itemView.findViewById(R.id.status_action_container);
 
@@ -318,12 +340,20 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(10)).cacheInMemory(false)
                     .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 
-
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            //Retrieves replies
+            if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
+                boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);
+                //Retrieves attached replies to a toot
+                if (showPreview && status.getReplies() == null) {
+                    new RetrieveRepliesAsyncTask(context, status, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
+            }
+
 
             final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
 
-
+            holder.status_reply.setText("");
             //Display a preview for accounts that have replied *if enabled and only for home timeline*
             if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
                 boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);
@@ -340,26 +370,26 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             holder.status_replies_profile_pictures.removeAllViews();
                             int i = 0;
                             for (Status replies : status.getReplies()) {
-                                if (i > 4)
+                                if (i > 10)
                                     break;
                                 if (!addedPictures.contains(replies.getAccount().getAcct())) {
                                     ImageView imageView = new ImageView(context);
-                                    imageView.setMaxHeight((int) Helper.convertDpToPixel(40, context));
-                                    imageView.setMaxWidth((int) Helper.convertDpToPixel(40, context));
+                                    imageView.setMaxHeight((int) Helper.convertDpToPixel(30, context));
+                                    imageView.setMaxWidth((int) Helper.convertDpToPixel(30, context));
                                     imageLoader.displayImage(replies.getAccount().getAvatar(), imageView, options);
                                     LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                                     imParams.setMargins(10, 5, 10, 5);
-                                    imParams.height = (int) Helper.convertDpToPixel(40, context);
-                                    imParams.width = (int) Helper.convertDpToPixel(40, context);
+                                    imParams.height = (int) Helper.convertDpToPixel(30, context);
+                                    imParams.width = (int) Helper.convertDpToPixel(30, context);
                                     holder.status_replies_profile_pictures.addView(imageView, imParams);
                                     i++;
                                     addedPictures.add(replies.getAccount().getAcct());
                                 }
                             }
                         }
-                        holder.status_replies_text.setText(context.getResources().getQuantityString(R.plurals.preview_replies, status.getReplies().size(), status.getReplies().size()));
+                        if( status.getReplies() != null && status.getReplies().size() > 0 )
+                            holder.status_reply.setText(String.valueOf(status.getReplies().size()));
                         holder.status_replies.setVisibility(View.VISIBLE);
-                        holder.status_replies_text.setVisibility(View.VISIBLE);
                         holder.loader_replies.setVisibility(View.GONE);
                     }
                 }else{
@@ -379,8 +409,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_more.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
-            holder.status_reply.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
-            holder.status_reply.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             holder.status_content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
             holder.status_account_displayname.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
             holder.status_account_username.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12*textSizePercent/100);
@@ -454,12 +482,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if( theme == THEME_DARK){
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
             }else {
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.black));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.black));
                 holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.black));
+                holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.black));
                 holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.black));
             }
 
@@ -687,7 +717,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         break;
                 }
 
-                Drawable imgFav, imgReblog, imgPinned;
+                Drawable imgFav, imgReblog, imgPinned, imgReply;
                 if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
                     changeDrawableColor(context, R.drawable.ic_favorite,R.color.marked_icon);
                     imgFav = ContextCompat.getDrawable(context, R.drawable.ic_favorite);
@@ -720,14 +750,22 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         changeDrawableColor(context, R.drawable.ic_action_pin_dark,R.color.black);
                     imgPinned = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_dark);
                 }
+                if( theme == THEME_DARK)
+                    changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
+                else
+                    changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
+                imgReply = ContextCompat.getDrawable(context, R.drawable.ic_reply);
+
 
                 imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
                 imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
                 imgPinned.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+                imgReply.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
 
                 holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
                 holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
                 holder.status_pin.setImageDrawable(imgPinned);
+                holder.status_reply.setCompoundDrawables(imgReply, null, null, null);
 
                 if( theme == Helper.THEME_LIGHT) {
                     holder.status_show_more.setTextColor(ContextCompat.getColor(context, R.color.white));
