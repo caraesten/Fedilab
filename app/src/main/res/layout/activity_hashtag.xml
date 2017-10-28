@@ -15,68 +15,100 @@
     You should have received a copy of the GNU General Public License along with Mastalab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<RelativeLayout
+<android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:paddingLeft="@dimen/fab_margin"
-    android:paddingRight="@dimen/fab_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <!-- Listview status -->
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:layout_width="match_parent"
-        android:id="@+id/swipeContainer"
-        android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/lv_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="none"
-            android:divider="@null"
-            >
-        </android.support.v7.widget.RecyclerView>
-    </android.support.v4.widget.SwipeRefreshLayout>
-    <RelativeLayout
-        android:id="@+id/no_action"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:padding="10dp"
-            android:gravity="center"
-            android:textSize="25sp"
-            android:layout_gravity="center"
-            android:textStyle="italic|bold"
-            android:typeface="serif"
-            android:text="@string/no_status"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </RelativeLayout>
-    <!-- Main Loader -->
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/loader"
-        android:visibility="gone"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
+
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        >
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true" />
-    </RelativeLayout>
-    <!-- Loader for next status -->
-    <RelativeLayout
-        android:id="@+id/loading_next_status"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom|center_horizontal"
-        android:gravity="bottom|center_horizontal"
-        android:layout_height="20dp">
-        <ProgressBar
+        tools:context="fr.gouv.etalab.mastodon.activities.MainActivity">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:indeterminate="true" />
-    </RelativeLayout>
-</RelativeLayout>
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            >
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|enterAlways"
+                android:theme="@style/AppThemeDark_NoActionBar"
+                app:popupTheme="?attr/popupOverlay"/>
+        </android.support.design.widget.AppBarLayout>
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:paddingLeft="@dimen/fab_margin"
+            android:paddingRight="@dimen/fab_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <!-- Listview status -->
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:layout_width="match_parent"
+                android:id="@+id/swipeContainer"
+                android:layout_height="match_parent">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/lv_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    android:divider="@null"
+                    >
+                </android.support.v7.widget.RecyclerView>
+            </android.support.v4.widget.SwipeRefreshLayout>
+            <RelativeLayout
+                android:id="@+id/no_action"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:textSize="25sp"
+                    android:layout_gravity="center"
+                    android:textStyle="italic|bold"
+                    android:typeface="serif"
+                    android:text="@string/no_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+            <!-- Main Loader -->
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/loader"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                >
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true" />
+            </RelativeLayout>
+            <!-- Loader for next status -->
+            <RelativeLayout
+                android:id="@+id/loading_next_status"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom|center_horizontal"
+                android:gravity="bottom|center_horizontal"
+                android:layout_height="20dp">
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:indeterminate="true" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </android.support.design.widget.CoordinatorLayout>
+</android.support.v4.widget.DrawerLayout>
