@@ -658,7 +658,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
             account_follow.setVisibility(View.GONE);
             header_edit_profile.setVisibility(View.VISIBLE);
         }else if( relationship.isBlocking()){
-            account_follow.setImageResource(R.drawable.ic_unlock_alt);
+            account_follow.setImageResource(R.drawable.ic_lock_open);
             doAction = action.UNBLOCK;
             account_follow.setVisibility(View.VISIBLE);
         }else if( relationship.isRequested()){

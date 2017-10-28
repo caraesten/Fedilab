@@ -53,7 +53,7 @@
             tools:ignore="UselessLeaf" />
         <ImageView
             android:gravity="center_vertical|end"
-            android:src="@drawable/ic_more_white"
+            android:src="@drawable/ic_more_vert"
             android:id="@+id/header_option_menu"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -82,7 +82,7 @@
             android:layout_width="30dp"
             app:srcCompat="@drawable/ic_arrow_drop_down"
             android:layout_height="30dp"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription,VectorDrawableCompat" />
     </LinearLayout>
     <TextView
         android:id="@+id/username"

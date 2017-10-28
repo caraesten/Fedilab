@@ -38,6 +38,8 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveInstanceInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
+
 
 /**
  * Created by Thomas on 05/06/2017.
@@ -63,7 +65,7 @@ public class InstanceActivity extends AppCompatActivity implements OnRetrieveIns
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_instance);
-
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline,R.color.white);
         instance_container = findViewById(R.id.instance_container);
         loader = findViewById(R.id.loader);
         instance_container.setVisibility(View.GONE);

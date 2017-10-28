@@ -13,7 +13,7 @@
                         android:visible="false"/>
                     <item
                         android:id="@+id/nav_scheduled"
-                        android:icon="@drawable/ic_schedule_black"
+                        android:icon="@drawable/ic_schedule"
                         android:title="@string/scheduled_toots" />
                     <item
                         android:id="@+id/nav_drafts"
@@ -21,7 +21,7 @@
                         android:title="@string/drafts" />
                     <item
                         android:id="@+id/nav_remote_follow"
-                        android:icon="@drawable/ic_remote_follow"
+                        android:icon="@drawable/ic_person_add"
                         android:title="@string/remote_follow_menu" />
                     <item
                         android:id="@+id/nav_follow_request"

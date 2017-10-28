@@ -313,7 +313,7 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
         if( accountId != null && accountId.equals(userId)){
             account_follow.setVisibility(View.GONE);
         }else if( relationship.isBlocking()){
-            account_follow.setImageResource(R.drawable.ic_unlock_alt);
+            account_follow.setImageResource(R.drawable.ic_lock_open);
             doAction = ShowAccountActivity.action.UNBLOCK;
             account_follow.setVisibility(View.VISIBLE);
         }else if( relationship.isRequested()){

@@ -125,12 +125,12 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
             holder.account_follow.setVisibility(View.VISIBLE);
             holder.account_follow_request.setVisibility(View.GONE);
         }else if( account.getFollowType() == Account.followAction.BLOCK){
-            holder.account_follow.setImageResource(R.drawable.ic_unlock_alt);
+            holder.account_follow.setImageResource(R.drawable.ic_lock_open);
             doAction = API.StatusAction.UNBLOCK;
             holder.account_follow.setVisibility(View.VISIBLE);
             holder.account_follow_request.setVisibility(View.GONE);
         }else if( account.getFollowType() == Account.followAction.MUTE){
-            holder.account_follow.setImageResource(R.drawable.ic_mute_white);
+            holder.account_follow.setImageResource(R.drawable.ic_volume_mute);
             doAction = API.StatusAction.UNMUTE;
             holder.account_follow.setVisibility(View.VISIBLE);
             holder.account_follow_request.setVisibility(View.GONE);
