@@ -353,7 +353,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
 
-
+            holder.status_reply.setText("");
             //Display a preview for accounts that have replied *if enabled and only for home timeline*
             if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
                 boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);
@@ -387,7 +387,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 }
                             }
                         }
-                        holder.status_reply.setText(String.valueOf(status.getReplies().size()));
+                        if( status.getReplies() != null && status.getReplies().size() > 0 )
+                            holder.status_reply.setText(String.valueOf(status.getReplies().size()));
                         holder.status_replies.setVisibility(View.VISIBLE);
                         holder.loader_replies.setVisibility(View.GONE);
                     }
