@@ -447,7 +447,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_icon);
                 changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
                 changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
-                changeDrawableColor(context, R.drawable.ic_action_pin_dark, R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.dark_icon);
                 changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_translate,R.color.dark_text);
@@ -460,7 +460,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_star_border,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_action_pin_dark, R.color.black);
+                changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.black);
                 changeDrawableColor(context, R.drawable.ic_photo,R.color.white);
                 changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.white);
                 changeDrawableColor(context, R.drawable.ic_translate,R.color.white);
@@ -715,7 +715,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         break;
                 }
 
-                Drawable imgFav, imgReblog, imgPinned, imgReply;
+                Drawable imgFav, imgReblog, imgReply;
                 if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
                     changeDrawableColor(context, R.drawable.ic_star,R.color.marked_icon);
                     imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star);
@@ -728,8 +728,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
 
                 if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged())) {
-                    changeDrawableColor(context, R.drawable.ic_repeat,R.color.boost_icon);
-                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
+                    changeDrawableColor(context, R.drawable.ic_repeat_boost,R.color.boost_icon);
+                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat_boost);
                 }else {
                     if( theme == THEME_DARK)
                         changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
@@ -738,16 +738,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
                 }
 
-                if( status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned())) {
-                    changeDrawableColor(context, R.drawable.ic_action_pin_yellow,R.color.marked_icon);
-                    imgPinned = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_yellow);
-                }else {
-                    if( theme == THEME_DARK)
-                        changeDrawableColor(context, R.drawable.ic_action_pin_dark,R.color.dark_icon);
-                    else
-                        changeDrawableColor(context, R.drawable.ic_action_pin_dark,R.color.black);
-                    imgPinned = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_dark);
-                }
+
                 if( theme == THEME_DARK)
                     changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
                 else
@@ -757,12 +748,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
                 imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
                 imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-                imgPinned.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
                 imgReply.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
 
                 holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
                 holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
-                holder.status_pin.setImageDrawable(imgPinned);
                 holder.status_reply.setCompoundDrawables(imgReply, null, null, null);
 
                 if( theme == Helper.THEME_LIGHT) {
@@ -775,10 +764,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 // Pinning toots is only available on Mastodon 1._6_.0 instances.
                 if (isOwner && Helper.canPin && (status.getVisibility().equals("public") || status.getVisibility().equals("unlisted")) && status.getReblog() == null) {
                     Drawable imgPin;
-                    if( status.isPinned())
-                        imgPin = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_yellow);
-                    else
-                        imgPin = ContextCompat.getDrawable(context, R.drawable.ic_action_pin_dark);
+                    if( status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned())) {
+                        changeDrawableColor(context, R.drawable.ic_pin_drop_p,R.color.marked_icon);
+                        imgPin = ContextCompat.getDrawable(context, R.drawable.ic_pin_drop_p);
+                    }else {
+                        if( theme == THEME_DARK)
+                            changeDrawableColor(context, R.drawable.ic_pin_drop,R.color.dark_icon);
+                        else
+                            changeDrawableColor(context, R.drawable.ic_pin_drop,R.color.black);
+                        imgPin = ContextCompat.getDrawable(context, R.drawable.ic_pin_drop);
+                    }
                     imgPin.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
                     holder.status_pin.setImageDrawable(imgPin);
 

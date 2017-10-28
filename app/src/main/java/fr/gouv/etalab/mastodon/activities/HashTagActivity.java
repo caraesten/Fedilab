@@ -116,15 +116,9 @@ public class HashTagActivity extends AppCompatActivity implements OnRetrieveFeed
                 new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.TAG, tag,null, max_id, HashTagActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
-        if( theme == Helper.THEME_LIGHT) {
-            swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,
-                    R.color.colorPrimary,
-                    R.color.colorPrimaryDark);
-        }else {
-            swipeRefreshLayout.setColorSchemeResources(R.color.colorAccentD,
-                    R.color.colorPrimaryD,
-                    R.color.colorPrimaryDarkD);
-        }
+        swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
+                R.color.mastodonC2,
+                R.color.mastodonC3);
         final LinearLayoutManager mLayoutManager;
         mLayoutManager = new LinearLayoutManager(this);
         lv_status.setLayoutManager(mLayoutManager);

@@ -46,8 +46,8 @@
                 app:popupTheme="?attr/popupOverlay">
                 <ImageView
                     android:id="@+id/iconbar"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     tools:ignore="ContentDescription" />
                 <LinearLayout
                     android:id="@+id/toolbar_search_container"
@@ -115,7 +115,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
-            app:srcCompat="@drawable/ic_edit" />
+            app:srcCompat="@drawable/ic_edit"
+            tools:ignore="VectorDrawableCompat" />
 
     </android.support.design.widget.CoordinatorLayout>
 
