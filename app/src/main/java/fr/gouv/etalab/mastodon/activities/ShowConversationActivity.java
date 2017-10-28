@@ -28,6 +28,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -89,23 +90,28 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
-            setTheme(R.style.AppTheme);
+            setTheme(R.style.AppTheme_NoActionBar);
         }else {
-            setTheme(R.style.AppThemeDark);
+            setTheme(R.style.AppThemeDark_NoActionBar);
         }
         setContentView(R.layout.activity_show_conversation);
 
-        ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null) {
+        setContentView(R.layout.activity_hashtag);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if( getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if( getSupportActionBar() != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(android.content.Context.LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.conversation_action_bar, null);
-            actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-            TextView title = actionBar.getCustomView().findViewById(R.id.toolbar_title);
-            pp_actionBar = actionBar.getCustomView().findViewById(R.id.pp_actionBar);
+            getSupportActionBar().setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+            TextView title = getSupportActionBar().getCustomView().findViewById(R.id.toolbar_title);
+            pp_actionBar = getSupportActionBar().getCustomView().findViewById(R.id.pp_actionBar);
             title.setText(R.string.conversation);
-            ImageView close_conversation = actionBar.getCustomView().findViewById(R.id.close_conversation);
+            ImageView close_conversation = getSupportActionBar().getCustomView().findViewById(R.id.close_conversation);
             if( close_conversation != null){
                 close_conversation.setOnClickListener(new View.OnClickListener() {
                     @Override
