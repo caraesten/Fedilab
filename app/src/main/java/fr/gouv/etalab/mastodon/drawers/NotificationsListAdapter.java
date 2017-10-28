@@ -42,6 +42,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -146,6 +147,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_1));
                 }
                 imgH = ContextCompat.getDrawable(context, R.drawable.ic_chat_bubble_outline);
+                holder.main_container_trans.setVisibility(View.GONE);
                 break;
             case "reblog":
                 holder.status_action_container.setVisibility(View.GONE);
@@ -159,6 +161,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_2));
                 }
                 imgH = ContextCompat.getDrawable(context, R.drawable.ic_boost_header_notif);
+                holder.main_container_trans.setVisibility(View.VISIBLE);
                 break;
             case "favourite":
                 holder.status_action_container.setVisibility(View.GONE);
@@ -172,6 +175,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_3));
                 }
                 imgH = ContextCompat.getDrawable(context, R.drawable.ic_fav_notif_header);
+                holder.main_container_trans.setVisibility(View.VISIBLE);
                 break;
             case "follow":
                 holder.status_action_container.setVisibility(View.GONE);
@@ -185,6 +189,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_4));
                 }
                 imgH = ContextCompat.getDrawable(context, R.drawable.ic_follow_notif_header);
+                holder.main_container_trans.setVisibility(View.GONE);
                 break;
         }
         changeDrawableColor(context, R.drawable.ic_chat_bubble_outline, R.color.mastodonC4);
@@ -503,6 +508,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     @Override
                     public void onClick(View v) {
                         PopupMenu popup = new PopupMenu(context, attached);
+                        assert status != null;
                         final boolean isOwner = status.getAccount().getId().equals(userId);
                         popup.getMenuInflater()
                                 .inflate(R.menu.option_toot, popup.getMenu());
@@ -563,6 +569,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                             //noinspection deprecation
                                             content = Html.fromHtml(status.getContent()).toString();
                                         ClipData clip = ClipData.newPlainText(Helper.CLIP_BOARD, content);
+                                        assert clipboard != null;
                                         clipboard.setPrimaryClip(clip);
                                         Toast.makeText(context,R.string.clipboard,Toast.LENGTH_LONG).show();
                                         return true;
@@ -914,6 +921,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         LinearLayout status_container2;
         LinearLayout status_container3;
         LinearLayout notification_status_container;
+        FrameLayout main_container_trans;
         ImageView status_privacy;
 
         public View getView(){
@@ -923,6 +931,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         public ViewHolder(View itemView) {
             super(itemView);
             card_status_container = itemView.findViewById(R.id.card_status_container);
+            main_container_trans = itemView.findViewById(R.id.container_trans);
             notification_status_container = itemView.findViewById(R.id.notification_status_container);
             status_document_container = itemView.findViewById(R.id.status_document_container);
             notification_status_content = itemView.findViewById(R.id.notification_status_content);
