@@ -271,6 +271,17 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         }
     }
 
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        int visibleItemCount = mLayoutManager.getChildCount();
+        int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+        for(int i = firstVisibleItem ; i <= firstVisibleItem + visibleItemCount ; i++){
+            notificationsListAdapter.notifyItemChanged(i);
+        }
+    }
+
     @Override
     public void onRetrieveMissingNotifications(List<Notification> notifications) {
         if( notifications != null && notifications.size() > 0) {

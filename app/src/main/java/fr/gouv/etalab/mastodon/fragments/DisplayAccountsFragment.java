@@ -166,8 +166,6 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         return rootView;
     }
 
-
-
     @Override
     public void onCreate(Bundle saveInstance)
     {
