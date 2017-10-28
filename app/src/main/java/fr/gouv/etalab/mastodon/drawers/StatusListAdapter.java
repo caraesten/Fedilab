@@ -696,8 +696,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
 
                 if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged())) {
-                    changeDrawableColor(context, R.drawable.ic_repeat,R.color.boost_icon);
-                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
+                    changeDrawableColor(context, R.drawable.ic_repeat_boost,R.color.boost_icon);
+                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat_boost);
                 }else {
                     if( theme == THEME_DARK)
                         changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
