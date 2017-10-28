@@ -23,12 +23,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    >
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="fr.gouv.etalab.mastodon.activities.MainActivity">
+        tools:context="fr.gouv.etalab.mastodon.activities.HashTagActivity">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBar"
@@ -49,7 +49,7 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:paddingLeft="@dimen/fab_margin"
             android:paddingRight="@dimen/fab_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <!-- Listview status -->
