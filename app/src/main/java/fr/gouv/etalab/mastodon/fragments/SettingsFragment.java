@@ -79,7 +79,7 @@ public class SettingsFragment extends Fragment {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-
+        changeColor();
         boolean auto_store = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
 
         final CheckBox set_auto_store = rootView.findViewById(R.id.set_auto_store);
@@ -375,7 +375,6 @@ public class SettingsFragment extends Fragment {
                     set_toot_visibility.setImageResource(R.drawable.ic_mail_outline);
                     break;
             }
-            changeColor();
         }else {
             toot_visibility_container.setVisibility(View.GONE);
         }
@@ -425,7 +424,7 @@ public class SettingsFragment extends Fragment {
                         }else {
                             Toast.makeText(context, R.string.toast_error,Toast.LENGTH_SHORT).show();
                         }
-                        changeColor();
+
                         dialog.dismiss();
                     }
                 });
