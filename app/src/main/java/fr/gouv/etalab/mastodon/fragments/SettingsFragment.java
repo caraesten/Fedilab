@@ -363,13 +363,13 @@ public class SettingsFragment extends Fragment {
             String tootVisibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), "public");
             switch (tootVisibility) {
                 case "public":
-                    set_toot_visibility.setImageResource(R.drawable.ic_action_globe);
+                    set_toot_visibility.setImageResource(R.drawable.ic_public);
                     break;
                 case "unlisted":
                     set_toot_visibility.setImageResource(R.drawable.ic_action_lock_open);
                     break;
                 case "private":
-                    set_toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
+                    set_toot_visibility.setImageResource(R.drawable.ic_lock_outline);
                     break;
                 case "direct":
                     set_toot_visibility.setImageResource(R.drawable.ic_mail_outline);
@@ -402,7 +402,7 @@ public class SettingsFragment extends Fragment {
                         switch (position){
                             case 0:
                                 visibility = "public";
-                                set_toot_visibility.setImageResource(R.drawable.ic_action_globe);
+                                set_toot_visibility.setImageResource(R.drawable.ic_public);
                                 break;
                             case 1:
                                 visibility = "unlisted";
@@ -410,7 +410,7 @@ public class SettingsFragment extends Fragment {
                                 break;
                             case 2:
                                 visibility = "private";
-                                set_toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
+                                set_toot_visibility.setImageResource(R.drawable.ic_lock_outline);
                                 break;
                             case 3:
                                 visibility = "direct";
@@ -478,14 +478,14 @@ public class SettingsFragment extends Fragment {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_DARK){
-            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_public,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_text);
         }else {
-            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.white);
+            changeDrawableColor(context, R.drawable.ic_public,R.color.white);
             changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.white);
-            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.white);
+            changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.white);
             changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.white);
         }
 

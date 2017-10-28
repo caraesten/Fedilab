@@ -401,9 +401,9 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_DARK){
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.mastodonC4);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.mastodonC4);
         }else {
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.mastodonC4);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.mastodonC4);
         }
         String urlHeader = account.getHeader();
         if (urlHeader.startsWith("/")) {
@@ -439,7 +439,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         //Redraws icon for locked accounts
         final float scale = getResources().getDisplayMetrics().density;
         if(account.isLocked()){
-            Drawable img = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_action_lock_closed);
+            Drawable img = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_lock_outline);
             img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (20 * scale + 0.5f));
             account_dn.setCompoundDrawables( img, null, null, null);
         }else{

@@ -4,7 +4,7 @@
     <item
         android:id="@+id/action_view_reply"
         android:title="@string/microphone"
-        android:icon="@drawable/ic_action_eye_open"
+        android:icon="@drawable/ic_visibility"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_microphone"
@@ -14,7 +14,7 @@
     <item
         android:id="@+id/action_store"
         android:title="@string/save"
-        android:icon="@drawable/ic_save"
+        android:icon="@drawable/ic_save_white"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_restore"

@@ -119,15 +119,15 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_DARK){
             changeDrawableColor(context, R.drawable.ic_cancel,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_public,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_text);
         }else {
             changeDrawableColor(context, R.drawable.ic_cancel,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_public,R.color.black);
             changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.black);
             changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.black);
         }
 
@@ -135,13 +135,13 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
 
         switch (status.getVisibility()) {
             case "public":
-                holder.scheduled_toot_privacy.setImageResource(R.drawable.ic_action_globe);
+                holder.scheduled_toot_privacy.setImageResource(R.drawable.ic_public);
                 break;
             case "unlisted":
                 holder.scheduled_toot_privacy.setImageResource(R.drawable.ic_action_lock_open);
                 break;
             case "private":
-                holder.scheduled_toot_privacy.setImageResource(R.drawable.ic_action_lock_closed);
+                holder.scheduled_toot_privacy.setImageResource(R.drawable.ic_lock_outline);
                 break;
             case "direct":
                 holder.scheduled_toot_privacy.setImageResource(R.drawable.ic_mail_outline);

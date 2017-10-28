@@ -25,6 +25,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.RequiresApi;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.PendingIntent;
@@ -732,7 +733,7 @@ public class Helper {
                 @Override
                 public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
                     notify_user(context, intent, notificationIdTmp, BitmapFactory.decodeResource(context.getResources(),
-                                R.drawable.ic_save), context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
+                                R.drawable.ic_save_white), context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
                     Toast.makeText(context, R.string.toast_saved,Toast.LENGTH_LONG).show();
                 }});
         } catch (Exception e) {
@@ -1439,9 +1440,8 @@ public class Helper {
      * @param hexaColor example 0xffff00
      */
     public static Drawable changeDrawableColor(Context context, int drawable, int hexaColor){
-        int color = Color.parseColor(context.getString(hexaColor));
         Drawable mDrawable = ContextCompat.getDrawable(context, drawable);
-        mDrawable.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+        DrawableCompat.setTint(mDrawable, ContextCompat.getColor(context, hexaColor));
         return mDrawable;
     }
 

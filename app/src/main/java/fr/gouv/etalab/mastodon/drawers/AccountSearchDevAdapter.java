@@ -123,7 +123,7 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
         //Redraws icon for locked accounts
         final float scale = context.getResources().getDisplayMetrics().density;
         if( account != null && account.isLocked()){
-            Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_action_lock_closed);
+            Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_lock_outline);
             img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (20 * scale + 0.5f));
             holder.account_dn.setCompoundDrawables( null, null, img, null);
         }else{
@@ -138,7 +138,7 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
             holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
             holder.account_un.setText(String.format("@%s",account.getAcct()));
         }
-        changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.mastodonC4);
+        changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.mastodonC4);
         //Profile picture
         imageLoader.displayImage(account.getAvatar(), holder.account_pp, options);
 

@@ -217,9 +217,9 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         if( theme == Helper.THEME_DARK){
             changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
             changeDrawableColor(context, R.drawable.ic_action_more,R.color.dark_icon);
-            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_public,R.color.dark_icon);
             changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.dark_icon);
-            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.dark_icon);
             changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_icon);
             changeDrawableColor(context, R.drawable.ic_retweet,R.color.dark_icon);
             changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_icon);
@@ -229,9 +229,9 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         }else {
             changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
             changeDrawableColor(context, R.drawable.ic_action_more,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_public,R.color.black);
             changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.black);
             changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.black);
             changeDrawableColor(context, R.drawable.ic_retweet,R.color.black);
             changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.black);
@@ -384,13 +384,13 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 }
                 switch (status.getVisibility()){
                     case "public":
-                        holder.status_privacy.setImageResource(R.drawable.ic_action_globe);
+                        holder.status_privacy.setImageResource(R.drawable.ic_public);
                         break;
                     case "unlisted":
                         holder.status_privacy.setImageResource(R.drawable.ic_action_lock_open);
                         break;
                     case "private":
-                        holder.status_privacy.setImageResource(R.drawable.ic_action_lock_closed);
+                        holder.status_privacy.setImageResource(R.drawable.ic_lock_outline);
                         break;
                     case "direct":
                         holder.status_privacy.setImageResource(R.drawable.ic_mail_outline);
