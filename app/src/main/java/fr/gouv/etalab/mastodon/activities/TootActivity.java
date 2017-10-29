@@ -429,13 +429,13 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         if(isAccountPrivate){
             if( tootReply == null) {
                 visibility = "private";
-                toot_visibility.setImageResource(R.drawable.ic_lock_outline);
+                toot_visibility.setImageResource(R.drawable.ic_lock_outline_toot);
             }else {
                 if( visibility.equals("direct") ){
-                    toot_visibility.setImageResource(R.drawable.ic_mail_outline);
+                    toot_visibility.setImageResource(R.drawable.ic_mail_outline_toot);
                 }else{
                     visibility = "private";
-                    toot_visibility.setImageResource(R.drawable.ic_lock_outline);
+                    toot_visibility.setImageResource(R.drawable.ic_lock_outline_toot);
                 }
             }
         }else {
