@@ -49,7 +49,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -68,6 +67,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -105,7 +105,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsForReplyAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateDescriptionAttachmentAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.UploadActionAsyncTask;
+import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
@@ -146,7 +146,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
     private String visibility;
     private final int PICK_IMAGE = 56556;
-    private ProgressBar loading_picture;
     private ImageButton toot_picture;
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
@@ -235,7 +234,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         toot_space_left = findViewById(R.id.toot_space_left);
         toot_visibility = findViewById(R.id.toot_visibility);
         toot_picture = findViewById(R.id.toot_picture);
-        loading_picture = findViewById(R.id.loading_picture);
         toot_picture_container = findViewById(R.id.toot_picture_container);
         toot_content = findViewById(R.id.toot_content);
         int newInputType = toot_content.getInputType() & (toot_content.getInputType() ^ InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
@@ -243,8 +241,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         toot_cw_content = findViewById(R.id.toot_cw_content);
         picture_scrollview = findViewById(R.id.picture_scrollview);
         toot_sensitive = findViewById(R.id.toot_sensitive);
-
-
         drawer_layout = findViewById(R.id.drawer_layout);
         drawer_layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -323,10 +319,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 byte[] bitmapdata = bos.toByteArray();
                 ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
                 toot_picture_container.setVisibility(View.VISIBLE);
-                loading_picture.setVisibility(View.VISIBLE);
                 picture_scrollview.setVisibility(View.VISIBLE);
                 toot_picture.setEnabled(false);
-                new UploadActionAsyncTask(getApplicationContext(), bs, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new API(getApplicationContext()).uploadMedia(bs, TootActivity.this);
             }
             toot_content.setText(String.format("\n\nvia @%s\n\n%s\n\n", tootMention, urlMention));
             toot_space_left.setText(String.valueOf(toot_content.length()));
@@ -393,9 +388,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                                     picture_scrollview.setVisibility(View.VISIBLE);
                                     InputStream bis = new ByteArrayInputStream(binaryData);
                                     toot_picture_container.setVisibility(View.VISIBLE);
-                                    loading_picture.setVisibility(View.VISIBLE);
                                     toot_picture.setEnabled(false);
-                                    new UploadActionAsyncTask(getApplicationContext(),bis,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    new API(getApplicationContext()).uploadMedia(bis, TootActivity.this);
                                     f.write(binaryData); 
                                     f.close();
                                 } catch (IOException e) {
@@ -680,15 +674,13 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     try {
                         InputStream inputStream = getContentResolver().openInputStream(fileUri);
                         toot_picture_container.setVisibility(View.VISIBLE);
-                        loading_picture.setVisibility(View.VISIBLE);
                         picture_scrollview.setVisibility(View.VISIBLE);
                         toot_picture.setEnabled(false);
-                        new UploadActionAsyncTask(getApplicationContext(), inputStream, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        new API(getApplicationContext()).uploadMedia(inputStream, TootActivity.this);
                         count++;
 
                     } catch (FileNotFoundException e) {
                         Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
-                        loading_picture.setVisibility(View.GONE);
                         toot_picture.setEnabled(true);
                         e.printStackTrace();
                     }
@@ -712,12 +704,10 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 //noinspection ConstantConditions
                 InputStream inputStream = getContentResolver().openInputStream(data.getData());
                 toot_picture_container.setVisibility(View.VISIBLE);
-                loading_picture.setVisibility(View.VISIBLE);
                 toot_picture.setEnabled(false);
-                new UploadActionAsyncTask(getApplicationContext(),inputStream,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new API(getApplicationContext()).uploadMedia(inputStream, TootActivity.this);
             } catch (FileNotFoundException e) {
                 Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
-                loading_picture.setVisibility(View.GONE);
                 toot_picture.setEnabled(true);
                 e.printStackTrace();
             }
@@ -978,7 +968,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
     @Override
     public void onRetrieveAttachment(final Attachment attachment, Error error) {
-        loading_picture.setVisibility(View.GONE);
         if( error != null){
             final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
@@ -1084,6 +1073,21 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             if( attachments.size() > index && attachment.getDescription() != null) {
                 attachments.get(index).setDescription(attachment.getDescription());
             }
+        }
+    }
+
+    @Override
+    public void onUpdateProgress(int progress) {
+        ProgressBar progressBar = findViewById(R.id.upload_progress);
+        TextView toolbar_text = findViewById(R.id.toolbar_text);
+        RelativeLayout progress_bar_container = findViewById(R.id.progress_bar_container);
+        if( progress <= 100) {
+            progressBar.setScaleY(3f);
+            progress_bar_container.setVisibility(View.VISIBLE);
+            progressBar.setProgress(progress);
+            toolbar_text.setText(String.format("%s%%", progress));
+        }else{
+            progress_bar_container.setVisibility(View.GONE);
         }
     }
 
@@ -1378,7 +1382,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             }
             toRemove.clear();
         }
-        loading_picture.setVisibility(View.GONE);
         if( attachments != null && attachments.size() > 0){
             toot_picture_container.setVisibility(View.VISIBLE);
             picture_scrollview.setVisibility(View.VISIBLE);
