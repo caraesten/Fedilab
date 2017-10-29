@@ -82,6 +82,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
     private RecyclerView lv_status;
     private boolean isRefreshed;
     private ImageView pp_actionBar;
+    private List<Status> statuses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,10 +184,11 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
         final LinearLayoutManager mLayoutManager;
         mLayoutManager = new LinearLayoutManager(this);
         lv_status.setLayoutManager(mLayoutManager);
-        lv_status.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
+
+        lv_status.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                if(dy > 0){
                     int visibleItemCount = mLayoutManager.getChildCount();
                     int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
                     if (firstVisibleItem + visibleItemCount == lv_status.getAdapter().getItemCount() -1 &&  firstVisibleItem > 0 &&
@@ -203,10 +205,34 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
 
                     }
                 }
+            }
+        });
+        lv_status.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == android.view.MotionEvent.ACTION_UP && statuses != null && statuses.size() > 0) {
+                    int visibleItemCount = mLayoutManager.getChildCount();
+                    int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+                    if (firstVisibleItem + visibleItemCount >= (lv_status.getAdapter().getItemCount() -1) &&  firstVisibleItem > 0 &&
+                            lv_status.getChildAt(lv_status.getChildCount() - 1).getBottom() <= lv_status.getHeight()) {
+
+                        swipeRefreshLayout.setRefreshing(true);
+                        ( new Handler()).postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                isRefreshed = true;
+                                statusId = statuses.get(statuses.size()-1).getId();
+                                new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, false, false, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            }
+                        }, 1000);
+
+                    }
+                }
                 return false;
             }
         });
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -252,7 +278,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
         int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
         int position = 0;
         boolean positionFound = false;
-        List<Status> statuses = new ArrayList<>();
+        statuses = new ArrayList<>();
         if( statusFirst != null)
             statuses.add(0, statusFirst);
         if( context.getAncestors() != null && context.getAncestors().size() > 0){
