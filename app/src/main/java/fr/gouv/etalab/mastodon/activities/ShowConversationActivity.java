@@ -215,8 +215,11 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
                 if (event.getAction() == android.view.MotionEvent.ACTION_UP && statuses != null && statuses.size() > 0) {
                     int visibleItemCount = mLayoutManager.getChildCount();
                     int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+                    int lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
                     if (firstVisibleItem + visibleItemCount >= (lv_status.getAdapter().getItemCount() -1) &&  firstVisibleItem > 0 &&
-                            lv_status.getChildAt(lv_status.getChildCount() - 1).getBottom() <= lv_status.getHeight()) {
+                            lv_status.getChildAt(lv_status.getChildCount() - 1).getBottom() <= lv_status.getHeight()
+                            && (firstVisibleItem + visibleItemCount >= lastVisibleItem)
+                            ) {
 
                         swipeRefreshLayout.setRefreshing(true);
                         ( new Handler()).postDelayed(new Runnable() {
