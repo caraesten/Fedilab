@@ -18,12 +18,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.client.Entities.Mention;
-import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountsReplyInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -54,43 +53,29 @@ public class RetrieveAccountsForReplyAsyncTask extends AsyncTask<Void, Void, Voi
     protected Void doInBackground(Void... params) {
         API api = new API(this.contextReference.get());
         fr.gouv.etalab.mastodon.client.Entities.Context statusContext = api.getStatusContext(status.getId());
-        ArrayList<Mention> mentions = new ArrayList<>();
         addedAccounts = new ArrayList<>();
+        accounts.add(status.getAccount());
+        addedAccounts.add(status.getAccount().getAcct());
+
         //Retrieves the first toot
         if( statusContext.getAncestors().size() > 0 ) {
             statusContext = api.getStatusContext(statusContext.getAncestors().get(0).getId());
         }
-        if( status != null){
-            for(Mention mention : status.getMentions()){
-                if( canBeAdded(mention.getAcct())){
-                    mentions.add(mention);
-                    addedAccounts.add(mention.getAcct());
-                }
-            }
-        }
         if( statusContext != null && statusContext.getDescendants().size() >  0){
-            for(fr.gouv.etalab.mastodon.client.Entities.Status status : statusContext.getDescendants())
-            for(Mention mention : status.getMentions()){
-                if( canBeAdded(mention.getAcct())){
-                    mentions.add(mention);
-                    addedAccounts.add(mention.getAcct());
+            for(fr.gouv.etalab.mastodon.client.Entities.Status status : statusContext.getDescendants()){
+                if( canBeAdded(status.getAccount().getAcct())){
+                    accounts.add(status.getAccount());
+                    addedAccounts.add(status.getAccount().getAcct());
                 }
             }
         }
         if( statusContext != null && statusContext.getAncestors().size() >  0){
-            for(fr.gouv.etalab.mastodon.client.Entities.Status status : statusContext.getAncestors())
-            for(Mention mention : status.getMentions()){
-                if( canBeAdded(mention.getAcct())){
-                    mentions.add(mention);
-                    addedAccounts.add(mention.getAcct());
+            for(fr.gouv.etalab.mastodon.client.Entities.Status status : statusContext.getAncestors()){
+                if( canBeAdded(status.getAccount().getAcct())){
+                    accounts.add(status.getAccount());
+                    addedAccounts.add(status.getAccount().getAcct());
                 }
             }
-        }
-        for( Mention mention: mentions){
-            Results accountSearch = api.search(mention.getUrl());
-            if( accountSearch != null && accountSearch.getAccounts() != null && accountSearch.getAccounts().size() == 1)
-                accounts.add(accountSearch.getAccounts().get(0));
-
         }
         return null;
     }

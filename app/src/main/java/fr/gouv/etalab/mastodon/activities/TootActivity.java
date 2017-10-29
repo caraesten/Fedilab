@@ -543,7 +543,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         String pattern = "^(.|\\s)*(@([a-zA-Z0-9_]{2,}))$";
         final Pattern sPattern = Pattern.compile(pattern);
 
-        String patternTag = "^(.|\\s)*(\\#([\\w-]{2,}))$";
+        String patternTag = "^(.|\\s)*(#([\\w-]{2,}))$";
         final Pattern tPattern = Pattern.compile(patternTag);
 
         toot_cw_content.addTextChangedListener(new TextWatcher() {
@@ -1007,7 +1007,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 if (show_media_urls) {
                     //Adds the shorter text_url of attachment at the end of the toot 
                     int selectionBefore = toot_content.getSelectionStart();
-                    toot_content.setText(toot_content.getText().toString() + "\n" + attachment.getText_url());
+                    toot_content.setText(String.format("%s\n%s",toot_content.getText().toString(), attachment.getText_url()));
                     toot_space_left.setText(String.valueOf(toot_content.length()));
                     //Moves the cursor
                     if (selectionBefore >= 0)
@@ -1032,7 +1032,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                                 AlertDialog.Builder builderInner = new AlertDialog.Builder(TootActivity.this);
                                 builderInner.setTitle(R.string.upload_form_description);
                                 //Text for report
-                                EditText input = null;
+                                EditText input;
                                 input = new EditText(TootActivity.this);
                                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                                         LinearLayout.LayoutParams.MATCH_PARENT,
@@ -1610,7 +1610,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     public void changeAccountReply(boolean isChecked, String acct){
         if (isChecked) {
             if( !toot_content.getText().toString().contains(acct))
-                toot_content.setText(acct + " " + toot_content.getText());
+                toot_content.setText(String.format("%s %s",acct, toot_content.getText()));
         } else {
             toot_content.setText(toot_content.getText().toString().replaceAll("\\s*" +acct, ""));
         }
