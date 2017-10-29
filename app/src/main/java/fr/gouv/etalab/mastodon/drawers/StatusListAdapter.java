@@ -33,7 +33,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -201,7 +200,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         LinearLayout status_spoiler_container;
         TextView status_spoiler;
         Button status_spoiler_button;
-        CardView card_status_container;
         TextView status_content;
         TextView status_content_translated;
         LinearLayout status_content_translated_container;
@@ -248,7 +246,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ViewHolder(View itemView) {
             super(itemView);
             loader_replies = itemView.findViewById(R.id.loader_replies);
-            card_status_container = itemView.findViewById(R.id.card_status_container);
             status_document_container = itemView.findViewById(R.id.status_document_container);
             status_content = itemView.findViewById(R.id.status_content);
             status_content_translated = itemView.findViewById(R.id.status_content_translated);
@@ -324,7 +321,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         if( viewHolder.getItemViewType() == DISPLAYED_STATUS){
             final ViewHolder holder = (ViewHolder) viewHolder;
-            holder.card_status_container.setVisibility(View.VISIBLE);
             final Status status = statuses.get(position);
             imageLoader = ImageLoader.getInstance();
             File cacheDir = new File(context.getCacheDir(), context.getString(R.string.app_name));
@@ -799,7 +795,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         context.startActivity(intent);
                     }
                 });
-                holder.card_status_container.setOnClickListener(new View.OnClickListener() {
+                holder.main_container.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(context, ShowConversationActivity.class);

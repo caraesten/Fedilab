@@ -19,6 +19,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -81,6 +82,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         swipeRefreshLayout = rootView.findViewById(R.id.swipeContainer);
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         lv_notifications = rootView.findViewById(R.id.lv_notifications);
+        lv_notifications.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         mainLoader = rootView.findViewById(R.id.loader);
         nextElementLoader = rootView.findViewById(R.id.loading_next_notifications);
         textviewNoAction = rootView.findViewById(R.id.no_action);

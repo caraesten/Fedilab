@@ -22,6 +22,7 @@ import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -121,6 +122,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         if( type == RetrieveFeedsAsyncTask.Type.HOME)
             lastReadStatus = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
         lv_status = rootView.findViewById(R.id.lv_status);
+        lv_status.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         mainLoader =  rootView.findViewById(R.id.loader);
         nextElementLoader = rootView.findViewById(R.id.loading_next_status);
         textviewNoAction =  rootView.findViewById(R.id.no_action);

@@ -22,13 +22,12 @@ import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,7 +52,7 @@ import mastodon.etalab.gouv.fr.mastodon.R;
  * Created by Thomas on 07/05/2017.
  * Adapter for accounts asking a follow request
  */
-public class AccountsFollowRequestAdapter extends BaseAdapter implements OnPostActionInterface {
+public class AccountsFollowRequestAdapter extends RecyclerView.Adapter implements OnPostActionInterface {
 
     private List<Account> accounts;
     private LayoutInflater layoutInflater;
@@ -71,42 +70,18 @@ public class AccountsFollowRequestAdapter extends BaseAdapter implements OnPostA
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
         accountsFollowRequestAdapter = this;
     }
+    
 
     @Override
-    public int getCount() {
-        return accounts.size();
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new AccountsFollowRequestAdapter.ViewHolder(layoutInflater.inflate(R.layout.drawer_account, parent, false));
     }
 
     @Override
-    public Object getItem(int position) {
-        return accounts.get(position);
-    }
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-
+        final AccountsFollowRequestAdapter.ViewHolder holder = (AccountsFollowRequestAdapter.ViewHolder) viewHolder;
         final Account account = accounts.get(position);
-        final ViewHolder holder;
-        if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.drawer_account_follow_request, parent, false);
-            holder = new ViewHolder();
-            holder.account_pp = (ImageView) convertView.findViewById(R.id.account_pp);
-            holder.account_un = (TextView) convertView.findViewById(R.id.account_un);
-            holder.btn_authorize = (Button) convertView.findViewById(R.id.btn_authorize);
-            holder.btn_reject = (Button) convertView.findViewById(R.id.btn_reject);
-
-            holder.account_container = (LinearLayout) convertView.findViewById(R.id.account_container);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-
         holder.btn_authorize.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.green_1), PorterDuff.Mode.MULTIPLY);
         holder.btn_reject.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.red_1), PorterDuff.Mode.MULTIPLY);
         holder.account_un.setText(String.format("@%s", account.getUsername()));
@@ -136,7 +111,16 @@ public class AccountsFollowRequestAdapter extends BaseAdapter implements OnPostA
                 new PostActionAsyncTask(context, API.StatusAction.REJECT, account.getId(), AccountsFollowRequestAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
-        return convertView;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemCount() {
+        return accounts.size();
     }
 
     private void openAccountDetails(String userId){
@@ -170,12 +154,19 @@ public class AccountsFollowRequestAdapter extends BaseAdapter implements OnPostA
     }
 
 
-    private class ViewHolder {
+    private class ViewHolder extends RecyclerView.ViewHolder {
         ImageView account_pp;
         Button btn_authorize;
         Button btn_reject;
         TextView account_un;
-        LinearLayout account_container;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            account_pp = itemView.findViewById(R.id.account_pp);
+            account_un = itemView.findViewById(R.id.account_un);
+            btn_authorize = itemView.findViewById(R.id.btn_authorize);
+            btn_reject = itemView.findViewById(R.id.btn_reject);
+        }
     }
 
 

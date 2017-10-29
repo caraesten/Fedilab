@@ -29,7 +29,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -142,9 +141,9 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 else
                     typeString = String.format("@%s %s", notification.getAccount().getUsername(),context.getString(R.string.notif_mention));
                 if( theme == Helper.THEME_DARK){
-                    holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_1));
+                    holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_1));
                 }else {
-                    holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_1));
+                    holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_1));
                 }
                 imgH = ContextCompat.getDrawable(context, R.drawable.ic_chat_bubble_outline);
                 holder.main_container_trans.setVisibility(View.GONE);
@@ -156,9 +155,9 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 else
                     typeString = String.format("@%s %s", notification.getAccount().getUsername(),context.getString(R.string.notif_reblog));
                 if( theme == Helper.THEME_DARK){
-                    holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_2));
+                    holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_2));
                 }else {
-                    holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_2));
+                    holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_2));
                 }
                 imgH = ContextCompat.getDrawable(context, R.drawable.ic_repeat_head);
                 holder.main_container_trans.setVisibility(View.VISIBLE);
@@ -170,9 +169,9 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 else
                     typeString = String.format("@%s %s", notification.getAccount().getUsername(),context.getString(R.string.notif_favourite));
                 if( theme == Helper.THEME_DARK){
-                    holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_3));
+                    holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_3));
                 }else {
-                    holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_3));
+                    holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_3));
                 }
                 imgH = ContextCompat.getDrawable(context, R.drawable.ic_star_border_header);
                 holder.main_container_trans.setVisibility(View.VISIBLE);
@@ -184,9 +183,9 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 else
                     typeString = String.format("@%s %s", notification.getAccount().getUsername(),context.getString(R.string.notif_follow));
                 if( theme == Helper.THEME_DARK){
-                    holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_4));
+                    holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_4));
                 }else {
-                    holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_4));
+                    holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_4));
                 }
                 imgH = ContextCompat.getDrawable(context, R.drawable.ic_follow_notif_header);
                 holder.main_container_trans.setVisibility(View.GONE);
@@ -895,7 +894,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        CardView card_status_container;
+        RelativeLayout card_status_container;
         TextView notification_status_content;
         TextView notification_type;
         TextView notification_account_username;

@@ -21,6 +21,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -96,6 +97,7 @@ public class HashTagActivity extends AppCompatActivity implements OnRetrieveFeed
 
 
         final RecyclerView lv_status = findViewById(R.id.lv_status);
+        lv_status.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
         tootsPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
         mainLoader = findViewById(R.id.loader);
         nextElementLoader = findViewById(R.id.loading_next_status);

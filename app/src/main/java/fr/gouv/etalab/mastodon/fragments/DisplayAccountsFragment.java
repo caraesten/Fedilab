@@ -22,6 +22,7 @@ import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -96,7 +97,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
 
         swipeRefreshLayout = rootView.findViewById(R.id.swipeContainer);
         lv_accounts = rootView.findViewById(R.id.lv_accounts);
-
+        lv_accounts.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         mainLoader = rootView.findViewById(R.id.loader);
         nextElementLoader = rootView.findViewById(R.id.loading_next_accounts);
         textviewNoAction = rootView.findViewById(R.id.no_action);

@@ -20,16 +20,20 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
+
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFollowRequestSentAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -58,7 +62,7 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
     private int accountPerPage;
     private TextView no_action_text;
     private boolean swiped;
-    private ListView lv_accounts;
+    private RecyclerView lv_accounts;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -76,6 +80,7 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         accountPerPage = sharedpreferences.getInt(Helper.SET_ACCOUNTS_PER_PAGE, 40);
         lv_accounts = rootView.findViewById(R.id.lv_accounts);
+        lv_accounts.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         no_action_text = rootView.findViewById(R.id.no_action_text);
         mainLoader = rootView.findViewById(R.id.loader);
         nextElementLoader = rootView.findViewById(R.id.loading_next_accounts);
@@ -84,23 +89,25 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
         nextElementLoader.setVisibility(View.GONE);
         accountsFollowRequestAdapter = new AccountsFollowRequestAdapter(context, this.accounts);
         lv_accounts.setAdapter(accountsFollowRequestAdapter);
+        final LinearLayoutManager mLayoutManager;
+        mLayoutManager = new LinearLayoutManager(context);
 
-        lv_accounts.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-            }
-
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-                if (firstVisibleItem + visibleItemCount == totalItemCount) {
-                    if (!flag_loading) {
-                        flag_loading = true;
-                        asyncTask = new RetrieveFollowRequestSentAsyncTask(context, max_id, DisplayFollowRequestSentFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        nextElementLoader.setVisibility(View.VISIBLE);
+        lv_accounts.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                if(dy > 0) {
+                    int visibleItemCount = mLayoutManager.getChildCount();
+                    int totalItemCount = mLayoutManager.getItemCount();
+                    int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+                    if (firstVisibleItem + visibleItemCount == totalItemCount) {
+                        if (!flag_loading) {
+                            flag_loading = true;
+                            asyncTask = new RetrieveFollowRequestSentAsyncTask(context, max_id, DisplayFollowRequestSentFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            nextElementLoader.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+                        nextElementLoader.setVisibility(View.GONE);
                     }
-                } else {
-                    nextElementLoader.setVisibility(View.GONE);
                 }
             }
         });
