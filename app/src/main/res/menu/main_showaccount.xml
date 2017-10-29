@@ -4,7 +4,7 @@
     <item
         android:id="@+id/action_show_pinned"
         android:title="@string/pinned_toots"
-        android:icon="@drawable/ic_action_pin"
+        android:icon="@drawable/ic_pin_drop"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_open_browser"

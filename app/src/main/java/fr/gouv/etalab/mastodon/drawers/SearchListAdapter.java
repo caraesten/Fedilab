@@ -157,7 +157,7 @@ public class SearchListAdapter extends BaseAdapter {
                 img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (15 * scale + 0.5f));
                 holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
             }else if( status.getReblog() != null){
-                Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_retweet);
+                Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
                 img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (15 * scale + 0.5f));
                 holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
             }else{

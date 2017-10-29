@@ -221,7 +221,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             changeDrawableColor(context, R.drawable.ic_lock_open,R.color.dark_icon);
             changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.dark_icon);
             changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_icon);
-            changeDrawableColor(context, R.drawable.ic_retweet,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
             changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
@@ -233,7 +233,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             changeDrawableColor(context, R.drawable.ic_lock_open,R.color.black);
             changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.black);
             changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_retweet,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
             changeDrawableColor(context, R.drawable.ic_star_border,R.color.black);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.black);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.black);

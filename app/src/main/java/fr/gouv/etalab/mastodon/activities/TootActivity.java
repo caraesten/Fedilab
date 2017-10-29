@@ -443,16 +443,16 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 visibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), "public");
                 switch (visibility) {
                     case "public":
-                        toot_visibility.setImageResource(R.drawable.ic_public);
+                        toot_visibility.setImageResource(R.drawable.ic_public_toot);
                         break;
                     case "unlisted":
-                        toot_visibility.setImageResource(R.drawable.ic_lock_open);
+                        toot_visibility.setImageResource(R.drawable.ic_lock_open_toot);
                         break;
                     case "private":
-                        toot_visibility.setImageResource(R.drawable.ic_lock_outline);
+                        toot_visibility.setImageResource(R.drawable.ic_lock_outline_toot);
                         break;
                     case "direct":
-                        toot_visibility.setImageResource(R.drawable.ic_mail_outline);
+                        toot_visibility.setImageResource(R.drawable.ic_mail_outline_toot);
                         break;
                 }
             }
@@ -1158,19 +1158,19 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 switch (position){
                     case 0:
                         visibility = "public";
-                        toot_visibility.setImageResource(R.drawable.ic_public);
+                        toot_visibility.setImageResource(R.drawable.ic_public_toot);
                         break;
                     case 1:
                         visibility = "unlisted";
-                        toot_visibility.setImageResource(R.drawable.ic_lock_open);
+                        toot_visibility.setImageResource(R.drawable.ic_lock_open_toot);
                         break;
                     case 2:
                         visibility = "private";
-                        toot_visibility.setImageResource(R.drawable.ic_lock_outline);
+                        toot_visibility.setImageResource(R.drawable.ic_lock_outline_toot);
                         break;
                     case 3:
                         visibility = "direct";
-                        toot_visibility.setImageResource(R.drawable.ic_mail_outline);
+                        toot_visibility.setImageResource(R.drawable.ic_mail_outline_toot);
                         break;
                 }
 
@@ -1426,19 +1426,19 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         switch (status.getVisibility()){
             case "public":
                 visibility = "public";
-                toot_visibility.setImageResource(R.drawable.ic_public);
+                toot_visibility.setImageResource(R.drawable.ic_public_toot);
                 break;
             case "unlisted":
                 visibility = "unlisted";
-                toot_visibility.setImageResource(R.drawable.ic_lock_open);
+                toot_visibility.setImageResource(R.drawable.ic_lock_open_toot);
                 break;
             case "private":
                 visibility = "private";
-                toot_visibility.setImageResource(R.drawable.ic_lock_outline);
+                toot_visibility.setImageResource(R.drawable.ic_lock_outline_toot);
                 break;
             case "direct":
                 visibility = "direct";
-                toot_visibility.setImageResource(R.drawable.ic_mail_outline);
+                toot_visibility.setImageResource(R.drawable.ic_mail_outline_toot);
                 break;
         }
 
@@ -1475,19 +1475,19 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         switch (tootReply.getVisibility()){
             case "public":
                 visibility = "public";
-                toot_visibility.setImageResource(R.drawable.ic_public);
+                toot_visibility.setImageResource(R.drawable.ic_public_toot);
                 break;
             case "unlisted":
                 visibility = "unlisted";
-                toot_visibility.setImageResource(R.drawable.ic_lock_open);
+                toot_visibility.setImageResource(R.drawable.ic_lock_open_toot);
                 break;
             case "private":
                 visibility = "private";
-                toot_visibility.setImageResource(R.drawable.ic_lock_outline);
+                toot_visibility.setImageResource(R.drawable.ic_lock_outline_toot);
                 break;
             case "direct":
                 visibility = "direct";
-                toot_visibility.setImageResource(R.drawable.ic_mail_outline);
+                toot_visibility.setImageResource(R.drawable.ic_mail_outline_toot);
                 break;
         }
         //If toot is not restored
@@ -1562,19 +1562,19 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_DARK) {
-            changeDrawableColor(TootActivity.this, R.drawable.ic_public, R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_lock_open, R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_lock_outline, R.color.dark_text);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_mail_outline, R.color.dark_text);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_public_toot, R.color.dark_text);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_lock_open_toot, R.color.dark_text);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_lock_outline_toot, R.color.dark_text);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_mail_outline_toot, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_insert_photo, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_skip_previous, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_check, R.color.dark_text);
         }else {
-            changeDrawableColor(TootActivity.this, R.drawable.ic_public, R.color.white);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_lock_open, R.color.white);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_lock_outline, R.color.white);
-            changeDrawableColor(TootActivity.this, R.drawable.ic_mail_outline, R.color.white);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_public_toot, R.color.white);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_lock_open_toot, R.color.white);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_lock_outline_toot, R.color.white);
+            changeDrawableColor(TootActivity.this, R.drawable.ic_mail_outline_toot, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_insert_photo, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_skip_previous, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next, R.color.white);
