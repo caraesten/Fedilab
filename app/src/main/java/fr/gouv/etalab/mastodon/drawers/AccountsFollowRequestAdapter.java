@@ -111,6 +111,12 @@ public class AccountsFollowRequestAdapter extends RecyclerView.Adapter implement
                 new PostActionAsyncTask(context, API.StatusAction.REJECT, account.getId(), AccountsFollowRequestAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if( theme == Helper.THEME_LIGHT) {
+            holder.btn_reject.setTextColor(ContextCompat.getColor(context, R.color.white));
+            holder.btn_authorize.setTextColor(ContextCompat.getColor(context, R.color.white));
+        }
     }
 
     @Override
