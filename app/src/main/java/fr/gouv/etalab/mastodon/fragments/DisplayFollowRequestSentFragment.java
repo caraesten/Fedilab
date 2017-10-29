@@ -26,14 +26,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFollowRequestSentAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -91,7 +89,7 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
         lv_accounts.setAdapter(accountsFollowRequestAdapter);
         final LinearLayoutManager mLayoutManager;
         mLayoutManager = new LinearLayoutManager(context);
-
+        lv_accounts.setLayoutManager(mLayoutManager);
         lv_accounts.addOnScrollListener(new RecyclerView.OnScrollListener() {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy)
             {

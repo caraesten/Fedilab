@@ -74,7 +74,7 @@ public class AccountsFollowRequestAdapter extends RecyclerView.Adapter implement
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new AccountsFollowRequestAdapter.ViewHolder(layoutInflater.inflate(R.layout.drawer_account, parent, false));
+        return new AccountsFollowRequestAdapter.ViewHolder(layoutInflater.inflate(R.layout.drawer_account_follow_request, parent, false));
     }
 
     @Override
