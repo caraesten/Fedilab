@@ -96,7 +96,6 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
         }
         setContentView(R.layout.activity_show_conversation);
 
-        setContentView(R.layout.activity_hashtag);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -239,6 +238,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
     @Override
     public void onRetrieveContext(Context context, Status statusFirst, Error error) {
         swipeRefreshLayout.setRefreshing(false);
+        RelativeLayout loader = findViewById(R.id.loader);
         if( error != null){
             final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
@@ -278,7 +278,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
 
             }
         }
-        RelativeLayout loader = findViewById(R.id.loader);
+
         StatusListAdapter statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, position, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
         lv_status.setAdapter(statusListAdapter);
         statusListAdapter.notifyDataSetChanged();
