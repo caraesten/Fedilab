@@ -458,8 +458,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_star_border,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.black);
-                changeDrawableColor(context, R.drawable.ic_photo,R.color.white);
-                changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.white);
+                changeDrawableColor(context, R.drawable.ic_photo,R.color.mastodonC4);
+                changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.mastodonC4);
                 changeDrawableColor(context, R.drawable.ic_translate,R.color.white);
             }
 
@@ -751,10 +751,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
                 holder.status_reply.setCompoundDrawables(imgReply, null, null, null);
 
-                if( theme == Helper.THEME_LIGHT) {
-                    holder.status_show_more.setTextColor(ContextCompat.getColor(context, R.color.white));
-                    holder.status_spoiler_button.setTextColor(ContextCompat.getColor(context, R.color.white));
-                }
 
                 boolean isOwner = status.getAccount().getId().equals(userId);
 
