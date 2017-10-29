@@ -220,17 +220,17 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
                             lv_status.getChildAt(lv_status.getChildCount() - 1).getBottom() <= lv_status.getHeight()
                             && (firstVisibleItem + visibleItemCount >= lastVisibleItem)
                             ) {
-
-                        swipeRefreshLayout.setRefreshing(true);
-                        ( new Handler()).postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                isRefreshed = true;
-                                statusId = statuses.get(statuses.size()-1).getId();
-                                new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, false, false, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            }
-                        }, 1000);
-
+                        if(event.getY() > mLayoutManager.getHeight() / 2){
+                            swipeRefreshLayout.setRefreshing(true);
+                            ( new Handler()).postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    isRefreshed = true;
+                                    statusId = statuses.get(statuses.size()-1).getId();
+                                    new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, false, false, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                }
+                            }, 1000);
+                        }
                     }
                 }
                 return false;
