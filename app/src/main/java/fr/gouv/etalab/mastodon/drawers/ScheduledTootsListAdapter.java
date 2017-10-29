@@ -14,6 +14,7 @@ package fr.gouv.etalab.mastodon.drawers;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
+import android.annotation.SuppressLint;
 import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -101,14 +102,13 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.drawer_scheduled_toot, parent, false);
             holder = new ViewHolder();
-            holder.scheduled_toot_container = (CardView) convertView.findViewById(R.id.scheduled_toot_container);
-            holder.scheduled_toot_title = (TextView) convertView.findViewById(R.id.scheduled_toot_title);
-            holder.scheduled_toot_date_creation = (TextView) convertView.findViewById(R.id.scheduled_toot_date_creation);
-            holder.scheduled_toot_media_count = (TextView) convertView.findViewById(R.id.scheduled_toot_media_count);
-            holder.scheduled_toot_failed = (TextView) convertView.findViewById(R.id.scheduled_toot_failed);
-            holder.scheduled_toot_delete = (ImageView) convertView.findViewById(R.id.scheduled_toot_delete);
-            holder.scheduled_toot_privacy = (ImageView) convertView.findViewById(R.id.scheduled_toot_privacy);
-            holder.scheduled_toot_date = (Button) convertView.findViewById(R.id.scheduled_toot_date);
+            holder.scheduled_toot_title = convertView.findViewById(R.id.scheduled_toot_title);
+            holder.scheduled_toot_date_creation = convertView.findViewById(R.id.scheduled_toot_date_creation);
+            holder.scheduled_toot_media_count = convertView.findViewById(R.id.scheduled_toot_media_count);
+            holder.scheduled_toot_failed = convertView.findViewById(R.id.scheduled_toot_failed);
+            holder.scheduled_toot_delete = convertView.findViewById(R.id.scheduled_toot_delete);
+            holder.scheduled_toot_privacy = convertView.findViewById(R.id.scheduled_toot_privacy);
+            holder.scheduled_toot_date = convertView.findViewById(R.id.scheduled_toot_date);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -196,7 +196,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
             public void onClick(View v) {
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
                 LayoutInflater inflater = ((MainActivity)context).getLayoutInflater();
-                View dialogView = inflater.inflate(R.layout.datetime_picker, null);
+                @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.datetime_picker, null);
                 SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
                 int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
                 if( theme == Helper.THEME_DARK){
@@ -211,12 +211,12 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
                 dialogBuilder.setView(dialogView);
                 final AlertDialog alertDialog = dialogBuilder.create();
 
-                final DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.date_picker);
-                final TimePicker timePicker = (TimePicker) dialogView.findViewById(R.id.time_picker);
-                Button date_time_cancel = (Button) dialogView.findViewById(R.id.date_time_cancel);
-                final ImageButton date_time_previous = (ImageButton) dialogView.findViewById(R.id.date_time_previous);
-                final ImageButton date_time_next = (ImageButton) dialogView.findViewById(R.id.date_time_next);
-                final ImageButton date_time_set = (ImageButton) dialogView.findViewById(R.id.date_time_set);
+                final DatePicker datePicker = dialogView.findViewById(R.id.date_picker);
+                final TimePicker timePicker = dialogView.findViewById(R.id.time_picker);
+                Button date_time_cancel = dialogView.findViewById(R.id.date_time_cancel);
+                final ImageButton date_time_previous = dialogView.findViewById(R.id.date_time_previous);
+                final ImageButton date_time_next = dialogView.findViewById(R.id.date_time_next);
+                final ImageButton date_time_set = dialogView.findViewById(R.id.date_time_set);
 
                 //Buttons management
                 date_time_cancel.setOnClickListener(new View.OnClickListener() {
