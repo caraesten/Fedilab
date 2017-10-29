@@ -20,7 +20,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/main_container"
-    android:layout_marginTop="5dp"
     android:orientation="vertical">
     <TextView
         android:id="@+id/status_search_title"

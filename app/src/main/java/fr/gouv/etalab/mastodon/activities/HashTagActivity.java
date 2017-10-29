@@ -97,7 +97,7 @@ public class HashTagActivity extends AppCompatActivity implements OnRetrieveFeed
 
 
         final RecyclerView lv_status = findViewById(R.id.lv_status);
-        lv_status.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
+        lv_status.addItemDecoration(new DividerItemDecoration(HashTagActivity.this, DividerItemDecoration.VERTICAL));
         tootsPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
         mainLoader = findViewById(R.id.loader);
         nextElementLoader = findViewById(R.id.loading_next_status);

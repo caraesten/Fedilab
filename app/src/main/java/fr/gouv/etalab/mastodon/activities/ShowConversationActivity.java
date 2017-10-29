@@ -182,7 +182,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
             }
         });
         lv_status = findViewById(R.id.lv_status);
-        lv_status.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
+        lv_status.addItemDecoration(new DividerItemDecoration(ShowConversationActivity.this, DividerItemDecoration.VERTICAL));
         final LinearLayoutManager mLayoutManager;
         mLayoutManager = new LinearLayoutManager(this);
         lv_status.setLayoutManager(mLayoutManager);
