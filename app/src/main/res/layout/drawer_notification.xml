@@ -15,18 +15,13 @@
     You should have received a copy of the GNU General Public License along with Mastalab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<android.support.v7.widget.CardView
+<FrameLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginTop="10dp"
-    style="?attr/cardStyle"
-    android:id="@+id/card_status_container"
-    card_view:cardPreventCornerOverlap="true"
-    app:cardUseCompatPadding="true">
+    android:id="@+id/card_status_container">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -165,8 +160,6 @@
                                 android:layout_height="0dp"
                                 android:baselineAligned="false">
                                 <RelativeLayout
-                                    android:layout_marginLeft="2dp"
-                                    android:layout_marginStart="2dp"
                                     android:layout_weight="1"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content">
@@ -292,10 +285,16 @@
                     android:id="@+id/status_more"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/ic_action_more"
+                    android:src="@drawable/ic_more_horiz"
                     tools:ignore="ContentDescription" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
-    </android.support.v7.widget.CardView>
+    <RelativeLayout
+        android:visibility="gone"
+        android:alpha="0.3"
+        android:background="@color/black"
+        android:id="@+id/container_trans"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</FrameLayout>

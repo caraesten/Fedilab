@@ -69,7 +69,6 @@ public class SettingsFragment extends Fragment {
     private Context context;
     private static final int ACTIVITY_CHOOSE_FILE = 411;
     private TextView set_folder;
-    int count = 0;
     int count2 = 0;
 
     @Override
@@ -80,10 +79,10 @@ public class SettingsFragment extends Fragment {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-
+        changeColor();
         boolean auto_store = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
 
-        final CheckBox set_auto_store = (CheckBox) rootView.findViewById(R.id.set_auto_store);
+        final CheckBox set_auto_store = rootView.findViewById(R.id.set_auto_store);
         set_auto_store.setChecked(auto_store);
         set_auto_store.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +96,7 @@ public class SettingsFragment extends Fragment {
 
 
         boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-        final CheckBox set_show_error_messages = (CheckBox) rootView.findViewById(R.id.set_show_error_messages);
+        final CheckBox set_show_error_messages = rootView.findViewById(R.id.set_show_error_messages);
         set_show_error_messages.setChecked(show_error_messages);
 
         set_show_error_messages.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +109,7 @@ public class SettingsFragment extends Fragment {
         });
 
         boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, true);
-        final CheckBox set_auto_add_media_url = (CheckBox) rootView.findViewById(R.id.set_auto_add_media_url);
+        final CheckBox set_auto_add_media_url = rootView.findViewById(R.id.set_auto_add_media_url);
         set_auto_add_media_url.setChecked(show_media_urls);
 
         set_auto_add_media_url.setOnClickListener(new View.OnClickListener() {
@@ -123,9 +122,9 @@ public class SettingsFragment extends Fragment {
         });
 
         boolean preview_reply = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);
-        final CheckBox set_preview_reply = (CheckBox) rootView.findViewById(R.id.set_preview_reply);
-        final LinearLayout set_preview_reply_pp_container = (LinearLayout) rootView.findViewById(R.id.set_preview_reply_pp_container);
-        final SwitchCompat set_preview_reply_pp = (SwitchCompat) rootView.findViewById(R.id.set_preview_reply_pp);
+        final CheckBox set_preview_reply = rootView.findViewById(R.id.set_preview_reply);
+        final LinearLayout set_preview_reply_pp_container = rootView.findViewById(R.id.set_preview_reply_pp_container);
+        final SwitchCompat set_preview_reply_pp = rootView.findViewById(R.id.set_preview_reply_pp);
         set_preview_reply.setChecked(preview_reply);
 
         set_preview_reply.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +146,7 @@ public class SettingsFragment extends Fragment {
         }else{
             set_preview_reply_pp_container.setVisibility(View.VISIBLE);
         }
-        boolean preview_reply_pp = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES_PP, true);
+        boolean preview_reply_pp = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES_PP, false);
         set_preview_reply_pp.setChecked(preview_reply_pp);
         set_preview_reply_pp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -159,7 +158,7 @@ public class SettingsFragment extends Fragment {
         });
         
         boolean notif_validation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
-        final CheckBox set_share_validation = (CheckBox) rootView.findViewById(R.id.set_share_validation);
+        final CheckBox set_share_validation = rootView.findViewById(R.id.set_share_validation);
         set_share_validation.setChecked(notif_validation);
 
         set_share_validation.setOnClickListener(new View.OnClickListener() {
@@ -172,7 +171,7 @@ public class SettingsFragment extends Fragment {
         });
 
         boolean notif_validation_fav = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
-        final CheckBox set_share_validation_fav = (CheckBox) rootView.findViewById(R.id.set_share_validation_fav);
+        final CheckBox set_share_validation_fav = rootView.findViewById(R.id.set_share_validation_fav);
         set_share_validation_fav.setChecked(notif_validation_fav);
 
         set_share_validation_fav.setOnClickListener(new View.OnClickListener() {
@@ -186,7 +185,7 @@ public class SettingsFragment extends Fragment {
 
 
         boolean multiaccount_actions = sharedpreferences.getBoolean(Helper.SET_ALLOW_CROSS_ACTIONS, true);
-        final CheckBox set_multiaccount_actions = (CheckBox) rootView.findViewById(R.id.set_multiaccount_actions);
+        final CheckBox set_multiaccount_actions = rootView.findViewById(R.id.set_multiaccount_actions);
         set_multiaccount_actions.setChecked(multiaccount_actions);
 
         set_multiaccount_actions.setOnClickListener(new View.OnClickListener() {
@@ -199,7 +198,7 @@ public class SettingsFragment extends Fragment {
         });
 
         boolean display_local = sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true);
-        final CheckBox set_display_local = (CheckBox) rootView.findViewById(R.id.set_display_local);
+        final CheckBox set_display_local = rootView.findViewById(R.id.set_display_local);
         set_display_local.setChecked(display_local);
 
         set_display_local.setOnClickListener(new View.OnClickListener() {
@@ -217,7 +216,7 @@ public class SettingsFragment extends Fragment {
 
 
         boolean display_global = sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true);
-        final CheckBox set_display_global = (CheckBox) rootView.findViewById(R.id.set_display_global);
+        final CheckBox set_display_global = rootView.findViewById(R.id.set_display_global);
         set_display_global.setChecked(display_global);
 
         set_display_global.setOnClickListener(new View.OnClickListener() {
@@ -233,9 +232,9 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        final CheckBox set_embedded_browser = (CheckBox) rootView.findViewById(R.id.set_embedded_browser);
-        final LinearLayout set_javascript_container = (LinearLayout) rootView.findViewById(R.id.set_javascript_container);
-        final SwitchCompat set_javascript = (SwitchCompat) rootView.findViewById(R.id.set_javascript);
+        final CheckBox set_embedded_browser = rootView.findViewById(R.id.set_embedded_browser);
+        final LinearLayout set_javascript_container = rootView.findViewById(R.id.set_javascript_container);
+        final SwitchCompat set_javascript = rootView.findViewById(R.id.set_javascript);
         boolean javascript = sharedpreferences.getBoolean(Helper.SET_JAVASCRIPT, true);
         boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
         if( !embedded_browser){
@@ -268,8 +267,8 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        final LinearLayout set_cookies_container = (LinearLayout) rootView.findViewById(R.id.set_cookies_container);
-        final SwitchCompat set_cookies = (SwitchCompat) rootView.findViewById(R.id.set_cookies);
+        final LinearLayout set_cookies_container = rootView.findViewById(R.id.set_cookies_container);
+        final SwitchCompat set_cookies = rootView.findViewById(R.id.set_cookies);
         boolean cookies = sharedpreferences.getBoolean(Helper.SET_COOKIES, false);
 
         set_cookies.setChecked(cookies);
@@ -288,7 +287,7 @@ public class SettingsFragment extends Fragment {
         }
         final String targeted_folder = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
 
-        set_folder = (TextView) rootView.findViewById(R.id.set_folder);
+        set_folder = rootView.findViewById(R.id.set_folder);
         set_folder.setText(targeted_folder);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             set_folder.setOnClickListener(new View.OnClickListener() {
@@ -300,11 +299,11 @@ public class SettingsFragment extends Fragment {
                 }
             });
         }else {
-            LinearLayout file_chooser = (LinearLayout) rootView.findViewById(R.id.file_chooser);
+            LinearLayout file_chooser = rootView.findViewById(R.id.file_chooser);
             file_chooser.setVisibility(View.GONE);
         }
 
-        final SwitchCompat set_night_mode = (SwitchCompat) rootView.findViewById(R.id.set_night_mode);
+        final SwitchCompat set_night_mode = rootView.findViewById(R.id.set_night_mode);
         set_night_mode.setChecked(theme == Helper.THEME_DARK);
         set_night_mode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -326,8 +325,8 @@ public class SettingsFragment extends Fragment {
         });
 
         // NSFW Timeout
-        SeekBar nsfwTimeoutSeekBar = (SeekBar) rootView.findViewById(R.id.set_nsfw_timeout);
-        final TextView set_nsfw_timeout_value = (TextView) rootView.findViewById(R.id.set_nsfw_timeout_value);
+        SeekBar nsfwTimeoutSeekBar = rootView.findViewById(R.id.set_nsfw_timeout);
+        final TextView set_nsfw_timeout_value = rootView.findViewById(R.id.set_nsfw_timeout_value);
 
         nsfwTimeoutSeekBar.setMax(30);
 
@@ -354,29 +353,28 @@ public class SettingsFragment extends Fragment {
 
 
 
-        LinearLayout toot_visibility_container = (LinearLayout) rootView.findViewById(R.id.toot_visibility_container);
+        LinearLayout toot_visibility_container = rootView.findViewById(R.id.toot_visibility_container);
         String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         final Account account = new AccountDAO(context, db).getAccountByToken(prefKeyOauthTokenT);
-        final ImageView set_toot_visibility = (ImageView) rootView.findViewById(R.id.set_toot_visibility);
+        final ImageView set_toot_visibility = rootView.findViewById(R.id.set_toot_visibility);
         //Only displayed for non locked accounts
         if (account != null && !account.isLocked()) {
             String tootVisibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), "public");
             switch (tootVisibility) {
                 case "public":
-                    set_toot_visibility.setImageResource(R.drawable.ic_action_globe);
+                    set_toot_visibility.setImageResource(R.drawable.ic_public);
                     break;
                 case "unlisted":
-                    set_toot_visibility.setImageResource(R.drawable.ic_action_lock_open);
+                    set_toot_visibility.setImageResource(R.drawable.ic_lock_open);
                     break;
                 case "private":
-                    set_toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
+                    set_toot_visibility.setImageResource(R.drawable.ic_lock_outline);
                     break;
                 case "direct":
                     set_toot_visibility.setImageResource(R.drawable.ic_mail_outline);
                     break;
             }
-            changeColor();
         }else {
             toot_visibility_container.setVisibility(View.GONE);
         }
@@ -403,15 +401,15 @@ public class SettingsFragment extends Fragment {
                         switch (position){
                             case 0:
                                 visibility = "public";
-                                set_toot_visibility.setImageResource(R.drawable.ic_action_globe);
+                                set_toot_visibility.setImageResource(R.drawable.ic_public);
                                 break;
                             case 1:
                                 visibility = "unlisted";
-                                set_toot_visibility.setImageResource(R.drawable.ic_action_lock_open);
+                                set_toot_visibility.setImageResource(R.drawable.ic_lock_open);
                                 break;
                             case 2:
                                 visibility = "private";
-                                set_toot_visibility.setImageResource(R.drawable.ic_action_lock_closed);
+                                set_toot_visibility.setImageResource(R.drawable.ic_lock_outline);
                                 break;
                             case 3:
                                 visibility = "direct";
@@ -426,7 +424,7 @@ public class SettingsFragment extends Fragment {
                         }else {
                             Toast.makeText(context, R.string.toast_error,Toast.LENGTH_SHORT).show();
                         }
-                        changeColor();
+
                         dialog.dismiss();
                     }
                 });
@@ -435,7 +433,7 @@ public class SettingsFragment extends Fragment {
         });
 
 
-        final Spinner translation_layout_spinner = (Spinner) rootView.findViewById(R.id.translation_layout_spinner);
+        final Spinner translation_layout_spinner = rootView.findViewById(R.id.translation_layout_spinner);
         ArrayAdapter<CharSequence> adapterTrans = ArrayAdapter.createFromResource(getActivity(),
                 R.array.settings_translation, android.R.layout.simple_spinner_item);
         translation_layout_spinner.setAdapter(adapterTrans);
@@ -460,7 +458,7 @@ public class SettingsFragment extends Fragment {
         });
 
         boolean trans_forced = sharedpreferences.getBoolean(Helper.SET_TRANS_FORCED, false);
-        final CheckBox set_trans_forced = (CheckBox) rootView.findViewById(R.id.set_trans_forced);
+        final CheckBox set_trans_forced = rootView.findViewById(R.id.set_trans_forced);
         set_trans_forced.setChecked(trans_forced);
         set_trans_forced.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -479,14 +477,14 @@ public class SettingsFragment extends Fragment {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_DARK){
-            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_public,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_lock_open,R.color.dark_text);
+            changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_text);
         }else {
-            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.white);
-            changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.white);
-            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.white);
+            changeDrawableColor(context, R.drawable.ic_public,R.color.white);
+            changeDrawableColor(context, R.drawable.ic_lock_open,R.color.white);
+            changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.white);
             changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.white);
         }
 

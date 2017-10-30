@@ -18,14 +18,11 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.SystemClock;
-import android.util.Log;
-
 import com.evernote.android.job.JobManager;
 import com.evernote.android.job.JobRequest;
-
+import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.Set;
-
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveScheduledTootsInterface;
@@ -41,21 +38,22 @@ import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 
 public class RetrieveScheduledTootsAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private Context context;
+
     private OnRetrieveScheduledTootsInterface listener;
     private List<StoredStatus> storedStatuses;
+    private WeakReference<Context> contextReference;
 
     public RetrieveScheduledTootsAsyncTask(Context context, OnRetrieveScheduledTootsInterface onRetrieveScheduledTootsInterface){
-        this.context = context;
+        this.contextReference = new WeakReference<>(context);
         this.listener = onRetrieveScheduledTootsInterface;
 
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         //Retrieves job asked by the user
-        storedStatuses = new StatusStoredDAO(context, db).getAllScheduled();
+        storedStatuses = new StatusStoredDAO(this.contextReference.get(), db).getAllScheduled();
         //Retrieves real jobs still waiting
         Set<JobRequest> jobRequests = JobManager.instance().getAllJobRequestsForTag(ScheduledTootsSyncJob.SCHEDULED_TOOT);
         int[] jobIds;
@@ -74,7 +72,7 @@ public class RetrieveScheduledTootsAsyncTask extends AsyncTask<Void, Void, Void>
             for(StoredStatus ss: storedStatuses){
                 if (!Helper.isJobPresent(jobIds, ss.getJobId())){
                     //JobId is fixed to -1 which means an error occured (it was never sent)
-                    new StatusStoredDAO(context, db).updateJobId(ss.getId(),-1);
+                    new StatusStoredDAO(this.contextReference.get(), db).updateJobId(ss.getId(),-1);
                 }
             }
             //Lets time to update db before dispaying

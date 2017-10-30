@@ -38,6 +38,8 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveInstanceInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
+
 
 /**
  * Created by Thomas on 05/06/2017.
@@ -63,9 +65,9 @@ public class InstanceActivity extends AppCompatActivity implements OnRetrieveIns
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_instance);
-
-        instance_container = (LinearLayout) findViewById(R.id.instance_container);
-        loader = (RelativeLayout) findViewById(R.id.loader);
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline,R.color.white);
+        instance_container = findViewById(R.id.instance_container);
+        loader = findViewById(R.id.loader);
         instance_container.setVisibility(View.GONE);
         loader.setVisibility(View.VISIBLE);
         setTitle(getString(R.string.action_about_instance));
@@ -94,11 +96,11 @@ public class InstanceActivity extends AppCompatActivity implements OnRetrieveIns
             return;
         }
         final Instance instance = apiResponse.getInstance();
-        TextView instance_title = (TextView) findViewById(R.id.instance_title);
-        TextView instance_description = (TextView) findViewById(R.id.instance_description);
-        TextView instance_version = (TextView) findViewById(R.id.instance_version);
-        TextView instance_uri = (TextView) findViewById(R.id.instance_uri);
-        FloatingActionButton instance_contact = (FloatingActionButton) findViewById(R.id.instance_contact);
+        TextView instance_title = findViewById(R.id.instance_title);
+        TextView instance_description = findViewById(R.id.instance_description);
+        TextView instance_version = findViewById(R.id.instance_version);
+        TextView instance_uri = findViewById(R.id.instance_uri);
+        FloatingActionButton instance_contact = findViewById(R.id.instance_contact);
 
         instance_title.setText(instance.getTitle());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)

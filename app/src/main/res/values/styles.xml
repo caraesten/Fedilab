@@ -1,5 +1,4 @@
 <resources>
-    <attr format="reference" name="cardStyle"/>
     <attr format="reference" name="appBarLayout"/>
     <attr format="reference" name="headerbg"/>
     <attr format="reference" name="shapeBorder"/>
@@ -18,7 +17,6 @@
         <item name="colorPrimaryDark">@color/mastodonC2</item>
         <item name="colorAccent">@color/mastodonC4</item>
         <item name="android:buttonStyle">@style/ButtonColor</item>
-        <item name="cardStyle">@style/CardViewStyle.Light</item>
         <item name="headerbg">@style/Header.Light</item>
         <item name="android:windowBackground">@color/mastodonC3__</item>
         <item name="shapeBorder">@style/Shape.Light</item>
@@ -41,7 +39,6 @@
         <item name="colorPrimaryDark">@color/mastodonC2</item>
         <item name="colorAccent">@color/mastodonC4</item>
         <item name="android:buttonStyle">@style/ButtonColor</item>
-        <item name="cardStyle">@style/CardViewStyle.Light</item>
         <item name="headerbg">@style/Header.Light</item>
         <item name="android:windowBackground">@color/mastodonC3__</item>
         <item name="shapeBorder">@style/Shape.Light</item>
@@ -103,9 +100,7 @@
     <style name="Shape.Light" parent="AppTheme">
         <item name="android:background">@drawable/shape_border_bottom_settings</item>
     </style>
-    <style name="CardViewStyle.Light" parent="CardView">
-        <item name="cardBackgroundColor">@color/mastodonC3__</item>
-    </style>
+
 
 
 
@@ -117,7 +112,6 @@
         <item name="colorPrimaryDark">@color/mastodonC2</item>
         <item name="colorAccent">@color/mastodonC4</item>
         <item name="android:buttonStyle">@style/DarkButtonColor</item>
-        <item name="cardStyle">@style/CardViewStyle.Dark</item>
         <item name="headerbg">@style/Header.Dark</item>
         <item name="android:windowBackground">@color/mastodonC1</item>
         <item name="shapeBorder">@style/Shape.Dark</item>
@@ -140,7 +134,6 @@
         <item name="colorPrimaryDark">@color/mastodonC2</item>
         <item name="colorAccent">@color/mastodonC4</item>
         <item name="android:buttonStyle">@style/DarkButtonColor</item>
-        <item name="cardStyle">@style/CardViewStyle.Dark</item>
         <item name="headerbg">@style/Header.Dark</item>
         <item name="android:windowBackground">@color/mastodonC1</item>
         <item name="shapeBorder">@style/Shape.Dark</item>
@@ -224,13 +217,6 @@
     <style name="Shape.Dark" parent="AppThemeDark">
         <item name="android:background">@drawable/shape_border_bottom_settings_dark</item>
     </style>
-
-
-
-    <style name="CardViewStyle.Dark" parent="CardView">
-        <item name="cardBackgroundColor">@color/mastodonC1_</item>
-    </style>
-
 
 
 

@@ -75,9 +75,9 @@ public class WebviewConnectActivity extends AppCompatActivity {
         clientId = sharedpreferences.getString(Helper.CLIENT_ID, null);
         clientSecret = sharedpreferences.getString(Helper.CLIENT_SECRET, null);
 
-        webView = (WebView) findViewById(R.id.webviewConnect);
+        webView = findViewById(R.id.webviewConnect);
         clearCookies(getApplicationContext());
-        final ProgressBar pbar = (ProgressBar) findViewById(R.id.progress_bar);
+        final ProgressBar pbar = findViewById(R.id.progress_bar);
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int progress) {

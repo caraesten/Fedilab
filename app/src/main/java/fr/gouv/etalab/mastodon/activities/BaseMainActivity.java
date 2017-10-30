@@ -117,7 +117,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 public abstract class BaseMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface {
 
-    private FloatingActionButton toot;
+    private FloatingActionButton toot, delete_all;
     private HashMap<String, String> tagTile = new HashMap<>();
     private HashMap<String, Integer> tagItem = new HashMap<>();
     private TextView toolbarTitle;
@@ -146,7 +146,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
 
@@ -195,28 +194,28 @@ public abstract class BaseMainActivity extends AppCompatActivity
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconHome = tabHome.getCustomView().findViewById(R.id.tab_icon);
         iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-        iconHome.setImageResource(R.drawable.ic_action_home_tl);
+        iconHome.setImageResource(R.drawable.ic_home);
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconNotif = tabNotif.getCustomView().findViewById(R.id.tab_icon);
         iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-        iconNotif.setImageResource(R.drawable.ic_notifications_tl);
+        iconNotif.setImageResource(R.drawable.ic_notifications);
 
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconLocal = tabLocal.getCustomView().findViewById(R.id.tab_icon);
         iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-        iconLocal.setImageResource(R.drawable.ic_action_users_tl);
+        iconLocal.setImageResource(R.drawable.ic_people);
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconGlobal = tabPublic.getCustomView().findViewById(R.id.tab_icon);
         iconGlobal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-        iconGlobal.setImageResource(R.drawable.ic_action_globe_tl);
+        iconGlobal.setImageResource(R.drawable.ic_public);
 
-        changeDrawableColor(getApplicationContext(), R.drawable.ic_action_home_tl,R.color.dark_text);
-        changeDrawableColor(getApplicationContext(), R.drawable.ic_notifications_tl,R.color.dark_text);
-        changeDrawableColor(getApplicationContext(), R.drawable.ic_action_users_tl,R.color.dark_text);
-        changeDrawableColor(getApplicationContext(), R.drawable.ic_action_globe_tl,R.color.dark_text);
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_home,R.color.dark_text);
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_notifications,R.color.dark_text);
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_people,R.color.dark_text);
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_public,R.color.dark_text);
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
@@ -438,10 +437,19 @@ public abstract class BaseMainActivity extends AppCompatActivity
                             displayStatusFragment.scrollToTop();
                         break;
                     case 2:
+                        if( display_local)
+                            updateTimeLine(RetrieveFeedsAsyncTask.Type.LOCAL,0);
+                        else if( display_global)
+                            updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC,0);
+                        displayStatusFragment = ((DisplayStatusFragment) fragment);
+                        if( displayStatusFragment != null )
+                            displayStatusFragment.scrollToTop();
+                        break;
                     case 3:
                         displayStatusFragment = ((DisplayStatusFragment) fragment);
                         if( displayStatusFragment != null )
                             displayStatusFragment.scrollToTop();
+                        updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC,0);
                         break;
                     case 1:
                         DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
@@ -479,7 +487,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
                     if (muteFrag != null && muteFrag.isVisible()) {
                         muteFrag.scrollToTop();
                     }
-                //Scroll to top when top bar is clicked (THEME_MENU only)
+                    //Scroll to top when top bar is clicked (THEME_MENU only)
                 } else {
                     int pos = tabLayout.getSelectedTabPosition();
                     Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, pos);
@@ -507,6 +515,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
             public boolean onQueryTextSubmit(String query) {
                 //Hide keyboard
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                assert imm != null;
                 imm.hideSoftInputFromWindow(toolbar_search.getWindowToken(), 0);
                 Intent intent = new Intent(BaseMainActivity.this, SearchResultActivity.class);
                 intent.putExtra("search", query);
@@ -581,6 +590,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
         currentLocale = Helper.currentLocale(getApplicationContext());
 
         toot = findViewById(R.id.toot);
+        delete_all = findViewById(R.id.delete_all);
         toot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -841,15 +851,14 @@ public abstract class BaseMainActivity extends AppCompatActivity
      * Manages new intents
      * @param intent Intent - intent related to a notification in top bar
      */
-    private boolean mamageNewIntent(Intent intent){
+    private void mamageNewIntent(Intent intent){
         if( intent == null || intent.getExtras() == null )
-            return false;
+            return;
 
         String action = intent.getAction();
         String type = intent.getType();
         Bundle extras = intent.getExtras();
         String userIdIntent;
-        boolean matchingIntent = false;
         if( extras.containsKey(INTENT_ACTION) ){
             final NavigationView navigationView = findViewById(R.id.nav_view);
             userIdIntent = extras.getString(PREF_KEY_ID); //Id of the account in the intent
@@ -859,7 +868,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 if( tabLayout.getTabAt(1) != null)
                     //noinspection ConstantConditions
                     tabLayout.getTabAt(1).select();
-                matchingIntent = true;
             }else if( extras.getInt(INTENT_ACTION) == HOME_TIMELINE_INTENT){
                 changeUser(BaseMainActivity.this, userIdIntent, true); //Connects the account which is related to the notification
             }else if( extras.getInt(INTENT_ACTION) == CHANGE_THEME_INTENT){
@@ -867,7 +875,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 navigationView.setCheckedItem(R.id.nav_settings);
                 navigationView.getMenu().performIdentifierAction(R.id.nav_settings, 0);
                 toolbarTitle.setText(R.string.settings);
-                matchingIntent = true;
             }else if( extras.getInt(INTENT_ACTION) == CHANGE_USER_INTENT){
                 unCheckAllMenuItems(navigationView);
                 if( tabLayout.getTabAt(0) != null)
@@ -876,7 +883,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 if( !toolbar_search.isIconified() ) {
                     toolbar_search.setIconified(true);
                 }
-                matchingIntent = true;
             }
         }else if( Intent.ACTION_SEND.equals(action) && type != null ) {
             if ("text/plain".equals(type)) {
@@ -941,7 +947,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
         intent.setAction("");
         intent.setData(null);
         intent.setFlags(0);
-        return matchingIntent;
     }
 
     @Override
@@ -968,6 +973,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 viewPager.setVisibility(View.VISIBLE);
                 tabLayout.setVisibility(View.VISIBLE);
                 toolbarTitle.setVisibility(View.GONE);
+                delete_all.setVisibility(View.GONE);
                 final NavigationView navigationView = findViewById(R.id.nav_view);
                 unCheckAllMenuItems(navigationView);
                 toot.setVisibility(View.VISIBLE);
@@ -976,25 +982,25 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
                 if( theme == Helper.THEME_DARK){
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_reply,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_more,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_globe,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_open,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.dark_icon);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_more_horiz,R.color.dark_icon);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_public,R.color.dark_icon);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_open,R.color.dark_icon);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.dark_icon);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_retweet,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_favorite_border,R.color.dark_icon);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_repeat,R.color.dark_icon);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_star_border,R.color.dark_icon);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_photo,R.color.dark_text);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_remove_red_eye,R.color.dark_text);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.dark_text);
                 }else {
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_reply,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_more,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_globe,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_open,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_action_lock_closed,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_more_horiz,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_public,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_open,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.black);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_retweet,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_favorite_border,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_repeat,R.color.black);
+                    changeDrawableColor(getApplicationContext(), R.drawable.ic_star_border,R.color.black);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_photo,R.color.white);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_remove_red_eye,R.color.white);
                     changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.white);
@@ -1036,6 +1042,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
             @Override
             public void onReceive(Context context, Intent intent) {
                 Bundle b = intent.getExtras();
+                assert b != null;
                 userIdService = b.getString("userIdService", null);
                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 if( userIdService != null && userIdService.equals(userId)) {
@@ -1050,6 +1057,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
             @Override
             public void onReceive(Context context, Intent intent) {
                 Bundle b = intent.getExtras();
+                assert b != null;
                 userIdService = b.getString("userIdService", null);
                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 if( userIdService != null && userIdService.equals(userId)) {
@@ -1065,6 +1073,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
             public void onReceive(Context context, Intent intent) {
                 Bundle b = intent.getExtras();
                 StreamingService.EventStreaming eventStreaming = (StreamingService.EventStreaming) intent.getSerializableExtra("eventStreaming");
+                assert b != null;
                 userIdService = b.getString("userIdService", null);
                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 if( userIdService != null && userIdService.equals(userId)) {
@@ -1137,7 +1146,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if( id == R.id.nav_remote_follow){
+        if (id == R.id.nav_remote_follow) {
             Intent remoteFollow = new Intent(getApplicationContext(), RemoteFollowActivity.class);
             startActivity(remoteFollow);
             return false;
@@ -1146,7 +1155,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
         unCheckAllMenuItems(navigationView);
         item.setChecked(true);
         //Remove the search bar
-        if( !toolbar_search.isIconified() ) {
+        if (!toolbar_search.isIconified()) {
             toolbar_search.setIconified(true);
         }
         toolbarTitle.setText(item.getTitle());
@@ -1160,6 +1169,13 @@ public abstract class BaseMainActivity extends AppCompatActivity
         viewPager.setVisibility(View.GONE);
         tabLayout.setVisibility(View.GONE);
         toolbarTitle.setVisibility(View.VISIBLE);
+
+
+        if (id != R.id.nav_drafts) {
+            delete_all.setVisibility(View.GONE);
+        }else{
+            delete_all.setVisibility(View.VISIBLE);
+        }
         if (id == R.id.nav_settings) {
             toot.setVisibility(View.GONE);
             TabLayoutSettingsFragment tabLayoutSettingsFragment= new TabLayoutSettingsFragment();
@@ -1203,6 +1219,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
             fragmentTag = "DRAFTS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayDraftsFragment, fragmentTag).commit();
+            toot.setVisibility(View.GONE);
         }else if( id == R.id.nav_follow_request){
             toot.setVisibility(View.GONE);
             DisplayFollowRequestSentFragment followRequestSentFragment = new DisplayFollowRequestSentFragment();
@@ -1284,6 +1301,10 @@ public abstract class BaseMainActivity extends AppCompatActivity
             return;
         Version currentVersion = new Version(apiResponse.getInstance().getVersion());
         Version minVersion = new Version("1.6");
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(Helper.INSTANCE_VERSION, apiResponse.getInstance().getVersion());
+        editor.apply();
         Helper.canPin = (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion));
     }
 
@@ -1319,15 +1340,15 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 notificationsFragment = new DisplayNotificationsFragment();
                 return notificationsFragment;
             }else if( position == 2 && display_local) {
-                    statusFragment = new DisplayStatusFragment();
-                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.LOCAL);
-                    statusFragment.setArguments(bundle);
-                    return statusFragment;
+                statusFragment = new DisplayStatusFragment();
+                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.LOCAL);
+                statusFragment.setArguments(bundle);
+                return statusFragment;
             }else if(position == 2){
-                    statusFragment = new DisplayStatusFragment();
-                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
-                    statusFragment.setArguments(bundle);
-                    return statusFragment;
+                statusFragment = new DisplayStatusFragment();
+                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
+                statusFragment.setArguments(bundle);
+                return statusFragment;
             }else if (position == 3){
                 statusFragment = new DisplayStatusFragment();
                 bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
@@ -1383,6 +1404,45 @@ public abstract class BaseMainActivity extends AppCompatActivity
             tabCounterHome.setVisibility(View.VISIBLE);
         }else {
             tabCounterHome.setVisibility(View.GONE);
+        }
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    public void updateTimeLine(RetrieveFeedsAsyncTask.Type type, int value){
+        if( type == RetrieveFeedsAsyncTask.Type.LOCAL){
+            if( tabLayout.getTabAt(2) != null && display_local){
+                View tabLocal = tabLayout.getTabAt(2).getCustomView();
+                assert tabLocal != null;
+                TextView tabCounterLocal = tabLocal.findViewById(R.id.tab_counter);
+                tabCounterLocal.setText(String.valueOf(value));
+                if( value > 0){
+                    tabCounterLocal.setVisibility(View.VISIBLE);
+                }else {
+                    tabCounterLocal.setVisibility(View.GONE);
+                }
+            }
+        }else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC){
+            if( tabLayout.getTabAt(3) != null && display_local){
+                View tabPublic = tabLayout.getTabAt(3).getCustomView();
+                assert tabPublic != null;
+                TextView tabCounterPublic = tabPublic.findViewById(R.id.tab_counter);
+                tabCounterPublic.setText(String.valueOf(value));
+                if( value > 0){
+                    tabCounterPublic.setVisibility(View.VISIBLE);
+                }else {
+                    tabCounterPublic.setVisibility(View.GONE);
+                }
+            }else if( tabLayout.getTabAt(2) != null && !display_local && display_global){
+                View tabPublic = tabLayout.getTabAt(2).getCustomView();
+                assert tabPublic != null;
+                TextView tabCounterPublic = tabPublic.findViewById(R.id.tab_counter);
+                tabCounterPublic.setText(String.valueOf(value));
+                if( value > 0){
+                    tabCounterPublic.setVisibility(View.VISIBLE);
+                }else {
+                    tabCounterPublic.setVisibility(View.GONE);
+                }
+            }
         }
     }
 

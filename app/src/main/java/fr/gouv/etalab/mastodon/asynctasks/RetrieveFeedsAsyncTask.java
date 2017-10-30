@@ -16,6 +16,9 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+
+import java.lang.ref.WeakReference;
+
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
@@ -28,7 +31,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 
 public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private Context context;
+
     private Type action;
     private APIResponse apiResponse;
     private String max_id;
@@ -37,6 +40,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     private String tag;
     private boolean showMediaOnly = false;
     private boolean showPinned = false;
+    private WeakReference<Context> contextReference;
 
     public enum Type{
         HOME,
@@ -51,14 +55,14 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     }
 
     public RetrieveFeedsAsyncTask(Context context, Type action, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
-        this.context = context;
+        this.contextReference = new WeakReference<>(context);
         this.action = action;
         this.max_id = max_id;
         this.listener = onRetrieveFeedsInterface;
     }
 
     public RetrieveFeedsAsyncTask(Context context, Type action, String targetedID, String max_id, boolean showMediaOnly, boolean showPinned, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
-        this.context = context;
+        this.contextReference = new WeakReference<>(context);
         this.action = action;
         this.max_id = max_id;
         this.listener = onRetrieveFeedsInterface;
@@ -67,7 +71,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.showPinned = showPinned;
     }
     public RetrieveFeedsAsyncTask(Context context, Type action, String tag, String targetedID, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
-        this.context = context;
+        this.contextReference = new WeakReference<>(context);
         this.action = action;
         this.max_id = max_id;
         this.listener = onRetrieveFeedsInterface;
@@ -78,7 +82,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        API api = new API(context);
+        API api = new API(this.contextReference.get());
         switch (action){
             case HOME:
                 apiResponse = api.getHomeTimeline(max_id);

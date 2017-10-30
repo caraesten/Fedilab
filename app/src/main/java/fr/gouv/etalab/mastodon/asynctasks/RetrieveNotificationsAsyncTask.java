@@ -16,6 +16,9 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+
+import java.lang.ref.WeakReference;
+
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveNotificationsInterface;
@@ -28,7 +31,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveNotificationsInterface;
 
 public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private Context context;
+
     private APIResponse apiResponse;
     private String max_id;
     private String acct, userId;
@@ -36,9 +39,10 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
     private String instance;
     private String token;
     private boolean refreshData;
+    private WeakReference<Context> contextReference;
 
     public RetrieveNotificationsAsyncTask(Context context, String instance, String token, String max_id, String acct, String userId, OnRetrieveNotificationsInterface onRetrieveNotificationsInterface){
-        this.context = context;
+        this.contextReference = new WeakReference<>(context);
         this.max_id = max_id;
         this.listener = onRetrieveNotificationsInterface;
         this.acct = acct;
@@ -52,7 +56,7 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
     @Override
     protected Void doInBackground(Void... params) {
 
-        API api = new API(context, instance, token);
+        API api = new API(this.contextReference.get(), instance, token);
         if( acct == null)
             apiResponse = api.getNotifications(max_id);
         else

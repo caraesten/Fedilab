@@ -59,8 +59,8 @@
                 android:layout_gravity="center_vertical"
                 android:id="@+id/rf_search"
                 android:textAllCaps="false"
-                android:drawableLeft="@drawable/ic_action_search"
-                android:drawableStart="@drawable/ic_action_search"
+                android:drawableLeft="@drawable/ic_search"
+                android:drawableStart="@drawable/ic_search"
                 android:drawablePadding="5dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="15dp"
@@ -71,7 +71,7 @@
                 android:text="@string/action_search" />
         </LinearLayout>
 
-        <ListView
+        <fr.gouv.etalab.mastodon.helper.ExpandableHeightListView
             android:visibility="gone"
             android:layout_marginTop="30dp"
             android:id="@+id/lv_account"

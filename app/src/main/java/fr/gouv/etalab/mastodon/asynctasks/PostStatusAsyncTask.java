@@ -16,12 +16,10 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-
+import java.lang.ref.WeakReference;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostStatusActionInterface;
 
 
@@ -32,14 +30,15 @@ import fr.gouv.etalab.mastodon.interfaces.OnPostStatusActionInterface;
 
 public class PostStatusAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private Context context;
     private OnPostStatusActionInterface listener;
     private APIResponse apiResponse;
     private fr.gouv.etalab.mastodon.client.Entities.Status status;
     private Account account;
+    private WeakReference<Context> contextReference;
+
 
     public PostStatusAsyncTask(Context context, Account account, fr.gouv.etalab.mastodon.client.Entities.Status status, OnPostStatusActionInterface onPostStatusActionInterface){
-        this.context = context;
+        this.contextReference = new WeakReference<>(context);
         this.listener = onPostStatusActionInterface;
         this.status = status;
         this.account = account;
@@ -48,9 +47,9 @@ public class PostStatusAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         if( account == null)
-            apiResponse = new API(context).postStatusAction(status);
+            apiResponse = new API(this.contextReference.get()).postStatusAction(status);
         else
-            apiResponse = new API(context, account.getInstance(), account.getToken()).postStatusAction(status);
+            apiResponse = new API(this.contextReference.get(), account.getInstance(), account.getToken()).postStatusAction(status);
 
         return null;
     }

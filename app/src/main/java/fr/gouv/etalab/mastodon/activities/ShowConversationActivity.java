@@ -15,6 +15,7 @@
 package fr.gouv.etalab.mastodon.activities;
 
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -25,13 +26,15 @@ import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -76,9 +79,10 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
     private String statusId;
     private Status initialStatus;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private ListView lv_status;
+    private RecyclerView lv_status;
     private boolean isRefreshed;
     private ImageView pp_actionBar;
+    private List<Status> statuses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,22 +91,28 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
-            setTheme(R.style.AppTheme);
+            setTheme(R.style.AppTheme_NoActionBar);
         }else {
-            setTheme(R.style.AppThemeDark);
+            setTheme(R.style.AppThemeDark_NoActionBar);
         }
         setContentView(R.layout.activity_show_conversation);
 
-        ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null) {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if( getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if( getSupportActionBar() != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(android.content.Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.conversation_action_bar, null);
-            actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-            TextView title = actionBar.getCustomView().findViewById(R.id.toolbar_title);
-            pp_actionBar = actionBar.getCustomView().findViewById(R.id.pp_actionBar);
+            assert inflater != null;
+            @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.conversation_action_bar, null);
+            getSupportActionBar().setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+            TextView title = getSupportActionBar().getCustomView().findViewById(R.id.toolbar_title);
+            pp_actionBar = getSupportActionBar().getCustomView().findViewById(R.id.pp_actionBar);
+            ImageView action_refresh = getSupportActionBar().getCustomView().findViewById(R.id.action_refresh);
             title.setText(R.string.conversation);
-            ImageView close_conversation = actionBar.getCustomView().findViewById(R.id.close_conversation);
+            ImageView close_conversation = getSupportActionBar().getCustomView().findViewById(R.id.close_conversation);
             if( close_conversation != null){
                 close_conversation.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -111,6 +121,20 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
                     }
                 });
             }
+            action_refresh.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    swipeRefreshLayout.setRefreshing(true);
+                    ( new Handler()).postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            isRefreshed = true;
+                            statusId = statuses.get(statuses.size()-1).getId();
+                            new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, false, false, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }
+                    }, 1000);
+                }
+            });
         }else{
             setTitle(R.string.conversation);
         }
@@ -172,12 +196,18 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
             }
         });
         lv_status = findViewById(R.id.lv_status);
-        lv_status.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
+        lv_status.addItemDecoration(new DividerItemDecoration(ShowConversationActivity.this, DividerItemDecoration.VERTICAL));
+        final LinearLayoutManager mLayoutManager;
+        mLayoutManager = new LinearLayoutManager(this);
+        lv_status.setLayoutManager(mLayoutManager);
 
-                    if (lv_status.getLastVisiblePosition() == lv_status.getAdapter().getCount() -1 &&  lv_status.getFirstVisiblePosition() > 0 &&
+        lv_status.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                if(dy > 0){
+                    int visibleItemCount = mLayoutManager.getChildCount();
+                    int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+                    if (firstVisibleItem + visibleItemCount == lv_status.getAdapter().getItemCount() -1 &&  firstVisibleItem > 0 &&
                             lv_status.getChildAt(lv_status.getChildCount() - 1).getBottom() <= lv_status.getHeight()) {
 
                         swipeRefreshLayout.setRefreshing(true);
@@ -191,10 +221,10 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
 
                     }
                 }
-                return false;
             }
         });
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -226,6 +256,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
     @Override
     public void onRetrieveContext(Context context, Status statusFirst, Error error) {
         swipeRefreshLayout.setRefreshing(false);
+        RelativeLayout loader = findViewById(R.id.loader);
         if( error != null){
             final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
@@ -239,7 +270,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
         int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
         int position = 0;
         boolean positionFound = false;
-        List<Status> statuses = new ArrayList<>();
+        statuses = new ArrayList<>();
         if( statusFirst != null)
             statuses.add(0, statusFirst);
         if( context.getAncestors() != null && context.getAncestors().size() > 0){
@@ -265,7 +296,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
 
             }
         }
-        RelativeLayout loader = findViewById(R.id.loader);
+
         StatusListAdapter statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, position, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
         lv_status.setAdapter(statusListAdapter);
         statusListAdapter.notifyDataSetChanged();
@@ -273,7 +304,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
         lv_status.setVisibility(View.VISIBLE);
         if( isRefreshed){
             position = statuses.size()-1;
-            lv_status.setSelection(position);
+            lv_status.scrollToPosition(position);
         }else {
             lv_status.smoothScrollToPosition(position);
         }

@@ -4,16 +4,26 @@
     <item
         android:id="@+id/action_show_pinned"
         android:title="@string/pinned_toots"
-        android:icon="@drawable/ic_action_pin"
+        android:icon="@drawable/ic_pin_drop"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_open_browser"
         android:title="@string/action_open_in_web"
-        android:icon="@drawable/ic_open_in_browser"
+        android:icon="@drawable/ic_open_with"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_show_media"
         android:title="@string/media"
         android:icon="@drawable/ic_perm_media"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_mute"
+        android:title="@string/more_action_1"
+        android:icon="@drawable/ic_volume_mute"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_block"
+        android:title="@string/more_action_2"
+        android:icon="@drawable/ic_block"
         app:showAsAction="ifRoom" />
 </menu>

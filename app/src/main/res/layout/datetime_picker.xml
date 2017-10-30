@@ -45,7 +45,8 @@
             android:layout_width="wrap_content"
             android:text="@string/cancel"
             android:layout_height="40dp"
-            tools:ignore="ButtonStyle" />
+            style="@style/Base.Widget.AppCompat.Button"
+             />
         <ImageButton
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
@@ -54,7 +55,8 @@
             android:layout_width="40dp"
             android:src="@drawable/ic_skip_previous"
             android:layout_height="40dp"
-            tools:ignore="ButtonStyle" />
+            style="@style/Base.Widget.AppCompat.Button"
+            tools:ignore="ContentDescription" />
         <ImageButton
             android:id="@+id/date_time_next"
             android:layout_marginStart="10dp"
@@ -62,7 +64,8 @@
             android:src="@drawable/ic_skip_next"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            tools:ignore="ButtonStyle" />
+            style="@style/Base.Widget.AppCompat.Button"
+            tools:ignore="ContentDescription"/>
         <ImageButton
             android:visibility="gone"
             android:layout_marginStart="10dp"
@@ -71,7 +74,8 @@
             android:src="@drawable/ic_check"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            tools:ignore="ButtonStyle" />
+            style="@style/Base.Widget.AppCompat.Button"
+            tools:ignore="ContentDescription"/>
     </LinearLayout>
 
 </LinearLayout>

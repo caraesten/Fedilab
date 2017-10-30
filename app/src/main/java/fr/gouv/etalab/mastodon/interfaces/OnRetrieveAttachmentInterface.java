@@ -23,4 +23,5 @@ import fr.gouv.etalab.mastodon.client.Entities.Error;
  */
 public interface OnRetrieveAttachmentInterface {
     void onRetrieveAttachment(Attachment attachment, Error error);
+    void onUpdateProgress(int progress);
 }

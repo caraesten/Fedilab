@@ -23,7 +23,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -33,10 +32,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveDeveloperAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRelationshipAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteAccountsAsyncTask;
-import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
@@ -46,7 +43,6 @@ import fr.gouv.etalab.mastodon.helper.ExpandableHeightListView;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRelationshipInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchDevelopersAccountshInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
 
@@ -78,20 +74,20 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_about);
-        TextView about_version = (TextView) findViewById(R.id.about_version);
+        TextView about_version = findViewById(R.id.about_version);
         try {
             PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
             String version = pInfo.versionName;
             about_version.setText(getResources().getString(R.string.about_vesrion, version));
         } catch (PackageManager.NameNotFoundException ignored) {}
 
-        ExpandableHeightListView lv_developers = (ExpandableHeightListView) findViewById(R.id.lv_developers);
-        ExpandableHeightListView lv_designers = (ExpandableHeightListView) findViewById(R.id.lv_designers);
-        ExpandableHeightListView lv_contributors = (ExpandableHeightListView) findViewById(R.id.lv_contributors);
+        ExpandableHeightListView lv_developers = findViewById(R.id.lv_developers);
+        ExpandableHeightListView lv_designers = findViewById(R.id.lv_designers);
+        ExpandableHeightListView lv_contributors = findViewById(R.id.lv_contributors);
 
-        Button about_code = (Button) findViewById(R.id.about_code);
-        Button about_license = (Button) findViewById(R.id.about_license);
-        Button about_thekinrar = (Button) findViewById(R.id.about_thekinrar);
+        Button about_code = findViewById(R.id.about_code);
+        Button about_license = findViewById(R.id.about_license);
+        Button about_thekinrar = findViewById(R.id.about_thekinrar);
 
         about_code.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -116,7 +112,7 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
                 startActivity(browserIntent);
             }
         });
-        Button about_translation = (Button) findViewById(R.id.about_translation);
+        Button about_translation = findViewById(R.id.about_translation);
         about_translation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,7 +129,7 @@ public class AboutActivity extends AppCompatActivity implements OnRetrieveRemote
             about_license.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
         }
 
-        TextView about_website = (TextView) findViewById(R.id.about_website);
+        TextView about_website = findViewById(R.id.about_website);
         about_website.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

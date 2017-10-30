@@ -17,12 +17,12 @@ package fr.gouv.etalab.mastodon.asynctasks;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
-import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 
 
@@ -33,7 +33,6 @@ import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 
 public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private Context context;
     private OnPostActionInterface listener;
     private int statusCode;
     private API.StatusAction apiAction;
@@ -43,17 +42,17 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
     private API api;
     private Account account;
     private fr.gouv.etalab.mastodon.client.Entities.Status remoteStatus;
-
+    private WeakReference<Context> contextReference;
 
     public PostActionAsyncTask(Context context, API.StatusAction apiAction, String targetedId, OnPostActionInterface onPostActionInterface){
-        this.context = context;
+        this.contextReference = new WeakReference<>(context);
         this.listener = onPostActionInterface;
         this.apiAction = apiAction;
         this.targetedId = targetedId;
     }
 
     public PostActionAsyncTask(Context context, Account account, API.StatusAction apiAction, String targetedId, OnPostActionInterface onPostActionInterface){
-        this.context = context;
+        this.contextReference = new WeakReference<>(context);
         this.listener = onPostActionInterface;
         this.apiAction = apiAction;
         this.targetedId = targetedId;
@@ -61,7 +60,7 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
     }
 
     public PostActionAsyncTask(Context context, Account account, fr.gouv.etalab.mastodon.client.Entities.Status remoteStatus, API.StatusAction apiAction, OnPostActionInterface onPostActionInterface){
-        this.context = context;
+        this.contextReference = new WeakReference<>(context);
         this.listener = onPostActionInterface;
         this.apiAction = apiAction;
         this.remoteStatus = remoteStatus;
@@ -69,7 +68,7 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
     }
 
     public PostActionAsyncTask(Context context, API.StatusAction apiAction, String targetedId, fr.gouv.etalab.mastodon.client.Entities.Status status, String comment, OnPostActionInterface onPostActionInterface){
-        this.context = context;
+        contextReference = new WeakReference<>(context);
         this.listener = onPostActionInterface;
         this.apiAction = apiAction;
         this.targetedId = targetedId;
@@ -82,9 +81,9 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
 
         //Remote action
         if( account !=null)
-            api = new API(context, account.getInstance(), account.getToken());
+            api = new API(contextReference.get(), account.getInstance(), account.getToken());
         else
-            api = new API(context);
+            api = new API(contextReference.get());
         if( remoteStatus != null){
             Results search = api.search(remoteStatus.getUri());
             if( search != null){

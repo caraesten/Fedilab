@@ -7,9 +7,10 @@ android {
         applicationId "fr.gouv.etalab.mastodon"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 64
-        versionName "1.5.4"
+        versionCode 65
+        versionName "1.5.5"
     }
+    flavorDimensions "default"
     buildTypes {
         release {
             minifyEnabled false
@@ -31,17 +32,17 @@ allprojects {
     }
 }
 dependencies {
-    compile 'com.android.support:appcompat-v7:26.0.2'
-    compile 'com.android.support:design:26.0.2'
-    compile 'com.android.support:support-v4:26.0.2'
-    compile 'com.android.support:cardview-v7:26.0.2'
-    compile 'com.loopj.android:android-async-http:1.4.9'
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-    compile 'com.evernote:android-job:1.2.0'
-    compile 'com.github.chrisbanes:PhotoView:2.0.0'
-    compile 'com.google.code.gson:gson:2.8.0'
-    compile 'org.jsoup:jsoup:1.10.3'
-    compile 'de.hdodenhof:circleimageview:2.2.0'
-    safetynetCompile 'com.google.android.gms:play-services-safetynet:11.0.4'
-    safetynetCompile 'io.github.kobakei:ratethisapp:1.2.0'
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:design:26.1.0'
+    implementation 'com.android.support:support-v4:26.1.0'
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.loopj.android:android-async-http:1.4.9'
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    implementation 'com.evernote:android-job:1.2.0'
+    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'org.jsoup:jsoup:1.10.3'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    safetynetImplementation 'com.google.android.gms:play-services-safetynet:11.4.2'
+    safetynetImplementation 'io.github.kobakei:ratethisapp:1.2.0'
 }

@@ -97,8 +97,7 @@
     <string name="fav_removed">De toot is uit jouw favorieten verwijderd!</string>
     <string name="reblog_added">De toot is geboost!</string>
     <string name="reblog_removed">De toot is niet meer geboost!</string>
-    <string name="reblog_by">Gedeeld via %1$s</string>
-
+    <string name="reblog_by">Geboost door %1$s</string>
 
     <string name="favourite_add">Deze toot aan jouw favorieten toevoegen?</string>
     <string name="favourite_remove">Deze toot uit jouw favorieten verwijderen?</string>
@@ -106,8 +105,6 @@
     <string name="reblog_remove">Deze toot niet meer boosten?</string>
     <string name="pin_add">Deze toot aan jouw profielpagina vastmaken?</string>
     <string name="pin_remove">Deze toot van profielpagina losmaken?</string>
-
-
 
     <string name="more_action_1">Negeren</string>
     <string name="more_action_2">Blokkeren</string>
@@ -344,7 +341,7 @@
     <string name="set_led_colour">LED-kleur instellen:</string>
 
     <string-array name="led_colours">
-        <item>Blaauw</item>
+        <item>Blauw</item>
         <item>Cyaan</item>
         <item>Magenta</item>
         <item>Groen</item>
@@ -433,4 +430,6 @@
     <string name="thanks_text_dev">
         Met dank aan:
     </string>
+    <string name="select_accounts">Kies enkele accounts</string>
+    <string name="upload_form_description">Omschrijf dit voor mensen met een visuele beperking</string>
 </resources>

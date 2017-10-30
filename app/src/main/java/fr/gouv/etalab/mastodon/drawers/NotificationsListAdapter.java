@@ -29,8 +29,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
@@ -39,9 +39,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -85,7 +85,8 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class NotificationsListAdapter extends BaseAdapter implements OnPostActionInterface, OnPostNotificationsActionInterface, OnRetrieveEmojiInterface {
+
+public class NotificationsListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnPostNotificationsActionInterface, OnRetrieveEmojiInterface {
 
     private Context context;
     private List<Notification> notifications;
@@ -109,65 +110,18 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
     }
 
-
+    
 
     @Override
-    public int getCount() {
-        return notifications.size();
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ViewHolder(layoutInflater.inflate(R.layout.drawer_notification, parent, false));
     }
 
     @Override
-    public Object getItem(int position) {
-        return notifications.get(position);
-    }
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-
+        final NotificationsListAdapter.ViewHolder holder = (NotificationsListAdapter.ViewHolder) viewHolder;
         final Notification notification = notifications.get(position);
-        final ViewHolder holder;
-        if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.drawer_notification, parent, false);
-            holder = new ViewHolder();
-            holder.card_status_container = (CardView) convertView.findViewById(R.id.card_status_container);
-            holder.notification_status_container = (LinearLayout) convertView.findViewById(R.id.notification_status_container);
-            holder.status_document_container = (LinearLayout) convertView.findViewById(R.id.status_document_container);
-            holder.notification_status_content = (TextView) convertView.findViewById(R.id.notification_status_content);
-            holder.notification_account_username = (TextView) convertView.findViewById(R.id.notification_account_username);
-            holder.notification_type = (TextView) convertView.findViewById(R.id.notification_type);
-            holder.notification_account_profile = (ImageView) convertView.findViewById(R.id.notification_account_profile);
-            holder.status_favorite_count = (TextView) convertView.findViewById(R.id.status_favorite_count);
-            holder.status_reblog_count = (TextView) convertView.findViewById(R.id.status_reblog_count);
-            holder.status_date = (TextView) convertView.findViewById(R.id.status_date);
-            holder.status_reply = (ImageView) convertView.findViewById(R.id.status_reply);
-            holder.status_privacy = (ImageView) convertView.findViewById(R.id.status_privacy);
-            holder.notification_delete = (ImageView) convertView.findViewById(R.id.notification_delete);
-
-            holder.status_show_more = (Button) convertView.findViewById(R.id.status_show_more);
-            holder.status_prev1 = (ImageView) convertView.findViewById(R.id.status_prev1);
-            holder.status_prev2 = (ImageView) convertView.findViewById(R.id.status_prev2);
-            holder.status_prev3 = (ImageView) convertView.findViewById(R.id.status_prev3);
-            holder.status_prev4 = (ImageView) convertView.findViewById(R.id.status_prev4);
-            holder.status_prev1_play = (ImageView) convertView.findViewById(R.id.status_prev1_play);
-            holder.status_prev2_play = (ImageView) convertView.findViewById(R.id.status_prev2_play);
-            holder.status_prev3_play = (ImageView) convertView.findViewById(R.id.status_prev3_play);
-            holder.status_prev4_play = (ImageView) convertView.findViewById(R.id.status_prev4_play);
-            holder.status_container2 = (LinearLayout) convertView.findViewById(R.id.status_container2);
-            holder.status_container3 = (LinearLayout) convertView.findViewById(R.id.status_container3);
-            holder.status_prev4_container = (RelativeLayout) convertView.findViewById(R.id.status_prev4_container);
-            holder.status_action_container = (LinearLayout) convertView.findViewById(R.id.status_action_container);
-            holder.status_more = (ImageView) convertView.findViewById(R.id.status_more);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         int iconSizePercent = sharedpreferences.getInt(Helper.SET_ICON_SIZE, 130);
@@ -187,11 +141,12 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 else
                     typeString = String.format("@%s %s", notification.getAccount().getUsername(),context.getString(R.string.notif_mention));
                 if( theme == Helper.THEME_DARK){
-                    holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_1));
+                    holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_1));
                 }else {
-                    holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_1));
+                    holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_1));
                 }
                 imgH = ContextCompat.getDrawable(context, R.drawable.ic_chat_bubble_outline);
+                holder.main_container_trans.setVisibility(View.GONE);
                 break;
             case "reblog":
                 holder.status_action_container.setVisibility(View.GONE);
@@ -200,11 +155,12 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 else
                     typeString = String.format("@%s %s", notification.getAccount().getUsername(),context.getString(R.string.notif_reblog));
                 if( theme == Helper.THEME_DARK){
-                    holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_2));
+                    holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_2));
                 }else {
-                    holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_2));
+                    holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_2));
                 }
-                imgH = ContextCompat.getDrawable(context, R.drawable.ic_boost_header_notif);
+                imgH = ContextCompat.getDrawable(context, R.drawable.ic_repeat_head);
+                holder.main_container_trans.setVisibility(View.VISIBLE);
                 break;
             case "favourite":
                 holder.status_action_container.setVisibility(View.GONE);
@@ -213,11 +169,12 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 else
                     typeString = String.format("@%s %s", notification.getAccount().getUsername(),context.getString(R.string.notif_favourite));
                 if( theme == Helper.THEME_DARK){
-                    holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_3));
+                    holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_3));
                 }else {
-                    holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_3));
+                    holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_3));
                 }
-                imgH = ContextCompat.getDrawable(context, R.drawable.ic_fav_notif_header);
+                imgH = ContextCompat.getDrawable(context, R.drawable.ic_star_border_header);
+                holder.main_container_trans.setVisibility(View.VISIBLE);
                 break;
             case "follow":
                 holder.status_action_container.setVisibility(View.GONE);
@@ -226,16 +183,17 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                 else
                     typeString = String.format("@%s %s", notification.getAccount().getUsername(),context.getString(R.string.notif_follow));
                 if( theme == Helper.THEME_DARK){
-                    holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_4));
+                    holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_4));
                 }else {
-                    holder.card_status_container.setCardBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_4));
+                    holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_4));
                 }
                 imgH = ContextCompat.getDrawable(context, R.drawable.ic_follow_notif_header);
+                holder.main_container_trans.setVisibility(View.GONE);
                 break;
         }
         changeDrawableColor(context, R.drawable.ic_chat_bubble_outline, R.color.mastodonC4);
-        changeDrawableColor(context, R.drawable.ic_boost_header_notif,R.color.mastodonC4);
-        changeDrawableColor(context, R.drawable.ic_fav_notif_header,R.color.mastodonC4);
+        changeDrawableColor(context, R.drawable.ic_repeat_head,R.color.mastodonC4);
+        changeDrawableColor(context, R.drawable.ic_star_border_header,R.color.mastodonC4);
         changeDrawableColor(context, R.drawable.ic_follow_notif_header,R.color.mastodonC4);
         holder.notification_type.setText(typeString);
         if( imgH != null) {
@@ -257,25 +215,25 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
         //Manages theme for icon colors
         if( theme == Helper.THEME_DARK){
             changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
-            changeDrawableColor(context, R.drawable.ic_action_more,R.color.dark_icon);
-            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.dark_icon);
-            changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.dark_icon);
-            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_more_horiz,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_public,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_lock_open,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.dark_icon);
             changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_icon);
-            changeDrawableColor(context, R.drawable.ic_retweet,R.color.dark_icon);
-            changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_delete,R.color.dark_text);
         }else {
             changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_action_more,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_action_globe,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_action_lock_open,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_action_lock_closed,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_more_horiz,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_public,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_lock_open,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.black);
             changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_retweet,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_star_border,R.color.black);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.black);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.black);
             changeDrawableColor(context, R.drawable.ic_delete,R.color.black);
@@ -296,7 +254,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                     content = content.substring(0, content.length() - 10);
             }
 
-            SpannableString spannableString = Helper.clickableElements(context, status.getContent(),
+            SpannableString spannableString = Helper.clickableElements(context, content,
                     status.getReblog() != null?status.getReblog().getMentions():status.getMentions(),
                     status.getReblog() != null?status.getReblog().getEmojis():status.getEmojis(),
                     position,
@@ -345,25 +303,25 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
 
                 Drawable imgFav, imgReblog;
                 if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
-                    changeDrawableColor(context, R.drawable.ic_favorite,R.color.marked_icon);
-                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_favorite);
+                    changeDrawableColor(context, R.drawable.ic_star,R.color.marked_icon);
+                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star);
                 }else {
                     if( theme == THEME_DARK)
-                        changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.dark_icon);
+                        changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
                     else
-                        changeDrawableColor(context, R.drawable.ic_favorite_border,R.color.black);
-                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_favorite_border);
+                        changeDrawableColor(context, R.drawable.ic_star_border,R.color.black);
+                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star_border);
                 }
 
                 if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged())) {
-                    changeDrawableColor(context, R.drawable.ic_boost,R.color.marked_icon);
-                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost);
+                    changeDrawableColor(context, R.drawable.ic_repeat_boost,R.color.boost_icon);
+                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat_boost);
                 }else {
                     if( theme == THEME_DARK)
-                        changeDrawableColor(context, R.drawable.ic_boost_border,R.color.dark_icon);
+                        changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
                     else
-                        changeDrawableColor(context, R.drawable.ic_boost_border,R.color.black);
-                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_boost_border);
+                        changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
+                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
                 }
 
                 imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
@@ -377,61 +335,64 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                     holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.black));
                     holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.black));
                 }
-
-                if( status.getReblog() == null) {
-                    if (status.getMedia_attachments().size() < 1) {
-                        holder.status_document_container.setVisibility(View.GONE);
-                        holder.status_show_more.setVisibility(View.GONE);
-                    } else {
-                        //If medias are loaded without any conditions or if device is on wifi
-                        if (!status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
-                            loadAttachments(status, holder);
+                if( type.equals("favourite") || type.equals("reblog")){
+                    holder.status_document_container.setVisibility(View.GONE);
+                }else {
+                    if (status.getReblog() == null) {
+                        if (status.getMedia_attachments().size() < 1) {
+                            holder.status_document_container.setVisibility(View.GONE);
                             holder.status_show_more.setVisibility(View.GONE);
-                            status.setAttachmentShown(true);
                         } else {
-                            //Text depending if toots is sensitive or not
-                            String textShowMore = (status.isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
-                            holder.status_show_more.setText(textShowMore);
-                            if (!status.isAttachmentShown()) {
-                                holder.status_show_more.setVisibility(View.VISIBLE);
-                                holder.status_document_container.setVisibility(View.GONE);
-                            } else {
+                            //If medias are loaded without any conditions or if device is on wifi
+                            if (!status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
                                 loadAttachments(status, holder);
+                                holder.status_show_more.setVisibility(View.GONE);
+                                status.setAttachmentShown(true);
+                            } else {
+                                //Text depending if toots is sensitive or not
+                                String textShowMore = (status.isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
+                                holder.status_show_more.setText(textShowMore);
+                                if (!status.isAttachmentShown()) {
+                                    holder.status_show_more.setVisibility(View.VISIBLE);
+                                    holder.status_document_container.setVisibility(View.GONE);
+                                } else {
+                                    loadAttachments(status, holder);
+                                }
                             }
                         }
-                    }
-                }else { //Attachments for reblogs
-                    if (status.getReblog().getMedia_attachments().size() < 1) {
-                        holder.status_document_container.setVisibility(View.GONE);
-                        holder.status_show_more.setVisibility(View.GONE);
-                    } else {
-                        //If medias are loaded without any conditions or if device is on wifi
-                        if (!status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
-                            loadAttachments(status.getReblog(), holder);
+                    } else { //Attachments for reblogs
+                        if (status.getReblog().getMedia_attachments().size() < 1) {
+                            holder.status_document_container.setVisibility(View.GONE);
                             holder.status_show_more.setVisibility(View.GONE);
-                            status.getReblog().setAttachmentShown(true);
                         } else {
-                            //Text depending if toots is sensitive or not
-                            String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
-                            holder.status_show_more.setText(textShowMore);
-                            if (!status.isAttachmentShown()) {
-                                holder.status_show_more.setVisibility(View.VISIBLE);
-                                holder.status_document_container.setVisibility(View.GONE);
-                            } else {
+                            //If medias are loaded without any conditions or if device is on wifi
+                            if (!status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
                                 loadAttachments(status.getReblog(), holder);
+                                holder.status_show_more.setVisibility(View.GONE);
+                                status.getReblog().setAttachmentShown(true);
+                            } else {
+                                //Text depending if toots is sensitive or not
+                                String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
+                                holder.status_show_more.setText(textShowMore);
+                                if (!status.isAttachmentShown()) {
+                                    holder.status_show_more.setVisibility(View.VISIBLE);
+                                    holder.status_document_container.setVisibility(View.GONE);
+                                } else {
+                                    loadAttachments(status.getReblog(), holder);
+                                }
                             }
                         }
                     }
                 }
                 switch (status.getVisibility()){
                     case "public":
-                        holder.status_privacy.setImageResource(R.drawable.ic_action_globe);
+                        holder.status_privacy.setImageResource(R.drawable.ic_public);
                         break;
                     case "unlisted":
-                        holder.status_privacy.setImageResource(R.drawable.ic_action_lock_open);
+                        holder.status_privacy.setImageResource(R.drawable.ic_lock_open);
                         break;
                     case "private":
-                        holder.status_privacy.setImageResource(R.drawable.ic_action_lock_closed);
+                        holder.status_privacy.setImageResource(R.drawable.ic_lock_outline);
                         break;
                     case "direct":
                         holder.status_privacy.setImageResource(R.drawable.ic_mail_outline);
@@ -539,7 +500,6 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
         });
         holder.notification_account_username.setVisibility(View.GONE);
 
-        final View finalConvertView = convertView;
         final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         final View attached = holder.status_more;
         holder.status_more.setOnClickListener(new View.OnClickListener() {
@@ -550,6 +510,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                     @Override
                     public void onClick(View v) {
                         PopupMenu popup = new PopupMenu(context, attached);
+                        assert status != null;
                         final boolean isOwner = status.getAccount().getId().equals(userId);
                         popup.getMenuInflater()
                                 .inflate(R.menu.option_toot, popup.getMenu());
@@ -610,6 +571,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
                                             //noinspection deprecation
                                             content = Html.fromHtml(status.getContent()).toString();
                                         ClipData clip = ClipData.newPlainText(Helper.CLIP_BOARD, content);
+                                        assert clipboard != null;
                                         clipboard.setPrimaryClip(clip);
                                         Toast.makeText(context,R.string.clipboard,Toast.LENGTH_LONG).show();
                                         return true;
@@ -628,7 +590,7 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
 
                                             @Override
                                             public void run() {
-                                                Bitmap bitmap = Helper.convertTootIntoBitmap(context, finalConvertView);
+                                                Bitmap bitmap = Helper.convertTootIntoBitmap(context, holder.getView());
                                                 status.setTakingScreenShot(false);
                                                 notificationsListAdapter.notifyDataSetChanged();
                                                 Intent intent = new Intent(context, TootActivity.class);
@@ -709,7 +671,17 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
 
         //Profile picture
         imageLoader.displayImage(notification.getAccount().getAvatar(), holder.notification_account_profile, options);
-        return convertView;
+
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemCount() {
+        return notifications.size();
     }
 
 
@@ -923,8 +895,9 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
     }
 
 
-    private class ViewHolder {
-        CardView card_status_container;
+    class ViewHolder extends RecyclerView.ViewHolder {
+
+        FrameLayout card_status_container;
         TextView notification_status_content;
         TextView notification_type;
         TextView notification_account_username;
@@ -950,7 +923,44 @@ public class NotificationsListAdapter extends BaseAdapter implements OnPostActio
         LinearLayout status_container2;
         LinearLayout status_container3;
         LinearLayout notification_status_container;
+        RelativeLayout main_container_trans;
         ImageView status_privacy;
+
+        public View getView(){
+            return itemView;
+        }
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            card_status_container = itemView.findViewById(R.id.card_status_container);
+            main_container_trans = itemView.findViewById(R.id.container_trans);
+            notification_status_container = itemView.findViewById(R.id.notification_status_container);
+            status_document_container = itemView.findViewById(R.id.status_document_container);
+            notification_status_content = itemView.findViewById(R.id.notification_status_content);
+            notification_account_username = itemView.findViewById(R.id.notification_account_username);
+            notification_type = itemView.findViewById(R.id.notification_type);
+            notification_account_profile = itemView.findViewById(R.id.notification_account_profile);
+            status_favorite_count = itemView.findViewById(R.id.status_favorite_count);
+            status_reblog_count = itemView.findViewById(R.id.status_reblog_count);
+            status_date = itemView.findViewById(R.id.status_date);
+            status_reply = itemView.findViewById(R.id.status_reply);
+            status_privacy = itemView.findViewById(R.id.status_privacy);
+            notification_delete = itemView.findViewById(R.id.notification_delete);
+            status_show_more = itemView.findViewById(R.id.status_show_more);
+            status_prev1 = itemView.findViewById(R.id.status_prev1);
+            status_prev2 = itemView.findViewById(R.id.status_prev2);
+            status_prev3 = itemView.findViewById(R.id.status_prev3);
+            status_prev4 = itemView.findViewById(R.id.status_prev4);
+            status_prev1_play = itemView.findViewById(R.id.status_prev1_play);
+            status_prev2_play = itemView.findViewById(R.id.status_prev2_play);
+            status_prev3_play = itemView.findViewById(R.id.status_prev3_play);
+            status_prev4_play = itemView.findViewById(R.id.status_prev4_play);
+            status_container2 = itemView.findViewById(R.id.status_container2);
+            status_container3 = itemView.findViewById(R.id.status_container3);
+            status_prev4_container = itemView.findViewById(R.id.status_prev4_container);
+            status_action_container = itemView.findViewById(R.id.status_action_container);
+            status_more = itemView.findViewById(R.id.status_more);
+        }
     }
 
 }

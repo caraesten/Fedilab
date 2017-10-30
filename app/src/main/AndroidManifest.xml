@@ -69,6 +69,10 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/AppThemeDark_NoActionBar">
             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="text/plain" />
@@ -157,15 +161,5 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
             />
-        <activity
-            android:name="fr.gouv.etalab.mastodon.activities.SplashActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:configChanges="orientation|screenSize"
-            android:theme="@style/SplashTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 </manifest>

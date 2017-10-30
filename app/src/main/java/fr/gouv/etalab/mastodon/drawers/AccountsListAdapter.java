@@ -21,12 +21,12 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -55,7 +55,7 @@ import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
  * Created by Thomas on 27/04/2017.
  * Adapter for accounts
  */
-public class AccountsListAdapter extends BaseAdapter implements OnPostActionInterface {
+public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostActionInterface {
 
     private List<Account> accounts;
     private LayoutInflater layoutInflater;
@@ -73,35 +73,18 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
         this.targetedId = targetedId;
     }
 
-    public enum action{
-        FOLLOW,
-        UNFOLLOW,
-        UNBLOCK,
-        NOTHING,
-        UNMUTE
-    }
-
     private API.StatusAction doAction;
 
+
+
     @Override
-    public int getCount() {
-        return accounts.size();
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ViewHolder(layoutInflater.inflate(R.layout.drawer_account, parent, false));
     }
 
     @Override
-    public Object getItem(int position) {
-        return accounts.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+        final AccountsListAdapter.ViewHolder holder = (AccountsListAdapter.ViewHolder) viewHolder;
         ImageLoader imageLoader = ImageLoader.getInstance();
         File cacheDir = new File(context.getCacheDir(), context.getString(R.string.app_name));
         ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(context)
@@ -116,26 +99,7 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
         DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
         final Account account = accounts.get(position);
-        final ViewHolder holder;
 
-        if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.drawer_account, parent, false);
-            holder = new ViewHolder();
-            holder.account_pp = (ImageView) convertView.findViewById(R.id.account_pp);
-            holder.account_dn = (TextView) convertView.findViewById(R.id.account_dn);
-            holder.account_ac = (TextView) convertView.findViewById(R.id.account_ac);
-            holder.account_un = (TextView) convertView.findViewById(R.id.account_un);
-            holder.account_ds = (TextView) convertView.findViewById(R.id.account_ds);
-            holder.account_sc = (TextView) convertView.findViewById(R.id.account_sc);
-            holder.account_fgc = (TextView) convertView.findViewById(R.id.account_fgc);
-            holder.account_frc = (TextView) convertView.findViewById(R.id.account_frc);
-            holder.account_follow = (FloatingActionButton) convertView.findViewById(R.id.account_follow);
-            holder.account_follow_request = (TextView) convertView.findViewById(R.id.account_follow_request);
-            holder.account_container = (LinearLayout) convertView.findViewById(R.id.account_container);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
 
         if( action == RetrieveAccountsAsyncTask.Type.BLOCKED)
             account.setFollowType(Account.followAction.BLOCK);
@@ -161,18 +125,18 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
             holder.account_follow.setVisibility(View.VISIBLE);
             holder.account_follow_request.setVisibility(View.GONE);
         }else if( account.getFollowType() == Account.followAction.BLOCK){
-            holder.account_follow.setImageResource(R.drawable.ic_unlock_alt);
+            holder.account_follow.setImageResource(R.drawable.ic_lock_open);
             doAction = API.StatusAction.UNBLOCK;
             holder.account_follow.setVisibility(View.VISIBLE);
             holder.account_follow_request.setVisibility(View.GONE);
         }else if( account.getFollowType() == Account.followAction.MUTE){
-            holder.account_follow.setImageResource(R.drawable.ic_mute_white);
+            holder.account_follow.setImageResource(R.drawable.ic_volume_mute);
             doAction = API.StatusAction.UNMUTE;
             holder.account_follow.setVisibility(View.VISIBLE);
             holder.account_follow_request.setVisibility(View.GONE);
         }
 
-        
+
         holder.account_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -232,8 +196,19 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
 
             }
         });
-        return convertView;
     }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemCount() {
+        return accounts.size();
+    }
+
+
 
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
@@ -272,7 +247,7 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
     }
 
 
-    private class ViewHolder {
+    private class ViewHolder extends RecyclerView.ViewHolder{
         ImageView account_pp;
         TextView account_ac;
         TextView account_dn;
@@ -284,6 +259,21 @@ public class AccountsListAdapter extends BaseAdapter implements OnPostActionInte
         FloatingActionButton account_follow;
         TextView account_follow_request;
         LinearLayout account_container;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+            account_pp = itemView.findViewById(R.id.account_pp);
+            account_dn = itemView.findViewById(R.id.account_dn);
+            account_ac = itemView.findViewById(R.id.account_ac);
+            account_un = itemView.findViewById(R.id.account_un);
+            account_ds = itemView.findViewById(R.id.account_ds);
+            account_sc = itemView.findViewById(R.id.account_sc);
+            account_fgc = itemView.findViewById(R.id.account_fgc);
+            account_frc = itemView.findViewById(R.id.account_frc);
+            account_follow = itemView.findViewById(R.id.account_follow);
+            account_follow_request = itemView.findViewById(R.id.account_follow_request);
+            account_container = itemView.findViewById(R.id.account_container);
+        }
     }
 
 }

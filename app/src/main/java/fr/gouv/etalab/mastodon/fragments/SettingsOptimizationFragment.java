@@ -47,8 +47,8 @@ public class SettingsOptimizationFragment extends Fragment {
 
 
         //Status per page
-        SeekBar statusSeekBar = (SeekBar) rootView.findViewById(R.id.set_toots_per_page);
-        final TextView set_toots_page_value = (TextView) rootView.findViewById(R.id.set_toots_page_value);
+        SeekBar statusSeekBar = rootView.findViewById(R.id.set_toots_per_page);
+        final TextView set_toots_page_value = rootView.findViewById(R.id.set_toots_page_value);
         statusSeekBar.setMax(30);
         int tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
         statusSeekBar.setProgress(tootPerPage-10);
@@ -69,8 +69,8 @@ public class SettingsOptimizationFragment extends Fragment {
         });
 
         //Accounts per page
-        SeekBar accountsSeekBar = (SeekBar) rootView.findViewById(R.id.set_accounts_per_page);
-        final TextView set_accounts_page_value = (TextView) rootView.findViewById(R.id.set_accounts_page_value);
+        SeekBar accountsSeekBar = rootView.findViewById(R.id.set_accounts_per_page);
+        final TextView set_accounts_page_value = rootView.findViewById(R.id.set_accounts_page_value);
         accountsSeekBar.setMax(30);
         int accountsPerPage = sharedpreferences.getInt(Helper.SET_ACCOUNTS_PER_PAGE, 40);
         accountsSeekBar.setProgress(accountsPerPage-10);
@@ -92,8 +92,8 @@ public class SettingsOptimizationFragment extends Fragment {
 
 
         //Notifications per page
-        SeekBar notificationsSeekBar = (SeekBar) rootView.findViewById(R.id.set_notifications_per_page);
-        final TextView set_notifications_page_value = (TextView) rootView.findViewById(R.id.set_notifications_page_value);
+        SeekBar notificationsSeekBar = rootView.findViewById(R.id.set_notifications_per_page);
+        final TextView set_notifications_page_value = rootView.findViewById(R.id.set_notifications_page_value);
         notificationsSeekBar.setMax(20);
         int notificationsPerPage = sharedpreferences.getInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 15);
         notificationsSeekBar.setProgress(notificationsPerPage-10);
@@ -114,7 +114,7 @@ public class SettingsOptimizationFragment extends Fragment {
         });
 
         //Manage download of attachments
-        RadioGroup radioGroup = (RadioGroup) rootView.findViewById(R.id.set_attachment_group);
+        RadioGroup radioGroup = rootView.findViewById(R.id.set_attachment_group);
         int attachmentAction = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
         switch (attachmentAction){
             case Helper.ATTACHMENT_ALWAYS:

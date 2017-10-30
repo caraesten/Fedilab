@@ -16,6 +16,9 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+
+import java.lang.ref.WeakReference;
+
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
@@ -28,13 +31,13 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
 
 public class RetrieveSearchAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private Context context;
     private String query;
     private APIResponse apiResponse;
     private OnRetrieveSearcAccountshInterface listener;
+    private WeakReference<Context> contextReference;
 
     public RetrieveSearchAccountsAsyncTask(Context context, String query, OnRetrieveSearcAccountshInterface onRetrieveSearcAccountshInterface){
-        this.context = context;
+        this.contextReference = new WeakReference<>(context);
         this.query = query;
         this.listener = onRetrieveSearcAccountshInterface;
     }
@@ -42,7 +45,7 @@ public class RetrieveSearchAccountsAsyncTask extends AsyncTask<Void, Void, Void>
 
     @Override
     protected Void doInBackground(Void... params) {
-        API api = new API(context);
+        API api = new API(this.contextReference.get());
         apiResponse = api.searchAccounts(query, 20);
         return null;
     }

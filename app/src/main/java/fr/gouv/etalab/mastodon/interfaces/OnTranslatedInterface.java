@@ -14,10 +14,12 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.interfaces;
 
+import fr.gouv.etalab.mastodon.client.Entities.Status;
+
 /**
  * Created by Thomas on 03/07/2017.
  * Yandex client API Handler
  */
 public interface OnTranslatedInterface {
-    void onTranslatedTextview(int position, String translatedResult, Boolean error);
+    void onTranslatedTextview(Status status, String translatedResult, Boolean error);
 }

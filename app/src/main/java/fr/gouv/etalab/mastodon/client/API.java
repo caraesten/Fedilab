@@ -17,9 +17,9 @@ package fr.gouv.etalab.mastodon.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import android.util.Log;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -29,7 +29,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.*;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
@@ -44,6 +49,7 @@ import cz.msebera.android.httpclient.Header;
 import fr.gouv.etalab.mastodon.client.Entities.*;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.USER_AGENT;
@@ -60,6 +66,7 @@ public class API {
 
 
     private SyncHttpClient client = new SyncHttpClient();
+    private AsyncHttpClient asyncClient = new AsyncHttpClient();
 
     private Account account;
     private Context context;
@@ -1267,12 +1274,94 @@ public class API {
      * @param inputStream InputStream
      * @return Attachment
      */
-    public Attachment uploadMedia(InputStream inputStream){
+    public Attachment uploadMedia(InputStream inputStream, final OnRetrieveAttachmentInterface listener){
+        File file = null;
+        try {
+            file = new File(context.getCacheDir(), "cacheFileAppeal.srl");
+            OutputStream output = new FileOutputStream(file);
+            try {
+                byte[] buffer = new byte[4 * 1024]; // or other buffer size
+                int read;
+
+                while ((read = inputStream.read(buffer)) != -1) {
+                    output.write(buffer, 0, read);
+                }
+                output.flush();
+            } finally {
+                output.close();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        RequestParams params = new RequestParams();
+        try {
+            params.put("file", file);
+            postAsync("/media", 240000, params, new JsonHttpResponseHandler() {
+
+                @Override
+                public void onStart(){
+                    listener.onUpdateProgress(0);
+                }
+                @Override
+                public void onProgress(long bytesWritten, long totalSize){
+                    int progress = (int)((bytesWritten*100/totalSize));
+                    listener.onUpdateProgress(progress);
+                }
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    attachment = parseAttachmentResponse(response);
+                    listener.onUpdateProgress(101);
+                    listener.onRetrieveAttachment(attachment, null);
+                }
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                    try {
+                        attachment = parseAttachmentResponse(response.getJSONObject(0));
+                        listener.onUpdateProgress(101);
+                        listener.onRetrieveAttachment(attachment, null);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response) {
+                    listener.onUpdateProgress(101);
+                    APIError = new Error();
+                    APIError.setError(statusCode + " - " + error.getMessage());
+                    listener.onRetrieveAttachment(null, APIError);
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String message, Throwable error) {
+                    listener.onUpdateProgress(101);
+                    APIError = new Error();
+                    APIError.setError(statusCode + " - " + error.getMessage());
+                    listener.onRetrieveAttachment(null, APIError);
+                }
+            });
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return attachment;
+    }
+
+
+    /**
+     * Changes media description
+     * @param mediaId String
+     *  @param description String
+     * @return Attachment
+     */
+    public Attachment updateDescription(String mediaId, String description){
 
         RequestParams params = new RequestParams();
-        params.put("file", inputStream);
-
-        post("/media", 240000, params, new JsonHttpResponseHandler() {
+        params.put("description", description);
+        put(String.format("/media/%s", mediaId), 240000, params, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -1297,7 +1386,6 @@ public class API {
         });
         return attachment;
     }
-
 
     /**
      * Retrieves Accounts and feeds when searching *synchronously*
@@ -1694,6 +1782,9 @@ public class API {
             attachment.setId(resobj.get("id").toString());
             attachment.setType(resobj.get("type").toString());
             attachment.setUrl(resobj.get("url").toString());
+            try {
+                attachment.setDescription(resobj.get("description").toString());
+            }catch (JSONException ignore){}
             try{
                 attachment.setRemote_url(resobj.get("remote_url").toString());
             }catch (JSONException ignore){}
@@ -1803,6 +1894,21 @@ public class API {
         }
     }
 
+    private void put(String action, int timeout, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        try {
+            client.setConnectTimeout(timeout);
+            client.setUserAgent(USER_AGENT);
+            client.addHeader("Authorization", "Bearer "+prefKeyOauthTokenT);
+            MastalabSSLSocketFactory mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());
+            mastalabSSLSocketFactory.setHostnameVerifier(MastalabSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+            client.setSSLSocketFactory(mastalabSSLSocketFactory);
+            client.put(getAbsoluteUrl(action), params, responseHandler);
+        } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
+            Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+    }
+
     private void delete(String action, RequestParams params, AsyncHttpResponseHandler responseHandler){
         try {
             client.setConnectTimeout(20000); //20s timeout
@@ -1832,6 +1938,23 @@ public class API {
             e.printStackTrace();
         }
     }
+
+
+    private void postAsync(String action, int timeout, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        try {
+            asyncClient.setConnectTimeout(timeout);
+            asyncClient.setUserAgent(USER_AGENT);
+            asyncClient.addHeader("Authorization", "Bearer "+prefKeyOauthTokenT);
+            MastalabSSLSocketFactory mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());
+            mastalabSSLSocketFactory.setHostnameVerifier(MastalabSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+            asyncClient.setSSLSocketFactory(mastalabSSLSocketFactory);
+            asyncClient.post(getAbsoluteUrl(action), params, responseHandler);
+        } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
+            Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+    }
+
 
     public Error getError(){
         return APIError;

@@ -16,6 +16,8 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
@@ -31,14 +33,14 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMissingFeedsInterface;
 
 public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private Context context;
     private String since_id;
     private OnRetrieveMissingFeedsInterface listener;
     private List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = new ArrayList<>();
     private RetrieveFeedsAsyncTask.Type type;
+    private WeakReference<Context> contextReference;
 
     public RetrieveMissingFeedsAsyncTask(Context context, String since_id, RetrieveFeedsAsyncTask.Type type, OnRetrieveMissingFeedsInterface onRetrieveMissingFeedsInterface){
-        this.context = context;
+        this.contextReference = new WeakReference<>(context);
         this.since_id = since_id;
         this.listener = onRetrieveMissingFeedsInterface;
         this.type = type;
@@ -48,7 +50,7 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         int loopInc = 0;
-        API api = new API(context);
+        API api = new API(this.contextReference.get());
         List<fr.gouv.etalab.mastodon.client.Entities.Status> tempStatus;
         APIResponse apiResponse = null;
         while (loopInc < 10){

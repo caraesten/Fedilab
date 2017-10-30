@@ -17,7 +17,6 @@
 -->
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/fab_margin"
     android:paddingRight="@dimen/fab_margin"
     android:layout_width="match_parent"
@@ -27,14 +26,14 @@
         android:layout_width="match_parent"
         android:id="@+id/swipeContainer"
         android:layout_height="match_parent">
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/lv_notifications"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none"
             android:divider="@null"
             >
-        </ListView>
+        </android.support.v7.widget.RecyclerView>
     </android.support.v4.widget.SwipeRefreshLayout>
     <RelativeLayout
         android:id="@+id/no_action"

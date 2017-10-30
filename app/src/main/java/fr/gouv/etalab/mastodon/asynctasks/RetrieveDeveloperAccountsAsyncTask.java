@@ -17,6 +17,7 @@ package fr.gouv.etalab.mastodon.asynctasks;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import fr.gouv.etalab.mastodon.client.API;
@@ -32,18 +33,19 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchDevelopersAccountshInt
 
 public class RetrieveDeveloperAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private Context context;
+
     private OnRetrieveSearchDevelopersAccountshInterface listener;
     private ArrayList<Account> accounts;
+    private WeakReference<Context> contextReference;
 
     public RetrieveDeveloperAccountsAsyncTask(Context context, OnRetrieveSearchDevelopersAccountshInterface onRetrieveSearchDevelopersAccountshInterface){
-        this.context = context;
+        this.contextReference = new WeakReference<>(context);
         this.listener = onRetrieveSearchDevelopersAccountshInterface;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        API api = new API(context);
+        API api = new API(this.contextReference.get());
         accounts = new ArrayList<>();
         APIResponse apiResponse = api.searchAccounts("@tom79@mastodon.social", 1);
         if( apiResponse.getAccounts() != null && apiResponse.getAccounts().size() > 0)

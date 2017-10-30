@@ -22,11 +22,12 @@ import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -63,7 +64,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
     private SwipeRefreshLayout swipeRefreshLayout;
     private String targetedId;
     private boolean swiped;
-    private ListView lv_accounts;
+    private RecyclerView lv_accounts;
     boolean hideHeader;
 
     @Override
@@ -96,7 +97,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
 
         swipeRefreshLayout = rootView.findViewById(R.id.swipeContainer);
         lv_accounts = rootView.findViewById(R.id.lv_accounts);
-
+        lv_accounts.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         mainLoader = rootView.findViewById(R.id.loader);
         nextElementLoader = rootView.findViewById(R.id.loading_next_accounts);
         textviewNoAction = rootView.findViewById(R.id.no_action);
@@ -109,23 +110,28 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
             //Hide account header when scrolling for ShowAccountActivity
             if (hideHeader && Build.VERSION.SDK_INT >= 21)
                 ViewCompat.setNestedScrollingEnabled(lv_accounts, true);
-            lv_accounts.setOnScrollListener(new AbsListView.OnScrollListener() {
-                @Override
-                public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-                }
-                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                    if (firstVisibleItem + visibleItemCount == totalItemCount) {
-                        if (!flag_loading) {
-                            flag_loading = true;
-                            if (type != RetrieveAccountsAsyncTask.Type.FOLLOWERS && type != RetrieveAccountsAsyncTask.Type.FOLLOWING)
-                                asyncTask = new RetrieveAccountsAsyncTask(context, type, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            else
-                                asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            nextElementLoader.setVisibility(View.VISIBLE);
+            final LinearLayoutManager mLayoutManager;
+            mLayoutManager = new LinearLayoutManager(context);
+            lv_accounts.setLayoutManager(mLayoutManager);
+            lv_accounts.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+                {
+                    if(dy > 0) {
+                        int visibleItemCount = mLayoutManager.getChildCount();
+                        int totalItemCount = mLayoutManager.getItemCount();
+                        int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+                        if (firstVisibleItem + visibleItemCount == totalItemCount) {
+                            if (!flag_loading) {
+                                flag_loading = true;
+                                if (type != RetrieveAccountsAsyncTask.Type.FOLLOWERS && type != RetrieveAccountsAsyncTask.Type.FOLLOWING)
+                                    asyncTask = new RetrieveAccountsAsyncTask(context, type, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                else
+                                    asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                nextElementLoader.setVisibility(View.VISIBLE);
+                            }
+                        } else {
+                            nextElementLoader.setVisibility(View.GONE);
                         }
-                    } else {
-                        nextElementLoader.setVisibility(View.GONE);
                     }
                 }
             });
@@ -160,8 +166,6 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         }
         return rootView;
     }
-
-
 
     @Override
     public void onCreate(Bundle saveInstance)
@@ -215,9 +219,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
             swiped = false;
         }
         if( accounts != null && accounts.size() > 0) {
-            for(Account tmpAccount: accounts){
-                this.accounts.add(tmpAccount);
-            }
+            this.accounts.addAll(accounts);
             accountsListAdapter.notifyDataSetChanged();
         }
         swipeRefreshLayout.setRefreshing(false);

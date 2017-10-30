@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.translation;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.json.JSONException;
 import cz.msebera.android.httpclient.Header;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
 
 /**
@@ -29,7 +30,7 @@ public class YandexQuery {
         this.listener = listenner;
     }
 
-    public void getYandexTextview(final int position, final String text, final String toLanguage) throws JSONException {
+    public void getYandexTextview(final Status status, final String text, final String toLanguage) throws JSONException {
 
         YandexClient.get(text, toLanguage, new AsyncHttpResponseHandler() {
             @Override
@@ -40,12 +41,12 @@ public class YandexQuery {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] response) {
                 String str_response = new String(response);
-                listener.onTranslatedTextview(position, str_response,false);
+                listener.onTranslatedTextview(status, str_response,false);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-                listener.onTranslatedTextview(position,  null, true);
+                listener.onTranslatedTextview(status,  null, true);
             }
 
         });
