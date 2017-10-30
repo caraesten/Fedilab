@@ -361,8 +361,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
                 android:indeterminate="true"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_width="15dp"
+                android:layout_height="15dp" />
         </LinearLayout>
 
         <TextView
