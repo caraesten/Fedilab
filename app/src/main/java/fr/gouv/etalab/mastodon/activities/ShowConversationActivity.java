@@ -30,10 +30,8 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -112,6 +110,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
             getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             TextView title = getSupportActionBar().getCustomView().findViewById(R.id.toolbar_title);
             pp_actionBar = getSupportActionBar().getCustomView().findViewById(R.id.pp_actionBar);
+            ImageView action_refresh = getSupportActionBar().getCustomView().findViewById(R.id.action_refresh);
             title.setText(R.string.conversation);
             ImageView close_conversation = getSupportActionBar().getCustomView().findViewById(R.id.close_conversation);
             if( close_conversation != null){
@@ -122,6 +121,20 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
                     }
                 });
             }
+            action_refresh.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    swipeRefreshLayout.setRefreshing(true);
+                    ( new Handler()).postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            isRefreshed = true;
+                            statusId = statuses.get(statuses.size()-1).getId();
+                            new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, false, false, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }
+                    }, 1000);
+                }
+            });
         }else{
             setTitle(R.string.conversation);
         }
@@ -208,33 +221,6 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
 
                     }
                 }
-            }
-        });
-        lv_status.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == android.view.MotionEvent.ACTION_UP && statuses != null && statuses.size() > 0) {
-                    int visibleItemCount = mLayoutManager.getChildCount();
-                    int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
-                    int lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
-                    if (firstVisibleItem + visibleItemCount >= (lv_status.getAdapter().getItemCount() -1) &&  firstVisibleItem > 0 &&
-                            lv_status.getChildAt(lv_status.getChildCount() - 1).getBottom() <= lv_status.getHeight()
-                            && (firstVisibleItem + visibleItemCount >= lastVisibleItem)
-                            ) {
-                        if(event.getY() > mLayoutManager.getHeight() / 2){
-                            swipeRefreshLayout.setRefreshing(true);
-                            ( new Handler()).postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    isRefreshed = true;
-                                    statusId = statuses.get(statuses.size()-1).getId();
-                                    new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, false, false, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                }
-                            }, 1000);
-                        }
-                    }
-                }
-                return false;
             }
         });
     }
