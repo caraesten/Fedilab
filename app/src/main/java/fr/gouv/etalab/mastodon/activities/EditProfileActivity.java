@@ -111,7 +111,7 @@ public class EditProfileActivity extends AppCompatActivity implements OnRetrieve
         if( actionBar != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(android.content.Context.LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
-            @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.conversation_action_bar, null);
+            @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.profileedition_action_bar, null);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             TextView title = actionBar.getCustomView().findViewById(R.id.toolbar_title);

@@ -216,11 +216,23 @@
                     android:layout_gravity="center_vertical"
                     android:id="@+id/show_account_title"
                     android:maxLines="1"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
                     android:textColor="?attr/actionBarTextColor"
                     />
+                <ImageButton
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:id="@+id/action_more"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_more_vert"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    tools:ignore="ContentDescription" />
             </LinearLayout>
 
             </android.support.v7.widget.Toolbar>

@@ -159,6 +159,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         account_pp = findViewById(R.id.account_pp);
         account_dn = findViewById(R.id.account_dn);
         account_un = findViewById(R.id.account_un);
+
         if(b != null){
             accountId = b.getString("accountId");
             new RetrieveRelationshipAsyncTask(getApplicationContext(), accountId,ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -279,99 +280,105 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         });
 
 
-
-
-
         final ImageButton account_menu = findViewById(R.id.account_menu);
+        ImageButton action_more = findViewById(R.id.action_more);
         account_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( account == null)
-                    return;
-                final PopupMenu popup = new PopupMenu(ShowAccountActivity.this, account_menu);
-                popup.getMenuInflater()
-                        .inflate(R.menu.main_showaccount, popup.getMenu());
-                if( !Helper.canPin || !accountId.equals(userId)) {
-                    popup.getMenu().findItem(R.id.action_show_pinned).setVisible(false);
-                }
-                final String[] stringArrayConf;
-                final boolean isOwner = account.getId().equals(userId);
-                if( isOwner) {
-                    popup.getMenu().findItem(R.id.action_block).setVisible(false);
-                    popup.getMenu().findItem(R.id.action_mute).setVisible(false);
-                    stringArrayConf =  getResources().getStringArray(R.array.more_action_owner_confirm);
-                }else {
-                    popup.getMenu().findItem(R.id.action_block).setVisible(true);
-                    popup.getMenu().findItem(R.id.action_mute).setVisible(true);
-                    stringArrayConf =  getResources().getStringArray(R.array.more_action_confirm);
-                }
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        AlertDialog.Builder builderInner;
-                        switch (item.getItemId()) {
-                            case R.id.action_show_pinned:
-                                showPinned = !showPinned;
-                                if( tabLayout.getTabAt(0) != null)
-                                    //noinspection ConstantConditions
-                                    tabLayout.getTabAt(0).select();
-                                PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-                                mPager.setAdapter(mPagerAdapter);
-                                return true;
-                            case R.id.action_show_media:
-                                showMediaOnly = !showMediaOnly;
-                                if( tabLayout.getTabAt(0) != null)
-                                    //noinspection ConstantConditions
-                                    tabLayout.getTabAt(0).select();
-                                mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-                                mPager.setAdapter(mPagerAdapter);
-                                return true;
-                            case R.id.action_open_browser:
-                                if( accountUrl != null) {
-                                    Intent intent = new Intent(getApplicationContext(), WebviewActivity.class);
-                                    Bundle b = new Bundle();
-                                    if( !accountUrl.startsWith("http://") && ! accountUrl.startsWith("https://"))
-                                        accountUrl = "http://" + accountUrl;
-                                    b.putString("url", accountUrl);
-                                    intent.putExtras(b);
-                                    startActivity(intent);
-                                }
-                                return true;
-                            case R.id.action_mute:
-                                builderInner = new AlertDialog.Builder(ShowAccountActivity.this);
-                                builderInner.setTitle(stringArrayConf[0]);
-                                doActionAccount = API.StatusAction.MUTE;
-                                break;
-                            case R.id.action_block:
-                                builderInner = new AlertDialog.Builder(ShowAccountActivity.this);
-                                builderInner.setTitle(stringArrayConf[1]);
-                                doActionAccount = API.StatusAction.BLOCK;
-                                break;
-                            default:
-                                return true;
-                        }
-                        builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog,int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                        builderInner.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog,int which) {
-                                new PostActionAsyncTask(getApplicationContext(), doActionAccount, account.getId(), ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                dialog.dismiss();
-                            }
-                        });
-                        builderInner.show();
-                        return true;
-                    }
-                });
-                popup.show();
+                showMenu(account_menu);
+            }
+        });
+        action_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMenu(account_menu);
             }
         });
     }
 
-
+    private void showMenu(View account_menu){
+        if( account == null)
+            return;
+        final PopupMenu popup = new PopupMenu(ShowAccountActivity.this, account_menu);
+        popup.getMenuInflater()
+                .inflate(R.menu.main_showaccount, popup.getMenu());
+        if( !Helper.canPin || !accountId.equals(userId)) {
+            popup.getMenu().findItem(R.id.action_show_pinned).setVisible(false);
+        }
+        final String[] stringArrayConf;
+        final boolean isOwner = account.getId().equals(userId);
+        if( isOwner) {
+            popup.getMenu().findItem(R.id.action_block).setVisible(false);
+            popup.getMenu().findItem(R.id.action_mute).setVisible(false);
+            stringArrayConf =  getResources().getStringArray(R.array.more_action_owner_confirm);
+        }else {
+            popup.getMenu().findItem(R.id.action_block).setVisible(true);
+            popup.getMenu().findItem(R.id.action_mute).setVisible(true);
+            stringArrayConf =  getResources().getStringArray(R.array.more_action_confirm);
+        }
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                AlertDialog.Builder builderInner;
+                switch (item.getItemId()) {
+                    case R.id.action_show_pinned:
+                        showPinned = !showPinned;
+                        if( tabLayout.getTabAt(0) != null)
+                            //noinspection ConstantConditions
+                            tabLayout.getTabAt(0).select();
+                        PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+                        mPager.setAdapter(mPagerAdapter);
+                        return true;
+                    case R.id.action_show_media:
+                        showMediaOnly = !showMediaOnly;
+                        if( tabLayout.getTabAt(0) != null)
+                            //noinspection ConstantConditions
+                            tabLayout.getTabAt(0).select();
+                        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+                        mPager.setAdapter(mPagerAdapter);
+                        return true;
+                    case R.id.action_open_browser:
+                        if( accountUrl != null) {
+                            Intent intent = new Intent(getApplicationContext(), WebviewActivity.class);
+                            Bundle b = new Bundle();
+                            if( !accountUrl.startsWith("http://") && ! accountUrl.startsWith("https://"))
+                                accountUrl = "http://" + accountUrl;
+                            b.putString("url", accountUrl);
+                            intent.putExtras(b);
+                            startActivity(intent);
+                        }
+                        return true;
+                    case R.id.action_mute:
+                        builderInner = new AlertDialog.Builder(ShowAccountActivity.this);
+                        builderInner.setTitle(stringArrayConf[0]);
+                        doActionAccount = API.StatusAction.MUTE;
+                        break;
+                    case R.id.action_block:
+                        builderInner = new AlertDialog.Builder(ShowAccountActivity.this);
+                        builderInner.setTitle(stringArrayConf[1]);
+                        doActionAccount = API.StatusAction.BLOCK;
+                        break;
+                    default:
+                        return true;
+                }
+                builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builderInner.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,int which) {
+                        new PostActionAsyncTask(getApplicationContext(), doActionAccount, account.getId(), ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        dialog.dismiss();
+                    }
+                });
+                builderInner.show();
+                return true;
+            }
+        });
+        popup.show();
+    }
     @Override
     public void onPostAction(int statusCode,API.StatusAction statusAction, String targetedId, Error error) {
         if( error != null){
