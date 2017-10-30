@@ -36,7 +36,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
@@ -118,7 +117,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 public abstract class BaseMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface {
 
-    private FloatingActionButton toot;
+    private FloatingActionButton toot, delete_all;
     private HashMap<String, String> tagTile = new HashMap<>();
     private HashMap<String, Integer> tagItem = new HashMap<>();
     private TextView toolbarTitle;
@@ -591,6 +590,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
         currentLocale = Helper.currentLocale(getApplicationContext());
 
         toot = findViewById(R.id.toot);
+        delete_all = findViewById(R.id.delete_all);
         toot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -973,6 +973,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 viewPager.setVisibility(View.VISIBLE);
                 tabLayout.setVisibility(View.VISIBLE);
                 toolbarTitle.setVisibility(View.GONE);
+                delete_all.setVisibility(View.GONE);
                 final NavigationView navigationView = findViewById(R.id.nav_view);
                 unCheckAllMenuItems(navigationView);
                 toot.setVisibility(View.VISIBLE);
@@ -1145,7 +1146,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if( id == R.id.nav_remote_follow){
+        if (id == R.id.nav_remote_follow) {
             Intent remoteFollow = new Intent(getApplicationContext(), RemoteFollowActivity.class);
             startActivity(remoteFollow);
             return false;
@@ -1154,7 +1155,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
         unCheckAllMenuItems(navigationView);
         item.setChecked(true);
         //Remove the search bar
-        if( !toolbar_search.isIconified() ) {
+        if (!toolbar_search.isIconified()) {
             toolbar_search.setIconified(true);
         }
         toolbarTitle.setText(item.getTitle());
@@ -1168,6 +1169,13 @@ public abstract class BaseMainActivity extends AppCompatActivity
         viewPager.setVisibility(View.GONE);
         tabLayout.setVisibility(View.GONE);
         toolbarTitle.setVisibility(View.VISIBLE);
+
+
+        if (id != R.id.nav_drafts) {
+            delete_all.setVisibility(View.GONE);
+        }else{
+            delete_all.setVisibility(View.VISIBLE);
+        }
         if (id == R.id.nav_settings) {
             toot.setVisibility(View.GONE);
             TabLayoutSettingsFragment tabLayoutSettingsFragment= new TabLayoutSettingsFragment();
@@ -1211,6 +1219,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
             fragmentTag = "DRAFTS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayDraftsFragment, fragmentTag).commit();
+            toot.setVisibility(View.GONE);
         }else if( id == R.id.nav_follow_request){
             toot.setVisibility(View.GONE);
             DisplayFollowRequestSentFragment followRequestSentFragment = new DisplayFollowRequestSentFragment();

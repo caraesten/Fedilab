@@ -117,7 +117,15 @@
             android:layout_margin="@dimen/fab_margin"
             app:srcCompat="@drawable/ic_edit"
             tools:ignore="VectorDrawableCompat" />
-
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/delete_all"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@drawable/ic_delete"
+            tools:ignore="VectorDrawableCompat" />
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView

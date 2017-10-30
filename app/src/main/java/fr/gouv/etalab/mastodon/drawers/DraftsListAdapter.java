@@ -21,7 +21,6 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +30,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.TootActivity;
@@ -41,7 +39,6 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
-import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
 /**
@@ -96,26 +93,21 @@ public class DraftsListAdapter extends BaseAdapter  {
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.drawer_draft, parent, false);
             holder = new ViewHolder();
-            holder.draft_title = (TextView) convertView.findViewById(R.id.draft_title);
-            holder.draft_date = (TextView) convertView.findViewById(R.id.draft_date);
-            holder.draft_delete = (ImageView) convertView.findViewById(R.id.draft_delete);
-            holder.drafts_container = (LinearLayout) convertView.findViewById(R.id.drafts_container);
+            holder.draft_title = convertView.findViewById(R.id.draft_title);
+            holder.draft_date = convertView.findViewById(R.id.draft_date);
+            holder.draft_delete = convertView.findViewById(R.id.draft_delete);
+            holder.drafts_container = convertView.findViewById(R.id.drafts_container);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_DARK){
-            changeDrawableColor(context, R.drawable.ic_cancel,R.color.dark_text);
-        }else {
-            changeDrawableColor(context, R.drawable.ic_cancel,R.color.black);
-        }
+
+
         final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
 
         if( this.clickable){
             if (draft.getStatus().getContent().length() > 300)
-                holder.draft_title.setText(draft.getStatus().getContent().substring(0, 299) + "…");
+                holder.draft_title.setText(String.format("%s…",draft.getStatus().getContent().substring(0, 299)));
             else
                 holder.draft_title.setText(draft.getStatus().getContent());
         }else {
@@ -151,7 +143,6 @@ public class DraftsListAdapter extends BaseAdapter  {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
                             }
-
                         })
                         .show();
             }
@@ -165,32 +156,6 @@ public class DraftsListAdapter extends BaseAdapter  {
                     b.putLong("restored", draft.getId());
                     intentToot.putExtras(b);
                     context.startActivity(intentToot);
-                }
-            });
-            holder.drafts_container.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle(R.string.delete_all);
-                    builder.setIcon(android.R.drawable.ic_dialog_alert)
-                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogConfirm, int which) {
-                                    new StatusStoredDAO(context, db).removeAllDrafts();
-                                    storedStatuses = new ArrayList<>();
-                                    draftsListAdapter.notifyDataSetChanged();
-                                    dialogConfirm.dismiss();
-                                }
-                            })
-                            .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogConfirm, int which) {
-                                    dialogConfirm.dismiss();
-                                }
-                            })
-                            .show();
-
-                    return false;
                 }
             });
         }
