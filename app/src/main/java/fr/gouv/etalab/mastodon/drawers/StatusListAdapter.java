@@ -838,6 +838,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         context.startActivity(intent);
                     }
                 });
+                if( theme == Helper.THEME_LIGHT){
+                    holder.main_container.setBackgroundResource(R.color.mastodonC3__);
+                }else {
+                    holder.main_container.setBackgroundResource(R.color.mastodonC1_);
+                }
             }else {
                 if( theme == Helper.THEME_LIGHT){
                     if( position == conversationPosition){
