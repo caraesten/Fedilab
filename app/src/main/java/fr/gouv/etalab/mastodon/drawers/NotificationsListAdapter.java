@@ -335,48 +335,51 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.black));
                     holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.black));
                 }
-
-                if( status.getReblog() == null) {
-                    if (status.getMedia_attachments().size() < 1) {
-                        holder.status_document_container.setVisibility(View.GONE);
-                        holder.status_show_more.setVisibility(View.GONE);
-                    } else {
-                        //If medias are loaded without any conditions or if device is on wifi
-                        if (!status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
-                            loadAttachments(status, holder);
+                if( type.equals("favourite") || type.equals("reblog")){
+                    holder.status_document_container.setVisibility(View.GONE);
+                }else {
+                    if (status.getReblog() == null) {
+                        if (status.getMedia_attachments().size() < 1) {
+                            holder.status_document_container.setVisibility(View.GONE);
                             holder.status_show_more.setVisibility(View.GONE);
-                            status.setAttachmentShown(true);
                         } else {
-                            //Text depending if toots is sensitive or not
-                            String textShowMore = (status.isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
-                            holder.status_show_more.setText(textShowMore);
-                            if (!status.isAttachmentShown()) {
-                                holder.status_show_more.setVisibility(View.VISIBLE);
-                                holder.status_document_container.setVisibility(View.GONE);
-                            } else {
+                            //If medias are loaded without any conditions or if device is on wifi
+                            if (!status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
                                 loadAttachments(status, holder);
+                                holder.status_show_more.setVisibility(View.GONE);
+                                status.setAttachmentShown(true);
+                            } else {
+                                //Text depending if toots is sensitive or not
+                                String textShowMore = (status.isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
+                                holder.status_show_more.setText(textShowMore);
+                                if (!status.isAttachmentShown()) {
+                                    holder.status_show_more.setVisibility(View.VISIBLE);
+                                    holder.status_document_container.setVisibility(View.GONE);
+                                } else {
+                                    loadAttachments(status, holder);
+                                }
                             }
                         }
-                    }
-                }else { //Attachments for reblogs
-                    if (status.getReblog().getMedia_attachments().size() < 1) {
-                        holder.status_document_container.setVisibility(View.GONE);
-                        holder.status_show_more.setVisibility(View.GONE);
-                    } else {
-                        //If medias are loaded without any conditions or if device is on wifi
-                        if (!status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
-                            loadAttachments(status.getReblog(), holder);
+                    } else { //Attachments for reblogs
+                        if (status.getReblog().getMedia_attachments().size() < 1) {
+                            holder.status_document_container.setVisibility(View.GONE);
                             holder.status_show_more.setVisibility(View.GONE);
-                            status.getReblog().setAttachmentShown(true);
                         } else {
-                            //Text depending if toots is sensitive or not
-                            String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
-                            holder.status_show_more.setText(textShowMore);
-                            if (!status.isAttachmentShown()) {
-                                holder.status_show_more.setVisibility(View.VISIBLE);
-                                holder.status_document_container.setVisibility(View.GONE);
-                            } else {
+                            //If medias are loaded without any conditions or if device is on wifi
+                            if (!status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
                                 loadAttachments(status.getReblog(), holder);
+                                holder.status_show_more.setVisibility(View.GONE);
+                                status.getReblog().setAttachmentShown(true);
+                            } else {
+                                //Text depending if toots is sensitive or not
+                                String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
+                                holder.status_show_more.setText(textShowMore);
+                                if (!status.isAttachmentShown()) {
+                                    holder.status_show_more.setVisibility(View.VISIBLE);
+                                    holder.status_document_container.setVisibility(View.GONE);
+                                } else {
+                                    loadAttachments(status.getReblog(), holder);
+                                }
                             }
                         }
                     }
@@ -894,7 +897,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        RelativeLayout card_status_container;
+        FrameLayout card_status_container;
         TextView notification_status_content;
         TextView notification_type;
         TextView notification_account_username;
@@ -920,7 +923,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         LinearLayout status_container2;
         LinearLayout status_container3;
         LinearLayout notification_status_container;
-        FrameLayout main_container_trans;
+        RelativeLayout main_container_trans;
         ImageView status_privacy;
 
         public View getView(){
