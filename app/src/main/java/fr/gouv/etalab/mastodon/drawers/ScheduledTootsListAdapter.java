@@ -23,7 +23,6 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +31,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -109,6 +109,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
             holder.scheduled_toot_delete = convertView.findViewById(R.id.scheduled_toot_delete);
             holder.scheduled_toot_privacy = convertView.findViewById(R.id.scheduled_toot_privacy);
             holder.scheduled_toot_date = convertView.findViewById(R.id.scheduled_toot_date);
+            holder.scheduled_toot_container = convertView.findViewById(R.id.scheduled_toot_container);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -307,7 +308,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
     }
 
     private class ViewHolder {
-        CardView scheduled_toot_container;
+        LinearLayout scheduled_toot_container;
         TextView scheduled_toot_title;
         TextView scheduled_toot_date_creation;
         TextView scheduled_toot_media_count;
