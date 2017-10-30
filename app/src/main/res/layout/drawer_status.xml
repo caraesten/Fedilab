@@ -358,6 +358,8 @@
             <ProgressBar
                 android:id="@+id/loader_replies"
                 android:visibility="gone"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
                 android:indeterminate="true"

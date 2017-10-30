@@ -170,23 +170,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     }
 
     @Override
-    public void onRetrieveReplies(APIResponse apiResponse) {
+    public void onRetrieveReplies(int position, APIResponse apiResponse) {
         if( apiResponse.getError() != null || apiResponse.getStatuses() == null || apiResponse.getStatuses().size() == 0){
             return;
         }
         List<Status> modifiedStatus = apiResponse.getStatuses();
-        int position = 0;
-        if( modifiedStatus != null && modifiedStatus.size() == 1){
-            for(Status status: statuses){
-                if( status.getId().equals(modifiedStatus.get(0).getId())) {
-                    if (modifiedStatus.get(0).getReplies() != null)
-                        status.setReplies(modifiedStatus.get(0).getReplies());
-                    else
-                        status.setReplies(new ArrayList<Status>());
-                    statusListAdapter.notifyItemChanged(position);
-                }
-                position++;
-            }
+        if( statuses !=null && statuses.size() > position && modifiedStatus != null && modifiedStatus.size() == 1){
+            statuses.get(position).setReplies(modifiedStatus.get(0).getReplies());
+            statusListAdapter.notifyItemChanged(position, modifiedStatus.get(0).getReplies());
         }
     }
 
@@ -316,6 +307,48 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             return new ViewHolderEmpty(layoutInflater.inflate(R.layout.drawer_empty, parent, false));
     }
 
+    /*
+    @Override
+    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int position, List<Object> payload) {
+        if( viewHolder.getItemViewType() == DISPLAYED_STATUS) {
+            if (!payload.isEmpty()) {
+                if (payload.get(0) instanceof Integer) {
+                    final ViewHolder holder = (ViewHolder) viewHolder;
+                    final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                    final Status status = statuses.get(position);
+                    boolean showPreviewPP = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES_PP, false);
+                    if (showPreviewPP) {
+                        ArrayList<String> addedPictures = new ArrayList<>();
+                        holder.status_replies_profile_pictures.removeAllViews();
+                        int i = 0;
+                        for (Status replies : status.getReplies()) {
+                            if (i > 10)
+                                break;
+                            if (!addedPictures.contains(replies.getAccount().getAcct())) {
+                                DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(10)).cacheInMemory(false)
+                                        .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+                                ImageView imageView = new ImageView(context);
+                                imageView.setMaxHeight((int) Helper.convertDpToPixel(30, context));
+                                imageView.setMaxWidth((int) Helper.convertDpToPixel(30, context));
+                                imageLoader.displayImage(replies.getAccount().getAvatar(), imageView, options);
+                                LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                                imParams.setMargins(10, 5, 10, 5);
+                                imParams.height = (int) Helper.convertDpToPixel(30, context);
+                                imParams.width = (int) Helper.convertDpToPixel(30, context);
+                                holder.status_replies_profile_pictures.addView(imageView, imParams);
+                                i++;
+                                addedPictures.add(replies.getAccount().getAcct());
+                            }
+                        }
+                    }
+                    if (status.getReplies() != null && status.getReplies().size() > 0)
+                        holder.status_reply.setText(String.valueOf(status.getReplies().size()));
+                    holder.status_replies.setVisibility(View.VISIBLE);
+                    holder.loader_replies.setVisibility(View.GONE);
+                }
+            }
+        }
+    }*/
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, @SuppressLint("RecyclerView") final int position) {
@@ -343,7 +376,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);
                 //Retrieves attached replies to a toot
                 if (showPreview && status.getReplies() == null) {
-                    new RetrieveRepliesAsyncTask(context, status, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new RetrieveRepliesAsyncTask(context, position, status, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             }
 
