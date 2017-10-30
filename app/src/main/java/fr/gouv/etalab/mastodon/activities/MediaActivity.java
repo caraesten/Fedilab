@@ -130,7 +130,7 @@ public class MediaActivity extends AppCompatActivity  {
         if( theme == Helper.THEME_LIGHT){
             main_container_media.setBackgroundResource(R.color.mastodonC2);
         }else {
-            main_container_media.setBackgroundResource(R.color.mastodonC1__);
+            main_container_media.setBackgroundResource(R.color.black);
         }
         changeDrawableColor(getApplicationContext(), R.drawable.ic_last_page,R.color.mastodonC4);
         changeDrawableColor(getApplicationContext(), R.drawable.ic_first_page,R.color.mastodonC4);
