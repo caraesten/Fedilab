@@ -355,7 +355,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
                 boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);
                 if( showPreview){
-                    boolean showPreviewPP = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES_PP, true);
+                    boolean showPreviewPP = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES_PP, false);
                     if(  status.getReplies() == null){
                         holder.loader_replies.setVisibility(View.VISIBLE);
                     }else if(status.getReplies().size() == 0){

@@ -146,7 +146,7 @@ public class SettingsFragment extends Fragment {
         }else{
             set_preview_reply_pp_container.setVisibility(View.VISIBLE);
         }
-        boolean preview_reply_pp = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES_PP, true);
+        boolean preview_reply_pp = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES_PP, false);
         set_preview_reply_pp.setChecked(preview_reply_pp);
         set_preview_reply_pp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
