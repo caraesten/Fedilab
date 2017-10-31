@@ -46,6 +46,7 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -180,7 +181,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 754;
     private BroadcastReceiver receive_picture;
     private Account accountReply;
-    private Translate translate;
     private View popup_trans;
     private AlertDialog dialogTrans;
 
@@ -776,7 +776,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                         popup_trans = getLayoutInflater().inflate( R.layout.popup_translate, null );
                         transAlert.setView(popup_trans);
 
-                        translate = new Translate(getApplicationContext(), code, TootActivity.this).privacy(toot_content.getText().toString(), toot_cw_content.getText().toString());
+                        new Translate(getApplicationContext(), Helper.targetField.CW, code, TootActivity.this).privacy(toot_cw_content.getText().toString());
+                        new Translate(getApplicationContext(), Helper.targetField.STATUS, code, TootActivity.this).privacy(toot_content.getText().toString());
                         transAlert.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 dialog.dismiss();
@@ -786,8 +787,10 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 TextView toot_trans = popup_trans.findViewById(R.id.toot_trans);
                                 TextView cw_trans = popup_trans.findViewById(R.id.cw_trans);
-                                if( toot_trans != null)
+                                if( toot_trans != null) {
                                     toot_content.setText(toot_trans.getText().toString());
+                                    toot_content.setSelection(toot_content.getText().length());
+                                }
                                 if( cw_trans != null)
                                     toot_cw_content.setText(cw_trans.getText().toString());
                                 dialog.dismiss();
@@ -1672,16 +1675,15 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     }
 
     @Override
-    public void onTranslatedTextview(Status status, String translatedResult, Boolean error) {
+    public void onTranslatedTextview(Translate translate, Status status, String translatedResult, Boolean error) {
 
     }
 
     @Override
-    public void onTranslated(Helper.targetField targetField, String translatedResult, Boolean error) {
-
+    public void onTranslated(Translate translate, Helper.targetField targetField, String translatedResult, Boolean error) {
         try {
-            String aJsonString = new Translate(getApplicationContext(), translate).replace(translatedResult);
-            if( popup_trans != null && translate != null) {
+            String aJsonString = translate.replace(translatedResult);
+            if( popup_trans != null ) {
                 ProgressBar trans_progress_cw = popup_trans.findViewById(R.id.trans_progress_cw);
                 ProgressBar trans_progress_toot = popup_trans.findViewById(R.id.trans_progress_toot);
                 if( targetField == Helper.targetField.STATUS && trans_progress_toot != null)

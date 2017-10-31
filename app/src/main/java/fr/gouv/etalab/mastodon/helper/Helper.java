@@ -278,13 +278,15 @@ public class Helper {
             Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 
     public static final Pattern hashtagPattern = Pattern.compile("(#[\\w_À-ú-]+)");
-    public static final Pattern mentionPattern = Pattern.compile("([\\w]*@[\\w]+)");
+    public static final Pattern mentionPattern = Pattern.compile("(@[\\w]+)");
+    public static final Pattern mentionOtherInstancePattern = Pattern.compile("(@[\\w]*@[\\w.-]+)");
     public static final Pattern blacklistPattern = Pattern.compile("(%[\\w_À-ú-]+)");
 
     //Targeted field after translation
     public enum targetField{
         STATUS,
-        CW
+        CW,
+        SIMPLE
     }
 
 

@@ -118,7 +118,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private final int DISPLAYED_STATUS = 1;
     private List<Status> pins;
     private int conversationPosition;
-    private Translate translate;
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
         super();
@@ -911,7 +910,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 @Override
                 public void onClick(View v) {
                     if( !status.isTranslated() ){
-                        translate = new Translate(context, status,StatusListAdapter.this).privacy(status.getContent(), null);
+                        new Translate(context, status,StatusListAdapter.this).privacy(status.getContent());
                     }else {
                         status.setTranslationShown(!status.isTranslationShown());
                         statusListAdapter.notifyDataSetChanged();
@@ -1382,12 +1381,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     }
 
     @Override
-    public void onTranslatedTextview(Status status, String translatedResult, Boolean error) {
+    public void onTranslatedTextview(Translate translate, Status status, String translatedResult, Boolean error) {
         if( error){
             Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
         }else {
             try {
-                String aJsonString = new Translate(context, translate).replace(translatedResult);
+                String aJsonString = translate.replace(translatedResult);
                 if( aJsonString != null) {
                     status.setTranslated(true);
                     status.setTranslationShown(true);
@@ -1402,7 +1401,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     }
 
     @Override
-    public void onTranslated(Helper.targetField targetField, String content, Boolean error) {
+    public void onTranslated(Translate translate, Helper.targetField targetField, String content, Boolean error) {
     }
 
 
