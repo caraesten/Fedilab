@@ -46,7 +46,6 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -772,6 +771,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 }else {
                     picker.setStyle(R.style.AppThemeDark, R.style.AlertDialogDark);
                 }
+                if( toot_content.getText().length() == 0 && toot_cw_content.getText().length() == 0)
+                    return true;
                 picker.setListener(new CountryPickerListener() {
                     @SuppressLint("InflateParams")
                     @Override
