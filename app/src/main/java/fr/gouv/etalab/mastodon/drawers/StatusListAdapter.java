@@ -127,6 +127,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private String targetedId;
     private HashMap<String, String> urlConversion;
     private HashMap<String, String> tagConversion;
+    private HashMap<String, String> mentionConversion;
     private final int DISPLAYED_STATUS = 1;
     private List<Status> pins;
     private int conversationPosition;
@@ -931,6 +932,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         String text = spannableString.toString();
                         if( !status.isTranslated() ){
                             tagConversion = new HashMap<>();
+                            mentionConversion = new HashMap<>();
                             urlConversion = new HashMap<>();
                             Matcher matcher;
                             //Extracts urls
@@ -963,6 +965,19 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 tagConversion.put(key, value);
                                 if( value != null) {
                                     tagConversion.put(key, value);
+                                    text = text.replace(value, key);
+                                }
+                                i++;
+                            }
+                            i = 0;
+                            //Same for mentions with __m0__, __m1__, etc.
+                            matcher = Helper.mentionPattern.matcher(text);
+                            while (matcher.find()){
+                                String key = "__m" + String.valueOf(i) + "__";
+                                String value = matcher.group(0);
+                                mentionConversion.put(key, value);
+                                if( value != null) {
+                                    mentionConversion.put(key, value);
                                     text = text.replace(value, key);
                                 }
                                 i++;
@@ -1472,6 +1487,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     Map.Entry pair = (Map.Entry)itT.next();
                     aJsonString = aJsonString.replace(pair.getKey().toString(), pair.getValue().toString());
                     itT.remove();
+                }
+                Iterator itM = mentionConversion.entrySet().iterator();
+                while (itM.hasNext()) {
+                    Map.Entry pair = (Map.Entry)itM.next();
+                    aJsonString = aJsonString.replace(pair.getKey().toString(), pair.getValue().toString());
+                    itM.remove();
                 }
                 status.setTranslated(true);
                 status.setTranslationShown(true);
