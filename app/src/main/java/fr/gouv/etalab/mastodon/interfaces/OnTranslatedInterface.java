@@ -15,6 +15,7 @@
 package fr.gouv.etalab.mastodon.interfaces;
 
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.helper.Helper;
 
 /**
  * Created by Thomas on 03/07/2017.
@@ -22,4 +23,6 @@ import fr.gouv.etalab.mastodon.client.Entities.Status;
  */
 public interface OnTranslatedInterface {
     void onTranslatedTextview(Status status, String translatedResult, Boolean error);
+    void onTranslated(Helper.targetField targetField, String content, Boolean error);
+
 }

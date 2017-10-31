@@ -74,6 +74,8 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BinaryHttpResponseHandler;
+import com.mukesh.countrypicker.CountryPicker;
+import com.mukesh.countrypicker.CountryPickerListener;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -119,6 +121,7 @@ import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.drawers.AccountsReplyAdapter;
 import fr.gouv.etalab.mastodon.drawers.AccountsSearchAdapter;
 import fr.gouv.etalab.mastodon.drawers.DraftsListAdapter;
+import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.drawers.TagsSearchAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostStatusActionInterface;
@@ -130,8 +133,11 @@ import fr.gouv.etalab.mastodon.jobs.ScheduledTootsSyncJob;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
+import fr.gouv.etalab.mastodon.translation.GoogleTranslateQuery;
+import fr.gouv.etalab.mastodon.translation.YandexQuery;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
+import static fr.gouv.etalab.mastodon.activities.BaseMainActivity.currentLocale;
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
@@ -176,6 +182,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 754;
     private BroadcastReceiver receive_picture;
     private Account accountReply;
+    private String status_not_translated, status_translated, cw_not_translated, cw_translated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -755,6 +762,63 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     }
                 });
                 alert.show();
+                return true;
+            case R.id.action_translate:
+                final CountryPicker picker = CountryPicker.newInstance("Select Country");  // dialog title
+                picker.setListener(new CountryPickerListener() {
+                    @Override
+                    public void onSelectCountry(String name, String code, String dialCode, int flagDrawableResID) {
+                        picker.dismiss();
+                        AlertDialog.Builder transAlert = new AlertDialog.Builder(TootActivity.this);
+                        transAlert.setTitle(R.string.translate_toot);
+                        final TextView textView = new TextView(TootActivity.this);
+                        textView.setVisibility(View.GONE);
+                        RelativeLayout layout = new RelativeLayout(TootActivity.this);
+                        final ProgressBar progressBar = new ProgressBar(TootActivity.this);
+                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+                        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+                        //Set the padding
+                        textView.setPadding(30, 30, 30, 30);
+                        layout.addView(progressBar,params);
+                        layout.addView(textView,params);
+                        transAlert.setView(layout);
+                        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                        int translator = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
+
+                        if (translator == Helper.TRANS_YANDEX) {
+                            new YandexQuery(TootActivity.this).getYandexTranslation(Helper.targetField.STATUS, text, currentLocale);
+                        }else {
+                            while( text.charAt(text.length() -1) == '\n' && text.length() > 0)
+                                text = text.substring(0, text.length() -1);
+                            text += ".";
+                            new GoogleTranslateQuery(TootActivity.this).getGoogleTranslation(Helper.targetField.STATUS, text.trim(), currentLocale);
+                        }
+                        transAlert.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dialog.dismiss();
+                            }
+                        });
+                        transAlert.setNegativeButton(R.string.validate, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+
+                                dialog.dismiss();
+                            }
+                        });
+                        AlertDialog dialog = transAlert.create();
+                        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                            @Override
+                            public void onShow(DialogInterface dialog) {
+                                Button negativeButton = ((AlertDialog) dialog)
+                                        .getButton(AlertDialog.BUTTON_NEGATIVE);
+                                if( negativeButton != null)
+                                    negativeButton.setEnabled(false);
+                            }
+                        });
+                        transAlert.show();
+                    }
+                });
+                picker.show(getSupportFragmentManager(), "COUNTRY_PICKER");
+
                 return true;
             case R.id.action_microphone:
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);

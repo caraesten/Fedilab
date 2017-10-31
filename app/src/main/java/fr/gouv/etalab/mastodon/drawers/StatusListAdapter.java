@@ -42,7 +42,6 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
-import android.util.Patterns;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -92,6 +91,7 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.client.Entities.Translate;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -100,8 +100,6 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
-import fr.gouv.etalab.mastodon.translation.GoogleTranslateQuery;
-import fr.gouv.etalab.mastodon.translation.YandexQuery;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
@@ -125,13 +123,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private StatusListAdapter statusListAdapter;
     private RetrieveFeedsAsyncTask.Type type;
     private String targetedId;
-    private HashMap<String, String> urlConversion;
-    private HashMap<String, String> tagConversion;
-    private HashMap<String, String> mentionConversion;
-    private HashMap<String, String> blacklistConversion;
     private final int DISPLAYED_STATUS = 1;
     private List<Status> pins;
     private int conversationPosition;
+    private Translate translate;
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
         super();
@@ -923,95 +918,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_translate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    try {
-                        SpannableString spannableString;
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                            spannableString = new SpannableString(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
-                        else
-                            //noinspection deprecation
-                            spannableString = new SpannableString(Html.fromHtml(status.getContent()));
-                        String text = spannableString.toString();
-                        if( !status.isTranslated() ){
-                            tagConversion = new HashMap<>();
-                            mentionConversion = new HashMap<>();
-                            urlConversion = new HashMap<>();
-                            blacklistConversion = new HashMap<>();
-                            Matcher matcher;
-                            //Extracts urls
-                            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
-                                matcher = Patterns.WEB_URL.matcher(spannableString.toString());
-                            else
-                                matcher = Helper.urlPattern.matcher(spannableString.toString());
-                            int i = 0;
-                            //replaces them by a kind of variable which shouldn't be translated ie: __u0__, __u1__, etc.
-                            while (matcher.find()){
-                                String key = "__u" + String.valueOf(i) + "__";
-                                String value = matcher.group(0);
-                                int end = matcher.end();
-                                if (spannableString.length() > end && spannableString.charAt(end) == '/') {
-                                    text = spannableString.toString().substring(0, end).
-                                            concat(spannableString.toString().substring(end+1, spannableString.length()));
-                                }
-                                if( value != null) {
-                                    urlConversion.put(key, value);
-                                    text = text.replace(value, key);
-                                }
-                                i++;
-                            }
-                            i = 0;
-                            //Same for tags with __t0__, __t1__, etc.
-                            matcher = Helper.hashtagPattern.matcher(text);
-                            while (matcher.find()){
-                                String key = "__t" + String.valueOf(i) + "__";
-                                String value = matcher.group(0);
-                                tagConversion.put(key, value);
-                                if( value != null) {
-                                    tagConversion.put(key, value);
-                                    text = text.replace(value, key);
-                                }
-                                i++;
-                            }
-                            i = 0;
-                            //Same for mentions with __m0__, __m1__, etc.
-                            matcher = Helper.mentionPattern.matcher(text);
-                            while (matcher.find()){
-                                String key = "__m" + String.valueOf(i) + "__";
-                                String value = matcher.group(0);
-                                mentionConversion.put(key, value);
-                                if( value != null) {
-                                    mentionConversion.put(key, value);
-                                    text = text.replace(value, key);
-                                }
-                                i++;
-                            }
-                            i = 0;
-                            //Same for blacklisted words (ie: starting with %) with __b0__, __b1__, etc.
-                            matcher = Helper.blacklistPattern.matcher(text);
-                            while (matcher.find()){
-                                String key = "__b" + String.valueOf(i) + "__";
-                                String value = matcher.group(0);
-                                blacklistConversion.put(key, value);
-                                if( value != null) {
-                                    blacklistConversion.put(key, value);
-                                    text = text.replace(value, key);
-                                }
-                                i++;
-                            }
-                            if (translator == Helper.TRANS_YANDEX)
-                                new YandexQuery(StatusListAdapter.this).getYandexTextview(status, text, currentLocale);
-                            else if( translator == Helper.TRANS_GOOGLE) {
-
-                                while( text.charAt(text.length() -1) == '\n' && text.length() > 0)
-                                    text = text.substring(0, text.length() -1);
-                                text += ".";
-                                new GoogleTranslateQuery(StatusListAdapter.this).getGoogleTextview(status, text.trim(), currentLocale);
-                            }
-                        }else {
-                            status.setTranslationShown(!status.isTranslationShown());
-                            statusListAdapter.notifyDataSetChanged();
-                        }
-                    } catch (JSONException e) {
-                        Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                    SpannableString spannableString;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                        spannableString = new SpannableString(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
+                    else
+                        //noinspection deprecation
+                        spannableString = new SpannableString(Html.fromHtml(status.getContent()));
+                    String text = spannableString.toString();
+                    if( !status.isTranslated() ){
+                        translate = new Translate(context, StatusListAdapter.this).privacy(text, null);
+                    }else {
+                        status.setTranslationShown(!status.isTranslationShown());
+                        statusListAdapter.notifyDataSetChanged();
                     }
                 }
             });
@@ -1483,6 +1401,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         if( error){
             Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
         }else {
+            HashMap<String, String> urlConversion = translate.getUrlConversion();
+            HashMap<String, String> tagConversion = translate.getTagConversion();
+            HashMap<String, String> mentionConversion = translate.getMentionConversion();
+            HashMap<String, String> blacklistConversion = translate.getBlacklistConversion();
             try {
                 String aJsonString = null;
                 if (translator == Helper.TRANS_YANDEX)
@@ -1524,6 +1446,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    @Override
+    public void onTranslated(Helper.targetField targetField, String content, Boolean error) {
+
     }
 
     private String yandexTranslateToText(String text) throws JSONException, UnsupportedEncodingException{

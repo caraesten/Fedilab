@@ -3,9 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_view_reply"
-        android:title="@string/microphone"
+        android:title="@string/show_reply"
         android:icon="@drawable/ic_visibility"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_translate"
+        android:title="@string/translate_toot"
+        android:icon="@drawable/ic_g_translate"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_microphone"
         android:title="@string/microphone"

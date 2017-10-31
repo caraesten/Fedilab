@@ -19,6 +19,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.json.JSONException;
 import cz.msebera.android.httpclient.Header;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
 
 /**
@@ -50,6 +51,28 @@ public class GoogleTranslateQuery {
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
                 listener.onTranslatedTextview(status,  null, true);
+            }
+
+        });
+    }
+
+
+    public void getGoogleTranslation(final Helper.targetField target, final String text, final String toLanguage) throws JSONException {
+
+        GoogleTranslateClient.get(text, toLanguage, new AsyncHttpResponseHandler() {
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+                String str_response = new String(response);
+                listener.onTranslated(target, str_response,false);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                listener.onTranslated(target,  null, true);
             }
 
         });

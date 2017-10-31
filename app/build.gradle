@@ -43,6 +43,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.0'
     implementation 'org.jsoup:jsoup:1.10.3'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.github.mukeshsolanki:country-picker-android:1.1.9'
     safetynetImplementation 'com.google.android.gms:play-services-safetynet:11.4.2'
     safetynetImplementation 'io.github.kobakei:ratethisapp:1.2.0'
 }
