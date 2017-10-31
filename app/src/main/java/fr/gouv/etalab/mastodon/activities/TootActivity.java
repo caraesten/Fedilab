@@ -765,6 +765,13 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 return true;
             case R.id.action_translate:
                 final CountryPicker picker = CountryPicker.newInstance("Select Country");  // dialog title
+                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                if( theme == Helper.THEME_LIGHT){
+                    picker.setStyle(R.style.AppTheme, R.style.AlertDialog);
+                }else {
+                    picker.setStyle(R.style.AppThemeDark, R.style.AlertDialogDark);
+                }
                 picker.setListener(new CountryPickerListener() {
                     @SuppressLint("InflateParams")
                     @Override
@@ -812,7 +819,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     }
                 });
                 picker.show(getSupportFragmentManager(), "COUNTRY_PICKER");
-
                 return true;
             case R.id.action_microphone:
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
