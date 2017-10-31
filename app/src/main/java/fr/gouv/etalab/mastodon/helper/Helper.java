@@ -279,6 +279,7 @@ public class Helper {
 
     public static final Pattern hashtagPattern = Pattern.compile("(#[\\w_À-ú-]+)");
     public static final Pattern mentionPattern = Pattern.compile("([\\w]*@[\\w]+)");
+    public static final Pattern blacklistPattern = Pattern.compile("(%[\\w_À-ú-]+)");
     /**
      * Converts emojis in input to unicode
      * @param input String

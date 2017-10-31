@@ -128,6 +128,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private HashMap<String, String> urlConversion;
     private HashMap<String, String> tagConversion;
     private HashMap<String, String> mentionConversion;
+    private HashMap<String, String> blacklistConversion;
     private final int DISPLAYED_STATUS = 1;
     private List<Status> pins;
     private int conversationPosition;
@@ -934,6 +935,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             tagConversion = new HashMap<>();
                             mentionConversion = new HashMap<>();
                             urlConversion = new HashMap<>();
+                            blacklistConversion = new HashMap<>();
                             Matcher matcher;
                             //Extracts urls
                             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
@@ -978,6 +980,19 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 mentionConversion.put(key, value);
                                 if( value != null) {
                                     mentionConversion.put(key, value);
+                                    text = text.replace(value, key);
+                                }
+                                i++;
+                            }
+                            i = 0;
+                            //Same for blacklisted words (ie: starting with %) with __b0__, __b1__, etc.
+                            matcher = Helper.blacklistPattern.matcher(text);
+                            while (matcher.find()){
+                                String key = "__b" + String.valueOf(i) + "__";
+                                String value = matcher.group(0);
+                                blacklistConversion.put(key, value);
+                                if( value != null) {
+                                    blacklistConversion.put(key, value);
                                     text = text.replace(value, key);
                                 }
                                 i++;
@@ -1493,6 +1508,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     Map.Entry pair = (Map.Entry)itM.next();
                     aJsonString = aJsonString.replace(pair.getKey().toString(), pair.getValue().toString());
                     itM.remove();
+                }
+                Iterator itB = blacklistConversion.entrySet().iterator();
+                while (itB.hasNext()) {
+                    Map.Entry pair = (Map.Entry)itB.next();
+                    aJsonString = aJsonString.replace(pair.getKey().toString(), pair.getValue().toString());
+                    itB.remove();
                 }
                 status.setTranslated(true);
                 status.setTranslationShown(true);
