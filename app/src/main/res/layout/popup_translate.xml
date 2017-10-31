@@ -17,7 +17,6 @@
 -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:visibility="gone"
     android:id="@+id/trans_container"
     android:padding="10dp"
     android:orientation="vertical"
@@ -40,6 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <ProgressBar
+            android:layout_gravity="center"
             android:id="@+id/trans_progress_cw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -63,6 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <ProgressBar
+            android:layout_gravity="center"
             android:id="@+id/trans_progress_toot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

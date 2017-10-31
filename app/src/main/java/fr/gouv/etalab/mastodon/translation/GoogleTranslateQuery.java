@@ -26,16 +26,16 @@ import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
  * Created by Thomas on 12/07/2017.
  * Google client API
  */
-public class GoogleTranslateQuery {
+class GoogleTranslateQuery {
 
     private OnTranslatedInterface listener;
 
 
-    public GoogleTranslateQuery(OnTranslatedInterface listenner) {
+    GoogleTranslateQuery(OnTranslatedInterface listenner) {
         this.listener = listenner;
     }
 
-    public void getGoogleTextview(final Status status, final String text, final String toLanguage) throws JSONException {
+    void getGoogleTextview(final Status status, final String text, final String toLanguage) throws JSONException {
 
         GoogleTranslateClient.get(text, toLanguage, new AsyncHttpResponseHandler() {
             @Override
@@ -57,7 +57,7 @@ public class GoogleTranslateQuery {
     }
 
 
-    public void getGoogleTranslation(final Helper.targetField target, final String text, final String toLanguage) throws JSONException {
+    void getGoogleTranslation(final Helper.targetField target, final String text, final String toLanguage) throws JSONException {
 
         GoogleTranslateClient.get(text, toLanguage, new AsyncHttpResponseHandler() {
             @Override

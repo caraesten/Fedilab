@@ -63,19 +63,11 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -91,7 +83,7 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
-import fr.gouv.etalab.mastodon.client.Entities.Translate;
+import fr.gouv.etalab.mastodon.translation.Translate;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -919,7 +911,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 @Override
                 public void onClick(View v) {
                     if( !status.isTranslated() ){
-                        translate = new Translate(context, StatusListAdapter.this).privacy(status.getContent(), null);
+                        translate = new Translate(context, status,StatusListAdapter.this).privacy(status.getContent(), null);
                     }else {
                         status.setTranslationShown(!status.isTranslationShown());
                         statusListAdapter.notifyDataSetChanged();
@@ -1394,47 +1386,15 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         if( error){
             Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
         }else {
-            HashMap<String, String> urlConversion = translate.getUrlConversion();
-            HashMap<String, String> tagConversion = translate.getTagConversion();
-            HashMap<String, String> mentionConversion = translate.getMentionConversion();
-            HashMap<String, String> blacklistConversion = translate.getBlacklistConversion();
             try {
-                String aJsonString = null;
-                if (translator == Helper.TRANS_YANDEX)
-                    aJsonString = yandexTranslateToText(translatedResult);
-                else if( translator == Helper.TRANS_GOOGLE)
-                    aJsonString = googleTranslateToText(translatedResult);
-                if( aJsonString == null)
-                    return;
-                Iterator itU = urlConversion.entrySet().iterator();
-                while (itU.hasNext()) {
-                    Map.Entry pair = (Map.Entry)itU.next();
-                    aJsonString = aJsonString.replace(pair.getKey().toString(), pair.getValue().toString());
-                    itU.remove();
+                String aJsonString = new Translate(context, translate).replace(translatedResult);
+                if( aJsonString != null) {
+                    status.setTranslated(true);
+                    status.setTranslationShown(true);
+                    status.setContent_translated(aJsonString);
+                    statusListAdapter.notifyDataSetChanged();
                 }
-                Iterator itT = tagConversion.entrySet().iterator();
-                while (itT.hasNext()) {
-                    Map.Entry pair = (Map.Entry)itT.next();
-                    aJsonString = aJsonString.replace(pair.getKey().toString(), pair.getValue().toString());
-                    itT.remove();
-                }
-                Iterator itM = mentionConversion.entrySet().iterator();
-                while (itM.hasNext()) {
-                    Map.Entry pair = (Map.Entry)itM.next();
-                    aJsonString = aJsonString.replace(pair.getKey().toString(), pair.getValue().toString());
-                    itM.remove();
-                }
-                Iterator itB = blacklistConversion.entrySet().iterator();
-                while (itB.hasNext()) {
-                    Map.Entry pair = (Map.Entry)itB.next();
-                    aJsonString = aJsonString.replace(pair.getKey().toString(), pair.getValue().toString());
-                    itB.remove();
-                }
-                status.setTranslated(true);
-                status.setTranslationShown(true);
-                status.setContent_translated(aJsonString);
-                statusListAdapter.notifyDataSetChanged();
-            } catch (JSONException | UnsupportedEncodingException | IllegalArgumentException e) {
+            } catch (IllegalArgumentException e) {
                 e.printStackTrace();
                 Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
             }
@@ -1443,62 +1403,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     @Override
     public void onTranslated(Helper.targetField targetField, String content, Boolean error) {
-
     }
 
-    private String yandexTranslateToText(String text) throws JSONException, UnsupportedEncodingException{
-        JSONObject translationJson = new JSONObject(text);
-        JSONArray aJsonArray = translationJson.getJSONArray("text");
-        String aJsonString = aJsonArray.get(0).toString();
 
-        /* The one instance where I've seen this happen,
-            the special tag was originally a hashtag ("__t1__"),
-            that Yandex decided to change to a "__q1 - __".
-         */
-        aJsonString = aJsonString.replaceAll("__q(\\d+) - __", "__t$1__");
-
-        // Noticed this in the very same toot
-        aJsonString = aJsonString.replace("&amp;", "&");
-
-        aJsonString = URLDecoder.decode(aJsonString, "UTF-8");
-        return aJsonString;
-    }
-
-    private String googleTranslateToText(String text) throws JSONException, UnsupportedEncodingException{
-
-        int i = 0;
-        StringBuilder aJsonString = new StringBuilder();
-        while( i < new JSONArray(new JSONArray(text).get(0).toString()).length() ) {
-            aJsonString.append(new JSONArray(new JSONArray(new JSONArray(text).get(0).toString()).get(i).toString()).get(0).toString());
-            i++;
-        }
-        //Some fixes due to translation with Google
-        aJsonString = new StringBuilder(aJsonString.toString().trim());
-        aJsonString = new StringBuilder(aJsonString.toString().replace("< / ", "</"));
-        aJsonString = new StringBuilder(aJsonString.toString().replace("</ ", "</"));
-        aJsonString = new StringBuilder(aJsonString.toString().replace("> ", ">"));
-        aJsonString = new StringBuilder(aJsonString.toString().replace(" <", "<"));
-        aJsonString = new StringBuilder(aJsonString.toString().replace(" // ", "//"));
-        aJsonString = new StringBuilder(aJsonString.toString().replace("// ", "//"));
-        aJsonString = new StringBuilder(aJsonString.toString().replace(" //", "//"));
-        aJsonString = new StringBuilder(aJsonString.toString().replace(" www .", "www."));
-        aJsonString = new StringBuilder(aJsonString.toString().replace("www .", "www."));
-
-        // This one might cause more trouble than it's worth
-        aJsonString = new StringBuilder(aJsonString.toString().replaceAll("\\* \\.", "*."));
-
-        /*
-            Noticed that sometimes the special tags were getting messed up by Google,
-             might be other variants, only caught one so far.
-
-            But, pre-planning might save some time later...
-         */
-        aJsonString = new StringBuilder(aJsonString.toString().replaceAll("__\\s?([ut])\\s?(\\d+)\\s?__", "__$1$2__"));
-        aJsonString = new StringBuilder(aJsonString.toString().replaceAll("%(?![0-9a-fA-F]{2})", "%25"));
-        aJsonString = new StringBuilder(aJsonString.toString().replaceAll("\\+", "%2B"));
-        aJsonString = new StringBuilder(URLDecoder.decode(aJsonString.toString(), "UTF-8"));
-        return aJsonString.toString();
-    }
 
 
 

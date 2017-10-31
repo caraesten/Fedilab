@@ -46,7 +46,6 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -117,7 +116,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
-import fr.gouv.etalab.mastodon.client.Entities.Translate;
+import fr.gouv.etalab.mastodon.translation.Translate;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.drawers.AccountsReplyAdapter;
@@ -182,6 +181,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private BroadcastReceiver receive_picture;
     private Account accountReply;
     private Translate translate;
+    private View popup_trans;
     private AlertDialog dialogTrans;
 
     @Override
@@ -766,26 +766,26 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             case R.id.action_translate:
                 final CountryPicker picker = CountryPicker.newInstance("Select Country");  // dialog title
                 picker.setListener(new CountryPickerListener() {
+                    @SuppressLint("InflateParams")
                     @Override
                     public void onSelectCountry(String name, String code, String dialCode, int flagDrawableResID) {
                         picker.dismiss();
                         AlertDialog.Builder transAlert = new AlertDialog.Builder(TootActivity.this);
                         transAlert.setTitle(R.string.translate_toot);
 
-                        LayoutInflater inflater = getLayoutInflater();
-                        transAlert.setView(inflater.inflate(R.layout.popup_translate, null));
+                        popup_trans = getLayoutInflater().inflate( R.layout.popup_translate, null );
+                        transAlert.setView(popup_trans);
 
-                        translate = new Translate(getApplicationContext(), TootActivity.this).privacy(toot_content.getText().toString(), toot_cw_content.getText().toString());
+                        translate = new Translate(getApplicationContext(), code, TootActivity.this).privacy(toot_content.getText().toString(), toot_cw_content.getText().toString());
                         transAlert.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 dialog.dismiss();
                             }
                         });
-                        dialogTrans = transAlert.create();
                         transAlert.setNegativeButton(R.string.validate, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                TextView toot_trans = dialogTrans.findViewById(R.id.toot_trans);
-                                TextView cw_trans = dialogTrans.findViewById(R.id.cw_trans);
+                                TextView toot_trans = popup_trans.findViewById(R.id.toot_trans);
+                                TextView cw_trans = popup_trans.findViewById(R.id.cw_trans);
                                 if( toot_trans != null)
                                     toot_content.setText(toot_trans.getText().toString());
                                 if( cw_trans != null)
@@ -793,6 +793,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                                 dialog.dismiss();
                             }
                         });
+                        dialogTrans = transAlert.create();
+                        transAlert.show();
 
                         dialogTrans.setOnShowListener(new DialogInterface.OnShowListener() {
                             @Override
@@ -803,7 +805,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                                     negativeButton.setEnabled(false);
                             }
                         });
-                        transAlert.show();
+
                     }
                 });
                 picker.show(getSupportFragmentManager(), "COUNTRY_PICKER");
@@ -1675,26 +1677,38 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     }
 
     @Override
-    public void onTranslated(Helper.targetField targetField, String content, Boolean error) {
-        if( dialogTrans != null) {
-            ProgressBar trans_progress_cw = dialogTrans.findViewById(R.id.trans_progress_cw);
-            ProgressBar trans_progress_toot = dialogTrans.findViewById(R.id.trans_progress_toot);
-            if( targetField == Helper.targetField.STATUS && trans_progress_toot != null)
-                trans_progress_toot.setVisibility(View.GONE);
-            if( targetField == Helper.targetField.CW && trans_progress_cw != null)
-                trans_progress_cw.setVisibility(View.GONE);
-            LinearLayout trans_container = dialogTrans.findViewById(R.id.trans_container);
-            if( trans_container != null){
-                TextView toot_trans = dialogTrans.findViewById(R.id.toot_trans);
-                TextView cw_trans = dialogTrans.findViewById(R.id.cw_trans);
-                if( targetField == Helper.targetField.CW && cw_trans != null) {
-                    cw_trans.setText(content);
-                }else if(targetField == Helper.targetField.STATUS && toot_trans != null){
-                    toot_trans.setText(content);
+    public void onTranslated(Helper.targetField targetField, String translatedResult, Boolean error) {
+
+        try {
+            String aJsonString = new Translate(getApplicationContext(), translate).replace(translatedResult);
+            if( popup_trans != null && translate != null) {
+                ProgressBar trans_progress_cw = popup_trans.findViewById(R.id.trans_progress_cw);
+                ProgressBar trans_progress_toot = popup_trans.findViewById(R.id.trans_progress_toot);
+                if( targetField == Helper.targetField.STATUS && trans_progress_toot != null)
+                    trans_progress_toot.setVisibility(View.GONE);
+                if( targetField == Helper.targetField.CW && trans_progress_cw != null)
+                    trans_progress_cw.setVisibility(View.GONE);
+                LinearLayout trans_container = popup_trans.findViewById(R.id.trans_container);
+                if( trans_container != null && aJsonString != null){
+                    TextView toot_trans = popup_trans.findViewById(R.id.toot_trans);
+                    TextView cw_trans = popup_trans.findViewById(R.id.cw_trans);
+                    if( targetField == Helper.targetField.CW && cw_trans != null) {
+                        cw_trans.setVisibility(View.VISIBLE);
+                        cw_trans.setText(aJsonString);
+                    }else if(targetField == Helper.targetField.STATUS && toot_trans != null){
+                        toot_trans.setVisibility(View.VISIBLE);
+                        toot_trans.setText(aJsonString);
+                    }
+                }else {
+                    Toast.makeText(getApplicationContext(), R.string.toast_error_translate, Toast.LENGTH_LONG).show();
                 }
+                if(trans_progress_cw != null && trans_progress_toot != null && trans_progress_cw.getVisibility() == View.GONE && trans_progress_toot.getVisibility() == View.GONE )
+                    if( dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE) != null)
+                        dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE).setEnabled(true);
             }
-            if(trans_progress_cw != null && trans_progress_toot != null && trans_progress_cw.getVisibility() == View.GONE && trans_progress_toot.getVisibility() == View.GONE )
-                dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE).setEnabled(true);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(), R.string.toast_error_translate, Toast.LENGTH_LONG).show();
         }
 
     }

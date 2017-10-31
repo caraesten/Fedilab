@@ -13,6 +13,8 @@
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.translation;
+
+
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.json.JSONException;
 import cz.msebera.android.httpclient.Header;
@@ -24,14 +26,14 @@ import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
  * Created by Thomas on 03/07/2017.
  * Yandex client API
  */
-public class YandexQuery {
+class YandexQuery {
 
     private OnTranslatedInterface listener;
-    public YandexQuery(OnTranslatedInterface listenner) {
+    YandexQuery(OnTranslatedInterface listenner) {
         this.listener = listenner;
     }
 
-    public void getYandexTextview(final Status status, final String text, final String toLanguage) throws JSONException {
+    void getYandexTextview(final Status status, final String text, final String toLanguage) throws JSONException {
 
         YandexClient.get(text, toLanguage, new AsyncHttpResponseHandler() {
             @Override
@@ -52,7 +54,7 @@ public class YandexQuery {
 
         });
     }
-    public void getYandexTranslation(final Helper.targetField target, final String content, final String toLanguage) throws JSONException {
+    void getYandexTranslation(final Helper.targetField target, final String content, final String toLanguage) throws JSONException {
 
         YandexClient.get(content, toLanguage, new AsyncHttpResponseHandler() {
             @Override
