@@ -176,23 +176,10 @@ public class Translate {
                         new YandexQuery(this.listener).getYandexTranslation(this, Helper.targetField.STATUS, content, this.targetedLanguage);
                     if (targetField == Helper.targetField.CW)
                         new YandexQuery(this.listener).getYandexTranslation(this, Helper.targetField.CW, content, this.targetedLanguage);
-                } else {
-                    while (text.length() > 0 && text.charAt(text.length() - 1) == '\n' && text.length() > 0)
-                        text = text.substring(0, text.length() - 1);
-                    text += ".";
-                    if (content != null)
-                        new GoogleTranslateQuery(this.listener).getGoogleTranslation(this, Helper.targetField.STATUS, text, this.targetedLanguage);
-                    if (targetField == Helper.targetField.CW)
-                        new GoogleTranslateQuery(this.listener).getGoogleTranslation(this, Helper.targetField.CW, content, this.targetedLanguage);
                 }
             }else {
                 if (translator == Helper.TRANS_YANDEX) {
                     new YandexQuery(this.listener).getYandexTextview(this, this.status, content, this.targetedLanguage);
-                } else {
-                    while (text.length() > 0 && text.charAt(text.length() - 1) == '\n' && text.length() > 0)
-                        text = text.substring(0, text.length() - 1);
-                    text += ".";
-                    new GoogleTranslateQuery(this.listener).getGoogleTextview(this, this.status, text, this.targetedLanguage);
                 }
             }
         } catch (JSONException e) {
@@ -212,8 +199,6 @@ public class Translate {
         try {
             if (translator == Helper.TRANS_YANDEX)
                 aJsonString = yandexTranslateToText(translatedResult);
-            else if( translator == Helper.TRANS_GOOGLE)
-                aJsonString = googleTranslateToText(translatedResult);
             if( aJsonString == null)
                 return null;
 
@@ -281,41 +266,4 @@ public class Translate {
         aJsonString = URLDecoder.decode(aJsonString, "UTF-8");
         return aJsonString;
     }
-
-    private String googleTranslateToText(String text) throws JSONException, UnsupportedEncodingException{
-
-        int i = 0;
-        StringBuilder aJsonString = new StringBuilder();
-        while( i < new JSONArray(new JSONArray(text).get(0).toString()).length() ) {
-            aJsonString.append(new JSONArray(new JSONArray(new JSONArray(text).get(0).toString()).get(i).toString()).get(0).toString());
-            i++;
-        }
-        //Some fixes due to translation with Google
-        aJsonString = new StringBuilder(aJsonString.toString().trim());
-        aJsonString = new StringBuilder(aJsonString.toString().replace("< / ", "</"));
-        aJsonString = new StringBuilder(aJsonString.toString().replace("</ ", "</"));
-        aJsonString = new StringBuilder(aJsonString.toString().replace("> ", ">"));
-        aJsonString = new StringBuilder(aJsonString.toString().replace(" <", "<"));
-        aJsonString = new StringBuilder(aJsonString.toString().replace(" // ", "//"));
-        aJsonString = new StringBuilder(aJsonString.toString().replace("// ", "//"));
-        aJsonString = new StringBuilder(aJsonString.toString().replace(" //", "//"));
-        aJsonString = new StringBuilder(aJsonString.toString().replace(" www .", "www."));
-        aJsonString = new StringBuilder(aJsonString.toString().replace("www .", "www."));
-
-        // This one might cause more trouble than it's worth
-        aJsonString = new StringBuilder(aJsonString.toString().replaceAll("\\* \\.", "*."));
-
-        /*
-            Noticed that sometimes the special tags were getting messed up by Google,
-             might be other variants, only caught one so far.
-
-            But, pre-planning might save some time later...
-         */
-        aJsonString = new StringBuilder(aJsonString.toString().replaceAll("__\\s?([ut])\\s?(\\d+)\\s?__", "__$1$2__"));
-        aJsonString = new StringBuilder(aJsonString.toString().replaceAll("%(?![0-9a-fA-F]{2})", "%25"));
-        aJsonString = new StringBuilder(aJsonString.toString().replaceAll("\\+", "%2B"));
-        aJsonString = new StringBuilder(URLDecoder.decode(aJsonString.toString(), "UTF-8"));
-        return aJsonString.toString();
-    }
-
 }

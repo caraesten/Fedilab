@@ -190,15 +190,6 @@
                         android:text="Powered by Yandex.Translate"
                         android:layout_height="wrap_content"
                         tools:ignore="HardcodedText" />
-                    <TextView
-                        android:id="@+id/google_translate"
-                        android:layout_width="match_parent"
-                        android:padding="2dp"
-                        android:gravity="end"
-                        android:text="Powered by Google Translate"
-                        android:layout_height="wrap_content"
-                        tools:ignore="HardcodedText" />
-
                 </LinearLayout>
 
                 <LinearLayout

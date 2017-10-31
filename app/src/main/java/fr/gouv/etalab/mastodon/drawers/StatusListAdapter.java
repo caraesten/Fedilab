@@ -211,7 +211,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         LinearLayout status_container3;
         LinearLayout main_container;
         TextView yandex_translate;
-        TextView google_translate;
         LinearLayout status_action_container;
         LinearLayout status_replies;
         LinearLayout status_replies_profile_pictures;
@@ -261,7 +260,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_spoiler = itemView.findViewById(R.id.status_spoiler);
             status_spoiler_button = itemView.findViewById(R.id.status_spoiler_button);
             yandex_translate = itemView.findViewById(R.id.yandex_translate);
-            google_translate = itemView.findViewById(R.id.google_translate);
             status_replies = itemView.findViewById(R.id.status_replies);
             status_replies_profile_pictures = itemView.findViewById(R.id.status_replies_profile_pictures);
             new_element = itemView.findViewById(R.id.new_element);
@@ -438,19 +436,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             {
                 case Helper.TRANS_NONE:
                     holder.yandex_translate.setVisibility(View.GONE);
-                    holder.google_translate.setVisibility(View.GONE);
                     break;
                 case Helper.TRANS_YANDEX:
-                    holder.google_translate.setVisibility(View.GONE);
                     holder.yandex_translate.setVisibility(View.VISIBLE);
-                    break;
-                case Helper.TRANS_GOOGLE:
-                    holder.yandex_translate.setVisibility(View.GONE);
-                    holder.google_translate.setVisibility(View.VISIBLE);
                     break;
                 default:
                     holder.yandex_translate.setVisibility(View.GONE);
-                    holder.google_translate.setVisibility(View.GONE);
                     break;
             }
 
@@ -922,13 +913,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 @Override
                 public void onClick(View v) {
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://translate.yandex.com/"));
-                    context.startActivity(browserIntent);
-                }
-            });
-            holder.google_translate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://translate.google.com/"));
                     context.startActivity(browserIntent);
                 }
             });
