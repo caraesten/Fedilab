@@ -46,6 +46,7 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -116,12 +117,12 @@ import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
+import fr.gouv.etalab.mastodon.client.Entities.Translate;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.drawers.AccountsReplyAdapter;
 import fr.gouv.etalab.mastodon.drawers.AccountsSearchAdapter;
 import fr.gouv.etalab.mastodon.drawers.DraftsListAdapter;
-import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.drawers.TagsSearchAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostStatusActionInterface;
@@ -129,15 +130,13 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountsReplyInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
 import fr.gouv.etalab.mastodon.jobs.ScheduledTootsSyncJob;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
-import fr.gouv.etalab.mastodon.translation.GoogleTranslateQuery;
-import fr.gouv.etalab.mastodon.translation.YandexQuery;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
-import static fr.gouv.etalab.mastodon.activities.BaseMainActivity.currentLocale;
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
@@ -147,7 +146,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Toot activity class
  */
 
-public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveAccountsReplyInterface {
+public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveAccountsReplyInterface, OnTranslatedInterface {
 
 
     private String visibility;
@@ -182,7 +181,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 754;
     private BroadcastReceiver receive_picture;
     private Account accountReply;
-    private String status_not_translated, status_translated, cw_not_translated, cw_translated;
+    private Translate translate;
+    private AlertDialog dialogTrans;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -771,41 +771,30 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                         picker.dismiss();
                         AlertDialog.Builder transAlert = new AlertDialog.Builder(TootActivity.this);
                         transAlert.setTitle(R.string.translate_toot);
-                        final TextView textView = new TextView(TootActivity.this);
-                        textView.setVisibility(View.GONE);
-                        RelativeLayout layout = new RelativeLayout(TootActivity.this);
-                        final ProgressBar progressBar = new ProgressBar(TootActivity.this);
-                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
-                        params.addRule(RelativeLayout.CENTER_IN_PARENT);
-                        //Set the padding
-                        textView.setPadding(30, 30, 30, 30);
-                        layout.addView(progressBar,params);
-                        layout.addView(textView,params);
-                        transAlert.setView(layout);
-                        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                        int translator = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
 
-                        if (translator == Helper.TRANS_YANDEX) {
-                            new YandexQuery(TootActivity.this).getYandexTranslation(Helper.targetField.STATUS, text, currentLocale);
-                        }else {
-                            while( text.charAt(text.length() -1) == '\n' && text.length() > 0)
-                                text = text.substring(0, text.length() -1);
-                            text += ".";
-                            new GoogleTranslateQuery(TootActivity.this).getGoogleTranslation(Helper.targetField.STATUS, text.trim(), currentLocale);
-                        }
+                        LayoutInflater inflater = getLayoutInflater();
+                        transAlert.setView(inflater.inflate(R.layout.popup_translate, null));
+
+                        translate = new Translate(getApplicationContext(), TootActivity.this).privacy(toot_content.getText().toString(), toot_cw_content.getText().toString());
                         transAlert.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 dialog.dismiss();
                             }
                         });
+                        dialogTrans = transAlert.create();
                         transAlert.setNegativeButton(R.string.validate, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-
+                                TextView toot_trans = dialogTrans.findViewById(R.id.toot_trans);
+                                TextView cw_trans = dialogTrans.findViewById(R.id.cw_trans);
+                                if( toot_trans != null)
+                                    toot_content.setText(toot_trans.getText().toString());
+                                if( cw_trans != null)
+                                    toot_cw_content.setText(cw_trans.getText().toString());
                                 dialog.dismiss();
                             }
                         });
-                        AlertDialog dialog = transAlert.create();
-                        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+                        dialogTrans.setOnShowListener(new DialogInterface.OnShowListener() {
                             @Override
                             public void onShow(DialogInterface dialog) {
                                 Button negativeButton = ((AlertDialog) dialog)
@@ -1678,5 +1667,35 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         } else {
             toot_content.setText(toot_content.getText().toString().replaceAll("\\s*" +acct, ""));
         }
+    }
+
+    @Override
+    public void onTranslatedTextview(Status status, String translatedResult, Boolean error) {
+
+    }
+
+    @Override
+    public void onTranslated(Helper.targetField targetField, String content, Boolean error) {
+        if( dialogTrans != null) {
+            ProgressBar trans_progress_cw = dialogTrans.findViewById(R.id.trans_progress_cw);
+            ProgressBar trans_progress_toot = dialogTrans.findViewById(R.id.trans_progress_toot);
+            if( targetField == Helper.targetField.STATUS && trans_progress_toot != null)
+                trans_progress_toot.setVisibility(View.GONE);
+            if( targetField == Helper.targetField.CW && trans_progress_cw != null)
+                trans_progress_cw.setVisibility(View.GONE);
+            LinearLayout trans_container = dialogTrans.findViewById(R.id.trans_container);
+            if( trans_container != null){
+                TextView toot_trans = dialogTrans.findViewById(R.id.toot_trans);
+                TextView cw_trans = dialogTrans.findViewById(R.id.cw_trans);
+                if( targetField == Helper.targetField.CW && cw_trans != null) {
+                    cw_trans.setText(content);
+                }else if(targetField == Helper.targetField.STATUS && toot_trans != null){
+                    toot_trans.setText(content);
+                }
+            }
+            if(trans_progress_cw != null && trans_progress_toot != null && trans_progress_cw.getVisibility() == View.GONE && trans_progress_toot.getVisibility() == View.GONE )
+                dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE).setEnabled(true);
+        }
+
     }
 }

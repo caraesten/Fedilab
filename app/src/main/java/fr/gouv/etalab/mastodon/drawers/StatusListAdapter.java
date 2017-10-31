@@ -918,15 +918,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_translate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    SpannableString spannableString;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                        spannableString = new SpannableString(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
-                    else
-                        //noinspection deprecation
-                        spannableString = new SpannableString(Html.fromHtml(status.getContent()));
-                    String text = spannableString.toString();
                     if( !status.isTranslated() ){
-                        translate = new Translate(context, StatusListAdapter.this).privacy(text, null);
+                        translate = new Translate(context, StatusListAdapter.this).privacy(status.getContent(), null);
                     }else {
                         status.setTranslationShown(!status.isTranslationShown());
                         statusListAdapter.notifyDataSetChanged();
