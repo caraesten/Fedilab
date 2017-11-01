@@ -776,11 +776,12 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     return true;
                 String dateString = sharedpreferences.getString(Helper.LAST_TRANSLATION_TIME, null);
                 if( dateString != null){
-                    Date date = Helper.stringToDate(getApplicationContext(), dateString);
-                    Date dateCompare = new Date( System.currentTimeMillis() + (TimeUnit.SECONDS.toMillis(Helper.SECONDES_BETWEEN_TRANSLATE)));
-                    if( date.before(dateCompare))
-                        Toast.makeText(getApplicationContext(),R.string.please_wait,Toast.LENGTH_SHORT).show();
+                    Date dateCompare = Helper.stringToDate(getApplicationContext(), dateString);
+                    Date date = new Date();
+                    if( date.before(dateCompare)) {
+                        Toast.makeText(getApplicationContext(), R.string.please_wait, Toast.LENGTH_SHORT).show();
                         return true;
+                    }
                 }
                 picker.setListener(new CountryPickerListener() {
                     @SuppressLint("InflateParams")
@@ -793,8 +794,16 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                         popup_trans = getLayoutInflater().inflate( R.layout.popup_translate, null );
                         transAlert.setView(popup_trans);
                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putString(Helper.LAST_TRANSLATION_TIME, Helper.dateToString(getApplicationContext(), new Date()));
+                        editor.putString(Helper.LAST_TRANSLATION_TIME, Helper.dateToString(getApplicationContext(), new Date( System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(Helper.SECONDES_BETWEEN_TRANSLATE))));
                         editor.apply();
+                        TextView yandex_translate = popup_trans.findViewById(R.id.yandex_translate);
+                        yandex_translate.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://translate.yandex.com/"));
+                                startActivity(browserIntent);
+                            }
+                        });
                         new Translate(getApplicationContext(), Helper.targetField.CW, locale, TootActivity.this).privacy(toot_cw_content.getText().toString());
                         new Translate(getApplicationContext(), Helper.targetField.STATUS, locale, TootActivity.this).privacy(toot_content.getText().toString());
                         transAlert.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {

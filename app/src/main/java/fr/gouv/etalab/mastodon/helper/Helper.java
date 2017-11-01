@@ -256,7 +256,7 @@ public class Helper {
 
     //Translate wait time
     public static final String LAST_TRANSLATION_TIME = "last_translation_time";
-    public static final int SECONDES_BETWEEN_TRANSLATE = 60;
+    public static final int SECONDES_BETWEEN_TRANSLATE = 30;
     //Intent
     public static final String INTENT_ACTION = "intent_action";
 
