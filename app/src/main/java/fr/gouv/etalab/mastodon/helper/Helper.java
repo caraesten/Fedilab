@@ -137,6 +137,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.CustomEmojiDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
@@ -1171,7 +1172,7 @@ public class Helper {
     @SuppressWarnings("SameParameterValue")
     public static SpannableString clickableElements(final Context context, String fullContent, List<Mention> mentions, final List<Emojis> emojis, final int position, boolean useHTML, final OnRetrieveEmojiInterface listener) {
         final SpannableString spannableString;
-
+        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         if( useHTML) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 spannableString = new SpannableString(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_LEGACY));
@@ -1231,6 +1232,7 @@ public class Helper {
                     .cacheOnDisk(true).resetViewBeforeLoading(true).build();
             imageLoader = ImageLoader.getInstance();
             for (final Emojis emoji : emojis) {
+                storeEmoji(context, db, emoji);
                 final String targetedEmoji = ":" + emoji.getShortcode() + ":";
                 if (spannableString.toString().contains(targetedEmoji)) {
                     //emojis can be used several times so we have to loop
@@ -1318,7 +1320,21 @@ public class Helper {
         return spannableString;
     }
 
-
+    /**
+     * Manage custom emoji to store or update them
+     * @param context Context
+     * @param db SQLiteDatabase
+     * @param emojis Emojis
+     */
+    private static void storeEmoji(Context context, SQLiteDatabase db, Emojis emojis){
+        try{
+            Emojis emoji_ = new CustomEmojiDAO(context, db).getEmoji(emojis.getShortcode());
+            if( emoji_ == null)
+                new CustomEmojiDAO(context, db).insertEmoji(emojis);
+            else
+                new CustomEmojiDAO(context, db).updateEmoji(emojis);
+        }catch (Exception ignored){}
+    }
 
     /**
      * Check if the account bio contents urls & tags and fills the content with ClickableSpan

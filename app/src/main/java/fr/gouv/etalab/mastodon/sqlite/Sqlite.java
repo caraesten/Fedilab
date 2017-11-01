@@ -26,7 +26,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 @SuppressWarnings("WeakerAccess")
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 3;
+    public static final int DB_VERSION = 4;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -38,7 +38,8 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String TABLE_USER_ACCOUNT = "USER_ACCOUNT";
     //Table of stored status
     static final String TABLE_STATUSES_STORED = "STATUSES_STORED";
-
+    //Table for custom emoji
+    static final String TABLE_CUSTOM_EMOJI = "CUSTOM_EMOJI";
 
     public static final String COL_USER_ID = "USER_ID";
     public static final String COL_USERNAME = "USERNAME";
@@ -87,6 +88,13 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_SENT + " INTEGER NOT NULL, " + COL_DATE_SENT + " TEXT)";
 
 
+    public static final String COL_SHORTCODE = "SHORTCODE";
+    public static final String COL_URL_STATIC = "URL_STATIC";
+    private final String CREATE_TABLE_CUSTOM_EMOJI = "CREATE TABLE " + TABLE_CUSTOM_EMOJI + " ("
+            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COL_SHORTCODE + " TEXT NOT NULL, " + COL_INSTANCE + " TEXT NOT NULL, "
+            + COL_URL + " TEXT NOT NULL, " + COL_URL_STATIC + " TEXT NOT NULL, "  + COL_DATE_CREATION + " TEXT NOT NULL)";
+
     public Sqlite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
@@ -114,6 +122,8 @@ public class Sqlite extends SQLiteOpenHelper {
             case 2:
                 db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATUSES_STORED);
                 db.execSQL(CREATE_TABLE_STATUSES_STORED);
+            case 3:
+                db.execSQL(CREATE_TABLE_CUSTOM_EMOJI);
             default:
                 break;
         }
