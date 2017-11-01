@@ -1187,8 +1187,8 @@ public class API {
      * @param since_id String since max
      * @return APIResponse
      */
-    public APIResponse getNotificationsSince(String since_id){
-        return getNotifications(null, since_id, notificationPerPage);
+    public APIResponse getNotificationsSince(String since_id, boolean display){
+        return getNotifications(null, since_id, notificationPerPage, display);
     }
 
     /**
@@ -1196,8 +1196,8 @@ public class API {
      * @param since_id String since max
      * @return APIResponse
      */
-    public APIResponse getNotificationsSince(String since_id, int notificationPerPage){
-        return getNotifications(null, since_id, notificationPerPage);
+    public APIResponse getNotificationsSince(String since_id, int notificationPerPage, boolean display){
+        return getNotifications(null, since_id, notificationPerPage, display);
     }
 
     /**
@@ -1205,8 +1205,8 @@ public class API {
      * @param max_id String id max
      * @return APIResponse
      */
-    public APIResponse getNotifications(String max_id){
-        return getNotifications(max_id, null, notificationPerPage);
+    public APIResponse getNotifications(String max_id, boolean display){
+        return getNotifications(max_id, null, notificationPerPage, display);
     }
     /**
      * Retrieves notifications for the authenticated account *synchronously*
@@ -1215,7 +1215,7 @@ public class API {
      * @param limit int limit  - max value 40
      * @return APIResponse
      */
-    private APIResponse getNotifications(String max_id, String since_id, int limit){
+    private APIResponse getNotifications(String max_id, String since_id, int limit, boolean display){
 
         RequestParams params = new RequestParams();
         if( max_id != null )
@@ -1227,10 +1227,18 @@ public class API {
         params.put("limit",String.valueOf(limit));
 
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
-        boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
-        boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
-        boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
+        boolean notif_follow, notif_add, notif_mention, notif_share;
+        if( !display) {
+            notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
+            notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
+            notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
+            notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
+        }else {
+            notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW_FILTER, true);
+            notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD_FILTER, true);
+            notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION_FILTER, true);
+            notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE_FILTER, true);
+        }
         if( !notif_follow )
             params.add("exclude_types[]", "follow");
         if( !notif_add )

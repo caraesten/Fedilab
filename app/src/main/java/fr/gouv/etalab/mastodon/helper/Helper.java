@@ -232,6 +232,11 @@ public class Helper {
     public static final String SET_NOTIF_ASK = "set_notif_follow_ask";
     public static final String SET_NOTIF_MENTION = "set_notif_follow_mention";
     public static final String SET_NOTIF_SHARE = "set_notif_follow_share";
+    public static final String SET_NOTIF_FOLLOW_FILTER = "set_notif_follow_filter";
+    public static final String SET_NOTIF_ADD_FILTER = "set_notif_follow_add_filter";
+    public static final String SET_NOTIF_MENTION_FILTER = "set_notif_follow_mention_filter";
+    public static final String SET_NOTIF_SHARE_FILTER = "set_notif_follow_share_filter";
+
     public static final String SET_NOTIF_VALIDATION = "set_share_validation";
     public static final String SET_NOTIF_VALIDATION_FAV = "set_share_validation_fav";
     public static final String SET_WIFI_ONLY = "set_wifi_only";

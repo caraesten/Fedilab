@@ -241,10 +241,10 @@ public abstract class BaseMainActivity extends AppCompatActivity
                     final MenuItem itemFollow = menu.findItem(R.id.action_follow);
                     final MenuItem itemMention = menu.findItem(R.id.action_mention);
                     final MenuItem itemBoost = menu.findItem(R.id.action_boost);
-                    notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
-                    notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
-                    notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
-                    notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
+                    notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW_FILTER, true);
+                    notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD_FILTER, true);
+                    notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION_FILTER, true);
+                    notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE_FILTER, true);
                     itemFavourite.setChecked(notif_add);
                     itemFollow.setChecked(notif_follow);
                     itemMention.setChecked(notif_mention);
@@ -275,28 +275,28 @@ public abstract class BaseMainActivity extends AppCompatActivity
                                 case R.id.action_favorite:
                                     SharedPreferences.Editor editor = sharedpreferences.edit();
                                     notif_add = !notif_add;
-                                    editor.putBoolean(Helper.SET_NOTIF_ADD, notif_add);
+                                    editor.putBoolean(Helper.SET_NOTIF_ADD_FILTER, notif_add);
                                     itemFavourite.setChecked(notif_add);
                                     editor.apply();
                                     break;
                                 case R.id.action_follow:
                                     editor = sharedpreferences.edit();
                                     notif_follow = !notif_follow;
-                                    editor.putBoolean(Helper.SET_NOTIF_FOLLOW, notif_follow);
+                                    editor.putBoolean(Helper.SET_NOTIF_FOLLOW_FILTER, notif_follow);
                                     itemFollow.setChecked(notif_follow);
                                     editor.apply();
                                     break;
                                 case R.id.action_mention:
                                     editor = sharedpreferences.edit();
                                     notif_mention = !notif_mention;
-                                    editor.putBoolean(Helper.SET_NOTIF_MENTION, notif_mention);
+                                    editor.putBoolean(Helper.SET_NOTIF_MENTION_FILTER, notif_mention);
                                     itemMention.setChecked(notif_mention);
                                     editor.apply();
                                     break;
                                 case R.id.action_boost:
                                     editor = sharedpreferences.edit();
                                     notif_share = !notif_share;
-                                    editor.putBoolean(Helper.SET_NOTIF_SHARE, notif_share);
+                                    editor.putBoolean(Helper.SET_NOTIF_SHARE_FILTER, notif_share);
                                     itemBoost.setChecked(notif_share);
                                     editor.apply();
                                     break;

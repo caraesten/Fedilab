@@ -125,7 +125,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
             //Retrieve users in db that owner has.
             for (Account account: accounts) {
                 String max_id = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId(), null);
-                new RetrieveNotificationsAsyncTask(getContext(), account.getInstance(), account.getToken(), max_id, account.getAcct(), account.getId(), NotificationsSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new RetrieveNotificationsAsyncTask(getContext(), false, account.getInstance(), account.getToken(), max_id, account.getAcct(), account.getId(), NotificationsSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
     }
