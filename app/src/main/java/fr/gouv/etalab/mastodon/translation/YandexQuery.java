@@ -14,7 +14,6 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.translation;
 
-
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.json.JSONException;
 import cz.msebera.android.httpclient.Header;
@@ -34,45 +33,52 @@ class YandexQuery {
     }
 
     void getYandexTextview(final Translate translate, final Status status, final String text, final String toLanguage) throws JSONException {
+        if( text != null && text.length() > 0) {
+            YandexClient.get(text, toLanguage, new AsyncHttpResponseHandler() {
+                @Override
+                public void onStart() {
 
-        YandexClient.get(text, toLanguage, new AsyncHttpResponseHandler() {
-            @Override
-            public void onStart() {
+                }
 
-            }
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+                    String str_response = new String(response);
+                    listener.onTranslatedTextview(translate, status, str_response, false);
+                }
 
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
-                String str_response = new String(response);
-                listener.onTranslatedTextview(translate, status, str_response,false);
-            }
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                    listener.onTranslatedTextview(translate, status, null, true);
+                }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-                listener.onTranslatedTextview(translate, status,  null, true);
-            }
-
-        });
+            });
+        }else {
+            listener.onTranslatedTextview(translate, status, "", false);
+        }
     }
     void getYandexTranslation(final Translate translate, final Helper.targetField target, final String content, final String toLanguage) throws JSONException {
+        if( content != null && content.length() > 0) {
+            YandexClient.get(content, toLanguage, new AsyncHttpResponseHandler() {
+                @Override
+                public void onStart() {
 
-        YandexClient.get(content, toLanguage, new AsyncHttpResponseHandler() {
-            @Override
-            public void onStart() {
+                }
 
-            }
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+                    String str_response = new String(response);
+                    listener.onTranslated(translate, target, str_response, false);
+                }
 
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
-                String str_response = new String(response);
-                listener.onTranslated(translate, target, str_response,false);
-            }
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                    e.printStackTrace();
+                    listener.onTranslated(translate, target, null, true);
+                }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-                listener.onTranslated(translate, target,  null, true);
-            }
-
-        });
+            });
+        }else{
+            listener.onTranslated(translate, target, "", false);
+        }
     }
 }

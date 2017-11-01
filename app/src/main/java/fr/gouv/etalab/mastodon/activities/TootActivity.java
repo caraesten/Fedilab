@@ -98,6 +98,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -764,7 +765,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 return true;
             case R.id.action_translate:
                 final CountryPicker picker = CountryPicker.newInstance("Select Country");  // dialog title
-                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
                 final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
                 if( theme == Helper.THEME_LIGHT){
                     picker.setStyle(R.style.AppTheme, R.style.AlertDialog);
@@ -773,19 +774,38 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 }
                 if( toot_content.getText().length() == 0 && toot_cw_content.getText().length() == 0)
                     return true;
+                String dateString = sharedpreferences.getString(Helper.LAST_TRANSLATION_TIME, null);
+                if( dateString != null){
+                    Date dateCompare = Helper.stringToDate(getApplicationContext(), dateString);
+                    Date date = new Date();
+                    if( date.before(dateCompare)) {
+                        Toast.makeText(getApplicationContext(), R.string.please_wait, Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                }
                 picker.setListener(new CountryPickerListener() {
                     @SuppressLint("InflateParams")
                     @Override
-                    public void onSelectCountry(String name, String code, String dialCode, int flagDrawableResID) {
+                    public void onSelectCountry(String name, String code, String dialCode, String locale, int flagDrawableResID) {
                         picker.dismiss();
                         AlertDialog.Builder transAlert = new AlertDialog.Builder(TootActivity.this);
                         transAlert.setTitle(R.string.translate_toot);
 
                         popup_trans = getLayoutInflater().inflate( R.layout.popup_translate, null );
                         transAlert.setView(popup_trans);
-
-                        new Translate(getApplicationContext(), Helper.targetField.CW, code, TootActivity.this).privacy(toot_cw_content.getText().toString());
-                        new Translate(getApplicationContext(), Helper.targetField.STATUS, code, TootActivity.this).privacy(toot_content.getText().toString());
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(Helper.LAST_TRANSLATION_TIME, Helper.dateToString(getApplicationContext(), new Date( System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(Helper.SECONDES_BETWEEN_TRANSLATE))));
+                        editor.apply();
+                        TextView yandex_translate = popup_trans.findViewById(R.id.yandex_translate);
+                        yandex_translate.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://translate.yandex.com/"));
+                                startActivity(browserIntent);
+                            }
+                        });
+                        new Translate(getApplicationContext(), Helper.targetField.CW, locale, TootActivity.this).privacy(toot_cw_content.getText().toString());
+                        new Translate(getApplicationContext(), Helper.targetField.STATUS, locale, TootActivity.this).privacy(toot_content.getText().toString());
                         transAlert.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 dialog.dismiss();
@@ -1689,7 +1709,11 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     @Override
     public void onTranslated(Translate translate, Helper.targetField targetField, String translatedResult, Boolean error) {
         try {
-            String aJsonString = translate.replace(translatedResult);
+            String aJsonString;
+            if( translatedResult != null && translatedResult.length() > 0)
+                aJsonString = translate.replace(translatedResult);
+            else
+                aJsonString = "";
             if( popup_trans != null ) {
                 ProgressBar trans_progress_cw = popup_trans.findViewById(R.id.trans_progress_cw);
                 ProgressBar trans_progress_toot = popup_trans.findViewById(R.id.trans_progress_toot);

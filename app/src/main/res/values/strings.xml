@@ -67,6 +67,8 @@
     <string name="show_boosts">Show boosts</string>
     <string name="show_replies">Show replies</string>
     <string name="action_open_in_web">Open in browser</string>
+    <string name="translate">Translate</string>
+    <string name="please_wait">Please, wait few seconds before making this action.</string>
     <!--- Menu -->
     <string name="home_menu">Home</string>
     <string name="local_menu">Local timeline</string>

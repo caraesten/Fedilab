@@ -168,19 +168,10 @@ public class Translate {
                 }
                 i++;
             }
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-            int translator = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
             if( status == null) {
-                if (translator == Helper.TRANS_YANDEX) {
-                    if (content != null)
-                        new YandexQuery(this.listener).getYandexTranslation(this, Helper.targetField.STATUS, content, this.targetedLanguage);
-                    if (targetField == Helper.targetField.CW)
-                        new YandexQuery(this.listener).getYandexTranslation(this, Helper.targetField.CW, content, this.targetedLanguage);
-                }
+                new YandexQuery(this.listener).getYandexTranslation(this,targetField, content, this.targetedLanguage);
             }else {
-                if (translator == Helper.TRANS_YANDEX) {
-                    new YandexQuery(this.listener).getYandexTextview(this, this.status, content, this.targetedLanguage);
-                }
+                new YandexQuery(this.listener).getYandexTextview(this, this.status, content, this.targetedLanguage);
             }
         } catch (JSONException e) {
             Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
@@ -250,20 +241,23 @@ public class Translate {
     }
 
     private String yandexTranslateToText(String text) throws JSONException, UnsupportedEncodingException{
-        JSONObject translationJson = new JSONObject(text);
-        JSONArray aJsonArray = translationJson.getJSONArray("text");
-        String aJsonString = aJsonArray.get(0).toString();
+        String aJsonString = null;
+        if( text !=null) {
+            JSONObject translationJson = new JSONObject(text);
+            JSONArray aJsonArray = translationJson.getJSONArray("text");
+            aJsonString = aJsonArray.get(0).toString();
 
         /* The one instance where I've seen this happen,
             the special tag was originally a hashtag ("__t1__"),
             that Yandex decided to change to a "__q1 - __".
          */
-        aJsonString = aJsonString.replaceAll("__q(\\d+) - __", "__t$1__");
+            aJsonString = aJsonString.replaceAll("__q(\\d+) - __", "__t$1__");
 
-        // Noticed this in the very same toot
-        aJsonString = aJsonString.replace("&amp;", "&");
+            // Noticed this in the very same toot
+            aJsonString = aJsonString.replace("&amp;", "&");
 
-        aJsonString = URLDecoder.decode(aJsonString, "UTF-8");
+            aJsonString = URLDecoder.decode(aJsonString, "UTF-8");
+        }
         return aJsonString;
     }
 }
