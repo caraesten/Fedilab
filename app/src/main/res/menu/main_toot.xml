@@ -7,15 +7,15 @@
         android:icon="@drawable/ic_visibility"
         app:showAsAction="always" />
     <item
-        android:id="@+id/action_translate"
-        android:title="@string/translate_toot"
-        android:icon="@drawable/ic_g_translate"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/action_microphone"
         android:title="@string/microphone"
         android:icon="@drawable/ic_mic"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_translate"
+        android:title="@string/translate"
+        android:icon="@drawable/ic_g_translate"
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_store"
         android:title="@string/save"

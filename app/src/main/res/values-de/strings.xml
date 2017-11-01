@@ -427,4 +427,5 @@
     <string name="action_open_in_web">Im Browser öffnen</string>
     <string name="select_accounts">Select some accounts</string>
     <string name="upload_form_description">Für Menschen mit Sehbehinderung beschreiben</string>
+    <string name="translate">Translate</string>
 </resources>
