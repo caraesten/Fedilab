@@ -598,7 +598,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 if( currentCursorPosition- (searchLength-1) < 0 || currentCursorPosition == 0 || currentCursorPosition > s.toString().length())
                     return;
                 Matcher m, mt;
-
                 if( s.toString().charAt(0) == '@')
                     m = sPattern.matcher(s.toString().substring(currentCursorPosition- searchLength, currentCursorPosition));
                 else
@@ -1423,13 +1422,46 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     }
 
     @Override
-    public void onRetrieveSearchEmoji(List<Emojis> emojis) {
+    public void onRetrieveSearchEmoji(final List<Emojis> emojis) {
         if( pp_progress != null && pp_actionBar != null) {
             pp_progress.setVisibility(View.GONE);
             pp_actionBar.setVisibility(View.VISIBLE);
         }
         if( emojis != null && emojis.size() > 0){
-            EmojisSearchAdapter tagsSearchAdapter = new EmojisSearchAdapter(TootActivity.this, emojis);
+            EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(TootActivity.this, emojis);
+            toot_content.setThreshold(1);
+            toot_content.setAdapter(emojisSearchAdapter);
+            final String oldContent = toot_content.getText().toString();
+            String[] searchA = oldContent.substring(0,currentCursorPosition).split(":");
+            final String search = searchA[searchA.length-1];
+            toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String shortcode = emojis.get(position).getShortcode();
+                    String deltaSearch = "";
+                    if( currentCursorPosition-searchLength > 0 && currentCursorPosition < oldContent.length() )
+                        deltaSearch = oldContent.substring(currentCursorPosition-searchLength, currentCursorPosition);
+                    else {
+                        if( currentCursorPosition >= oldContent.length() )
+                            deltaSearch = oldContent.substring(currentCursorPosition-searchLength, oldContent.length());
+                    }
+
+                    if( !search.equals(""))
+                        deltaSearch = deltaSearch.replace(":"+search,"");
+                    String newContent = oldContent.substring(0,currentCursorPosition-searchLength);
+                    newContent += deltaSearch;
+                    newContent += ":" + shortcode + ": ";
+                    int newPosition = newContent.length();
+                    if( currentCursorPosition < oldContent.length() - 1)
+                        newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
+                    toot_content.setText(newContent);
+                    toot_space_left.setText(String.valueOf(toot_content.length()));
+                    toot_content.setSelection(newPosition);
+                    EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(TootActivity.this, new ArrayList<Emojis>());
+                    toot_content.setThreshold(1);
+                    toot_content.setAdapter(emojisSearchAdapter);
+                }
+            });
         }
     }
 
