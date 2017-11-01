@@ -81,6 +81,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveRepliesAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
+import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.translation.Translate;
@@ -1362,6 +1363,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             statuses.get(position).setEmojiFound(true);
             statusListAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onRetrieveSearchEmoji(List<Emojis> emojis) {
+
     }
 
     @Override

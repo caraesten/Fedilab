@@ -45,6 +45,7 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -105,6 +106,7 @@ import java.util.regex.Pattern;
 import cz.msebera.android.httpclient.Header;
 import fr.gouv.etalab.mastodon.asynctasks.PostStatusAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsForReplyAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveEmojiAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateDescriptionAttachmentAsyncTask;
@@ -112,11 +114,14 @@ import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
+import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
+import fr.gouv.etalab.mastodon.drawers.EmojisSearchAdapter;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.translation.Translate;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
@@ -146,7 +151,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Toot activity class
  */
 
-public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveAccountsReplyInterface, OnTranslatedInterface {
+public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveAccountsReplyInterface, OnTranslatedInterface, OnRetrieveEmojiInterface {
 
 
     private String visibility;
@@ -553,6 +558,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         String patternTag = "^(.|\\s)*(#([\\w-]{2,}))$";
         final Pattern tPattern = Pattern.compile(patternTag);
 
+        String patternEmoji = "^(.|\\s)*(:([\\w_]{1,}))$";
+        final Pattern ePattern = Pattern.compile(patternEmoji);
+
         toot_cw_content.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -614,7 +622,22 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                             pp_actionBar.setVisibility(View.GONE);
                         }
                         new RetrieveSearchAsyncTask(getApplicationContext(),search,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    }else{toot_content.dismissDropDown();}
+                    }else{
+                        if( s.toString().charAt(0) == ':')
+                            mt = ePattern.matcher(s.toString().substring(currentCursorPosition- searchLength, currentCursorPosition));
+                        else
+                            mt = ePattern.matcher(s.toString().substring(currentCursorPosition- (searchLength-1), currentCursorPosition));
+                        if(mt.matches()) {
+                            String shortcode = mt.group(3);
+                            if (pp_progress != null && pp_actionBar != null) {
+                                pp_progress.setVisibility(View.VISIBLE);
+                                pp_actionBar.setVisibility(View.GONE);
+                            }
+                            new RetrieveEmojiAsyncTask(getApplicationContext(),shortcode,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }else {
+                            toot_content.dismissDropDown();
+                        }
+                    }
                 }
 
 
@@ -1395,6 +1418,22 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     }
 
     @Override
+    public void onRetrieveEmoji(int position, SpannableString spannableString, Boolean error) {
+
+    }
+
+    @Override
+    public void onRetrieveSearchEmoji(List<Emojis> emojis) {
+        if( pp_progress != null && pp_actionBar != null) {
+            pp_progress.setVisibility(View.GONE);
+            pp_actionBar.setVisibility(View.VISIBLE);
+        }
+        if( emojis != null && emojis.size() > 0){
+            EmojisSearchAdapter tagsSearchAdapter = new EmojisSearchAdapter(TootActivity.this, emojis);
+        }
+    }
+
+    @Override
     public void onRetrieveSearch(Results results, Error error) {
         if( pp_progress != null && pp_actionBar != null) {
             pp_progress.setVisibility(View.GONE);
@@ -1745,4 +1784,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         }
 
     }
+
+
 }

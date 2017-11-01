@@ -16,6 +16,10 @@ package fr.gouv.etalab.mastodon.interfaces;
 
 import android.text.SpannableString;
 
+import java.util.List;
+
+import fr.gouv.etalab.mastodon.client.Entities.Emojis;
+
 
 /**
  * Created by Thomas on 19/10/2017.
@@ -23,4 +27,5 @@ import android.text.SpannableString;
  */
 public interface OnRetrieveEmojiInterface {
     void onRetrieveEmoji(int position, SpannableString spannableString, Boolean error);
+    void onRetrieveSearchEmoji(List<Emojis> emojis);
 }

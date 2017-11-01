@@ -127,6 +127,20 @@ public class CustomEmojiDAO {
     }
 
 
+    /**
+     * Returns an emoji by its shortcode in db
+     * @return emoji Emojis
+     */
+    public List<Emojis> getEmojiStartingBy(String shortCode){
+        try {
+            String instance = Helper.getLiveInstance(context);
+            Cursor c = db.query(Sqlite.TABLE_CUSTOM_EMOJI, null, Sqlite.COL_SHORTCODE + " LIKE \"%" + shortCode + "%\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance+ "\"", null, null, null, null, null);
+            return cursorToListEmojis(c);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     /***
      * Method to hydrate emoji from database
      * @param c Cursor

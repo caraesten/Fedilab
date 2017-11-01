@@ -67,6 +67,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
+import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
@@ -892,6 +893,11 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             notifications.get(position).getStatus().setEmojiFound(true);
             notificationsListAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onRetrieveSearchEmoji(List<Emojis> emojis) {
+
     }
 
 
