@@ -765,7 +765,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 return true;
             case R.id.action_translate:
                 final CountryPicker picker = CountryPicker.newInstance("Select Country");  // dialog title
-                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
                 final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
                 if( theme == Helper.THEME_LIGHT){
                     picker.setStyle(R.style.AppTheme, R.style.AlertDialog);
@@ -792,6 +792,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
                         popup_trans = getLayoutInflater().inflate( R.layout.popup_translate, null );
                         transAlert.setView(popup_trans);
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(Helper.LAST_TRANSLATION_TIME, Helper.dateToString(getApplicationContext(), new Date()));
+                        editor.apply();
                         new Translate(getApplicationContext(), Helper.targetField.CW, locale, TootActivity.this).privacy(toot_cw_content.getText().toString());
                         new Translate(getApplicationContext(), Helper.targetField.STATUS, locale, TootActivity.this).privacy(toot_content.getText().toString());
                         transAlert.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
