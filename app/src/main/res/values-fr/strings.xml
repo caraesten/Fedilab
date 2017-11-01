@@ -435,4 +435,5 @@
     <string name="select_accounts">Sélectionnez des comptes</string>
     <string name="upload_form_description">Décrire pour les malvoyants</string>
     <string name="translate">Traduire</string>
+    <string name="please_wait">Veuillez patienter quelques secondes avant de faire cette action.</string>
 </resources>

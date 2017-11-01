@@ -428,4 +428,5 @@
     <string name="select_accounts">Select some accounts</string>
     <string name="upload_form_description">Für Menschen mit Sehbehinderung beschreiben</string>
     <string name="translate">Translate</string>
+    <string name="please_wait">Please, wait few seconds before making this action.</string>
 </resources>

@@ -254,6 +254,9 @@ public class Helper {
     public static final int MINUTES_BETWEEN_NOTIFICATIONS_REFRESH = 15;
     public static final int MINUTES_BETWEEN_HOME_TIMELINE = 30;
 
+    //Translate wait time
+    public static final String LAST_TRANSLATION_TIME = "last_translation_time";
+    public static final int SECONDES_BETWEEN_TRANSLATE = 60;
     //Intent
     public static final String INTENT_ACTION = "intent_action";
 
