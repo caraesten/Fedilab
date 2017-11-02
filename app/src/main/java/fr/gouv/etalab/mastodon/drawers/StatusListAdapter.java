@@ -42,7 +42,6 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
-import android.util.Patterns;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -64,19 +63,11 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -90,8 +81,10 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveRepliesAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
+import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.translation.Translate;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -100,8 +93,6 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
-import fr.gouv.etalab.mastodon.translation.GoogleTranslateQuery;
-import fr.gouv.etalab.mastodon.translation.YandexQuery;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
@@ -125,8 +116,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private StatusListAdapter statusListAdapter;
     private RetrieveFeedsAsyncTask.Type type;
     private String targetedId;
-    private HashMap<String, String> urlConversion;
-    private HashMap<String, String> tagConversion;
     private final int DISPLAYED_STATUS = 1;
     private List<Status> pins;
     private int conversationPosition;
@@ -223,7 +212,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         LinearLayout status_container3;
         LinearLayout main_container;
         TextView yandex_translate;
-        TextView google_translate;
         LinearLayout status_action_container;
         LinearLayout status_replies;
         LinearLayout status_replies_profile_pictures;
@@ -273,7 +261,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_spoiler = itemView.findViewById(R.id.status_spoiler);
             status_spoiler_button = itemView.findViewById(R.id.status_spoiler_button);
             yandex_translate = itemView.findViewById(R.id.yandex_translate);
-            google_translate = itemView.findViewById(R.id.google_translate);
             status_replies = itemView.findViewById(R.id.status_replies);
             status_replies_profile_pictures = itemView.findViewById(R.id.status_replies_profile_pictures);
             new_element = itemView.findViewById(R.id.new_element);
@@ -450,19 +437,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             {
                 case Helper.TRANS_NONE:
                     holder.yandex_translate.setVisibility(View.GONE);
-                    holder.google_translate.setVisibility(View.GONE);
                     break;
                 case Helper.TRANS_YANDEX:
-                    holder.google_translate.setVisibility(View.GONE);
                     holder.yandex_translate.setVisibility(View.VISIBLE);
-                    break;
-                case Helper.TRANS_GOOGLE:
-                    holder.yandex_translate.setVisibility(View.GONE);
-                    holder.google_translate.setVisibility(View.VISIBLE);
                     break;
                 default:
                     holder.yandex_translate.setVisibility(View.GONE);
-                    holder.google_translate.setVisibility(View.GONE);
                     break;
             }
 
@@ -470,11 +450,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
             if( theme == Helper.THEME_DARK){
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
-                changeDrawableColor(context, R.drawable.ic_more_horiz,R.color.dark_icon);
-                changeDrawableColor(context, R.drawable.ic_public,R.color.dark_icon);
-                changeDrawableColor(context, R.drawable.ic_lock_open,R.color.dark_icon);
-                changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.dark_icon);
-                changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_icon);
+                changeDrawableColor(context, holder.status_more, R.color.dark_icon);
+                changeDrawableColor(context, holder.status_privacy, R.color.dark_icon);
                 changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
                 changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
                 changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.dark_icon);
@@ -484,10 +461,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }else {
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_more_horiz,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_public,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_lock_open,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.black);
+                changeDrawableColor(context, holder.status_more, R.color.black);
+                changeDrawableColor(context, holder.status_privacy, R.color.black);
                 changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_star_border,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.black);
@@ -643,18 +618,34 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }else {
                     holder.status_translate.setVisibility(View.GONE);
                 }
-                if( status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()){
-                    holder.status_content_container.setVisibility(View.GONE);
-                    holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                    holder.status_spoiler_button.setVisibility(View.VISIBLE);
-                    holder.status_spoiler.setVisibility(View.VISIBLE);
-                }else {
-                    holder.status_spoiler_button.setVisibility(View.GONE);
-                    holder.status_content_container.setVisibility(View.VISIBLE);
-                    if( status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 )
+                if( status.getReblog() == null) {
+                    if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()) {
+                        holder.status_content_container.setVisibility(View.GONE);
                         holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                    else
-                        holder.status_spoiler_container.setVisibility(View.GONE);
+                        holder.status_spoiler_button.setVisibility(View.VISIBLE);
+                        holder.status_spoiler.setVisibility(View.VISIBLE);
+                    } else {
+                        holder.status_spoiler_button.setVisibility(View.GONE);
+                        holder.status_content_container.setVisibility(View.VISIBLE);
+                        if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0)
+                            holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                        else
+                            holder.status_spoiler_container.setVisibility(View.GONE);
+                    }
+                }else {
+                    if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()) {
+                        holder.status_content_container.setVisibility(View.GONE);
+                        holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_button.setVisibility(View.VISIBLE);
+                        holder.status_spoiler.setVisibility(View.VISIBLE);
+                    } else {
+                        holder.status_spoiler_button.setVisibility(View.GONE);
+                        holder.status_content_container.setVisibility(View.VISIBLE);
+                        if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0)
+                            holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                        else
+                            holder.status_spoiler_container.setVisibility(View.GONE);
+                    }
                 }
                 if( status.getSpoiler_text() != null)
                     holder.status_spoiler.setText(status.getSpoiler_text());
@@ -921,67 +912,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_translate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    try {
-                        SpannableString spannableString;
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                            spannableString = new SpannableString(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
-                        else
-                            //noinspection deprecation
-                            spannableString = new SpannableString(Html.fromHtml(status.getContent()));
-                        String text = spannableString.toString();
-                        if( !status.isTranslated() ){
-                            tagConversion = new HashMap<>();
-                            urlConversion = new HashMap<>();
-                            Matcher matcher;
-                            //Extracts urls
-                            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
-                                matcher = Patterns.WEB_URL.matcher(spannableString.toString());
-                            else
-                                matcher = Helper.urlPattern.matcher(spannableString.toString());
-                            int i = 0;
-                            //replaces them by a kind of variable which shouldn't be translated ie: __u0__, __u1__, etc.
-                            while (matcher.find()){
-                                String key = "__u" + String.valueOf(i) + "__";
-                                String value = matcher.group(0);
-                                int end = matcher.end();
-                                if (spannableString.length() > end && spannableString.charAt(end) == '/') {
-                                    text = spannableString.toString().substring(0, end).
-                                            concat(spannableString.toString().substring(end+1, spannableString.length()));
-                                }
-                                if( value != null) {
-                                    urlConversion.put(key, value);
-                                    text = text.replace(value, key);
-                                }
-                                i++;
-                            }
-                            i = 0;
-                            //Same for tags with __t0__, __t1__, etc.
-                            matcher = Helper.hashtagPattern.matcher(text);
-                            while (matcher.find()){
-                                String key = "__t" + String.valueOf(i) + "__";
-                                String value = matcher.group(0);
-                                tagConversion.put(key, value);
-                                if( value != null) {
-                                    tagConversion.put(key, value);
-                                    text = text.replace(value, key);
-                                }
-                                i++;
-                            }
-                            if (translator == Helper.TRANS_YANDEX)
-                                new YandexQuery(StatusListAdapter.this).getYandexTextview(status, text, currentLocale);
-                            else if( translator == Helper.TRANS_GOOGLE) {
-
-                                while( text.charAt(text.length() -1) == '\n' && text.length() > 0)
-                                    text = text.substring(0, text.length() -1);
-                                text += ".";
-                                new GoogleTranslateQuery(StatusListAdapter.this).getGoogleTextview(status, text.trim(), currentLocale);
-                            }
-                        }else {
-                            status.setTranslationShown(!status.isTranslationShown());
-                            statusListAdapter.notifyDataSetChanged();
-                        }
-                    } catch (JSONException e) {
-                        Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                    if( !status.isTranslated() ){
+                        new Translate(context, status,StatusListAdapter.this).privacy(status.getContent());
+                    }else {
+                        status.setTranslationShown(!status.isTranslationShown());
+                        statusListAdapter.notifyDataSetChanged();
                     }
                 }
             });
@@ -990,13 +925,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 @Override
                 public void onClick(View v) {
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://translate.yandex.com/"));
-                    context.startActivity(browserIntent);
-                }
-            });
-            holder.google_translate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://translate.google.com/"));
                     context.startActivity(browserIntent);
                 }
             });
@@ -1449,94 +1377,35 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     }
 
     @Override
-    public void onTranslatedTextview(Status status, String translatedResult, Boolean error) {
+    public void onRetrieveSearchEmoji(List<Emojis> emojis) {
+
+    }
+
+    @Override
+    public void onTranslatedTextview(Translate translate, Status status, String translatedResult, Boolean error) {
         if( error){
             Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
         }else {
             try {
-                String aJsonString = null;
-                if (translator == Helper.TRANS_YANDEX)
-                    aJsonString = yandexTranslateToText(translatedResult);
-                else if( translator == Helper.TRANS_GOOGLE)
-                    aJsonString = googleTranslateToText(translatedResult);
-                if( aJsonString == null)
-                    return;
-                Iterator itU = urlConversion.entrySet().iterator();
-                while (itU.hasNext()) {
-                    Map.Entry pair = (Map.Entry)itU.next();
-                    aJsonString = aJsonString.replace(pair.getKey().toString(), pair.getValue().toString());
-                    itU.remove();
+                String aJsonString = translate.replace(translatedResult);
+                if( aJsonString != null) {
+                    status.setTranslated(true);
+                    status.setTranslationShown(true);
+                    status.setContent_translated(aJsonString);
+                    statusListAdapter.notifyDataSetChanged();
                 }
-                Iterator itT = tagConversion.entrySet().iterator();
-                while (itT.hasNext()) {
-                    Map.Entry pair = (Map.Entry)itT.next();
-                    aJsonString = aJsonString.replace(pair.getKey().toString(), pair.getValue().toString());
-                    itT.remove();
-                }
-                status.setTranslated(true);
-                status.setTranslationShown(true);
-                status.setContent_translated(aJsonString);
-                statusListAdapter.notifyDataSetChanged();
-            } catch (JSONException | UnsupportedEncodingException | IllegalArgumentException e) {
+            } catch (IllegalArgumentException e) {
                 e.printStackTrace();
                 Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
             }
         }
     }
 
-    private String yandexTranslateToText(String text) throws JSONException, UnsupportedEncodingException{
-        JSONObject translationJson = new JSONObject(text);
-        JSONArray aJsonArray = translationJson.getJSONArray("text");
-        String aJsonString = aJsonArray.get(0).toString();
-
-        /* The one instance where I've seen this happen,
-            the special tag was originally a hashtag ("__t1__"),
-            that Yandex decided to change to a "__q1 - __".
-         */
-        aJsonString = aJsonString.replaceAll("__q(\\d+) - __", "__t$1__");
-
-        // Noticed this in the very same toot
-        aJsonString = aJsonString.replace("&amp;", "&");
-
-        aJsonString = URLDecoder.decode(aJsonString, "UTF-8");
-        return aJsonString;
+    @Override
+    public void onTranslated(Translate translate, Helper.targetField targetField, String content, Boolean error) {
     }
 
-    private String googleTranslateToText(String text) throws JSONException, UnsupportedEncodingException{
 
-        int i = 0;
-        StringBuilder aJsonString = new StringBuilder();
-        while( i < new JSONArray(new JSONArray(text).get(0).toString()).length() ) {
-            aJsonString.append(new JSONArray(new JSONArray(new JSONArray(text).get(0).toString()).get(i).toString()).get(0).toString());
-            i++;
-        }
-        //Some fixes due to translation with Google
-        aJsonString = new StringBuilder(aJsonString.toString().trim());
-        aJsonString = new StringBuilder(aJsonString.toString().replace("< / ", "</"));
-        aJsonString = new StringBuilder(aJsonString.toString().replace("</ ", "</"));
-        aJsonString = new StringBuilder(aJsonString.toString().replace("> ", ">"));
-        aJsonString = new StringBuilder(aJsonString.toString().replace(" <", "<"));
-        aJsonString = new StringBuilder(aJsonString.toString().replace(" // ", "//"));
-        aJsonString = new StringBuilder(aJsonString.toString().replace("// ", "//"));
-        aJsonString = new StringBuilder(aJsonString.toString().replace(" //", "//"));
-        aJsonString = new StringBuilder(aJsonString.toString().replace(" www .", "www."));
-        aJsonString = new StringBuilder(aJsonString.toString().replace("www .", "www."));
-
-        // This one might cause more trouble than it's worth
-        aJsonString = new StringBuilder(aJsonString.toString().replaceAll("\\* \\.", "*."));
-
-        /*
-            Noticed that sometimes the special tags were getting messed up by Google,
-             might be other variants, only caught one so far.
-
-            But, pre-planning might save some time later...
-         */
-        aJsonString = new StringBuilder(aJsonString.toString().replaceAll("__\\s?([ut])\\s?(\\d+)\\s?__", "__$1$2__"));
-        aJsonString = new StringBuilder(aJsonString.toString().replaceAll("%(?![0-9a-fA-F]{2})", "%25"));
-        aJsonString = new StringBuilder(aJsonString.toString().replaceAll("\\+", "%2B"));
-        aJsonString = new StringBuilder(URLDecoder.decode(aJsonString.toString(), "UTF-8"));
-        return aJsonString.toString();
-    }
 
 
 

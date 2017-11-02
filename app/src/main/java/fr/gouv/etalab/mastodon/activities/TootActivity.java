@@ -45,6 +45,7 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -74,6 +75,8 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BinaryHttpResponseHandler;
+import com.mukesh.countrypicker.CountryPicker;
+import com.mukesh.countrypicker.CountryPickerListener;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -96,12 +99,14 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cz.msebera.android.httpclient.Header;
 import fr.gouv.etalab.mastodon.asynctasks.PostStatusAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsForReplyAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveEmojiAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateDescriptionAttachmentAsyncTask;
@@ -109,11 +114,15 @@ import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
+import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
+import fr.gouv.etalab.mastodon.drawers.EmojisSearchAdapter;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
+import fr.gouv.etalab.mastodon.translation.Translate;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.drawers.AccountsReplyAdapter;
@@ -126,6 +135,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountsReplyInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
 import fr.gouv.etalab.mastodon.jobs.ScheduledTootsSyncJob;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -141,7 +151,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Toot activity class
  */
 
-public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveAccountsReplyInterface {
+public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveAccountsReplyInterface, OnTranslatedInterface, OnRetrieveEmojiInterface {
 
 
     private String visibility;
@@ -176,6 +186,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 754;
     private BroadcastReceiver receive_picture;
     private Account accountReply;
+    private View popup_trans;
+    private AlertDialog dialogTrans;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -546,6 +558,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         String patternTag = "^(.|\\s)*(#([\\w-]{2,}))$";
         final Pattern tPattern = Pattern.compile(patternTag);
 
+        String patternEmoji = "^(.|\\s)*(:([\\w_]{1,}))$";
+        final Pattern ePattern = Pattern.compile(patternEmoji);
+
         toot_cw_content.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -583,7 +598,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 if( currentCursorPosition- (searchLength-1) < 0 || currentCursorPosition == 0 || currentCursorPosition > s.toString().length())
                     return;
                 Matcher m, mt;
-
                 if( s.toString().charAt(0) == '@')
                     m = sPattern.matcher(s.toString().substring(currentCursorPosition- searchLength, currentCursorPosition));
                 else
@@ -607,7 +621,22 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                             pp_actionBar.setVisibility(View.GONE);
                         }
                         new RetrieveSearchAsyncTask(getApplicationContext(),search,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    }else{toot_content.dismissDropDown();}
+                    }else{
+                        if( s.toString().charAt(0) == ':')
+                            mt = ePattern.matcher(s.toString().substring(currentCursorPosition- searchLength, currentCursorPosition));
+                        else
+                            mt = ePattern.matcher(s.toString().substring(currentCursorPosition- (searchLength-1), currentCursorPosition));
+                        if(mt.matches()) {
+                            String shortcode = mt.group(3);
+                            if (pp_progress != null && pp_actionBar != null) {
+                                pp_progress.setVisibility(View.VISIBLE);
+                                pp_actionBar.setVisibility(View.GONE);
+                            }
+                            new RetrieveEmojiAsyncTask(getApplicationContext(),shortcode,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }else {
+                            toot_content.dismissDropDown();
+                        }
+                    }
                 }
 
 
@@ -755,6 +784,84 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     }
                 });
                 alert.show();
+                return true;
+            case R.id.action_translate:
+                final CountryPicker picker = CountryPicker.newInstance("Select Country");  // dialog title
+                final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                if( theme == Helper.THEME_LIGHT){
+                    picker.setStyle(R.style.AppTheme, R.style.AlertDialog);
+                }else {
+                    picker.setStyle(R.style.AppThemeDark, R.style.AlertDialogDark);
+                }
+                if( toot_content.getText().length() == 0 && toot_cw_content.getText().length() == 0)
+                    return true;
+                String dateString = sharedpreferences.getString(Helper.LAST_TRANSLATION_TIME, null);
+                if( dateString != null){
+                    Date dateCompare = Helper.stringToDate(getApplicationContext(), dateString);
+                    Date date = new Date();
+                    if( date.before(dateCompare)) {
+                        Toast.makeText(getApplicationContext(), R.string.please_wait, Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                }
+                picker.setListener(new CountryPickerListener() {
+                    @SuppressLint("InflateParams")
+                    @Override
+                    public void onSelectCountry(String name, String code, String dialCode, String locale, int flagDrawableResID) {
+                        picker.dismiss();
+                        AlertDialog.Builder transAlert = new AlertDialog.Builder(TootActivity.this);
+                        transAlert.setTitle(R.string.translate_toot);
+
+                        popup_trans = getLayoutInflater().inflate( R.layout.popup_translate, null );
+                        transAlert.setView(popup_trans);
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(Helper.LAST_TRANSLATION_TIME, Helper.dateToString(getApplicationContext(), new Date( System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(Helper.SECONDES_BETWEEN_TRANSLATE))));
+                        editor.apply();
+                        TextView yandex_translate = popup_trans.findViewById(R.id.yandex_translate);
+                        yandex_translate.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://translate.yandex.com/"));
+                                startActivity(browserIntent);
+                            }
+                        });
+                        new Translate(getApplicationContext(), Helper.targetField.CW, locale, TootActivity.this).privacy(toot_cw_content.getText().toString());
+                        new Translate(getApplicationContext(), Helper.targetField.STATUS, locale, TootActivity.this).privacy(toot_content.getText().toString());
+                        transAlert.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dialog.dismiss();
+                            }
+                        });
+                        transAlert.setNegativeButton(R.string.validate, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                TextView toot_trans = popup_trans.findViewById(R.id.toot_trans);
+                                TextView cw_trans = popup_trans.findViewById(R.id.cw_trans);
+                                if( toot_trans != null) {
+                                    toot_content.setText(toot_trans.getText().toString());
+                                    toot_content.setSelection(toot_content.getText().length());
+                                }
+                                if( cw_trans != null)
+                                    toot_cw_content.setText(cw_trans.getText().toString());
+                                dialog.dismiss();
+                            }
+                        });
+                        dialogTrans = transAlert.create();
+                        transAlert.show();
+
+                        dialogTrans.setOnShowListener(new DialogInterface.OnShowListener() {
+                            @Override
+                            public void onShow(DialogInterface dialog) {
+                                Button negativeButton = ((AlertDialog) dialog)
+                                        .getButton(AlertDialog.BUTTON_NEGATIVE);
+                                if( negativeButton != null)
+                                    negativeButton.setEnabled(false);
+                            }
+                        });
+
+                    }
+                });
+                picker.show(getSupportFragmentManager(), "COUNTRY_PICKER");
                 return true;
             case R.id.action_microphone:
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -1310,6 +1417,55 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     }
 
     @Override
+    public void onRetrieveEmoji(int position, SpannableString spannableString, Boolean error) {
+
+    }
+
+    @Override
+    public void onRetrieveSearchEmoji(final List<Emojis> emojis) {
+        if( pp_progress != null && pp_actionBar != null) {
+            pp_progress.setVisibility(View.GONE);
+            pp_actionBar.setVisibility(View.VISIBLE);
+        }
+        if( emojis != null && emojis.size() > 0){
+            EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(TootActivity.this, emojis);
+            toot_content.setThreshold(1);
+            toot_content.setAdapter(emojisSearchAdapter);
+            final String oldContent = toot_content.getText().toString();
+            String[] searchA = oldContent.substring(0,currentCursorPosition).split(":");
+            final String search = searchA[searchA.length-1];
+            toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String shortcode = emojis.get(position).getShortcode();
+                    String deltaSearch = "";
+                    if( currentCursorPosition-searchLength > 0 && currentCursorPosition < oldContent.length() )
+                        deltaSearch = oldContent.substring(currentCursorPosition-searchLength, currentCursorPosition);
+                    else {
+                        if( currentCursorPosition >= oldContent.length() )
+                            deltaSearch = oldContent.substring(currentCursorPosition-searchLength, oldContent.length());
+                    }
+
+                    if( !search.equals(""))
+                        deltaSearch = deltaSearch.replace(":"+search,"");
+                    String newContent = oldContent.substring(0,currentCursorPosition-searchLength);
+                    newContent += deltaSearch;
+                    newContent += ":" + shortcode + ": ";
+                    int newPosition = newContent.length();
+                    if( currentCursorPosition < oldContent.length() - 1)
+                        newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
+                    toot_content.setText(newContent);
+                    toot_space_left.setText(String.valueOf(toot_content.length()));
+                    toot_content.setSelection(newPosition);
+                    EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(TootActivity.this, new ArrayList<Emojis>());
+                    toot_content.setThreshold(1);
+                    toot_content.setAdapter(emojisSearchAdapter);
+                }
+            });
+        }
+    }
+
+    @Override
     public void onRetrieveSearch(Results results, Error error) {
         if( pp_progress != null && pp_actionBar != null) {
             pp_progress.setVisibility(View.GONE);
@@ -1615,4 +1771,51 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             toot_content.setText(toot_content.getText().toString().replaceAll("\\s*" +acct, ""));
         }
     }
+
+    @Override
+    public void onTranslatedTextview(Translate translate, Status status, String translatedResult, Boolean error) {
+
+    }
+
+    @Override
+    public void onTranslated(Translate translate, Helper.targetField targetField, String translatedResult, Boolean error) {
+        try {
+            String aJsonString;
+            if( translatedResult != null && translatedResult.length() > 0)
+                aJsonString = translate.replace(translatedResult);
+            else
+                aJsonString = "";
+            if( popup_trans != null ) {
+                ProgressBar trans_progress_cw = popup_trans.findViewById(R.id.trans_progress_cw);
+                ProgressBar trans_progress_toot = popup_trans.findViewById(R.id.trans_progress_toot);
+                if( targetField == Helper.targetField.STATUS && trans_progress_toot != null)
+                    trans_progress_toot.setVisibility(View.GONE);
+                if( targetField == Helper.targetField.CW && trans_progress_cw != null)
+                    trans_progress_cw.setVisibility(View.GONE);
+                LinearLayout trans_container = popup_trans.findViewById(R.id.trans_container);
+                if( trans_container != null && aJsonString != null){
+                    TextView toot_trans = popup_trans.findViewById(R.id.toot_trans);
+                    TextView cw_trans = popup_trans.findViewById(R.id.cw_trans);
+                    if( targetField == Helper.targetField.CW && cw_trans != null) {
+                        cw_trans.setVisibility(View.VISIBLE);
+                        cw_trans.setText(aJsonString);
+                    }else if(targetField == Helper.targetField.STATUS && toot_trans != null){
+                        toot_trans.setVisibility(View.VISIBLE);
+                        toot_trans.setText(aJsonString);
+                    }
+                }else {
+                    Toast.makeText(getApplicationContext(), R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                }
+                if(trans_progress_cw != null && trans_progress_toot != null && trans_progress_cw.getVisibility() == View.GONE && trans_progress_toot.getVisibility() == View.GONE )
+                    if( dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE) != null)
+                        dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE).setEnabled(true);
+            }
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(), R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+
 }

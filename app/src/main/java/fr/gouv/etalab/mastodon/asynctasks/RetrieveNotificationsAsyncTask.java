@@ -40,8 +40,9 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
     private String token;
     private boolean refreshData;
     private WeakReference<Context> contextReference;
+    private boolean display;
 
-    public RetrieveNotificationsAsyncTask(Context context, String instance, String token, String max_id, String acct, String userId, OnRetrieveNotificationsInterface onRetrieveNotificationsInterface){
+    public RetrieveNotificationsAsyncTask(Context context, boolean display, String instance, String token, String max_id, String acct, String userId, OnRetrieveNotificationsInterface onRetrieveNotificationsInterface){
         this.contextReference = new WeakReference<>(context);
         this.max_id = max_id;
         this.listener = onRetrieveNotificationsInterface;
@@ -50,6 +51,7 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
         this.userId = userId;
         this.token = token;
         this.refreshData = true;
+        this.display = display;
     }
 
 
@@ -58,9 +60,9 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
 
         API api = new API(this.contextReference.get(), instance, token);
         if( acct == null)
-            apiResponse = api.getNotifications(max_id);
+            apiResponse = api.getNotifications(max_id, display);
         else
-            apiResponse = api.getNotificationsSince(max_id);
+            apiResponse = api.getNotificationsSince(max_id, display);
         return null;
     }
 

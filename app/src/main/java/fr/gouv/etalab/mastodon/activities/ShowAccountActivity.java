@@ -199,6 +199,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.followers)));
 
         mPager = findViewById(R.id.account_viewpager);
+        mPager.setOffscreenPageLimit(3);
         PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
 

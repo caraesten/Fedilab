@@ -15,11 +15,15 @@
 package fr.gouv.etalab.mastodon.interfaces;
 
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.translation.Translate;
 
 /**
  * Created by Thomas on 03/07/2017.
  * Yandex client API Handler
  */
 public interface OnTranslatedInterface {
-    void onTranslatedTextview(Status status, String translatedResult, Boolean error);
+    void onTranslatedTextview(Translate translate, Status status, String translatedResult, Boolean error);
+    void onTranslated(Translate translate, Helper.targetField targetField, String content, Boolean error);
+
 }

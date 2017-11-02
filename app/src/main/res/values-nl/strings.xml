@@ -334,7 +334,6 @@
 
     <string-array name="settings_translation">
         <item>Yandex</item>
-        <item>Google</item>
         <item>Nee</item>
     </string-array>
 
@@ -432,4 +431,6 @@
     </string>
     <string name="select_accounts">Kies enkele accounts</string>
     <string name="upload_form_description">Omschrijf dit voor mensen met een visuele beperking</string>
+    <string name="translate">Translate</string>
+    <string name="please_wait">Please, wait few seconds before making this action.</string>
 </resources>

@@ -78,6 +78,7 @@ import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -137,6 +138,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.CustomEmojiDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
@@ -223,7 +225,6 @@ public class Helper {
     public static final int LED_COLOUR = 0;
 
     public static final int TRANS_YANDEX = 0;
-    public static final int TRANS_GOOGLE = 1;
     public static final int TRANS_NONE = 2;
 
     public static final String SET_TRANS_FORCED = "set_trans_forced";
@@ -233,6 +234,11 @@ public class Helper {
     public static final String SET_NOTIF_ASK = "set_notif_follow_ask";
     public static final String SET_NOTIF_MENTION = "set_notif_follow_mention";
     public static final String SET_NOTIF_SHARE = "set_notif_follow_share";
+    public static final String SET_NOTIF_FOLLOW_FILTER = "set_notif_follow_filter";
+    public static final String SET_NOTIF_ADD_FILTER = "set_notif_follow_add_filter";
+    public static final String SET_NOTIF_MENTION_FILTER = "set_notif_follow_mention_filter";
+    public static final String SET_NOTIF_SHARE_FILTER = "set_notif_follow_share_filter";
+
     public static final String SET_NOTIF_VALIDATION = "set_share_validation";
     public static final String SET_NOTIF_VALIDATION_FAV = "set_share_validation_fav";
     public static final String SET_WIFI_ONLY = "set_wifi_only";
@@ -255,6 +261,9 @@ public class Helper {
     public static final int MINUTES_BETWEEN_NOTIFICATIONS_REFRESH = 15;
     public static final int MINUTES_BETWEEN_HOME_TIMELINE = 30;
 
+    //Translate wait time
+    public static final String LAST_TRANSLATION_TIME = "last_translation_time";
+    public static final int SECONDES_BETWEEN_TRANSLATE = 30;
     //Intent
     public static final String INTENT_ACTION = "intent_action";
 
@@ -278,6 +287,18 @@ public class Helper {
             Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 
     public static final Pattern hashtagPattern = Pattern.compile("(#[\\w_À-ú-]+)");
+    public static final Pattern mentionPattern = Pattern.compile("(@[\\w]+)");
+    public static final Pattern mentionOtherInstancePattern = Pattern.compile("(@[\\w]*@[\\w.-]+)");
+    public static final Pattern blacklistPattern = Pattern.compile("(%[\\w_À-ú-]+)");
+
+    //Targeted field after translation
+    public enum targetField{
+        STATUS,
+        CW,
+        SIMPLE
+    }
+
+
     /**
      * Converts emojis in input to unicode
      * @param input String
@@ -1152,7 +1173,7 @@ public class Helper {
     @SuppressWarnings("SameParameterValue")
     public static SpannableString clickableElements(final Context context, String fullContent, List<Mention> mentions, final List<Emojis> emojis, final int position, boolean useHTML, final OnRetrieveEmojiInterface listener) {
         final SpannableString spannableString;
-
+        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         if( useHTML) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 spannableString = new SpannableString(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_LEGACY));
@@ -1212,6 +1233,7 @@ public class Helper {
                     .cacheOnDisk(true).resetViewBeforeLoading(true).build();
             imageLoader = ImageLoader.getInstance();
             for (final Emojis emoji : emojis) {
+                storeEmoji(context, db, emoji);
                 final String targetedEmoji = ":" + emoji.getShortcode() + ":";
                 if (spannableString.toString().contains(targetedEmoji)) {
                     //emojis can be used several times so we have to loop
@@ -1299,7 +1321,21 @@ public class Helper {
         return spannableString;
     }
 
-
+    /**
+     * Manage custom emoji to store or update them
+     * @param context Context
+     * @param db SQLiteDatabase
+     * @param emojis Emojis
+     */
+    private static void storeEmoji(Context context, SQLiteDatabase db, Emojis emojis){
+        try{
+            Emojis emoji_ = new CustomEmojiDAO(context, db).getEmoji(emojis.getShortcode());
+            if( emoji_ == null)
+                new CustomEmojiDAO(context, db).insertEmoji(emojis);
+            else
+                new CustomEmojiDAO(context, db).updateEmoji(emojis);
+        }catch (Exception ignored){}
+    }
 
     /**
      * Check if the account bio contents urls & tags and fills the content with ClickableSpan
@@ -1446,7 +1482,23 @@ public class Helper {
         DrawableCompat.setTint(mDrawable, ContextCompat.getColor(context, hexaColor));
         return mDrawable;
     }
+    /**
+     * change color of a drawable
+     * @param imageView int the ImageView
+     * @param hexaColor example 0xffff00
+     */
+    public static void changeDrawableColor(Context context, ImageView imageView, int hexaColor){
+        imageView.setColorFilter(context.getResources().getColor(hexaColor));
+    }
 
+    /**
+     * change color of a drawable
+     * @param imageButton int the ImageButton
+     * @param hexaColor example 0xffff00
+     */
+    public static void changeDrawableColor(Context context, ImageButton imageButton, int hexaColor){
+        imageButton.setColorFilter(context.getResources().getColor(hexaColor));
+    }
 
     /**
      * Returns the current locale of the device

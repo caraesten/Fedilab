@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_view_reply"
-        android:title="@string/microphone"
+        android:title="@string/show_reply"
         android:icon="@drawable/ic_visibility"
         app:showAsAction="always" />
     <item
@@ -11,6 +11,11 @@
         android:title="@string/microphone"
         android:icon="@drawable/ic_mic"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_translate"
+        android:title="@string/translate"
+        android:icon="@drawable/ic_g_translate"
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_store"
         android:title="@string/save"

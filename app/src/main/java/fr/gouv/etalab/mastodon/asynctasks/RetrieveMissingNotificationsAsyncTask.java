@@ -53,7 +53,7 @@ public class RetrieveMissingNotificationsAsyncTask extends AsyncTask<Void, Void,
         API api = new API(this.contextReference.get());
         List<Notification> tempNotifications;
         while (loopInc < 10){
-            APIResponse apiResponse = api.getNotificationsSince(since_id, 40);
+            APIResponse apiResponse = api.getNotificationsSince(since_id, 40, false);
             String max_id = apiResponse.getMax_id();
             since_id = apiResponse.getSince_id();
             tempNotifications = apiResponse.getNotifications();

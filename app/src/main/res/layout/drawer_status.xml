@@ -155,7 +155,7 @@
                     android:maxLines="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless"
                     android:text="@string/load_attachment_spoiler" />
             </LinearLayout>
             <LinearLayout
@@ -190,15 +190,6 @@
                         android:text="Powered by Yandex.Translate"
                         android:layout_height="wrap_content"
                         tools:ignore="HardcodedText" />
-                    <TextView
-                        android:id="@+id/google_translate"
-                        android:layout_width="match_parent"
-                        android:padding="2dp"
-                        android:gravity="end"
-                        android:text="Powered by Google Translate"
-                        android:layout_height="wrap_content"
-                        tools:ignore="HardcodedText" />
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -326,7 +317,7 @@
                     android:maxLines="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless"
                     android:text="@string/load_attachment" />
             </LinearLayout>
 

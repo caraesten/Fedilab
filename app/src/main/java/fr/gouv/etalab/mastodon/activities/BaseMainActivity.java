@@ -28,6 +28,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -142,6 +143,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
     private Intent streamingIntent;
     public static String lastHomeId = null, lastNotificationId = null;
     boolean notif_follow, notif_add, notif_mention, notif_share, show_boosts, show_replies;
+    private AppBarLayout appBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,6 +179,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
         Helper.canPin = false;
         Helper.fillMapEmoji(getApplicationContext());
         //Here, the user is authenticated
+        appBar = findViewById(R.id.appBar);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbarTitle  = toolbar.findViewById(R.id.toolbar_title);
@@ -195,6 +198,9 @@ public abstract class BaseMainActivity extends AppCompatActivity
         ImageView iconHome = tabHome.getCustomView().findViewById(R.id.tab_icon);
         iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
         iconHome.setImageResource(R.drawable.ic_home);
+
+        iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
+
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconNotif = tabNotif.getCustomView().findViewById(R.id.tab_icon);
@@ -241,10 +247,10 @@ public abstract class BaseMainActivity extends AppCompatActivity
                     final MenuItem itemFollow = menu.findItem(R.id.action_follow);
                     final MenuItem itemMention = menu.findItem(R.id.action_mention);
                     final MenuItem itemBoost = menu.findItem(R.id.action_boost);
-                    notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
-                    notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
-                    notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
-                    notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
+                    notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW_FILTER, true);
+                    notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD_FILTER, true);
+                    notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION_FILTER, true);
+                    notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE_FILTER, true);
                     itemFavourite.setChecked(notif_add);
                     itemFollow.setChecked(notif_follow);
                     itemMention.setChecked(notif_mention);
@@ -275,28 +281,28 @@ public abstract class BaseMainActivity extends AppCompatActivity
                                 case R.id.action_favorite:
                                     SharedPreferences.Editor editor = sharedpreferences.edit();
                                     notif_add = !notif_add;
-                                    editor.putBoolean(Helper.SET_NOTIF_ADD, notif_add);
+                                    editor.putBoolean(Helper.SET_NOTIF_ADD_FILTER, notif_add);
                                     itemFavourite.setChecked(notif_add);
                                     editor.apply();
                                     break;
                                 case R.id.action_follow:
                                     editor = sharedpreferences.edit();
                                     notif_follow = !notif_follow;
-                                    editor.putBoolean(Helper.SET_NOTIF_FOLLOW, notif_follow);
+                                    editor.putBoolean(Helper.SET_NOTIF_FOLLOW_FILTER, notif_follow);
                                     itemFollow.setChecked(notif_follow);
                                     editor.apply();
                                     break;
                                 case R.id.action_mention:
                                     editor = sharedpreferences.edit();
                                     notif_mention = !notif_mention;
-                                    editor.putBoolean(Helper.SET_NOTIF_MENTION, notif_mention);
+                                    editor.putBoolean(Helper.SET_NOTIF_MENTION_FILTER, notif_mention);
                                     itemMention.setChecked(notif_mention);
                                     editor.apply();
                                     break;
                                 case R.id.action_boost:
                                     editor = sharedpreferences.edit();
                                     notif_share = !notif_share;
-                                    editor.putBoolean(Helper.SET_NOTIF_SHARE, notif_share);
+                                    editor.putBoolean(Helper.SET_NOTIF_SHARE_FILTER, notif_share);
                                     itemBoost.setChecked(notif_share);
                                     editor.apply();
                                     break;
@@ -407,11 +413,20 @@ public abstract class BaseMainActivity extends AppCompatActivity
                     toot.setVisibility(View.GONE);
                 DrawerLayout drawer = findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
+                if( tab.getCustomView() != null) {
+                    ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
+                    if( icon != null)
+                        icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
+                }
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
+                if( tab.getCustomView() != null) {
+                    ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
+                    if( icon != null)
+                        icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.white), PorterDuff.Mode.SRC_IN);
+                }
             }
 
             @Override
@@ -977,34 +992,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 final NavigationView navigationView = findViewById(R.id.nav_view);
                 unCheckAllMenuItems(navigationView);
                 toot.setVisibility(View.VISIBLE);
-                //Manages theme for icon colors
-                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-                if( theme == Helper.THEME_DARK){
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_reply,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_more_horiz,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_public,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_open,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_repeat,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_star_border,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_photo,R.color.dark_text);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_remove_red_eye,R.color.dark_text);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.dark_text);
-                }else {
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_reply,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_more_horiz,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_public,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_open,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_repeat,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_star_border,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_photo,R.color.white);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_remove_red_eye,R.color.white);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.white);
-                }
                 switch (viewPager.getCurrentItem()){
                     case 1:
                         toot.setVisibility(View.GONE);
@@ -1170,7 +1157,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
         tabLayout.setVisibility(View.GONE);
         toolbarTitle.setVisibility(View.VISIBLE);
 
-
+        appBar.setExpanded(true);
         if (id != R.id.nav_drafts) {
             delete_all.setVisibility(View.GONE);
         }else{

@@ -67,6 +67,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
+import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
@@ -132,6 +133,12 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         String type = notification.getType();
         String typeString = "";
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+
+        if (theme == THEME_DARK){
+            holder.main_container_trans.setAlpha(.3f);
+        }else {
+            holder.main_container_trans.setAlpha(.1f);
+        }
         Drawable imgH = null;
         switch (type){
             case "mention":
@@ -147,6 +154,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 }
                 imgH = ContextCompat.getDrawable(context, R.drawable.ic_chat_bubble_outline);
                 holder.main_container_trans.setVisibility(View.GONE);
+                holder.status_more.setVisibility(View.VISIBLE);
                 break;
             case "reblog":
                 holder.status_action_container.setVisibility(View.GONE);
@@ -161,6 +169,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 }
                 imgH = ContextCompat.getDrawable(context, R.drawable.ic_repeat_head);
                 holder.main_container_trans.setVisibility(View.VISIBLE);
+                holder.status_more.setVisibility(View.GONE);
                 break;
             case "favourite":
                 holder.status_action_container.setVisibility(View.GONE);
@@ -175,6 +184,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 }
                 imgH = ContextCompat.getDrawable(context, R.drawable.ic_star_border_header);
                 holder.main_container_trans.setVisibility(View.VISIBLE);
+                holder.status_more.setVisibility(View.GONE);
                 break;
             case "follow":
                 holder.status_action_container.setVisibility(View.GONE);
@@ -215,11 +225,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         //Manages theme for icon colors
         if( theme == Helper.THEME_DARK){
             changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
-            changeDrawableColor(context, R.drawable.ic_more_horiz,R.color.dark_icon);
-            changeDrawableColor(context, R.drawable.ic_public,R.color.dark_icon);
-            changeDrawableColor(context, R.drawable.ic_lock_open,R.color.dark_icon);
-            changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.dark_icon);
-            changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_icon);
+            changeDrawableColor(context, holder.status_more, R.color.dark_icon);
+            changeDrawableColor(context, holder.status_privacy, R.color.dark_icon);
             changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
             changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
@@ -227,11 +234,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             changeDrawableColor(context, R.drawable.ic_delete,R.color.dark_text);
         }else {
             changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_more_horiz,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_public,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_lock_open,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.black);
+            changeDrawableColor(context, holder.status_more, R.color.black);
+            changeDrawableColor(context, holder.status_privacy, R.color.black);
             changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
             changeDrawableColor(context, R.drawable.ic_star_border,R.color.black);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.black);
@@ -892,6 +896,11 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             notifications.get(position).getStatus().setEmojiFound(true);
             notificationsListAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onRetrieveSearchEmoji(List<Emojis> emojis) {
+
     }
 
 

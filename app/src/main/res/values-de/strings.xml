@@ -342,7 +342,6 @@
 
     <string-array name="settings_translation">
         <item>Yandex</item>
-        <item>Google</item>
         <item>Nein</item>
     </string-array>
 
@@ -428,4 +427,6 @@
     <string name="action_open_in_web">Im Browser öffnen</string>
     <string name="select_accounts">Select some accounts</string>
     <string name="upload_form_description">Für Menschen mit Sehbehinderung beschreiben</string>
+    <string name="translate">Translate</string>
+    <string name="please_wait">Please, wait few seconds before making this action.</string>
 </resources>
