@@ -155,7 +155,7 @@
                     android:maxLines="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless"
                     android:text="@string/load_attachment_spoiler" />
             </LinearLayout>
             <LinearLayout
@@ -317,7 +317,7 @@
                     android:maxLines="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless"
                     android:text="@string/load_attachment" />
             </LinearLayout>
 
