@@ -201,28 +201,6 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
         mLayoutManager = new LinearLayoutManager(this);
         lv_status.setLayoutManager(mLayoutManager);
 
-        lv_status.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
-            {
-                if(dy > 0){
-                    int visibleItemCount = mLayoutManager.getChildCount();
-                    int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
-                    if (firstVisibleItem + visibleItemCount == lv_status.getAdapter().getItemCount() -1 &&  firstVisibleItem > 0 &&
-                            lv_status.getChildAt(lv_status.getChildCount() - 1).getBottom() <= lv_status.getHeight()) {
-
-                        swipeRefreshLayout.setRefreshing(true);
-                        ( new Handler()).postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                isRefreshed = true;
-                                new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, false, false, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            }
-                        }, 1000);
-
-                    }
-                }
-            }
-        });
     }
 
 
