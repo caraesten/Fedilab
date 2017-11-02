@@ -79,7 +79,6 @@ public class SettingsFragment extends Fragment {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        changeColor();
         boolean auto_store = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
 
         final CheckBox set_auto_store = rootView.findViewById(R.id.set_auto_store);
@@ -358,6 +357,11 @@ public class SettingsFragment extends Fragment {
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         final Account account = new AccountDAO(context, db).getAccountByToken(prefKeyOauthTokenT);
         final ImageView set_toot_visibility = rootView.findViewById(R.id.set_toot_visibility);
+        if( theme == Helper.THEME_DARK){
+            changeDrawableColor(context, set_toot_visibility, R.color.dark_text);
+        }else {
+            changeDrawableColor(context, set_toot_visibility, R.color.white);
+        }
         //Only displayed for non locked accounts
         if (account != null && !account.isLocked()) {
             String tootVisibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), "public");
@@ -473,22 +477,6 @@ public class SettingsFragment extends Fragment {
     }
 
 
-    private void changeColor(){
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_DARK){
-            changeDrawableColor(context, R.drawable.ic_public,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_lock_open,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.dark_text);
-            changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_text);
-        }else {
-            changeDrawableColor(context, R.drawable.ic_public,R.color.white);
-            changeDrawableColor(context, R.drawable.ic_lock_open,R.color.white);
-            changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.white);
-            changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.white);
-        }
-
-    }
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
