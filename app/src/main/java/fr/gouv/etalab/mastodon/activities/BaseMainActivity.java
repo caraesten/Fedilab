@@ -196,6 +196,9 @@ public abstract class BaseMainActivity extends AppCompatActivity
         iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
         iconHome.setImageResource(R.drawable.ic_home);
 
+        iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
+
+
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconNotif = tabNotif.getCustomView().findViewById(R.id.tab_icon);
         iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
@@ -407,11 +410,20 @@ public abstract class BaseMainActivity extends AppCompatActivity
                     toot.setVisibility(View.GONE);
                 DrawerLayout drawer = findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
+                if( tab.getCustomView() != null) {
+                    ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
+                    if( icon != null)
+                        icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
+                }
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
+                if( tab.getCustomView() != null) {
+                    ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
+                    if( icon != null)
+                        icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.white), PorterDuff.Mode.SRC_IN);
+                }
             }
 
             @Override
