@@ -618,18 +618,34 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }else {
                     holder.status_translate.setVisibility(View.GONE);
                 }
-                if( status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()){
-                    holder.status_content_container.setVisibility(View.GONE);
-                    holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                    holder.status_spoiler_button.setVisibility(View.VISIBLE);
-                    holder.status_spoiler.setVisibility(View.VISIBLE);
-                }else {
-                    holder.status_spoiler_button.setVisibility(View.GONE);
-                    holder.status_content_container.setVisibility(View.VISIBLE);
-                    if( status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 )
+                if( status.getReblog() == null) {
+                    if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()) {
+                        holder.status_content_container.setVisibility(View.GONE);
                         holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                    else
-                        holder.status_spoiler_container.setVisibility(View.GONE);
+                        holder.status_spoiler_button.setVisibility(View.VISIBLE);
+                        holder.status_spoiler.setVisibility(View.VISIBLE);
+                    } else {
+                        holder.status_spoiler_button.setVisibility(View.GONE);
+                        holder.status_content_container.setVisibility(View.VISIBLE);
+                        if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0)
+                            holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                        else
+                            holder.status_spoiler_container.setVisibility(View.GONE);
+                    }
+                }else {
+                    if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()) {
+                        holder.status_content_container.setVisibility(View.GONE);
+                        holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_button.setVisibility(View.VISIBLE);
+                        holder.status_spoiler.setVisibility(View.VISIBLE);
+                    } else {
+                        holder.status_spoiler_button.setVisibility(View.GONE);
+                        holder.status_content_container.setVisibility(View.VISIBLE);
+                        if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0)
+                            holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                        else
+                            holder.status_spoiler_container.setVisibility(View.GONE);
+                    }
                 }
                 if( status.getSpoiler_text() != null)
                     holder.status_spoiler.setText(status.getSpoiler_text());
