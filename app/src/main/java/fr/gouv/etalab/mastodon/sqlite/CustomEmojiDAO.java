@@ -59,12 +59,9 @@ public class CustomEmojiDAO {
         values.put(Sqlite.COL_URL_STATIC, emoji.getStatic_url());
         values.put(Sqlite.COL_DATE_CREATION, Helper.dateToString(context, new Date()));
         //Inserts emoji
-        long last_id;
         try{
-            last_id = db.insert(Sqlite.TABLE_CUSTOM_EMOJI, null, values);
-        }catch (Exception e) {
-            last_id =  -1;
-        }
+            db.insert(Sqlite.TABLE_CUSTOM_EMOJI, null, values);
+        }catch (Exception ignored) {}
     }
 
     //------- UPDATES  -------
