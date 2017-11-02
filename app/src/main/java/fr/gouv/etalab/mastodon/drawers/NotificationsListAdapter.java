@@ -133,6 +133,12 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         String type = notification.getType();
         String typeString = "";
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+
+        if (theme == THEME_DARK){
+            holder.main_container_trans.setAlpha(.3f);
+        }else {
+            holder.main_container_trans.setAlpha(.1f);
+        }
         Drawable imgH = null;
         switch (type){
             case "mention":

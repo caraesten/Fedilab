@@ -292,7 +292,6 @@
     </LinearLayout>
     <RelativeLayout
         android:visibility="gone"
-        android:alpha="0.3"
         android:background="@color/black"
         android:id="@+id/container_trans"
         android:layout_width="match_parent"

@@ -992,34 +992,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 final NavigationView navigationView = findViewById(R.id.nav_view);
                 unCheckAllMenuItems(navigationView);
                 toot.setVisibility(View.VISIBLE);
-                //Manages theme for icon colors
-                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-                if( theme == Helper.THEME_DARK){
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_reply,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_more_horiz,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_public,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_open,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_repeat,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_star_border,R.color.dark_icon);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_photo,R.color.dark_text);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_remove_red_eye,R.color.dark_text);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.dark_text);
-                }else {
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_reply,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_more_horiz,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_public,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_open,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_repeat,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_star_border,R.color.black);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_photo,R.color.white);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_remove_red_eye,R.color.white);
-                    changeDrawableColor(getApplicationContext(), R.drawable.ic_translate,R.color.white);
-                }
                 switch (viewPager.getCurrentItem()){
                     case 1:
                         toot.setVisibility(View.GONE);
