@@ -28,6 +28,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -142,6 +143,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
     private Intent streamingIntent;
     public static String lastHomeId = null, lastNotificationId = null;
     boolean notif_follow, notif_add, notif_mention, notif_share, show_boosts, show_replies;
+    private AppBarLayout appBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,6 +179,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
         Helper.canPin = false;
         Helper.fillMapEmoji(getApplicationContext());
         //Here, the user is authenticated
+        appBar = findViewById(R.id.appBar);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbarTitle  = toolbar.findViewById(R.id.toolbar_title);
@@ -1182,7 +1185,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
         tabLayout.setVisibility(View.GONE);
         toolbarTitle.setVisibility(View.VISIBLE);
 
-
+        appBar.setExpanded(true);
         if (id != R.id.nav_drafts) {
             delete_all.setVisibility(View.GONE);
         }else{
