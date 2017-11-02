@@ -450,11 +450,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
             if( theme == Helper.THEME_DARK){
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
-                changeDrawableColor(context, R.drawable.ic_more_horiz,R.color.dark_icon);
-                changeDrawableColor(context, R.drawable.ic_public,R.color.dark_icon);
-                changeDrawableColor(context, R.drawable.ic_lock_open,R.color.dark_icon);
-                changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.dark_icon);
-                changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.dark_icon);
+                changeDrawableColor(context, holder.status_more, R.color.dark_icon);
+                changeDrawableColor(context, holder.status_privacy, R.color.dark_icon);
                 changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
                 changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
                 changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.dark_icon);
@@ -464,10 +461,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }else {
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_more_horiz,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_public,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_lock_open,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.black);
+                changeDrawableColor(context, holder.status_more, R.color.black);
+                changeDrawableColor(context, holder.status_privacy, R.color.black);
                 changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_star_border,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.black);

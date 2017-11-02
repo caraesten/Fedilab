@@ -78,6 +78,7 @@ import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -1481,7 +1482,23 @@ public class Helper {
         DrawableCompat.setTint(mDrawable, ContextCompat.getColor(context, hexaColor));
         return mDrawable;
     }
+    /**
+     * change color of a drawable
+     * @param imageView int the ImageView
+     * @param hexaColor example 0xffff00
+     */
+    public static void changeDrawableColor(Context context, ImageView imageView, int hexaColor){
+        imageView.setColorFilter(context.getResources().getColor(hexaColor));
+    }
 
+    /**
+     * change color of a drawable
+     * @param imageButton int the ImageButton
+     * @param hexaColor example 0xffff00
+     */
+    public static void changeDrawableColor(Context context, ImageButton imageButton, int hexaColor){
+        imageButton.setColorFilter(context.getResources().getColor(hexaColor));
+    }
 
     /**
      * Returns the current locale of the device

@@ -124,6 +124,7 @@ public class ShowConversationActivity extends AppCompatActivity implements OnRet
             action_refresh.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if( statuses != null)
                     swipeRefreshLayout.setRefreshing(true);
                     ( new Handler()).postDelayed(new Runnable() {
                         @Override
