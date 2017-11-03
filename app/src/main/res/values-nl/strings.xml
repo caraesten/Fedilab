@@ -433,4 +433,5 @@
     <string name="upload_form_description">Omschrijf dit voor mensen met een visuele beperking</string>
     <string name="translate">Translate</string>
     <string name="please_wait">Please, wait few seconds before making this action.</string>
+    <string name="disclaimer_full">De informatie hieronder kan mogelijk een incompleet beeld geven van dit gebruikersprofiel.</string>
 </resources>

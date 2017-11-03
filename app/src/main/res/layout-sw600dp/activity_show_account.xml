@@ -241,7 +241,14 @@
                     android:gravity="center"
                     tools:ignore="ContentDescription" />
             </LinearLayout>
-
+            <TextView
+                android:id="@+id/warning_message"
+                android:visibility="gone"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="@string/disclaimer_full"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
             </android.support.v7.widget.Toolbar>
         <android.support.design.widget.TabLayout
             android:id="@+id/account_tabLayout"

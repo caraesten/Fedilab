@@ -436,4 +436,5 @@
     <string name="upload_form_description">Décrire pour les malvoyants</string>
     <string name="translate">Traduire</string>
     <string name="please_wait">Veuillez patienter quelques secondes avant de faire cette action.</string>
+    <string name="disclaimer_full">Les données ci-dessous peuvent ne pas refléter ce profil dans sa totalité.</string>
 </resources>
