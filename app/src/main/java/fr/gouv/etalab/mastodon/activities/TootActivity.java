@@ -47,6 +47,7 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -1128,7 +1129,10 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                         return false;
                     }
                 });
-                String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION, null);
+                String instance = Helper.getLiveInstance(getApplicationContext());
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
+                Log.v(Helper.TAG,"instance: " + instanceVersion);
                 if (instanceVersion != null) {
                     Version currentVersion = new Version(instanceVersion);
                     Version minVersion = new Version("2.0");
