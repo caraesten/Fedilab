@@ -103,7 +103,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                     int visibleItemCount = mLayoutManager.getChildCount();
                     int totalItemCount = mLayoutManager.getItemCount();
                     int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
-                    if (firstVisibleItem + visibleItemCount == totalItemCount) {
+                    if (firstVisibleItem + visibleItemCount == totalItemCount && context != null) {
                         if (!flag_loading) {
                             flag_loading = true;
                             asyncTask = new RetrieveNotificationsAsyncTask(context, true, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -125,15 +125,13 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 flag_loading = true;
                 swiped = true;
                 MainActivity.countNewNotifications = 0;
-                asyncTask = new RetrieveNotificationsAsyncTask(context, true, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                if( context != null)
+                    asyncTask = new RetrieveNotificationsAsyncTask(context, true, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
         swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
                 R.color.mastodonC2,
                 R.color.mastodonC3);
-
-        asyncTask = new RetrieveNotificationsAsyncTask(context, true, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
 
         return rootView;
     }
@@ -152,6 +150,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
+        if( context != null)
+            asyncTask = new RetrieveNotificationsAsyncTask(context, true, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     public void onDestroy() {
