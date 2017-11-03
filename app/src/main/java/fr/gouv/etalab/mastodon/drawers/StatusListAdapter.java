@@ -42,6 +42,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -432,9 +433,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_toot_date.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12*textSizePercent/100);
             holder.status_spoiler.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
             holder.status_content_translated.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
-
-            switch (translator)
-            {
+            switch (translator) {
                 case Helper.TRANS_NONE:
                     holder.yandex_translate.setVisibility(View.GONE);
                     break;
@@ -442,8 +441,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.yandex_translate.setVisibility(View.VISIBLE);
                     break;
                 default:
-                    holder.yandex_translate.setVisibility(View.GONE);
-                    break;
+                    holder.yandex_translate.setVisibility(View.VISIBLE);
             }
 
             //Manages theme for icon colors

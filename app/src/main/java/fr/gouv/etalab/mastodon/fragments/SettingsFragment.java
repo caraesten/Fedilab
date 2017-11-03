@@ -437,30 +437,6 @@ public class SettingsFragment extends Fragment {
         });
 
 
-        final Spinner translation_layout_spinner = rootView.findViewById(R.id.translation_layout_spinner);
-        ArrayAdapter<CharSequence> adapterTrans = ArrayAdapter.createFromResource(getActivity(),
-                R.array.settings_translation, android.R.layout.simple_spinner_item);
-        translation_layout_spinner.setAdapter(adapterTrans);
-
-        int positionSpinnerTrans = (sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX));
-        translation_layout_spinner.setSelection(positionSpinnerTrans);
-        translation_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if( count2 > 0){
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putInt(Helper.SET_TRANSLATOR, position );
-                    editor.apply();
-                }else {
-                    count2++;
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
         boolean trans_forced = sharedpreferences.getBoolean(Helper.SET_TRANS_FORCED, false);
         final CheckBox set_trans_forced = rootView.findViewById(R.id.set_trans_forced);
         set_trans_forced.setChecked(trans_forced);
@@ -472,6 +448,56 @@ public class SettingsFragment extends Fragment {
                 editor.apply();
             }
         });
+
+        final Spinner translation_layout_spinner = rootView.findViewById(R.id.translation_layout_spinner);
+        ArrayAdapter<CharSequence> adapterTrans = ArrayAdapter.createFromResource(getActivity(),
+                R.array.settings_translation, android.R.layout.simple_spinner_item);
+        translation_layout_spinner.setAdapter(adapterTrans);
+
+        int positionSpinnerTrans;
+        switch (sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX)){
+            case Helper.TRANS_YANDEX:
+               positionSpinnerTrans = 0;
+                break;
+            case Helper.TRANS_NONE:
+                positionSpinnerTrans = 1;
+                break;
+            default:
+                positionSpinnerTrans = 0;
+        }
+        translation_layout_spinner.setSelection(positionSpinnerTrans);
+        translation_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if( count2 > 0){
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    switch (position){
+                        case 0:
+                            editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
+                            editor.apply();
+                            break;
+                        case 1:
+                            set_trans_forced.isChecked();
+                            editor.putBoolean(Helper.SET_TRANS_FORCED, false);
+                            editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_NONE);
+                            editor.apply();
+                            break;
+                    }
+                    getActivity().recreate();
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
+                    startActivity(intent);
+                }else {
+                    count2++;
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
 
         return rootView;
     }
