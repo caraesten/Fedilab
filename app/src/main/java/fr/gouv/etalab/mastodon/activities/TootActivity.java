@@ -64,6 +64,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -121,8 +122,10 @@ import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
+import fr.gouv.etalab.mastodon.drawers.CustomEmojiAdapter;
 import fr.gouv.etalab.mastodon.drawers.EmojisSearchAdapter;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
+import fr.gouv.etalab.mastodon.sqlite.CustomEmojiDAO;
 import fr.gouv.etalab.mastodon.translation.Translate;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
@@ -189,6 +192,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private Account accountReply;
     private View popup_trans;
     private AlertDialog dialogTrans;
+    private AlertDialog alertDialogEmoji;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -864,6 +868,41 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 });
                 picker.show(getSupportFragmentManager(), "COUNTRY_PICKER");
                 return true;
+            case R.id.action_emoji:
+                final List<Emojis>  emojis = new CustomEmojiDAO(getApplicationContext(), db).getAllEmojis();
+                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                int paddingPixel = 15;
+                float density = getResources().getDisplayMetrics().density;
+                int paddingDp = (int)(paddingPixel * density);
+                builder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.setTitle(R.string.insert_emoji);
+                if( emojis != null && emojis.size() > 0) {
+                    GridView gridView = new GridView(TootActivity.this);
+                    gridView.setAdapter(new CustomEmojiAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, emojis));
+                    gridView.setNumColumns(5);
+                    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            toot_content.getText().insert(toot_content.getSelectionStart(), " :" + emojis.get(position).getShortcode()+": ");
+                            alertDialogEmoji.dismiss();
+                        }
+                    });
+                    gridView.setPadding(paddingDp,paddingDp,paddingDp,paddingDp);
+                    builder.setView(gridView);
+                }else{
+                    TextView textView = new TextView(TootActivity.this);
+                    textView.setText(getString(R.string.no_emoji));
+                    textView.setPadding(paddingDp,paddingDp,paddingDp,paddingDp);
+                    builder.setView(textView);
+                }
+                alertDialogEmoji = builder.show();
+
+
+                return true;
             case R.id.action_microphone:
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
@@ -1059,6 +1098,16 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         if( tootReply == null){
             if( itemViewReply != null)
                 itemViewReply.setVisible(false);
+        }
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION, null);
+        Version currentVersion = new Version(instanceVersion);
+        Version minVersion = new Version("2.0");
+        MenuItem itemEmoji = menu.findItem(R.id.action_emoji);
+        if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
+            itemEmoji.setVisible(true);
+        }else{
+            itemEmoji.setVisible(false);
         }
         if( accountReply != null){
             MenuItem itemRestore = menu.findItem(R.id.action_restore);

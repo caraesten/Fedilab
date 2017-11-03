@@ -436,4 +436,6 @@
     <string name="translate">Translate</string>
     <string name="please_wait">Please, wait few seconds before making this action.</string>
     <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
+    <string name="insert_emoji">Inserir Emoji</string>
+    <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
 </resources>

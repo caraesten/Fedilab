@@ -430,4 +430,6 @@
     <string name="translate">Translate</string>
     <string name="please_wait">Please, wait few seconds before making this action.</string>
     <string name="disclaimer_full">Das Profil wird möglicherweise unvollständig wiedergegeben.</string>
+    <string name="insert_emoji">Emoji einfügen</string>
+    <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
 </resources>
