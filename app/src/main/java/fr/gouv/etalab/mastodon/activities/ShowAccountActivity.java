@@ -118,7 +118,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     private Relationship relationship;
     private boolean showMediaOnly, showPinned;
     private ImageView pp_actionBar;
-    private ImageView header_edit_profile;
+    private FloatingActionButton header_edit_profile;
     private List<Status> pins;
     private String accountUrl;
     private int maxScrollSize;
@@ -690,6 +690,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         if( accountId != null && accountId.equals(userId)){
             account_follow.setVisibility(View.GONE);
             header_edit_profile.setVisibility(View.VISIBLE);
+            header_edit_profile.bringToFront();
         }else if( relationship.isBlocking()){
             account_follow.setImageResource(R.drawable.ic_lock_open);
             doAction = action.UNBLOCK;
