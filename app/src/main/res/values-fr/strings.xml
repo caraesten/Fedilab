@@ -192,7 +192,6 @@
     <string name="about_license">Licence : </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Code source : </string>
-    <string name="about_code_action">bitbucket</string>
     <string name="about_yandex">Traduction des pouets :</string>
     <string name="about_thekinrar">Recherche d\'instances :</string>
     <string name="about_thekinrar_action">instances.social</string>
