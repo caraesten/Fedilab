@@ -130,10 +130,9 @@ public class MediaActivity extends AppCompatActivity  {
         if( theme == Helper.THEME_LIGHT){
             main_container_media.setBackgroundResource(R.color.mastodonC2);
         }else {
-            main_container_media.setBackgroundResource(R.color.black);
+            main_container_media.setBackgroundResource(R.color.mastodonC1);
         }
-        changeDrawableColor(getApplicationContext(), R.drawable.ic_last_page,R.color.mastodonC4);
-        changeDrawableColor(getApplicationContext(), R.drawable.ic_first_page,R.color.mastodonC4);
+
 
         canSwipe = true;
         loader = findViewById(R.id.loader);
@@ -141,6 +140,8 @@ public class MediaActivity extends AppCompatActivity  {
         videoView = findViewById(R.id.media_video);
         prev = findViewById(R.id.media_prev);
         next = findViewById(R.id.media_next);
+        changeDrawableColor(getApplicationContext(), prev,R.color.mastodonC4);
+        changeDrawableColor(getApplicationContext(), next,R.color.mastodonC4);
         prev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
