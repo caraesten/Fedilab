@@ -1696,7 +1696,7 @@ public class Helper {
         paint.setStrokeWidth(12);
         paint.setTextSize(30);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-        canvas.drawText("Via #Mastalab", view.getWidth()-230, view.getHeight() - 5, paint);
+        canvas.drawText("Via #Mastalab", view.getWidth()-230, view.getHeight() -50, paint);
 
         if( new_element != null)
             new_element.setVisibility(new_element_v);

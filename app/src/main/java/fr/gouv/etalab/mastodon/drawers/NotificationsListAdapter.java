@@ -300,7 +300,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 holder.status_document_container.setVisibility(View.GONE);
                 holder.notification_status_content.setVisibility(View.VISIBLE);
                 holder.status_show_more.setVisibility(View.GONE);
-                holder.status_action_container.setVisibility(View.GONE);
+                holder.status_action_container.setVisibility(View.INVISIBLE);
             }else {
                 holder.status_action_container.setVisibility(View.VISIBLE);
 
@@ -591,7 +591,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                         notificationsListAdapter.notifyDataSetChanged();
                                         Handler handler = new Handler();
                                         handler.postDelayed(new Runnable() {
-
                                             @Override
                                             public void run() {
                                                 Bitmap bitmap = Helper.convertTootIntoBitmap(context, holder.getView());
@@ -618,7 +617,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                                 context.startActivity(intent);
                                             }
 
-                                        }, 1000);
+                                        }, 500);
                                         return true;
                                     default:
                                         return true;
