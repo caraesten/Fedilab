@@ -21,6 +21,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_container"
+    android:divider="?android:dividerHorizontal"
+    android:showDividers="end"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
