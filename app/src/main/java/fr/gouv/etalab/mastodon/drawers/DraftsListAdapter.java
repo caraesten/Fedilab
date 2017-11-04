@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.drawers;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -39,6 +40,7 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import mastodon.etalab.gouv.fr.mastodon.R;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
 /**
@@ -120,6 +122,14 @@ public class DraftsListAdapter extends BaseAdapter  {
             holder.draft_title.setTypeface(Typeface.DEFAULT_BOLD);
         }
 
+        //Manages theme for icon colors
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if( theme == Helper.THEME_DARK){
+            changeDrawableColor(context, holder.draft_delete, R.color.dark_text);
+        }else{
+            changeDrawableColor(context, holder.draft_delete, R.color.black);
+        }
         holder.draft_date.setText(Helper.dateToString(context, draft.getCreation_date()));
         holder.draft_delete.setOnClickListener(new View.OnClickListener() {
             @Override

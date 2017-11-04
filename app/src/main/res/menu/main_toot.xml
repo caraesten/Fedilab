@@ -7,6 +7,11 @@
         android:icon="@drawable/ic_visibility"
         app:showAsAction="always" />
     <item
+        android:id="@+id/action_emoji"
+        android:title="@string/insert_emoji"
+        android:icon="@drawable/ic_insert_emoticon"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/action_microphone"
         android:title="@string/microphone"
         android:icon="@drawable/ic_mic"

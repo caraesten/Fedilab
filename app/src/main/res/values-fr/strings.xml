@@ -192,7 +192,6 @@
     <string name="about_license">Licence : </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Code source : </string>
-    <string name="about_code_action">bitbucket</string>
     <string name="about_yandex">Traduction des pouets :</string>
     <string name="about_thekinrar">Recherche d\'instances :</string>
     <string name="about_thekinrar_action">instances.social</string>
@@ -436,4 +435,7 @@
     <string name="upload_form_description">Décrire pour les malvoyants</string>
     <string name="translate">Traduire</string>
     <string name="please_wait">Veuillez patienter quelques secondes avant de faire cette action.</string>
+    <string name="disclaimer_full">Les données ci-dessous peuvent ne pas refléter ce profil dans sa totalité.</string>
+    <string name="insert_emoji">Insérer un émoji</string>
+    <string name="no_emoji">L\'application n\'a pas encore collecté d\'emojis personnalisés</string>
 </resources>

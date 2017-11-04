@@ -18,6 +18,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
@@ -145,7 +147,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         int visibleItemCount = mLayoutManager.getChildCount();
                         int totalItemCount = mLayoutManager.getItemCount();
                         int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
-                        if(firstVisibleItem + visibleItemCount == totalItemCount ) {
+                        if(firstVisibleItem + visibleItemCount == totalItemCount && context != null) {
                             if(!flag_loading ) {
                                 flag_loading = true;
                                 if( type == RetrieveFeedsAsyncTask.Type.USER)
@@ -186,12 +188,29 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
                     R.color.mastodonC2,
                     R.color.mastodonC3);
-            if( type == RetrieveFeedsAsyncTask.Type.USER)
-                asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            else if( type == RetrieveFeedsAsyncTask.Type.TAG)
-                asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            else {
-                asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            if( context != null) {
+                if (type == RetrieveFeedsAsyncTask.Type.USER)
+                    asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                else if (type == RetrieveFeedsAsyncTask.Type.TAG)
+                    asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                else {
+                    asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
+            }else {
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if( context != null){
+                            if (type == RetrieveFeedsAsyncTask.Type.USER)
+                                asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            else if (type == RetrieveFeedsAsyncTask.Type.TAG)
+                                asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            else {
+                                asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            }
+                        }
+                    }
+                }, 500);
             }
         }else {
             statusListAdapter.notifyDataSetChanged();

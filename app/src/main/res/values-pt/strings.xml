@@ -192,7 +192,6 @@
     <string name="about_license">Licença: </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Código-fonte: </string>
-    <string name="about_code_action">Bitbucket</string>
     <string name="about_yandex">Tradução dos toots:</string>
     <string name="about_thekinrar">Busca de instâncias:</string>
     <string name="about_thekinrar_action">instances.social</string>
@@ -435,4 +434,7 @@
     <string name="upload_form_description">Describe for the visually impaired</string>
     <string name="translate">Translate</string>
     <string name="please_wait">Please, wait few seconds before making this action.</string>
+    <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
+    <string name="insert_emoji">Inserir Emoji</string>
+    <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
 </resources>

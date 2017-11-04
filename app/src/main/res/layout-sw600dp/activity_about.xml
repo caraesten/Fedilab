@@ -220,17 +220,5 @@
                 android:layout_height="wrap_content"
                 android:text="@string/about_yandex_action"/>
         </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:padding="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:text="@string/thanks_text"
-                android:layout_marginTop="20dp"
-                android:gravity="center_horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
     </LinearLayout>
 </ScrollView>

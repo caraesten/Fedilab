@@ -45,6 +45,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
+import android.text.style.UnderlineSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -117,7 +118,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     private Relationship relationship;
     private boolean showMediaOnly, showPinned;
     private ImageView pp_actionBar;
-    private ImageView header_edit_profile;
+    private FloatingActionButton header_edit_profile;
     private List<Status> pins;
     private String accountUrl;
     private int maxScrollSize;
@@ -396,7 +397,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
 
     @Override
-    public void onRetrieveAccount(Account account, Error error) {
+    public void onRetrieveAccount(final Account account, Error error) {
         if( error != null){
             final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
@@ -481,7 +482,26 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         final AppBarLayout appBar = findViewById(R.id.appBar);
         maxScrollSize = appBar.getTotalScrollRange();
 
-
+        final TextView warning_message = findViewById(R.id.warning_message);
+        SpannableString content = new SpannableString(getString(R.string.disclaimer_full));
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        warning_message.setText(content);
+        warning_message.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), WebviewActivity.class);
+                Bundle b = new Bundle();
+                if( !accountUrl.startsWith("http://") && ! accountUrl.startsWith("https://"))
+                    accountUrl = "http://" + accountUrl;
+                b.putString("url", accountUrl);
+                intent.putExtras(b);
+                startActivity(intent);
+            }
+        });
+        if( account.getAcct().contains("@") )
+            warning_message.setVisibility(View.VISIBLE);
+        else
+            warning_message.setVisibility(View.GONE);
         appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -507,12 +527,17 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                             .scaleY(0).scaleX(0)
                             .setDuration(400)
                             .start();
+                    warning_message.setVisibility(View.GONE);
                 }
                 if (percentage <= 40 && !avatarShown) {
                     avatarShown = true;
                     account_pp.animate()
                             .scaleY(1).scaleX(1)
                             .start();
+                    if( account.getAcct().contains("@") )
+                        warning_message.setVisibility(View.VISIBLE);
+                    else
+                        warning_message.setVisibility(View.GONE);
                 }
             }
         });
@@ -665,6 +690,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         if( accountId != null && accountId.equals(userId)){
             account_follow.setVisibility(View.GONE);
             header_edit_profile.setVisibility(View.VISIBLE);
+            header_edit_profile.bringToFront();
         }else if( relationship.isBlocking()){
             account_follow.setImageResource(R.drawable.ic_lock_open);
             doAction = action.UNBLOCK;

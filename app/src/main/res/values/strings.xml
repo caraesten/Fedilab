@@ -93,6 +93,9 @@
     <string name="click_to_change">Click on the path to change it</string>
     <string name="failed">Failed!</string>
     <string name="scheduled_toots">Scheduled toots</string>
+    <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
+    <string name="insert_emoji">Insert emoji</string>
+    <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
     <!-- Status -->
     <string name="no_status">No toot to display</string>
     <string name="fav_added">The toot was added to favourites</string>
@@ -199,7 +202,7 @@
     <string name="about_license">License: </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Source code: </string>
-    <string name="about_code_action">Bitbucket</string>
+    <string name="about_code_action" translatable="false">Github</string>
     <string name="about_yandex">Translation of toots:</string>
     <string name="about_yandex_action" translatable="false">Powered by Yandex.Translate</string>
     <string name="about_thekinrar">Search instances:</string>
