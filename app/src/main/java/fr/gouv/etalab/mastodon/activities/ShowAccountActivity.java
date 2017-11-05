@@ -312,10 +312,12 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         if( isOwner) {
             popup.getMenu().findItem(R.id.action_block).setVisible(false);
             popup.getMenu().findItem(R.id.action_mute).setVisible(false);
+            popup.getMenu().findItem(R.id.action_mention).setVisible(false);
             stringArrayConf =  getResources().getStringArray(R.array.more_action_owner_confirm);
         }else {
             popup.getMenu().findItem(R.id.action_block).setVisible(true);
             popup.getMenu().findItem(R.id.action_mute).setVisible(true);
+            popup.getMenu().findItem(R.id.action_mention).setVisible(true);
             stringArrayConf =  getResources().getStringArray(R.array.more_action_confirm);
         }
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -348,6 +350,13 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                             intent.putExtras(b);
                             startActivity(intent);
                         }
+                        return true;
+                    case R.id.action_mention:
+                        Intent intent = new Intent(getApplicationContext(), TootActivity.class);
+                        Bundle b = new Bundle();
+                        b.putString("mentionAccount", account.getAcct());
+                        intent.putExtras(b);
+                        startActivity(intent);
                         return true;
                     case R.id.action_mute:
                         builderInner = new AlertDialog.Builder(ShowAccountActivity.this);

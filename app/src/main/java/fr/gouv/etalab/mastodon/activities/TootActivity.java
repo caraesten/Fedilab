@@ -192,6 +192,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private View popup_trans;
     private AlertDialog dialogTrans;
     private AlertDialog alertDialogEmoji;
+    private String mentionAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -289,6 +290,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             sharedContent = b.getString("sharedContent", null);
             sharedContentIni = b.getString("sharedContent", null);
             sharedSubject = b.getString("sharedSubject", null);
+            mentionAccount = b.getString("mentionAccount", null);
             restoredScheduled = b.getBoolean("restoredScheduled", false);
             // ACTION_SEND route
             if (b.getInt("uriNumber", 0) == 1) {
@@ -307,7 +309,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             }
             restored = b.getLong("restored", -1);
         }
-        initialContent = toot_content.getText().toString();
+
         if(restoredScheduled){
             toot_it.setVisibility(View.GONE);
             invalidateOptionsMenu();
@@ -327,6 +329,11 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         else
             userId = accountReply.getId();
 
+        if( mentionAccount != null){
+            toot_content.setText(String.format("@%s\n", mentionAccount));
+            toot_content.setSelection(toot_content.getText().length());
+            toot_space_left.setText(String.valueOf(toot_content.length()));
+        }
         if( tootMention != null && urlMention != null && fileMention != null) {
             Bitmap pictureMention = BitmapFactory.decodeFile(getCacheDir() + "/" + fileMention);
             if (pictureMention != null) {
@@ -342,6 +349,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             toot_content.setText(String.format("\n\nvia @%s\n\n%s\n\n", tootMention, urlMention));
             toot_space_left.setText(String.valueOf(toot_content.length()));
         }
+        initialContent = toot_content.getText().toString();
         Account account;
         if( accountReply == null)
             account = new AccountDAO(getApplicationContext(),db).getAccountByID(userId);
@@ -1736,7 +1744,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         //Nothing to store here....
         if(toot_content.getText().toString().trim().length() == 0 && (attachments == null || attachments.size() <1) && toot_cw_content.getText().toString().trim().length() == 0)
             return;
-        if( initialContent.equals(toot_content.getText().toString()))
+        if( initialContent.trim().equals(toot_content.getText().toString().trim()))
             return;
         Status toot = new Status();
         toot.setSensitive(isSensitive);
