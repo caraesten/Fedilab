@@ -533,7 +533,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             public void onClick(View v) {
 
                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-
                     if (ContextCompat.checkSelfPermission(TootActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
                             PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(TootActivity.this,
@@ -543,21 +542,17 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     }
                 }
                 Intent intent;
+                intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-                    intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                    intent.addCategory(Intent.CATEGORY_OPENABLE);
                     intent.setType("*/*");
                     String[] mimetypes = {"image/*", "video/*"};
                     intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
                     startActivityForResult(intent, PICK_IMAGE);
                 }else {
-                    Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                    getIntent.setType("image/*");
-
+                    intent.setType("image/* video/*");
                     Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    pickIntent.setType("image/*");
-
-                    Intent chooserIntent = Intent.createChooser(getIntent, getString(R.string.toot_select_image));
+                    Intent chooserIntent = Intent.createChooser(intent, getString(R.string.toot_select_image));
                     chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
                     startActivityForResult(chooserIntent, PICK_IMAGE);
                 }
