@@ -256,9 +256,9 @@
     <string name="toast_report">Le pouet a été signalé !</string>
     <string name="toast_unstatus">Le pouet a été supprimé !</string>
     <string name="toast_error">Oups ! Une erreur s\'est produite !</string>
-    <string name="toast_code_error">Une erreur s\'est produite ! L\'instance n\'a retourné aucun code d\authorisation !</string>
+    <string name="toast_code_error">Une erreur s\'est produite ! L\'instance n\'a retourné aucun code d\autorisation !</string>
     <string name="toast_error_instance">Le nom de l\'instance ne semble pas être valide !</string>
-    <string name="toast_error_loading_account">Une erreur s\'est produite en chargeant le compte !</string>
+    <string name="toast_error_loading_account">Une erreur s\'est produite pendant le chargement du compte !</string>
     <string name="toast_error_search">Une erreur s\'est produite lors de la recherche !</string>
     <string name="toast_error_login">Impossible de vous connecter !</string>
     <string name="toast_update_credential_ok">Les données du profil ont été sauvegardées !</string>
