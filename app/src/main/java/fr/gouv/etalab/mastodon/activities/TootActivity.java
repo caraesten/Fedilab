@@ -74,10 +74,10 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.github.stom79.localepicker.CountryPicker;
+import com.github.stom79.localepicker.CountryPickerListener;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BinaryHttpResponseHandler;
-import com.mukesh.countrypicker.CountryPicker;
-import com.mukesh.countrypicker.CountryPickerListener;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -815,7 +815,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 picker.setListener(new CountryPickerListener() {
                     @SuppressLint("InflateParams")
                     @Override
-                    public void onSelectCountry(String name, String code, String dialCode, String locale, int flagDrawableResID) {
+                    public void onSelectCountry(String name, String locale, int flagDrawableResID) {
                         picker.dismiss();
                         AlertDialog.Builder transAlert = new AlertDialog.Builder(TootActivity.this);
                         transAlert.setTitle(R.string.translate_toot);
