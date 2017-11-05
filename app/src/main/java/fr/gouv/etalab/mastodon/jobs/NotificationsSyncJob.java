@@ -107,11 +107,10 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
         //Check which notifications the user wants to see
         boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
         boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
-        boolean notif_ask = sharedpreferences.getBoolean(Helper.SET_NOTIF_ASK, true);
         boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
         boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
         //User disagree with all notifications
-        if( !notif_follow && !notif_add && !notif_ask && !notif_mention && !notif_share)
+        if( !notif_follow && !notif_add && !notif_mention && !notif_share)
             return; //Nothing is done
         //No account connected, the service is stopped
         if(!Helper.isLoggedIn(getContext()))

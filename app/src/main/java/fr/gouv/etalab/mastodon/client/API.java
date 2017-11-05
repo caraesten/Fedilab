@@ -16,7 +16,6 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -1222,8 +1221,8 @@ public class API {
             params.put("max_id", max_id);
         if( since_id != null )
             params.put("since_id", since_id);
-        if( 0 > limit || limit > 40)
-            limit = 40;
+        if( 0 > limit || limit > 30)
+            limit = 30;
         params.put("limit",String.valueOf(limit));
 
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);

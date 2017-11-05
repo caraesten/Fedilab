@@ -57,7 +57,6 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
 
     @Override
     protected Void doInBackground(Void... params) {
-
         API api = new API(this.contextReference.get(), instance, token);
         if( acct == null)
             apiResponse = api.getNotifications(max_id, display);
