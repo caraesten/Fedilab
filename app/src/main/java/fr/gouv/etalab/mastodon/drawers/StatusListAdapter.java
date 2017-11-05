@@ -607,7 +607,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_content_container.setVisibility(View.VISIBLE);
                 holder.status_translate.setVisibility(View.GONE);
                 holder.status_show_more.setVisibility(View.GONE);
-                holder.status_action_container.setVisibility(View.GONE);
+                holder.status_action_container.setVisibility(View.INVISIBLE);
             }else {
                 holder.status_action_container.setVisibility(View.VISIBLE);
                 if( trans_forced || (translator != Helper.TRANS_NONE && currentLocale != null && status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale))){
@@ -1052,9 +1052,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 case R.id.action_mention:
                                     status.setTakingScreenShot(true);
                                     statusListAdapter.notifyDataSetChanged();
-                                    Handler handler = new Handler();
+                                    // Get a handler that can be used to post to the main thread
+                                    final Handler handler = new Handler();
                                     handler.postDelayed(new Runnable() {
-
                                         @Override
                                         public void run() {
                                             Bitmap bitmap = Helper.convertTootIntoBitmap(context, holder.getView());
@@ -1080,8 +1080,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                             intent.putExtras(b);
                                             context.startActivity(intent);
                                         }
-
-                                    }, 1000);
+                                    }, 500);
                                     return true;
                                 default:
                                     return true;
