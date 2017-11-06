@@ -100,12 +100,16 @@ public class MediaActivity extends AppCompatActivity  {
     private File fileVideo;
     private TextView progress;
     private boolean canSwipe;
+
+
+
     private enum actionSwipe{
         RIGHT_TO_LEFT,
         LEFT_TO_RIGHT,
         POP
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,14 +127,28 @@ public class MediaActivity extends AppCompatActivity  {
             mediaPosition = getIntent().getExtras().getInt("position", 1);
         if( attachments == null || attachments.size() == 0)
             finish();
-        if( getSupportActionBar() != null)
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         RelativeLayout main_container_media = findViewById(R.id.main_container_media);
         if( theme == Helper.THEME_LIGHT){
             main_container_media.setBackgroundResource(R.color.mastodonC2);
         }else {
             main_container_media.setBackgroundResource(R.color.mastodonC1);
+        }
+
+        if( getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            Handler h = new Handler();
+
+            h.postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    // DO DELAYED STUFF
+                    if(canSwipe)
+                        getSupportActionBar().hide();
+                }
+            }, 2000);
         }
 
 
@@ -160,6 +178,9 @@ public class MediaActivity extends AppCompatActivity  {
             @Override
             public void onMatrixChanged(RectF rect) {
                 canSwipe = (imageView.getScale() == 1 );
+                if( !canSwipe && getSupportActionBar() != null && getSupportActionBar().isShowing()){
+                    getSupportActionBar().hide();
+                }
             }
         });
 
@@ -212,8 +233,6 @@ public class MediaActivity extends AppCompatActivity  {
         return true;
     }
 
-
-
     /**
      * Manage touch event
      * Allows to swipe from timelines
@@ -222,6 +241,20 @@ public class MediaActivity extends AppCompatActivity  {
      */
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
+
+        if( event.getAction() == MotionEvent.ACTION_DOWN){
+            if( getSupportActionBar() != null && !getSupportActionBar().isShowing() && canSwipe) {
+                getSupportActionBar().show();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getSupportActionBar().hide();
+                    }
+                }, 2000);
+                return super.dispatchTouchEvent(event);
+            }
+        }
         if( !canSwipe || mediaPosition > attachments.size() || mediaPosition < 1 || attachments.size() <= 1)
             return super.dispatchTouchEvent(event);
         switch(event.getAction()){
