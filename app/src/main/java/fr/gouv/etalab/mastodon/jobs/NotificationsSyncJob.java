@@ -149,6 +149,8 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                 pos++;
             }
         }
+        if( notifications.size() == 0 )
+            return;
         //No previous notifications in cache, so no notification will be sent
         int newFollows = 0;
         int newAdds = 0;
