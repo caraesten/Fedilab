@@ -36,6 +36,7 @@ import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -123,8 +124,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                 return;
             //Retrieve users in db that owner has.
             for (Account account: accounts) {
-                String max_id = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId(), null);
-                new RetrieveNotificationsAsyncTask(getContext(), false, account.getInstance(), account.getToken(), max_id, account.getAcct(), account.getId(), NotificationsSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new RetrieveNotificationsAsyncTask(getContext(), false, account.getInstance(), account.getToken(), null, account.getAcct(), account.getId(), NotificationsSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
     }
@@ -133,10 +133,9 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
 
     @Override
     public void onRetrieveNotifications(APIResponse apiResponse, String acct, final String userId, boolean refreshData) {
-        final List<Notification> notifications = apiResponse.getNotifications();
-        if( apiResponse.getError() != null || notifications == null || notifications.size() == 0)
+        List<Notification> notificationsReceived = apiResponse.getNotifications();
+        if( apiResponse.getError() != null || notificationsReceived == null || notificationsReceived.size() == 0)
             return;
-        Bitmap icon_notification = null;
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
         boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
@@ -144,20 +143,24 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
         boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
         final String max_id = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
 
+        final  List<Notification> notifications = new ArrayList<>();
+        int pos = 0;
+        for(Notification notif: notificationsReceived){
+            if( Long.parseLong(notif.getId()) > Long.parseLong(max_id) ) {
+                notifications.add(pos, notif);
+                pos++;
+            }
+        }
 
         //No previous notifications in cache, so no notification will be sent
         int newFollows = 0;
         int newAdds = 0;
-        int newAsks = 0;
         int newMentions = 0;
         int newShare = 0;
         String notificationUrl = null;
         String title = null;
         final String message;
         for(Notification notification: notifications){
-            //The notification associated to max_id is discarded as it is supposed to have already been sent
-            if( max_id != null && notification.getId().equals(max_id))
-                continue;
             switch (notification.getType()){
                 case "mention":
                     if(notif_mention){
@@ -212,7 +215,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
             }
         }
 
-        int allNotifCount = newFollows + newAdds + newAsks + newMentions + newShare;
+        int allNotifCount = newFollows + newAdds + newMentions + newShare;
         if( allNotifCount > 0){
             //Some others notification
             int other = allNotifCount -1;
@@ -227,7 +230,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
             long notif_id = Long.parseLong(userId);
             final int notificationId = ((notif_id + 1) > 2147483647) ? (int) (2147483647 - notif_id - 1) : (int) (notif_id + 1);
 
-            if( notificationUrl != null && icon_notification == null){
+            if( notificationUrl != null ){
                 ImageLoader imageLoaderNoty = ImageLoader.getInstance();
                 File cacheDir = new File(getContext().getCacheDir(), getContext().getString(R.string.app_name));
                 ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getContext())
@@ -246,8 +249,9 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         super.onLoadingComplete(imageUri, view, loadedImage);
-                        if( max_id != null) {
-                            notify_user(getContext(), intent, notificationId, loadedImage, finalTitle, message);
+                        notify_user(getContext(), intent, notificationId, loadedImage, finalTitle, message);
+                        String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
+                        if( Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
                             SharedPreferences.Editor editor = sharedpreferences.edit();
                             editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notifications.get(0).getId());
                             editor.apply();
@@ -255,9 +259,10 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                     }
                     @Override
                     public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
-                        if( max_id != null) {
-                            notify_user(getContext(), intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
-                                    R.drawable.mastodonlogo), finalTitle, message);
+                        notify_user(getContext(), intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
+                                R.drawable.mastodonlogo), finalTitle, message);
+                        String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
+                        if( Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
                             SharedPreferences.Editor editor = sharedpreferences.edit();
                             editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notifications.get(0).getId());
                             editor.apply();

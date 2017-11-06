@@ -1232,15 +1232,20 @@ public class API {
             notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD_FILTER, true);
             notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION_FILTER, true);
             notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE_FILTER, true);
-            if( !notif_follow )
-                params.add("exclude_types[]", "follow");
-            if( !notif_add )
-                params.add("exclude_types[]", "favourite");
-            if( !notif_share )
-                params.add("exclude_types[]", "reblog");
-            if( !notif_mention )
-                params.add("exclude_types[]", "mention");
+        }else{
+            notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
+            notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
+            notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
+            notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
         }
+        if( !notif_follow )
+            params.add("exclude_types[]", "follow");
+        if( !notif_add )
+            params.add("exclude_types[]", "favourite");
+        if( !notif_share )
+            params.add("exclude_types[]", "reblog");
+        if( !notif_mention )
+            params.add("exclude_types[]", "mention");
 
         notifications = new ArrayList<>();
         get("/notifications", params, new JsonHttpResponseHandler() {
