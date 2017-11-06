@@ -88,7 +88,6 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                 .setPeriodic(TimeUnit.MINUTES.toMillis(Helper.MINUTES_BETWEEN_NOTIFICATIONS_REFRESH), TimeUnit.MINUTES.toMillis(5))
                 .setUpdateCurrent(updateCurrent)
                 .setRequiredNetworkType(JobRequest.NetworkType.METERED)
-                .setRequiresBatteryNotLow(true)
                 .setRequirementsEnforced(false)
                 .build()
                 .schedule();
@@ -142,16 +141,14 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
         boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
         boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
         final String max_id = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
-
         final  List<Notification> notifications = new ArrayList<>();
         int pos = 0;
         for(Notification notif: notificationsReceived){
-            if( Long.parseLong(notif.getId()) > Long.parseLong(max_id) ) {
+            if( max_id == null || Long.parseLong(notif.getId()) > Long.parseLong(max_id) ) {
                 notifications.add(pos, notif);
                 pos++;
             }
         }
-
         //No previous notifications in cache, so no notification will be sent
         int newFollows = 0;
         int newAdds = 0;
@@ -229,7 +226,6 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
             intent.putExtra(PREF_KEY_ID, userId);
             long notif_id = Long.parseLong(userId);
             final int notificationId = ((notif_id + 1) > 2147483647) ? (int) (2147483647 - notif_id - 1) : (int) (notif_id + 1);
-
             if( notificationUrl != null ){
                 ImageLoader imageLoaderNoty = ImageLoader.getInstance();
                 File cacheDir = new File(getContext().getCacheDir(), getContext().getString(R.string.app_name));

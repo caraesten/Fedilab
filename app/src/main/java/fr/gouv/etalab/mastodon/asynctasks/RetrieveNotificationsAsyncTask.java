@@ -24,6 +24,7 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveNotificationsInterface;
 
 
+
 /**
  * Created by Thomas on 28/04/2017.
  * Retrieves notifications on the instance
