@@ -247,7 +247,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                         super.onLoadingComplete(imageUri, view, loadedImage);
                         notify_user(getContext(), intent, notificationId, loadedImage, finalTitle, message);
                         String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
-                        if( Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
+                        if( lastNotif == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
                             SharedPreferences.Editor editor = sharedpreferences.edit();
                             editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notifications.get(0).getId());
                             editor.apply();
@@ -258,7 +258,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                         notify_user(getContext(), intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
                                 R.drawable.mastodonlogo), finalTitle, message);
                         String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
-                        if( Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
+                        if( lastNotif == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
                             SharedPreferences.Editor editor = sharedpreferences.edit();
                             editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notifications.get(0).getId());
                             editor.apply();
