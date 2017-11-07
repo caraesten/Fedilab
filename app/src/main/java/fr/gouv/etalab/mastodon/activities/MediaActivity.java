@@ -30,11 +30,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.URLUtil;
 import android.widget.ImageView;
 import android.widget.MediaController;
@@ -102,7 +102,6 @@ public class MediaActivity extends AppCompatActivity  {
     private boolean canSwipe;
 
 
-
     private enum actionSwipe{
         RIGHT_TO_LEFT,
         LEFT_TO_RIGHT,
@@ -117,9 +116,9 @@ public class MediaActivity extends AppCompatActivity  {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
-            setTheme(R.style.AppTheme);
+            setTheme(R.style.AppTheme_NoActionBar);
         }else {
-            setTheme(R.style.AppThemeDark);
+            setTheme(R.style.AppThemeDark_NoActionBar);
         }
         setContentView(R.layout.activity_media);
         attachments = getIntent().getParcelableArrayListExtra("mediaArray");
@@ -128,7 +127,6 @@ public class MediaActivity extends AppCompatActivity  {
         if( attachments == null || attachments.size() == 0)
             finish();
 
-
         RelativeLayout main_container_media = findViewById(R.id.main_container_media);
         if( theme == Helper.THEME_LIGHT){
             main_container_media.setBackgroundResource(R.color.mastodonC2);
@@ -136,8 +134,41 @@ public class MediaActivity extends AppCompatActivity  {
             main_container_media.setBackgroundResource(R.color.mastodonC1);
         }
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         if( getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            LayoutInflater inflater = (LayoutInflater) this.getSystemService(android.content.Context.LAYOUT_INFLATER_SERVICE);
+            assert inflater != null;
+            @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.picture_actionbar, null);
+            getSupportActionBar().setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+
+
+            ImageView action_save = getSupportActionBar().getCustomView().findViewById(R.id.action_save);
+            ImageView close = getSupportActionBar().getCustomView().findViewById(R.id.close);
+            if( close != null){
+                close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
+            }
+            action_save.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(Build.VERSION.SDK_INT >= 23 ){
+                        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
+                            ActivityCompat.requestPermissions(MediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST_CODE);
+                        } else {
+                            Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
+                        }
+                    }else{
+                        Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
+                    }
+                }
+            });
             Handler h = new Handler();
 
             h.postDelayed(new Runnable() {
@@ -204,34 +235,6 @@ public class MediaActivity extends AppCompatActivity  {
         displayMediaAtPosition(actionSwipe.POP);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            case R.id.action_download:
-                if(Build.VERSION.SDK_INT >= 23 ){
-                    if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
-                        ActivityCompat.requestPermissions(MediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST_CODE);
-                    } else {
-                        Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
-                    }
-                }else{
-                    Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
-                }
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main_media, menu);
-        return true;
-    }
 
     /**
      * Manage touch event
@@ -252,7 +255,6 @@ public class MediaActivity extends AppCompatActivity  {
                         getSupportActionBar().hide();
                     }
                 }, 2000);
-                return super.dispatchTouchEvent(event);
             }
         }
         if( !canSwipe || mediaPosition > attachments.size() || mediaPosition < 1 || attachments.size() <= 1)
@@ -429,15 +431,10 @@ public class MediaActivity extends AppCompatActivity  {
             filename = url;
         if( attachments.size() > 1 )
             filename = String.format("%s  (%s/%s)",filename, mediaPosition, attachments.size());
-
-        LayoutInflater mInflater = LayoutInflater.from(MediaActivity.this);
         ActionBar actionBar = getSupportActionBar();
         if( actionBar != null){
-            @SuppressLint("InflateParams") View picture_actionbar = mInflater.inflate(R.layout.picture_actionbar, null);
-            TextView picture_actionbar_title = picture_actionbar.findViewById(R.id.picture_actionbar);
+            TextView picture_actionbar_title = actionBar.getCustomView().findViewById(R.id.toolbar_title);
             picture_actionbar_title.setText(filename);
-            actionBar.setCustomView(picture_actionbar);
-            actionBar.setDisplayShowCustomEnabled(true);
         }else {
             setTitle(url);
         }
