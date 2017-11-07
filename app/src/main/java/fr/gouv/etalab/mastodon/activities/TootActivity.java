@@ -1707,6 +1707,10 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         }
         //If toot is not restored
         if( restored == -1 ){
+            if( tootReply.getSpoiler_text() != null && tootReply.getSpoiler_text().length() > 0) {
+                toot_cw_content.setText(tootReply.getSpoiler_text());
+                toot_cw_content.setVisibility(View.VISIBLE);
+            }
             //Retrieves mentioned accounts + OP and adds them at the beginin of the toot
             ArrayList<String> mentionedAccountsAdded = new ArrayList<>();
             if( tootReply.getAccount() != null && tootReply.getAccount().getAcct() != null && !tootReply.getAccount().getId().equals(userId)) {
@@ -1722,12 +1726,13 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     }
                 }
             }
+
             toot_content.setText(toot_content.getText().toString().trim());
             if (toot_content.getText().toString().startsWith("@")) {
-                //Put a "<trim>dot<space>" at the end of all mentioned account to force capitalization
                 toot_content.append("\n");
             }
             toot_space_left.setText(String.valueOf(toot_content.length()));
+            toot_content.requestFocus();
             toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
         }
         initialContent = toot_content.getText().toString();
