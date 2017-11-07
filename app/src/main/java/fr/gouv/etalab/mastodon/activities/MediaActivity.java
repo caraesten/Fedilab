@@ -108,7 +108,6 @@ public class MediaActivity extends AppCompatActivity  {
         POP
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,7 +130,7 @@ public class MediaActivity extends AppCompatActivity  {
         if( theme == Helper.THEME_LIGHT){
             main_container_media.setBackgroundResource(R.color.mastodonC2);
         }else {
-            main_container_media.setBackgroundResource(R.color.mastodonC1);
+            main_container_media.setBackgroundResource(R.color.mastodonC1_);
         }
 
         Toolbar toolbar = findViewById(R.id.toolbar);
