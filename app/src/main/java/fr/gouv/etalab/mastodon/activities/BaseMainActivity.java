@@ -809,7 +809,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
         });
 
 
-
+        // Asked once for notification opt-in
         boolean popupShown = sharedpreferences.getBoolean(Helper.SET_POPUP_PUSH, false);
         if(!popupShown){
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this);

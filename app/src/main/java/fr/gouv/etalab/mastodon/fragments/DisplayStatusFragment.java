@@ -124,7 +124,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         if( type == RetrieveFeedsAsyncTask.Type.HOME)
             lastReadStatus = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
         lv_status = rootView.findViewById(R.id.lv_status);
-        lv_status.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         mainLoader =  rootView.findViewById(R.id.loader);
         nextElementLoader = rootView.findViewById(R.id.loading_next_status);
         textviewNoAction =  rootView.findViewById(R.id.no_action);

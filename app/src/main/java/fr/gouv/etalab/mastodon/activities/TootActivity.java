@@ -74,10 +74,10 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.github.stom79.localepicker.CountryPicker;
+import com.github.stom79.localepicker.CountryPickerListener;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BinaryHttpResponseHandler;
-import com.mukesh.countrypicker.CountryPicker;
-import com.mukesh.countrypicker.CountryPickerListener;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -192,6 +192,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private View popup_trans;
     private AlertDialog dialogTrans;
     private AlertDialog alertDialogEmoji;
+    private String mentionAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -289,6 +290,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             sharedContent = b.getString("sharedContent", null);
             sharedContentIni = b.getString("sharedContent", null);
             sharedSubject = b.getString("sharedSubject", null);
+            mentionAccount = b.getString("mentionAccount", null);
             restoredScheduled = b.getBoolean("restoredScheduled", false);
             // ACTION_SEND route
             if (b.getInt("uriNumber", 0) == 1) {
@@ -307,7 +309,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             }
             restored = b.getLong("restored", -1);
         }
-        initialContent = toot_content.getText().toString();
+
         if(restoredScheduled){
             toot_it.setVisibility(View.GONE);
             invalidateOptionsMenu();
@@ -327,6 +329,11 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         else
             userId = accountReply.getId();
 
+        if( mentionAccount != null){
+            toot_content.setText(String.format("@%s\n", mentionAccount));
+            toot_content.setSelection(toot_content.getText().length());
+            toot_space_left.setText(String.valueOf(toot_content.length()));
+        }
         if( tootMention != null && urlMention != null && fileMention != null) {
             Bitmap pictureMention = BitmapFactory.decodeFile(getCacheDir() + "/" + fileMention);
             if (pictureMention != null) {
@@ -342,6 +349,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             toot_content.setText(String.format("\n\nvia @%s\n\n%s\n\n", tootMention, urlMention));
             toot_space_left.setText(String.valueOf(toot_content.length()));
         }
+        initialContent = toot_content.getText().toString();
         Account account;
         if( accountReply == null)
             account = new AccountDAO(getApplicationContext(),db).getAccountByID(userId);
@@ -525,7 +533,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             public void onClick(View v) {
 
                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-
                     if (ContextCompat.checkSelfPermission(TootActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
                             PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(TootActivity.this,
@@ -535,21 +542,17 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     }
                 }
                 Intent intent;
+                intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-                    intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                    intent.addCategory(Intent.CATEGORY_OPENABLE);
                     intent.setType("*/*");
                     String[] mimetypes = {"image/*", "video/*"};
                     intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
                     startActivityForResult(intent, PICK_IMAGE);
                 }else {
-                    Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                    getIntent.setType("image/*");
-
+                    intent.setType("image/* video/*");
                     Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    pickIntent.setType("image/*");
-
-                    Intent chooserIntent = Intent.createChooser(getIntent, getString(R.string.toot_select_image));
+                    Intent chooserIntent = Intent.createChooser(intent, getString(R.string.toot_select_image));
                     chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
                     startActivityForResult(chooserIntent, PICK_IMAGE);
                 }
@@ -812,7 +815,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 picker.setListener(new CountryPickerListener() {
                     @SuppressLint("InflateParams")
                     @Override
-                    public void onSelectCountry(String name, String code, String dialCode, String locale, int flagDrawableResID) {
+                    public void onSelectCountry(String name, String locale, int flagDrawableResID) {
                         picker.dismiss();
                         AlertDialog.Builder transAlert = new AlertDialog.Builder(TootActivity.this);
                         transAlert.setTitle(R.string.translate_toot);
@@ -1704,6 +1707,10 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         }
         //If toot is not restored
         if( restored == -1 ){
+            if( tootReply.getSpoiler_text() != null && tootReply.getSpoiler_text().length() > 0) {
+                toot_cw_content.setText(tootReply.getSpoiler_text());
+                toot_cw_content.setVisibility(View.VISIBLE);
+            }
             //Retrieves mentioned accounts + OP and adds them at the beginin of the toot
             ArrayList<String> mentionedAccountsAdded = new ArrayList<>();
             if( tootReply.getAccount() != null && tootReply.getAccount().getAcct() != null && !tootReply.getAccount().getId().equals(userId)) {
@@ -1719,12 +1726,13 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     }
                 }
             }
+
             toot_content.setText(toot_content.getText().toString().trim());
             if (toot_content.getText().toString().startsWith("@")) {
-                //Put a "<trim>dot<space>" at the end of all mentioned account to force capitalization
                 toot_content.append("\n");
             }
             toot_space_left.setText(String.valueOf(toot_content.length()));
+            toot_content.requestFocus();
             toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
         }
         initialContent = toot_content.getText().toString();
@@ -1736,7 +1744,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         //Nothing to store here....
         if(toot_content.getText().toString().trim().length() == 0 && (attachments == null || attachments.size() <1) && toot_cw_content.getText().toString().trim().length() == 0)
             return;
-        if( initialContent.equals(toot_content.getText().toString()))
+        if( initialContent.trim().equals(toot_content.getText().toString().trim()))
             return;
         Status toot = new Status();
         toot.setSensitive(isSensitive);

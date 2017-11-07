@@ -16,7 +16,6 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -1222,22 +1221,22 @@ public class API {
             params.put("max_id", max_id);
         if( since_id != null )
             params.put("since_id", since_id);
-        if( 0 > limit || limit > 40)
-            limit = 40;
+        if( 0 > limit || limit > 30)
+            limit = 30;
         params.put("limit",String.valueOf(limit));
 
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean notif_follow, notif_add, notif_mention, notif_share;
-        if( !display) {
-            notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
-            notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
-            notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
-            notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
-        }else {
+        if( display) {
             notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW_FILTER, true);
             notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD_FILTER, true);
             notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION_FILTER, true);
             notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE_FILTER, true);
+        }else{
+            notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
+            notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
+            notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
+            notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
         }
         if( !notif_follow )
             params.add("exclude_types[]", "follow");

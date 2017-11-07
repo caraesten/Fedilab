@@ -26,4 +26,9 @@
         android:title="@string/more_action_2"
         android:icon="@drawable/ic_block"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_mention"
+        android:title="@string/more_action_7"
+        android:icon="@drawable/ic_chat_bubble_outline"
+        app:showAsAction="ifRoom" />
 </menu>

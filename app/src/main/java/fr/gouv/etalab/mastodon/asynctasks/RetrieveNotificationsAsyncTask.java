@@ -24,6 +24,7 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveNotificationsInterface;
 
 
+
 /**
  * Created by Thomas on 28/04/2017.
  * Retrieves notifications on the instance
@@ -57,7 +58,6 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
 
     @Override
     protected Void doInBackground(Void... params) {
-
         API api = new API(this.contextReference.get(), instance, token);
         if( acct == null)
             apiResponse = api.getNotifications(max_id, display);
