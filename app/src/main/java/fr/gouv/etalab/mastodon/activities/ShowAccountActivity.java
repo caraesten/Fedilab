@@ -304,7 +304,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         final PopupMenu popup = new PopupMenu(ShowAccountActivity.this, account_menu);
         popup.getMenuInflater()
                 .inflate(R.menu.main_showaccount, popup.getMenu());
-        if( !Helper.canPin || !accountId.equals(userId)) {
+        if( !Helper.canPin ) {
             popup.getMenu().findItem(R.id.action_show_pinned).setVisible(false);
         }
         final String[] stringArrayConf;
@@ -573,7 +573,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                             .inflate(R.menu.option_filter_toots_account, popup.getMenu());
                     Menu menu = popup.getMenu();
 
-                    if( !Helper.canPin || !accountId.equals(userId)) {
+                    if( !Helper.canPin ) {
                         popup.getMenu().findItem(R.id.action_show_pinned).setVisible(false);
                     }
                     final MenuItem itemShowPined = menu.findItem(R.id.action_show_pinned);
