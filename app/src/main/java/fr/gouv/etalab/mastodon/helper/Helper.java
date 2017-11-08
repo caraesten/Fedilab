@@ -133,6 +133,7 @@ import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
+import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
@@ -283,6 +284,7 @@ public class Helper {
 
     public static final Pattern urlPattern = Pattern.compile(
             "(?i)\\b((?:[a-z][\\w-]+:(?:/{1,3}|[a-z0-9%])|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,10}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))",
+
             Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 
     public static final Pattern hashtagPattern = Pattern.compile("(#[\\w_À-ú-]+)");
@@ -297,6 +299,7 @@ public class Helper {
         SIMPLE
     }
 
+    private static boolean isPerformingSearch = false;
 
     /**
      * Converts emojis in input to unicode
@@ -1385,6 +1388,61 @@ public class Helper {
                     b.putString("tag", tag.substring(1));
                     intent.putExtras(b);
                     context.startActivity(intent);
+                }
+                @Override
+                public void updateDrawState(TextPaint ds) {
+                    super.updateDrawState(ds);
+                }
+            }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        }
+
+        Matcher matcherMention = mentionPattern.matcher(spannableString);
+        while (matcherMention.find()){
+            int matchStart = matcherMention.start(1);
+            int matchEnd = matcherMention.end();
+            final String search = spannableString.toString().substring(matchStart, matchEnd);
+            final String finalFullContent = fullContent;
+            spannableString.setSpan(new ClickableSpan() {
+                @Override
+                public void onClick(View textView) {
+                    if(!isPerformingSearch){
+                        isPerformingSearch = true;
+
+                        AsyncTask.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    String[] val = search.split("@");
+                                    if( val.length > 0 ) {
+                                        String username, instance;
+                                        if( val.length == 2){
+                                            username = val[1];
+                                            Pattern urlAccountPattern = Pattern.compile(
+                                                    "https:\\/\\/[\\w._-]+\\/@"+ username);
+                                            Matcher matcherAccount = urlAccountPattern.matcher(finalFullContent);
+                                            while (matcherAccount.find()){
+                                                String url = matcherAccount.group(0);
+                                                API api = new API(context);
+                                                Results results = api.search(url);
+                                                if( results.getAccounts().size() > 0 ){
+                                                    Account account = results.getAccounts().get(0);
+                                                    Intent intent = new Intent(context, ShowAccountActivity.class);
+                                                    Bundle b = new Bundle();
+                                                    b.putString("accountId", account.getId());
+                                                    intent.putExtras(b);
+                                                    context.startActivity(intent);
+                                                }
+                                            }
+                                        }
+                                    }
+                                    isPerformingSearch = false;
+                                }catch (Exception e){
+                                    isPerformingSearch = false;
+                                    Toast.makeText(context,R.string.toast_error, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
                 }
                 @Override
                 public void updateDrawState(TextPaint ds) {
