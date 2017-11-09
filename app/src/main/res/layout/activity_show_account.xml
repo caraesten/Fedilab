@@ -212,6 +212,7 @@
             <LinearLayout
                 android:id="@+id/toolbar_content"
                 android:animationCache="true"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
