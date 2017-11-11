@@ -21,10 +21,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -78,12 +78,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private String lastReadStatus;
     private Intent streamingFederatedIntent, streamingLocalIntent;
     LinearLayoutManager mLayoutManager;
+    private boolean liveNotifications;
 
     public DisplayStatusFragment(){
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_status, container, false);
         statuses = new ArrayList<>();
         knownId = new ArrayList<>();
@@ -117,6 +118,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         isOnWifi = Helper.isOnWIFI(context);
+        liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
         positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
         swipeRefreshLayout = rootView.findViewById(R.id.swipeContainer);
         behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
@@ -433,7 +435,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 if( statuses != null && statuses.size() > 0)
                     retrieveMissingToots(statuses.get(0).getId());
             }else {
-                if( streamingFederatedIntent != null){
+                if( streamingFederatedIntent != null && !liveNotifications){
                     SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
@@ -454,7 +456,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 if( statuses != null && statuses.size() > 0)
                     retrieveMissingToots(statuses.get(0).getId());
             }else {
-                if( streamingLocalIntent != null){
+                if( streamingLocalIntent != null && !liveNotifications){
                     SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
