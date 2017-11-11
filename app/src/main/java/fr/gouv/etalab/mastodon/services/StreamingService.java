@@ -18,16 +18,28 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.view.View;
 
+
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -36,14 +48,23 @@ import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.client.TLSSocketFactory;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+import mastodon.etalab.gouv.fr.mastodon.R;
+
+import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
+import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
+import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
+import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
 
 
 /**
@@ -175,18 +196,123 @@ public class StreamingService extends IntentService {
         }
     }
 
-    public void onRetrieveStreaming(EventStreaming event, Account account, JSONObject response) {
+    public void onRetrieveStreaming(EventStreaming event, final Account account, JSONObject response) {
         if(  response == null )
             return;
         //No previous notifications in cache, so no notification will be sent
         Status status ;
-        Notification notification;
+        final Notification notification;
         String dataId = null;
 
         Bundle b = new Bundle();
         if( event == EventStreaming.NOTIFICATION){
             notification = API.parseNotificationResponse(getApplicationContext(), response);
             b.putParcelable("data", notification);
+            boolean activityPaused;
+            try {
+                activityPaused = BaseMainActivity.activityState();
+            }catch (Exception e){
+                activityPaused = true;
+            }
+            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
+            boolean canNotify = Helper.canNotify(getApplicationContext());
+            boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
+            if(activityPaused && liveNotifications && canNotify && notify) {
+                boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
+                boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
+                boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
+                boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
+                boolean somethingToPush = (notif_follow || notif_add || notif_mention || notif_share);
+                String title = null;
+                if( somethingToPush){
+                    switch (notification.getType()){
+                        case "mention":
+                            if(notif_mention){
+                                if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
+                                    title = String.format("@%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getApplicationContext().getString(R.string.notif_mention));
+                                else
+                                    title = String.format("@%s %s", notification.getAccount().getUsername(),getApplicationContext().getString(R.string.notif_mention));
+                            }
+                            break;
+                        case "reblog":
+                            if(notif_share){
+                                if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
+                                    title = String.format("@%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getApplicationContext().getString(R.string.notif_reblog));
+                                else
+                                    title = String.format("@%s %s", notification.getAccount().getUsername(),getApplicationContext().getString(R.string.notif_reblog));
+                            }
+                            break;
+                        case "favourite":
+                            if(notif_add){
+                                if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
+                                    title = String.format("@%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getApplicationContext().getString(R.string.notif_favourite));
+                                else
+                                    title = String.format("@%s %s", notification.getAccount().getUsername(),getApplicationContext().getString(R.string.notif_favourite));
+                            }
+                            break;
+                        case "follow":
+                            if(notif_follow){
+                                if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
+                                    title = String.format("@%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getApplicationContext().getString(R.string.notif_follow));
+                                else
+                                    title = String.format("@%s %s", notification.getAccount().getUsername(),getApplicationContext().getString(R.string.notif_follow));
+                            }
+                            break;
+                        default:
+                    }
+                    //Some others notification
+                    final Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
+                    intent.putExtra(INTENT_ACTION, NOTIFICATION_INTENT);
+                    intent.putExtra(PREF_KEY_ID, account.getId());
+                    long notif_id = Long.parseLong(account.getId());
+                    final int notificationId = ((notif_id + 1) > 2147483647) ? (int) (2147483647 - notif_id - 1) : (int) (notif_id + 1);
+                    if( account.getAvatar() != null ) {
+                        ImageLoader imageLoaderNoty = ImageLoader.getInstance();
+                        File cacheDir = new File(getApplicationContext().getCacheDir(), getApplicationContext().getString(R.string.app_name));
+                        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
+                                .imageDownloader(new PatchBaseImageDownloader(getApplicationContext()))
+                                .threadPoolSize(5)
+                                .threadPriority(Thread.MIN_PRIORITY + 3)
+                                .denyCacheImageMultipleSizesInMemory()
+                                .diskCache(new UnlimitedDiskCache(cacheDir))
+                                .build();
+                        imageLoaderNoty.init(config);
+                        DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
+                                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+
+                        final String finalTitle = title;
+                        if( title != null) {
+                            imageLoaderNoty.loadImage(account.getAvatar(), options, new SimpleImageLoadingListener() {
+                                @Override
+                                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                                    super.onLoadingComplete(imageUri, view, loadedImage);
+                                    notify_user(getApplicationContext(), intent, notificationId, loadedImage, finalTitle, "");
+                                    String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId(), null);
+                                    if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
+                                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                                        editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId(), notification.getId());
+                                        editor.apply();
+                                    }
+                                }
+
+                                @Override
+                                public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason) {
+                                    notify_user(getApplicationContext(), intent, notificationId, BitmapFactory.decodeResource(getApplicationContext().getResources(),
+                                            R.drawable.mastodonlogo), finalTitle, "");
+                                    String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId(), null);
+                                    if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
+                                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                                        editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId(), notification.getId());
+                                        editor.apply();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+            }
         }else if ( event ==  EventStreaming.UPDATE){
             status = API.parseStatuses(getApplicationContext(), response);
             status.setReplies(new ArrayList<Status>());

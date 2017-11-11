@@ -144,6 +144,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
     public static String lastHomeId = null, lastNotificationId = null;
     boolean notif_follow, notif_add, notif_mention, notif_share, show_boosts, show_replies;
     private AppBarLayout appBar;
+    private static boolean activityPaused;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1452,9 +1453,15 @@ public abstract class BaseMainActivity extends AppCompatActivity
     }
 
     private static void activityResumed() {
+        activityPaused = false;
     }
 
     private static void activityPaused() {
+        activityPaused = true;
+    }
+
+    public static boolean activityState(){
+        return activityPaused;
     }
 
 }
