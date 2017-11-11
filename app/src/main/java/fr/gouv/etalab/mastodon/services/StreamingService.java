@@ -78,7 +78,6 @@ import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
 public class StreamingService extends Service {
 
 
-    private EventStreaming lastEvent;
 
 
     public enum EventStreaming{
@@ -116,6 +115,20 @@ public class StreamingService extends Service {
         }
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Bundle extras = intent.getExtras();
+        if(extras != null) {
+            boolean restart = (boolean) extras.get("restart");
+            if( restart) {
+                SystemClock.sleep(1000);
+                sendBroadcast(new Intent("RestartStreamingService"));
+                stopSelf();
+            }
+        }
+        return START_STICKY;
+    }
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -128,6 +141,7 @@ public class StreamingService extends Service {
         HttpsURLConnection httpsURLConnection = null;
         BufferedReader reader = null;
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        EventStreaming lastEvent = null;
         if( accountStream != null){
             try {
                 URL url = new URL("https://" + accountStream.getInstance() + "/api/v1/streaming/user");
@@ -150,6 +164,7 @@ public class StreamingService extends Service {
                         stopSelf();
                         return;
                     }
+
                     if ((lastEvent == EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
                         switch (event.trim()) {
                             case "event: update":
@@ -245,7 +260,7 @@ public class StreamingService extends Service {
                 boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
                 boolean somethingToPush = (notif_follow || notif_add || notif_mention || notif_share);
                 String title = null;
-                if( somethingToPush){
+                if( somethingToPush && notification != null){
                     switch (notification.getType()){
                         case "mention":
                             if(notif_mention){

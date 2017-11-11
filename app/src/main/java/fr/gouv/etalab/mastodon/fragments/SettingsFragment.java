@@ -47,7 +47,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -229,8 +228,8 @@ public class SettingsFragment extends Fragment {
                 editor.apply();
                 if( set_live_notif.isChecked() ){
                     try {
-                        ((BaseMainActivity) context).startSreaming();
-                    }catch (Exception ignored){}
+                        ((MainActivity) context).startSreaming(true);
+                    }catch (Exception ignored){ignored.printStackTrace();}
                 }
             }
         });

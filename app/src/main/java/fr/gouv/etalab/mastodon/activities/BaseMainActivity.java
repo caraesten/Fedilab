@@ -223,7 +223,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
         changeDrawableColor(getApplicationContext(), R.drawable.ic_notifications,R.color.dark_text);
         changeDrawableColor(getApplicationContext(), R.drawable.ic_people,R.color.dark_text);
         changeDrawableColor(getApplicationContext(), R.drawable.ic_public,R.color.dark_text);
-        startSreaming();
+        startSreaming(false);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
@@ -1461,8 +1461,9 @@ public abstract class BaseMainActivity extends AppCompatActivity
         return activityPaused;
     }
 
-    public void startSreaming(){
+    public void startSreaming(boolean restart){
         streamingIntent = new Intent(this, StreamingService.class);
+        streamingIntent.putExtra("restart",restart);
         startService(streamingIntent);
     }
 }
