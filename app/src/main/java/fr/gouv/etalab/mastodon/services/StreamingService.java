@@ -117,7 +117,8 @@ public class StreamingService extends IntentService {
     protected void onHandleIntent(@Nullable Intent intent) {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
-        if( liveNotifications){
+        boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
+        if( liveNotifications && notify){
             Iterator it = httpsURLConnections.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry)it.next();
