@@ -13,7 +13,7 @@ package fr.gouv.etalab.mastodon.services;
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
-import android.app.IntentService;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,6 +21,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
@@ -46,9 +47,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -76,23 +76,12 @@ import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
  * Manage service for streaming api and new notifications
  */
 
-public class StreamingService extends IntentService {
+public class StreamingService extends Service {
 
 
     private EventStreaming lastEvent;
-    /**
-     * Creates an IntentService.  Invoked by your subclass's constructor.
-     *
-     * @param name Used to name the worker thread, important only for debugging.
-     */
-    public StreamingService(String name) {
-        super(name);
-    }
-    public StreamingService() {
-        super("StreamingService");
-    }
 
-    private static HttpsURLConnection httpsURLConnection;
+
     private static HashMap<String, HttpsURLConnection> httpsURLConnections = new HashMap<>();
 
     public enum EventStreaming{
@@ -110,49 +99,63 @@ public class StreamingService extends IntentService {
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING+userId, true);
         editor.apply();
-    }
-
-
-    @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
         boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
         if( liveNotifications && notify){
-            Iterator it = httpsURLConnections.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry)it.next();
-                if( pair.getValue() != null)
-                    ((HttpsURLConnection)pair.getValue()).disconnect();
-                it.remove();
-            }
+
             SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccount();
-            for(Account accountStream: accountStreams){
-                streamOnUser(accountStream, true);
+            for(final Account accountStream: accountStreams){
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try  {
+                            streamOnUser(accountStream);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                thread.start();
             }
         }else {
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            if( httpsURLConnection != null)
-                httpsURLConnection.disconnect();
             if( userId != null) {
                 SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                Account accountStream = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
-                streamOnUser(accountStream, false);
+                final Account accountStream = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try  {
+                            streamOnUser(accountStream);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                thread.start();
             }
         }
-        
     }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
+
     
-    private void streamOnUser(Account accountStream, boolean liveNotifications){
+    private void streamOnUser(Account accountStream){
         InputStream inputStream;
         BufferedReader reader = null;
+        try {
+            httpsURLConnections.get(accountStream.getAcct() + accountStream.getInstance()).disconnect();
+        }catch (Exception ignored){}
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( accountStream != null){
             try {
-
                 URL url = new URL("https://" + accountStream.getInstance() + "/api/v1/streaming/user");
-                httpsURLConnection = (HttpsURLConnection) url.openConnection();
+                HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
                 httpsURLConnection.setRequestProperty("Content-Type", "application/json");
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + accountStream.getToken());
                 httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
@@ -162,10 +165,7 @@ public class StreamingService extends IntentService {
                 httpsURLConnection.setRequestMethod("GET");
                 httpsURLConnection.setConnectTimeout(70000);
                 httpsURLConnection.setReadTimeout(70000);
-                if( liveNotifications)
-                    httpsURLConnections.put(accountStream.getAcct()+accountStream.getInstance(),httpsURLConnection);
-                else
-                    StreamingService.httpsURLConnection = httpsURLConnection;
+                httpsURLConnections.put(accountStream.getAcct()+accountStream.getInstance(),httpsURLConnection);
                 inputStream = new BufferedInputStream(httpsURLConnection.getInputStream());
                 reader = new BufferedReader(new InputStreamReader(inputStream));
                 String event;
