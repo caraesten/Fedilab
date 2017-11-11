@@ -223,7 +223,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
         changeDrawableColor(getApplicationContext(), R.drawable.ic_notifications,R.color.dark_text);
         changeDrawableColor(getApplicationContext(), R.drawable.ic_people,R.color.dark_text);
         changeDrawableColor(getApplicationContext(), R.drawable.ic_public,R.color.dark_text);
-
+        startSreaming();
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
@@ -1090,7 +1090,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 }
             }
         };
-        startSreaming();
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_federated_data, new IntentFilter(Helper.RECEIVE_FEDERATED_DATA));
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_local_data, new IntentFilter(Helper.RECEIVE_LOCAL_DATA));

@@ -46,7 +46,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -82,8 +81,6 @@ public class StreamingService extends Service {
     private EventStreaming lastEvent;
 
 
-    private static HashMap<String, HttpsURLConnection> httpsURLConnections = new HashMap<>();
-
     public enum EventStreaming{
         UPDATE,
         NOTIFICATION,
@@ -92,9 +89,11 @@ public class StreamingService extends Service {
     }
     protected Account account;
 
+    private boolean restartCalled;
 
     public void onCreate() {
         super.onCreate();
+        restartCalled = false;
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
         boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
@@ -125,16 +124,14 @@ public class StreamingService extends Service {
 
 
     private void streamOnUser(Account accountStream){
-        InputStream inputStream;
+        InputStream inputStream = null;
+        HttpsURLConnection httpsURLConnection = null;
         BufferedReader reader = null;
-        try {
-            httpsURLConnections.get(accountStream.getAcct() + accountStream.getInstance()).disconnect();
-        }catch (Exception ignored){}
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( accountStream != null){
             try {
                 URL url = new URL("https://" + accountStream.getInstance() + "/api/v1/streaming/user");
-                HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
+                httpsURLConnection = (HttpsURLConnection) url.openConnection();
                 httpsURLConnection.setRequestProperty("Content-Type", "application/json");
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + accountStream.getToken());
                 httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
@@ -144,7 +141,6 @@ public class StreamingService extends Service {
                 httpsURLConnection.setRequestMethod("GET");
                 httpsURLConnection.setConnectTimeout(70000);
                 httpsURLConnection.setReadTimeout(70000);
-                httpsURLConnections.put(accountStream.getAcct()+accountStream.getInstance(),httpsURLConnection);
                 inputStream = new BufferedInputStream(httpsURLConnection.getInputStream());
                 reader = new BufferedReader(new InputStreamReader(inputStream));
                 String event;
@@ -199,12 +195,21 @@ public class StreamingService extends Service {
                 if(reader != null){
                     try{
                         reader.close();
-                    }catch (IOException e){
-                        e.printStackTrace();
-                    }
+                    }catch (IOException ignored){}
                 }
-                SystemClock.sleep(1000);
-                sendBroadcast(new Intent("RestartStreamingService"));
+                if (inputStream != null) {
+                    try {
+                        inputStream.close();
+                    } catch (IOException ignored) {}
+                }
+                if( httpsURLConnection != null)
+                    httpsURLConnection.disconnect();
+                if( !restartCalled ) {
+                    restartCalled = true;
+                    SystemClock.sleep(1000);
+                    sendBroadcast(new Intent("RestartStreamingService"));
+                    stopSelf();
+                }
             }
         }
     }
