@@ -45,6 +45,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -89,6 +93,8 @@ public class StreamingService extends IntentService {
     }
 
     private static HttpsURLConnection httpsURLConnection;
+    private static HashMap<String, HttpsURLConnection> httpsURLConnections = new HashMap<>();
+
     public enum EventStreaming{
         UPDATE,
         NOTIFICATION,
@@ -110,16 +116,37 @@ public class StreamingService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
+        if( liveNotifications){
+            Iterator it = httpsURLConnections.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                if( pair.getValue() != null)
+                    ((HttpsURLConnection)pair.getValue()).disconnect();
+                it.remove();
+            }
+            SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccount();
+            for(Account accountStream: accountStreams){
+                streamOnUser(accountStream, true);
+            }
+        }else {
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            if( httpsURLConnection != null)
+                httpsURLConnection.disconnect();
+            if( userId != null) {
+                SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                Account accountStream = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
+                streamOnUser(accountStream, false);
+            }
+        }
+        
+    }
+    
+    private void streamOnUser(Account accountStream, boolean liveNotifications){
         InputStream inputStream;
         BufferedReader reader = null;
-        Account accountStream = null;
-        if( httpsURLConnection != null)
-            httpsURLConnection.disconnect();
-        if( userId != null) {
-            SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            accountStream = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
-        }
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( accountStream != null){
             try {
 
@@ -134,6 +161,10 @@ public class StreamingService extends IntentService {
                 httpsURLConnection.setRequestMethod("GET");
                 httpsURLConnection.setConnectTimeout(70000);
                 httpsURLConnection.setReadTimeout(70000);
+                if( liveNotifications)
+                    httpsURLConnections.put(accountStream.getAcct()+accountStream.getInstance(),httpsURLConnection);
+                else
+                    StreamingService.httpsURLConnection = httpsURLConnection;
                 inputStream = new BufferedInputStream(httpsURLConnection.getInputStream());
                 reader = new BufferedReader(new InputStreamReader(inputStream));
                 String event;
