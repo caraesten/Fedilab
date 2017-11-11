@@ -78,8 +78,6 @@ import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
 public class StreamingService extends Service {
 
 
-
-
     public enum EventStreaming{
         UPDATE,
         NOTIFICATION,
