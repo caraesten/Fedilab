@@ -283,7 +283,7 @@ public class StreamingService extends Service {
                     intent.putExtra(PREF_KEY_ID, account.getId());
                     long notif_id = Long.parseLong(account.getId());
                     final int notificationId = ((notif_id + 1) > 2147483647) ? (int) (2147483647 - notif_id - 1) : (int) (notif_id + 1);
-                    if( account.getAvatar() != null ) {
+                    if( notification.getAccount().getAvatar() != null ) {
                         ImageLoader imageLoaderNoty = ImageLoader.getInstance();
                         File cacheDir = new File(getApplicationContext().getCacheDir(), getApplicationContext().getString(R.string.app_name));
                         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
@@ -299,11 +299,11 @@ public class StreamingService extends Service {
 
                         final String finalTitle = title;
                         if( title != null) {
-                            imageLoaderNoty.loadImage(account.getAvatar(), options, new SimpleImageLoadingListener() {
+                            imageLoaderNoty.loadImage(notification.getAccount().getAvatar(), options, new SimpleImageLoadingListener() {
                                 @Override
                                 public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                                     super.onLoadingComplete(imageUri, view, loadedImage);
-                                    notify_user(getApplicationContext(), intent, notificationId, loadedImage, finalTitle, "");
+                                    notify_user(getApplicationContext(), intent, notificationId, loadedImage, finalTitle, "@"+account.getAcct()+"@"+account.getInstance());
                                     String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId(), null);
                                     if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
                                         SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -315,7 +315,7 @@ public class StreamingService extends Service {
                                 @Override
                                 public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason) {
                                     notify_user(getApplicationContext(), intent, notificationId, BitmapFactory.decodeResource(getApplicationContext().getResources(),
-                                            R.drawable.mastodonlogo), finalTitle, "");
+                                            R.drawable.mastodonlogo), finalTitle, "@"+account.getAcct()+"@"+account.getInstance());
                                     String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId(), null);
                                     if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
                                         SharedPreferences.Editor editor = sharedpreferences.edit();
