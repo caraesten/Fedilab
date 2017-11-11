@@ -443,37 +443,35 @@ public abstract class BaseMainActivity extends AppCompatActivity
                     toot.setVisibility(View.VISIBLE);
                 else
                     toot.setVisibility(View.GONE);
-                Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
-                switch (tab.getPosition()){
-                    case 0:
-                        DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
-                        countNewStatus = 0;
-                        updateHomeCounter();
-                        if( displayStatusFragment != null )
+                if( viewPager.getAdapter() != null) {
+                    Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
+                    switch (tab.getPosition()) {
+                        case 0:
+                            DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
+                            countNewStatus = 0;
+                            updateHomeCounter();
                             displayStatusFragment.scrollToTop();
-                        break;
-                    case 2:
-                        if( display_local)
-                            updateTimeLine(RetrieveFeedsAsyncTask.Type.LOCAL,0);
-                        else if( display_global)
-                            updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC,0);
-                        displayStatusFragment = ((DisplayStatusFragment) fragment);
-                        if( displayStatusFragment != null )
+                            break;
+                        case 2:
+                            if (display_local)
+                                updateTimeLine(RetrieveFeedsAsyncTask.Type.LOCAL, 0);
+                            else if (display_global)
+                                updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC, 0);
+                            displayStatusFragment = ((DisplayStatusFragment) fragment);
                             displayStatusFragment.scrollToTop();
-                        break;
-                    case 3:
-                        displayStatusFragment = ((DisplayStatusFragment) fragment);
-                        if( displayStatusFragment != null )
+                            break;
+                        case 3:
+                            displayStatusFragment = ((DisplayStatusFragment) fragment);
                             displayStatusFragment.scrollToTop();
-                        updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC,0);
-                        break;
-                    case 1:
-                        DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
-                        countNewNotifications = 0;
-                        updateNotifCounter();
-                        if( displayNotificationsFragment != null )
+                            updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC, 0);
+                            break;
+                        case 1:
+                            DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
+                            countNewNotifications = 0;
+                            updateNotifCounter();
                             displayNotificationsFragment.scrollToTop();
-                        break;
+                            break;
+                    }
                 }
             }
         });
@@ -506,20 +504,20 @@ public abstract class BaseMainActivity extends AppCompatActivity
                     //Scroll to top when top bar is clicked (THEME_MENU only)
                 } else {
                     int pos = tabLayout.getSelectedTabPosition();
-                    Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, pos);
-                    switch (pos) {
-                        case 0:
-                        case 2:
-                        case 3:
-                            DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
-                            if (displayStatusFragment != null)
+                    if( viewPager.getAdapter() != null) {
+                        Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, pos);
+                        switch (pos) {
+                            case 0:
+                            case 2:
+                            case 3:
+                                DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
                                 displayStatusFragment.scrollToTop();
-                            break;
-                        case 1:
-                            DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
-                            if (displayNotificationsFragment != null)
+                                break;
+                            case 1:
+                                DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
                                 displayNotificationsFragment.scrollToTop();
-                            break;
+                                break;
+                        }
                     }
                 }
             }
@@ -1092,8 +1090,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 }
             }
         };
-        streamingIntent = new Intent(this, StreamingService.class);
-        startService(streamingIntent);
+        startSreaming();
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_federated_data, new IntentFilter(Helper.RECEIVE_FEDERATED_DATA));
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_local_data, new IntentFilter(Helper.RECEIVE_LOCAL_DATA));
@@ -1348,6 +1345,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
             return null;
         }
 
+        @NonNull
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
@@ -1464,7 +1462,8 @@ public abstract class BaseMainActivity extends AppCompatActivity
         return activityPaused;
     }
 
-    public void setstreamingIntent(Intent streamService){
-        streamingIntent = streamService;
+    public void startSreaming(){
+        streamingIntent = new Intent(this, StreamingService.class);
+        startService(streamingIntent);
     }
 }

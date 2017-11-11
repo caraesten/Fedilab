@@ -25,7 +25,6 @@ import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.View;
 
 
@@ -93,36 +92,16 @@ public class StreamingService extends Service {
     }
     protected Account account;
 
+
     public void onCreate() {
         super.onCreate();
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING+userId, true);
-        editor.apply();
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
         boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
         if( liveNotifications && notify){
-
             SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccount();
             for(final Account accountStream: accountStreams){
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try  {
-                            streamOnUser(accountStream);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-                thread.start();
-            }
-        }else {
-            if( userId != null) {
-                SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                final Account accountStream = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -145,13 +124,11 @@ public class StreamingService extends Service {
     }
 
 
-    
     private void streamOnUser(Account accountStream){
         InputStream inputStream;
         BufferedReader reader = null;
         try {
             httpsURLConnections.get(accountStream.getAcct() + accountStream.getInstance()).disconnect();
-            Log.v(Helper.TAG,accountStream.getAcct() + " - streamOnUser: " + httpsURLConnections.get(accountStream.getAcct() + accountStream.getInstance()).getInputStream());
         }catch (Exception ignored){}
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( accountStream != null){
@@ -173,8 +150,7 @@ public class StreamingService extends Service {
                 String event;
                 EventStreaming eventStreaming;
                 while((event = reader.readLine()) != null) {
-                    Log.v(Helper.TAG,accountStream.getAcct() + " - continue: " + sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING + accountStream.getId(), true) );
-                    if( !sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING + accountStream.getId(), true) ) {
+                    if( !sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING, true) ) {
                         stopSelf();
                         return;
                     }

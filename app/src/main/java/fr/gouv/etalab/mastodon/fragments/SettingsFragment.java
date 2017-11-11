@@ -47,6 +47,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -224,12 +225,13 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, set_live_notif.isChecked());
+                editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING, set_live_notif.isChecked());
                 editor.apply();
-                if( getActivity() != null)
-                    getActivity().recreate();
-                Intent intent = new Intent(context, MainActivity.class);
-                intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
-                startActivity(intent);
+                if( set_live_notif.isChecked() ){
+                    try {
+                        ((BaseMainActivity) context).startSreaming();
+                    }catch (Exception ignored){}
+                }
             }
         });
 
