@@ -250,7 +250,9 @@ public class StreamingService extends IntentService {
             boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
             boolean canNotify = Helper.canNotify(getApplicationContext());
             boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
-            if(activityPaused && liveNotifications && canNotify && notify) {
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+
+            if((userId == null || !userId.equals(account.getId()) || activityPaused) && liveNotifications && canNotify && notify) {
                 boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
                 boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
                 boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
