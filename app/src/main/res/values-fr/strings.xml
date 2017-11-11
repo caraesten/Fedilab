@@ -438,4 +438,5 @@
     <string name="disclaimer_full">Les données ci-dessous peuvent ne pas refléter ce profil dans sa totalité.</string>
     <string name="insert_emoji">Insérer un émoji</string>
     <string name="no_emoji">L\'application n\'a pas encore collecté d\'emojis personnalisés</string>
+    <string name="live_notif">Notifications en direct</string>
 </resources>

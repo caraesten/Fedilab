@@ -96,6 +96,7 @@
     <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
     <string name="insert_emoji">Insert emoji</string>
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
+    <string name="live_notif">Live notifications</string>
     <!-- Status -->
     <string name="no_status">No toot to display</string>
     <string name="fav_added">The toot was added to favourites</string>

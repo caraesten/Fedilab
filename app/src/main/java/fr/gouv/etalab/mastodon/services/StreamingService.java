@@ -25,6 +25,7 @@ import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.View;
 
 
@@ -150,6 +151,7 @@ public class StreamingService extends Service {
         BufferedReader reader = null;
         try {
             httpsURLConnections.get(accountStream.getAcct() + accountStream.getInstance()).disconnect();
+            Log.v(Helper.TAG,accountStream.getAcct() + " - streamOnUser: " + httpsURLConnections.get(accountStream.getAcct() + accountStream.getInstance()).getInputStream());
         }catch (Exception ignored){}
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( accountStream != null){
@@ -171,8 +173,11 @@ public class StreamingService extends Service {
                 String event;
                 EventStreaming eventStreaming;
                 while((event = reader.readLine()) != null) {
-                    if( !sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING + accountStream.getId(), true) )
+                    Log.v(Helper.TAG,accountStream.getAcct() + " - continue: " + sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING + accountStream.getId(), true) );
+                    if( !sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING + accountStream.getId(), true) ) {
                         stopSelf();
+                        return;
+                    }
                     if ((lastEvent == EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
                         switch (event.trim()) {
                             case "event: update":

@@ -1464,4 +1464,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
         return activityPaused;
     }
 
+    public void setstreamingIntent(Intent streamService){
+        streamingIntent = streamService;
+    }
 }

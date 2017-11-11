@@ -435,4 +435,5 @@
     <string name="disclaimer_full">De informatie hieronder kan mogelijk een incompleet beeld geven van dit gebruikersprofiel.</string>
     <string name="insert_emoji">Emoji toevoegen</string>
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
+    <string name="live_notif">Live notifications</string>
 </resources>

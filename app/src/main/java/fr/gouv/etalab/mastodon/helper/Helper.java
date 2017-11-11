@@ -215,7 +215,7 @@ public class Helper {
     public static final String SET_SHOW_BOOSTS = "set_show_boost";
     public static final String SET_SHOW_REPLIES = "set_show_replies";
     public static final String INSTANCE_VERSION = "instance_version";
-
+    public static final String SET_LIVE_NOTIFICATIONS = "set_show_replies";
 
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
@@ -229,7 +229,6 @@ public class Helper {
     public static final int TRANS_NONE = 2;
 
     public static final String SET_TRANS_FORCED = "set_trans_forced";
-    public static final String SET_LIVE_NOTIFICATIONS = "set_live_notifications";
     public static final String SET_NOTIFY = "set_notify";
     public static final String SET_NOTIF_FOLLOW = "set_notif_follow";
     public static final String SET_NOTIF_ADD = "set_notif_follow_add";
