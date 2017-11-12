@@ -33,8 +33,9 @@ import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
-import mastodon.etalab.gouv.fr.mastodon.R;
+
 
 
 /**
@@ -47,12 +48,10 @@ public class EmojisSearchAdapter extends ArrayAdapter<Emojis> implements Filtera
     private LayoutInflater layoutInflater;
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
-    private Context context;
 
     public EmojisSearchAdapter(Context context, List<Emojis> emojis){
         super(context, android.R.layout.simple_list_item_1, emojis);
         this.emojis = emojis;
-        this.context = context;
         this.tempEmojis = new ArrayList<>(emojis);
         this.suggestions = new ArrayList<>(emojis);
         layoutInflater = LayoutInflater.from(context);

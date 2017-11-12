@@ -45,11 +45,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cz.msebera.android.httpclient.Header;
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.*;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
-import mastodon.etalab.gouv.fr.mastodon.R;
+
 
 import static fr.gouv.etalab.mastodon.helper.Helper.USER_AGENT;
 

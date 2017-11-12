@@ -23,7 +23,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +41,7 @@ import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import java.io.File;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
@@ -50,9 +50,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
-import mastodon.etalab.gouv.fr.mastodon.R;
 
-import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
 /**
@@ -111,11 +109,11 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.drawer_account_search_dev, parent, false);
             holder = new ViewHolder();
-            holder.account_pp = (ImageView) convertView.findViewById(R.id.account_pp);
-            holder.account_dn = (TextView) convertView.findViewById(R.id.account_dn);
-            holder.account_un = (TextView) convertView.findViewById(R.id.account_un);
-            holder.account_follow = (FloatingActionButton) convertView.findViewById(R.id.account_follow);
-            holder.acccount_container = (LinearLayout) convertView.findViewById(R.id.acccount_container);
+            holder.account_pp = convertView.findViewById(R.id.account_pp);
+            holder.account_dn = convertView.findViewById(R.id.account_dn);
+            holder.account_un = convertView.findViewById(R.id.account_un);
+            holder.account_follow = convertView.findViewById(R.id.account_follow);
+            holder.acccount_container = convertView.findViewById(R.id.acccount_container);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -124,6 +122,7 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
         final float scale = context.getResources().getDisplayMetrics().density;
         if( account != null && account.isLocked()){
             Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_lock_outline);
+            assert img != null;
             img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (20 * scale + 0.5f));
             holder.account_dn.setCompoundDrawables( null, null, img, null);
         }else{
@@ -132,13 +131,15 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            assert account != null;
             holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
             holder.account_un.setText(String.format("@%s",account.getAcct()));
         }else {
+            assert account != null;
             holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
             holder.account_un.setText(String.format("@%s",account.getAcct()));
         }
-        changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.mastodonC4);
+        Helper.changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.mastodonC4);
         //Profile picture
         imageLoader.displayImage(account.getAvatar(), holder.account_pp, options);
 

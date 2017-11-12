@@ -59,9 +59,11 @@ public class StreamingLocalTimelineService extends IntentService {
      *
      * @param name Used to name the worker thread, important only for debugging.
      */
+    @SuppressWarnings("unused")
     public StreamingLocalTimelineService(String name) {
         super(name);
     }
+    @SuppressWarnings("unused")
     public StreamingLocalTimelineService() {
         super("StreamingLocalTimelineService");
     }
