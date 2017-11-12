@@ -263,33 +263,33 @@ public class LiveNotificationService extends Service {
                         case "mention":
                             if(notif_mention){
                                 if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
-                                    title = String.format("@%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getApplicationContext().getString(R.string.notif_mention));
+                                    title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getApplicationContext().getString(R.string.notif_mention));
                                 else
-                                    title = String.format("@%s %s", notification.getAccount().getUsername(),getApplicationContext().getString(R.string.notif_mention));
+                                    title = String.format("@%s %s", notification.getAccount().getAcct(),getApplicationContext().getString(R.string.notif_mention));
                             }
                             break;
                         case "reblog":
                             if(notif_share){
                                 if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
-                                    title = String.format("@%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getApplicationContext().getString(R.string.notif_reblog));
+                                    title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getApplicationContext().getString(R.string.notif_reblog));
                                 else
-                                    title = String.format("@%s %s", notification.getAccount().getUsername(),getApplicationContext().getString(R.string.notif_reblog));
+                                    title = String.format("@%s %s", notification.getAccount().getAcct(),getApplicationContext().getString(R.string.notif_reblog));
                             }
                             break;
                         case "favourite":
                             if(notif_add){
                                 if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
-                                    title = String.format("@%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getApplicationContext().getString(R.string.notif_favourite));
+                                    title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getApplicationContext().getString(R.string.notif_favourite));
                                 else
-                                    title = String.format("@%s %s", notification.getAccount().getUsername(),getApplicationContext().getString(R.string.notif_favourite));
+                                    title = String.format("@%s %s", notification.getAccount().getAcct(),getApplicationContext().getString(R.string.notif_favourite));
                             }
                             break;
                         case "follow":
                             if(notif_follow){
                                 if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
-                                    title = String.format("@%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getApplicationContext().getString(R.string.notif_follow));
+                                    title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getApplicationContext().getString(R.string.notif_follow));
                                 else
-                                    title = String.format("@%s %s", notification.getAccount().getUsername(),getApplicationContext().getString(R.string.notif_follow));
+                                    title = String.format("@%s %s", notification.getAccount().getAcct(),getApplicationContext().getString(R.string.notif_follow));
                             }
                             break;
                         default:
