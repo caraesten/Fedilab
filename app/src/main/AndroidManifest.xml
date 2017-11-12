@@ -17,7 +17,7 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     android:installLocation="auto"
-    package="mastodon.etalab.gouv.fr.mastodon">
+    package="fr.gouv.etalab.mastodon">
 
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
