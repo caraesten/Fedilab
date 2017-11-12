@@ -30,9 +30,10 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import java.util.List;
+
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
-import mastodon.etalab.gouv.fr.mastodon.R;
 
 
 

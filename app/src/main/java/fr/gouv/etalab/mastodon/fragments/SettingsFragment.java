@@ -52,7 +52,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
-import mastodon.etalab.gouv.fr.mastodon.R;
+import fr.gouv.etalab.mastodon.R;
 
 import static android.app.Activity.RESULT_OK;
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_THEME_INTENT;

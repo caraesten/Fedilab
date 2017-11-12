@@ -44,7 +44,7 @@ import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
-import mastodon.etalab.gouv.fr.mastodon.R;
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveNotificationsAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;

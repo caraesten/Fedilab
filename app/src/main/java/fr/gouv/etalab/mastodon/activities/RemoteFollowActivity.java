@@ -63,6 +63,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRelationshipAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteAccountsAsyncTask;
@@ -81,7 +82,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRelationshipInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
-import mastodon.etalab.gouv.fr.mastodon.R;
+
 
 
 /**

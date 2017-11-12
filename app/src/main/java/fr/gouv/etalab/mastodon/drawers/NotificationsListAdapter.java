@@ -57,6 +57,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
@@ -73,7 +74,6 @@ import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnPostNotificationsActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
-import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.helper.Helper;

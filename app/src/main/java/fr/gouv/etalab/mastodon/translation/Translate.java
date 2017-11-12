@@ -32,10 +32,10 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.regex.Matcher;
 
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
-import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.activities.BaseMainActivity.currentLocale;
 

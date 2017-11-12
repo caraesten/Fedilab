@@ -45,7 +45,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
-import mastodon.etalab.gouv.fr.mastodon.R;
+import fr.gouv.etalab.mastodon.R;
 
 
 /**

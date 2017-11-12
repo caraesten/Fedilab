@@ -38,7 +38,7 @@ import java.util.List;
 
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
-import mastodon.etalab.gouv.fr.mastodon.R;
+import fr.gouv.etalab.mastodon.R;
 
 /**
  * Created by Thomas on 03/11/2017.

@@ -123,6 +123,7 @@ import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.LoginActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
@@ -140,7 +141,6 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.CustomEmojiDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
-import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 

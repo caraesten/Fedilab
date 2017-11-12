@@ -38,7 +38,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.drawers.AccountsFollowRequestAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountsInterface;
-import mastodon.etalab.gouv.fr.mastodon.R;
+import fr.gouv.etalab.mastodon.R;
 
 
 /**

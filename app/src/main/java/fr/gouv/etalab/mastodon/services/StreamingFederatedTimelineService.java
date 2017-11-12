@@ -40,7 +40,6 @@ import javax.net.ssl.HttpsURLConnection;
 
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.TLSSocketFactory;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -61,9 +60,11 @@ public class StreamingFederatedTimelineService extends IntentService {
      *
      * @param name Used to name the worker thread, important only for debugging.
      */
+    @SuppressWarnings("unused")
     public StreamingFederatedTimelineService(String name) {
         super(name);
     }
+    @SuppressWarnings("unused")
     public StreamingFederatedTimelineService() {
         super("StreamingFederatedTimelineService");
     }

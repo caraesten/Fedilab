@@ -74,6 +74,7 @@ import java.util.Locale;
 import java.util.Stack;
 import java.util.regex.Matcher;
 
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveInstanceAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMetaDataAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
@@ -92,6 +93,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveInstanceInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMetaDataInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
+import fr.gouv.etalab.mastodon.services.LiveNotificationService;
 import fr.gouv.etalab.mastodon.services.StreamingService;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
@@ -1057,22 +1059,22 @@ public abstract class BaseMainActivity extends AppCompatActivity
             @Override
             public void onReceive(Context context, Intent intent) {
                 Bundle b = intent.getExtras();
-                StreamingService.EventStreaming eventStreaming = (StreamingService.EventStreaming) intent.getSerializableExtra("eventStreaming");
+                LiveNotificationService.EventStreaming eventStreaming = (LiveNotificationService.EventStreaming) intent.getSerializableExtra("eventStreaming");
                 assert b != null;
                 userIdService = b.getString("userIdService", null);
                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 if( userIdService != null && userIdService.equals(userId)) {
-                    if (eventStreaming == StreamingService.EventStreaming.NOTIFICATION) {
+                    if (eventStreaming == LiveNotificationService.EventStreaming.NOTIFICATION) {
                         Notification notification = b.getParcelable("data");
                         if (notificationsFragment != null) {
                             notificationsFragment.refresh(notification);
                         }
-                    } else if (eventStreaming == StreamingService.EventStreaming.UPDATE) {
+                    } else if (eventStreaming == LiveNotificationService.EventStreaming.UPDATE) {
                         Status status = b.getParcelable("data");
                         if (homeFragment != null) {
                             homeFragment.refresh(status);
                         }
-                    } else if (eventStreaming == StreamingService.EventStreaming.DELETE) {
+                    } else if (eventStreaming == LiveNotificationService.EventStreaming.DELETE) {
                         //noinspection unused
                         String id = b.getString("id");
                         if (notificationsFragment != null) {
@@ -1460,9 +1462,17 @@ public abstract class BaseMainActivity extends AppCompatActivity
         return activityPaused;
     }
 
+
     public void startSreaming(boolean restart){
-        streamingIntent = new Intent(this, StreamingService.class);
-        streamingIntent.putExtra("restart",restart);
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
+        boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
+        if( notify && liveNotifications) {
+            streamingIntent = new Intent(this, LiveNotificationService.class);
+            streamingIntent.putExtra("restart", restart);
+        }else {
+            streamingIntent = new Intent(this, StreamingService.class);
+        }
         startService(streamingIntent);
     }
 }

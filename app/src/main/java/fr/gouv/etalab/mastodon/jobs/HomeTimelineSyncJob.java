@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveHomeTimelineServiceAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
@@ -50,7 +51,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveHomeTimelineServiceInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
-import mastodon.etalab.gouv.fr.mastodon.R;
+
 
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;

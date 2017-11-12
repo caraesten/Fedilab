@@ -50,12 +50,13 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 
 import cz.msebera.android.httpclient.Header;
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.KinrarClient;
 import fr.gouv.etalab.mastodon.client.MastalabSSLSocketFactory;
 import fr.gouv.etalab.mastodon.client.OauthClient;
 import fr.gouv.etalab.mastodon.helper.Helper;
-import mastodon.etalab.gouv.fr.mastodon.R;
+
 
 import static fr.gouv.etalab.mastodon.helper.Helper.USER_AGENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;

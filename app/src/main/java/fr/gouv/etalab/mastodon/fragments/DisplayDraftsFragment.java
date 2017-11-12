@@ -37,7 +37,7 @@ import fr.gouv.etalab.mastodon.drawers.DraftsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
-import mastodon.etalab.gouv.fr.mastodon.R;
+import fr.gouv.etalab.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 

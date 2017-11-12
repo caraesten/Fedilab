@@ -58,6 +58,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateCredentialAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
@@ -69,7 +71,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateCredentialInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
-import mastodon.etalab.gouv.fr.mastodon.R;
+
 
 
 

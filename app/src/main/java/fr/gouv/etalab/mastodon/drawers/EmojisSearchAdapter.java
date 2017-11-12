@@ -33,8 +33,9 @@ import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
-import mastodon.etalab.gouv.fr.mastodon.R;
+
 
 
 /**

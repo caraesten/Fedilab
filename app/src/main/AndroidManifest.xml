@@ -38,15 +38,19 @@
         <service
             android:name=".services.StreamingService"
             android:exported="false"/>
+        <service
+            android:name=".services.LiveNotificationService"
+            android:exported="false"/>
         <receiver android:name=".services.RestartServiceReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="RestartStreamingService" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".services.RestartServiceReceiver" >
-            <!-- This intent filter receives the boot completed event -->
+        <receiver android:name=".services.RestartLiveNotificationReceiver"
+            android:exported="false">
             <intent-filter>
+                <action android:name="RestartStreamingService" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>

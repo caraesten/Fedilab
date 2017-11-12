@@ -35,12 +35,14 @@ import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
-import mastodon.etalab.gouv.fr.mastodon.R;
+
 
 
 /**
