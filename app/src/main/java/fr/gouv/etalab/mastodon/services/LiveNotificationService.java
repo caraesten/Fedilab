@@ -110,13 +110,15 @@ public class LiveNotificationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Bundle extras = intent.getExtras();
-        if(extras != null) {
-            boolean restart = (boolean) extras.get("restart");
-            if( restart) {
-                SystemClock.sleep(1000);
-                sendBroadcast(new Intent("RestartStreamingService"));
-                stopSelf();
+        if(intent != null) {
+            Bundle extras = intent.getExtras();
+            if (extras != null) {
+                boolean restart = (boolean) extras.get("restart");
+                if (restart) {
+                    SystemClock.sleep(1000);
+                    sendBroadcast(new Intent("RestartStreamingService"));
+                    stopSelf();
+                }
             }
         }
         return START_STICKY;
