@@ -43,7 +43,7 @@ public class OauthClient {
 
     public void get(String action, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         try {
-            client.setConnectTimeout(10000); //10s timeout
+            client.setConnectTimeout(30000); //30s timeout
             client.setUserAgent(USER_AGENT);
             MastalabSSLSocketFactory mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());
             mastalabSSLSocketFactory.setHostnameVerifier(MastalabSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
@@ -56,7 +56,7 @@ public class OauthClient {
 
     public void post(String action, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         try {
-            client.setConnectTimeout(10000); //10s timeout
+            client.setConnectTimeout(30000); //30s timeout
             client.setUserAgent(USER_AGENT);
             MastalabSSLSocketFactory mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());
             mastalabSSLSocketFactory.setHostnameVerifier(MastalabSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
