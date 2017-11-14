@@ -1177,6 +1177,8 @@ public class Helper {
         }else{
             spannableString = new SpannableString(fullContent);
         }
+        String instance = getLiveInstance(context);
+
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
         if( embedded_browser){
@@ -1215,49 +1217,46 @@ public class Helper {
 
         if( emojis != null && emojis.size() > 0 ) {
             final int[] i = {0};
-            int emojiToSearch = 0;
-            for (final Emojis emoji : emojis) {
-                final String targetedEmoji = ":" + emoji.getShortcode() + ":";
-                for(int startPosition = -1 ; (startPosition = spannableString.toString().indexOf(targetedEmoji, startPosition + 1)) != -1 ; startPosition++){
-                    emojiToSearch++;
-                }
-            }
+
             ImageLoader imageLoader;
             DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                     .cacheOnDisk(true).resetViewBeforeLoading(true).build();
             imageLoader = ImageLoader.getInstance();
             for (final Emojis emoji : emojis) {
-                storeEmoji(context, db, emoji);
-                final String targetedEmoji = ":" + emoji.getShortcode() + ":";
-                if (spannableString.toString().contains(targetedEmoji)) {
-                    //emojis can be used several times so we have to loop
-                    for(int startPosition = -1 ; (startPosition = spannableString.toString().indexOf(targetedEmoji, startPosition + 1)) != -1 ; startPosition++){
-                        final int endPosition = startPosition + targetedEmoji.length();
-                        final int finalStartPosition = startPosition;
+                if( instance != null && emoji.getUrl().contains(instance))
+                    storeEmoji(context, db, emoji);
                         NonViewAware imageAware = new NonViewAware(new ImageSize(50, 50), ViewScaleType.CROP);
-                        final int finalEmojiToSearch = emojiToSearch;
                         imageLoader.displayImage(emoji.getUrl(), imageAware, options, new SimpleImageLoadingListener() {
                             @Override
                             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                                 super.onLoadingComplete(imageUri, view, loadedImage);
-                                spannableString.setSpan(
-                                        new ImageSpan(context,
-                                                Bitmap.createScaledBitmap(loadedImage, (int)Helper.convertDpToPixel(20, context),
-                                                        (int)Helper.convertDpToPixel(20, context), false)), finalStartPosition,
-                                        endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                final String targetedEmoji = ":" + emoji.getShortcode() + ":";
+                                if (spannableString.toString().contains(targetedEmoji)) {
+                                    //emojis can be used several times so we have to loop
+                                    for (int startPosition = -1; (startPosition = spannableString.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                        final int endPosition = startPosition + targetedEmoji.length();
+                                        spannableString.setSpan(
+                                                new ImageSpan(context,
+                                                        Bitmap.createScaledBitmap(loadedImage, (int) Helper.convertDpToPixel(20, context),
+                                                                (int) Helper.convertDpToPixel(20, context), false)), startPosition,
+                                                endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                    }
+                                }
                                 i[0]++;
-                                if( i[0] == finalEmojiToSearch)
+                                if( i[0] ==  (emojis.size()))
                                     listener.onRetrieveEmoji(position, spannableString, false);
                             }
                             @Override
                             public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason) {
                                 i[0]++;
+                                if( i[0] ==  (emojis.size()))
+                                    listener.onRetrieveEmoji(position, spannableString, false);
                             }
                         });
                     }
-                }
 
-            }
+
+
         }
 
         //Deals with mention to make them clickable
@@ -1762,6 +1761,15 @@ public class Helper {
         if( notification_delete != null)
             notification_delete.setVisibility(notification_delete_v);
         return returnedBitmap;
+    }
+
+    public static Bitmap resizeImage(Bitmap originalPicture,  float maxImageSize) {
+        float ratio = Math.min(
+                maxImageSize / originalPicture.getWidth(),
+                maxImageSize / originalPicture.getHeight());
+        int width = Math.round(ratio * originalPicture.getWidth());
+        int height = Math.round(ratio * originalPicture.getHeight());
+        return Bitmap.createScaledBitmap(originalPicture, width, height, false);
     }
 
 }

@@ -44,7 +44,6 @@ import javax.net.ssl.X509TrustManager;
 public class PatchBaseImageDownloader extends BaseImageDownloader {
 
     private SSLSocketFactory sf;
-
     public PatchBaseImageDownloader(Context context) {
         super(context);
 
