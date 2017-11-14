@@ -92,6 +92,7 @@ public class LiveNotificationService extends Service {
         if( liveNotifications && notify){
             SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccount();
+            if(accountStreams != null)
             for(final Account accountStream: accountStreams){
                 Thread thread = new Thread(new Runnable() {
                     @Override
