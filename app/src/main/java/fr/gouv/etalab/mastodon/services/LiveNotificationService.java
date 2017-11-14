@@ -78,12 +78,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
 public class LiveNotificationService extends Service {
 
 
-    public enum EventStreaming{
-        UPDATE,
-        NOTIFICATION,
-        DELETE,
-        NONE
-    }
+
     protected Account account;
 
     private boolean restartCalled;
@@ -139,7 +134,7 @@ public class LiveNotificationService extends Service {
         HttpsURLConnection httpsURLConnection = null;
         BufferedReader reader = null;
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        EventStreaming lastEvent = null;
+        Helper.EventStreaming lastEvent = null;
         if( accountStream != null){
             try {
                 URL url = new URL("https://" + accountStream.getInstance() + "/api/v1/streaming/user");
@@ -156,44 +151,44 @@ public class LiveNotificationService extends Service {
                 inputStream = new BufferedInputStream(httpsURLConnection.getInputStream());
                 reader = new BufferedReader(new InputStreamReader(inputStream));
                 String event;
-                EventStreaming eventStreaming;
+                Helper.EventStreaming eventStreaming;
                 while((event = reader.readLine()) != null) {
                     if( !sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING, true) ) {
                         stopSelf();
                         return;
                     }
 
-                    if ((lastEvent == EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
+                    if ((lastEvent == Helper.EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
                         switch (event.trim()) {
                             case "event: update":
-                                lastEvent = EventStreaming.UPDATE;
+                                lastEvent = Helper.EventStreaming.UPDATE;
                                 break;
                             case "event: notification":
-                                lastEvent = EventStreaming.NOTIFICATION;
+                                lastEvent = Helper.EventStreaming.NOTIFICATION;
                                 break;
                             case "event: delete":
-                                lastEvent = EventStreaming.DELETE;
+                                lastEvent = Helper.EventStreaming.DELETE;
                                 break;
                             default:
-                                lastEvent = EventStreaming.NONE;
+                                lastEvent = Helper.EventStreaming.NONE;
                         }
                     } else {
                         if (!event.startsWith("data: ")) {
-                            lastEvent = EventStreaming.NONE;
+                            lastEvent = Helper.EventStreaming.NONE;
                             continue;
                         }
                         event = event.substring(6);
-                        if (lastEvent == EventStreaming.UPDATE) {
-                            eventStreaming = EventStreaming.UPDATE;
-                        } else if (lastEvent == EventStreaming.NOTIFICATION) {
-                            eventStreaming = EventStreaming.NOTIFICATION;
-                        } else if (lastEvent == EventStreaming.DELETE) {
-                            eventStreaming = EventStreaming.DELETE;
+                        if (lastEvent == Helper.EventStreaming.UPDATE) {
+                            eventStreaming = Helper.EventStreaming.UPDATE;
+                        } else if (lastEvent == Helper.EventStreaming.NOTIFICATION) {
+                            eventStreaming = Helper.EventStreaming.NOTIFICATION;
+                        } else if (lastEvent == Helper.EventStreaming.DELETE) {
+                            eventStreaming = Helper.EventStreaming.DELETE;
                             event = "{id:" + event + "}";
                         } else {
-                            eventStreaming = EventStreaming.UPDATE;
+                            eventStreaming = Helper.EventStreaming.UPDATE;
                         }
-                        lastEvent = EventStreaming.NONE;
+                        lastEvent = Helper.EventStreaming.NONE;
                         try {
                             JSONObject eventJson = new JSONObject(event);
                             onRetrieveStreaming(eventStreaming, accountStream, eventJson);
@@ -227,7 +222,7 @@ public class LiveNotificationService extends Service {
         }
     }
 
-    public void onRetrieveStreaming(EventStreaming event, final Account account, JSONObject response) {
+    public void onRetrieveStreaming(Helper.EventStreaming event, final Account account, JSONObject response) {
         if(  response == null )
             return;
         //No previous notifications in cache, so no notification will be sent
@@ -236,7 +231,7 @@ public class LiveNotificationService extends Service {
         String dataId = null;
 
         Bundle b = new Bundle();
-        if( event == EventStreaming.NOTIFICATION){
+        if( event == Helper.EventStreaming.NOTIFICATION){
             notification = API.parseNotificationResponse(getApplicationContext(), response);
             b.putParcelable("data", notification);
             boolean activityPaused;
@@ -346,12 +341,12 @@ public class LiveNotificationService extends Service {
                     }
                 }
             }
-        }else if ( event ==  EventStreaming.UPDATE){
+        }else if ( event ==  Helper.EventStreaming.UPDATE){
             status = API.parseStatuses(getApplicationContext(), response);
             status.setReplies(new ArrayList<Status>());
             status.setNew(true);
             b.putParcelable("data", status);
-        }else if( event == EventStreaming.DELETE){
+        }else if( event == Helper.EventStreaming.DELETE){
             try {
                 dataId = response.getString("id");
             } catch (JSONException e) {

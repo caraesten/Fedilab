@@ -299,6 +299,13 @@ public class Helper {
         CW,
         SIMPLE
     }
+    //Event Type
+    public enum EventStreaming{
+        UPDATE,
+        NOTIFICATION,
+        DELETE,
+        NONE
+    }
 
     private static boolean isPerformingSearch = false;
 

@@ -1059,22 +1059,22 @@ public abstract class BaseMainActivity extends AppCompatActivity
             @Override
             public void onReceive(Context context, Intent intent) {
                 Bundle b = intent.getExtras();
-                LiveNotificationService.EventStreaming eventStreaming = (LiveNotificationService.EventStreaming) intent.getSerializableExtra("eventStreaming");
+                Helper.EventStreaming eventStreaming = (Helper.EventStreaming) intent.getSerializableExtra("eventStreaming");
                 assert b != null;
                 userIdService = b.getString("userIdService", null);
                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 if( userIdService != null && userIdService.equals(userId)) {
-                    if (eventStreaming == LiveNotificationService.EventStreaming.NOTIFICATION) {
+                    if (eventStreaming == Helper.EventStreaming.NOTIFICATION) {
                         Notification notification = b.getParcelable("data");
                         if (notificationsFragment != null) {
                             notificationsFragment.refresh(notification);
                         }
-                    } else if (eventStreaming == LiveNotificationService.EventStreaming.UPDATE) {
+                    } else if (eventStreaming == Helper.EventStreaming.UPDATE) {
                         Status status = b.getParcelable("data");
                         if (homeFragment != null) {
                             homeFragment.refresh(status);
                         }
-                    } else if (eventStreaming == LiveNotificationService.EventStreaming.DELETE) {
+                    } else if (eventStreaming == Helper.EventStreaming.DELETE) {
                         //noinspection unused
                         String id = b.getString("id");
                         if (notificationsFragment != null) {
