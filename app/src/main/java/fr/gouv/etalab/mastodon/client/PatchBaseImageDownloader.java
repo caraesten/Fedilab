@@ -67,7 +67,7 @@ public class PatchBaseImageDownloader extends BaseImageDownloader {
         }
         try {
             return new ContentLengthInputStream(new BufferedInputStream(conn.getInputStream(), BUFFER_SIZE), conn.getContentLength());
-        }catch (FileNotFoundException e){
+        }catch (Exception e){
             return null;
         }
 
