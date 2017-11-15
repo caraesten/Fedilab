@@ -280,17 +280,21 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         if( context == null)
             return;
         if( notification != null){
-            //Update the id of the last notification retrieved
-            MainActivity.lastNotificationId = notification.getId();
-            notifications.add(0, notification);
-            MainActivity.countNewNotifications++;
-            int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
-            if( firstVisibleItem > 0)
-                notificationsListAdapter.notifyItemInserted(0);
-            else
-                notificationsListAdapter.notifyDataSetChanged();
-            if( textviewNoAction.getVisibility() == View.VISIBLE)
-                textviewNoAction.setVisibility(View.GONE);
+            //Makes sure the notifications is not already displayed
+            if( notification.getId() != null && notifications.get(0)!= null
+                    && Long.parseLong(notification.getId()) > Long.parseLong(notifications.get(0).getId())) {
+                //Update the id of the last notification retrieved
+                MainActivity.lastNotificationId = notification.getId();
+                notifications.add(0, notification);
+                MainActivity.countNewNotifications++;
+                int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+                if (firstVisibleItem > 0)
+                    notificationsListAdapter.notifyItemInserted(0);
+                else
+                    notificationsListAdapter.notifyDataSetChanged();
+                if (textviewNoAction.getVisibility() == View.VISIBLE)
+                    textviewNoAction.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -299,12 +303,9 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     @Override
     public void onRetrieveMissingNotifications(List<Notification> notifications) {
         if( notifications != null && notifications.size() > 0) {
-            ArrayList<String> knownId = new ArrayList<>();
-            for (Notification nt : this.notifications) {
-                knownId.add(nt.getId());
-            }
             for (int i = notifications.size()-1 ; i >= 0 ; i--) {
-                if (!knownId.contains(notifications.get(i).getId())) {
+                if (this.notifications.size() == 0 ||
+                        Long.parseLong(notifications.get(i).getId()) > Long.parseLong(this.notifications.get(0).getId())) {
                     MainActivity.countNewNotifications++;
                     this.notifications.add(0, notifications.get(i));
                 }

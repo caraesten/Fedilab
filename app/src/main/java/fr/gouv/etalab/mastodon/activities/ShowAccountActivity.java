@@ -30,6 +30,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -236,7 +237,9 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                Fragment fragment = (Fragment) mPager.getAdapter().instantiateItem(mPager, tab.getPosition());
+                Fragment fragment = null;
+                if( mPager.getAdapter() != null)
+                    fragment = (Fragment) mPager.getAdapter().instantiateItem(mPager, tab.getPosition());
                 switch (tab.getPosition()){
                     case 0:
                         if( displayStatusFragment != null )
@@ -244,9 +247,10 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                         break;
                     case 1:
                     case 2:
-                        DisplayAccountsFragment displayAccountsFragment = ((DisplayAccountsFragment) fragment);
-                        if (displayAccountsFragment != null)
+                        if( fragment != null) {
+                            DisplayAccountsFragment displayAccountsFragment = ((DisplayAccountsFragment) fragment);
                             displayAccountsFragment.scrollToTop();
+                        }
                         break;
                 }
             }
@@ -458,6 +462,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         final float scale = getResources().getDisplayMetrics().density;
         if(account.isLocked()){
             Drawable img = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_lock_outline);
+            assert img != null;
             img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (20 * scale + 0.5f));
             account_dn.setCompoundDrawables( img, null, null, null);
         }else{
@@ -738,7 +743,6 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                     displayStatusFragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
                     bundle.putString("targetedId", accountId);
-                    bundle.putBoolean("hideHeader",true);
                     bundle.putBoolean("showMediaOnly",showMediaOnly);
                     bundle.putBoolean("showPinned",showPinned);
                     displayStatusFragment.setArguments(bundle);
@@ -747,20 +751,19 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                     DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
                     bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWING);
                     bundle.putString("targetedId", accountId);
-                    bundle.putBoolean("hideHeader",true);
                     displayAccountsFragment.setArguments(bundle);
                     return displayAccountsFragment;
                 case 2:
                     displayAccountsFragment = new DisplayAccountsFragment();
                     bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWERS);
                     bundle.putString("targetedId", accountId);
-                    bundle.putBoolean("hideHeader",true);
                     displayAccountsFragment.setArguments(bundle);
                     return displayAccountsFragment;
             }
             return null;
         }
 
+        @NonNull
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
