@@ -21,6 +21,12 @@ import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -48,12 +54,14 @@ import android.text.InputType;
 import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.URLUtil;
@@ -1194,8 +1202,32 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                         imageView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+
                                 AlertDialog.Builder builderInner = new AlertDialog.Builder(TootActivity.this);
                                 builderInner.setTitle(R.string.upload_form_description);
+
+
+                                boolean makebackground = false;
+                                LinearLayout linearLayout = null;
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                    linearLayout = new LinearLayout(TootActivity.this);
+                                    linearLayout.setOrientation(LinearLayout.VERTICAL);
+
+                                    ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
+                                    linearLayout.setLayoutParams(layoutParams);
+                                    Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+                                    Bitmap workingBitmap = Bitmap.createBitmap(bitmap);
+                                    Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
+                                    Canvas canvas = new Canvas(mutableBitmap);
+                                    Paint p = new Paint(Color.BLACK);
+                                    ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);
+                                    p.setColorFilter(filter);
+                                    canvas.drawBitmap(mutableBitmap, new Matrix(), p);
+                                    BitmapDrawable background = new BitmapDrawable(getResources(), mutableBitmap);
+                                    linearLayout.setBackground(background);
+                                    makebackground = true;
+                                }
+
                                 //Text for report
                                 EditText input;
                                 input = new EditText(TootActivity.this);
@@ -1203,16 +1235,20 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                                 input.setSingleLine(false);
                                 input.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
                                 input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-                                input.setLines(5);
-                                input.setMaxLines(10);
+                                input.setLines(50);
                                 input.setVerticalScrollBarEnabled(true);
                                 input.setMovementMethod(ScrollingMovementMethod.getInstance());
                                 input.setScrollBarStyle(View.SCROLLBARS_INSIDE_INSET);
                                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                                         LinearLayout.LayoutParams.MATCH_PARENT,
-                                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                                        LinearLayout.LayoutParams.MATCH_PARENT);
                                 input.setLayoutParams(lp);
-                                builderInner.setView(input);
+                                if( !makebackground)
+                                    builderInner.setView(input);
+                                else {
+                                    linearLayout.addView(input);
+                                    builderInner.setView(linearLayout);
+                                }
                                 builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -1232,7 +1268,14 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                                         dialog.dismiss();
                                     }
                                 });
-                                builderInner.show();
+                                AlertDialog alertDialog = builderInner.create();
+                                WindowManager.LayoutParams lpd = new WindowManager.LayoutParams();
+                                lpd.copyFrom(alertDialog.getWindow().getAttributes());
+                                lpd.width = WindowManager.LayoutParams.MATCH_PARENT;
+                                lpd.height = WindowManager.LayoutParams.MATCH_PARENT;
+                                alertDialog.show();
+                                alertDialog.getWindow().setAttributes(lpd);
+
                             }
                         });
                     }
