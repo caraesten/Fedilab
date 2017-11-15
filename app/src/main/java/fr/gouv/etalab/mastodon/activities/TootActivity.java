@@ -47,12 +47,14 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.URLUtil;
 import android.widget.AdapterView;
@@ -1197,6 +1199,15 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                                 //Text for report
                                 EditText input;
                                 input = new EditText(TootActivity.this);
+                                input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(420)});
+                                input.setSingleLine(false);
+                                input.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
+                                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+                                input.setLines(5);
+                                input.setMaxLines(10);
+                                input.setVerticalScrollBarEnabled(true);
+                                input.setMovementMethod(ScrollingMovementMethod.getInstance());
+                                input.setScrollBarStyle(View.SCROLLBARS_INSIDE_INSET);
                                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                                         LinearLayout.LayoutParams.MATCH_PARENT,
                                         LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -1209,7 +1220,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                                     }
                                 });
                                 final EditText finalInput = input;
-                                finalInput.setFilters(new InputFilter[]{new InputFilter.LengthFilter(420)});
+
                                 if( attachment.getDescription() != null && !attachment.getDescription().equals("null")) {
                                     finalInput.setText(attachment.getDescription());
                                     finalInput.setSelection(finalInput.getText().length());
