@@ -930,7 +930,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 }
                 return true;
             case R.id.action_store:
-                storeToot(true);
+                storeToot(true, true);
                 return true;
             case R.id.action_restore:
                 try{
@@ -1061,7 +1061,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                             Toast.makeText(getApplicationContext(), R.string.toot_scheduled_date, Toast.LENGTH_LONG).show();
                         }else {
                             //Store the toot as draft first
-                            storeToot(false);
+                            storeToot(false, false);
                             //Schedules the toot
                             ScheduledTootsSyncJob.schedule(getApplicationContext(), currentToId, time);
                             //Clear content
@@ -1408,7 +1408,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean storeToot = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
         if( storeToot && accountReply == null)
-            storeToot(true);
+            storeToot(true, false);
     }
 
 
@@ -1817,12 +1817,14 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
 
 
-    private void storeToot(boolean message){
+    private void storeToot(boolean message, boolean forced){
         //Nothing to store here....
-        if(toot_content.getText().toString().trim().length() == 0 && (attachments == null || attachments.size() <1) && toot_cw_content.getText().toString().trim().length() == 0)
-            return;
-        if( initialContent.trim().equals(toot_content.getText().toString().trim()))
-            return;
+        if( !forced) {
+            if (toot_content.getText().toString().trim().length() == 0 && (attachments == null || attachments.size() < 1) && toot_cw_content.getText().toString().trim().length() == 0)
+                return;
+            if (initialContent.trim().equals(toot_content.getText().toString().trim()))
+                return;
+        }
         Status toot = new Status();
         toot.setSensitive(isSensitive);
         toot.setMedia_attachments(attachments);
