@@ -54,7 +54,6 @@ import android.text.InputType;
 import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -1202,80 +1201,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                         imageView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-
-                                AlertDialog.Builder builderInner = new AlertDialog.Builder(TootActivity.this);
-                                builderInner.setTitle(R.string.upload_form_description);
-
-
-                                boolean makebackground = false;
-                                LinearLayout linearLayout = null;
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                    linearLayout = new LinearLayout(TootActivity.this);
-                                    linearLayout.setOrientation(LinearLayout.VERTICAL);
-
-                                    ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
-                                    linearLayout.setLayoutParams(layoutParams);
-                                    Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
-                                    Bitmap workingBitmap = Bitmap.createBitmap(bitmap);
-                                    Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
-                                    Canvas canvas = new Canvas(mutableBitmap);
-                                    Paint p = new Paint(Color.BLACK);
-                                    ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);
-                                    p.setColorFilter(filter);
-                                    canvas.drawBitmap(mutableBitmap, new Matrix(), p);
-                                    BitmapDrawable background = new BitmapDrawable(getResources(), mutableBitmap);
-                                    linearLayout.setBackground(background);
-                                    makebackground = true;
-                                }
-
-                                //Text for report
-                                EditText input;
-                                input = new EditText(TootActivity.this);
-                                input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(420)});
-                                input.setSingleLine(false);
-                                input.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
-                                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-                                input.setLines(50);
-                                input.setVerticalScrollBarEnabled(true);
-                                input.setMovementMethod(ScrollingMovementMethod.getInstance());
-                                input.setScrollBarStyle(View.SCROLLBARS_INSIDE_INSET);
-                                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                                        LinearLayout.LayoutParams.MATCH_PARENT,
-                                        LinearLayout.LayoutParams.MATCH_PARENT);
-                                input.setLayoutParams(lp);
-                                if( !makebackground)
-                                    builderInner.setView(input);
-                                else {
-                                    linearLayout.addView(input);
-                                    builderInner.setView(linearLayout);
-                                }
-                                builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                                final EditText finalInput = input;
-
-                                if( attachment.getDescription() != null && !attachment.getDescription().equals("null")) {
-                                    finalInput.setText(attachment.getDescription());
-                                    finalInput.setSelection(finalInput.getText().length());
-                                }
-                                builderInner.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        new UpdateDescriptionAttachmentAsyncTask(getApplicationContext(), attachment.getId(), finalInput.getText().toString(), TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                        dialog.dismiss();
-                                    }
-                                });
-                                AlertDialog alertDialog = builderInner.create();
-                                WindowManager.LayoutParams lpd = new WindowManager.LayoutParams();
-                                lpd.copyFrom(alertDialog.getWindow().getAttributes());
-                                lpd.width = WindowManager.LayoutParams.MATCH_PARENT;
-                                lpd.height = WindowManager.LayoutParams.MATCH_PARENT;
-                                alertDialog.show();
-                                alertDialog.getWindow().setAttributes(lpd);
-
+                                showAddDescription(imageView, attachment);
                             }
                         });
                     }
@@ -1308,6 +1234,81 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         }
     }
 
+    private void showAddDescription(ImageView imageView, final Attachment attachment){
+        AlertDialog.Builder builderInner = new AlertDialog.Builder(TootActivity.this);
+        builderInner.setTitle(R.string.upload_form_description);
+
+
+        boolean makebackground = false;
+        LinearLayout linearLayout = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            linearLayout = new LinearLayout(TootActivity.this);
+            linearLayout.setOrientation(LinearLayout.VERTICAL);
+
+            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
+            linearLayout.setLayoutParams(layoutParams);
+            Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+            Bitmap workingBitmap = Bitmap.createBitmap(bitmap);
+            Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
+            Canvas canvas = new Canvas(mutableBitmap);
+            Paint p = new Paint(Color.BLACK);
+            ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);
+            p.setColorFilter(filter);
+            canvas.drawBitmap(mutableBitmap, new Matrix(), p);
+            BitmapDrawable background = new BitmapDrawable(getResources(), mutableBitmap);
+            linearLayout.setBackground(background);
+            makebackground = true;
+        }
+
+        //Text for report
+        EditText input;
+        input = new EditText(TootActivity.this);
+        input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(420)});
+        input.setSingleLine(false);
+        input.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        input.setLines(50);
+        input.setVerticalScrollBarEnabled(true);
+        input.setMovementMethod(ScrollingMovementMethod.getInstance());
+        input.setScrollBarStyle(View.SCROLLBARS_INSIDE_INSET);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+        if( !makebackground)
+            builderInner.setView(input);
+        else {
+            linearLayout.addView(input);
+            builderInner.setView(linearLayout);
+        }
+        builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        final EditText finalInput = input;
+
+        if( attachment.getDescription() != null && !attachment.getDescription().equals("null")) {
+            finalInput.setText(attachment.getDescription());
+            finalInput.setSelection(finalInput.getText().length());
+        }
+        builderInner.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                new UpdateDescriptionAttachmentAsyncTask(getApplicationContext(), attachment.getId(), finalInput.getText().toString(), TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alertDialog = builderInner.create();
+        WindowManager.LayoutParams lpd = new WindowManager.LayoutParams();
+        //noinspection ConstantConditions
+        lpd.copyFrom(alertDialog.getWindow().getAttributes());
+        lpd.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lpd.height = WindowManager.LayoutParams.MATCH_PARENT;
+        alertDialog.show();
+        alertDialog.getWindow().setAttributes(lpd);
+    }
 
     /**
      * Removes a media
@@ -1652,7 +1653,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             toot_picture_container.setVisibility(View.VISIBLE);
             picture_scrollview.setVisibility(View.VISIBLE);
             int i = 0 ;
-            for(Attachment attachment: attachments){
+            for(final Attachment attachment: attachments){
                 String url = attachment.getPreview_url();
                 if( url == null || url.trim().equals(""))
                     url = attachment.getUrl();
@@ -1667,8 +1668,30 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 toot_picture_container.addView(imageView, i, imParams);
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(View view) {
+                        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                        String instance = Helper.getLiveInstance(getApplicationContext());
+                        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                        String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
+                        if (instanceVersion != null) {
+                            Version currentVersion = new Version(instanceVersion);
+                            Version minVersion = new Version("2.0");
+                            if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
+                                imageView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        showAddDescription(imageView, attachment);
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+                imageView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
                         showRemove(imageView.getId());
+                        return false;
                     }
                 });
                 if( attachments.size() < 4)
