@@ -291,7 +291,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         //New data are available
         if (context == null)
             return;
-        if( status.getId() != null && statuses.get(0)!= null
+        if( status.getId() != null && statuses != null && statuses.size() > 0 && statuses.get(0)!= null
                 && Long.parseLong(status.getId()) > Long.parseLong(statuses.get(0).getId())) {
             if (type == RetrieveFeedsAsyncTask.Type.HOME) {
 
