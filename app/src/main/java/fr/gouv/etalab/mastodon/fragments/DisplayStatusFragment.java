@@ -490,7 +490,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         MainActivity.countNewStatus++;
                 }
             }
-            statusListAdapter.notifyItemRangeInserted(0, inserted - 1);
+            statusListAdapter.notifyItemRangeInserted(0, inserted);
             try {
                 if( type == RetrieveFeedsAsyncTask.Type.HOME)
                     ((MainActivity) context).updateHomeCounter();
