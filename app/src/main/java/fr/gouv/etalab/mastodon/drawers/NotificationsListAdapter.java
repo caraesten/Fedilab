@@ -250,23 +250,28 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             else
                 holder.status_document_container.setVisibility(View.VISIBLE);
 
-            String content = status.getContent();
-            if( content != null) {
-                content = content.replaceAll("</p>", "<br/><br/>");
-                content = content.replaceAll("<p>", "");
-                if (content.endsWith("<br/><br/>"))
-                    content = content.substring(0, content.length() - 10);
-            }
-
-            SpannableString spannableString = Helper.clickableElements(context, content,
-                    status.getReblog() != null?status.getReblog().getMentions():status.getMentions(),
-                    status.getReblog() != null?status.getReblog().getEmojis():status.getEmojis(),
-                    position,
-                    true, NotificationsListAdapter.this);
-
             Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/DroidSans-Regular.ttf");
             holder.notification_status_content.setTypeface(tf);
-            holder.notification_status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
+            String content;
+
+            if( status.getContents() != null){
+                holder.notification_status_content.setText(status.getContents(), TextView.BufferType.SPANNABLE);
+            }else {
+                content = status.getContent();
+                if (content != null) {
+                    content = content.replaceAll("</p>", "<br/><br/>");
+                    content = content.replaceAll("<p>", "");
+                    if (content.endsWith("<br/><br/>"))
+                        content = content.substring(0, content.length() - 10);
+                }
+                SpannableString spannableString = Helper.clickableElements(context, content,
+                        status.getReblog() != null ? status.getReblog().getMentions() : status.getMentions(),
+                        status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis(),
+                        position,
+                        true, NotificationsListAdapter.this);
+
+                holder.notification_status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
+            }
             holder.notification_status_content.setMovementMethod(null);
             holder.notification_status_content.setMovementMethod(LinkMovementMethod.getInstance());
             holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
