@@ -644,9 +644,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             holder.status_spoiler_container.setVisibility(View.GONE);
                     }
                 }
-                if( status.getSpoiler_text() != null)
-                    holder.status_spoiler.setText(status.getSpoiler_text());
+
                 if( status.getReblog() == null) {
+                    if( status.getSpoiler_text() != null)
+                        holder.status_spoiler.setText(status.getSpoiler_text());
                     if (status.getMedia_attachments().size() < 1) {
                         holder.status_document_container.setVisibility(View.GONE);
                         holder.status_show_more.setVisibility(View.GONE);
@@ -669,6 +670,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         }
                     }
                 }else { //Attachments for reblogs
+                    if( status.getReblog().getSpoiler_text() != null)
+                        holder.status_spoiler.setText(status.getReblog().getSpoiler_text());
                     if (status.getReblog().getMedia_attachments().size() < 1) {
                         holder.status_document_container.setVisibility(View.GONE);
                         holder.status_show_more.setVisibility(View.GONE);
