@@ -7,8 +7,8 @@ android {
         applicationId "fr.gouv.etalab.mastodon"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 71
-        versionName "1.6.0-beta-2"
+        versionCode 73
+        versionName "1.6.0-beta-4"
     }
     flavorDimensions "default"
     buildTypes {
@@ -32,10 +32,10 @@ allprojects {
     }
 }
 dependencies {
-    implementation 'com.android.support:appcompat-v7:27.0.0'
-    implementation 'com.android.support:design:27.0.0'
-    implementation 'com.android.support:support-v4:27.0.0'
-    implementation 'com.android.support:recyclerview-v7:27.0.0'
+    implementation 'com.android.support:appcompat-v7:27.0.1'
+    implementation 'com.android.support:design:27.0.1'
+    implementation 'com.android.support:support-v4:27.0.1'
+    implementation 'com.android.support:recyclerview-v7:27.0.1'
     implementation 'com.loopj.android:android-async-http:1.4.9'
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     implementation 'com.evernote:android-job:1.2.0'
