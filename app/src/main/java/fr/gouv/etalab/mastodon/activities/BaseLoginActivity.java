@@ -20,8 +20,6 @@ import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -36,10 +34,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,22 +42,14 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
+import java.security.NoSuchAlgorithmException;;
 import java.util.HashMap;
 
-import cz.msebera.android.httpclient.Header;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.HttpsConnection;
-import fr.gouv.etalab.mastodon.client.KinrarClient;
-import fr.gouv.etalab.mastodon.client.MastalabSSLSocketFactory;
-import fr.gouv.etalab.mastodon.client.OauthClient;
 import fr.gouv.etalab.mastodon.helper.Helper;
 
-
-import static fr.gouv.etalab.mastodon.helper.Helper.USER_AGENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
@@ -161,6 +147,10 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
                             } catch (IOException e) {
                                 isLoadingInstance = false;
                                 e.printStackTrace();
+                            } catch (NoSuchAlgorithmException e) {
+                                e.printStackTrace();
+                            } catch (KeyManagementException e) {
+                                e.printStackTrace();
                             }
                         }
                     }).start();
@@ -255,6 +245,10 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
 
                 } catch (IOException e) {
                     e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                } catch (KeyManagementException e) {
+                    e.printStackTrace();
                 }
             }
         }).start();
@@ -303,6 +297,10 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
                         } catch (IOException e) {
                             connectionButton.setEnabled(true);
                             Toast.makeText(getApplicationContext(),R.string.toast_error_login,Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                        } catch (NoSuchAlgorithmException e) {
+                            e.printStackTrace();
+                        } catch (KeyManagementException e) {
                             e.printStackTrace();
                         }
                     }
