@@ -20,6 +20,8 @@ import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -42,16 +44,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
+import java.util.HashMap;
 
 import cz.msebera.android.httpclient.Header;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
+import fr.gouv.etalab.mastodon.client.Entities.HttpsConnection;
 import fr.gouv.etalab.mastodon.client.KinrarClient;
 import fr.gouv.etalab.mastodon.client.MastalabSSLSocketFactory;
 import fr.gouv.etalab.mastodon.client.OauthClient;
@@ -116,43 +121,49 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if( s.length() > 2 && !isLoadingInstance){
-                    String action = "/instances/search";
-                    RequestParams parameters = new RequestParams();
-                    parameters.add("q", s.toString().trim());
-                    parameters.add("count", String.valueOf(5));
-                    parameters.add("name", String.valueOf(true));
+                    final String action = "/instances/search";
+                    final HashMap<String, String> parameters = new HashMap<>();
+                    parameters.put("q", s.toString().trim());
+                    parameters.put("count", String.valueOf(5));
+                    parameters.put("name", String.valueOf(true));
                     isLoadingInstance = true;
-                    new KinrarClient().get(action, parameters, new AsyncHttpResponseHandler() {
+                    new Thread(new Runnable(){
                         @Override
-                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                            isLoadingInstance = false;
-                            String response = new String(responseBody);
-                            String[] instances;
+                        public void run() {
                             try {
-                                JSONObject jsonObject = new JSONObject(response);
-                                JSONArray jsonArray = jsonObject.getJSONArray("instances");
-                                if( jsonArray != null){
-                                    instances = new String[jsonArray.length()];
-                                    for(int i = 0 ; i < jsonArray.length() ; i++){
-                                        instances[i] = jsonArray.getJSONObject(i).get("name").toString();
-                                    }
-                                }else {
-                                    instances = new String[]{};
-                                }
-                                login_instance.setAdapter(null);
-                                ArrayAdapter<String> adapter =
-                                        new ArrayAdapter<>(BaseLoginActivity.this, android.R.layout.simple_list_item_1, instances);
-                                login_instance.setAdapter(adapter);
-                                if( login_instance.hasFocus() && !BaseLoginActivity.this.isFinishing())
-                                    login_instance.showDropDown();
+                                final String response = new HttpsConnection().get("https://instances.social/api/1.0" + action,  parameters, Helper.THEKINRAR_SECRET_TOKEN );
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        isLoadingInstance = false;
+                                        String[] instances;
+                                        try {
+                                            JSONObject jsonObject = new JSONObject(response);
+                                            JSONArray jsonArray = jsonObject.getJSONArray("instances");
+                                            if( jsonArray != null){
+                                                instances = new String[jsonArray.length()];
+                                                for(int i = 0 ; i < jsonArray.length() ; i++){
+                                                    instances[i] = jsonArray.getJSONObject(i).get("name").toString();
+                                                }
+                                            }else {
+                                                instances = new String[]{};
+                                            }
+                                            login_instance.setAdapter(null);
+                                            ArrayAdapter<String> adapter =
+                                                    new ArrayAdapter<>(BaseLoginActivity.this, android.R.layout.simple_list_item_1, instances);
+                                            login_instance.setAdapter(adapter);
+                                            if( login_instance.hasFocus() && !BaseLoginActivity.this.isFinishing())
+                                                login_instance.showDropDown();
 
-                            } catch (JSONException ignored) {isLoadingInstance = false;}
+                                        } catch (JSONException ignored) {isLoadingInstance = false;}
+                                    }
+                                });
+
+                            } catch (IOException e) {
+                                isLoadingInstance = false;
+                                e.printStackTrace();
+                            }
                         }
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                            isLoadingInstance = false;
-                        }
-                    });
+                    }).start();
                 }
             }
         });
@@ -202,48 +213,51 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
         } catch (UnsupportedEncodingException e) {
             Toast.makeText(BaseLoginActivity.this,R.string.client_error, Toast.LENGTH_LONG).show();
         }
-        String action = "/api/v1/apps";
-        RequestParams parameters = new RequestParams();
-        parameters.add(Helper.CLIENT_NAME, Helper.CLIENT_NAME_VALUE);
-        parameters.add(Helper.REDIRECT_URIS, client_id_for_webview?Helper.REDIRECT_CONTENT_WEB:Helper.REDIRECT_CONTENT);
-        parameters.add(Helper.SCOPES, Helper.OAUTH_SCOPES);
-        parameters.add(Helper.WEBSITE, Helper.WEBSITE_VALUE);
-        new OauthClient(instance).post(action, parameters, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                String response = new String(responseBody);
-                JSONObject resobj;
-                try {
-                    resobj = new JSONObject(response);
-                    client_id = resobj.get(Helper.CLIENT_ID).toString();
-                    client_secret = resobj.get(Helper.CLIENT_SECRET).toString();
+        final String action = "/api/v1/apps";
+        final HashMap<String, String> parameters = new HashMap<>();
+        parameters.put(Helper.CLIENT_NAME, Helper.CLIENT_NAME_VALUE);
+        parameters.put(Helper.REDIRECT_URIS, client_id_for_webview?Helper.REDIRECT_CONTENT_WEB:Helper.REDIRECT_CONTENT);
+        parameters.put(Helper.SCOPES, Helper.OAUTH_SCOPES);
+        parameters.put(Helper.WEBSITE, Helper.WEBSITE_VALUE);
 
-                    String id = resobj.get(Helper.ID).toString();
-                    SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(Helper.CLIENT_ID, client_id);
-                    editor.putString(Helper.CLIENT_SECRET, client_secret);
-                    editor.putString(Helper.ID, id);
-                    editor.apply();
-                    connectionButton.setEnabled(true);
-                    login_two_step.setVisibility(View.VISIBLE);
-                    if( client_id_for_webview){
-                        Intent i = new Intent(BaseLoginActivity.this, WebviewConnectActivity.class);
-                        i.putExtra("instance", instance);
-                        startActivity(i);
-                    }
-                } catch (JSONException e) {
+        new Thread(new Runnable(){
+            @Override
+            public void run() {
+                try {
+                    final String response = new HttpsConnection().post("https://" + instance + action,  parameters, null );
+                    runOnUiThread(new Runnable() {
+                      public void run() {
+                          JSONObject resobj;
+                          try {
+                              resobj = new JSONObject(response);
+                              client_id = resobj.get(Helper.CLIENT_ID).toString();
+                              client_secret = resobj.get(Helper.CLIENT_SECRET).toString();
+
+                              String id = resobj.get(Helper.ID).toString();
+                              SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                              SharedPreferences.Editor editor = sharedpreferences.edit();
+                              editor.putString(Helper.CLIENT_ID, client_id);
+                              editor.putString(Helper.CLIENT_SECRET, client_secret);
+                              editor.putString(Helper.ID, id);
+                              editor.apply();
+                              connectionButton.setEnabled(true);
+                              login_two_step.setVisibility(View.VISIBLE);
+                              if( client_id_for_webview){
+                                  Intent i = new Intent(BaseLoginActivity.this, WebviewConnectActivity.class);
+                                  i.putExtra("instance", instance);
+                                  startActivity(i);
+                              }
+                          } catch (JSONException e) {
+                              e.printStackTrace();
+                          }
+                      }
+                    });
+
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                error.printStackTrace();
-                Toast.makeText(BaseLoginActivity.this,R.string.client_error, Toast.LENGTH_LONG).show();
-            }
-        });
+        }).start();
 
         connectionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -254,50 +268,45 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
                     retrievesClientId();
                     return;
                 }
-                AsyncHttpClient client = new AsyncHttpClient();
-                RequestParams requestParams = new RequestParams();
+
+                final HashMap<String, String> parameters = new HashMap<>();
                 SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                requestParams.add(Helper.CLIENT_ID, sharedpreferences.getString(Helper.CLIENT_ID, null));
-                requestParams.add(Helper.CLIENT_SECRET, sharedpreferences.getString(Helper.CLIENT_SECRET, null));
-                requestParams.add("grant_type", "password");
-                requestParams.add("username",login_uid.getText().toString().trim());
-                requestParams.add("password",login_passwd.getText().toString().trim());
-                requestParams.add("scope"," read write follow");
-                client.setUserAgent(USER_AGENT);
-                try {
-                    MastalabSSLSocketFactory mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());
-                    mastalabSSLSocketFactory.setHostnameVerifier(MastalabSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-                    client.setSSLSocketFactory(mastalabSSLSocketFactory);
-                    client.post("https://" + instance+ "/oauth/token", requestParams, new AsyncHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                            String response = new String(responseBody);
-                            JSONObject resobj;
-                            try {
-                                resobj = new JSONObject(response);
-                                String token = resobj.get("access_token").toString();
-                                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedpreferences.edit();
-                                editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);
-                                editor.apply();
-                                //Update the account with the token;
-                                new UpdateAccountInfoAsyncTask(BaseLoginActivity.this, token, instance).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
+                parameters.put(Helper.CLIENT_ID, sharedpreferences.getString(Helper.CLIENT_ID, null));
+                parameters.put(Helper.CLIENT_SECRET, sharedpreferences.getString(Helper.CLIENT_SECRET, null));
+                parameters.put("grant_type", "password");
+                parameters.put("username",login_uid.getText().toString().trim());
+                parameters.put("password",login_passwd.getText().toString().trim());
+                parameters.put("scope"," read write follow");
 
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                new Thread(new Runnable(){
+                    @Override
+                    public void run() {
+                        try {
+                            final String response = new HttpsConnection().post("https://" + instance + "/oauth/token",  parameters, null );
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    JSONObject resobj;
+                                    try {
+                                        resobj = new JSONObject(response);
+                                        String token = resobj.get("access_token").toString();
+                                        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                                        editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);
+                                        editor.apply();
+                                        //Update the account with the token;
+                                        new UpdateAccountInfoAsyncTask(BaseLoginActivity.this, token, instance).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                        } catch (IOException e) {
                             connectionButton.setEnabled(true);
-                            error.printStackTrace();
                             Toast.makeText(getApplicationContext(),R.string.toast_error_login,Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
                         }
-                    });
-
-                } catch (NoSuchAlgorithmException | KeyManagementException | UnrecoverableKeyException | KeyStoreException e) {
-                    e.printStackTrace();
-                }
+                    }
+                }).start();
 
             }
         });

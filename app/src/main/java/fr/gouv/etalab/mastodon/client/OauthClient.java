@@ -15,6 +15,8 @@
 package fr.gouv.etalab.mastodon.client;
 
 
+import android.util.Log;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -23,6 +25,8 @@ import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
+
+import fr.gouv.etalab.mastodon.helper.Helper;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.USER_AGENT;
 
@@ -46,8 +50,10 @@ public class OauthClient {
             client.setConnectTimeout(30000); //30s timeout
             client.setUserAgent(USER_AGENT);
             MastalabSSLSocketFactory mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());
-            mastalabSSLSocketFactory.setHostnameVerifier(MastalabSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-            client.setSSLSocketFactory(mastalabSSLSocketFactory);
+            //mastalabSSLSocketFactory.setHostnameVerifier(MastalabSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+           // client.setSSLSocketFactory(mastalabSSLSocketFactory);
+            Log.v(Helper.TAG,"getAbsoluteUrl(action): " + getAbsoluteUrl(action));
+            Log.v(Helper.TAG,"params: " + params);
             client.get(getAbsoluteUrl(action), params, responseHandler);
         } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
             e.printStackTrace();
@@ -59,8 +65,10 @@ public class OauthClient {
             client.setConnectTimeout(30000); //30s timeout
             client.setUserAgent(USER_AGENT);
             MastalabSSLSocketFactory mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());
-            mastalabSSLSocketFactory.setHostnameVerifier(MastalabSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-            client.setSSLSocketFactory(mastalabSSLSocketFactory);
+            //mastalabSSLSocketFactory.setHostnameVerifier(MastalabSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+           // client.setSSLSocketFactory(mastalabSSLSocketFactory);
+            Log.v(Helper.TAG,"getAbsoluteUrl(action): " + getAbsoluteUrl(action));
+            Log.v(Helper.TAG,"params: " + params);
             client.post(getAbsoluteUrl(action), params, responseHandler);
         } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
             e.printStackTrace();

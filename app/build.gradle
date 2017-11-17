@@ -37,6 +37,7 @@ dependencies {
     implementation 'com.android.support:support-v4:27.0.1'
     implementation 'com.android.support:recyclerview-v7:27.0.1'
     implementation 'com.loopj.android:android-async-http:1.4.9'
+    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     implementation 'com.evernote:android-job:1.2.0'
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
