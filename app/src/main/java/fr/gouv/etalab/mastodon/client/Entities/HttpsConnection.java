@@ -9,6 +9,8 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -16,7 +18,7 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.client.TLSSocketFactory;
 
 /**
  * Created by Thomas on 17/11/2017.
@@ -25,7 +27,8 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 public class HttpsConnection {
 
 
-    public String post(String urlConnection, HashMap<String, String> paramaters, String token) throws IOException {
+
+    public String post(String urlConnection, HashMap<String, String> paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException {
         URL url = new URL(urlConnection);
         Map<String,Object> params = new LinkedHashMap<>();
         Iterator it = paramaters.entrySet().iterator();
@@ -44,6 +47,8 @@ public class HttpsConnection {
         byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 
         HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
+            conn.setSSLSocketFactory(new TLSSocketFactory());
         conn.setRequestMethod("POST");
         if( token != null)
             conn.setRequestProperty("Authorization", "Bearer " + token);
@@ -58,7 +63,7 @@ public class HttpsConnection {
         return sb.toString();
     }
 
-    public String get(String urlConnection, HashMap<String, String> paramaters, String token) throws IOException {
+    public String get(String urlConnection, HashMap<String, String> paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException {
 
         Map<String,Object> params = new LinkedHashMap<>();
         Iterator it = paramaters.entrySet().iterator();
@@ -74,9 +79,10 @@ public class HttpsConnection {
             postData.append('=');
             postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
         }
-        Log.v(Helper.TAG,"GET: " + urlConnection + "?" + postData);
         URL url = new URL(urlConnection + "?" + postData);
         HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
+            conn.setSSLSocketFactory(new TLSSocketFactory());
         if( token != null)
             conn.setRequestProperty("Authorization", "Bearer " + token);
         conn.setRequestMethod("GET");
