@@ -16,6 +16,8 @@ package fr.gouv.etalab.mastodon.client;
 import android.content.Context;
 import android.os.Build;
 
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -42,6 +44,7 @@ import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
 
 
@@ -213,6 +216,23 @@ public class HttpsConnection {
 
                     request.write(pixels);
 
+
+                    int totalSize = pixels.length;
+                    int bytesTransferred = 0;
+                    int chunkSize = 2000;
+
+                    while (bytesTransferred < totalSize) {
+                        int nextChunkSize = totalSize - bytesTransferred;
+                        if (nextChunkSize > chunkSize) {
+                            nextChunkSize = chunkSize;
+                        }
+                        request.write(pixels, bytesTransferred, nextChunkSize);
+                        bytesTransferred += nextChunkSize;
+
+                        int progress = 100 * bytesTransferred / totalSize;
+                        listener.onUpdateProgress(progress);
+                    }
+
                     request.writeBytes("\r\n");
                     request.writeBytes("--*****\r\n");
                     request.flush();
@@ -229,12 +249,17 @@ public class HttpsConnection {
                     while ((line = responseStreamReader.readLine()) != null) {
                         stringBuilder.append(line).append("\n");
                     }
+                    listener.onUpdateProgress(101);
                     responseStreamReader.close();
 
                     String response = stringBuilder.toString();
-
+                    Attachment attachment = API.parseAttachmentResponse(new JSONObject(response));
+                    listener.onRetrieveAttachment(attachment, null);
                 }catch (Exception e) {
-                    e.printStackTrace();
+                    listener.onUpdateProgress(101);
+                    fr.gouv.etalab.mastodon.client.Entities.Error error = new fr.gouv.etalab.mastodon.client.Entities.Error();
+                    error.setError(e.getMessage());
+                    listener.onRetrieveAttachment(null, error);
                 }
             }
         }).start();
