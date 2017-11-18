@@ -63,7 +63,6 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.URLUtil;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -85,8 +84,6 @@ import android.widget.Toast;
 
 import com.github.stom79.localepicker.CountryPicker;
 import com.github.stom79.localepicker.CountryPickerListener;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.BinaryHttpResponseHandler;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -99,10 +96,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -112,8 +106,6 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import cz.msebera.android.httpclient.Header;
 import fr.gouv.etalab.mastodon.asynctasks.PostStatusAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsForReplyAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveEmojiAsyncTask;
@@ -132,6 +124,7 @@ import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.drawers.CustomEmojiAdapter;
 import fr.gouv.etalab.mastodon.drawers.EmojisSearchAdapter;
+import fr.gouv.etalab.mastodon.interfaces.OnDownloadInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.sqlite.CustomEmojiDAO;
 import fr.gouv.etalab.mastodon.translation.Translate;
@@ -163,7 +156,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Toot activity class
  */
 
-public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveAccountsReplyInterface, OnTranslatedInterface, OnRetrieveEmojiInterface {
+public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveAccountsReplyInterface, OnTranslatedInterface, OnRetrieveEmojiInterface, OnDownloadInterface {
 
 
     private String visibility;
@@ -410,32 +403,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                         toot_content.setSelection(toot_content.getText().length());
                     }
                     if( image != null){
-                        AsyncHttpClient client = new AsyncHttpClient();
-                        String[] allowedTypes = new String[] { "image/png","image/jpeg" };
-                        client.get(image, new BinaryHttpResponseHandler(allowedTypes) {
-                            @Override
-                            public void onSuccess(int statusCode, Header[] headers, byte[] binaryData) {
-                                OutputStream f;
-                                try {
-                                    f = new FileOutputStream(getCacheDir() + URLUtil.guessFileName(image, null, null));
-                                    picture_scrollview.setVisibility(View.VISIBLE);
-                                    InputStream bis = new ByteArrayInputStream(binaryData);
-                                    toot_picture_container.setVisibility(View.VISIBLE);
-                                    toot_picture.setEnabled(false);
-                                    new HttpsConnection(getApplicationContext()).upload(bis, TootActivity.this);
-                                    f.write(binaryData); 
-                                    f.close();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(int statusCode, Header[] headers, byte[] binaryData, Throwable error) {
-                                error.printStackTrace();
-                            }
-
-                        });
+                        new HttpsConnection(getApplicationContext()).download(image, TootActivity.this);
                     }
 
                 }
@@ -1217,6 +1185,19 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 attachments.get(index).setDescription(attachment.getDescription());
             }
         }
+    }
+
+    @Override
+    public void onDownloaded(String pathToFile, Error error) {
+        picture_scrollview.setVisibility(View.VISIBLE);
+        Bitmap pictureMention = BitmapFactory.decodeFile(pathToFile);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        pictureMention.compress(Bitmap.CompressFormat.PNG, 0, bos);
+        byte[] bitmapdata = bos.toByteArray();
+        ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
+        toot_picture_container.setVisibility(View.VISIBLE);
+        toot_picture.setEnabled(false);
+        new HttpsConnection(getApplicationContext()).upload(bs, TootActivity.this);
     }
 
     @Override

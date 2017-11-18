@@ -16,7 +16,6 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import com.loopj.android.http.RequestParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -193,7 +192,7 @@ public class API {
     public Relationship getRelationship(String accountId) {
 
         Relationship relationship = new Relationship();
-        RequestParams params = new RequestParams();
+        HashMap<String, String> params = new HashMap<>();
         params.put("id",accountId);
         try {
             String response = new HttpsConnection().get(getAbsoluteUrl("/accounts/relationships"), 60, null, prefKeyOauthTokenT);

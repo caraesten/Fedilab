@@ -16,9 +16,7 @@ package fr.gouv.etalab.mastodon.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
-
 import org.json.JSONObject;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -29,8 +27,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.Reader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.security.KeyManagementException;
@@ -42,12 +40,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.net.ssl.HttpsURLConnection;
-
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnDownloadInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
 
 
@@ -72,6 +70,7 @@ public class HttpsConnection {
         this.context = context;
     }
 
+    @SuppressWarnings("ConstantConditions")
     public String get(String urlConnection, int timeout, HashMap<String, String> paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
 
         Map<String,Object> params = new LinkedHashMap<>();
@@ -167,6 +166,67 @@ public class HttpsConnection {
     }
 
 
+    public void download(final String downloadUrl, final OnDownloadInterface listener) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                URL url;
+                try {
+                    url = new URL(downloadUrl);
+                    httpsURLConnection = (HttpsURLConnection) url.openConnection();
+                    int responseCode = httpsURLConnection.getResponseCode();
+
+                    // always check HTTP response code first
+                    if (responseCode == HttpURLConnection.HTTP_OK) {
+                        String fileName = "";
+                        String disposition = httpsURLConnection.getHeaderField("Content-Disposition");
+
+                        if (disposition != null) {
+                            // extracts file name from header field
+                            int index = disposition.indexOf("filename=");
+                            if (index > 0) {
+                                fileName = disposition.substring(index + 10,
+                                        disposition.length() - 1);
+                            }
+                        } else {
+                            // extracts file name from URL
+                            fileName = downloadUrl.substring(downloadUrl.lastIndexOf("/") + 1,
+                                    downloadUrl.length());
+                        }
+                        // opens input stream from the HTTP connection
+                        InputStream inputStream = httpsURLConnection.getInputStream();
+                        File saveDir = context.getCacheDir();
+                        String saveFilePath = saveDir + File.separator + fileName;
+
+                        // opens an output stream to save into file
+                        FileOutputStream outputStream = new FileOutputStream(saveFilePath);
+
+                        int bytesRead;
+                        byte[] buffer = new byte[4096];
+                        while ((bytesRead = inputStream.read(buffer)) != -1) {
+                            outputStream.write(buffer, 0, bytesRead);
+                        }
+                        outputStream.close();
+                        inputStream.close();
+                        listener.onDownloaded(saveFilePath, null);
+                    } else {
+                        Error error = new Error();
+                        error.setError(String.valueOf(responseCode));
+                        listener.onDownloaded(null, error);
+                    }
+                    httpsURLConnection.disconnect();
+                } catch (IOException e) {
+                    Error error = new Error();
+                    error.setError(context.getString(R.string.toast_error));
+                    e.printStackTrace();
+                }
+
+            }
+        }).start();
+
+
+    }
+
     public void upload(final InputStream inputStream, final OnRetrieveAttachmentInterface listener) {
 
         new Thread(new Runnable() {
@@ -248,7 +308,7 @@ public class HttpsConnection {
 
                     BufferedReader responseStreamReader = new BufferedReader(new InputStreamReader(responseStream));
 
-                    String line = "";
+                    String line;
                     StringBuilder stringBuilder = new StringBuilder();
 
                     while ((line = responseStreamReader.readLine()) != null) {

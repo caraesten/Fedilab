@@ -40,6 +40,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+
 import java.util.HashMap;
 
 import fr.gouv.etalab.mastodon.R;
