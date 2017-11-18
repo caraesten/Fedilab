@@ -14,6 +14,7 @@ package fr.gouv.etalab.mastodon.client;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 
 import org.json.JSONObject;
@@ -45,6 +46,8 @@ import java.util.regex.Pattern;
 import javax.net.ssl.HttpsURLConnection;
 
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
 
 
@@ -65,7 +68,7 @@ public class HttpsConnection {
 
     public HttpsConnection(){}
 
-    HttpsConnection(Context context){
+    public HttpsConnection(Context context){
         this.context = context;
     }
 
@@ -164,13 +167,15 @@ public class HttpsConnection {
     }
 
 
-    public void upload(final String urlConnection, final int timeout, final InputStream inputStream, final OnRetrieveAttachmentInterface listener, final HashMap<String, String> paramaters, final String token) {
+    public void upload(final InputStream inputStream, final OnRetrieveAttachmentInterface listener) {
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    final URL url = new URL(urlConnection);
+                    SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                    String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+                    final URL url = new URL("https://"+Helper.getLiveInstance(context)+"/api/v1/media");
                     ByteArrayOutputStream ous = null;
                     try {
                         try {
@@ -193,7 +198,7 @@ public class HttpsConnection {
                     byte[] pixels = ous.toByteArray();
 
                     httpsURLConnection = (HttpsURLConnection) url.openConnection();
-                    httpsURLConnection.setConnectTimeout(timeout * 1000);
+                    httpsURLConnection.setConnectTimeout(240 * 1000);
                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
                         httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
                     httpsURLConnection.setDoInput(true);
@@ -257,7 +262,7 @@ public class HttpsConnection {
                     listener.onRetrieveAttachment(attachment, null);
                 }catch (Exception e) {
                     listener.onUpdateProgress(101);
-                    fr.gouv.etalab.mastodon.client.Entities.Error error = new fr.gouv.etalab.mastodon.client.Entities.Error();
+                    Error error = new Error();
                     error.setError(e.getMessage());
                     listener.onRetrieveAttachment(null, error);
                 }

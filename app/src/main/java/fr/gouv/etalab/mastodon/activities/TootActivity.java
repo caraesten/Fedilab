@@ -120,7 +120,6 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveEmojiAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateDescriptionAttachmentAsyncTask;
-import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
@@ -130,6 +129,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
+import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.drawers.CustomEmojiAdapter;
 import fr.gouv.etalab.mastodon.drawers.EmojisSearchAdapter;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
@@ -353,7 +353,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 toot_picture_container.setVisibility(View.VISIBLE);
                 picture_scrollview.setVisibility(View.VISIBLE);
                 toot_picture.setEnabled(false);
-                new API(getApplicationContext()).uploadMedia(bs, TootActivity.this);
+                new HttpsConnection(getApplicationContext()).upload(bs, TootActivity.this);
             }
             toot_content.setText(String.format("\n\nvia @%s\n\n%s\n\n", tootMention, urlMention));
             toot_space_left.setText(String.valueOf(toot_content.length()));
@@ -422,7 +422,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                                     InputStream bis = new ByteArrayInputStream(binaryData);
                                     toot_picture_container.setVisibility(View.VISIBLE);
                                     toot_picture.setEnabled(false);
-                                    new API(getApplicationContext()).uploadMedia(bis, TootActivity.this);
+                                    new HttpsConnection(getApplicationContext()).upload(bis, TootActivity.this);
                                     f.write(binaryData); 
                                     f.close();
                                 } catch (IOException e) {
@@ -574,7 +574,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         String patternTag = "^(.|\\s)*(#([\\w-]{2,}))$";
         final Pattern tPattern = Pattern.compile(patternTag);
 
-        String patternEmoji = "^(.|\\s)*(:([\\w_]{1,}))$";
+        String patternEmoji = "^(.|\\s)*(:([\\w_]+))$";
         final Pattern ePattern = Pattern.compile(patternEmoji);
 
         toot_cw_content.addTextChangedListener(new TextWatcher() {
@@ -721,7 +721,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                         toot_picture_container.setVisibility(View.VISIBLE);
                         picture_scrollview.setVisibility(View.VISIBLE);
                         toot_picture.setEnabled(false);
-                        new API(getApplicationContext()).uploadMedia(inputStream, TootActivity.this);
+                        new HttpsConnection(getApplicationContext()).upload(inputStream, TootActivity.this);
                         count++;
 
                     } catch (FileNotFoundException e) {
@@ -750,7 +750,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 InputStream inputStream = getContentResolver().openInputStream(data.getData());
                 toot_picture_container.setVisibility(View.VISIBLE);
                 toot_picture.setEnabled(false);
-                new API(getApplicationContext()).uploadMedia(inputStream, TootActivity.this);
+                new HttpsConnection(getApplicationContext()).upload(inputStream, TootActivity.this);
             } catch (FileNotFoundException e) {
                 Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
                 toot_picture.setEnabled(true);
