@@ -403,7 +403,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                         toot_content.setSelection(toot_content.getText().length());
                     }
                     if( image != null){
-                        new HttpsConnection(getApplicationContext()).download(image, TootActivity.this);
+                        new HttpsConnection(TootActivity.this).download(image, TootActivity.this);
                     }
 
                 }

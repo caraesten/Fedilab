@@ -16,7 +16,6 @@ package fr.gouv.etalab.mastodon.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.util.Log;
 
 import org.json.JSONObject;
 import java.io.BufferedInputStream;
@@ -116,7 +115,6 @@ public class HttpsConnection {
             for (int c; (c = in.read()) >= 0; )
                 sb.append((char) c);
             httpsURLConnection.disconnect();
-            Log.v(Helper.TAG,httpsURLConnection.getResponseCode() + " - sb.toString(): " + sb.toString());
             throw new HttpsConnectionException(httpsURLConnection.getResponseCode(), sb.toString());
         }
     }
@@ -198,7 +196,7 @@ public class HttpsConnection {
                         // opens input stream from the HTTP connection
                         InputStream inputStream = httpsURLConnection.getInputStream();
                         File saveDir = context.getCacheDir();
-                        String saveFilePath = saveDir + File.separator + fileName;
+                        final String saveFilePath = saveDir + File.separator + fileName;
 
                         // opens an output stream to save into file
                         FileOutputStream outputStream = new FileOutputStream(saveFilePath);
@@ -210,11 +208,19 @@ public class HttpsConnection {
                         }
                         outputStream.close();
                         inputStream.close();
-                        listener.onDownloaded(saveFilePath, null);
+                        ((TootActivity)context).runOnUiThread(new Runnable() {
+                            public void run() {
+                                listener.onDownloaded(saveFilePath, null);
+                            }});
+
                     } else {
-                        Error error = new Error();
+                        final Error error = new Error();
                         error.setError(String.valueOf(responseCode));
-                        listener.onDownloaded(null, error);
+                        ((TootActivity)context).runOnUiThread(new Runnable() {
+                            public void run() {
+                                listener.onDownloaded(null, error);
+                            }});
+
                     }
                     httpsURLConnection.disconnect();
                 } catch (IOException e) {
