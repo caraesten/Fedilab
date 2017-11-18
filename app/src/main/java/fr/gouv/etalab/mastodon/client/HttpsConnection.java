@@ -16,6 +16,8 @@ package fr.gouv.etalab.mastodon.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.util.Log;
+
 import org.json.JSONObject;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -114,6 +116,7 @@ public class HttpsConnection {
             for (int c; (c = in.read()) >= 0; )
                 sb.append((char) c);
             httpsURLConnection.disconnect();
+            Log.v(Helper.TAG,httpsURLConnection.getResponseCode() + " - sb.toString(): " + sb.toString());
             throw new HttpsConnectionException(httpsURLConnection.getResponseCode(), sb.toString());
         }
     }
@@ -274,7 +277,7 @@ public class HttpsConnection {
                     httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
                     httpsURLConnection.setRequestProperty("Cache-Control", "no-cache");
                     httpsURLConnection.setRequestProperty("Content-Type", "multipart/form-data;boundary="+ boundary);
-
+                    httpsURLConnection.setChunkedStreamingMode(-1);
 
                     DataOutputStream request = new DataOutputStream(httpsURLConnection.getOutputStream());
 
@@ -286,7 +289,7 @@ public class HttpsConnection {
 
                     int totalSize = pixels.length;
                     int bytesTransferred = 0;
-                    int chunkSize = 2000;
+                    int chunkSize = 2048;
 
                     while (bytesTransferred < totalSize) {
                         int nextChunkSize = totalSize - bytesTransferred;
@@ -301,7 +304,7 @@ public class HttpsConnection {
                             public void run() {
                                 listener.onUpdateProgress(progress);
                             }});
-
+                        request.flush();
                     }
                     request.writeBytes(lineEnd);
                     request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);

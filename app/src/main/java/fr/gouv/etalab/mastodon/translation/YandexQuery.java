@@ -14,12 +14,10 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.translation;
 
+import android.os.AsyncTask;
 import org.json.JSONException;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import fr.gouv.etalab.mastodon.asynctasks.TranslateAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
-import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
 
@@ -33,57 +31,20 @@ class YandexQuery {
     YandexQuery(OnTranslatedInterface listenner) {
         this.listener = listenner;
     }
-    private static final String BASE_URL = "https://translate.yandex.net/api/v1.5/tr.json/translate?";
-    private static final String YANDEX_KEY = "trnsl.1.1.20170703T074828Z.a95168c920f61b17.699437a40bbfbddc4cd57f345a75c83f0f30c420";
+
 
     void getYandexTextview(final Translate translate, final Status status, final String text, final String toLanguage) throws JSONException {
         if( text != null && text.length() > 0) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        String str_response = new HttpsConnection().get(getAbsoluteUrl(text, toLanguage), 30, null, null );
-                        listener.onTranslatedTextview(translate, status, str_response, false);
-                    } catch (Exception e) {
-                        listener.onTranslatedTextview(translate, status, null, true);
-                    }
-                }
-            }).start();
-
+            new TranslateAsyncTask(translate, null, status, text, toLanguage, TranslateAsyncTask.typeInter.TRANSLATEDTEXTVIEW, listener).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }else {
             listener.onTranslatedTextview(translate, status, "", false);
         }
     }
     void getYandexTranslation(final Translate translate, final Helper.targetField target, final String content, final String toLanguage) throws JSONException {
         if( content != null && content.length() > 0) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        String str_response = new HttpsConnection().get(getAbsoluteUrl(content, toLanguage), 30, null, null );
-                        listener.onTranslated(translate, target, str_response, false);
-                    } catch (Exception e) {
-                        listener.onTranslated(translate, target, "", false);
-                    }
-                }
-            }).start();
+            new TranslateAsyncTask(translate, target, null, content, toLanguage, TranslateAsyncTask.typeInter.TRANSLATEDTEXTVIEW, listener).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }else{
             listener.onTranslated(translate, target, "", false);
         }
-    }
-
-    private static String getAbsoluteUrl(String content, String toLanguage) {
-        String key  = "key=" + YANDEX_KEY + "&";
-        toLanguage = toLanguage.replace("null","");
-        String lang = "lang=" + toLanguage + "&";
-        String text;
-        try {
-            text = "text=" + URLEncoder.encode(content, "utf-8") + "&";
-        } catch (UnsupportedEncodingException e) {
-            text = "text=" + content + "&";
-            e.printStackTrace();
-        }
-        String format = "format=html&";
-        return BASE_URL + key + lang +format  + text ;
     }
 }
