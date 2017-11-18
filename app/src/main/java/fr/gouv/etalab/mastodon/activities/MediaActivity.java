@@ -382,10 +382,10 @@ public class MediaActivity extends AppCompatActivity implements OnDownloadInterf
     }
 
     @Override
-    public void onDownloaded(Uri uri, Error error) {
+    public void onDownloaded(String path, Error error) {
         progress.setVisibility(View.GONE);
         videoView.setVisibility(View.VISIBLE);
-        videoView.setVideoURI(uri);
+        videoView.setVideoURI(Uri.parse(path));
         videoView.start();
         MediaController mc = new MediaController(MediaActivity.this);
         videoView.setMediaController(mc);
@@ -399,6 +399,7 @@ public class MediaActivity extends AppCompatActivity implements OnDownloadInterf
         });
         videoView.setVisibility(View.VISIBLE);
     }
+
 
     @Override
     public void onUpdateProgress(int progressPercentage) {
