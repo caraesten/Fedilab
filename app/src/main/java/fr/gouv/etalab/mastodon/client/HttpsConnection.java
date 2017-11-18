@@ -238,7 +238,8 @@ public class HttpsConnection {
                 } catch (IOException e) {
                     Error error = new Error();
                     error.setError(context.getString(R.string.toast_error));
-                    httpsURLConnection.disconnect();
+                    if(httpsURLConnection != null)
+                        httpsURLConnection.disconnect();
                     e.printStackTrace();
                 }
 
@@ -372,7 +373,8 @@ public class HttpsConnection {
                         }});
                     final Error error = new Error();
                     error.setError(e.getMessage());
-                    httpsURLConnection.disconnect();
+                    if(httpsURLConnection != null)
+                        httpsURLConnection.disconnect();
                     ((TootActivity)context).runOnUiThread(new Runnable() {
                         public void run() {
                             listener.onRetrieveAttachment(null, error);
