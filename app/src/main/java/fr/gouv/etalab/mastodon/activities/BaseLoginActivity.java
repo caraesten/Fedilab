@@ -47,7 +47,7 @@ import java.util.HashMap;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
-import fr.gouv.etalab.mastodon.client.Entities.HttpsConnection;
+import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.helper.Helper;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
@@ -117,7 +117,7 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             try {
-                                final String response = new HttpsConnection().get("https://instances.social/api/1.0" + action,  parameters, Helper.THEKINRAR_SECRET_TOKEN );
+                                final String response = new HttpsConnection().get("https://instances.social/api/1.0" + action, 30, parameters, Helper.THEKINRAR_SECRET_TOKEN );
                                 runOnUiThread(new Runnable() {
                                     public void run() {
                                         isLoadingInstance = false;
@@ -214,7 +214,7 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    final String response = new HttpsConnection().post("https://" + instance + action,  parameters, null );
+                    final String response = new HttpsConnection().post("https://" + instance + action, 30, parameters, null );
                     runOnUiThread(new Runnable() {
                       public void run() {
                           JSONObject resobj;
@@ -276,7 +276,7 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
-                            final String response = new HttpsConnection().post("https://" + instance + "/oauth/token",  parameters, null );
+                            final String response = new HttpsConnection().post("https://" + instance + "/oauth/token", 30, parameters, null );
                             runOnUiThread(new Runnable() {
                                 public void run() {
                                     JSONObject resobj;

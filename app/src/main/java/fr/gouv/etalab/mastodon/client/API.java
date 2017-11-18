@@ -16,10 +16,8 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.SyncHttpClient;
@@ -35,24 +33,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.*;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import cz.msebera.android.httpclient.Header;
-import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.*;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
-
-
-import static fr.gouv.etalab.mastodon.helper.Helper.USER_AGENT;
 
 
 /**
@@ -144,21 +137,15 @@ public class API {
      * @return APIResponse
      */
     public APIResponse getInstance() {
-        get("/instance", null, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                instanceEntity = parseInstance(response);
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-                setError(statusCode, error);
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
-                setError(statusCode, error);
-            }
-        });
-        apiResponse.setInstance(instanceEntity);
+        try {
+            String response = new HttpsConnection().get(getAbsoluteUrl("/instance"), 30, null, prefKeyOauthTokenT);
+            instanceEntity = parseInstance(new JSONObject(response));
+            apiResponse.setInstance(instanceEntity);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         return apiResponse;
     }
 
@@ -167,33 +154,23 @@ public class API {
      * @return APIResponse
      */
     public APIResponse updateCredential(String display_name, String note, String avatar, String header) {
-        RequestParams requestParams = new RequestParams();
 
+        HashMap<String, String> requestParams = new HashMap<>();
         if( display_name != null)
-            requestParams.add("display_name",display_name);
+            requestParams.put("display_name",display_name);
         if( note != null)
-            requestParams.add("note",note);
+            requestParams.put("note",note);
         if( avatar != null)
-            requestParams.add("avatar",avatar);
+            requestParams.put("avatar",avatar);
         if( header != null)
-            requestParams.add("header",header);
-        patch("/accounts/update_credentials", requestParams, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-            }
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-                setError(statusCode, error);
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
-                setError(statusCode, error);
-            }
-        });
+            requestParams.put("header",header);
+        try {
+            new HttpsConnection().patch(getAbsoluteUrl("/accounts/update_credentials"), 60, requestParams, prefKeyOauthTokenT);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         return apiResponse;
     }
 
@@ -204,28 +181,14 @@ public class API {
      */
     public Account verifyCredentials() {
         account = new Account();
-        get("/accounts/verify_credentials", null, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                account = parseAccountResponse(context, response);
-            }
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                try {
-                    account = parseAccountResponse(context, response.getJSONObject(0));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-                setError(statusCode, error);
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
-                setError(statusCode, error);
-            }
-        });
+        try {
+            String response = new HttpsConnection().get(getAbsoluteUrl("/accounts/verify_credentials"), 60, null, prefKeyOauthTokenT);
+            account = parseAccountResponse(context, new JSONObject(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         return account;
     }
 
@@ -237,28 +200,14 @@ public class API {
     public Account getAccount(String accountId) {
 
         account = new Account();
-        get(String.format("/accounts/%s",accountId), null, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                account = parseAccountResponse(context, response);
-            }
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                try {
-                    account = parseAccountResponse(context, response.getJSONObject(0));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-                setError(statusCode, error);
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
-                setError(statusCode, error);
-            }
-        });
+        try {
+            String response = new HttpsConnection().get(getAbsoluteUrl(String.format("/accounts/%s",accountId)), 60, null, prefKeyOauthTokenT);
+            account = parseAccountResponse(context, new JSONObject(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         return account;
     }
 
@@ -273,28 +222,14 @@ public class API {
         relationship = new Relationship();
         RequestParams params = new RequestParams();
         params.put("id",accountId);
-        get("/accounts/relationships", params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                relationship = parseRelationshipResponse(response);
-            }
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                try {
-                    relationship = parseRelationshipResponse(response.getJSONObject(0));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-                setError(statusCode, error);
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
-                setError(statusCode, error);
-            }
-        });
+        try {
+            String response = new HttpsConnection().get(getAbsoluteUrl("/accounts/relationships"), 60, null, prefKeyOauthTokenT);
+            relationship = parseRelationshipResponse(new JSONObject(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         return relationship;
     }
 
@@ -307,37 +242,24 @@ public class API {
      * @return Relationship entity
      */
     public APIResponse getRelationship(List<Account> accounts) {
-
-        relationship = new Relationship();
-        RequestParams params = new RequestParams();
+        HashMap<String, String> params = new HashMap<>();
         if( accounts != null && accounts.size() > 0 ) {
             for(Account account: accounts) {
-                params.add("id[]", account.getId());
+                params.put("id[]", account.getId());
             }
         }
-        get("/accounts/relationships", params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Relationship relationship = parseRelationshipResponse(response);
-                relationships.add(relationship);
-                apiResponse.setSince_id(findSinceId(headers));
-                apiResponse.setMax_id(findMaxId(headers));
-            }
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                apiResponse.setSince_id(findSinceId(headers));
-                apiResponse.setMax_id(findMaxId(headers));
-                relationships = parseRelationshipResponse(response);
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-                setError(statusCode, error);
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
-                setError(statusCode, error);
-            }
-        });
+        relationships = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection();
+            String response = httpsConnection.get(getAbsoluteUrl("/accounts/relationships"), 60, params, prefKeyOauthTokenT);
+            relationships = parseRelationshipResponse(new JSONArray(response));
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         apiResponse.setRelationships(relationships);
         return apiResponse;
     }
@@ -399,7 +321,7 @@ public class API {
     private APIResponse getStatus(String accountId, boolean onlyMedia, boolean pinned,
                                   boolean exclude_replies, String max_id, String since_id, int limit) {
 
-        RequestParams params = new RequestParams();
+        HashMap<String, String> params = new HashMap<>();
         if( exclude_replies)
             params.put("exclude_replies", Boolean.toString(true));
         if (max_id != null)
@@ -414,30 +336,18 @@ public class API {
             params.put("pinned", Boolean.toString(true));
         params.put("limit", String.valueOf(limit));
         statuses = new ArrayList<>();
-        get(String.format("/accounts/%s/statuses", accountId), params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Status status = parseStatuses(context, response);
-                statuses.add(status);
-                apiResponse.setSince_id(findSinceId(headers));
-                apiResponse.setMax_id(findMaxId(headers));
-            }
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                apiResponse.setSince_id(findSinceId(headers));
-                apiResponse.setMax_id(findMaxId(headers));
-                statuses = parseStatuses(response);
 
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-                setError(statusCode, error);
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
-                setError(statusCode, error);
-            }
-        });
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection();
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/accounts/%s/statuses", accountId)), 60, params, prefKeyOauthTokenT);
+            statuses = parseStatuses(new JSONArray(response));
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         apiResponse.setStatuses(statuses);
         return apiResponse;
     }
@@ -451,29 +361,17 @@ public class API {
      */
     public APIResponse getStatusbyId(String statusId) {
         statuses = new ArrayList<>();
-        get(String.format("/statuses/%s", statusId), null, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                apiResponse.setSince_id(findSinceId(headers));
-                apiResponse.setMax_id(findMaxId(headers));
-                Status status = parseStatuses(context, response);
-                statuses.add(status);
-            }
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                apiResponse.setSince_id(findSinceId(headers));
-                apiResponse.setMax_id(findMaxId(headers));
-                statuses = parseStatuses(response);
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-                setError(statusCode, error);
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
-                setError(statusCode, error);
-            }
-        });
+
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection();
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/statuses/%s", statusId)), 60, null, prefKeyOauthTokenT);
+            Status status = parseStatuses(context, new JSONObject(response));
+            statuses.add(status);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         apiResponse.setStatuses(statuses);
         return apiResponse;
     }
@@ -486,20 +384,15 @@ public class API {
      */
     public fr.gouv.etalab.mastodon.client.Entities.Context getStatusContext(String statusId) {
         statusContext = new fr.gouv.etalab.mastodon.client.Entities.Context();
-        get(String.format("/statuses/%s/context", statusId), null, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                statusContext = parseContext(response);
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-                setError(statusCode, error);
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
-                setError(statusCode, error);
-            }
-        });
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection();
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/statuses/%s/context", statusId)), 60, null, prefKeyOauthTokenT);
+            statusContext = parseContext(new JSONObject(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         return statusContext;
     }
 
@@ -547,7 +440,7 @@ public class API {
      */
     private APIResponse getHomeTimeline(String max_id, String since_id, int limit) {
 
-        RequestParams params = new RequestParams();
+        HashMap<String, String> params = new HashMap<>();
         if (max_id != null)
             params.put("max_id", max_id);
         if (since_id != null)
@@ -556,30 +449,17 @@ public class API {
             limit = 80;
         params.put("limit",String.valueOf(limit));
         statuses = new ArrayList<>();
-        get("/timelines/home", params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Status status = parseStatuses(context, response);
-                statuses.add(status);
-                apiResponse.setSince_id(findSinceId(headers));
-                apiResponse.setMax_id(findMaxId(headers));
-            }
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                statuses = parseStatuses(response);
-                apiResponse.setSince_id(findSinceId(headers));
-                apiResponse.setMax_id(findMaxId(headers));
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-                setError(statusCode, error);
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
-                setError(statusCode, error);
-            }
-        });
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection();
+            String response = httpsConnection.get(getAbsoluteUrl("/timelines/home"), 60, params, prefKeyOauthTokenT);
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+            statuses = parseStatuses(new JSONArray(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         apiResponse.setStatuses(statuses);
         return apiResponse;
     }
@@ -626,7 +506,7 @@ public class API {
      */
     private APIResponse getPublicTimeline(boolean local, String max_id, String since_id, int limit){
 
-        RequestParams params = new RequestParams();
+        HashMap<String, String> params = new HashMap<>();
         if( local)
             params.put("local", Boolean.toString(true));
         if( max_id != null )
@@ -637,31 +517,17 @@ public class API {
             limit = 40;
         params.put("limit",String.valueOf(limit));
         statuses = new ArrayList<>();
-        get("/timelines/public", params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Status status = parseStatuses(context, response);
-                statuses.add(status);
-                apiResponse.setSince_id(findSinceId(headers));
-                apiResponse.setMax_id(findMaxId(headers));
-            }
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                statuses = parseStatuses(response);
-                apiResponse.setSince_id(findSinceId(headers));
-                apiResponse.setMax_id(findMaxId(headers));
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-                setError(statusCode, error);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
-                setError(statusCode, error);
-            }
-        });
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection();
+            String response = httpsConnection.get(getAbsoluteUrl("/timelines/public"), 60, params, prefKeyOauthTokenT);
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+            statuses = parseStatuses(new JSONArray(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         apiResponse.setStatuses(statuses);
         return apiResponse;
     }
@@ -687,7 +553,7 @@ public class API {
      */
     private APIResponse getPublicTimelineTag(String tag, boolean local, String max_id, String since_id, int limit){
 
-        RequestParams params = new RequestParams();
+        HashMap<String, String> params = new HashMap<>();
         if( local)
             params.put("local", Boolean.toString(true));
         if( max_id != null )
@@ -698,31 +564,17 @@ public class API {
             limit = 40;
         params.put("limit",String.valueOf(limit));
         statuses = new ArrayList<>();
-
-        get(String.format("/timelines/tag/%s",tag.trim()), params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Status status = parseStatuses(context, response);
-                statuses.add(status);
-                apiResponse.setSince_id(findSinceId(headers));
-                apiResponse.setMax_id(findMaxId(headers));
-            }
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                statuses = parseStatuses(response);
-                apiResponse.setSince_id(findSinceId(headers));
-                apiResponse.setMax_id(findMaxId(headers));
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-                setError(statusCode, error);
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
-                setError(statusCode, error);
-            }
-        });
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection();
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/timelines/tag/%s",tag.trim())), 60, params, prefKeyOauthTokenT);
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+            statuses = parseStatuses(new JSONArray(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         apiResponse.setStatuses(statuses);
         return apiResponse;
     }
@@ -776,7 +628,7 @@ public class API {
      */
     private APIResponse getAccounts(String action, String max_id, String since_id, int limit){
 
-        RequestParams params = new RequestParams();
+        HashMap<String, String> params = new HashMap<>();
         if( max_id != null )
             params.put("max_id", max_id);
         if( since_id != null )
@@ -785,30 +637,17 @@ public class API {
             limit = 40;
         params.put("limit",String.valueOf(limit));
         accounts = new ArrayList<>();
-        get(action, params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                apiResponse.setSince_id(findSinceId(headers));
-                apiResponse.setMax_id(findMaxId(headers));
-                Account account = parseAccountResponse(context, response);
-                accounts.add(account);
-            }
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                apiResponse.setSince_id(findSinceId(headers));
-                apiResponse.setMax_id(findMaxId(headers));
-                accounts = parseAccountResponse(response);
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-                setError(statusCode, error);
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
-                setError(statusCode, error);
-            }
-        });
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection();
+            String response = httpsConnection.get(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+            accounts = parseAccountResponse(new JSONArray(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         apiResponse.setAccounts(accounts);
         return apiResponse;
     }
@@ -831,7 +670,7 @@ public class API {
      */
     private APIResponse getFollowRequest(String max_id, String since_id, int limit){
 
-        RequestParams params = new RequestParams();
+        HashMap<String, String> params = new HashMap<>();
         if( max_id != null )
             params.put("max_id", max_id);
         if( since_id != null )
@@ -840,30 +679,17 @@ public class API {
             limit = 40;
         params.put("limit",String.valueOf(limit));
         accounts = new ArrayList<>();
-        get("/follow_requests", params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                apiResponse.setSince_id(findSinceId(headers));
-                apiResponse.setMax_id(findMaxId(headers));
-                Account account = parseAccountResponse(context, response);
-                accounts.add(account);
-            }
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                apiResponse.setSince_id(findSinceId(headers));
-                apiResponse.setMax_id(findMaxId(headers));
-                accounts = parseAccountResponse(response);
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-                setError(statusCode, error);
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
-                setError(statusCode, error);
-            }
-        });
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection();
+            String response = httpsConnection.get(getAbsoluteUrl("/follow_requests"), 60, params, prefKeyOauthTokenT);
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+            accounts = parseAccountResponse(new JSONArray(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         apiResponse.setAccounts(accounts);
         return apiResponse;
     }
@@ -886,7 +712,7 @@ public class API {
      */
     private APIResponse getFavourites(String max_id, String since_id, int limit){
 
-        RequestParams params = new RequestParams();
+        HashMap<String, String> params = new HashMap<>();
         if( max_id != null )
             params.put("max_id", max_id);
         if( since_id != null )
@@ -895,30 +721,17 @@ public class API {
             limit = 40;
         params.put("limit",String.valueOf(limit));
         statuses = new ArrayList<>();
-        get("/favourites", params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Status status = parseStatuses(context, response);
-                statuses.add(status);
-                apiResponse.setSince_id(findSinceId(headers));
-                apiResponse.setMax_id(findMaxId(headers));
-            }
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                statuses = parseStatuses(response);
-                apiResponse.setSince_id(findSinceId(headers));
-                apiResponse.setMax_id(findMaxId(headers));
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject response){
-                setError(statusCode, error);
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String message, Throwable error){
-                setError(statusCode, error);
-            }
-        });
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection();
+            String response = httpsConnection.get(getAbsoluteUrl("/favourites"), 60, params, prefKeyOauthTokenT);
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+            statuses = parseStatuses(new JSONArray(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         apiResponse.setStatuses(statuses);
         return apiResponse;
     }
@@ -1882,7 +1695,7 @@ public class API {
     }
 
     
-    private void get(String action, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+    /*private void get(String action, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         try {
             client.setConnectTimeout(20000); //20s timeout
             client.setUserAgent(USER_AGENT);
@@ -1971,7 +1784,7 @@ public class API {
             Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
-    }
+    }*/
 
 
     public Error getError(){
