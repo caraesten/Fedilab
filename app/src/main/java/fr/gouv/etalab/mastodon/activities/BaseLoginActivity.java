@@ -38,11 +38,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;;
 import java.util.HashMap;
 
 import fr.gouv.etalab.mastodon.R;
@@ -144,12 +141,11 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
                                     }
                                 });
 
-                            } catch (IOException e) {
+                            } catch (HttpsConnection.HttpsConnectionException e) {
                                 isLoadingInstance = false;
                                 e.printStackTrace();
-                            } catch (NoSuchAlgorithmException e) {
-                                e.printStackTrace();
-                            } catch (KeyManagementException e) {
+                            } catch (Exception e) {
+                                isLoadingInstance = false;
                                 e.printStackTrace();
                             }
                         }
@@ -243,11 +239,9 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
                       }
                     });
 
-                } catch (IOException e) {
+                } catch (HttpsConnection.HttpsConnectionException e) {
                     e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                } catch (KeyManagementException e) {
+                }catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -294,13 +288,13 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
                                     }
                                 }
                             });
-                        } catch (IOException e) {
+                        }catch (HttpsConnection.HttpsConnectionException e) {
                             connectionButton.setEnabled(true);
                             Toast.makeText(getApplicationContext(),R.string.toast_error_login,Toast.LENGTH_LONG).show();
                             e.printStackTrace();
-                        } catch (NoSuchAlgorithmException e) {
-                            e.printStackTrace();
-                        } catch (KeyManagementException e) {
+                        } catch (Exception e) {
+                            connectionButton.setEnabled(true);
+                            Toast.makeText(getApplicationContext(),R.string.toast_error_login,Toast.LENGTH_LONG).show();
                             e.printStackTrace();
                         }
                     }
