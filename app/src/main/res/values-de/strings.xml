@@ -407,7 +407,6 @@
     <string name="privacy_API">Die Anwendung <b >benutzt keine Trackingwerkzeuge</b> (Nutzerbewertung, Fehlerberichte, etc.) und enthält keinerlei Werbung.\n
     \n
              Die Nutzung von Bibliotheken ist minimiert: \n
-             - <b >Android Asynchronous Http Client</b>: Anfragen verwalten\n
              - <b >Universal Image Loader</b>: Dateien verwalten\n
              - <b >Android-Job</b>: Dienste verwalten\n
              - <b >PhotoView</b>: Bilder verwalten\n

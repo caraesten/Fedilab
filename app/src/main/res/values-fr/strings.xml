@@ -404,7 +404,6 @@
     <string name="privacy_API">
         L\'application n\'utilise <b>aucun outil de suivi</b> (mesure d\'audience, rapport d\'erreurs, etc.) et elle ne comporte aucune publicité.\n\n
         L\'utilisation de bibliothèques est réduite au strict minimum :\n
-        - <b>Android Asynchronous Http Client</b> : Pour la gestion des requêtes\n
         - <b>Universal Image Loader</b> : Pour la gestion des médias\n
         - <b>Android-Job</b> : Pour la gestion des services\n
         - <b>PhotoView</b> : Pour la gestion des images\n

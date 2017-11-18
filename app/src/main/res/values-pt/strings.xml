@@ -408,7 +408,6 @@
     <string name="privacy_API">
         O aplicativo <b>não usa ferramentas de rastreamento</b> (medição de audiência, relatório de erros, etc.) e não contém propagandas.\n\n
         O uso de bibliotecas é mínimo: \n
-        - <b>Android Asynchronous Http Client</b>: Para administrar consultas\n
         - <b>Universal Image Loader</b>: Para administrar mídia\n
         - <b>Android-Job</b>: Para administrar serviços\n
         - <b>PhotoView</b>: Para administrar imagens\n

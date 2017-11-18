@@ -289,12 +289,20 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
                                 }
                             });
                         }catch (HttpsConnection.HttpsConnectionException e) {
-                            connectionButton.setEnabled(true);
-                            Toast.makeText(getApplicationContext(),R.string.toast_error_login,Toast.LENGTH_LONG).show();
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    connectionButton.setEnabled(true);
+                                    Toast.makeText(getApplicationContext(),R.string.toast_error_login,Toast.LENGTH_LONG).show();
+                                }
+                            });
                             e.printStackTrace();
                         } catch (Exception e) {
-                            connectionButton.setEnabled(true);
-                            Toast.makeText(getApplicationContext(),R.string.toast_error_login,Toast.LENGTH_LONG).show();
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    connectionButton.setEnabled(true);
+                                    Toast.makeText(getApplicationContext(),R.string.toast_error_login,Toast.LENGTH_LONG).show();
+                                }
+                            });
                             e.printStackTrace();
                         }
                     }
