@@ -40,6 +40,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -110,6 +111,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeUser;
+import static fr.gouv.etalab.mastodon.helper.Helper.logout;
 import static fr.gouv.etalab.mastodon.helper.Helper.menuAccounts;
 import static fr.gouv.etalab.mastodon.helper.Helper.unCheckAllMenuItems;
 import static fr.gouv.etalab.mastodon.helper.Helper.updateHeaderAccountInfo;
@@ -616,7 +618,13 @@ public abstract class BaseMainActivity extends AppCompatActivity
 
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
-
+        if( account == null){
+            Helper.logout(getApplicationContext());
+            Intent myIntent = new Intent(BaseMainActivity.this, LoginActivity.class);
+            startActivity(myIntent);
+            finish();
+            return;
+        }
         //Image loader configuration
         imageLoader = ImageLoader.getInstance();
         File cacheDir = new File(getCacheDir(), getString(R.string.app_name));

@@ -55,7 +55,6 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
             token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         }
         account.setToken(token);
-        //TODO: remove this static value to allow other instances
         account.setInstance(instance);
         SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         boolean userExists = new AccountDAO(this.contextReference.get(), db).userExist(account);

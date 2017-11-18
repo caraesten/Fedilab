@@ -219,7 +219,6 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
                               resobj = new JSONObject(response);
                               client_id = resobj.get(Helper.CLIENT_ID).toString();
                               client_secret = resobj.get(Helper.CLIENT_SECRET).toString();
-
                               String id = resobj.get(Helper.ID).toString();
                               SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                               SharedPreferences.Editor editor = sharedpreferences.edit();

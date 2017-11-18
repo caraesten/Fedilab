@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
+
 import org.json.JSONObject;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -60,7 +61,6 @@ public class HttpsConnection {
 
     private HttpsURLConnection httpsURLConnection;
     private String since_id, max_id;
-    private int actionCode;
     private Context context;
 
 
@@ -73,12 +73,15 @@ public class HttpsConnection {
     @SuppressWarnings("ConstantConditions")
     public String get(String urlConnection, int timeout, HashMap<String, String> paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
 
+
         Map<String,Object> params = new LinkedHashMap<>();
-        Iterator it = paramaters.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            params.put(pair.getKey().toString(), pair.getValue());
-            it.remove();
+        if( paramaters != null) {
+            Iterator it = paramaters.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry) it.next();
+                params.put(pair.getKey().toString(), pair.getValue());
+                it.remove();
+            }
         }
         StringBuilder postData = new StringBuilder();
         for (Map.Entry<String,Object> param : params.entrySet()) {
@@ -90,18 +93,18 @@ public class HttpsConnection {
         URL url = new URL(urlConnection + "?" + postData);
         httpsURLConnection = (HttpsURLConnection)url.openConnection();
         httpsURLConnection.setConnectTimeout(timeout * 1000);
+        httpsURLConnection.setRequestProperty("http.keepAlive", "false");
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
         if( token != null)
             httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
         httpsURLConnection.setRequestMethod("GET");
-        getSinceMaxId();
-        actionCode = httpsURLConnection.getResponseCode();
-        if (actionCode >= 200 && actionCode < 400) {
+        if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
             Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream(), "UTF-8"));
             StringBuilder sb = new StringBuilder();
             for (int c; (c = in.read()) >= 0; )
                 sb.append((char) c);
+            getSinceMaxId();
             httpsURLConnection.disconnect();
             in.close();
             return sb.toString();
@@ -110,7 +113,8 @@ public class HttpsConnection {
             StringBuilder sb = new StringBuilder();
             for (int c; (c = in.read()) >= 0; )
                 sb.append((char) c);
-            throw new HttpsConnectionException(actionCode, sb.toString());
+            httpsURLConnection.disconnect();
+            throw new HttpsConnectionException(httpsURLConnection.getResponseCode(), sb.toString());
         }
     }
 
@@ -119,11 +123,13 @@ public class HttpsConnection {
     public String post(String urlConnection, int timeout, HashMap<String, String> paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
         URL url = new URL(urlConnection);
         Map<String,Object> params = new LinkedHashMap<>();
-        Iterator it = paramaters.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            params.put(pair.getKey().toString(), pair.getValue());
-            it.remove();
+        if( paramaters != null) {
+            Iterator it = paramaters.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry) it.next();
+                params.put(pair.getKey().toString(), pair.getValue());
+                it.remove();
+            }
         }
         StringBuilder postData = new StringBuilder();
         for (Map.Entry<String,Object> param : params.entrySet()) {
@@ -136,6 +142,7 @@ public class HttpsConnection {
 
         httpsURLConnection = (HttpsURLConnection)url.openConnection();
         httpsURLConnection.setConnectTimeout(timeout * 1000);
+        httpsURLConnection.setDoOutput(true);
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
         httpsURLConnection.setRequestMethod("POST");
@@ -143,25 +150,17 @@ public class HttpsConnection {
             httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
         httpsURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         httpsURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
-        actionCode = httpsURLConnection.getResponseCode();
+
+
+        httpsURLConnection.getOutputStream().write(postDataBytes);
+        Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream(), "UTF-8"));
+        StringBuilder sb = new StringBuilder();
+        for (int c; (c = in.read()) >= 0;)
+            sb.append((char)c);
         getSinceMaxId();
-        httpsURLConnection.setDoOutput(true);
-        if (actionCode >= 200 && actionCode < 400) {
-            httpsURLConnection.getOutputStream().write(postDataBytes);
-            Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream(), "UTF-8"));
-            StringBuilder sb = new StringBuilder();
-            for (int c; (c = in.read()) >= 0;)
-                sb.append((char)c);
-            httpsURLConnection.disconnect();
-            in.close();
-            return sb.toString();
-        }else {
-            Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getErrorStream(), "UTF-8"));
-            StringBuilder sb = new StringBuilder();
-            for (int c; (c = in.read()) >= 0; )
-                sb.append((char) c);
-            throw new HttpsConnectionException(actionCode, sb.toString());
-        }
+        httpsURLConnection.disconnect();
+        in.close();
+        return sb.toString();
 
     }
 
@@ -218,6 +217,7 @@ public class HttpsConnection {
                 } catch (IOException e) {
                     Error error = new Error();
                     error.setError(context.getString(R.string.toast_error));
+                    httpsURLConnection.disconnect();
                     e.printStackTrace();
                 }
 
@@ -319,11 +319,13 @@ public class HttpsConnection {
 
                     String response = stringBuilder.toString();
                     Attachment attachment = API.parseAttachmentResponse(new JSONObject(response));
+                    httpsURLConnection.disconnect();
                     listener.onRetrieveAttachment(attachment, null);
                 }catch (Exception e) {
                     listener.onUpdateProgress(101);
                     Error error = new Error();
                     error.setError(e.getMessage());
+                    httpsURLConnection.disconnect();
                     listener.onRetrieveAttachment(null, error);
                 }
             }
@@ -335,11 +337,13 @@ public class HttpsConnection {
     public String put(String urlConnection, int timeout, HashMap<String, String> paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
         URL url = new URL(urlConnection);
         Map<String,Object> params = new LinkedHashMap<>();
-        Iterator it = paramaters.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            params.put(pair.getKey().toString(), pair.getValue());
-            it.remove();
+        if( paramaters != null) {
+            Iterator it = paramaters.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry) it.next();
+                params.put(pair.getKey().toString(), pair.getValue());
+                it.remove();
+            }
         }
         StringBuilder postData = new StringBuilder();
         for (Map.Entry<String,Object> param : params.entrySet()) {
@@ -357,18 +361,19 @@ public class HttpsConnection {
         if( token != null)
             httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
         httpsURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
-        getSinceMaxId();
+
         httpsURLConnection.setRequestMethod("PUT");
         httpsURLConnection.setDoInput(true);
         httpsURLConnection.setDoOutput(true);
-        actionCode = httpsURLConnection.getResponseCode();
-        if (actionCode >= 200 && actionCode < 400) {
+
+        if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
             DataOutputStream dataOutputStream = new DataOutputStream(httpsURLConnection.getOutputStream());
             dataOutputStream.write(postDataBytes);
             Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream(), "UTF-8"));
             StringBuilder sb = new StringBuilder();
             for (int c; (c = in.read()) >= 0;)
                 sb.append((char)c);
+            getSinceMaxId();
             httpsURLConnection.disconnect();
             in.close();
             return sb.toString();
@@ -377,7 +382,8 @@ public class HttpsConnection {
             StringBuilder sb = new StringBuilder();
             for (int c; (c = in.read()) >= 0; )
                 sb.append((char) c);
-            throw new HttpsConnectionException(actionCode, sb.toString());
+            httpsURLConnection.disconnect();
+            throw new HttpsConnectionException(httpsURLConnection.getResponseCode(), sb.toString());
         }
 
     }
@@ -387,11 +393,13 @@ public class HttpsConnection {
     public String patch(String urlConnection, int timeout, HashMap<String, String> paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
         URL url = new URL(urlConnection);
         Map<String,Object> params = new LinkedHashMap<>();
-        Iterator it = paramaters.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            params.put(pair.getKey().toString(), pair.getValue());
-            it.remove();
+        if( paramaters != null) {
+            Iterator it = paramaters.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry) it.next();
+                params.put(pair.getKey().toString(), pair.getValue());
+                it.remove();
+            }
         }
         StringBuilder postData = new StringBuilder();
         for (Map.Entry<String,Object> param : params.entrySet()) {
@@ -413,8 +421,8 @@ public class HttpsConnection {
         httpsURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
         httpsURLConnection.setDoOutput(true);
         getSinceMaxId();
-        actionCode = httpsURLConnection.getResponseCode();
-        if (actionCode >= 200 && actionCode < 400) {
+
+        if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
             httpsURLConnection.getOutputStream().write(postDataBytes);
             Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream(), "UTF-8"));
             StringBuilder sb = new StringBuilder();
@@ -428,7 +436,8 @@ public class HttpsConnection {
             StringBuilder sb = new StringBuilder();
             for (int c; (c = in.read()) >= 0; )
                 sb.append((char) c);
-            throw new HttpsConnectionException(actionCode, sb.toString());
+            httpsURLConnection.disconnect();
+            throw new HttpsConnectionException(httpsURLConnection.getResponseCode(), sb.toString());
         }
 
     }
@@ -437,11 +446,13 @@ public class HttpsConnection {
     public int delete(String urlConnection, int timeout, HashMap<String, String> paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
         URL url = new URL(urlConnection);
         Map<String,Object> params = new LinkedHashMap<>();
-        Iterator it = paramaters.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            params.put(pair.getKey().toString(), pair.getValue());
-            it.remove();
+        if( paramaters != null) {
+            Iterator it = paramaters.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry) it.next();
+                params.put(pair.getKey().toString(), pair.getValue());
+                it.remove();
+            }
         }
         StringBuilder postData = new StringBuilder();
         for (Map.Entry<String,Object> param : params.entrySet()) {
@@ -462,16 +473,17 @@ public class HttpsConnection {
         httpsURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         httpsURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
         httpsURLConnection.setRequestMethod("DELETE");
-        actionCode = httpsURLConnection.getResponseCode();
-        if (actionCode >= 200 && actionCode < 400) {
+
+        if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
             httpsURLConnection.disconnect();
-            return actionCode;
+            return httpsURLConnection.getResponseCode();
         }else {
             Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getErrorStream(), "UTF-8"));
             StringBuilder sb = new StringBuilder();
             for (int c; (c = in.read()) >= 0; )
                 sb.append((char) c);
-            throw new HttpsConnectionException(actionCode, sb.toString());
+            httpsURLConnection.disconnect();
+            throw new HttpsConnectionException(httpsURLConnection.getResponseCode(), sb.toString());
         }
     }
 
@@ -506,7 +518,12 @@ public class HttpsConnection {
     }
 
     public int getActionCode() {
-        return actionCode;
+        try {
+            return httpsURLConnection.getResponseCode();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 
     public class HttpsConnectionException extends Exception {
