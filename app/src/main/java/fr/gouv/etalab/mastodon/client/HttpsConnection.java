@@ -150,7 +150,6 @@ public class HttpsConnection {
         httpsURLConnection.setRequestMethod("POST");
         if( token != null)
             httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
-        httpsURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         httpsURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
 
 

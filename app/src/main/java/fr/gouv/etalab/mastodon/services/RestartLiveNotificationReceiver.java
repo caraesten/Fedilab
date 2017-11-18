@@ -36,7 +36,9 @@ public class RestartLiveNotificationReceiver extends BroadcastReceiver {
         boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
         if( notify && liveNotifications) {
             Intent streamingServiceIntent = new Intent(context.getApplicationContext(), LiveNotificationService.class);
-            context.startService(streamingServiceIntent);
+            try {
+                context.startService(streamingServiceIntent);
+            }catch (Exception ignored){}
         }
     }
 
