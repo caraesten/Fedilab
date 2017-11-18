@@ -27,7 +27,9 @@ public class RestartFederatedServiceReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent  streamingServiceIntent = new Intent(context.getApplicationContext(), StreamingFederatedTimelineService.class);
-        context.startService(streamingServiceIntent);
+        try {
+            context.startService(streamingServiceIntent);
+        }catch (Exception ignored){}
     }
 
 }
