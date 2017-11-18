@@ -346,7 +346,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 toot_picture_container.setVisibility(View.VISIBLE);
                 picture_scrollview.setVisibility(View.VISIBLE);
                 toot_picture.setEnabled(false);
-                new HttpsConnection(getApplicationContext()).upload(bs, TootActivity.this);
+                new HttpsConnection(TootActivity.this).upload(bs, TootActivity.this);
             }
             toot_content.setText(String.format("\n\nvia @%s\n\n%s\n\n", tootMention, urlMention));
             toot_space_left.setText(String.valueOf(toot_content.length()));
@@ -689,7 +689,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                         toot_picture_container.setVisibility(View.VISIBLE);
                         picture_scrollview.setVisibility(View.VISIBLE);
                         toot_picture.setEnabled(false);
-                        new HttpsConnection(getApplicationContext()).upload(inputStream, TootActivity.this);
+                        new HttpsConnection(TootActivity.this).upload(inputStream, TootActivity.this);
                         count++;
 
                     } catch (FileNotFoundException e) {
@@ -718,7 +718,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 InputStream inputStream = getContentResolver().openInputStream(data.getData());
                 toot_picture_container.setVisibility(View.VISIBLE);
                 toot_picture.setEnabled(false);
-                new HttpsConnection(getApplicationContext()).upload(inputStream, TootActivity.this);
+                new HttpsConnection(TootActivity.this).upload(inputStream, TootActivity.this);
             } catch (FileNotFoundException e) {
                 Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
                 toot_picture.setEnabled(true);
@@ -1197,7 +1197,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
         toot_picture_container.setVisibility(View.VISIBLE);
         toot_picture.setEnabled(false);
-        new HttpsConnection(getApplicationContext()).upload(bs, TootActivity.this);
+        new HttpsConnection(TootActivity.this).upload(bs, TootActivity.this);
     }
 
     @Override

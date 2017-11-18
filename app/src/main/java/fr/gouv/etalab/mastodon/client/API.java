@@ -191,12 +191,15 @@ public class API {
      */
     public Relationship getRelationship(String accountId) {
 
-        Relationship relationship = new Relationship();
+        List<Relationship> relationships;
+        Relationship relationship = null;
         HashMap<String, String> params = new HashMap<>();
         params.put("id",accountId);
         try {
-            String response = new HttpsConnection().get(getAbsoluteUrl("/accounts/relationships"), 60, null, prefKeyOauthTokenT);
-            relationship = parseRelationshipResponse(new JSONObject(response));
+            String response = new HttpsConnection().get(getAbsoluteUrl("/accounts/relationships"), 60, params, prefKeyOauthTokenT);
+            relationships = parseRelationshipResponse(new JSONArray(response));
+            if( relationships != null && relationships.size() > 0)
+                relationship = relationships.get(0);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {

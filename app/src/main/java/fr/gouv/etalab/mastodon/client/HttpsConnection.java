@@ -16,7 +16,6 @@ package fr.gouv.etalab.mastodon.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
-
 import org.json.JSONObject;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -43,6 +42,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.net.ssl.HttpsURLConnection;
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -233,6 +233,11 @@ public class HttpsConnection {
             @Override
             public void run() {
                 try {
+
+                    String twoHyphens = "--";
+                    String boundary = "*****" + Long.toString(System.currentTimeMillis()) + "*****";
+                    String lineEnd = "\r\n";
+
                     SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                     String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
                     final URL url = new URL("https://"+Helper.getLiveInstance(context)+"/api/v1/media");
@@ -258,29 +263,26 @@ public class HttpsConnection {
                     byte[] pixels = ous.toByteArray();
 
                     httpsURLConnection = (HttpsURLConnection) url.openConnection();
-                    httpsURLConnection.setConnectTimeout(240 * 1000);
                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
                         httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
                     httpsURLConnection.setDoInput(true);
                     httpsURLConnection.setDoOutput(true);
                     httpsURLConnection.setUseCaches(false);
+                    httpsURLConnection.setRequestMethod("POST");
                     if (token != null)
                         httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
-                    httpsURLConnection.setRequestMethod("POST");
-
-                    httpsURLConnection.setRequestProperty("Content-Type",  "multipart/form-data");
                     httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
                     httpsURLConnection.setRequestProperty("Cache-Control", "no-cache");
-                    httpsURLConnection.setRequestProperty("Content-Type", "multipart/form-data;boundary=*****");
+                    httpsURLConnection.setRequestProperty("Content-Type", "multipart/form-data;boundary="+ boundary);
 
 
                     DataOutputStream request = new DataOutputStream(httpsURLConnection.getOutputStream());
-                    request.writeBytes("--*****\r\n");
-                    request.writeBytes("Content-Disposition: form-data; name=\"picture\";filename=\"picture.png\"\r\n");
-                    request.writeBytes("\r\n");
 
-                    request.write(pixels);
+                    request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+                    request.writeBytes("Content-Disposition: form-data; name=\"file\";filename=\"picture.png\"" + lineEnd);
+                    request.writeBytes(lineEnd);
 
+                    //request.write(pixels);
 
                     int totalSize = pixels.length;
                     int bytesTransferred = 0;
@@ -294,15 +296,26 @@ public class HttpsConnection {
                         request.write(pixels, bytesTransferred, nextChunkSize);
                         bytesTransferred += nextChunkSize;
 
-                        int progress = 100 * bytesTransferred / totalSize;
-                        listener.onUpdateProgress(progress);
-                    }
+                        final int progress = 100 * bytesTransferred / totalSize;
+                        ((TootActivity)context).runOnUiThread(new Runnable() {
+                            public void run() {
+                                listener.onUpdateProgress(progress);
+                            }});
 
-                    request.writeBytes("\r\n");
-                    request.writeBytes("--*****\r\n");
+                    }
+                    request.writeBytes(lineEnd);
+                    request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
                     request.flush();
                     request.close();
 
+                    if (200 != httpsURLConnection.getResponseCode()) {
+                        Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getErrorStream(), "UTF-8"));
+                        StringBuilder sb = new StringBuilder();
+                        for (int c; (c = in.read()) >= 0; )
+                            sb.append((char) c);
+                        httpsURLConnection.disconnect();
+                        throw new HttpsConnectionException(httpsURLConnection.getResponseCode(), context.getString(R.string.toast_error));
+                    }
 
                     InputStream responseStream = new BufferedInputStream(httpsURLConnection.getInputStream());
 
@@ -314,19 +327,36 @@ public class HttpsConnection {
                     while ((line = responseStreamReader.readLine()) != null) {
                         stringBuilder.append(line).append("\n");
                     }
-                    listener.onUpdateProgress(101);
-                    responseStreamReader.close();
+                    ((TootActivity)context).runOnUiThread(new Runnable() {
+                        public void run() {
+                            listener.onUpdateProgress(101);
+                        }});
+
 
                     String response = stringBuilder.toString();
-                    Attachment attachment = API.parseAttachmentResponse(new JSONObject(response));
+                    final Attachment attachment = API.parseAttachmentResponse(new JSONObject(response));
+                    responseStreamReader.close();
+                    responseStream.close();
                     httpsURLConnection.disconnect();
-                    listener.onRetrieveAttachment(attachment, null);
+
+                    ((TootActivity)context).runOnUiThread(new Runnable() {
+                        public void run() {
+                            listener.onRetrieveAttachment(attachment, null);
+                        }});
                 }catch (Exception e) {
-                    listener.onUpdateProgress(101);
-                    Error error = new Error();
+                    e.printStackTrace();
+                    ((TootActivity)context).runOnUiThread(new Runnable() {
+                        public void run() {
+                            listener.onUpdateProgress(101);
+                        }});
+                    final Error error = new Error();
                     error.setError(e.getMessage());
                     httpsURLConnection.disconnect();
-                    listener.onRetrieveAttachment(null, error);
+                    ((TootActivity)context).runOnUiThread(new Runnable() {
+                        public void run() {
+                            listener.onRetrieveAttachment(null, error);
+                        }});
+
                 }
             }
         }).start();
@@ -464,15 +494,18 @@ public class HttpsConnection {
         byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 
         httpsURLConnection = (HttpsURLConnection)url.openConnection();
-        httpsURLConnection.setConnectTimeout(timeout * 1000);
-        getSinceMaxId();
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
         if( token != null)
             httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
         httpsURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-        httpsURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
         httpsURLConnection.setRequestMethod("DELETE");
+        httpsURLConnection.setConnectTimeout(timeout * 1000);
+        httpsURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+
+        getSinceMaxId();
+
+
 
         if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
             httpsURLConnection.disconnect();
