@@ -43,6 +43,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.net.ssl.HttpsURLConnection;
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
@@ -208,18 +209,29 @@ public class HttpsConnection {
                         }
                         outputStream.close();
                         inputStream.close();
+                        if(context instanceof TootActivity)
                         ((TootActivity)context).runOnUiThread(new Runnable() {
                             public void run() {
                                 listener.onDownloaded(saveFilePath, null);
                             }});
-
+                        if(context instanceof MediaActivity)
+                            ((MediaActivity)context).runOnUiThread(new Runnable() {
+                                public void run() {
+                                    listener.onDownloaded(saveFilePath, null);
+                                }});
                     } else {
                         final Error error = new Error();
                         error.setError(String.valueOf(responseCode));
-                        ((TootActivity)context).runOnUiThread(new Runnable() {
-                            public void run() {
-                                listener.onDownloaded(null, error);
-                            }});
+                        if(context instanceof TootActivity)
+                            ((TootActivity)context).runOnUiThread(new Runnable() {
+                                public void run() {
+                                    listener.onDownloaded(null, error);
+                                }});
+                        if(context instanceof MediaActivity)
+                            ((MediaActivity)context).runOnUiThread(new Runnable() {
+                                public void run() {
+                                    listener.onDownloaded(null, error);
+                                }});
 
                     }
                     httpsURLConnection.disconnect();

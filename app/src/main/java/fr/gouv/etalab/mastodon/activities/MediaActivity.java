@@ -363,7 +363,7 @@ public class MediaActivity extends AppCompatActivity implements OnDownloadInterf
                 }else{
                     progress.setText("0 %");
                     progress.setVisibility(View.VISIBLE);
-                    new HttpsConnection(getApplicationContext()).download(finalUrl, MediaActivity.this );
+                    new HttpsConnection(MediaActivity.this).download(finalUrl, MediaActivity.this );
                 }
                 break;
         }
