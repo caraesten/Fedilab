@@ -391,9 +391,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     final String image = intent.getStringExtra("image");
                     String title = intent.getStringExtra("title");
                     String description = intent.getStringExtra("description");
-                    if( description != null && description.length() > 20 ){
-                        if( description.length() > 200 )
-                            description = description.substring(0,199) + "…";
+                    if( description != null ){
                         if( title != null)
                             sharedContent = title + "\n\n" + description + "\n\n" + sharedContentIni;
                         else
