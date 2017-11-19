@@ -204,9 +204,20 @@ public class HttpsConnection {
                         FileOutputStream outputStream = new FileOutputStream(saveFilePath);
 
                         int bytesRead;
-                        byte[] buffer = new byte[4096];
+                        byte[] buffer = new byte[1024];
+                        int contentSize = httpsURLConnection.getContentLength();
+                        int downloadedFileSize = 0;
                         while ((bytesRead = inputStream.read(buffer)) != -1) {
                             outputStream.write(buffer, 0, bytesRead);
+                            downloadedFileSize += bytesRead;
+                            if( context instanceof MediaActivity) {
+                                final int currentProgress = (downloadedFileSize *100 )/ contentSize;
+                                ((MediaActivity) context).runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        listener.onUpdateProgress(currentProgress);
+                                    }
+                                });
+                            }
                         }
                         outputStream.close();
                         inputStream.close();
