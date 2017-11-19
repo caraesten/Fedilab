@@ -554,19 +554,19 @@ public class HttpsConnection {
     private void getSinceMaxId(){
         Map<String, List<String>> map = httpsURLConnection.getHeaderFields();
         for (Map.Entry<String, List<String>> entry : map.entrySet()) {
-
-            if( entry.toString().startsWith("Link: ")){
+            if( entry.toString().startsWith("Link")){
                 Pattern patternMaxId = Pattern.compile("max_id=([0-9]{1,}).*");
                 Matcher matcherMaxId = patternMaxId.matcher(entry.toString());
                 if (matcherMaxId.find()) {
                     max_id = matcherMaxId.group(1);
                 }
-                if( entry.toString().startsWith("Link: ")){
+                if( entry.toString().startsWith("Link")){
                     Pattern patternSinceId = Pattern.compile("since_id=([0-9]{1,}).*");
                     Matcher matcherSinceId = patternSinceId.matcher(entry.toString());
                     if (matcherSinceId.find()) {
                         since_id = matcherSinceId.group(1);
                     }
+
                 }
             }
         }
