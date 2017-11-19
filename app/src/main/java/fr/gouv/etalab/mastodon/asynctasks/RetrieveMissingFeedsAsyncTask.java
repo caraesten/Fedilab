@@ -49,30 +49,21 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        int loopInc = 0;
         API api = new API(this.contextReference.get());
         List<fr.gouv.etalab.mastodon.client.Entities.Status> tempStatus;
         APIResponse apiResponse = null;
-        while (loopInc < 10){
-
-            if( type == RetrieveFeedsAsyncTask.Type.HOME)
-                apiResponse = api.getHomeTimelineSinceId(since_id, 80);
-            else if( type == RetrieveFeedsAsyncTask.Type.LOCAL)
-                apiResponse = api.getPublicTimelineSinceId(true, since_id, 80);
-            else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC)
-                apiResponse = api.getPublicTimelineSinceId(false, since_id, 80);
-            if (apiResponse == null)
-                break;
-            String max_id = apiResponse.getMax_id();
-            since_id = apiResponse.getSince_id();
+        if( type == RetrieveFeedsAsyncTask.Type.HOME)
+            apiResponse = api.getHomeTimeline(since_id);
+        else if( type == RetrieveFeedsAsyncTask.Type.LOCAL)
+            apiResponse = api.getPublicTimelineSinceId(true, since_id);
+        else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC)
+            apiResponse = api.getPublicTimelineSinceId(false, since_id);
+        if (apiResponse != null) {
             tempStatus = apiResponse.getStatuses();
-            if( statuses != null && tempStatus != null)
+            if( tempStatus != null)
                 statuses.addAll(0, tempStatus);
-            loopInc++;
-            if( tempStatus == null || max_id == null || max_id.equals(since_id) || tempStatus.size() == 0)
-                break;
         }
-        if( type == RetrieveFeedsAsyncTask.Type.HOME && statuses != null && statuses.size() > 0) {
+        if (type == RetrieveFeedsAsyncTask.Type.HOME && statuses.size() > 0) {
             MainActivity.lastHomeId = statuses.get(0).getId();
         }
         return null;

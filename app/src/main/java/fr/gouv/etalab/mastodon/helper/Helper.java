@@ -85,7 +85,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.loopj.android.http.BuildConfig;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -123,6 +122,8 @@ import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import fr.gouv.etalab.mastodon.BuildConfig;
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.LoginActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
@@ -140,7 +141,6 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.CustomEmojiDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
-import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 
@@ -215,6 +215,7 @@ public class Helper {
     public static final String SET_SHOW_BOOSTS = "set_show_boost";
     public static final String SET_SHOW_REPLIES = "set_show_replies";
     public static final String INSTANCE_VERSION = "instance_version";
+    public static final String SET_LIVE_NOTIFICATIONS = "set_show_replies";
 
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
@@ -297,6 +298,13 @@ public class Helper {
         STATUS,
         CW,
         SIMPLE
+    }
+    //Event Type
+    public enum EventStreaming{
+        UPDATE,
+        NOTIFICATION,
+        DELETE,
+        NONE
     }
 
     private static boolean isPerformingSearch = false;
@@ -1160,11 +1168,13 @@ public class Helper {
      * Click on tag => HashTagActivity
      * @param context Context
      * @param fullContent String, should be the st
-     * @param mentions List<Mention>
+     * @param status Status
      * @return TextView
      */
     @SuppressWarnings("SameParameterValue")
-    public static SpannableString clickableElements(final Context context, String fullContent, List<Mention> mentions, final List<Emojis> emojis, final int position, boolean useHTML, final OnRetrieveEmojiInterface listener) {
+    public static SpannableString clickableElements(final Context context, String fullContent, final Status status, boolean useHTML, final OnRetrieveEmojiInterface listener) {
+        List<Mention> mentions = status.getReblog() != null ? status.getReblog().getMentions() : status.getMentions();
+        final List<Emojis> emojis = status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis();
         final SpannableString spannableString;
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         if( useHTML) {
@@ -1176,6 +1186,8 @@ public class Helper {
         }else{
             spannableString = new SpannableString(fullContent);
         }
+        String instance = getLiveInstance(context);
+
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
         if( embedded_browser){
@@ -1214,49 +1226,53 @@ public class Helper {
 
         if( emojis != null && emojis.size() > 0 ) {
             final int[] i = {0};
-            int emojiToSearch = 0;
-            for (final Emojis emoji : emojis) {
-                final String targetedEmoji = ":" + emoji.getShortcode() + ":";
-                for(int startPosition = -1 ; (startPosition = spannableString.toString().indexOf(targetedEmoji, startPosition + 1)) != -1 ; startPosition++){
-                    emojiToSearch++;
-                }
-            }
+
             ImageLoader imageLoader;
             DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                     .cacheOnDisk(true).resetViewBeforeLoading(true).build();
             imageLoader = ImageLoader.getInstance();
             for (final Emojis emoji : emojis) {
-                storeEmoji(context, db, emoji);
-                final String targetedEmoji = ":" + emoji.getShortcode() + ":";
-                if (spannableString.toString().contains(targetedEmoji)) {
-                    //emojis can be used several times so we have to loop
-                    for(int startPosition = -1 ; (startPosition = spannableString.toString().indexOf(targetedEmoji, startPosition + 1)) != -1 ; startPosition++){
-                        final int endPosition = startPosition + targetedEmoji.length();
-                        final int finalStartPosition = startPosition;
-                        NonViewAware imageAware = new NonViewAware(new ImageSize(50, 50), ViewScaleType.CROP);
-                        final int finalEmojiToSearch = emojiToSearch;
-                        imageLoader.displayImage(emoji.getUrl(), imageAware, options, new SimpleImageLoadingListener() {
-                            @Override
-                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                                super.onLoadingComplete(imageUri, view, loadedImage);
+                boolean sameInstance;
+                if( instance != null) {
+                    if (status.getReblog() == null)
+                        sameInstance = status.getUri().contains(instance);
+                    else
+                        sameInstance = status.getReblog().getUri().contains(instance);
+                    if (sameInstance)
+                        storeEmoji(context, db, emoji);
+                }
+                NonViewAware imageAware = new NonViewAware(new ImageSize(50, 50), ViewScaleType.CROP);
+                imageLoader.displayImage(emoji.getUrl(), imageAware, options, new SimpleImageLoadingListener() {
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        super.onLoadingComplete(imageUri, view, loadedImage);
+                        final String targetedEmoji = ":" + emoji.getShortcode() + ":";
+                        if (spannableString.toString().contains(targetedEmoji)) {
+                            //emojis can be used several times so we have to loop
+                            for (int startPosition = -1; (startPosition = spannableString.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                final int endPosition = startPosition + targetedEmoji.length();
                                 spannableString.setSpan(
                                         new ImageSpan(context,
-                                                Bitmap.createScaledBitmap(loadedImage, (int)Helper.convertDpToPixel(20, context),
-                                                        (int)Helper.convertDpToPixel(20, context), false)), finalStartPosition,
+                                                Bitmap.createScaledBitmap(loadedImage, (int) Helper.convertDpToPixel(20, context),
+                                                        (int) Helper.convertDpToPixel(20, context), false)), startPosition,
                                         endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-                                i[0]++;
-                                if( i[0] == finalEmojiToSearch)
-                                    listener.onRetrieveEmoji(position, spannableString, false);
                             }
-                            @Override
-                            public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason) {
-                                i[0]++;
-                            }
-                        });
+                        }
+                        i[0]++;
+                        if( i[0] ==  (emojis.size()))
+                            listener.onRetrieveEmoji(status, spannableString, false);
                     }
-                }
-
+                    @Override
+                    public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason) {
+                        i[0]++;
+                        if( i[0] ==  (emojis.size()))
+                            listener.onRetrieveEmoji(status, spannableString, false);
+                    }
+                });
             }
+
+
+
         }
 
         //Deals with mention to make them clickable
@@ -1270,19 +1286,19 @@ public class Helper {
                     for(int startPosition = -1 ; (startPosition = spannableString.toString().indexOf(targetedAccount, startPosition + 1)) != -1 ; startPosition++){
                         int endPosition = startPosition + targetedAccount.length();
                         spannableString.setSpan(new ClickableSpan() {
-                                @Override
-                                public void onClick(View textView) {
-                                    Intent intent = new Intent(context, ShowAccountActivity.class);
-                                    Bundle b = new Bundle();
-                                    b.putString("accountId", mention.getId());
-                                    intent.putExtras(b);
-                                    context.startActivity(intent);
-                                }
-                                @Override
-                                public void updateDrawState(TextPaint ds) {
-                                    super.updateDrawState(ds);
-                                }
-                            },
+                                                    @Override
+                                                    public void onClick(View textView) {
+                                                        Intent intent = new Intent(context, ShowAccountActivity.class);
+                                                        Bundle b = new Bundle();
+                                                        b.putString("accountId", mention.getId());
+                                                        intent.putExtras(b);
+                                                        context.startActivity(intent);
+                                                    }
+                                                    @Override
+                                                    public void updateDrawState(TextPaint ds) {
+                                                        super.updateDrawState(ds);
+                                                    }
+                                                },
                                 startPosition, endPosition,
                                 Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }
@@ -1414,7 +1430,7 @@ public class Helper {
                                 try {
                                     String[] val = search.split("@");
                                     if( val.length > 0 ) {
-                                        String username, instance;
+                                        String username;
                                         if( val.length == 2){
                                             username = val[1];
                                             Pattern urlAccountPattern = Pattern.compile(
@@ -1761,6 +1777,15 @@ public class Helper {
         if( notification_delete != null)
             notification_delete.setVisibility(notification_delete_v);
         return returnedBitmap;
+    }
+
+    public static Bitmap resizeImage(Bitmap originalPicture,  float maxImageSize) {
+        float ratio = Math.min(
+                maxImageSize / originalPicture.getWidth(),
+                maxImageSize / originalPicture.getHeight());
+        int width = Math.round(ratio * originalPicture.getWidth());
+        int height = Math.round(ratio * originalPicture.getHeight());
+        return Bitmap.createScaledBitmap(originalPicture, width, height, false);
     }
 
 }

@@ -44,7 +44,6 @@ import javax.net.ssl.X509TrustManager;
 public class PatchBaseImageDownloader extends BaseImageDownloader {
 
     private SSLSocketFactory sf;
-
     public PatchBaseImageDownloader(Context context) {
         super(context);
 
@@ -68,7 +67,7 @@ public class PatchBaseImageDownloader extends BaseImageDownloader {
         }
         try {
             return new ContentLengthInputStream(new BufferedInputStream(conn.getInputStream(), BUFFER_SIZE), conn.getContentLength());
-        }catch (FileNotFoundException e){
+        }catch (Exception e){
             return null;
         }
 

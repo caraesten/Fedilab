@@ -17,10 +17,10 @@ public class Version implements Comparable<Version> {
 
     public Version(String version) {
         if(version == null)
-            throw new IllegalArgumentException("Version can not be null");
+            version = "2.0";
         version = version.replaceAll("[^\\d.]", "");
         if(!version.matches("[0-9]+(\\.[0-9]+)*"))
-            throw new IllegalArgumentException("Invalid version format");
+            version = "2.0";
         this.version = version;
     }
 

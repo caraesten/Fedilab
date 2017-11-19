@@ -33,17 +33,16 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import cz.msebera.android.httpclient.Header;
+import java.util.HashMap;
+
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
-import fr.gouv.etalab.mastodon.client.OauthClient;
+import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.helper.Helper;
-import mastodon.etalab.gouv.fr.mastodon.R;
+import fr.gouv.etalab.mastodon.R;
 
 /**
  * Created by Thomas on 24/04/2017.
@@ -98,6 +97,7 @@ public class WebviewConnectActivity extends AppCompatActivity {
             public boolean shouldOverrideUrlLoading(WebView view, String url){
                 super.shouldOverrideUrlLoading(view,url);
                 if( url.contains(Helper.REDIRECT_CONTENT_WEB)){
+
                     String val[] = url.split("code=");
                     if (val.length< 2){
                         Toast.makeText(getApplicationContext(), R.string.toast_code_error, Toast.LENGTH_LONG).show();
@@ -108,40 +108,38 @@ public class WebviewConnectActivity extends AppCompatActivity {
                     }
                     String code = val[1];
 
-                    String action = "/oauth/token";
-                    RequestParams parameters = new RequestParams();
-                    parameters.add(Helper.CLIENT_ID, clientId);
-                    parameters.add(Helper.CLIENT_SECRET, clientSecret);
-                    parameters.add(Helper.REDIRECT_URI,Helper.REDIRECT_CONTENT_WEB);
-                    parameters.add("grant_type", "authorization_code");
-                    parameters.add("code",code);
-                    new OauthClient(instance).post(action, parameters, new AsyncHttpResponseHandler() {
+                    final String action = "/oauth/token";
+                    final HashMap<String, String> parameters = new HashMap<>();
+                    parameters.put(Helper.CLIENT_ID, clientId);
+                    parameters.put(Helper.CLIENT_SECRET, clientSecret);
+                    parameters.put(Helper.REDIRECT_URI,Helper.REDIRECT_CONTENT_WEB);
+                    parameters.put("grant_type", "authorization_code");
+                    parameters.put("code",code);
+
+                    new Thread(new Runnable(){
                         @Override
-                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                            String response = new String(responseBody);
-                            JSONObject resobj;
+                        public void run() {
                             try {
-                                resobj = new JSONObject(response);
-                                String token = resobj.get("access_token").toString();
-                                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedpreferences.edit();
-                                editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);
-                                editor.apply();
-                                //Update the account with the token;
-                                new UpdateAccountInfoAsyncTask(WebviewConnectActivity.this, token, instance).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            } catch (JSONException e) {
+                                final String response = new HttpsConnection().post("https://" + instance + action, 30, parameters, null);
+                                JSONObject resobj;
+                                try {
+                                    resobj = new JSONObject(response);
+                                    String token = resobj.get("access_token").toString();
+                                    SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                    editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);
+                                    editor.apply();
+                                    //Update the account with the token;
+                                    new UpdateAccountInfoAsyncTask(WebviewConnectActivity.this, token, instance).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            } catch (HttpsConnection.HttpsConnectionException e) {
+                                e.printStackTrace();
+                            }catch (Exception e) {
                                 e.printStackTrace();
                             }
-
-                        }
-
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                            error.printStackTrace();
-                        }
-                    });
-
-
+                        }}).start();
                     return true;
                 }
                 return false;

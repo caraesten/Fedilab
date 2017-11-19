@@ -40,13 +40,9 @@ import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
-
 import com.github.chrisbanes.photoview.OnMatrixChangedListener;
 import com.github.chrisbanes.photoview.PhotoView;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -54,23 +50,18 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
-
 import java.io.File;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
 import java.util.ArrayList;
-
-import cz.msebera.android.httpclient.Header;
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
-import fr.gouv.etalab.mastodon.client.MastalabSSLSocketFactory;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
-import mastodon.etalab.gouv.fr.mastodon.R;
+import fr.gouv.etalab.mastodon.interfaces.OnDownloadInterface;
+
 
 import static fr.gouv.etalab.mastodon.helper.Helper.EXTERNAL_STORAGE_REQUEST_CODE;
-import static fr.gouv.etalab.mastodon.helper.Helper.USER_AGENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
@@ -79,7 +70,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Media Activity
  */
 
-public class MediaActivity extends AppCompatActivity  {
+public class MediaActivity extends AppCompatActivity implements OnDownloadInterface {
 
 
     private RelativeLayout loader;
@@ -100,6 +91,8 @@ public class MediaActivity extends AppCompatActivity  {
     private File fileVideo;
     private TextView progress;
     private boolean canSwipe;
+
+
 
 
     private enum actionSwipe{
@@ -325,9 +318,10 @@ public class MediaActivity extends AppCompatActivity  {
             url = attachment.getRemote_url();
             attachment.setType(type);
         }
+        final String finalUrl = url;
         switch (type){
             case "image":
-                final String finalUrl = url;
+
                 imageLoader.displayImage(url, imageView, options, new SimpleImageLoadingListener(){
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
@@ -347,81 +341,29 @@ public class MediaActivity extends AppCompatActivity  {
             case "video":
             case "gifv":
 
-                try {
-                    File file = new File(getCacheDir() + "/" + Helper.md5(url)+".mp4");
-                    if(file.exists()) {
-                        Uri uri = Uri.parse(file.getAbsolutePath());
-                        videoView.setVisibility(View.VISIBLE);
-                        videoView.setVideoURI(uri);
-                        videoView.start();
-                        MediaController mc = new MediaController(MediaActivity.this);
-                        videoView.setMediaController(mc);
-                        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                            @Override
-                            public void onPrepared(MediaPlayer mp) {
-                                loader.setVisibility(View.GONE);
-                                mp.start();
-                                mp.setLooping(true);
-                            }
-                        });
-                        videoView.setVisibility(View.VISIBLE);
-                        fileVideo = file;
-                        downloadedImage = null;
-                    }else{
-                        progress.setText("0 %");
-                        progress.setVisibility(View.VISIBLE);
-                        AsyncHttpClient client = new AsyncHttpClient();
-                        MastalabSSLSocketFactory mastalabSSLSocketFactory = new MastalabSSLSocketFactory(MastalabSSLSocketFactory.getKeystore());
-                        mastalabSSLSocketFactory.setHostnameVerifier(MastalabSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-                        client.setSSLSocketFactory(mastalabSSLSocketFactory);
-                        client.setUserAgent(USER_AGENT);
-                        client.setConnectTimeout(120000); //120s timeout
-                        final String finalUrl1 = url;
-                        client.get(url, null, new FileAsyncHttpResponseHandler(MediaActivity.this) {
-                            @Override
-                            public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
-                                progress.setVisibility(View.GONE);
-                            }
-
-                            @Override
-                            public void onProgress(long bytesWritten, long totalSize) {
-                                long progressPercentage = (long)100*bytesWritten/totalSize;
-                                progress.setText(String.format("%s%%",String.valueOf(progressPercentage)));
-                            }
-
-                            @Override
-                            public void onSuccess(int statusCode, Header[] headers, File response) {
-                                File dir = getCacheDir();
-                                File from = new File(dir, response.getName());
-                                File to = new File(dir, Helper.md5(finalUrl1) + ".mp4");
-                                if (from.exists())
-                                    //noinspection ResultOfMethodCallIgnored
-                                    from.renameTo(to);
-                                fileVideo = to;
-                                downloadedImage = null;
-                                progress.setVisibility(View.GONE);
-                                Uri uri = Uri.parse(to.getAbsolutePath());
-                                videoView.setVisibility(View.VISIBLE);
-                                videoView.setVideoURI(uri);
-                                videoView.start();
-                                MediaController mc = new MediaController(MediaActivity.this);
-                                videoView.setMediaController(mc);
-                                videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                                    @Override
-                                    public void onPrepared(MediaPlayer mp) {
-                                        loader.setVisibility(View.GONE);
-                                        mp.start();
-                                        mp.setLooping(true);
-                                    }
-                                });
-                                videoView.setVisibility(View.VISIBLE);
-                            }
-                        });
-                    }
-                } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException | UnrecoverableKeyException e) {
-                    e.printStackTrace();
-                    progress.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(),R.string.toast_error,Toast.LENGTH_LONG).show();
+                File file = new File(getCacheDir() + "/" + Helper.md5(url)+".mp4");
+                if(file.exists()) {
+                    Uri uri = Uri.parse(file.getAbsolutePath());
+                    videoView.setVisibility(View.VISIBLE);
+                    videoView.setVideoURI(uri);
+                    videoView.start();
+                    MediaController mc = new MediaController(MediaActivity.this);
+                    videoView.setMediaController(mc);
+                    videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mp) {
+                            loader.setVisibility(View.GONE);
+                            mp.start();
+                            mp.setLooping(true);
+                        }
+                    });
+                    videoView.setVisibility(View.VISIBLE);
+                    fileVideo = file;
+                    downloadedImage = null;
+                }else{
+                    progress.setText("0 %");
+                    progress.setVisibility(View.VISIBLE);
+                    new HttpsConnection(MediaActivity.this).download(finalUrl, MediaActivity.this );
                 }
                 break;
         }
@@ -439,5 +381,29 @@ public class MediaActivity extends AppCompatActivity  {
         }
     }
 
+    @Override
+    public void onDownloaded(String path, Error error) {
+        progress.setVisibility(View.GONE);
+        videoView.setVisibility(View.VISIBLE);
+        videoView.setVideoURI(Uri.parse(path));
+        videoView.start();
+        MediaController mc = new MediaController(MediaActivity.this);
+        videoView.setMediaController(mc);
+        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                loader.setVisibility(View.GONE);
+                mp.start();
+                mp.setLooping(true);
+            }
+        });
+        videoView.setVisibility(View.VISIBLE);
+    }
+
+
+    @Override
+    public void onUpdateProgress(int progressPercentage) {
+        progress.setText(String.format("%s%%",String.valueOf(progressPercentage)));
+    }
 
 }

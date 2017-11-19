@@ -16,11 +16,9 @@ package fr.gouv.etalab.mastodon.fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -40,7 +38,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveManyRelationshipsInterface;
-import mastodon.etalab.gouv.fr.mastodon.R;
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.drawers.AccountsListAdapter;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountsInterface;
@@ -65,30 +63,19 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
     private String targetedId;
     private boolean swiped;
     private RecyclerView lv_accounts;
-    boolean hideHeader;
+
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_accounts, container, false);
 
         context = getContext();
-        boolean comesFromSearch = false;
-        hideHeader = false;
         Bundle bundle = this.getArguments();
         accounts = new ArrayList<>();
         if (bundle != null) {
             type = (RetrieveAccountsAsyncTask.Type) bundle.get("type");
             targetedId = bundle.getString("targetedId", null);
-            hideHeader = bundle.getBoolean("hideHeader", false);
-            if( bundle.containsKey("accounts")){
-                ArrayList<Parcelable> accountsReceived = bundle.getParcelableArrayList("accounts");
-                assert accountsReceived != null;
-                for(Parcelable account: accountsReceived){
-                    accounts.add((Account)account);
-                }
-                comesFromSearch = true;
-            }
         }
         max_id = null;
         firstLoad = true;
@@ -106,64 +93,54 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         accountsListAdapter = new AccountsListAdapter(context, type, targetedId, this.accounts);
         lv_accounts.setAdapter(accountsListAdapter);
 
-        if( !comesFromSearch) {
-            //Hide account header when scrolling for ShowAccountActivity
-            if (hideHeader && Build.VERSION.SDK_INT >= 21)
-                ViewCompat.setNestedScrollingEnabled(lv_accounts, true);
-            final LinearLayoutManager mLayoutManager;
-            mLayoutManager = new LinearLayoutManager(context);
-            lv_accounts.setLayoutManager(mLayoutManager);
-            lv_accounts.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy)
-                {
-                    if(dy > 0) {
-                        int visibleItemCount = mLayoutManager.getChildCount();
-                        int totalItemCount = mLayoutManager.getItemCount();
-                        int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
-                        if (firstVisibleItem + visibleItemCount == totalItemCount) {
-                            if (!flag_loading) {
-                                flag_loading = true;
-                                if (type != RetrieveAccountsAsyncTask.Type.FOLLOWERS && type != RetrieveAccountsAsyncTask.Type.FOLLOWING)
-                                    asyncTask = new RetrieveAccountsAsyncTask(context, type, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                else
-                                    asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                nextElementLoader.setVisibility(View.VISIBLE);
-                            }
-                        } else {
-                            nextElementLoader.setVisibility(View.GONE);
+        final LinearLayoutManager mLayoutManager;
+        mLayoutManager = new LinearLayoutManager(context);
+        lv_accounts.setLayoutManager(mLayoutManager);
+        lv_accounts.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                if(dy > 0) {
+                    int visibleItemCount = mLayoutManager.getChildCount();
+                    int totalItemCount = mLayoutManager.getItemCount();
+                    int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+                    if (firstVisibleItem + visibleItemCount == totalItemCount) {
+                        if (!flag_loading) {
+                            flag_loading = true;
+                            if (type != RetrieveAccountsAsyncTask.Type.FOLLOWERS && type != RetrieveAccountsAsyncTask.Type.FOLLOWING)
+                                asyncTask = new RetrieveAccountsAsyncTask(context, type, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            else
+                                asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            nextElementLoader.setVisibility(View.VISIBLE);
                         }
+                    } else {
+                        nextElementLoader.setVisibility(View.GONE);
                     }
                 }
-            });
-            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    max_id = null;
-                    accounts = new ArrayList<>();
-                    firstLoad = true;
-                    flag_loading = true;
-                    swiped = true;
-                    if (type != RetrieveAccountsAsyncTask.Type.FOLLOWERS && type != RetrieveAccountsAsyncTask.Type.FOLLOWING)
-                        asyncTask = new RetrieveAccountsAsyncTask(context, type, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    else
-                        asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }
-            });
-            swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
-                    R.color.mastodonC2,
-                    R.color.mastodonC3);
+            }
+        });
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                max_id = null;
+                accounts = new ArrayList<>();
+                firstLoad = true;
+                flag_loading = true;
+                swiped = true;
+                if (type != RetrieveAccountsAsyncTask.Type.FOLLOWERS && type != RetrieveAccountsAsyncTask.Type.FOLLOWING)
+                    asyncTask = new RetrieveAccountsAsyncTask(context, type, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                else
+                    asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        });
+        swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
+                R.color.mastodonC2,
+                R.color.mastodonC3);
 
-            if (type != RetrieveAccountsAsyncTask.Type.FOLLOWERS && type != RetrieveAccountsAsyncTask.Type.FOLLOWING)
-                asyncTask = new RetrieveAccountsAsyncTask(context, type, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            else
-                asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }else {
-            accountsListAdapter.notifyDataSetChanged();
-            mainLoader.setVisibility(View.GONE);
-            nextElementLoader.setVisibility(View.GONE);
-            if( accounts == null || accounts.size() == 0 )
-                textviewNoAction.setVisibility(View.VISIBLE);
-        }
+        if (type != RetrieveAccountsAsyncTask.Type.FOLLOWERS && type != RetrieveAccountsAsyncTask.Type.FOLLOWING)
+            asyncTask = new RetrieveAccountsAsyncTask(context, type, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        else
+            asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
         return rootView;
     }
 
@@ -224,7 +201,6 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         }
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
-
         if( type != RetrieveAccountsAsyncTask.Type.BLOCKED && type != RetrieveAccountsAsyncTask.Type.MUTED)
             new RetrieveManyRelationshipsAsyncTask(context, accounts,DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }

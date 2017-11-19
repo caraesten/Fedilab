@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.fragments;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.Context;
@@ -51,7 +52,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
-import mastodon.etalab.gouv.fr.mastodon.R;
+import fr.gouv.etalab.mastodon.R;
 
 import static android.app.Activity.RESULT_OK;
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_THEME_INTENT;
@@ -72,10 +73,11 @@ public class SettingsFragment extends Fragment {
     int count2 = 0;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         final View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
         context = getContext();
+        assert context != null;
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -206,10 +208,29 @@ public class SettingsFragment extends Fragment {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_DISPLAY_LOCAL, set_display_local.isChecked());
                 editor.apply();
-                getActivity().recreate();
+                if( getActivity() != null)
+                    getActivity().recreate();
                 Intent intent = new Intent(context, MainActivity.class);
                 intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
                 startActivity(intent);
+            }
+        });
+
+        boolean livenotif = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
+        final CheckBox set_live_notif = rootView.findViewById(R.id.set_live_notify);
+        set_live_notif.setChecked(livenotif);
+        set_live_notif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, set_live_notif.isChecked());
+                editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING, set_live_notif.isChecked());
+                editor.apply();
+                if( set_live_notif.isChecked() ){
+                    try {
+                        ((MainActivity) context).startSreaming(true);
+                    }catch (Exception ignored){ignored.printStackTrace();}
+                }
             }
         });
 
@@ -224,7 +245,8 @@ public class SettingsFragment extends Fragment {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_DISPLAY_GLOBAL, set_display_global.isChecked());
                 editor.apply();
-                getActivity().recreate();
+                if( getActivity() != null)
+                    getActivity().recreate();
                 Intent intent = new Intent(context, MainActivity.class);
                 intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
                 startActivity(intent);
@@ -311,9 +333,11 @@ public class SettingsFragment extends Fragment {
                 editor.putInt(Helper.SET_THEME, isChecked?Helper.THEME_DARK:Helper.THEME_LIGHT);
                 editor.apply();
                 if( isChecked){
-                    getActivity().setTheme(R.style.AppThemeDark);
+                    if( getActivity() != null)
+                        getActivity().setTheme(R.style.AppThemeDark);
                 }else {
-                    getActivity().setTheme(R.style.AppTheme);
+                    if( getActivity() != null)
+                        getActivity().setTheme(R.style.AppTheme);
                 }
                 getActivity().recreate();
                 Intent intent = new Intent(context, MainActivity.class);
@@ -450,7 +474,7 @@ public class SettingsFragment extends Fragment {
         });
 
         final Spinner translation_layout_spinner = rootView.findViewById(R.id.translation_layout_spinner);
-        ArrayAdapter<CharSequence> adapterTrans = ArrayAdapter.createFromResource(getActivity(),
+        ArrayAdapter<CharSequence> adapterTrans = ArrayAdapter.createFromResource(getContext(),
                 R.array.settings_translation, android.R.layout.simple_spinner_item);
         translation_layout_spinner.setAdapter(adapterTrans);
 
@@ -483,7 +507,8 @@ public class SettingsFragment extends Fragment {
                             editor.apply();
                             break;
                     }
-                    getActivity().recreate();
+                    if( getActivity() != null)
+                        getActivity().recreate();
                     Intent intent = new Intent(context, MainActivity.class);
                     intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
                     startActivity(intent);

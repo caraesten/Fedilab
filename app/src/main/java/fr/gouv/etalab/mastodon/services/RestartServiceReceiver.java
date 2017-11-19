@@ -27,7 +27,9 @@ public class RestartServiceReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent  streamingServiceIntent = new Intent(context.getApplicationContext(), StreamingService.class);
-        context.startService(streamingServiceIntent);
+        try {
+            context.startService(streamingServiceIntent);
+        }catch (Exception ignored){}
     }
 
 }

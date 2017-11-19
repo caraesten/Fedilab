@@ -74,6 +74,7 @@ import java.util.Locale;
 import java.util.Stack;
 import java.util.regex.Matcher;
 
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveInstanceAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMetaDataAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
@@ -92,6 +93,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveInstanceInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMetaDataInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
+import fr.gouv.etalab.mastodon.services.LiveNotificationService;
 import fr.gouv.etalab.mastodon.services.StreamingService;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
@@ -99,7 +101,6 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.fragments.TabLayoutSettingsFragment;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
-import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_THEME_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_USER_INTENT;
@@ -144,6 +145,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
     public static String lastHomeId = null, lastNotificationId = null;
     boolean notif_follow, notif_add, notif_mention, notif_share, show_boosts, show_replies;
     private AppBarLayout appBar;
+    private static boolean activityPaused;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,7 +224,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
         changeDrawableColor(getApplicationContext(), R.drawable.ic_notifications,R.color.dark_text);
         changeDrawableColor(getApplicationContext(), R.drawable.ic_people,R.color.dark_text);
         changeDrawableColor(getApplicationContext(), R.drawable.ic_public,R.color.dark_text);
-
+        startSreaming(false);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
@@ -442,37 +444,35 @@ public abstract class BaseMainActivity extends AppCompatActivity
                     toot.setVisibility(View.VISIBLE);
                 else
                     toot.setVisibility(View.GONE);
-                Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
-                switch (tab.getPosition()){
-                    case 0:
-                        DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
-                        countNewStatus = 0;
-                        updateHomeCounter();
-                        if( displayStatusFragment != null )
+                if( viewPager.getAdapter() != null) {
+                    Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
+                    switch (tab.getPosition()) {
+                        case 0:
+                            DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
+                            countNewStatus = 0;
+                            updateHomeCounter();
                             displayStatusFragment.scrollToTop();
-                        break;
-                    case 2:
-                        if( display_local)
-                            updateTimeLine(RetrieveFeedsAsyncTask.Type.LOCAL,0);
-                        else if( display_global)
-                            updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC,0);
-                        displayStatusFragment = ((DisplayStatusFragment) fragment);
-                        if( displayStatusFragment != null )
+                            break;
+                        case 2:
+                            if (display_local)
+                                updateTimeLine(RetrieveFeedsAsyncTask.Type.LOCAL, 0);
+                            else if (display_global)
+                                updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC, 0);
+                            displayStatusFragment = ((DisplayStatusFragment) fragment);
                             displayStatusFragment.scrollToTop();
-                        break;
-                    case 3:
-                        displayStatusFragment = ((DisplayStatusFragment) fragment);
-                        if( displayStatusFragment != null )
+                            break;
+                        case 3:
+                            displayStatusFragment = ((DisplayStatusFragment) fragment);
                             displayStatusFragment.scrollToTop();
-                        updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC,0);
-                        break;
-                    case 1:
-                        DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
-                        countNewNotifications = 0;
-                        updateNotifCounter();
-                        if( displayNotificationsFragment != null )
+                            updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC, 0);
+                            break;
+                        case 1:
+                            DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
+                            countNewNotifications = 0;
+                            updateNotifCounter();
                             displayNotificationsFragment.scrollToTop();
-                        break;
+                            break;
+                    }
                 }
             }
         });
@@ -505,20 +505,20 @@ public abstract class BaseMainActivity extends AppCompatActivity
                     //Scroll to top when top bar is clicked (THEME_MENU only)
                 } else {
                     int pos = tabLayout.getSelectedTabPosition();
-                    Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, pos);
-                    switch (pos) {
-                        case 0:
-                        case 2:
-                        case 3:
-                            DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
-                            if (displayStatusFragment != null)
+                    if( viewPager.getAdapter() != null) {
+                        Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, pos);
+                        switch (pos) {
+                            case 0:
+                            case 2:
+                            case 3:
+                                DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
                                 displayStatusFragment.scrollToTop();
-                            break;
-                        case 1:
-                            DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
-                            if (displayNotificationsFragment != null)
+                                break;
+                            case 1:
+                                DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
                                 displayNotificationsFragment.scrollToTop();
-                            break;
+                                break;
+                        }
                     }
                 }
             }
@@ -616,7 +616,13 @@ public abstract class BaseMainActivity extends AppCompatActivity
 
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
-
+        if( account == null){
+            Helper.logout(getApplicationContext());
+            Intent myIntent = new Intent(BaseMainActivity.this, LoginActivity.class);
+            startActivity(myIntent);
+            finish();
+            return;
+        }
         //Image loader configuration
         imageLoader = ImageLoader.getInstance();
         File cacheDir = new File(getCacheDir(), getString(R.string.app_name));
@@ -1059,22 +1065,22 @@ public abstract class BaseMainActivity extends AppCompatActivity
             @Override
             public void onReceive(Context context, Intent intent) {
                 Bundle b = intent.getExtras();
-                StreamingService.EventStreaming eventStreaming = (StreamingService.EventStreaming) intent.getSerializableExtra("eventStreaming");
+                Helper.EventStreaming eventStreaming = (Helper.EventStreaming) intent.getSerializableExtra("eventStreaming");
                 assert b != null;
                 userIdService = b.getString("userIdService", null);
                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 if( userIdService != null && userIdService.equals(userId)) {
-                    if (eventStreaming == StreamingService.EventStreaming.NOTIFICATION) {
+                    if (eventStreaming == Helper.EventStreaming.NOTIFICATION) {
                         Notification notification = b.getParcelable("data");
                         if (notificationsFragment != null) {
                             notificationsFragment.refresh(notification);
                         }
-                    } else if (eventStreaming == StreamingService.EventStreaming.UPDATE) {
+                    } else if (eventStreaming == Helper.EventStreaming.UPDATE) {
                         Status status = b.getParcelable("data");
                         if (homeFragment != null) {
                             homeFragment.refresh(status);
                         }
-                    } else if (eventStreaming == StreamingService.EventStreaming.DELETE) {
+                    } else if (eventStreaming == Helper.EventStreaming.DELETE) {
                         //noinspection unused
                         String id = b.getString("id");
                         if (notificationsFragment != null) {
@@ -1091,8 +1097,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 }
             }
         };
-        streamingIntent = new Intent(this, StreamingService.class);
-        startService(streamingIntent);
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_federated_data, new IntentFilter(Helper.RECEIVE_FEDERATED_DATA));
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_local_data, new IntentFilter(Helper.RECEIVE_LOCAL_DATA));
@@ -1347,6 +1351,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
             return null;
         }
 
+        @NonNull
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
@@ -1452,9 +1457,28 @@ public abstract class BaseMainActivity extends AppCompatActivity
     }
 
     private static void activityResumed() {
+        activityPaused = false;
     }
 
     private static void activityPaused() {
+        activityPaused = true;
     }
 
+    public static boolean activityState(){
+        return activityPaused;
+    }
+
+
+    public void startSreaming(boolean restart){
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
+        boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
+        if( notify && liveNotifications) {
+            streamingIntent = new Intent(this, LiveNotificationService.class);
+            streamingIntent.putExtra("restart", restart);
+        }else {
+            streamingIntent = new Intent(this, StreamingService.class);
+        }
+        startService(streamingIntent);
+    }
 }

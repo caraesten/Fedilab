@@ -1,4 +1,3 @@
-package fr.gouv.etalab.mastodon.services;
 /* Copyright 2017 Thomas Schneider
  *
  * This file is a part of Mastalab
@@ -13,23 +12,15 @@ package fr.gouv.etalab.mastodon.services;
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
+package fr.gouv.etalab.mastodon.interfaces;
+
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 
 /**
- * Created by Thomas on 26/09/2017.
- * BroadcastReceiver for restarting the service for listening federated timeline
+ * Created by Thomas on 17/11/2017.
+ * Interface when a media has been downloaded
  */
-
-public class RestartFederatedServiceReceiver extends BroadcastReceiver {
-
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        Intent  streamingServiceIntent = new Intent(context.getApplicationContext(), StreamingFederatedTimelineService.class);
-        try {
-            context.startService(streamingServiceIntent);
-        }catch (Exception ignored){}
-    }
-
+public interface OnDownloadInterface {
+    void onDownloaded(String saveFilePath, Error error);
+    void onUpdateProgress(int progress);
 }

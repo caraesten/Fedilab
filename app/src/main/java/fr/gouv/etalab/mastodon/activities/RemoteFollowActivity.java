@@ -44,8 +44,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -60,9 +58,10 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import cz.msebera.android.httpclient.Header;
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRelationshipAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteAccountsAsyncTask;
@@ -71,7 +70,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
-import fr.gouv.etalab.mastodon.client.KinrarClient;
+import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.drawers.AccountSearchDevAdapter;
 import fr.gouv.etalab.mastodon.helper.ExpandableHeightListView;
@@ -81,7 +80,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRelationshipInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
-import mastodon.etalab.gouv.fr.mastodon.R;
+
 
 
 /**
@@ -194,43 +193,52 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
             @Override
             public void afterTextChanged(Editable s) {
                 if( s.length() > 2 && !isLoadingInstance){
-                    String action = "/instances/search";
-                    RequestParams parameters = new RequestParams();
-                    parameters.add("q", s.toString().trim());
-                    parameters.add("count", String.valueOf(10));
-                    parameters.add("name", String.valueOf(true));
+                    final String action = "/instances/search";
+                    final HashMap<String, String> parameters = new HashMap<>();
+                    parameters.put("q", s.toString().trim());
+                    parameters.put("count", String.valueOf(5));
+                    parameters.put("name", String.valueOf(true));
                     isLoadingInstance = true;
-                    new KinrarClient().get(action, parameters, new AsyncHttpResponseHandler() {
+                    new Thread(new Runnable(){
                         @Override
-                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                            isLoadingInstance = false;
-                            String response = new String(responseBody);
-                            String[] instances;
+                        public void run() {
                             try {
-                                JSONObject jsonObject = new JSONObject(response);
-                                JSONArray jsonArray = jsonObject.getJSONArray("instances");
-                                if( jsonArray != null){
-                                    instances = new String[jsonArray.length()];
-                                    for(int i = 0 ; i < jsonArray.length() ; i++){
-                                        instances[i] = jsonArray.getJSONObject(i).get("name").toString();
-                                    }
-                                }else {
-                                    instances = new String[]{};
-                                }
-                                rf_instance.setAdapter(null);
-                                ArrayAdapter<String> adapter =
-                                        new ArrayAdapter<>(RemoteFollowActivity.this, android.R.layout.simple_list_item_1, instances);
-                                rf_instance.setAdapter(adapter);
-                                if( rf_instance.hasFocus() && !RemoteFollowActivity.this.isFinishing())
-                                    rf_instance.showDropDown();
+                                final String response = new HttpsConnection().get("https://instances.social/api/1.0" + action, 30, parameters, Helper.THEKINRAR_SECRET_TOKEN );
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        isLoadingInstance = false;
+                                        String[] instances;
+                                        try {
+                                            JSONObject jsonObject = new JSONObject(response);
+                                            JSONArray jsonArray = jsonObject.getJSONArray("instances");
+                                            if( jsonArray != null){
+                                                instances = new String[jsonArray.length()];
+                                                for(int i = 0 ; i < jsonArray.length() ; i++){
+                                                    instances[i] = jsonArray.getJSONObject(i).get("name").toString();
+                                                }
+                                            }else {
+                                                instances = new String[]{};
+                                            }
+                                            rf_instance.setAdapter(null);
+                                            ArrayAdapter<String> adapter =
+                                                    new ArrayAdapter<>(RemoteFollowActivity.this, android.R.layout.simple_list_item_1, instances);
+                                            rf_instance.setAdapter(adapter);
+                                            if( rf_instance.hasFocus() && !RemoteFollowActivity.this.isFinishing())
+                                                rf_instance.showDropDown();
 
-                            } catch (JSONException ignored) {isLoadingInstance = false;}
+                                        } catch (JSONException ignored) {isLoadingInstance = false;}
+                                    }
+                                });
+
+                            } catch (HttpsConnection.HttpsConnectionException e) {
+                                isLoadingInstance = false;
+                                e.printStackTrace();
+                            } catch (Exception e) {
+                                isLoadingInstance = false;
+                                e.printStackTrace();
+                            }
                         }
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                            isLoadingInstance = false;
-                        }
-                    });
+                    }).start();
                 }
             }
         });

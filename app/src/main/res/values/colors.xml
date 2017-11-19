@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources tools:ignore="PrivateResource" xmlns:tools="http://schemas.android.com/tools">
-
-    <!-- LIGHT -->
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#2196F3</color>
-    <!-- DARK -->
-    <color name="colorPrimaryD">#616161</color>
-    <color name="colorPrimaryDarkD">#212121</color>
-    <color name="colorAccentD">#4db6ac</color>
+    
 
     <!-- Header Profile-->
     <color name="header1">#0288D1</color>

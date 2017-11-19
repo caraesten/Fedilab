@@ -44,7 +44,7 @@ import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
-import mastodon.etalab.gouv.fr.mastodon.R;
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveNotificationsAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
@@ -167,9 +167,9 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                         if( notificationUrl == null){
                             notificationUrl = notification.getAccount().getAvatar();
                             if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
-                                title = String.format("@%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getContext().getString(R.string.notif_mention));
+                                title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getContext().getString(R.string.notif_mention));
                             else
-                                title = String.format("@%s %s", notification.getAccount().getUsername(),getContext().getString(R.string.notif_mention));
+                                title = String.format("@%s %s", notification.getAccount().getAcct(),getContext().getString(R.string.notif_mention));
                         }
                     }
                     break;
@@ -179,9 +179,9 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                         if( notificationUrl == null){
                             notificationUrl = notification.getAccount().getAvatar();
                             if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
-                                title = String.format("@%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getContext().getString(R.string.notif_reblog));
+                                title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getContext().getString(R.string.notif_reblog));
                             else
-                                title = String.format("@%s %s", notification.getAccount().getUsername(),getContext().getString(R.string.notif_reblog));
+                                title = String.format("@%s %s", notification.getAccount().getAcct(),getContext().getString(R.string.notif_reblog));
 
                         }
                     }
@@ -192,9 +192,9 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                         if( notificationUrl == null){
                             notificationUrl = notification.getAccount().getAvatar();
                             if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
-                                title = String.format("@%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getContext().getString(R.string.notif_favourite));
+                                title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getContext().getString(R.string.notif_favourite));
                             else
-                                title = String.format("@%s %s", notification.getAccount().getUsername(),getContext().getString(R.string.notif_favourite));
+                                title = String.format("@%s %s", notification.getAccount().getAcct(),getContext().getString(R.string.notif_favourite));
                         }
                     }
                     break;
@@ -204,9 +204,9 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                         if( notificationUrl == null){
                             notificationUrl = notification.getAccount().getAvatar();
                             if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
-                                title = String.format("@%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getContext().getString(R.string.notif_follow));
+                                title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getContext().getString(R.string.notif_follow));
                             else
-                                title = String.format("@%s %s", notification.getAccount().getUsername(),getContext().getString(R.string.notif_follow));
+                                title = String.format("@%s %s", notification.getAccount().getAcct(),getContext().getString(R.string.notif_follow));
                         }
                     }
                     break;

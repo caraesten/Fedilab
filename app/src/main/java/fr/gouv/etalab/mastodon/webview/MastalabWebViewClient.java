@@ -25,7 +25,7 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import fr.gouv.etalab.mastodon.activities.WebviewActivity;
-import mastodon.etalab.gouv.fr.mastodon.R;
+import fr.gouv.etalab.mastodon.R;
 
 /**
  * Created by Thomas on 25/06/2017.

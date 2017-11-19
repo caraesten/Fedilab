@@ -26,7 +26,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 @SuppressWarnings("WeakerAccess")
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 4;
+    public static final int DB_VERSION = 6;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -112,6 +112,7 @@ public class Sqlite extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_USER_ACCOUNT);
         db.execSQL(CREATE_TABLE_STATUSES_STORED);
+        db.execSQL(CREATE_TABLE_CUSTOM_EMOJI);
     }
 
     @Override
@@ -124,6 +125,13 @@ public class Sqlite extends SQLiteOpenHelper {
                 db.execSQL(CREATE_TABLE_STATUSES_STORED);
             case 3:
                 db.execSQL(CREATE_TABLE_CUSTOM_EMOJI);
+            case 4:
+                db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_CUSTOM_EMOJI + " ("
+                        + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                        + COL_SHORTCODE + " TEXT NOT NULL, " + COL_INSTANCE + " TEXT NOT NULL, "
+                        + COL_URL + " TEXT NOT NULL, " + COL_URL_STATIC + " TEXT NOT NULL, "  + COL_DATE_CREATION + " TEXT NOT NULL)");
+            case 5:
+                db.execSQL("delete from "+ TABLE_CUSTOM_EMOJI); //Reset table due to bugs
             default:
                 break;
         }

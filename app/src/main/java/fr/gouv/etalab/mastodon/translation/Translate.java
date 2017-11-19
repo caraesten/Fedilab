@@ -32,10 +32,10 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.regex.Matcher;
 
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
-import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.activities.BaseMainActivity.currentLocale;
 
@@ -188,8 +188,7 @@ public class Translate {
         int translator = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
         String aJsonString = null;
         try {
-            if (translator == Helper.TRANS_YANDEX)
-                aJsonString = yandexTranslateToText(translatedResult);
+            aJsonString = yandexTranslateToText(translatedResult);
             if( aJsonString == null)
                 return null;
 

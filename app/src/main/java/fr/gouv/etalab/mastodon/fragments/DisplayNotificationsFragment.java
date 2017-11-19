@@ -19,6 +19,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
@@ -32,13 +33,13 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingNotificationsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMissingNotificationsInterface;
-import mastodon.etalab.gouv.fr.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveNotificationsAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveNotificationsInterface;
@@ -71,7 +72,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
         max_id = null;
@@ -279,17 +280,21 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         if( context == null)
             return;
         if( notification != null){
-            //Update the id of the last notification retrieved
-            MainActivity.lastNotificationId = notification.getId();
-            notifications.add(0, notification);
-            MainActivity.countNewNotifications++;
-            int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
-            if( firstVisibleItem > 0)
-                notificationsListAdapter.notifyItemInserted(0);
-            else
-                notificationsListAdapter.notifyDataSetChanged();
-            if( textviewNoAction.getVisibility() == View.VISIBLE)
-                textviewNoAction.setVisibility(View.GONE);
+            //Makes sure the notifications is not already displayed
+            if( notification.getId() != null && notifications != null && notifications.size() > 0 && notifications.get(0)!= null
+                    && Long.parseLong(notification.getId()) > Long.parseLong(notifications.get(0).getId())) {
+                //Update the id of the last notification retrieved
+                MainActivity.lastNotificationId = notification.getId();
+                notifications.add(0, notification);
+                MainActivity.countNewNotifications++;
+                int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+                if (firstVisibleItem > 0)
+                    notificationsListAdapter.notifyItemInserted(0);
+                else
+                    notificationsListAdapter.notifyDataSetChanged();
+                if (textviewNoAction.getVisibility() == View.VISIBLE)
+                    textviewNoAction.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -298,12 +303,9 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     @Override
     public void onRetrieveMissingNotifications(List<Notification> notifications) {
         if( notifications != null && notifications.size() > 0) {
-            ArrayList<String> knownId = new ArrayList<>();
-            for (Notification nt : this.notifications) {
-                knownId.add(nt.getId());
-            }
             for (int i = notifications.size()-1 ; i >= 0 ; i--) {
-                if (!knownId.contains(notifications.get(i).getId())) {
+                if (this.notifications.size() == 0 ||
+                        Long.parseLong(notifications.get(i).getId()) > Long.parseLong(this.notifications.get(0).getId())) {
                     MainActivity.countNewNotifications++;
                     this.notifications.add(0, notifications.get(i));
                 }

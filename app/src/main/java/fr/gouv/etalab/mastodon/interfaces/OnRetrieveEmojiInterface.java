@@ -19,6 +19,7 @@ import android.text.SpannableString;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
 
 
 /**
@@ -26,6 +27,6 @@ import fr.gouv.etalab.mastodon.client.Entities.Emojis;
  * Interface when retrieving emojis
  */
 public interface OnRetrieveEmojiInterface {
-    void onRetrieveEmoji(int position, SpannableString spannableString, Boolean error);
+    void onRetrieveEmoji(Status status, SpannableString spannableString, Boolean error);
     void onRetrieveSearchEmoji(List<Emojis> emojis);
 }

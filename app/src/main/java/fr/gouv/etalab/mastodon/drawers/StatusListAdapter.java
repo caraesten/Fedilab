@@ -71,6 +71,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
@@ -83,6 +84,7 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.translation.Translate;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
@@ -93,7 +95,6 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
-import mastodon.etalab.gouv.fr.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
@@ -156,6 +157,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @Override
     public int getItemCount() {
         return statuses.size();
+    }
+
+    private Status getItemAt(int position){
+        if( statuses.size() > position)
+            return statuses.get(position);
+        else
+            return null;
     }
 
     @Override
@@ -534,10 +542,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             if( status.getContent_translated() != null && status.getContent_translated().length() > 0){
                 holder.status_content_translated.setMovementMethod(null);
-                SpannableString spannableStringTrans = Helper.clickableElements(context,status.getContent_translated(),
-                        status.getReblog() != null?status.getReblog().getMentions():status.getMentions(),
-                        status.getReblog() != null?status.getReblog().getEmojis():status.getEmojis(),
-                        position,
+                SpannableString spannableStringTrans = Helper.clickableElements(context,status.getContent_translated(), status,
                         true, StatusListAdapter.this);
                 holder.status_content_translated.setText(spannableStringTrans, TextView.BufferType.SPANNABLE);
                 holder.status_content_translated.setOnLongClickListener(new View.OnLongClickListener() {
@@ -559,10 +564,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     content = content.substring(0,content.length() -10);
                 holder.status_content.setMovementMethod(null);
                 final SpannableString spannableString = Helper.clickableElements(context,content,
-                        status.getReblog() != null?status.getReblog().getMentions():status.getMentions(),
-                        status.getReblog() != null?status.getReblog().getEmojis():status.getEmojis(),
-                        position,
-                        true, StatusListAdapter.this);
+                        status, true, StatusListAdapter.this);
                 holder.status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
             }
             holder.status_content.setOnLongClickListener(new View.OnLongClickListener() {
@@ -644,9 +646,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             holder.status_spoiler_container.setVisibility(View.GONE);
                     }
                 }
-                if( status.getSpoiler_text() != null)
-                    holder.status_spoiler.setText(status.getSpoiler_text());
+
                 if( status.getReblog() == null) {
+                    if( status.getSpoiler_text() != null)
+                        holder.status_spoiler.setText(status.getSpoiler_text());
                     if (status.getMedia_attachments().size() < 1) {
                         holder.status_document_container.setVisibility(View.GONE);
                         holder.status_show_more.setVisibility(View.GONE);
@@ -669,6 +672,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         }
                     }
                 }else { //Attachments for reblogs
+                    if( status.getReblog().getSpoiler_text() != null)
+                        holder.status_spoiler.setText(status.getReblog().getSpoiler_text());
                     if (status.getReblog().getMedia_attachments().size() < 1) {
                         holder.status_document_container.setVisibility(View.GONE);
                         holder.status_show_more.setVisibility(View.GONE);
@@ -1363,11 +1368,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
     @Override
-    public void onRetrieveEmoji(int position, SpannableString spannableString, Boolean error) {
-        statuses.get(position).setContents(spannableString);
-        if( !statuses.get(position).isEmojiFound()) {
-            statuses.get(position).setEmojiFound(true);
-            statusListAdapter.notifyDataSetChanged();
+    public void onRetrieveEmoji(Status status, SpannableString spannableString, Boolean error) {
+        status.setContents(spannableString);
+        if( !status.isEmojiFound()) {
+            for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
+                if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
+                    if( statusListAdapter.getItemAt(i) != null) {
+                        statusListAdapter.getItemAt(i).setEmojiFound(true);
+                        statusListAdapter.notifyItemChanged(i);
+                    }
+                }
+            }
+
         }
     }
 

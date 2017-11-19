@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
 
@@ -39,7 +40,7 @@ import android.widget.Toast;
 
 
 import fr.gouv.etalab.mastodon.helper.Helper;
-import mastodon.etalab.gouv.fr.mastodon.R;
+import fr.gouv.etalab.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.compareDate;
 
@@ -57,10 +58,11 @@ public class SettingsNotificationsFragment extends Fragment {
     int count = 0;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_settings_notifications, container, false);
         context = getContext();
+        assert context != null;
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -91,6 +93,7 @@ public class SettingsNotificationsFragment extends Fragment {
                     notification_settings.setVisibility(View.GONE);
             }
         });
+
 
 
         boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
@@ -277,8 +280,7 @@ public class SettingsNotificationsFragment extends Fragment {
             ledLabel.setEnabled(true);
             led_colour_spinner.setEnabled(true);
 
-            ArrayAdapter<CharSequence> adapterLEDColour = ArrayAdapter.createFromResource(getActivity(),
-                    R.array.led_colours, android.R.layout.simple_spinner_item);
+            ArrayAdapter<CharSequence> adapterLEDColour = ArrayAdapter.createFromResource(getContext(), R.array.led_colours, android.R.layout.simple_spinner_item);
             led_colour_spinner.setAdapter(adapterLEDColour);
             int positionSpinnerLEDColour = (sharedpreferences.getInt(Helper.SET_LED_COLOUR, Helper.LED_COLOUR));
             led_colour_spinner.setSelection(positionSpinnerLEDColour);

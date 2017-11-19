@@ -247,7 +247,7 @@
     <string name="toast_unblock">Le compte n\'est plus bloqué !</string>
     <string name="toast_mute">Le compte a été masqué !</string>
     <string name="toast_unmute">Le compte n\'est plus masqué !</string>
-    <string name="toast_follow">Le compte a été suivi !</string>
+    <string name="toast_follow">Le compte est suivi !</string>
     <string name="toast_unfollow">Le compte n\'est plus suivi !</string>
     <string name="toast_reblog">Le pouet a été partagé !</string>
     <string name="toast_unreblog">Le pouet a été supprimé des partages !</string>
@@ -404,7 +404,6 @@
     <string name="privacy_API">
         L\'application n\'utilise <b>aucun outil de suivi</b> (mesure d\'audience, rapport d\'erreurs, etc.) et elle ne comporte aucune publicité.\n\n
         L\'utilisation de bibliothèques est réduite au strict minimum :\n
-        - <b>Android Asynchronous Http Client</b> : Pour la gestion des requêtes\n
         - <b>Universal Image Loader</b> : Pour la gestion des médias\n
         - <b>Android-Job</b> : Pour la gestion des services\n
         - <b>PhotoView</b> : Pour la gestion des images\n
@@ -438,4 +437,5 @@
     <string name="disclaimer_full">Les données ci-dessous peuvent ne pas refléter ce profil dans sa totalité.</string>
     <string name="insert_emoji">Insérer un émoji</string>
     <string name="no_emoji">L\'application n\'a pas encore collecté d\'emojis personnalisés</string>
+    <string name="live_notif">Notifications en direct</string>
 </resources>

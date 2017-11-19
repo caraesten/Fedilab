@@ -407,7 +407,6 @@
     <string name="privacy_API">Die Anwendung <b >benutzt keine Trackingwerkzeuge</b> (Nutzerbewertung, Fehlerberichte, etc.) und enthält keinerlei Werbung.\n
     \n
              Die Nutzung von Bibliotheken ist minimiert: \n
-             - <b >Android Asynchronous Http Client</b>: Anfragen verwalten\n
              - <b >Universal Image Loader</b>: Dateien verwalten\n
              - <b >Android-Job</b>: Dienste verwalten\n
              - <b >PhotoView</b>: Bilder verwalten\n
@@ -431,4 +430,5 @@
     <string name="disclaimer_full">Das Profil wird möglicherweise unvollständig wiedergegeben.</string>
     <string name="insert_emoji">Emoji einfügen</string>
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
+    <string name="live_notif">Live notifications</string>
 </resources>

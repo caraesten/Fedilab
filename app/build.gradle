@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion "27.0.0"
+    buildToolsVersion "27.0.1"
     defaultConfig {
         applicationId "fr.gouv.etalab.mastodon"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 69
-        versionName "1.5.9"
+        versionCode 76
+        versionName "1.6.0"
     }
     flavorDimensions "default"
     buildTypes {
@@ -32,11 +32,10 @@ allprojects {
     }
 }
 dependencies {
-    implementation 'com.android.support:appcompat-v7:27.0.0'
-    implementation 'com.android.support:design:27.0.0'
-    implementation 'com.android.support:support-v4:27.0.0'
-    implementation 'com.android.support:recyclerview-v7:27.0.0'
-    implementation 'com.loopj.android:android-async-http:1.4.9'
+    implementation 'com.android.support:appcompat-v7:27.0.1'
+    implementation 'com.android.support:design:27.0.1'
+    implementation 'com.android.support:support-v4:27.0.1'
+    implementation 'com.android.support:recyclerview-v7:27.0.1'
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     implementation 'com.evernote:android-job:1.2.0'
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
@@ -44,6 +43,6 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.10.3'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.github.stom79:country-picker-android:1.2.0'
-    safetynetImplementation 'com.google.android.gms:play-services-safetynet:11.4.2'
+    safetynetImplementation 'com.google.android.gms:play-services-safetynet:11.6.0'
     safetynetImplementation 'io.github.kobakei:ratethisapp:1.2.0'
 }
