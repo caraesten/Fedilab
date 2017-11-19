@@ -125,7 +125,11 @@ import java.util.regex.Pattern;
 import fr.gouv.etalab.mastodon.BuildConfig;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
-import fr.gouv.etalab.mastodon.activities.LoginActivity;
+import fr.gouv.etalab.mastodon.activities
+
+
+
+        .LoginActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.WebviewActivity;

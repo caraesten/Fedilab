@@ -54,6 +54,7 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
         if( token == null) {
             token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         }
+
         account.setToken(token);
         account.setInstance(instance);
         SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
