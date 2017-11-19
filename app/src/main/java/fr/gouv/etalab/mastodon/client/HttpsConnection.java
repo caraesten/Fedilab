@@ -31,7 +31,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -88,9 +87,9 @@ public class HttpsConnection {
         StringBuilder postData = new StringBuilder();
         for (Map.Entry<String,Object> param : params.entrySet()) {
             if (postData.length() != 0) postData.append('&');
-            postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+            postData.append(param.getKey());
             postData.append('=');
-            postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+            postData.append(String.valueOf(param.getValue()));
         }
         URL url = new URL(urlConnection + "?" + postData);
         httpsURLConnection = (HttpsURLConnection)url.openConnection();
@@ -136,9 +135,9 @@ public class HttpsConnection {
         StringBuilder postData = new StringBuilder();
         for (Map.Entry<String,Object> param : params.entrySet()) {
             if (postData.length() != 0) postData.append('&');
-            postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+            postData.append(param.getKey());
             postData.append('=');
-            postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+            postData.append(String.valueOf(param.getValue()));
         }
         byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 
@@ -400,9 +399,9 @@ public class HttpsConnection {
         StringBuilder postData = new StringBuilder();
         for (Map.Entry<String,Object> param : params.entrySet()) {
             if (postData.length() != 0) postData.append('&');
-            postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+            postData.append(param.getKey());
             postData.append('=');
-            postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+            postData.append(String.valueOf(param.getValue()));
         }
         byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 
@@ -456,9 +455,9 @@ public class HttpsConnection {
         StringBuilder postData = new StringBuilder();
         for (Map.Entry<String,Object> param : params.entrySet()) {
             if (postData.length() != 0) postData.append('&');
-            postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+            postData.append(param.getKey());
             postData.append('=');
-            postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+            postData.append(String.valueOf(param.getValue()));
         }
         byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 
@@ -509,9 +508,9 @@ public class HttpsConnection {
         StringBuilder postData = new StringBuilder();
         for (Map.Entry<String,Object> param : params.entrySet()) {
             if (postData.length() != 0) postData.append('&');
-            postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+            postData.append(param.getKey());
             postData.append('=');
-            postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+            postData.append(String.valueOf(param.getValue()));
         }
         byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 
