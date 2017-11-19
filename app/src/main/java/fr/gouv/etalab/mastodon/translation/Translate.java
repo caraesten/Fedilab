@@ -188,8 +188,7 @@ public class Translate {
         int translator = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
         String aJsonString = null;
         try {
-            if (translator == Helper.TRANS_YANDEX)
-                aJsonString = yandexTranslateToText(translatedResult);
+            aJsonString = yandexTranslateToText(translatedResult);
             if( aJsonString == null)
                 return null;
 
