@@ -95,6 +95,7 @@ public class HttpsConnection {
         httpsURLConnection = (HttpsURLConnection)url.openConnection();
         httpsURLConnection.setConnectTimeout(timeout * 1000);
         httpsURLConnection.setRequestProperty("http.keepAlive", "false");
+        httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
         if( token != null)
@@ -142,6 +143,7 @@ public class HttpsConnection {
         byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 
         httpsURLConnection = (HttpsURLConnection)url.openConnection();
+        httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
         httpsURLConnection.setConnectTimeout(timeout * 1000);
         httpsURLConnection.setDoOutput(true);
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
@@ -173,6 +175,7 @@ public class HttpsConnection {
                 try {
                     url = new URL(downloadUrl);
                     httpsURLConnection = (HttpsURLConnection) url.openConnection();
+                    httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
                     int responseCode = httpsURLConnection.getResponseCode();
 
                     // always check HTTP response code first
@@ -283,6 +286,7 @@ public class HttpsConnection {
                     byte[] pixels = ous.toByteArray();
 
                     httpsURLConnection = (HttpsURLConnection) url.openConnection();
+                    httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
                         httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
                     httpsURLConnection.setDoInput(true);
@@ -406,6 +410,7 @@ public class HttpsConnection {
         byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 
         httpsURLConnection = (HttpsURLConnection)url.openConnection();
+        httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
         httpsURLConnection.setConnectTimeout(timeout * 1000);
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
@@ -462,6 +467,7 @@ public class HttpsConnection {
         byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 
         httpsURLConnection = (HttpsURLConnection)url.openConnection();
+        httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
         httpsURLConnection.setConnectTimeout(timeout * 1000);
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
@@ -515,6 +521,7 @@ public class HttpsConnection {
         byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 
         httpsURLConnection = (HttpsURLConnection)url.openConnection();
+        httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
         if( token != null)
