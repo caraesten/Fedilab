@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -219,9 +220,12 @@ public class API {
     public APIResponse getRelationship(List<Account> accounts) {
         HashMap<String, String> params = new HashMap<>();
         if( accounts != null && accounts.size() > 0 ) {
-            for(Account account: accounts) {
-                params.put("id[]", account.getId());
-            }
+            StringBuilder parameters = new StringBuilder();
+            for(Account account: accounts)
+                parameters.append("id[]=").append(account.getId()).append("&");
+            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(5));
+            params.put("id[]", parameters.toString());
+
         }
         List<Relationship> relationships = new ArrayList<>();
         try {
@@ -797,9 +801,11 @@ public class API {
                 if( status.getIn_reply_to_id() != null)
                     params.put("in_reply_to_id", status.getIn_reply_to_id());
                 if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0 ) {
-                    for(Attachment attachment: status.getMedia_attachments()) {
-                        params.put("media_ids[]", attachment.getId());
-                    }
+                    StringBuilder parameters = new StringBuilder();
+                    for(Attachment attachment: status.getMedia_attachments())
+                        parameters.append("media_ids[]=").append(attachment.getId()).append("&");
+                    parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(12));
+                    params.put("media_ids[]", parameters.toString());
                 }
                 if( status.isSensitive())
                     params.put("sensitive", Boolean.toString(status.isSensitive()));
@@ -849,9 +855,11 @@ public class API {
         if( status.getIn_reply_to_id() != null)
             params.put("in_reply_to_id", status.getIn_reply_to_id());
         if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0 ) {
-            for(Attachment attachment: status.getMedia_attachments()) {
-                params.put("media_ids[]", attachment.getId());
-            }
+            StringBuilder parameters = new StringBuilder();
+            for(Attachment attachment: status.getMedia_attachments())
+                parameters.append("media_ids[]=").append(attachment.getId()).append("&");
+            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(12));
+            params.put("media_ids[]", parameters.toString());
         }
         if( status.isSensitive())
             params.put("sensitive", Boolean.toString(status.isSensitive()));
@@ -963,14 +971,21 @@ public class API {
             notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
             notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
         }
+        StringBuilder parameters = new StringBuilder();
+
         if( !notif_follow )
-            params.put("exclude_types[]", "follow");
+            parameters.append("exclude_types[]=").append("follow").append("&");
         if( !notif_add )
-            params.put("exclude_types[]", "favourite");
+            parameters.append("exclude_types[]=").append("favourite").append("&");
         if( !notif_share )
-            params.put("exclude_types[]", "reblog");
+            parameters.append("exclude_types[]=").append("reblog").append("&");
         if( !notif_mention )
-            params.put("exclude_types[]", "mention");
+            parameters.append("exclude_types[]=").append("mention").append("&");
+        if( parameters.length() > 0) {
+            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(16));
+            params.put("exclude_types[]", parameters.toString());
+        }
+
 
         List<Notification> notifications = new ArrayList<>();
 

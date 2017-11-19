@@ -201,7 +201,6 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         }
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
-
         if( type != RetrieveAccountsAsyncTask.Type.BLOCKED && type != RetrieveAccountsAsyncTask.Type.MUTED)
             new RetrieveManyRelationshipsAsyncTask(context, accounts,DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
