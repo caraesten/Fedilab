@@ -264,11 +264,14 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     if (content.endsWith("<br/><br/>"))
                         content = content.substring(0, content.length() - 10);
                 }
+
                 SpannableString spannableString = Helper.clickableElements(context, content,
+                        status,  true, NotificationsListAdapter.this);
+                /*SpannableString spannableString = Helper.clickableElements(context, content,
                         status.getReblog() != null ? status.getReblog().getMentions() : status.getMentions(),
                         status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis(),
                         position,
-                        true, NotificationsListAdapter.this);
+                        true, NotificationsListAdapter.this);*/
 
                 holder.notification_status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
             }
@@ -693,6 +696,13 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     }
 
 
+    private Notification getItemAt(int position){
+        if( notifications.size() > position)
+            return notifications.get(position);
+        else
+            return null;
+    }
+
     /**
      * Display a validation message for notification deletion
      * @param notification Notification
@@ -892,12 +902,20 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         holder.status_show_more.setVisibility(View.GONE);
     }
 
+
     @Override
-    public void onRetrieveEmoji(int position, SpannableString spannableString, Boolean error) {
-        notifications.get(position).getStatus().setContents(spannableString);
-        if( !notifications.get(position).getStatus().isEmojiFound()) {
-            notifications.get(position).getStatus().setEmojiFound(true);
-            notificationsListAdapter.notifyDataSetChanged();
+    public void onRetrieveEmoji(Status status, SpannableString spannableString, Boolean error) {
+        status.setContents(spannableString);
+        if( !status.isEmojiFound()) {
+            for (int i = 0; i < notificationsListAdapter.getItemCount(); i++) {
+                if (notificationsListAdapter.getItemAt(i) != null && notificationsListAdapter.getItemAt(i).getId().equals(status.getId())) {
+                    if( notificationsListAdapter.getItemAt(i).getStatus() != null) {
+                        notificationsListAdapter.getItemAt(i).getStatus().setEmojiFound(true);
+                        notificationsListAdapter.notifyItemChanged(i);
+                    }
+                }
+            }
+
         }
     }
 

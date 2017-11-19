@@ -1168,11 +1168,13 @@ public class Helper {
      * Click on tag => HashTagActivity
      * @param context Context
      * @param fullContent String, should be the st
-     * @param mentions List<Mention>
+     * @param status Status
      * @return TextView
      */
     @SuppressWarnings("SameParameterValue")
-    public static SpannableString clickableElements(final Context context, String fullContent, List<Mention> mentions, final List<Emojis> emojis, final int position, boolean useHTML, final OnRetrieveEmojiInterface listener) {
+    public static SpannableString clickableElements(final Context context, String fullContent, final Status status, boolean useHTML, final OnRetrieveEmojiInterface listener) {
+        List<Mention> mentions = status.getReblog() != null ? status.getReblog().getMentions() : status.getMentions();
+        final List<Emojis> emojis = status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis();
         final SpannableString spannableString;
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         if( useHTML) {
@@ -1230,37 +1232,44 @@ public class Helper {
                     .cacheOnDisk(true).resetViewBeforeLoading(true).build();
             imageLoader = ImageLoader.getInstance();
             for (final Emojis emoji : emojis) {
-                if( instance != null && emoji.getUrl().contains(instance))
-                    storeEmoji(context, db, emoji);
-                        NonViewAware imageAware = new NonViewAware(new ImageSize(50, 50), ViewScaleType.CROP);
-                        imageLoader.displayImage(emoji.getUrl(), imageAware, options, new SimpleImageLoadingListener() {
-                            @Override
-                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                                super.onLoadingComplete(imageUri, view, loadedImage);
-                                final String targetedEmoji = ":" + emoji.getShortcode() + ":";
-                                if (spannableString.toString().contains(targetedEmoji)) {
-                                    //emojis can be used several times so we have to loop
-                                    for (int startPosition = -1; (startPosition = spannableString.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
-                                        final int endPosition = startPosition + targetedEmoji.length();
-                                        spannableString.setSpan(
-                                                new ImageSpan(context,
-                                                        Bitmap.createScaledBitmap(loadedImage, (int) Helper.convertDpToPixel(20, context),
-                                                                (int) Helper.convertDpToPixel(20, context), false)), startPosition,
-                                                endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-                                    }
-                                }
-                                i[0]++;
-                                if( i[0] ==  (emojis.size()))
-                                    listener.onRetrieveEmoji(position, spannableString, false);
+                boolean sameInstance;
+                if( instance != null) {
+                    if (status.getReblog() == null)
+                        sameInstance = status.getUri().contains(instance);
+                    else
+                        sameInstance = status.getReblog().getUri().contains(instance);
+                    if (sameInstance)
+                        storeEmoji(context, db, emoji);
+                }
+                NonViewAware imageAware = new NonViewAware(new ImageSize(50, 50), ViewScaleType.CROP);
+                imageLoader.displayImage(emoji.getUrl(), imageAware, options, new SimpleImageLoadingListener() {
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        super.onLoadingComplete(imageUri, view, loadedImage);
+                        final String targetedEmoji = ":" + emoji.getShortcode() + ":";
+                        if (spannableString.toString().contains(targetedEmoji)) {
+                            //emojis can be used several times so we have to loop
+                            for (int startPosition = -1; (startPosition = spannableString.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                final int endPosition = startPosition + targetedEmoji.length();
+                                spannableString.setSpan(
+                                        new ImageSpan(context,
+                                                Bitmap.createScaledBitmap(loadedImage, (int) Helper.convertDpToPixel(20, context),
+                                                        (int) Helper.convertDpToPixel(20, context), false)), startPosition,
+                                        endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                             }
-                            @Override
-                            public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason) {
-                                i[0]++;
-                                if( i[0] ==  (emojis.size()))
-                                    listener.onRetrieveEmoji(position, spannableString, false);
-                            }
-                        });
+                        }
+                        i[0]++;
+                        if( i[0] ==  (emojis.size()))
+                            listener.onRetrieveEmoji(status, spannableString, false);
                     }
+                    @Override
+                    public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason) {
+                        i[0]++;
+                        if( i[0] ==  (emojis.size()))
+                            listener.onRetrieveEmoji(status, spannableString, false);
+                    }
+                });
+            }
 
 
 
@@ -1277,19 +1286,19 @@ public class Helper {
                     for(int startPosition = -1 ; (startPosition = spannableString.toString().indexOf(targetedAccount, startPosition + 1)) != -1 ; startPosition++){
                         int endPosition = startPosition + targetedAccount.length();
                         spannableString.setSpan(new ClickableSpan() {
-                                @Override
-                                public void onClick(View textView) {
-                                    Intent intent = new Intent(context, ShowAccountActivity.class);
-                                    Bundle b = new Bundle();
-                                    b.putString("accountId", mention.getId());
-                                    intent.putExtras(b);
-                                    context.startActivity(intent);
-                                }
-                                @Override
-                                public void updateDrawState(TextPaint ds) {
-                                    super.updateDrawState(ds);
-                                }
-                            },
+                                                    @Override
+                                                    public void onClick(View textView) {
+                                                        Intent intent = new Intent(context, ShowAccountActivity.class);
+                                                        Bundle b = new Bundle();
+                                                        b.putString("accountId", mention.getId());
+                                                        intent.putExtras(b);
+                                                        context.startActivity(intent);
+                                                    }
+                                                    @Override
+                                                    public void updateDrawState(TextPaint ds) {
+                                                        super.updateDrawState(ds);
+                                                    }
+                                                },
                                 startPosition, endPosition,
                                 Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }
@@ -1421,7 +1430,7 @@ public class Helper {
                                 try {
                                     String[] val = search.split("@");
                                     if( val.length > 0 ) {
-                                        String username, instance;
+                                        String username;
                                         if( val.length == 2){
                                             username = val[1];
                                             Pattern urlAccountPattern = Pattern.compile(

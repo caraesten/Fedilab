@@ -84,6 +84,7 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.translation.Translate;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
@@ -156,6 +157,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @Override
     public int getItemCount() {
         return statuses.size();
+    }
+
+    private Status getItemAt(int position){
+        if( statuses.size() > position)
+            return statuses.get(position);
+        else
+            return null;
     }
 
     @Override
@@ -534,10 +542,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             if( status.getContent_translated() != null && status.getContent_translated().length() > 0){
                 holder.status_content_translated.setMovementMethod(null);
-                SpannableString spannableStringTrans = Helper.clickableElements(context,status.getContent_translated(),
-                        status.getReblog() != null?status.getReblog().getMentions():status.getMentions(),
-                        status.getReblog() != null?status.getReblog().getEmojis():status.getEmojis(),
-                        position,
+                SpannableString spannableStringTrans = Helper.clickableElements(context,status.getContent_translated(), status,
                         true, StatusListAdapter.this);
                 holder.status_content_translated.setText(spannableStringTrans, TextView.BufferType.SPANNABLE);
                 holder.status_content_translated.setOnLongClickListener(new View.OnLongClickListener() {
@@ -559,10 +564,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     content = content.substring(0,content.length() -10);
                 holder.status_content.setMovementMethod(null);
                 final SpannableString spannableString = Helper.clickableElements(context,content,
-                        status.getReblog() != null?status.getReblog().getMentions():status.getMentions(),
-                        status.getReblog() != null?status.getReblog().getEmojis():status.getEmojis(),
-                        position,
-                        true, StatusListAdapter.this);
+                        status, true, StatusListAdapter.this);
                 holder.status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
             }
             holder.status_content.setOnLongClickListener(new View.OnLongClickListener() {
@@ -1366,11 +1368,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
     @Override
-    public void onRetrieveEmoji(int position, SpannableString spannableString, Boolean error) {
-        statuses.get(position).setContents(spannableString);
-        if( !statuses.get(position).isEmojiFound()) {
-            statuses.get(position).setEmojiFound(true);
-            statusListAdapter.notifyDataSetChanged();
+    public void onRetrieveEmoji(Status status, SpannableString spannableString, Boolean error) {
+        status.setContents(spannableString);
+        if( !status.isEmojiFound()) {
+            for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
+                if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
+                    if( statusListAdapter.getItemAt(i) != null) {
+                        statusListAdapter.getItemAt(i).setEmojiFound(true);
+                        statusListAdapter.notifyItemChanged(i);
+                    }
+                }
+            }
+
         }
     }
 
