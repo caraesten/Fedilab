@@ -865,6 +865,7 @@ public class Helper {
             navigationView.inflateMenu(R.menu.menu_accounts);
             Menu mainMenu = navigationView.getMenu();
             SubMenu currentSubmenu = null;
+            if( accounts != null)
             for(final Account account: accounts) {
                 if( !currrentUserId.equals(account.getId()) ) {
                     if( !lastInstance.trim().toUpperCase().equals(account.getInstance().trim().toUpperCase())){
