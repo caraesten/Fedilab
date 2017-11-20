@@ -184,6 +184,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             swiped = false;
             return;
         }
+        int previousPosition = notifications.size();
         max_id = apiResponse.getMax_id();
         List<Notification> notifications = apiResponse.getNotifications();
 
@@ -211,7 +212,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 MainActivity.lastNotificationId = notifications.get(0).getId();
                 updateNotificationLastId(sharedpreferences, this.userId, notifications.get(0).getId());
             }
-            notificationsListAdapter.notifyDataSetChanged();
+            notificationsListAdapter.notifyItemRangeInserted(previousPosition, notifications.size());
         }
         if( firstLoad )
             ((MainActivity)context).updateNotifCounter();

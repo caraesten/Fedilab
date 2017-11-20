@@ -152,6 +152,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             public void onRefresh() {
                 max_id = null;
                 statuses = new ArrayList<>();
+                statuses.clear();
                 firstLoad = true;
                 flag_loading = true;
                 swiped = true;
@@ -234,6 +235,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             flag_loading = false;
             return;
         }
+        int previousPosition = this.statuses.size();
         List<Status> statuses = apiResponse.getStatuses();
         max_id = apiResponse.getMax_id();
 
@@ -243,8 +245,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         else
             textviewNoAction.setVisibility(View.GONE);
         if( swiped ){
-            statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
-            lv_status.setAdapter(statusListAdapter);
             swiped = false;
         }
 
@@ -260,8 +260,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     this.statuses.add(tmpStatus);
                 }
             }
-
-            if( firstLoad && type == RetrieveFeedsAsyncTask.Type.HOME) {
+            if( firstLoad && type == RetrieveFeedsAsyncTask.Type.HOME && statuses.size() > 0) {
                 //Update the id of the last toot retrieved
                 MainActivity.lastHomeId = statuses.get(0).getId();
                 SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -270,7 +269,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 editor.apply();
                 lastReadStatus = statuses.get(0).getId();
             }
-            statusListAdapter.notifyDataSetChanged();
+            statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
             if( firstLoad && type == RetrieveFeedsAsyncTask.Type.HOME)
             //Display new value in counter
             try {
