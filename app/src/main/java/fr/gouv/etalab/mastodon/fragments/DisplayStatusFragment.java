@@ -151,8 +151,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             @Override
             public void onRefresh() {
                 max_id = null;
-                statuses = new ArrayList<>();
-                statuses.clear();
                 firstLoad = true;
                 flag_loading = true;
                 swiped = true;
@@ -245,6 +243,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         else
             textviewNoAction.setVisibility(View.GONE);
         if( swiped ){
+            if (previousPosition > 0) {
+                for (int i = 0; i < previousPosition; i++) {
+                    this.statuses.remove(0);
+                }
+                statusListAdapter.notifyItemRangeRemoved(0, previousPosition);
+            }
             swiped = false;
         }
 
