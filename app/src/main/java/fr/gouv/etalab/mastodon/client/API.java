@@ -20,7 +20,10 @@ import android.content.SharedPreferences;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.lang.*;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -797,7 +800,12 @@ public class API {
             case CREATESTATUS:
                 params = new HashMap<>();
                 action = "/statuses";
-                params.put("status", status.getContent());
+                try {
+                    params.put("status", URLEncoder.encode(status.getContent(), "UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    params.put("status", status.getContent());
+                    e.printStackTrace();
+                }
                 if( status.getIn_reply_to_id() != null)
                     params.put("in_reply_to_id", status.getIn_reply_to_id());
                 if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0 ) {
@@ -810,7 +818,12 @@ public class API {
                 if( status.isSensitive())
                     params.put("sensitive", Boolean.toString(status.isSensitive()));
                 if( status.getSpoiler_text() != null)
-                    params.put("spoiler_text", status.getSpoiler_text());
+                    try {
+                        params.put("spoiler_text", URLEncoder.encode(status.getSpoiler_text(), "UTF-8"));
+                    } catch (UnsupportedEncodingException e) {
+                        params.put("spoiler_text", status.getSpoiler_text());
+                        e.printStackTrace();
+                    }
                 params.put("visibility", status.getVisibility());
                 break;
             default:
@@ -851,7 +864,12 @@ public class API {
     public APIResponse postStatusAction(Status status){
 
         HashMap<String, String> params = new HashMap<>();
-        params.put("status", status.getContent());
+        try {
+            params.put("status", URLEncoder.encode(status.getContent(), "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            params.put("status", status.getContent());
+            e.printStackTrace();
+        }
         if( status.getIn_reply_to_id() != null)
             params.put("in_reply_to_id", status.getIn_reply_to_id());
         if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0 ) {
@@ -864,7 +882,12 @@ public class API {
         if( status.isSensitive())
             params.put("sensitive", Boolean.toString(status.isSensitive()));
         if( status.getSpoiler_text() != null)
-            params.put("spoiler_text", status.getSpoiler_text());
+            try {
+                params.put("spoiler_text", URLEncoder.encode(status.getSpoiler_text(), "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                params.put("spoiler_text", status.getSpoiler_text());
+                e.printStackTrace();
+            }
         params.put("visibility", status.getVisibility());
         statuses = new ArrayList<>();
 
@@ -1016,7 +1039,12 @@ public class API {
     public Attachment updateDescription(String mediaId, String description){
 
         HashMap<String, String> params = new HashMap<>();
-        params.put("description", description);
+        try {
+            params.put("description", URLEncoder.encode(description, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            params.put("description", description);
+            e.printStackTrace();
+        }
         try {
             HttpsConnection httpsConnection = new HttpsConnection();
             String response = httpsConnection.put(getAbsoluteUrl(String.format("/media/%s", mediaId)), 240, params, prefKeyOauthTokenT);
