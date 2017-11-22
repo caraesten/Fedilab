@@ -84,7 +84,6 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
-import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.translation.Translate;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
@@ -279,24 +278,25 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     @Override
     public int getItemViewType(int position) {
-        if( type == RetrieveFeedsAsyncTask.Type.HOME) {
-            Status status = statuses.get(position);
-            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            int HIDDEN_STATUS = 0;
-            String filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_HOME, null);
 
-            if( filter != null && filter.length() > 0){
-                Pattern filterPattern = Pattern.compile("(" + filter + ")");
-                String content;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                    content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
-                else
-                    //noinspection deprecation
-                    content = Html.fromHtml(status.getContent()).toString();
-                Matcher matcher = filterPattern.matcher(content);
-                if(matcher.find())
-                    return HIDDEN_STATUS;
-            }
+        Status status = statuses.get(position);
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int HIDDEN_STATUS = 0;
+        String filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_HOME, null);
+
+        if( filter != null && filter.length() > 0){
+            Pattern filterPattern = Pattern.compile("(" + filter + ")");
+            String content;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
+            else
+                //noinspection deprecation
+                content = Html.fromHtml(status.getContent()).toString();
+            Matcher matcher = filterPattern.matcher(content);
+            if(matcher.find())
+                return HIDDEN_STATUS;
+        }
+        if( type == RetrieveFeedsAsyncTask.Type.HOME) {
             if (status.getReblog() != null && !sharedpreferences.getBoolean(Helper.SET_SHOW_BOOSTS, true))
                 return HIDDEN_STATUS;
             else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true)) {

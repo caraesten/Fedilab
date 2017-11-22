@@ -324,92 +324,25 @@ public abstract class BaseMainActivity extends AppCompatActivity
         tabStrip.getChildAt(0).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                //Only shown if the tab has focus
-                if( homeFragment != null && homeFragment.getUserVisibleHint()){
-                    PopupMenu popup = new PopupMenu(BaseMainActivity.this, tabStrip.getChildAt(0));
-                    popup.getMenuInflater()
-                            .inflate(R.menu.option_filter_toots, popup.getMenu());
-                    Menu menu = popup.getMenu();
-                    final MenuItem itemShowBoosts = menu.findItem(R.id.action_show_boosts);
-                    final MenuItem itemShowReplies = menu.findItem(R.id.action_show_replies);
-                    final MenuItem itemFilter = menu.findItem(R.id.action_filter);
-
-                    show_boosts = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOSTS, true);
-                    show_replies = sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true);
-                    show_filtered = sharedpreferences.getString(Helper.SET_FILTER_REGEX_HOME, null);
-                    itemShowBoosts.setChecked(show_boosts);
-                    itemShowReplies.setChecked(show_replies);
-                    if( show_filtered != null && show_filtered.length() > 0){
-                        itemFilter.setTitle(show_filtered);
-                    }
-
-                    popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
-                        @Override
-                        public void onDismiss(PopupMenu menu) {
-                            if( homeFragment != null)
-                                homeFragment.refreshFilter();
-                        }
-                    });
-                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        public boolean onMenuItemClick(MenuItem item) {
-                            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
-                            item.setActionView(new View(getApplicationContext()));
-                            item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
-                                @Override
-                                public boolean onMenuItemActionExpand(MenuItem item) {
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean onMenuItemActionCollapse(MenuItem item) {
-                                    return false;
-                                }
-                            });
-                            final SharedPreferences.Editor editor = sharedpreferences.edit();
-                            switch (item.getItemId()) {
-                                case R.id.action_show_boosts:
-
-                                    show_boosts = !show_boosts;
-                                    editor.putBoolean(Helper.SET_SHOW_BOOSTS, show_boosts);
-                                    itemShowBoosts.setChecked(show_boosts);
-                                    editor.apply();
-                                    break;
-                                case R.id.action_show_replies:
-                                    show_replies = !show_replies;
-                                    editor.putBoolean(Helper.SET_SHOW_REPLIES, show_replies);
-                                    itemShowReplies.setChecked(show_replies);
-                                    editor.apply();
-                                    break;
-                                case R.id.action_filter:
-                                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this);
-                                    LayoutInflater inflater = getLayoutInflater();
-                                    @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.filter_regex, null);
-                                    dialogBuilder.setView(dialogView);
-                                    final EditText editText = dialogView.findViewById(R.id.filter_regex);
-                                    if( show_filtered != null) {
-                                        editText.setText(show_filtered);
-                                        editText.setSelection(editText.getText().toString().length());
-                                    }
-                                    dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            itemFilter.setTitle(editText.getText().toString().trim());
-                                            editor.putString(Helper.SET_FILTER_REGEX_HOME, editText.getText().toString().trim());
-                                            editor.apply();
-                                        }
-                                    });
-                                    AlertDialog alertDialog = dialogBuilder.create();
-                                    alertDialog.show();
-                                    break;
-                            }
-                            return false;
-                        }
-                    });
-                    popup.show();
-                }
-                return true;
+                return manageFilters(tabStrip, sharedpreferences);
             }
         });
+
+        if( tabStrip.getChildCount() > 2)
+        tabStrip.getChildAt(2).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return manageFilters(tabStrip, sharedpreferences);
+            }
+        });
+        if( tabStrip.getChildCount() == 4)
+        tabStrip.getChildAt(3).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return manageFilters(tabStrip, sharedpreferences);
+            }
+        });
+
 
         viewPager = findViewById(R.id.viewpager);
         int countPage = 2;
@@ -889,6 +822,135 @@ public abstract class BaseMainActivity extends AppCompatActivity
     protected abstract void installProviders();
 
     protected abstract void rateThisApp();
+
+
+    private boolean manageFilters(LinearLayout tabStrip, final SharedPreferences sharedpreferences){
+        //Only shown if the tab has focus
+        if(
+                (homeFragment != null && homeFragment.getUserVisibleHint()) ||
+                        (federatedFragment != null && federatedFragment.getUserVisibleHint()) ||
+                        (localFragment != null && localFragment.getUserVisibleHint())
+                ){
+            PopupMenu popup = null;
+            if(homeFragment != null && homeFragment.getUserVisibleHint())
+                popup = new PopupMenu(BaseMainActivity.this, tabStrip.getChildAt(0));
+            else if(localFragment != null && localFragment.getUserVisibleHint())
+                popup = new PopupMenu(BaseMainActivity.this, tabStrip.getChildAt(2));
+            else if(federatedFragment != null && federatedFragment.getUserVisibleHint()){
+                if( !display_local && display_global)
+                    popup = new PopupMenu(BaseMainActivity.this, tabStrip.getChildAt(2));
+                else
+                    popup = new PopupMenu(BaseMainActivity.this, tabStrip.getChildAt(3));
+            }
+            if( popup == null)
+                return true;
+            popup.getMenuInflater()
+                    .inflate(R.menu.option_filter_toots, popup.getMenu());
+            Menu menu = popup.getMenu();
+            final MenuItem itemShowBoosts = menu.findItem(R.id.action_show_boosts);
+            final MenuItem itemShowReplies = menu.findItem(R.id.action_show_replies);
+            final MenuItem itemFilter = menu.findItem(R.id.action_filter);
+            if((federatedFragment != null && federatedFragment.getUserVisibleHint()) ||
+                    (localFragment != null && localFragment.getUserVisibleHint())){
+                itemShowBoosts.setVisible(false);
+                itemShowReplies.setVisible(false);
+                itemFilter.setVisible(true);
+            }else {
+                itemShowBoosts.setVisible(true);
+                itemShowReplies.setVisible(true);
+                itemFilter.setVisible(true);
+            }
+            show_boosts = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOSTS, true);
+            show_replies = sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true);
+
+            if(homeFragment != null && homeFragment.getUserVisibleHint())
+                show_filtered = sharedpreferences.getString(Helper.SET_FILTER_REGEX_HOME, null);
+            if(localFragment != null && localFragment.getUserVisibleHint())
+                show_filtered = sharedpreferences.getString(Helper.SET_FILTER_REGEX_LOCAL, null);
+            if(federatedFragment != null && federatedFragment.getUserVisibleHint())
+                show_filtered = sharedpreferences.getString(Helper.SET_FILTER_REGEX_PUBLIC, null);
+
+            itemShowBoosts.setChecked(show_boosts);
+            itemShowReplies.setChecked(show_replies);
+            if( show_filtered != null && show_filtered.length() > 0){
+                itemFilter.setTitle(show_filtered);
+            }
+
+            popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
+                @Override
+                public void onDismiss(PopupMenu menu) {
+                    if(homeFragment != null && homeFragment.getUserVisibleHint())
+                        homeFragment.refreshFilter();
+                    if(localFragment != null && localFragment.getUserVisibleHint())
+                        localFragment.refreshFilter();
+                    if(federatedFragment != null && federatedFragment.getUserVisibleHint())
+                        federatedFragment.refreshFilter();
+                }
+            });
+            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                public boolean onMenuItemClick(MenuItem item) {
+                    item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+                    item.setActionView(new View(getApplicationContext()));
+                    item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                        @Override
+                        public boolean onMenuItemActionExpand(MenuItem item) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onMenuItemActionCollapse(MenuItem item) {
+                            return false;
+                        }
+                    });
+                    final SharedPreferences.Editor editor = sharedpreferences.edit();
+                    switch (item.getItemId()) {
+                        case R.id.action_show_boosts:
+
+                            show_boosts = !show_boosts;
+                            editor.putBoolean(Helper.SET_SHOW_BOOSTS, show_boosts);
+                            itemShowBoosts.setChecked(show_boosts);
+                            editor.apply();
+                            break;
+                        case R.id.action_show_replies:
+                            show_replies = !show_replies;
+                            editor.putBoolean(Helper.SET_SHOW_REPLIES, show_replies);
+                            itemShowReplies.setChecked(show_replies);
+                            editor.apply();
+                            break;
+                        case R.id.action_filter:
+                            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this);
+                            LayoutInflater inflater = getLayoutInflater();
+                            @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.filter_regex, null);
+                            dialogBuilder.setView(dialogView);
+                            final EditText editText = dialogView.findViewById(R.id.filter_regex);
+                            if( show_filtered != null) {
+                                editText.setText(show_filtered);
+                                editText.setSelection(editText.getText().toString().length());
+                            }
+                            dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    itemFilter.setTitle(editText.getText().toString().trim());
+                                    if(homeFragment != null && homeFragment.getUserVisibleHint())
+                                        editor.putString(Helper.SET_FILTER_REGEX_HOME, editText.getText().toString().trim());
+                                    if(localFragment != null && localFragment.getUserVisibleHint())
+                                        editor.putString(Helper.SET_FILTER_REGEX_LOCAL, editText.getText().toString().trim());
+                                    if(federatedFragment != null && federatedFragment.getUserVisibleHint())
+                                        editor.putString(Helper.SET_FILTER_REGEX_PUBLIC, editText.getText().toString().trim());
+                                    editor.apply();
+                                }
+                            });
+                            AlertDialog alertDialog = dialogBuilder.create();
+                            alertDialog.show();
+                            break;
+                    }
+                    return false;
+                }
+            });
+            popup.show();
+        }
+        return true;
+    }
 
 
     @Override
