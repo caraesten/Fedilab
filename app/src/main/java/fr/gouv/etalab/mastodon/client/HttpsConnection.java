@@ -306,6 +306,7 @@ public class HttpsConnection {
 
                     httpsURLConnection = (HttpsURLConnection) url.openConnection();
                     httpsURLConnection.setFixedLengthStreamingMode(lengthSent);
+
                     httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
                         httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
