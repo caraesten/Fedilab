@@ -54,6 +54,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -144,6 +145,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
     private Intent streamingIntent;
     public static String lastHomeId = null, lastNotificationId = null;
     boolean notif_follow, notif_add, notif_mention, notif_share, show_boosts, show_replies;
+    String show_filtered;
     private AppBarLayout appBar;
     private static boolean activityPaused;
 
@@ -330,11 +332,17 @@ public abstract class BaseMainActivity extends AppCompatActivity
                     Menu menu = popup.getMenu();
                     final MenuItem itemShowBoosts = menu.findItem(R.id.action_show_boosts);
                     final MenuItem itemShowReplies = menu.findItem(R.id.action_show_replies);
+                    final MenuItem itemFilter = menu.findItem(R.id.action_filter);
 
                     show_boosts = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOSTS, true);
                     show_replies = sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true);
+                    show_filtered = sharedpreferences.getString(Helper.SET_FILTER_REGEX_HOME, null);
                     itemShowBoosts.setChecked(show_boosts);
                     itemShowReplies.setChecked(show_replies);
+                    if( show_filtered != null && show_filtered.length() > 0){
+                        itemFilter.setTitle(show_filtered);
+                    }
+
                     popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
                         @Override
                         public void onDismiss(PopupMenu menu) {
@@ -357,20 +365,41 @@ public abstract class BaseMainActivity extends AppCompatActivity
                                     return false;
                                 }
                             });
+                            final SharedPreferences.Editor editor = sharedpreferences.edit();
                             switch (item.getItemId()) {
                                 case R.id.action_show_boosts:
-                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+
                                     show_boosts = !show_boosts;
                                     editor.putBoolean(Helper.SET_SHOW_BOOSTS, show_boosts);
                                     itemShowBoosts.setChecked(show_boosts);
                                     editor.apply();
                                     break;
                                 case R.id.action_show_replies:
-                                    editor = sharedpreferences.edit();
                                     show_replies = !show_replies;
                                     editor.putBoolean(Helper.SET_SHOW_REPLIES, show_replies);
                                     itemShowReplies.setChecked(show_replies);
                                     editor.apply();
+                                    break;
+                                case R.id.action_filter:
+                                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this);
+                                    LayoutInflater inflater = getLayoutInflater();
+                                    @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.filter_regex, null);
+                                    dialogBuilder.setView(dialogView);
+                                    final EditText editText = dialogView.findViewById(R.id.filter_regex);
+                                    if( show_filtered != null) {
+                                        editText.setText(show_filtered);
+                                        editText.setSelection(editText.getText().toString().length());
+                                    }
+                                    dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            itemFilter.setTitle(editText.getText().toString().trim());
+                                            editor.putString(Helper.SET_FILTER_REGEX_HOME, editText.getText().toString().trim());
+                                            editor.apply();
+                                        }
+                                    });
+                                    AlertDialog alertDialog = dialogBuilder.create();
+                                    alertDialog.show();
                                     break;
                             }
                             return false;

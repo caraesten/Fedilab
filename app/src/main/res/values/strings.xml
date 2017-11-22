@@ -443,4 +443,6 @@
     <string name="thanks_text_dev">
         Thank you to:
     </string>
+
+    <string name="filter_regex">Filter out by regular expressions</string>
 </resources>

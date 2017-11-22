@@ -437,4 +437,5 @@
     <string name="insert_emoji">Inserir Emoji</string>
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
     <string name="live_notif">Live notifications</string>
+    <string name="filter_regex">Filtrar com uma expressão regular</string>
 </resources>

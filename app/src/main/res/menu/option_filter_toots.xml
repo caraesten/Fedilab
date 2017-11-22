@@ -15,4 +15,8 @@
         android:title="@string/show_replies"
         app:actionViewClass="android.widget.CheckBox"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_filter"
+        app:showAsAction="always"
+        android:title="@string/filter_regex" />
 </menu>
