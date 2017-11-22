@@ -282,7 +282,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         Status status = statuses.get(position);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int HIDDEN_STATUS = 0;
-        String filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_HOME, null);
+        String filter;
+        if( type == RetrieveFeedsAsyncTask.Type.HOME)
+            filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_HOME, null);
+        else if( type == RetrieveFeedsAsyncTask.Type.LOCAL)
+            filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_LOCAL, null);
+        else
+            filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_PUBLIC, null);
 
         if( filter != null && filter.length() > 0){
             Pattern filterPattern = Pattern.compile("(" + filter + ")");
