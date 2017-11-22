@@ -123,7 +123,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             @Override
             public void onRefresh() {
                 max_id = null;
-                notifications = new ArrayList<>();
                 firstLoad = true;
                 flag_loading = true;
                 swiped = true;
@@ -184,6 +183,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             swiped = false;
             return;
         }
+        int previousPosition = notifications.size();
         max_id = apiResponse.getMax_id();
         List<Notification> notifications = apiResponse.getNotifications();
 
@@ -192,10 +192,12 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         else
             textviewNoAction.setVisibility(View.GONE);
         if( swiped ){
-            boolean isOnWifi = Helper.isOnWIFI(context);
-            int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-            notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments, this.notifications);
-            lv_notifications.setAdapter(notificationsListAdapter);
+            if (previousPosition > 0) {
+                for (int i = 0; i < previousPosition; i++) {
+                    this.notifications.remove(0);
+                }
+                notificationsListAdapter.notifyItemRangeRemoved(0, previousPosition);
+            }
             swiped = false;
         }
 
@@ -211,7 +213,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 MainActivity.lastNotificationId = notifications.get(0).getId();
                 updateNotificationLastId(sharedpreferences, this.userId, notifications.get(0).getId());
             }
-            notificationsListAdapter.notifyDataSetChanged();
+            notificationsListAdapter.notifyItemRangeInserted(previousPosition, notifications.size());
         }
         if( firstLoad )
             ((MainActivity)context).updateNotifCounter();

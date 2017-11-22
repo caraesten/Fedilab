@@ -16,6 +16,8 @@ package fr.gouv.etalab.mastodon.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.text.Html;
+import android.text.SpannableString;
 
 import org.json.JSONObject;
 import java.io.BufferedInputStream;
@@ -63,7 +65,7 @@ public class HttpsConnection {
     private HttpsURLConnection httpsURLConnection;
     private String since_id, max_id;
     private Context context;
-
+    private int CHUNK_SIZE = 4096;
 
     public HttpsConnection(){}
 
@@ -162,6 +164,7 @@ public class HttpsConnection {
         getSinceMaxId();
         httpsURLConnection.disconnect();
         in.close();
+
         return sb.toString();
 
     }
@@ -204,7 +207,7 @@ public class HttpsConnection {
                         FileOutputStream outputStream = new FileOutputStream(saveFilePath);
 
                         int bytesRead;
-                        byte[] buffer = new byte[1024];
+                        byte[] buffer = new byte[CHUNK_SIZE];
                         int contentSize = httpsURLConnection.getContentLength();
                         int downloadedFileSize = 0;
                         while ((bytesRead = inputStream.read(buffer)) != -1) {
@@ -278,7 +281,7 @@ public class HttpsConnection {
                     ByteArrayOutputStream ous = null;
                     try {
                         try {
-                            byte[] buffer = new byte[4 * 1024]; // or other buffer size
+                            byte[] buffer = new byte[CHUNK_SIZE]; // or other buffer size
                             ous = new ByteArrayOutputStream();
                             int read;
                             while ((read = inputStream.read(buffer)) != -1) {
@@ -296,20 +299,29 @@ public class HttpsConnection {
                     }
                     byte[] pixels = ous.toByteArray();
 
+                    int lengthSent = pixels.length;
+                    lengthSent += 2 * (twoHyphens + boundary + twoHyphens + lineEnd).getBytes().length;
+                    lengthSent += ("Content-Disposition: form-data; name=\"file\";filename=\"picture.png\"" + lineEnd).getBytes().length;
+                    lengthSent += 2 * (lineEnd).getBytes().length;
+
                     httpsURLConnection = (HttpsURLConnection) url.openConnection();
+                    httpsURLConnection.setFixedLengthStreamingMode(lengthSent);
+
                     httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
                         httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
                     httpsURLConnection.setDoInput(true);
                     httpsURLConnection.setDoOutput(true);
                     httpsURLConnection.setUseCaches(false);
+
                     httpsURLConnection.setRequestMethod("POST");
                     if (token != null)
                         httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
                     httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
                     httpsURLConnection.setRequestProperty("Cache-Control", "no-cache");
+                    httpsURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                     httpsURLConnection.setRequestProperty("Content-Type", "multipart/form-data;boundary="+ boundary);
-                    httpsURLConnection.setChunkedStreamingMode(-1);
+
 
                     DataOutputStream request = new DataOutputStream(httpsURLConnection.getOutputStream());
 
@@ -321,15 +333,16 @@ public class HttpsConnection {
 
                     int totalSize = pixels.length;
                     int bytesTransferred = 0;
-                    int chunkSize = 2048;
+
 
                     while (bytesTransferred < totalSize) {
                         int nextChunkSize = totalSize - bytesTransferred;
-                        if (nextChunkSize > chunkSize) {
-                            nextChunkSize = chunkSize;
+                        if (nextChunkSize > CHUNK_SIZE) {
+                            nextChunkSize = CHUNK_SIZE;
                         }
                         request.write(pixels, bytesTransferred, nextChunkSize);
                         bytesTransferred += nextChunkSize;
+
 
                         final int progress = 100 * bytesTransferred / totalSize;
                         ((TootActivity)context).runOnUiThread(new Runnable() {
@@ -342,7 +355,6 @@ public class HttpsConnection {
                     request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
                     request.flush();
                     request.close();
-
                     if (200 != httpsURLConnection.getResponseCode()) {
                         Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getErrorStream(), "UTF-8"));
                         StringBuilder sb = new StringBuilder();
@@ -433,25 +445,16 @@ public class HttpsConnection {
         httpsURLConnection.setDoInput(true);
         httpsURLConnection.setDoOutput(true);
 
-        if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
-            DataOutputStream dataOutputStream = new DataOutputStream(httpsURLConnection.getOutputStream());
-            dataOutputStream.write(postDataBytes);
-            Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream(), "UTF-8"));
-            StringBuilder sb = new StringBuilder();
-            for (int c; (c = in.read()) >= 0;)
-                sb.append((char)c);
-            getSinceMaxId();
-            httpsURLConnection.disconnect();
-            in.close();
-            return sb.toString();
-        }else {
-            Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getErrorStream(), "UTF-8"));
-            StringBuilder sb = new StringBuilder();
-            for (int c; (c = in.read()) >= 0; )
-                sb.append((char) c);
-            httpsURLConnection.disconnect();
-            throw new HttpsConnectionException(httpsURLConnection.getResponseCode(), sb.toString());
-        }
+        httpsURLConnection.getOutputStream().write(postDataBytes);
+        Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream(), "UTF-8"));
+        StringBuilder sb = new StringBuilder();
+        for (int c; (c = in.read()) >= 0;)
+            sb.append((char)c);
+        getSinceMaxId();
+        httpsURLConnection.disconnect();
+        in.close();
+
+        return sb.toString();
 
     }
 
@@ -490,23 +493,16 @@ public class HttpsConnection {
         httpsURLConnection.setDoOutput(true);
         getSinceMaxId();
 
-        if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
-            httpsURLConnection.getOutputStream().write(postDataBytes);
-            Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream(), "UTF-8"));
-            StringBuilder sb = new StringBuilder();
-            for (int c; (c = in.read()) >= 0;)
-                sb.append((char)c);
-            httpsURLConnection.disconnect();
-            in.close();
-            return sb.toString();
-        }else {
-            Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getErrorStream(), "UTF-8"));
-            StringBuilder sb = new StringBuilder();
-            for (int c; (c = in.read()) >= 0; )
-                sb.append((char) c);
-            httpsURLConnection.disconnect();
-            throw new HttpsConnectionException(httpsURLConnection.getResponseCode(), sb.toString());
-        }
+        httpsURLConnection.getOutputStream().write(postDataBytes);
+        Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream(), "UTF-8"));
+        StringBuilder sb = new StringBuilder();
+        for (int c; (c = in.read()) >= 0;)
+            sb.append((char)c);
+        getSinceMaxId();
+        httpsURLConnection.disconnect();
+        in.close();
+
+        return sb.toString();
 
     }
 
@@ -602,10 +598,15 @@ public class HttpsConnection {
 
         private int statusCode;
         private String message;
-
         HttpsConnectionException(int statusCode, String message) {
             this.statusCode = statusCode;
-            this.message = message;
+            SpannableString spannableString;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                spannableString = new SpannableString(Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY));
+            else
+                //noinspection deprecation
+                spannableString = new SpannableString(Html.fromHtml(message));
+            this.message = spannableString.toString();
         }
 
 
