@@ -396,9 +396,11 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                             sharedContent = title + "\n\n" + description + "\n\n" + sharedContentIni;
                         else
                             sharedContent = description + "\n\n" + sharedContentIni;
+                        int selectionBefore = toot_content.getSelectionStart();
                         toot_content.setText(sharedContent);
+                        if( selectionBefore >= 0 && selectionBefore < toot_content.length())
+                            toot_content.setSelection(selectionBefore);
                         toot_space_left.setText(String.valueOf(toot_content.length()));
-                        toot_content.setSelection(toot_content.getText().length());
                     }
                     if( image != null){
                         new HttpsConnection(TootActivity.this).download(image, TootActivity.this);
@@ -407,7 +409,10 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                 }
             };
             LocalBroadcastManager.getInstance(this).registerReceiver(receive_picture, new IntentFilter(Helper.RECEIVE_PICTURE));
+            int selectionBefore = toot_content.getSelectionStart();
             toot_content.setText( String.format("\n%s", sharedContent));
+            if( selectionBefore >= 0 && selectionBefore < toot_content.length())
+                toot_content.setSelection(selectionBefore);
             toot_space_left.setText(String.valueOf(toot_content.length()));
         }
         attachments = new ArrayList<>();
@@ -1146,11 +1151,10 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             if (show_media_urls) {
                 //Adds the shorter text_url of attachment at the end of the toot 
                 int selectionBefore = toot_content.getSelectionStart();
-                toot_content.setText(String.format("%s\n%s",toot_content.getText().toString(), attachment.getText_url()));
+                toot_content.setText(String.format("%s\n\n%s",toot_content.getText().toString(), attachment.getText_url()));
                 toot_space_left.setText(String.valueOf(toot_content.length()));
                 //Moves the cursor
-                if (selectionBefore >= 0)
-                    toot_content.setSelection(selectionBefore);
+                toot_content.setSelection(selectionBefore);
             }
             toot_picture_container.addView(imageView, attachments.size(), imParams);
             imageView.setOnLongClickListener(new View.OnLongClickListener() {

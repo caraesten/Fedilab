@@ -922,7 +922,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
                     while (matcher.find()){
                         int matchStart = matcher.start(1);
                         int matchEnd = matcher.end();
-                        if(matchStart < matchEnd && sharedText.length() > matchEnd)
+                        if(matchStart < matchEnd && sharedText.length() >= matchEnd)
                             sharedText = sharedText.substring(matchStart, matchEnd);
                     }
                     new RetrieveMetaDataAsyncTask(sharedText, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
