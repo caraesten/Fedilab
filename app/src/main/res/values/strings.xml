@@ -446,4 +446,5 @@
 
     <string name="filter_regex">Filter out by regular expressions</string>
     <string name="search">Search</string>
+    <string name="delete">Delete</string>
 </resources>

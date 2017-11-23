@@ -16,14 +16,22 @@ package fr.gouv.etalab.mastodon.drawers;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.SearchResultActivity;
+import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 
 /**
@@ -34,10 +42,14 @@ public class SearchTootsListAdapter extends BaseAdapter  {
 
     private List<String> searches;
     private LayoutInflater layoutInflater;
+    private Context context;
+    private SearchTootsListAdapter searchTootsListAdapter;
 
     public SearchTootsListAdapter(Context context, List<String> searches){
         this.searches = searches;
         layoutInflater = LayoutInflater.from(context);
+        this.context = context;
+        this.searchTootsListAdapter = this;
     }
 
     @Override
@@ -59,21 +71,52 @@ public class SearchTootsListAdapter extends BaseAdapter  {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        final String tag = searches.get(position);
+        final String search = searches.get(position);
         final ViewHolder holder;
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.drawer_search, parent, false);
             holder = new ViewHolder();
             holder.search_title = convertView.findViewById(R.id.search_keyword);
+            holder.search_container = convertView.findViewById(R.id.search_container);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.search_title.setText(tag);
+        holder.search_title.setText(search);
         holder.search_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(context, SearchResultActivity.class);
+                intent.putExtra("search", search);
+                intent.putExtra("tootOnly", true);
+                context.startActivity(intent);
+            }
+        });
+        final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
 
+        holder.search_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage(R.string.delete + ": " + search);
+                builder.setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                new SearchDAO(context, db).remove(search.trim());
+                                searches.remove(search);
+                                searchTootsListAdapter.notifyDataSetChanged();
+                                dialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
             }
         });
         return convertView;
@@ -81,6 +124,7 @@ public class SearchTootsListAdapter extends BaseAdapter  {
 
 
     private class ViewHolder {
+        LinearLayout search_container;
         TextView search_title;
     }
 

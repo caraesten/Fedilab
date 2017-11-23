@@ -23,16 +23,20 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.drawers.SearchTootsListAdapter;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.R;
@@ -51,7 +55,7 @@ public class DisplaySearchFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_drafts, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_search, container, false);
         context = getContext();
 
         final ListView lv_search_toots = rootView.findViewById(R.id.lv_search_toots);
@@ -61,11 +65,13 @@ public class DisplaySearchFragment extends Fragment {
         mainLoader.setVisibility(View.VISIBLE);
         final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         List<String> searches = new SearchDAO(context, db).getAllSearch();
-        if( searches != null && searches.size() > 0) {
-            searchTootsListAdapter = new SearchTootsListAdapter(context, searches);
-            lv_search_toots.setAdapter(searchTootsListAdapter);
-            searchTootsListAdapter.notifyDataSetChanged();
-        }else {
+        if( searches == null)
+            searches = new ArrayList<>();
+        Log.v(Helper.TAG,"searches: " + searches);
+        searchTootsListAdapter = new SearchTootsListAdapter(context, searches);
+        lv_search_toots.setAdapter(searchTootsListAdapter);
+        searchTootsListAdapter.notifyDataSetChanged();
+        if( searches.size() == 0) {
             textviewNoAction.setVisibility(View.VISIBLE);
         }
         mainLoader.setVisibility(View.GONE);
@@ -77,43 +83,32 @@ public class DisplaySearchFragment extends Fragment {
             add_new.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle(R.string.search);
-                    builder.setIcon(android.R.drawable.ic_menu_search)
-                            .setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogConfirm, int which) {
-
-                                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
-                                    LayoutInflater inflater = getLayoutInflater();
-                                    @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.search_toot, null);
-                                    dialogBuilder.setView(dialogView);
-                                    final EditText editText = dialogView.findViewById(R.id.search_toot);
-                                    dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int id) {
-                                           String keyword = editText.getText().toString().trim();
-                                           //Already in db
-                                           List<String> searches = new SearchDAO(context, db).getSearchByKeyword(keyword);
-                                            if( searches.size() > 0){
-                                                return;
-                                            }
-                                            new SearchDAO(context, db).insertSearch(keyword);
-                                            searches.add(keyword);
-                                            searchTootsListAdapter.notifyDataSetChanged();
-                                        }
-                                    });
-                                    AlertDialog alertDialog = dialogBuilder.create();
-                                    alertDialog.show();
-                                }
-                            })
-                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogConfirm, int which) {
-                                    dialogConfirm.dismiss();
-                                }
-                            })
-                            .show();
+                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+                    LayoutInflater inflater = getLayoutInflater();
+                    @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.search_toot, null);
+                    dialogBuilder.setView(dialogView);
+                    final EditText editText = dialogView.findViewById(R.id.search_toot);
+                    dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            String keyword = editText.getText().toString().trim();
+                            //Empty
+                            if( keyword.length() == 0)
+                                return;
+                            //Already in db
+                            List<String> searches = new SearchDAO(context, db).getSearchByKeyword(keyword);
+                            if( searches == null)
+                                searches = new ArrayList<>();
+                            if( searches.size() > 0){
+                                return;
+                            }
+                            new SearchDAO(context, db).insertSearch(keyword);
+                            searches.add(keyword);
+                            searchTootsListAdapter.notifyDataSetChanged();
+                        }
+                    });
+                    AlertDialog alertDialog = dialogBuilder.create();
+                    alertDialog.show();
                 }
             });
         return rootView;

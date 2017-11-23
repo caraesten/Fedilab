@@ -24,10 +24,14 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveTootsAsyncTask;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
@@ -35,7 +39,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.SearchListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchInterface;
-
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchStatusInterface;
 
 
 /**
@@ -43,7 +47,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchInterface;
  * Show search results within two tabs: Toots and accounts
  */
 
-public class SearchResultActivity extends AppCompatActivity implements OnRetrieveSearchInterface {
+public class SearchResultActivity extends AppCompatActivity implements OnRetrieveSearchInterface, OnRetrieveSearchStatusInterface {
 
 
     private String search;
@@ -68,8 +72,11 @@ public class SearchResultActivity extends AppCompatActivity implements OnRetriev
         Bundle b = getIntent().getExtras();
         if(b != null){
             search = b.getString("search");
-            if( search != null)
+            boolean tootOnly = b.getBoolean("tootOnly", false);
+            if( !tootOnly && search != null)
                 new RetrieveSearchAsyncTask(getApplicationContext(), search.trim(), SearchResultActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            else if(tootOnly)
+                new RetrieveTootsAsyncTask(getApplicationContext(), search.trim(), SearchResultActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             else
                 Toast.makeText(this,R.string.toast_error_search,Toast.LENGTH_LONG).show();
         }else{
@@ -124,5 +131,23 @@ public class SearchResultActivity extends AppCompatActivity implements OnRetriev
     }
 
 
+    @Override
+    public void onRetrieveSearchStatus(APIResponse apiResponse, Error error) {
+        loader.setVisibility(View.GONE);
+        if( apiResponse.getError() != null){
+            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages)
+                Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
+        lv_search.setVisibility(View.VISIBLE);
+        List<String> tags = new ArrayList<>();
+        List<Account> accounts = new ArrayList<>();
+        List<Status> statuses = apiResponse.getStatuses();
 
+        SearchListAdapter searchListAdapter = new SearchListAdapter(SearchResultActivity.this, statuses, accounts, tags);
+        lv_search.setAdapter(searchListAdapter);
+        searchListAdapter.notifyDataSetChanged();
+    }
 }

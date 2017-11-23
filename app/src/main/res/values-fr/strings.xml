@@ -441,4 +441,5 @@
     <string name="filter_regex">Filtrer avec une expression rationnelle</string>
 
     <string name="search">Rechercher</string>
+    <string name="delete">Supprimer</string>
 </resources>

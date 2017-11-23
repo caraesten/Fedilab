@@ -1133,6 +1133,39 @@ public class API {
         return apiResponse;
     }
 
+
+    /**
+     * Retrieves Accounts when searching (ie: via @...) *synchronously*
+     *
+     * @param query  String search
+     * @return APIResponse
+     */
+    public APIResponse searchStatus(String query, int count) {
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("q", query);
+        if( count < 5)
+            count = 5;
+        if( count > 40 )
+            count = 40;
+        params.put("limit", String.valueOf(count));
+
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection();
+            String response = httpsConnection.get(getAbsoluteUrl("/statuses/search"), 60, params, null);
+            statuses = parseStatuses(new JSONArray(response));
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            setDefaultError();
+            e.printStackTrace();
+        }
+        apiResponse.setStatuses(statuses);
+        return apiResponse;
+    }
+
     /**
      * Parse json response an unique account
      * @param resobj JSONObject
