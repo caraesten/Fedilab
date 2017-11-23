@@ -258,23 +258,11 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         if( context == null)
             return;
         max_id = null;
-        notifications = new ArrayList<>();
         firstLoad = true;
         flag_loading = true;
         swiped = true;
         MainActivity.countNewNotifications = 0;
-        if( context != null)
-            asyncTask = new RetrieveNotificationsAsyncTask(context, true, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        else {
-            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if( context != null){
-                        asyncTask = new RetrieveNotificationsAsyncTask(context, true, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    }
-                }
-            }, 500);
-        }
+        asyncTask = new RetrieveNotificationsAsyncTask(context, true, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 
