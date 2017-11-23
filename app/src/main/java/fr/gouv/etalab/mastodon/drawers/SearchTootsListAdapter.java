@@ -27,27 +27,27 @@ import fr.gouv.etalab.mastodon.R;
 
 
 /**
- * Created by Thomas on 26/05/2017.
- * Adapter for tags when searching
+ * Created by Thomas on 22/11/2017.
+ * Adapter for search
  */
-public class TagsListAdapter extends BaseAdapter  {
+public class SearchTootsListAdapter extends BaseAdapter  {
 
-    private List<String> tags;
+    private List<String> searches;
     private LayoutInflater layoutInflater;
 
-    public TagsListAdapter(Context context, List<String> tags){
-        this.tags = tags;
+    public SearchTootsListAdapter(Context context, List<String> searches){
+        this.searches = searches;
         layoutInflater = LayoutInflater.from(context);
     }
 
     @Override
     public int getCount() {
-        return tags.size();
+        return searches.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return tags.get(position);
+        return searches.get(position);
     }
 
     @Override
@@ -59,18 +59,18 @@ public class TagsListAdapter extends BaseAdapter  {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        final String tag = tags.get(position);
+        final String tag = searches.get(position);
         final ViewHolder holder;
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.drawer_tag, parent, false);
+            convertView = layoutInflater.inflate(R.layout.drawer_search, parent, false);
             holder = new ViewHolder();
-            holder.tag_name = (TextView) convertView.findViewById(R.id.tag_name);
+            holder.search_title = convertView.findViewById(R.id.search_keyword);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.tag_name.setText(tag);
-        holder.tag_name.setOnClickListener(new View.OnClickListener() {
+        holder.search_title.setText(tag);
+        holder.search_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -81,7 +81,7 @@ public class TagsListAdapter extends BaseAdapter  {
 
 
     private class ViewHolder {
-        TextView tag_name;
+        TextView search_title;
     }
 
 

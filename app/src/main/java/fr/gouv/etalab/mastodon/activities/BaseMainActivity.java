@@ -90,6 +90,7 @@ import fr.gouv.etalab.mastodon.fragments.DisplayDraftsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayFollowRequestSentFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayScheduledTootsFragment;
+import fr.gouv.etalab.mastodon.fragments.DisplaySearchFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveInstanceInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMetaDataInterface;
@@ -120,7 +121,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 public abstract class BaseMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface {
 
-    private FloatingActionButton toot, delete_all;
+    private FloatingActionButton toot, delete_all, add_new;
     private HashMap<String, String> tagTile = new HashMap<>();
     private HashMap<String, Integer> tagItem = new HashMap<>();
     private TextView toolbarTitle;
@@ -568,6 +569,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
 
         toot = findViewById(R.id.toot);
         delete_all = findViewById(R.id.delete_all);
+        add_new = findViewById(R.id.add_new);
         toot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -1086,6 +1088,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 tabLayout.setVisibility(View.VISIBLE);
                 toolbarTitle.setVisibility(View.GONE);
                 delete_all.setVisibility(View.GONE);
+                add_new.setVisibility(View.GONE);
                 final NavigationView navigationView = findViewById(R.id.nav_view);
                 unCheckAllMenuItems(navigationView);
                 toot.setVisibility(View.VISIBLE);
@@ -1258,6 +1261,11 @@ public abstract class BaseMainActivity extends AppCompatActivity
         }else{
             delete_all.setVisibility(View.VISIBLE);
         }
+        if( id != R.id.nav_search){
+            add_new.setVisibility(View.GONE);
+        }else{
+            add_new.setVisibility(View.VISIBLE);
+        }
         if (id == R.id.nav_settings) {
             toot.setVisibility(View.GONE);
             TabLayoutSettingsFragment tabLayoutSettingsFragment= new TabLayoutSettingsFragment();
@@ -1296,11 +1304,16 @@ public abstract class BaseMainActivity extends AppCompatActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayScheduledTootsFragment, fragmentTag).commit();
         }else if (id == R.id.nav_drafts) {
-            toot.setVisibility(View.VISIBLE);
             DisplayDraftsFragment displayDraftsFragment = new DisplayDraftsFragment();
             fragmentTag = "DRAFTS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayDraftsFragment, fragmentTag).commit();
+            toot.setVisibility(View.GONE);
+        }else if (id == R.id.nav_search) {
+            DisplaySearchFragment displaySearchFragment = new DisplaySearchFragment();
+            fragmentTag = "SEARCH";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, displaySearchFragment, fragmentTag).commit();
             toot.setVisibility(View.GONE);
         }else if( id == R.id.nav_follow_request){
             toot.setVisibility(View.GONE);

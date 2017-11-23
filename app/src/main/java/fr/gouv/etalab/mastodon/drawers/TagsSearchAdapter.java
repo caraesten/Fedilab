@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.drawers;
 
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +64,7 @@ public class TagsSearchAdapter extends ArrayAdapter<String> implements Filterabl
     }
 
 
+    @NonNull
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
@@ -71,7 +73,7 @@ public class TagsSearchAdapter extends ArrayAdapter<String> implements Filterabl
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.drawer_tag_search, parent, false);
             holder = new ViewHolder();
-            holder.tag_name = (TextView) convertView.findViewById(R.id.tag_name);
+            holder.tag_name = convertView.findViewById(R.id.tag_name);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -81,6 +83,7 @@ public class TagsSearchAdapter extends ArrayAdapter<String> implements Filterabl
         return convertView;
     }
 
+    @NonNull
     @Override
     public Filter getFilter() {
         return searchFilter;
