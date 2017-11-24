@@ -20,13 +20,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.lang.ref.WeakReference;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.sqlite.CustomEmojiDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 
@@ -68,6 +72,7 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
             if( account.getUsername() != null && account.getCreated_at() != null)
                 new AccountDAO(this.contextReference.get(), db).insertAccount(account);
         }
+
         return null;
     }
 

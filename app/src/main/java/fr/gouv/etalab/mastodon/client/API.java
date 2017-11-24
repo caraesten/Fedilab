@@ -1110,6 +1110,31 @@ public class API {
         return apiResponse;
     }
 
+
+
+    /**
+     * Retrieves Accounts when searching (ie: via @...) *synchronously*
+     *
+     * @return APIResponse
+     */
+    public APIResponse getCustomEmoji() {
+        List<Emojis> emojis = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection();
+            String response = httpsConnection.get(getAbsoluteUrl("/custom_emojis"), 60, null, prefKeyOauthTokenT);
+            emojis = parseEmojis(new JSONArray(response));
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        apiResponse.setEmojis(emojis);
+        return apiResponse;
+    }
+
     /**
      * Parse json response an unique account
      * @param resobj JSONObject
@@ -1242,10 +1267,7 @@ public class API {
                 if( arrayTag != null){
                     for(int j = 0 ; j < emojisTag.length() ; j++){
                         JSONObject emojisObj = emojisTag.getJSONObject(j);
-                        Emojis emojis = new Emojis();
-                        emojis.setShortcode(emojisObj.get("shortcode").toString());
-                        emojis.setStatic_url(emojisObj.get("static_url").toString());
-                        emojis.setUrl(emojisObj.get("url").toString());
+                        Emojis emojis = parseEmojis(emojisObj);
                         emojiList.add(emojis);
                     }
                 }
@@ -1301,6 +1323,47 @@ public class API {
             e.printStackTrace();
         }
         return instance;
+    }
+
+
+
+    /**
+     * Parse emojis
+     * @param jsonArray JSONArray
+     * @return List<Emojis> of emojis
+     */
+    private List<Emojis> parseEmojis(JSONArray jsonArray){
+        List<Emojis> emojis = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length() ) {
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                Emojis emojis1 = parseEmojis(resobj);
+                emojis.add(emojis1);
+                i++;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return emojis;
+    }
+
+
+    /**
+     * Parse json response for emoji
+     * @param resobj JSONObject
+     * @return Emojis
+     */
+    private static Emojis parseEmojis(JSONObject resobj){
+        Emojis emojis = new Emojis();
+        try {
+            emojis.setShortcode(resobj.get("shortcode").toString());
+            emojis.setStatic_url(resobj.get("static_url").toString());
+            emojis.setUrl(resobj.get("url").toString());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return emojis;
     }
 
     /**

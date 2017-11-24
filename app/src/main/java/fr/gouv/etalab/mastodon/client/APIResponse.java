@@ -30,6 +30,7 @@ public class APIResponse {
     private List<Context> contexts = null;
     private List<Notification> notifications = null;
     private List<Relationship> relationships = null;
+    private List<Emojis> emojis = null;
     private fr.gouv.etalab.mastodon.client.Entities.Error error = null;
     private String since_id, max_id;
     private Instance instance;
@@ -104,5 +105,13 @@ public class APIResponse {
 
     public void setRelationships(List<Relationship> relationships) {
         this.relationships = relationships;
+    }
+
+    public List<Emojis> getEmojis() {
+        return emojis;
+    }
+
+    public void setEmojis(List<Emojis> emojis) {
+        this.emojis = emojis;
     }
 }

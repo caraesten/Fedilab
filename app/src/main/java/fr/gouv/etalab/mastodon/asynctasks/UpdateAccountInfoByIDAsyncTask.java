@@ -22,10 +22,13 @@ import android.os.AsyncTask;
 import java.lang.ref.WeakReference;
 
 import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.CustomEmojiDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 /**
@@ -60,6 +63,15 @@ public class UpdateAccountInfoByIDAsyncTask extends AsyncTask<Void, Void, Void> 
                 new AccountDAO(this.contextReference.get(), db).updateAccount(account);
             }
         }
+        try {
+            APIResponse response = new API(contextReference.get()).getCustomEmoji();
+            if( response != null && response.getEmojis() != null && response.getEmojis().size() > 0){
+                new CustomEmojiDAO(contextReference.get(), db).removeAll();
+                for(Emojis emojis: response.getEmojis()){
+                    new CustomEmojiDAO(contextReference.get(), db).insertEmoji(emojis);
+                }
+            }
+        }catch (Exception ignored){}
         return null;
     }
 

@@ -139,7 +139,6 @@ import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
-import fr.gouv.etalab.mastodon.sqlite.CustomEmojiDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
@@ -1236,15 +1235,6 @@ public class Helper {
                     .cacheOnDisk(true).resetViewBeforeLoading(true).build();
             imageLoader = ImageLoader.getInstance();
             for (final Emojis emoji : emojis) {
-                boolean sameInstance;
-                if( instance != null) {
-                    if (status.getReblog() == null)
-                        sameInstance = status.getUri().contains(instance);
-                    else
-                        sameInstance = status.getReblog().getUri().contains(instance);
-                    if (sameInstance)
-                        storeEmoji(context, db, emoji);
-                }
                 NonViewAware imageAware = new NonViewAware(new ImageSize(50, 50), ViewScaleType.CROP);
                 imageLoader.displayImage(emoji.getUrl(), imageAware, options, new SimpleImageLoadingListener() {
                     @Override
@@ -1334,21 +1324,6 @@ public class Helper {
         return spannableString;
     }
 
-    /**
-     * Manage custom emoji to store or update them
-     * @param context Context
-     * @param db SQLiteDatabase
-     * @param emojis Emojis
-     */
-    private static void storeEmoji(Context context, SQLiteDatabase db, Emojis emojis){
-        try{
-            Emojis emoji_ = new CustomEmojiDAO(context, db).getEmoji(emojis.getShortcode());
-            if( emoji_ == null)
-                new CustomEmojiDAO(context, db).insertEmoji(emojis);
-            else
-                new CustomEmojiDAO(context, db).updateEmoji(emojis);
-        }catch (Exception ignored){}
-    }
 
     /**
      * Check if the account bio contents urls & tags and fills the content with ClickableSpan
