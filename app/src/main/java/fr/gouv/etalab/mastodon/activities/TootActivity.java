@@ -1088,7 +1088,10 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         Version currentVersion = new Version(instanceVersion);
         Version minVersion = new Version("2.0");
         MenuItem itemEmoji = menu.findItem(R.id.action_emoji);
-        if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
+        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        final List<Emojis>  emojis = new CustomEmojiDAO(getApplicationContext(), db).getAllEmojis();
+        //Displays button only if custom emojis
+        if (emojis != null && emojis.size() > 0 && (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion))) {
             itemEmoji.setVisible(true);
         }else{
             itemEmoji.setVisible(false);

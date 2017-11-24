@@ -92,6 +92,14 @@ public class CustomEmojiDAO {
         return db.delete(Sqlite.TABLE_CUSTOM_EMOJI,  Sqlite.COL_SHORTCODE + " = \"" + emoji.getShortcode() + "\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance+ "\"", null);
     }
 
+    /***
+     * Remove emoji by id
+     */
+    public void removeAll(){
+        String instance = Helper.getLiveInstance(context);
+        db.delete(Sqlite.TABLE_CUSTOM_EMOJI, Sqlite.COL_INSTANCE + " = \"" + instance + "\"", null);
+    }
+
     //------- GETTERS  -------
 
     /**
