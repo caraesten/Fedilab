@@ -143,7 +143,6 @@ public class HashTagActivity extends AppCompatActivity implements OnRetrieveFeed
                         nextElementLoader.setVisibility(View.GONE);
                     }
                 }
-
             }
         });
         new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.TAG, tag,null, max_id, HashTagActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
