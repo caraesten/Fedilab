@@ -1153,6 +1153,48 @@ public class API {
         return results;
     }
 
+
+    /**
+     * Parse json response an unique instance social result
+     * @param resobj JSONObject
+     * @return InstanceSocial
+     */
+    public static InstanceSocial parseInstanceSocialResponse(Context context, JSONObject resobj){
+
+        InstanceSocial instanceSocial = new InstanceSocial();
+        try {
+            instanceSocial.setAdded_at(Helper.mstStringToDate(context, resobj.get("added_at").toString()));
+            instanceSocial.setChecked_at(Helper.mstStringToDate(context, resobj.get("checked_at").toString()));
+            instanceSocial.setUpdated_at(Helper.mstStringToDate(context, resobj.get("updated_at").toString()));
+
+            instanceSocial.setUptime(Float.parseFloat(resobj.get("uptime").toString()));
+            instanceSocial.setUp(Boolean.parseBoolean(resobj.get("up").toString()));
+
+            instanceSocial.setConnections(Long.parseLong(resobj.get("connections").toString()));
+            instanceSocial.setDead(Boolean.parseBoolean(resobj.get("dead").toString()));
+            instanceSocial.setHttps_rank(resobj.get("https_rank").toString());
+            instanceSocial.setHttps_score(Integer.parseInt(resobj.get("https_score").toString()));
+            instanceSocial.setId(resobj.get("id").toString());
+
+            instanceSocial.setInfo(resobj.get("info").toString());
+            instanceSocial.setVersion(resobj.get("version").toString());
+            instanceSocial.setName(resobj.get("name").toString());
+            instanceSocial.setObs_rank(resobj.get("obs_rank").toString());
+            instanceSocial.setThumbnail(resobj.get("thumbnail").toString());
+            instanceSocial.setIpv6(Boolean.parseBoolean(resobj.get("ipv6").toString()));
+            instanceSocial.setObs_score(Integer.parseInt(resobj.get("obs_score").toString()));
+            instanceSocial.setOpen_registrations(Boolean.parseBoolean(resobj.get("open_registrations").toString()));
+
+            instanceSocial.setUsers(Long.parseLong(resobj.get("users").toString()));
+            instanceSocial.setStatuses(Long.parseLong(resobj.get("statuses").toString()));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return instanceSocial;
+    }
+
+
     /**
      * Parse Tags
      * @param jsonArray JSONArray

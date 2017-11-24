@@ -20,10 +20,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
+
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.Entities.InstanceSocial;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.helper.Helper;
 
@@ -35,7 +39,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 
 public class InstanceHealthActivity extends AppCompatActivity {
 
-
+    private InstanceSocial instanceSocial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +79,8 @@ public class InstanceHealthActivity extends AppCompatActivity {
                     HashMap<String, String> parameters = new HashMap<>();
                     parameters.put("name", instance.trim());
                     final String response = new HttpsConnection().get("https://instances.social/api/1.0/instances/show", 30, parameters, Helper.THEKINRAR_SECRET_TOKEN );
-                    Log.v(Helper.TAG,"resp: " + response);
+                    if( response != null)
+                        instanceSocial = API.parseInstanceSocialResponse(getApplicationContext(), new JSONObject(response));
                     runOnUiThread(new Runnable() {
                         public void run() {
 

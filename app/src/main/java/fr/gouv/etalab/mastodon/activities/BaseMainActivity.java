@@ -40,7 +40,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -85,7 +84,6 @@ import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
-import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayDraftsFragment;
@@ -231,28 +229,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
         startSreaming(false);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
-        new Thread(new Runnable(){
-            @Override
-            public void run() {
-                try {
-                    HashMap<String, String> parameters = new HashMap<>();
-                    parameters.put("name", "mastodon.social");
-                    final String response = new HttpsConnection().get("https://instances.social/api/1.0/instances/show", 30, parameters, Helper.THEKINRAR_SECRET_TOKEN );
-                    Log.v(Helper.TAG,"resp: " + response);
-                    runOnUiThread(new Runnable() {
-                        public void run() {
 
-
-                        }
-                    });
-
-                } catch (HttpsConnection.HttpsConnectionException e) {
-                    e.printStackTrace();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
         tabLayout.addTab(tabHome);
         tabLayout.addTab(tabNotif);
         if( display_local)
