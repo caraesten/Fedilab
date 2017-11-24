@@ -16,19 +16,45 @@ package fr.gouv.etalab.mastodon.activities;
 
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.HashMap;
+
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.InstanceSocial;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
+import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 
 
@@ -40,11 +66,16 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 public class InstanceHealthActivity extends AppCompatActivity {
 
     private InstanceSocial instanceSocial;
+    private TextView name, values, checked_at, up, uptime;
+    private ImageLoader imageLoader;
+    private DisplayImageOptions option;
+    private String instance;
+    private LinearLayout container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
@@ -52,9 +83,32 @@ public class InstanceHealthActivity extends AppCompatActivity {
         }else {
             setTheme(R.style.AppThemeDark);
         }
-        setContentView(R.layout.activity_remote_follow);
+        setContentView(R.layout.activity_instance_social);
+        Bundle b = getIntent().getExtras();
+        instance =  Helper.getLiveInstance(getApplicationContext());
+        if(b != null)
+            instance = b.getString("instance", Helper.getLiveInstance(getApplicationContext()));
 
-        checkInstance("mastodon.social");
+
+        name = findViewById(R.id.name);
+        values = findViewById(R.id.values);
+        checked_at = findViewById(R.id.checked_at);
+        up = findViewById(R.id.up);
+        uptime = findViewById(R.id.uptime);
+        container = findViewById(R.id.container);
+        option = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
+                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+        imageLoader = ImageLoader.getInstance();
+        File cacheDir = new File(getCacheDir(), getString(R.string.app_name));
+        ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(this)
+                .imageDownloader(new PatchBaseImageDownloader(getApplicationContext()))
+                .threadPoolSize(5)
+                .threadPriority(Thread.MIN_PRIORITY + 3)
+                .denyCacheImageMultipleSizesInMemory()
+                .diskCache(new UnlimitedDiskCache(cacheDir))
+                .build();
+        imageLoader.init(configImg);
+        checkInstance();
     }
 
     @Override
@@ -69,7 +123,8 @@ public class InstanceHealthActivity extends AppCompatActivity {
     }
 
 
-    private void checkInstance(final String instance){
+    private void checkInstance(){
+
         if( instance == null)
             return;
         new Thread(new Runnable(){
@@ -82,9 +137,34 @@ public class InstanceHealthActivity extends AppCompatActivity {
                     if( response != null)
                         instanceSocial = API.parseInstanceSocialResponse(getApplicationContext(), new JSONObject(response));
                     runOnUiThread(new Runnable() {
+                        @SuppressLint("SetTextI18n")
                         public void run() {
+                            if( instanceSocial.getThumbnail() != null && !instanceSocial.getThumbnail().equals("null"))
+                                imageLoader.loadImage(instanceSocial.getThumbnail(), option, new SimpleImageLoadingListener() {
+                                    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
+                                    @Override
+                                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                                        super.onLoadingComplete(imageUri, view, loadedImage);
+                                        Bitmap workingBitmap = Bitmap.createBitmap(loadedImage);
+                                        Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
+                                        Canvas canvas = new Canvas(mutableBitmap);
+                                        Paint p = new Paint(Color.BLACK);
+                                        ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);
+                                        p.setColorFilter(filter);
+                                        canvas.drawBitmap(mutableBitmap, new Matrix(), p);
+                                        BitmapDrawable background = new BitmapDrawable(getResources(), mutableBitmap);
+                                        container.setBackground(background);
 
-
+                                    }
+                                    @Override
+                                    public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason) {
+                                    }
+                                });
+                            name.setText(instanceSocial.getName());
+                            up.setText(Boolean.toString(instanceSocial.isUp()));
+                            uptime.setText(Float.toString(instanceSocial.getUptime()));
+                            checked_at.setText(Helper.dateToString(getApplicationContext(), instanceSocial.getUpdated_at()));
+                            values.setText(String.format("version: %s - %s users - %s statuses", instanceSocial.getVersion(), Long.toString(instanceSocial.getUsers()), Long.toString(instanceSocial.getStatuses())));
                         }
                     });
 

@@ -172,5 +172,8 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
             />
+        <activity android:name=".activities.InstanceHealthActivity"
+            android:theme="@style/Base.AlertDialog.AppCompat"
+            android:excludeFromRecents="true"/>
     </application>
 </manifest>
