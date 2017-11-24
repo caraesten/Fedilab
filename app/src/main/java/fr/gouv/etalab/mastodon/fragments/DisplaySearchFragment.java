@@ -23,6 +23,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,6 +87,7 @@ public class DisplaySearchFragment extends Fragment {
                     @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.search_toot, null);
                     dialogBuilder.setView(dialogView);
                     final EditText editText = dialogView.findViewById(R.id.search_toot);
+                    editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});
                     dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
