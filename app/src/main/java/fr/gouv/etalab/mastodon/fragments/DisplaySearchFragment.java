@@ -23,7 +23,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,8 +66,7 @@ public class DisplaySearchFragment extends Fragment {
         List<String> searches = new SearchDAO(context, db).getAllSearch();
         if( searches == null)
             searches = new ArrayList<>();
-        Log.v(Helper.TAG,"searches: " + searches);
-        searchTootsListAdapter = new SearchTootsListAdapter(context, searches);
+        searchTootsListAdapter = new SearchTootsListAdapter(context, searches, textviewNoAction);
         lv_search_toots.setAdapter(searchTootsListAdapter);
         searchTootsListAdapter.notifyDataSetChanged();
         if( searches.size() == 0) {

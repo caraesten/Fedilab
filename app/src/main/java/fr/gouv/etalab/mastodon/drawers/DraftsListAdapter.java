@@ -29,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -54,6 +55,7 @@ public class DraftsListAdapter extends BaseAdapter  {
     private Context context;
     private DraftsListAdapter draftsListAdapter;
     private boolean clickable;
+    private RelativeLayout textviewNoAction;
 
     public DraftsListAdapter(Context context, List<StoredStatus> storedStatuses){
         this.storedStatuses = storedStatuses;
@@ -63,12 +65,13 @@ public class DraftsListAdapter extends BaseAdapter  {
         this.clickable = false;
     }
 
-    public DraftsListAdapter(Context context, List<StoredStatus> storedStatuses, boolean clickable){
+    public DraftsListAdapter(Context context, List<StoredStatus> storedStatuses, boolean clickable, RelativeLayout textviewNoAction){
         this.storedStatuses = storedStatuses;
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
         draftsListAdapter = this;
         this.clickable = clickable;
+        this.textviewNoAction = textviewNoAction;
     }
 
     @Override
@@ -145,6 +148,8 @@ public class DraftsListAdapter extends BaseAdapter  {
                                 new StatusStoredDAO(context, db).remove(draft.getId());
                                 storedStatuses.remove(draft);
                                 draftsListAdapter.notifyDataSetChanged();
+                                if( storedStatuses.size() == 0 && textviewNoAction != null && textviewNoAction.getVisibility() == View.GONE)
+                                    textviewNoAction.setVisibility(View.VISIBLE);
                                 dialog.dismiss();
                             }
                         })

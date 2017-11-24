@@ -27,15 +27,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
-import fr.gouv.etalab.mastodon.activities.SearchResultActivity;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+
+import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
 /**
@@ -48,12 +50,14 @@ public class SearchTootsListAdapter extends BaseAdapter  {
     private LayoutInflater layoutInflater;
     private Context context;
     private SearchTootsListAdapter searchTootsListAdapter;
+    private RelativeLayout textviewNoAction;
 
-    public SearchTootsListAdapter(Context context, List<String> searches){
+    public SearchTootsListAdapter(Context context, List<String> searches, RelativeLayout textviewNoAction){
         this.searches = searches;
         layoutInflater = LayoutInflater.from(context);
         this.context = context;
         this.searchTootsListAdapter = this;
+        this.textviewNoAction = textviewNoAction;
     }
 
     @Override
@@ -90,11 +94,13 @@ public class SearchTootsListAdapter extends BaseAdapter  {
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
             holder.search_container.setBackgroundResource(R.color.mastodonC3__);
+            changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right,R.color.black);
         }else {
             holder.search_container.setBackgroundResource(R.color.mastodonC1_);
+            changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right,R.color.dark_text);
         }
         holder.search_title.setText(search);
-        holder.search_title.setOnClickListener(new View.OnClickListener() {
+        holder.search_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, HashTagActivity.class);
@@ -106,12 +112,11 @@ public class SearchTootsListAdapter extends BaseAdapter  {
         });
         final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
 
-        holder.search_container.setOnClickListener(new View.OnClickListener() {
+        holder.search_container.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
-
+            public boolean onLongClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage(R.string.delete + ": " + search);
+                builder.setMessage(context.getString(R.string.delete) + ": " + search);
                 builder.setIcon(android.R.drawable.ic_dialog_alert)
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
@@ -119,6 +124,8 @@ public class SearchTootsListAdapter extends BaseAdapter  {
                                 new SearchDAO(context, db).remove(search.trim());
                                 searches.remove(search);
                                 searchTootsListAdapter.notifyDataSetChanged();
+                                if( searches.size() == 0 && textviewNoAction != null && textviewNoAction.getVisibility() == View.GONE)
+                                    textviewNoAction.setVisibility(View.VISIBLE);
                                 dialog.dismiss();
                             }
                         })
@@ -129,6 +136,7 @@ public class SearchTootsListAdapter extends BaseAdapter  {
                             }
                         })
                         .show();
+                return false;
             }
         });
         return convertView;
