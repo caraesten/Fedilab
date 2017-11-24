@@ -35,7 +35,6 @@ import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.drawers.SearchTootsListAdapter;
-import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.R;
@@ -50,6 +49,7 @@ public class DisplaySearchFragment extends Fragment {
 
     private Context context;
     private SearchTootsListAdapter searchTootsListAdapter;
+    private List<String> searches;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
@@ -60,10 +60,10 @@ public class DisplaySearchFragment extends Fragment {
         final ListView lv_search_toots = rootView.findViewById(R.id.lv_search_toots);
 
         RelativeLayout mainLoader = rootView.findViewById(R.id.loader);
-        RelativeLayout textviewNoAction = rootView.findViewById(R.id.no_action);
+        final RelativeLayout textviewNoAction = rootView.findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        List<String> searches = new SearchDAO(context, db).getAllSearch();
+        searches = new SearchDAO(context, db).getAllSearch();
         if( searches == null)
             searches = new ArrayList<>();
         searchTootsListAdapter = new SearchTootsListAdapter(context, searches, textviewNoAction);
@@ -94,14 +94,16 @@ public class DisplaySearchFragment extends Fragment {
                             if( keyword.length() == 0)
                                 return;
                             //Already in db
-                            List<String> searches = new SearchDAO(context, db).getSearchByKeyword(keyword);
-                            if( searches == null)
-                                searches = new ArrayList<>();
-                            if( searches.size() > 0){
+                            List<String> s_ = new SearchDAO(context, db).getSearchByKeyword(keyword);
+                            if( s_ == null)
+                                s_ = new ArrayList<>();
+                            if( s_.size() > 0){
                                 return;
                             }
                             new SearchDAO(context, db).insertSearch(keyword);
                             searches.add(keyword);
+                            if( textviewNoAction.getVisibility() == View.VISIBLE)
+                                textviewNoAction.setVisibility(View.GONE);
                             searchTootsListAdapter.notifyDataSetChanged();
                         }
                     });
