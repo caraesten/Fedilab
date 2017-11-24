@@ -291,7 +291,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_PUBLIC, null);
 
         if( filter != null && filter.length() > 0){
-            Pattern filterPattern = Pattern.compile("(" + filter + ")");
+            Pattern filterPattern = Pattern.compile("(" + filter + ")",  Pattern.CASE_INSENSITIVE);
             String content;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
