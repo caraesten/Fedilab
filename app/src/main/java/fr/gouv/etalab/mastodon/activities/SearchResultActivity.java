@@ -30,7 +30,6 @@ import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveTootsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
@@ -72,11 +71,8 @@ public class SearchResultActivity extends AppCompatActivity implements OnRetriev
         Bundle b = getIntent().getExtras();
         if(b != null){
             search = b.getString("search");
-            boolean tootOnly = b.getBoolean("tootOnly", false);
-            if( !tootOnly && search != null)
+            if( search != null)
                 new RetrieveSearchAsyncTask(getApplicationContext(), search.trim(), SearchResultActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            else if(tootOnly)
-                new RetrieveTootsAsyncTask(getApplicationContext(), search.trim(), SearchResultActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             else
                 Toast.makeText(this,R.string.toast_error_search,Toast.LENGTH_LONG).show();
         }else{

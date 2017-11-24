@@ -18,7 +18,9 @@ package fr.gouv.etalab.mastodon.drawers;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +31,9 @@ import android.widget.TextView;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.SearchResultActivity;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
@@ -82,13 +86,21 @@ public class SearchTootsListAdapter extends BaseAdapter  {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if( theme == Helper.THEME_LIGHT){
+            holder.search_container.setBackgroundResource(R.color.mastodonC3__);
+        }else {
+            holder.search_container.setBackgroundResource(R.color.mastodonC1_);
+        }
         holder.search_title.setText(search);
         holder.search_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, SearchResultActivity.class);
-                intent.putExtra("search", search);
-                intent.putExtra("tootOnly", true);
+                Intent intent = new Intent(context, HashTagActivity.class);
+                Bundle b = new Bundle();
+                b.putString("tag", search.trim());
+                intent.putExtras(b);
                 context.startActivity(intent);
             }
         });

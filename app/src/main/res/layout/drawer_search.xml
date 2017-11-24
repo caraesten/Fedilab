@@ -19,13 +19,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/search_container"
+    android:divider="?android:dividerHorizontal"
+    android:showDividers="end"
+    android:paddingTop="5dp"
     android:orientation="vertical">
     <TextView
         android:drawableRight="@drawable/ic_keyboard_arrow_right"
         android:drawableEnd="@drawable/ic_keyboard_arrow_right"
         android:id="@+id/search_keyword"
         android:textSize="18sp"
-        android:background="?attr/colorAccent"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
         android:layout_marginTop="5dp"
