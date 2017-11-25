@@ -422,8 +422,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         if (!sharedUri.isEmpty()) {
             uploadSharedImage(sharedUri);
         }
-
-        boolean isAccountPrivate = account.isLocked();
+        visibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), "public");
+        boolean isAccountPrivate = (account.isLocked() || visibility.equals("private"));
         if(isAccountPrivate){
             if( tootReply == null) {
                 visibility = "private";
@@ -438,7 +438,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             }
         }else {
             if( tootReply == null){
-                visibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), "public");
+
                 switch (visibility) {
                     case "public":
                         toot_visibility.setImageResource(R.drawable.ic_public_toot);
