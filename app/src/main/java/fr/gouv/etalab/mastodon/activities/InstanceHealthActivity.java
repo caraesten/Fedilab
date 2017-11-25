@@ -85,7 +85,7 @@ public class InstanceHealthActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setTheme(R.style.AppThemeDark_NoActionBar);
         setContentView(R.layout.activity_instance_social);
-        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         Bundle b = getIntent().getExtras();
         if( getSupportActionBar() != null)
             getSupportActionBar().hide();
