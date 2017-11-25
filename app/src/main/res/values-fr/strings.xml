@@ -439,4 +439,7 @@
     <string name="no_emoji">L\'application n\'a pas encore collecté d\'emojis personnalisés</string>
     <string name="live_notif">Notifications en direct</string>
     <string name="filter_regex">Filtrer avec une expression rationnelle</string>
+
+    <string name="search">Rechercher</string>
+    <string name="delete">Supprimer</string>
 </resources>

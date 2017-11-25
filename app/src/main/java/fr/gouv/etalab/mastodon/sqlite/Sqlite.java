@@ -26,7 +26,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 @SuppressWarnings("WeakerAccess")
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 6;
+    public static final int DB_VERSION = 7;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -40,6 +40,8 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String TABLE_STATUSES_STORED = "STATUSES_STORED";
     //Table for custom emoji
     static final String TABLE_CUSTOM_EMOJI = "CUSTOM_EMOJI";
+    //Table for search
+    static final String TABLE_SEARCH = "SEARCH";
 
     public static final String COL_USER_ID = "USER_ID";
     public static final String COL_USERNAME = "USERNAME";
@@ -95,6 +97,12 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_SHORTCODE + " TEXT NOT NULL, " + COL_INSTANCE + " TEXT NOT NULL, "
             + COL_URL + " TEXT NOT NULL, " + COL_URL_STATIC + " TEXT NOT NULL, "  + COL_DATE_CREATION + " TEXT NOT NULL)";
 
+
+    public static final String COL_KEYWORDS = "KEYWORDS";
+    private final String CREATE_TABLE_SEARCH = "CREATE TABLE " + TABLE_SEARCH + " ("
+            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COL_KEYWORDS + " TEXT NOT NULL, " + COL_USER_ID + " TEXT NOT NULL, " + COL_DATE_CREATION + " TEXT NOT NULL)";
+
     public Sqlite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
@@ -113,6 +121,7 @@ public class Sqlite extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_USER_ACCOUNT);
         db.execSQL(CREATE_TABLE_STATUSES_STORED);
         db.execSQL(CREATE_TABLE_CUSTOM_EMOJI);
+        db.execSQL(CREATE_TABLE_SEARCH);
     }
 
     @Override
@@ -132,6 +141,8 @@ public class Sqlite extends SQLiteOpenHelper {
                         + COL_URL + " TEXT NOT NULL, " + COL_URL_STATIC + " TEXT NOT NULL, "  + COL_DATE_CREATION + " TEXT NOT NULL)");
             case 5:
                 db.execSQL("delete from "+ TABLE_CUSTOM_EMOJI); //Reset table due to bugs
+            case 6:
+                db.execSQL(CREATE_TABLE_SEARCH);
             default:
                 break;
         }

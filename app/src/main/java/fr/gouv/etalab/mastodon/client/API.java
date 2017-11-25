@@ -27,6 +27,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.*;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -120,6 +122,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
+            setDefaultError();
             e.printStackTrace();
         }
         return apiResponse;
@@ -145,6 +148,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
+            setDefaultError();
             e.printStackTrace();
         }
         return apiResponse;
@@ -163,6 +167,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
+            setDefaultError();
             e.printStackTrace();
         }
         return account;
@@ -182,6 +187,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
+            setDefaultError();
             e.printStackTrace();
         }
         return account;
@@ -207,6 +213,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
+            setDefaultError();
             e.printStackTrace();
         }
         return relationship;
@@ -240,6 +247,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
+            setDefaultError();
             e.printStackTrace();
         }
         apiResponse.setRelationships(relationships);
@@ -329,6 +337,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
+            setDefaultError();
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
@@ -353,6 +362,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
+            setDefaultError();
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
@@ -374,6 +384,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
+            setDefaultError();
             e.printStackTrace();
         }
         return statusContext;
@@ -427,6 +438,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
+            setDefaultError();
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
@@ -486,6 +498,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
+            setDefaultError();
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
@@ -535,6 +548,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
+            setDefaultError();
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
@@ -609,6 +623,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
+            setDefaultError();
             e.printStackTrace();
         }
         apiResponse.setAccounts(accounts);
@@ -652,6 +667,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
+            setDefaultError();
             e.printStackTrace();
         }
         apiResponse.setAccounts(accounts);
@@ -695,6 +711,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
+            setDefaultError();
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
@@ -838,6 +855,7 @@ public class API {
             } catch (HttpsConnection.HttpsConnectionException e) {
                 setError(e.getStatusCode(), e);
             }catch (Exception e) {
+                setDefaultError();
                 e.printStackTrace();
             }
         }else{
@@ -848,10 +866,10 @@ public class API {
             } catch (HttpsConnection.HttpsConnectionException e) {
                 setError(e.getStatusCode(), e);
             }catch (Exception e) {
+                setDefaultError();
                 e.printStackTrace();
             }
         }
-
         return actionCode;
     }
 
@@ -886,7 +904,6 @@ public class API {
                 params.put("spoiler_text", URLEncoder.encode(status.getSpoiler_text(), "UTF-8"));
             } catch (UnsupportedEncodingException e) {
                 params.put("spoiler_text", status.getSpoiler_text());
-                e.printStackTrace();
             }
         params.put("visibility", status.getVisibility());
         statuses = new ArrayList<>();
@@ -901,6 +918,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
+            setDefaultError();
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
@@ -928,6 +946,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
+            setDefaultError();
             e.printStackTrace();
         }
         return apiResponse;
@@ -1021,6 +1040,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
+            setDefaultError();
             e.printStackTrace();
         }
         apiResponse.setNotifications(notifications);
@@ -1052,6 +1072,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
+            setDefaultError();
             e.printStackTrace();
         }
         return attachment;
@@ -1074,6 +1095,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
+            setDefaultError();
             e.printStackTrace();
         }
         return results;
@@ -1104,6 +1126,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
+            setDefaultError();
             e.printStackTrace();
         }
         apiResponse.setAccounts(accounts);
@@ -1148,6 +1171,7 @@ public class API {
             results.setStatuses(parseStatuses(resobj.getJSONArray("statuses")));
             results.setHashtags(parseTags(resobj.getJSONArray("hashtags")));
         } catch (JSONException e) {
+            setDefaultError();
             e.printStackTrace();
         }
         return results;
@@ -1614,6 +1638,11 @@ public class API {
         apiResponse.setError(APIError);
     }
 
+    private void setDefaultError(){
+        APIError = new Error();
+        APIError.setError(context.getString(R.string.toast_error));
+        apiResponse.setError(APIError);
+    }
 
 
     public Error getError(){

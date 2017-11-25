@@ -20,6 +20,10 @@
                         android:icon="@drawable/ic_save_white"
                         android:title="@string/drafts" />
                     <item
+                        android:id="@+id/nav_search"
+                        android:icon="@drawable/ic_search"
+                        android:title="@string/search" />
+                    <item
                         android:id="@+id/nav_remote_follow"
                         android:icon="@drawable/ic_person_add"
                         android:title="@string/remote_follow_menu" />

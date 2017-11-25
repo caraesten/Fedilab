@@ -76,7 +76,7 @@ public class DisplayDraftsFragment extends Fragment {
         new StatusStoredDAO(context, db).removeAllSent();
         drafts = new StatusStoredDAO(context, db).getAllDrafts();
         if( drafts != null && drafts.size() > 0) {
-            draftsListAdapter = new DraftsListAdapter(context, drafts, true);
+            draftsListAdapter = new DraftsListAdapter(context, drafts, true, textviewNoAction);
             lv_draft_toots.setAdapter(draftsListAdapter);
             draftsListAdapter.notifyDataSetChanged();
         }else {
@@ -100,7 +100,7 @@ public class DisplayDraftsFragment extends Fragment {
                                     new StatusStoredDAO(context, db).removeAllDrafts();
                                     drafts = new ArrayList<>();
                                     drafts.clear();
-                                    draftsListAdapter = new DraftsListAdapter(context, drafts, true);
+                                    draftsListAdapter = new DraftsListAdapter(context, drafts, true, textviewNoAction);
                                     lv_draft_toots.setAdapter(draftsListAdapter);
                                     draftsListAdapter.notifyDataSetChanged();
                                     textviewNoAction.setVisibility(View.VISIBLE);
