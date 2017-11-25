@@ -6,94 +6,78 @@
     tools:context="fr.gouv.etalab.mastodon.activities.InstanceHealthActivity"
     android:layout_margin="@dimen/fab_margin"
     android:id="@+id/container"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="300dp">
 
     <TextView
         android:id="@+id/name"
         android:textSize="20sp"
+        android:textColor="@color/titleb"
         android:layout_gravity="center"
+        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/values"
+        android:textColor="@color/dark_text"
+        android:layout_marginTop="10dp"
         android:layout_gravity="center"
+        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:textColor="@color/dark_text"
+        android:layout_marginTop="10dp"
+        android:id="@+id/checked_at"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_gravity="center_vertical"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            android:text="Checked at"
-            />
-        <TextView
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/checked_at"
-            android:layout_gravity="center_vertical"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
+        />
+
+    <TextView
+        android:id="@+id/up"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="end"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_gravity="center_vertical"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:gravity="end"
-            android:layout_height="wrap_content"
-            android:text="Is up"
-            />
-        <TextView
-            android:id="@+id/up"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="center_vertical"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"
-            />
-    </LinearLayout>
+        />
 
 
-    <LinearLayout
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
+    <TextView
+        android:textColor="@color/dark_text"
+        android:id="@+id/uptime"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="end"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_gravity="center_vertical"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:gravity="end"
-            android:layout_height="wrap_content"
-            android:text="Uptime"
-            />
-        <TextView
-            android:id="@+id/uptime"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="center_vertical"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"
-            />
-    </LinearLayout>
+        />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/ref_instance"
+        android:layout_gravity="end|center_vertical"
+        android:text="via instances.social"
+        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        tools:ignore="HardcodedText" />
+    <Button
+        android:layout_marginTop="20dp"
+        android:id="@+id/close"
+        android:textSize="16sp"
+        android:layout_gravity="center"
+        android:textAllCaps="false"
+        android:text="@string/close"
+        android:textColor="@color/buttonb"
+        style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>

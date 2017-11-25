@@ -36,6 +36,7 @@
     <style name="AppTheme_NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:textColor">@color/black</item>
         <item name="colorPrimary">@color/mastodonC1</item>
+        <item name="android:scrollbarThumbVertical">@color/transparent</item>
         <item name="colorPrimaryDark">@color/mastodonC2</item>
         <item name="colorAccent">@color/mastodonC4</item>
         <item name="android:buttonStyle">@style/ButtonColor</item>
@@ -102,9 +103,6 @@
     </style>
 
 
-
-
-
     <!-- Dark theme -->
     <style name="AppThemeDark" parent="Theme.AppCompat">
         <item name="android:textColor">@color/dark_text</item>
@@ -130,6 +128,7 @@
 
     <style name="AppThemeDark_NoActionBar" parent="Theme.AppCompat.NoActionBar">
         <item name="android:textColor">@color/dark_text</item>
+        <item name="android:scrollbarThumbVertical">@color/transparent</item>
         <item name="colorPrimary">@color/mastodonC1</item>
         <item name="colorPrimaryDark">@color/mastodonC2</item>
         <item name="colorAccent">@color/mastodonC4</item>

@@ -103,7 +103,6 @@ public class InstanceActivity extends AppCompatActivity implements OnRetrieveIns
         TextView instance_version = findViewById(R.id.instance_version);
         TextView instance_uri = findViewById(R.id.instance_uri);
         FloatingActionButton instance_contact = findViewById(R.id.instance_contact);
-        FloatingActionButton instance_health = findViewById(R.id.instance_health);
 
         instance_title.setText(instance.getTitle());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -125,13 +124,6 @@ public class InstanceActivity extends AppCompatActivity implements OnRetrieveIns
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",instance.getEmail(), null));
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "[Mastodon] - " + instance.getUri());
                 startActivity(Intent.createChooser(emailIntent, getString(R.string.send_email)));
-            }
-        });
-        instance_health.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), InstanceHealthActivity.class);
-                startActivity(intent);
             }
         });
     }

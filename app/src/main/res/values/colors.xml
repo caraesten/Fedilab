@@ -29,6 +29,10 @@
     <color name="background_image">#282c37</color>
     <color name="green_1">#009688</color>
     <color name="red_1">#F44336</color>
+    <color name="green">#B2DFDB</color>
+    <color name="red">#FFCDD2</color>
+    <color name="buttonb">#B3E5FC</color>
+    <color name="titleb">#D7CCC8</color>
     <color name="black">#000</color>
 
     <!-- Mastodon color scheme -->

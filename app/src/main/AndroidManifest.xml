@@ -173,7 +173,7 @@
             android:label="@string/app_name"
             />
         <activity android:name=".activities.InstanceHealthActivity"
-            android:theme="@style/Base.AlertDialog.AppCompat"
+            android:theme="@style/Base.V7.Theme.AppCompat.Dialog"
             android:excludeFromRecents="true"/>
     </application>
 </manifest>

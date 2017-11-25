@@ -207,11 +207,11 @@
     <string name="no_accounts">Keinen Nutzer gefunden</string>
     <string name="no_follow_request">Keine Folgen-Anfrage</string>
     <string name="status_cnt">Toots \n
-     %d</string>
+     %1$s</string>
     <string name="following_cnt">Following \n
-     %d</string>
+     %1$s</string>
     <string name="followers_cnt">Followers \n
-     %d</string>
+     %1$s</string>
     <string name="pins_cnt">Angeheftet\n
  %d</string>
     <string name="authorize">Authorisieren</string>

@@ -749,8 +749,14 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 popup.show();
             }
         });
-
-
+        final ImageView optionInfo = headerLayout.findViewById(R.id.header_option_info);
+        optionInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), InstanceHealthActivity.class);
+                startActivity(intent);
+            }
+        });
         updateHeaderAccountInfo(BaseMainActivity.this, account, headerLayout, imageLoader, options);
         //Locked account can see follow request
         if (account.isLocked()) {

@@ -201,9 +201,9 @@
     <!-- Accounts -->
     <string name="no_accounts">Geen account om weer te geven</string>
     <string name="no_follow_request">Geen volgverzoeken</string>
-    <string name="status_cnt">Toots \n %d</string>
-    <string name="following_cnt">Volgt \n %d</string>
-    <string name="followers_cnt">Volgers \n %d</string>
+    <string name="status_cnt">Toots \n %1$s</string>
+    <string name="following_cnt">Volgt \n %1$s</string>
+    <string name="followers_cnt">Volgers \n %1$s</string>
     <string name="pins_cnt">Vastgezet \n %d</string>
     <string name="authorize">Goedkeuren</string>
     <string name="reject">Afkeuren</string>

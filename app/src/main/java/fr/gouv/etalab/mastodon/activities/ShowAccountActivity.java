@@ -94,6 +94,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRelationshipInterface;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
+import static fr.gouv.etalab.mastodon.helper.Helper.withSuffix;
 
 
 /**
@@ -562,11 +563,11 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         account_note.setMovementMethod(LinkMovementMethod.getInstance());
         if (tabLayout.getTabAt(0) != null && tabLayout.getTabAt(1) != null && tabLayout.getTabAt(2) != null) {
             //noinspection ConstantConditions
-            tabLayout.getTabAt(0).setText(getString(R.string.status_cnt, account.getStatuses_count()));
+            tabLayout.getTabAt(0).setText(getString(R.string.status_cnt, withSuffix(account.getStatuses_count())));
             //noinspection ConstantConditions
-            tabLayout.getTabAt(1).setText(getString(R.string.following_cnt, account.getFollowing_count()));
+            tabLayout.getTabAt(1).setText(getString(R.string.following_cnt, withSuffix(account.getFollowing_count())));
             //noinspection ConstantConditions
-            tabLayout.getTabAt(2).setText(getString(R.string.followers_cnt, account.getFollowers_count()));
+            tabLayout.getTabAt(2).setText(getString(R.string.followers_cnt, withSuffix(account.getFollowers_count())));
 
             //Allows to filter by long click
             final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);

@@ -203,9 +203,9 @@
     <!-- Accounts -->
     <string name="no_accounts">Aucun compte à afficher</string>
     <string name="no_follow_request">Aucune demande d\'abonnement</string>
-    <string name="status_cnt">Pouets \n %d</string>
-    <string name="following_cnt">Abonnements \n %d</string>
-    <string name="followers_cnt">Abonnés \n %d</string>
+    <string name="status_cnt">Pouets \n %1$s</string>
+    <string name="following_cnt">Abonnements \n %1$s</string>
+    <string name="followers_cnt">Abonnés \n %1$s</string>
     <string name="authorize">Autoriser</string>
     <string name="reject">Rejeter</string>
 

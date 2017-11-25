@@ -17,6 +17,7 @@
 package fr.gouv.etalab.mastodon.helper;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -1765,6 +1766,24 @@ public class Helper {
         int width = Math.round(ratio * originalPicture.getWidth());
         int height = Math.round(ratio * originalPicture.getHeight());
         return Bitmap.createScaledBitmap(originalPicture, width, height, false);
+    }
+
+    @SuppressLint("DefaultLocale")
+    public static String withSuffix(long count) {
+        if (count < 1000) return "" + count;
+        int exp = (int) (Math.log(count) / Math.log(1000));
+        Locale locale = null;
+        try {
+            locale = Locale.getDefault();
+        }catch (Exception ignored){}
+        if(locale != null)
+        return String.format(locale, "%.1f %c",
+                count / Math.pow(1000, exp),
+                "kMGTPE".charAt(exp-1));
+        else
+            return String.format( "%.1f %c",
+                    count / Math.pow(1000, exp),
+                    "kMGTPE".charAt(exp-1));
     }
 
 }

@@ -51,6 +51,8 @@ import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.withSuffix;
+
 
 /**
  * Created by Thomas on 27/04/2017.
@@ -160,9 +162,9 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
             //noinspection deprecation
             holder.account_ds.setText(Html.fromHtml(account.getNote()));
         holder.account_ds.setAutoLinkMask(Linkify.WEB_URLS);
-        holder.account_sc.setText(String.valueOf(account.getStatuses_count()));
-        holder.account_fgc.setText(String.valueOf(account.getFollowing_count()));
-        holder.account_frc.setText(String.valueOf(account.getFollowers_count()));
+        holder.account_sc.setText(withSuffix(account.getStatuses_count()));
+        holder.account_fgc.setText(withSuffix(account.getFollowing_count()));
+        holder.account_frc.setText(withSuffix(account.getFollowers_count()));
         //Profile picture
         imageLoader.displayImage(account.getAvatar(), holder.account_pp, options);
 

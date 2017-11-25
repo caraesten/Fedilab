@@ -17,8 +17,7 @@ package fr.gouv.etalab.mastodon.activities;
 
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -27,13 +26,19 @@ import android.graphics.LightingColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -57,6 +62,8 @@ import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.withSuffix;
+
 
 /**
  * Created by Thomas on 24/11/2017.
@@ -76,26 +83,44 @@ public class InstanceHealthActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_LIGHT){
-            setTheme(R.style.AppTheme);
-        }else {
-            setTheme(R.style.AppThemeDark);
-        }
+        setTheme(R.style.AppThemeDark_NoActionBar);
         setContentView(R.layout.activity_instance_social);
+        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         Bundle b = getIntent().getExtras();
+        if( getSupportActionBar() != null)
+            getSupportActionBar().hide();
         instance =  Helper.getLiveInstance(getApplicationContext());
         if(b != null)
             instance = b.getString("instance", Helper.getLiveInstance(getApplicationContext()));
 
-
+        Button close = findViewById(R.id.close);
         name = findViewById(R.id.name);
         values = findViewById(R.id.values);
         checked_at = findViewById(R.id.checked_at);
         up = findViewById(R.id.up);
         uptime = findViewById(R.id.uptime);
         container = findViewById(R.id.container);
+
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        TextView ref_instance = findViewById(R.id.ref_instance);
+        SpannableString content = new SpannableString(ref_instance.getText().toString());
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        ref_instance.setText(content);
+        ref_instance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://instances.social"));
+                startActivity(browserIntent);
+            }
+        });
+
         option = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
                 .cacheOnDisk(true).resetViewBeforeLoading(true).build();
         imageLoader = ImageLoader.getInstance();
@@ -137,7 +162,7 @@ public class InstanceHealthActivity extends AppCompatActivity {
                     if( response != null)
                         instanceSocial = API.parseInstanceSocialResponse(getApplicationContext(), new JSONObject(response));
                     runOnUiThread(new Runnable() {
-                        @SuppressLint("SetTextI18n")
+                        @SuppressLint({"SetTextI18n", "DefaultLocale"})
                         public void run() {
                             if( instanceSocial.getThumbnail() != null && !instanceSocial.getThumbnail().equals("null"))
                                 imageLoader.loadImage(instanceSocial.getThumbnail(), option, new SimpleImageLoadingListener() {
@@ -161,10 +186,16 @@ public class InstanceHealthActivity extends AppCompatActivity {
                                     }
                                 });
                             name.setText(instanceSocial.getName());
-                            up.setText(Boolean.toString(instanceSocial.isUp()));
-                            uptime.setText(Float.toString(instanceSocial.getUptime()));
-                            checked_at.setText(Helper.dateToString(getApplicationContext(), instanceSocial.getUpdated_at()));
-                            values.setText(String.format("version: %s - %s users - %s statuses", instanceSocial.getVersion(), Long.toString(instanceSocial.getUsers()), Long.toString(instanceSocial.getStatuses())));
+                            if( instanceSocial.isUp()) {
+                                up.setText("Is up!");
+                                up.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
+                            }else {
+                                up.setText("Is down!");
+                                up.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                            }
+                            uptime.setText(String.format("Uptime: %.2f %%", (instanceSocial.getUptime()*100)));
+                            checked_at.setText(String.format("Checked at: %s", Helper.dateToString(getApplicationContext(), instanceSocial.getUpdated_at())));
+                            values.setText(String.format("version: %s \n %s users - %s statuses", instanceSocial.getVersion(), withSuffix(instanceSocial.getUsers()), withSuffix(instanceSocial.getStatuses())));
                         }
                     });
 

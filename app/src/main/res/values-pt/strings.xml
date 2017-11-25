@@ -202,9 +202,9 @@
     <!-- Accounts -->
     <string name="no_accounts">Sem contas para exibir</string>
     <string name="no_follow_request">Sem solicitações de seguidor</string>
-    <string name="status_cnt">Toots \n %d</string>
-    <string name="following_cnt">Seguindo \n %d</string>
-    <string name="followers_cnt">Seguidores \n %d</string>
+    <string name="status_cnt">Toots \n %1$s</string>
+    <string name="following_cnt">Seguindo \n %1$s</string>
+    <string name="followers_cnt">Seguidores \n %1$s</string>
     <string name="pins_cnt">Fixado \n %d</string>
     <string name="authorize">Autorizar</string>
     <string name="reject">Rejeitar</string>

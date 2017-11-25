@@ -83,4 +83,11 @@
         android:maxLines="1"
         android:layout_height="wrap_content"
         />
+    <ImageView
+        android:layout_gravity="center_vertical|end"
+        android:src="@drawable/ic_info_outline"
+        android:id="@+id/header_option_info"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        tools:ignore="ContentDescription" />
 </LinearLayout>

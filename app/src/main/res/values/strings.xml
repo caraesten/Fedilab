@@ -215,9 +215,9 @@
     <!-- Accounts -->
     <string name="no_accounts">No account to display</string>
     <string name="no_follow_request">No follow request</string>
-    <string name="status_cnt">Toots \n %d</string>
-    <string name="following_cnt">Following \n %d</string>
-    <string name="followers_cnt">Followers \n %d</string>
+    <string name="status_cnt">Toots \n %1$s</string>
+    <string name="following_cnt">Following \n %1$s</string>
+    <string name="followers_cnt">Followers \n %1$s</string>
     <string name="pins_cnt">Pinned \n %d</string>
     <string name="authorize">Authorize</string>
     <string name="reject">Reject</string>
