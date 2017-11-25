@@ -194,7 +194,7 @@ public class InstanceHealthActivity extends AppCompatActivity {
                                 up.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
                             }
                             uptime.setText(String.format("Uptime: %.2f %%", (instanceSocial.getUptime()*100)));
-                            checked_at.setText(String.format("Checked at: %s", Helper.dateToString(getApplicationContext(), instanceSocial.getUpdated_at())));
+                            checked_at.setText(String.format("Checked at: %s", Helper.dateToString(getApplicationContext(), instanceSocial.getChecked_at())));
                             values.setText(String.format("version: %s \n %s users - %s statuses", instanceSocial.getVersion(), withSuffix(instanceSocial.getUsers()), withSuffix(instanceSocial.getStatuses())));
                         }
                     });
