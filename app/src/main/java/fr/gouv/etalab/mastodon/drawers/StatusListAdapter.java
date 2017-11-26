@@ -60,8 +60,10 @@ import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 
 import java.io.File;
@@ -85,6 +87,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.translation.Translate;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
@@ -382,7 +385,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     .build();
             if( !imageLoader.isInited())
                 imageLoader.init(configImg);
-            DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(10)).cacheInMemory(false)
+            final DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(10)).cacheInMemory(false)
                     .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -610,13 +613,55 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
             if( status.getReblog() != null) {
-                imageLoader.displayImage(ppurl, holder.status_account_profile_boost, options);
-                imageLoader.displayImage(status.getAccount().getAvatar(), holder.status_account_profile_boost_by, options);
+                imageLoader.displayImage(ppurl, holder.status_account_profile_boost, options, new ImageLoadingListener() {
+                    @Override
+                    public void onLoadingStarted(String imageUri, View view) {
+                    }
+                    @Override
+                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                        new HttpsConnection(context).download(ppurl, holder.status_account_profile_boost, options);
+                    }
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    }
+                    @Override
+                    public void onLoadingCancelled(String imageUri, View view) {
+                    }
+                });
+                imageLoader.displayImage(status.getAccount().getAvatar(), holder.status_account_profile_boost_by, options, new ImageLoadingListener() {
+                    @Override
+                    public void onLoadingStarted(String imageUri, View view) {
+                    }
+                    @Override
+                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                        new HttpsConnection(context).download(status.getAccount().getAvatar(), holder.status_account_profile_boost_by, options);
+                    }
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    }
+                    @Override
+                    public void onLoadingCancelled(String imageUri, View view) {
+                    }
+                });
                 holder.status_account_profile_boost.setVisibility(View.VISIBLE);
                 holder.status_account_profile_boost_by.setVisibility(View.VISIBLE);
                 holder.status_account_profile.setVisibility(View.GONE);
             }else{
-                imageLoader.displayImage(ppurl, holder.status_account_profile, options);
+                imageLoader.displayImage(ppurl, holder.status_account_profile, options, new ImageLoadingListener() {
+                    @Override
+                    public void onLoadingStarted(String imageUri, View view) {
+                    }
+                    @Override
+                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                        new HttpsConnection(context).download(ppurl, holder.status_account_profile, options);
+                    }
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    }
+                    @Override
+                    public void onLoadingCancelled(String imageUri, View view) {
+                    }
+                });
                 holder.status_account_profile_boost.setVisibility(View.GONE);
                 holder.status_account_profile_boost_by.setVisibility(View.GONE);
                 holder.status_account_profile.setVisibility(View.VISIBLE);
