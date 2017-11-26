@@ -715,7 +715,7 @@ public class Helper {
 
         final String fileName = URLUtil.guessFileName(url, null, null);final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
- 
+
         try {
             File file;
             if( bitmap != null) {
