@@ -42,6 +42,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -51,7 +53,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.net.ssl.HttpsURLConnection;
 import fr.gouv.etalab.mastodon.R;
-import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
@@ -277,6 +278,40 @@ public class HttpsConnection {
             public void run() {
                 URL url;
                 try {
+
+                    final ImageLoader imageLoader = ImageLoader.getInstance();
+                    File cacheDir = new File(context.getCacheDir(), context.getString(R.string.app_name));
+                    ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(context)
+                            .imageDownloader(new PatchBaseImageDownloader(context))
+                            .threadPoolSize(5)
+                            .threadPriority(Thread.MIN_PRIORITY + 3)
+                            .denyCacheImageMultipleSizesInMemory()
+                            .diskCache(new UnlimitedDiskCache(cacheDir))
+                            .build();
+                    if( !imageLoader.isInited())
+                        imageLoader.init(configImg);
+
+                    SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                    String cache = sharedpreferences.getString(Helper.SET_PICTURE_URL + Helper.md5(downloadUrl), null);
+
+                    if( cache != null){
+                        String[] val = cache.split("\\|");
+                        if( val.length == 2){
+                            Date date = Helper.stringToDate(context, val[0]);
+                            final String uri = val[1];
+                            Calendar cal = Calendar.getInstance();
+                            cal.setTime(new Date());
+                            cal.add(Calendar.DATE, -1);
+                            Date dateBefore = cal.getTime();
+                            if( date.after(dateBefore)){
+                                ((AppCompatActivity)context).runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        imageLoader.displayImage(uri, imageView, options);
+                                    }});
+                                return;
+                            }
+                        }
+                    }
                     url = new URL(downloadUrl);
                     httpsURLConnection = (HttpsURLConnection) url.openConnection();
                     httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
@@ -315,23 +350,15 @@ public class HttpsConnection {
                         outputStream.write(buffer, 0, bytesRead);
                     }
 
-                    final ImageLoader imageLoader = ImageLoader.getInstance();
-                    File cacheDir = new File(context.getCacheDir(), context.getString(R.string.app_name));
-                    ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(context)
-                            .imageDownloader(new PatchBaseImageDownloader(context))
-                            .threadPoolSize(5)
-                            .threadPriority(Thread.MIN_PRIORITY + 3)
-                            .denyCacheImageMultipleSizesInMemory()
-                            .diskCache(new UnlimitedDiskCache(cacheDir))
-                            .build();
-                    if( !imageLoader.isInited())
-                        imageLoader.init(configImg);
+
                     if(context instanceof AppCompatActivity)
                         ((AppCompatActivity)context).runOnUiThread(new Runnable() {
                             public void run() {
                                 imageLoader.displayImage("file://"+saveFilePath, imageView, options);
                             }});
-
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString(Helper.SET_PICTURE_URL + Helper.md5(downloadUrl), Helper.dateToString(context, new Date() )+ "|" +"file://"+saveFilePath);
+                    editor.apply();
                     outputStream.close();
                     inputStream.close();
                     httpsURLConnection.disconnect();
