@@ -925,7 +925,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         status.setContents(spannableString);
         if( !status.isEmojiFound()) {
             for (int i = 0; i < notificationsListAdapter.getItemCount(); i++) {
-                if (notificationsListAdapter.getItemAt(i) != null && notificationsListAdapter.getItemAt(i).getId().equals(status.getId())) {
+                if (notificationsListAdapter.getItemAt(i) != null && notificationsListAdapter.getItemAt(i).getStatus() != null &&  notificationsListAdapter.getItemAt(i).getStatus().getId().equals(status.getId())) {
                     if( notificationsListAdapter.getItemAt(i).getStatus() != null) {
                         notificationsListAdapter.getItemAt(i).getStatus().setEmojiFound(true);
                         notificationsListAdapter.notifyItemChanged(i);
