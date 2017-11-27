@@ -496,6 +496,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 assert imm != null;
                 imm.hideSoftInputFromWindow(toolbar_search.getWindowToken(), 0);
                 Intent intent = new Intent(BaseMainActivity.this, SearchResultActivity.class);
+                query= query.replaceAll("^#+", "");
                 intent.putExtra("search", query);
                 startActivity(intent);
                 toolbar_search.setQuery("", false);
