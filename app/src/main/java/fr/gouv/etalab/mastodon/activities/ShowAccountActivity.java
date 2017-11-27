@@ -63,6 +63,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 
@@ -82,6 +83,7 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
@@ -640,7 +642,21 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
         }
 
-        imageLoader.displayImage(account.getAvatar(), account_pp, options);
+        imageLoader.displayImage(account.getAvatar(), account_pp, options, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String imageUri, View view) {
+            }
+            @Override
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                new HttpsConnection(ShowAccountActivity.this).download(account.getAvatar(), account_pp, options);
+            }
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+            }
+            @Override
+            public void onLoadingCancelled(String imageUri, View view) {
+            }
+        });
 
 
     }

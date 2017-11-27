@@ -263,7 +263,11 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
                 parameters.put(Helper.CLIENT_SECRET, sharedpreferences.getString(Helper.CLIENT_SECRET, null));
                 parameters.put("grant_type", "password");
                 parameters.put("username",login_uid.getText().toString().trim());
-                parameters.put("password",login_passwd.getText().toString().trim());
+                try {
+                    parameters.put("password",URLEncoder.encode(login_passwd.getText().toString(), "UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    parameters.put("password",login_passwd.getText().toString());
+                }
                 parameters.put("scope"," read write follow");
 
                 new Thread(new Runnable(){
