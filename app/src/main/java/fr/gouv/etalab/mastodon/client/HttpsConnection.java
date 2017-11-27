@@ -273,45 +273,41 @@ public class HttpsConnection {
 
 
     public void download(final String downloadUrl, final ImageView imageView, final DisplayImageOptions options) {
+
+        final ImageLoader imageLoader = ImageLoader.getInstance();
+        File cacheDir = new File(context.getCacheDir(), context.getString(R.string.app_name));
+        ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(context)
+                .imageDownloader(new PatchBaseImageDownloader(context))
+                .threadPoolSize(5)
+                .threadPriority(Thread.MIN_PRIORITY + 3)
+                .denyCacheImageMultipleSizesInMemory()
+                .diskCache(new UnlimitedDiskCache(cacheDir))
+                .build();
+        if( !imageLoader.isInited())
+            imageLoader.init(configImg);
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String cache = sharedpreferences.getString(Helper.SET_PICTURE_URL + Helper.md5(downloadUrl), null);
+
+        if( cache != null){
+            String[] val = cache.split("\\|");
+            if( val.length == 2){
+                Date date = Helper.stringToDate(context, val[0]);
+                final String uri = val[1];
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(new Date());
+                cal.add(Calendar.DATE, -1);
+                Date dateBefore = cal.getTime();
+                if( date.after(dateBefore)){
+                    imageLoader.displayImage(uri, imageView, options);
+                    return;
+                }
+            }
+        }
         new Thread(new Runnable() {
             @Override
             public void run() {
                 URL url;
                 try {
-
-                    final ImageLoader imageLoader = ImageLoader.getInstance();
-                    File cacheDir = new File(context.getCacheDir(), context.getString(R.string.app_name));
-                    ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(context)
-                            .imageDownloader(new PatchBaseImageDownloader(context))
-                            .threadPoolSize(5)
-                            .threadPriority(Thread.MIN_PRIORITY + 3)
-                            .denyCacheImageMultipleSizesInMemory()
-                            .diskCache(new UnlimitedDiskCache(cacheDir))
-                            .build();
-                    if( !imageLoader.isInited())
-                        imageLoader.init(configImg);
-
-                    SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                    String cache = sharedpreferences.getString(Helper.SET_PICTURE_URL + Helper.md5(downloadUrl), null);
-
-                    if( cache != null){
-                        String[] val = cache.split("\\|");
-                        if( val.length == 2){
-                            Date date = Helper.stringToDate(context, val[0]);
-                            final String uri = val[1];
-                            Calendar cal = Calendar.getInstance();
-                            cal.setTime(new Date());
-                            cal.add(Calendar.DATE, -1);
-                            Date dateBefore = cal.getTime();
-                            if( date.after(dateBefore)){
-                                ((AppCompatActivity)context).runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        imageLoader.displayImage(uri, imageView, options);
-                                    }});
-                                return;
-                            }
-                        }
-                    }
                     url = new URL(downloadUrl);
                     httpsURLConnection = (HttpsURLConnection) url.openConnection();
                     httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
@@ -349,8 +345,6 @@ public class HttpsConnection {
                     while ((bytesRead = inputStream.read(buffer)) != -1) {
                         outputStream.write(buffer, 0, bytesRead);
                     }
-
-
                     if(context instanceof AppCompatActivity)
                         ((AppCompatActivity)context).runOnUiThread(new Runnable() {
                             public void run() {
