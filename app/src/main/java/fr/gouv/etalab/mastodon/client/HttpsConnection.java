@@ -297,7 +297,8 @@ public class HttpsConnection {
                 cal.setTime(new Date());
                 cal.add(Calendar.DATE, -1);
                 Date dateBefore = cal.getTime();
-                if( date.after(dateBefore)){
+                File file = new File(uri);
+                if( date.after(dateBefore) && file.exists()){
                     imageLoader.displayImage(uri, imageView, options);
                     return;
                 }
