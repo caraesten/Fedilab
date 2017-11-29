@@ -128,7 +128,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 swiped = true;
                 MainActivity.countNewNotifications = 0;
                 if( context != null)
-                    asyncTask = new RetrieveNotificationsAsyncTask(context, true, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    asyncTask = new RetrieveNotificationsAsyncTask(context, true, null, null, null, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
         swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
@@ -262,7 +262,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         flag_loading = true;
         swiped = true;
         MainActivity.countNewNotifications = 0;
-        asyncTask = new RetrieveNotificationsAsyncTask(context, true, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        asyncTask = new RetrieveNotificationsAsyncTask(context, true, null, null, null, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 
@@ -319,7 +319,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notificationId);
             editor.apply();
-            lastReadNotifications = notificationId;
         }
+        lastReadNotifications = notificationId;
     }
 }
