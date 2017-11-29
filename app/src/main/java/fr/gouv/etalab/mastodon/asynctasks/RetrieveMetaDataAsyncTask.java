@@ -51,6 +51,10 @@ public class RetrieveMetaDataAsyncTask extends AsyncTask<Void, Void, Void> {
         String potentialUrl = "";
         try {
             Matcher matcher;
+
+            if (url.startsWith("www."))
+                url = "http://" + url;
+
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
                 matcher = Patterns.WEB_URL.matcher(url);
             else

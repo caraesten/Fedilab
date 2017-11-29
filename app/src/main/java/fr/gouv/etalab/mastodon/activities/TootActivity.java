@@ -392,6 +392,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     String title = intent.getStringExtra("title");
                     String description = intent.getStringExtra("description");
                     if( description != null && description.length() > 0){
+                        if (sharedContentIni.startsWith("www."))
+                            sharedContentIni = "http://" + sharedContentIni;
                         if( title != null && title.length() > 0)
                             sharedContent = title + "\n\n" + description + "\n\n" + sharedContentIni;
                         else
