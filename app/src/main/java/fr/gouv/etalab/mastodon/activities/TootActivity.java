@@ -84,6 +84,9 @@ import android.widget.Toast;
 
 import com.github.stom79.localepicker.CountryPicker;
 import com.github.stom79.localepicker.CountryPickerListener;
+import com.github.stom79.mytransl.MyTransL;
+import com.github.stom79.mytransl.client.HttpsConnectionException;
+import com.github.stom79.mytransl.translate.Translate;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -127,7 +130,6 @@ import fr.gouv.etalab.mastodon.drawers.EmojisSearchAdapter;
 import fr.gouv.etalab.mastodon.interfaces.OnDownloadInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.sqlite.CustomEmojiDAO;
-import fr.gouv.etalab.mastodon.translation.Translate;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.drawers.AccountsReplyAdapter;
@@ -140,7 +142,6 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountsReplyInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchInterface;
-import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
 import fr.gouv.etalab.mastodon.jobs.ScheduledTootsSyncJob;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -156,7 +157,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Toot activity class
  */
 
-public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveAccountsReplyInterface, OnTranslatedInterface, OnRetrieveEmojiInterface, OnDownloadInterface {
+public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveAccountsReplyInterface, OnRetrieveEmojiInterface, OnDownloadInterface {
 
 
     private String visibility;
@@ -815,8 +816,83 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                                 startActivity(browserIntent);
                             }
                         });
-                        new Translate(getApplicationContext(), Helper.targetField.CW, locale, TootActivity.this).privacy(toot_cw_content.getText().toString());
-                        new Translate(getApplicationContext(), Helper.targetField.STATUS, locale, TootActivity.this).privacy(toot_content.getText().toString());
+                        MyTransL myTransL = MyTransL.getInstance(MyTransL.translatorEngine.YANDEX);
+                        myTransL.setYandexAPIKey(Helper.YANDEX_KEY);
+                        myTransL.setObfuscation(true);
+                        myTransL.setTimeout(60);
+                        myTransL.translate(toot_cw_content.getText().toString(), myTransL.getLocale(), new com.github.stom79.mytransl.client.Results() {
+                            @Override
+                            public void onSuccess(Translate translate) {
+                                try {
+                                    if( translate.getTranslatedContent() == null)
+                                        return;
+                                    if( popup_trans != null ) {
+                                        ProgressBar trans_progress_cw = popup_trans.findViewById(R.id.trans_progress_cw);
+                                        ProgressBar trans_progress_toot = popup_trans.findViewById(R.id.trans_progress_toot);
+                                        if( trans_progress_cw != null)
+                                            trans_progress_cw.setVisibility(View.GONE);
+                                        LinearLayout trans_container = popup_trans.findViewById(R.id.trans_container);
+                                        if( trans_container != null ){
+                                            TextView cw_trans = popup_trans.findViewById(R.id.cw_trans);
+                                            if( cw_trans != null) {
+                                                cw_trans.setVisibility(View.VISIBLE);
+                                                cw_trans.setText(translate.getTranslatedContent());
+                                            }
+                                        }else {
+                                            Toast.makeText(getApplicationContext(), R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                                        }
+                                        if(trans_progress_cw != null && trans_progress_toot != null && trans_progress_cw.getVisibility() == View.GONE && trans_progress_toot.getVisibility() == View.GONE )
+                                            if( dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE) != null)
+                                                dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE).setEnabled(true);
+                                    }
+                                } catch (IllegalArgumentException e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(getApplicationContext(), R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                                }
+
+                            }
+
+                            @Override
+                            public void onFail(HttpsConnectionException e) {
+
+                            }
+                        });
+                        myTransL.translate(toot_content.getText().toString(), myTransL.getLocale(), new com.github.stom79.mytransl.client.Results() {
+                            @Override
+                            public void onSuccess(Translate translate) {
+                                try {
+                                    if( translate.getTranslatedContent() == null)
+                                        return;
+                                    if( popup_trans != null ) {
+                                        ProgressBar trans_progress_cw = popup_trans.findViewById(R.id.trans_progress_cw);
+                                        ProgressBar trans_progress_toot = popup_trans.findViewById(R.id.trans_progress_toot);
+                                        if( trans_progress_toot != null)
+                                            trans_progress_toot.setVisibility(View.GONE);
+                                        LinearLayout trans_container = popup_trans.findViewById(R.id.trans_container);
+                                        if( trans_container != null ){
+                                            TextView toot_trans = popup_trans.findViewById(R.id.toot_trans);
+                                           if(toot_trans != null){
+                                                toot_trans.setVisibility(View.VISIBLE);
+                                                toot_trans.setText(translate.getTranslatedContent());
+                                            }
+                                        }else {
+                                            Toast.makeText(getApplicationContext(), R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                                        }
+                                        if(trans_progress_cw != null && trans_progress_toot != null && trans_progress_cw.getVisibility() == View.GONE && trans_progress_toot.getVisibility() == View.GONE )
+                                            if( dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE) != null)
+                                                dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE).setEnabled(true);
+                                    }
+                                } catch (IllegalArgumentException e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(getApplicationContext(), R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFail(HttpsConnectionException e) {
+
+                            }
+                        });
                         transAlert.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 dialog.dismiss();
@@ -1902,50 +1978,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         }
     }
 
-    @Override
-    public void onTranslatedTextview(Translate translate, Status status, String translatedResult, Boolean error) {
 
-    }
-
-    @Override
-    public void onTranslated(Translate translate, Helper.targetField targetField, String translatedResult, Boolean error) {
-        try {
-            String aJsonString;
-            if( translatedResult != null && translatedResult.length() > 0)
-                aJsonString = translate.replace(translatedResult);
-            else
-                aJsonString = "";
-            if( popup_trans != null ) {
-                ProgressBar trans_progress_cw = popup_trans.findViewById(R.id.trans_progress_cw);
-                ProgressBar trans_progress_toot = popup_trans.findViewById(R.id.trans_progress_toot);
-                if( targetField == Helper.targetField.STATUS && trans_progress_toot != null)
-                    trans_progress_toot.setVisibility(View.GONE);
-                if( targetField == Helper.targetField.CW && trans_progress_cw != null)
-                    trans_progress_cw.setVisibility(View.GONE);
-                LinearLayout trans_container = popup_trans.findViewById(R.id.trans_container);
-                if( trans_container != null && aJsonString != null){
-                    TextView toot_trans = popup_trans.findViewById(R.id.toot_trans);
-                    TextView cw_trans = popup_trans.findViewById(R.id.cw_trans);
-                    if( targetField == Helper.targetField.CW && cw_trans != null) {
-                        cw_trans.setVisibility(View.VISIBLE);
-                        cw_trans.setText(aJsonString);
-                    }else if(targetField == Helper.targetField.STATUS && toot_trans != null){
-                        toot_trans.setVisibility(View.VISIBLE);
-                        toot_trans.setText(aJsonString);
-                    }
-                }else {
-                    Toast.makeText(getApplicationContext(), R.string.toast_error_translate, Toast.LENGTH_LONG).show();
-                }
-                if(trans_progress_cw != null && trans_progress_toot != null && trans_progress_cw.getVisibility() == View.GONE && trans_progress_toot.getVisibility() == View.GONE )
-                    if( dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE) != null)
-                        dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE).setEnabled(true);
-            }
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(), R.string.toast_error_translate, Toast.LENGTH_LONG).show();
-        }
-
-    }
 
 
 }

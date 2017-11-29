@@ -56,6 +56,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.stom79.mytransl.MyTransL;
+import com.github.stom79.mytransl.client.HttpsConnectionException;
+import com.github.stom79.mytransl.client.Results;
+import com.github.stom79.mytransl.translate.Translate;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -88,7 +92,6 @@ import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
-import fr.gouv.etalab.mastodon.translation.Translate;
 import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -96,7 +99,6 @@ import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
-import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
 
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
@@ -107,7 +109,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnTranslatedInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface {
+public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface {
 
     private Context context;
     private List<Status> statuses;
@@ -975,12 +977,30 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     return false;
                 }
             });
-
+            final MyTransL myTransL = MyTransL.getInstance(MyTransL.translatorEngine.YANDEX);
+            myTransL.setObfuscation(true);
+            myTransL.setYandexAPIKey(Helper.YANDEX_KEY);
             holder.status_translate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if( !status.isTranslated() ){
-                        new Translate(context, status,StatusListAdapter.this).privacy(status.getContent());
+                        myTransL.translate(status.getContent(), myTransL.getLocale(), new Results() {
+                            @Override
+                            public void onSuccess(Translate translate) {
+                                if( translate.getTranslatedContent() != null) {
+                                    status.setTranslated(true);
+                                    status.setTranslationShown(true);
+                                    status.setContent_translated(translate.getTranslatedContent());
+                                    statusListAdapter.notifyDataSetChanged();
+                                }else {
+                                    Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                                }
+                            }
+                            @Override
+                            public void onFail(HttpsConnectionException e) {
+                                Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                            }
+                        });
                     }else {
                         status.setTranslationShown(!status.isTranslationShown());
                         statusListAdapter.notifyDataSetChanged();
@@ -1452,36 +1472,4 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     public void onRetrieveSearchEmoji(List<Emojis> emojis) {
 
     }
-
-    @Override
-    public void onTranslatedTextview(Translate translate, Status status, String translatedResult, Boolean error) {
-        if( error){
-            Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
-        }else {
-            try {
-                String aJsonString = translate.replace(translatedResult);
-                if( aJsonString != null) {
-                    status.setTranslated(true);
-                    status.setTranslationShown(true);
-                    status.setContent_translated(aJsonString);
-                    statusListAdapter.notifyDataSetChanged();
-                }
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-                Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
-    @Override
-    public void onTranslated(Translate translate, Helper.targetField targetField, String content, Boolean error) {
-    }
-
-
-
-
-
-
-
-
 }
