@@ -613,55 +613,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
             if( status.getReblog() != null) {
-                imageLoader.displayImage(ppurl, holder.status_account_profile_boost, options, new ImageLoadingListener() {
-                    @Override
-                    public void onLoadingStarted(String imageUri, View view) {
-                    }
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                        new HttpsConnection(context).download(ppurl, holder.status_account_profile_boost, options);
-                    }
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    }
-                    @Override
-                    public void onLoadingCancelled(String imageUri, View view) {
-                    }
-                });
-                imageLoader.displayImage(status.getAccount().getAvatar(), holder.status_account_profile_boost_by, options, new ImageLoadingListener() {
-                    @Override
-                    public void onLoadingStarted(String imageUri, View view) {
-                    }
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                        new HttpsConnection(context).download(status.getAccount().getAvatar(), holder.status_account_profile_boost_by, options);
-                    }
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    }
-                    @Override
-                    public void onLoadingCancelled(String imageUri, View view) {
-                    }
-                });
+                imageLoader.displayImage(ppurl, holder.status_account_profile_boost, options);
+                imageLoader.displayImage(status.getAccount().getAvatar(), holder.status_account_profile_boost_by, options);
                 holder.status_account_profile_boost.setVisibility(View.VISIBLE);
                 holder.status_account_profile_boost_by.setVisibility(View.VISIBLE);
                 holder.status_account_profile.setVisibility(View.GONE);
             }else{
-                imageLoader.displayImage(ppurl, holder.status_account_profile, options, new ImageLoadingListener() {
-                    @Override
-                    public void onLoadingStarted(String imageUri, View view) {
-                    }
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                        new HttpsConnection(context).download(ppurl, holder.status_account_profile, options);
-                    }
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    }
-                    @Override
-                    public void onLoadingCancelled(String imageUri, View view) {
-                    }
-                });
+                imageLoader.displayImage(ppurl, holder.status_account_profile, options);
                 holder.status_account_profile_boost.setVisibility(View.GONE);
                 holder.status_account_profile_boost_by.setVisibility(View.GONE);
                 holder.status_account_profile.setVisibility(View.VISIBLE);
