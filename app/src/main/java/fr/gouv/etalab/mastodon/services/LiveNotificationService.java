@@ -44,6 +44,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -151,55 +152,67 @@ public class LiveNotificationService extends Service {
                 httpsURLConnection.setRequestMethod("GET");
                 httpsURLConnection.setConnectTimeout(70000);
                 httpsURLConnection.setReadTimeout(70000);
-                inputStream = new BufferedInputStream(httpsURLConnection.getInputStream());
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-                String event;
-                Helper.EventStreaming eventStreaming;
-                while((event = reader.readLine()) != null) {
-                    if( !sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING, true) ) {
-                        stopSelf();
-                        return;
-                    }
 
-                    if ((lastEvent == Helper.EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
-                        switch (event.trim()) {
-                            case "event: update":
-                                lastEvent = Helper.EventStreaming.UPDATE;
-                                break;
-                            case "event: notification":
-                                lastEvent = Helper.EventStreaming.NOTIFICATION;
-                                break;
-                            case "event: delete":
-                                lastEvent = Helper.EventStreaming.DELETE;
-                                break;
-                            default:
-                                lastEvent = Helper.EventStreaming.NONE;
+                if( httpsURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK){
+                    inputStream = new BufferedInputStream(httpsURLConnection.getInputStream());
+                    reader = new BufferedReader(new InputStreamReader(inputStream));
+                    String event;
+                    Helper.EventStreaming eventStreaming;
+                    while((event = reader.readLine()) != null) {
+                        if( !sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING, true) ) {
+                            stopSelf();
+                            return;
                         }
-                    } else {
-                        if (!event.startsWith("data: ")) {
-                            lastEvent = Helper.EventStreaming.NONE;
-                            continue;
-                        }
-                        event = event.substring(6);
-                        if (lastEvent == Helper.EventStreaming.UPDATE) {
-                            eventStreaming = Helper.EventStreaming.UPDATE;
-                        } else if (lastEvent == Helper.EventStreaming.NOTIFICATION) {
-                            eventStreaming = Helper.EventStreaming.NOTIFICATION;
-                        } else if (lastEvent == Helper.EventStreaming.DELETE) {
-                            eventStreaming = Helper.EventStreaming.DELETE;
-                            event = "{id:" + event + "}";
+
+                        if ((lastEvent == Helper.EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
+                            switch (event.trim()) {
+                                case "event: update":
+                                    lastEvent = Helper.EventStreaming.UPDATE;
+                                    break;
+                                case "event: notification":
+                                    lastEvent = Helper.EventStreaming.NOTIFICATION;
+                                    break;
+                                case "event: delete":
+                                    lastEvent = Helper.EventStreaming.DELETE;
+                                    break;
+                                default:
+                                    lastEvent = Helper.EventStreaming.NONE;
+                            }
                         } else {
-                            eventStreaming = Helper.EventStreaming.UPDATE;
+                            if (!event.startsWith("data: ")) {
+                                lastEvent = Helper.EventStreaming.NONE;
+                                continue;
+                            }
+                            event = event.substring(6);
+                            if (lastEvent == Helper.EventStreaming.UPDATE) {
+                                eventStreaming = Helper.EventStreaming.UPDATE;
+                            } else if (lastEvent == Helper.EventStreaming.NOTIFICATION) {
+                                eventStreaming = Helper.EventStreaming.NOTIFICATION;
+                            } else if (lastEvent == Helper.EventStreaming.DELETE) {
+                                eventStreaming = Helper.EventStreaming.DELETE;
+                                event = "{id:" + event + "}";
+                            } else {
+                                eventStreaming = Helper.EventStreaming.UPDATE;
+                            }
+                            lastEvent = Helper.EventStreaming.NONE;
+                            try {
+                                JSONObject eventJson = new JSONObject(event);
+                                onRetrieveStreaming(eventStreaming, accountStream, eventJson);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
-                        lastEvent = Helper.EventStreaming.NONE;
-                        try {
-                            JSONObject eventJson = new JSONObject(event);
-                            onRetrieveStreaming(eventStreaming, accountStream, eventJson);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    }
+                }else {
+                    httpsURLConnection.disconnect();
+                    if( !restartCalled ) {
+                        restartCalled = true;
+                        SystemClock.sleep(60000);
+                        sendBroadcast(new Intent("RestartStreamingService"));
+                        stopSelf();
                     }
                 }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }finally {
@@ -217,7 +230,7 @@ public class LiveNotificationService extends Service {
                     httpsURLConnection.disconnect();
                 if( !restartCalled ) {
                     restartCalled = true;
-                    SystemClock.sleep(1000);
+                    SystemClock.sleep(10000);
                     sendBroadcast(new Intent("RestartStreamingService"));
                     stopSelf();
                 }
