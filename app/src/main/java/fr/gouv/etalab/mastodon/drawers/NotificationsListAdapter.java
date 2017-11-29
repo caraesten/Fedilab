@@ -50,9 +50,7 @@ import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -72,7 +70,6 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
-import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnPostNotificationsActionInterface;
@@ -684,21 +681,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         }
 
         //Profile picture
-        imageLoader.displayImage(notification.getAccount().getAvatar(), holder.notification_account_profile, options, new ImageLoadingListener() {
-            @Override
-            public void onLoadingStarted(String imageUri, View view) {
-            }
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                new HttpsConnection(context).download(notification.getAccount().getAvatar(), holder.notification_account_profile, options);
-            }
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-            }
-            @Override
-            public void onLoadingCancelled(String imageUri, View view) {
-            }
-        });
+        imageLoader.displayImage(notification.getAccount().getAvatar(), holder.notification_account_profile, options);
 
     }
 

@@ -642,21 +642,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
         }
 
-        imageLoader.displayImage(account.getAvatar(), account_pp, options, new ImageLoadingListener() {
-            @Override
-            public void onLoadingStarted(String imageUri, View view) {
-            }
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                new HttpsConnection(ShowAccountActivity.this).download(account.getAvatar(), account_pp, options);
-            }
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-            }
-            @Override
-            public void onLoadingCancelled(String imageUri, View view) {
-            }
-        });
+        imageLoader.displayImage(account.getAvatar(), account_pp, options);
 
 
     }
