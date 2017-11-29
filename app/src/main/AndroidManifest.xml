@@ -50,7 +50,7 @@
         <receiver android:name=".services.RestartLiveNotificationReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="RestartStreamingService" />
+                <action android:name="RestartLiveNotificationService" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>

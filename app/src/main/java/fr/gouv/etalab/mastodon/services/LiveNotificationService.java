@@ -208,7 +208,7 @@ public class LiveNotificationService extends Service {
                     if( !restartCalled ) {
                         restartCalled = true;
                         SystemClock.sleep(60000);
-                        sendBroadcast(new Intent("RestartStreamingService"));
+                        sendBroadcast(new Intent("RestartLiveNotificationService"));
                         stopSelf();
                     }
                 }
@@ -230,8 +230,8 @@ public class LiveNotificationService extends Service {
                     httpsURLConnection.disconnect();
                 if( !restartCalled ) {
                     restartCalled = true;
-                    SystemClock.sleep(10000);
-                    sendBroadcast(new Intent("RestartStreamingService"));
+                    SystemClock.sleep(5000);
+                    sendBroadcast(new Intent("RestartLiveNotificationService"));
                     stopSelf();
                 }
             }
