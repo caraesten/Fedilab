@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 
@@ -58,7 +59,7 @@ public class BackGroundTask extends AsyncTask<Void, Void, Void> {
     private Account account;
     private WeakReference<Context> contextReference;
 
-    public BackGroundTask(Context context, Account account){
+    BackGroundTask(Context context, Account account){
         this.contextReference = new WeakReference<>(context);
         this.account = account;
     }
@@ -156,10 +157,18 @@ public class BackGroundTask extends AsyncTask<Void, Void, Void> {
                     httpsURLConnection.disconnect();
             }
         }
-
+        SystemClock.sleep(5000);
         return null;
     }
 
+    @Override
+    protected void onPostExecute(Void result) {
+        Intent streamingServiceIntent = new Intent(contextReference.get(), LiveNotificationService.class);
+        streamingServiceIntent.putExtra("userId", account.getId());
+        try {
+            contextReference.get().startService(streamingServiceIntent);
+        }catch (Exception ignored){}
+    }
 
 
     private void onRetrieveStreaming(Helper.EventStreaming event, final Account account, JSONObject response) {

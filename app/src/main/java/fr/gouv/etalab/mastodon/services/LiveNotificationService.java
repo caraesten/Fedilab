@@ -51,17 +51,6 @@ public class LiveNotificationService extends IntentService {
 
     public void onCreate() {
         super.onCreate();
-    }
-
-
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
-
-    @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
         boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
@@ -78,6 +67,48 @@ public class LiveNotificationService extends IntentService {
                     task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 }
+        }
+    }
+
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
+    @Override
+    protected void onHandleIntent(@Nullable Intent intent) {
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
+        boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
+        String userId;
+        if( liveNotifications && notify){
+            SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            if( intent == null || intent.getExtras() == null) {
+                List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccount();
+                if (accountStreams != null){
+                    for (final Account accountStream : accountStreams) {
+                        if (backGroundTaskHashMap.containsKey(accountStream.getAcct() + accountStream.getInstance()))
+                            if (!backGroundTaskHashMap.get(accountStream.getAcct() + accountStream.getInstance()).isCancelled())
+                                backGroundTaskHashMap.get(accountStream.getAcct() + accountStream.getInstance()).cancel(true);
+                        BackGroundTask task = new BackGroundTask(getApplicationContext(), accountStream);
+                        backGroundTaskHashMap.put(accountStream.getAcct() + accountStream.getInstance(), task);
+                        task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    }
+
+                }
+            }else if((userId = intent.getStringExtra("userId")) != null){
+                Account accountStream = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
+                if (accountStream != null) {
+                    if (backGroundTaskHashMap.containsKey(accountStream.getAcct() + accountStream.getInstance()))
+                        if (!backGroundTaskHashMap.get(accountStream.getAcct() + accountStream.getInstance()).isCancelled())
+                            backGroundTaskHashMap.get(accountStream.getAcct() + accountStream.getInstance()).cancel(true);
+                    BackGroundTask task = new BackGroundTask(getApplicationContext(), accountStream);
+                    backGroundTaskHashMap.put(accountStream.getAcct() + accountStream.getInstance(), task);
+                    task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
+            }
         }
     }
 
