@@ -106,7 +106,8 @@ public class StreamingService extends IntentService {
                 httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
                 httpsURLConnection.setRequestProperty("Keep-Alive", "header");
                 httpsURLConnection.setRequestProperty("Connection", "close");
-                httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
+                    httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
                 httpsURLConnection.setRequestMethod("GET");
                 httpsURLConnection.setConnectTimeout(70000);
                 httpsURLConnection.setReadTimeout(70000);
@@ -151,20 +152,15 @@ public class StreamingService extends IntentService {
                         try {
                             JSONObject eventJson = new JSONObject(event);
                             onRetrieveStreaming(eventStreaming, accountStream, eventJson);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        } catch (JSONException ignored) {}
                     }
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception ignored) {
             }finally {
                 if(reader != null){
                     try{
                         reader.close();
-                    }catch (IOException e){
-                        e.printStackTrace();
-                    }
+                    }catch (IOException ignored){}
                 }
                 SystemClock.sleep(1000);
                 sendBroadcast(new Intent("RestartStreamingService"));
@@ -194,9 +190,7 @@ public class StreamingService extends IntentService {
             try {
                 //noinspection UnusedAssignment
                 dataId = response.getString("id");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            } catch (JSONException ignored) {}
         }
         if( account != null)
             b.putString("userIdService",account.getId());

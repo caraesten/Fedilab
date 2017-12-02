@@ -109,7 +109,8 @@ public class StreamingFederatedTimelineService extends IntentService {
                 httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
                 httpsURLConnection.setRequestProperty("Keep-Alive", "header");
                 httpsURLConnection.setRequestProperty("Connection", "close");
-                httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
+                    httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
                 httpsURLConnection.setRequestMethod("GET");
                 httpsURLConnection.setConnectTimeout(70000);
                 httpsURLConnection.setReadTimeout(70000);
@@ -131,19 +132,14 @@ public class StreamingFederatedTimelineService extends IntentService {
                     try {
                         JSONObject eventJson = new JSONObject(event);
                         onRetrieveStreaming(accountStream, eventJson);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    } catch (JSONException ignored) {}
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception ignored) {
             }finally {
                 if(reader != null){
                     try{
                         reader.close();
-                    }catch (IOException e){
-                        e.printStackTrace();
-                    }
+                    }catch (IOException ignored){}
                 }
                 if( sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + accountStream.getId(), true)) {
                     SystemClock.sleep(1000);

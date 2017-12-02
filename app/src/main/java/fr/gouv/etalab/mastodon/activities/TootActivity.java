@@ -82,19 +82,18 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.github.stom79.localepicker.CountryPicker;
 import com.github.stom79.localepicker.CountryPickerListener;
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.github.stom79.mytransl.MyTransL;
+import com.github.stom79.mytransl.client.HttpsConnectionException;
+import com.github.stom79.mytransl.translate.Translate;
+
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -127,9 +126,7 @@ import fr.gouv.etalab.mastodon.drawers.EmojisSearchAdapter;
 import fr.gouv.etalab.mastodon.interfaces.OnDownloadInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.sqlite.CustomEmojiDAO;
-import fr.gouv.etalab.mastodon.translation.Translate;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
-import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.drawers.AccountsReplyAdapter;
 import fr.gouv.etalab.mastodon.drawers.AccountsSearchAdapter;
 import fr.gouv.etalab.mastodon.drawers.DraftsListAdapter;
@@ -140,7 +137,6 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountsReplyInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearcAccountshInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchInterface;
-import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
 import fr.gouv.etalab.mastodon.jobs.ScheduledTootsSyncJob;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -156,14 +152,12 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Toot activity class
  */
 
-public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveAccountsReplyInterface, OnTranslatedInterface, OnRetrieveEmojiInterface, OnDownloadInterface {
+public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAccountshInterface, OnRetrieveAttachmentInterface, OnPostStatusActionInterface, OnRetrieveSearchInterface, OnRetrieveAccountsReplyInterface, OnRetrieveEmojiInterface, OnDownloadInterface {
 
 
     private String visibility;
     private final int PICK_IMAGE = 56556;
     private ImageButton toot_picture;
-    private ImageLoader imageLoader;
-    private DisplayImageOptions options;
     private LinearLayout toot_picture_container;
     private ArrayList<Attachment> attachments;
     private boolean isSensitive = false;
@@ -235,18 +229,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         //By default the toot is not restored so the id -1 is defined
         currentToId = -1;
         boolean restoredScheduled = false;
-        imageLoader = ImageLoader.getInstance();
-        File cacheDir = new File(getCacheDir(), getString(R.string.app_name));
-        ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(this)
-                .imageDownloader(new PatchBaseImageDownloader(getApplicationContext()))
-                .threadPoolSize(5)
-                .threadPriority(Thread.MIN_PRIORITY + 3)
-                .denyCacheImageMultipleSizesInMemory()
-                .diskCache(new UnlimitedDiskCache(cacheDir))
-                .build();
-        imageLoader.init(configImg);
-        options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+
 
         toot_it = findViewById(R.id.toot_it);
         Button toot_cw = findViewById(R.id.toot_cw);
@@ -295,14 +278,14 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             mentionAccount = b.getString("mentionAccount", null);
             restoredScheduled = b.getBoolean("restoredScheduled", false);
             // ACTION_SEND route
-            if (b.getInt("uriNumber", 0) == 1) {
+            if (b.getInt("uriNumberMast", 0) == 1) {
                 Uri fileUri = b.getParcelable("sharedUri");
                 if (fileUri != null) {
                     sharedUri.add(fileUri);
                 }
             }
             // ACTION_SEND_MULTIPLE route
-            else if( b.getInt("uriNumber", 0) > 1) {
+            else if( b.getInt("uriNumberMast", 0) > 1) {
                 ArrayList<Uri> fileUri = b.getParcelableArrayList("sharedUri");
 
                 if (fileUri != null) {
@@ -362,23 +345,23 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         if( url.startsWith("/") ){
             url = "https://" + Helper.getLiveInstance(getApplicationContext()) + account.getAvatar();
         }
-        imageLoader.loadImage(url, options, new SimpleImageLoadingListener(){
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                super.onLoadingComplete(imageUri, view, loadedImage);
-                BitmapDrawable ppDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(loadedImage, (int) Helper.convertDpToPixel(25, getApplicationContext()), (int) Helper.convertDpToPixel(25, getApplicationContext()), true));
-                if( pp_actionBar != null){
-                    pp_actionBar.setImageDrawable(ppDrawable);
-                } else if( getSupportActionBar() != null){
+        Glide.with(getApplicationContext())
+                .asBitmap()
+                .load(url)
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        BitmapDrawable ppDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(25, getApplicationContext()), (int) Helper.convertDpToPixel(25, getApplicationContext()), true));
+                        if( pp_actionBar != null){
+                            pp_actionBar.setImageDrawable(ppDrawable);
+                        } else if( getSupportActionBar() != null){
 
-                    getSupportActionBar().setIcon(ppDrawable);
-                    getSupportActionBar().setDisplayShowHomeEnabled(true);
-                }
-            }
-            @Override
-            public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
+                            getSupportActionBar().setIcon(ppDrawable);
+                            getSupportActionBar().setDisplayShowHomeEnabled(true);
+                        }
+                    }
+                });
 
-            }});
 
         if( sharedContent != null ){ //Shared content
 
@@ -391,8 +374,10 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     final String image = intent.getStringExtra("image");
                     String title = intent.getStringExtra("title");
                     String description = intent.getStringExtra("description");
-                    if( description != null ){
-                        if( title != null)
+                    if( description != null && description.length() > 0){
+                        if (sharedContentIni.startsWith("www."))
+                            sharedContentIni = "http://" + sharedContentIni;
+                        if( title != null && title.length() > 0)
                             sharedContent = title + "\n\n" + description + "\n\n" + sharedContentIni;
                         else
                             sharedContent = description + "\n\n" + sharedContentIni;
@@ -698,7 +683,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     } catch (FileNotFoundException e) {
                         Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
                         toot_picture.setEnabled(true);
-                        e.printStackTrace();
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
@@ -725,7 +709,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             } catch (FileNotFoundException e) {
                 Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
                 toot_picture.setEnabled(true);
-                e.printStackTrace();
             }
         }else if(requestCode == Helper.REQ_CODE_SPEECH_INPUT && resultCode == Activity.RESULT_OK){
             if (null != data) {
@@ -813,8 +796,81 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                                 startActivity(browserIntent);
                             }
                         });
-                        new Translate(getApplicationContext(), Helper.targetField.CW, locale, TootActivity.this).privacy(toot_cw_content.getText().toString());
-                        new Translate(getApplicationContext(), Helper.targetField.STATUS, locale, TootActivity.this).privacy(toot_content.getText().toString());
+                        MyTransL myTransL = MyTransL.getInstance(MyTransL.translatorEngine.YANDEX);
+                        myTransL.setYandexAPIKey(Helper.YANDEX_KEY);
+                        myTransL.setObfuscation(true);
+                        myTransL.setTimeout(60);
+                        myTransL.translate(toot_cw_content.getText().toString(), myTransL.getLocale(), new com.github.stom79.mytransl.client.Results() {
+                            @Override
+                            public void onSuccess(Translate translate) {
+                                try {
+                                    if( translate.getTranslatedContent() == null)
+                                        return;
+                                    if( popup_trans != null ) {
+                                        ProgressBar trans_progress_cw = popup_trans.findViewById(R.id.trans_progress_cw);
+                                        ProgressBar trans_progress_toot = popup_trans.findViewById(R.id.trans_progress_toot);
+                                        if( trans_progress_cw != null)
+                                            trans_progress_cw.setVisibility(View.GONE);
+                                        LinearLayout trans_container = popup_trans.findViewById(R.id.trans_container);
+                                        if( trans_container != null ){
+                                            TextView cw_trans = popup_trans.findViewById(R.id.cw_trans);
+                                            if( cw_trans != null) {
+                                                cw_trans.setVisibility(View.VISIBLE);
+                                                cw_trans.setText(translate.getTranslatedContent());
+                                            }
+                                        }else {
+                                            Toast.makeText(getApplicationContext(), R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                                        }
+                                        if(trans_progress_cw != null && trans_progress_toot != null && trans_progress_cw.getVisibility() == View.GONE && trans_progress_toot.getVisibility() == View.GONE )
+                                            if( dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE) != null)
+                                                dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE).setEnabled(true);
+                                    }
+                                } catch (IllegalArgumentException e) {
+                                    Toast.makeText(getApplicationContext(), R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                                }
+
+                            }
+
+                            @Override
+                            public void onFail(HttpsConnectionException e) {
+
+                            }
+                        });
+                        myTransL.translate(toot_content.getText().toString(), myTransL.getLocale(), new com.github.stom79.mytransl.client.Results() {
+                            @Override
+                            public void onSuccess(Translate translate) {
+                                try {
+                                    if( translate.getTranslatedContent() == null)
+                                        return;
+                                    if( popup_trans != null ) {
+                                        ProgressBar trans_progress_cw = popup_trans.findViewById(R.id.trans_progress_cw);
+                                        ProgressBar trans_progress_toot = popup_trans.findViewById(R.id.trans_progress_toot);
+                                        if( trans_progress_toot != null)
+                                            trans_progress_toot.setVisibility(View.GONE);
+                                        LinearLayout trans_container = popup_trans.findViewById(R.id.trans_container);
+                                        if( trans_container != null ){
+                                            TextView toot_trans = popup_trans.findViewById(R.id.toot_trans);
+                                           if(toot_trans != null){
+                                                toot_trans.setVisibility(View.VISIBLE);
+                                                toot_trans.setText(translate.getTranslatedContent());
+                                            }
+                                        }else {
+                                            Toast.makeText(getApplicationContext(), R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                                        }
+                                        if(trans_progress_cw != null && trans_progress_toot != null && trans_progress_cw.getVisibility() == View.GONE && trans_progress_toot.getVisibility() == View.GONE )
+                                            if( dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE) != null)
+                                                dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE).setEnabled(true);
+                                    }
+                                } catch (IllegalArgumentException e) {
+                                    Toast.makeText(getApplicationContext(), R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFail(HttpsConnectionException e) {
+
+                            }
+                        });
                         transAlert.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 dialog.dismiss();
@@ -1143,7 +1199,16 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
             final ImageView imageView = new ImageView(getApplicationContext());
             imageView.setId(Integer.parseInt(attachment.getId()));
-            imageLoader.displayImage(url, imageView, options);
+
+            Glide.with(imageView.getContext())
+                    .asBitmap()
+                    .load(url)
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            imageView.setImageBitmap(resource);
+                        }
+                    });
             LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
             imParams.setMargins(20, 5, 20, 5);
             imParams.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
@@ -1500,8 +1565,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                             newContent += deltaSearch;
                             newContent += "@" + account.getAcct() + " ";
                             int newPosition = newContent.length();
-                            if (currentCursorPosition < oldContent.length() - 1)
-                                newContent += oldContent.substring(currentCursorPosition, oldContent.length() - 1);
+                            if (currentCursorPosition < oldContent.length() )
+                                newContent += oldContent.substring(currentCursorPosition, oldContent.length());
                             toot_content.setText(newContent);
                             toot_space_left.setText(String.valueOf(toot_content.length()));
                             toot_content.setSelection(newPosition);
@@ -1551,7 +1616,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     newContent += deltaSearch;
                     newContent += ":" + shortcode + ": ";
                     int newPosition = newContent.length();
-                    if( currentCursorPosition < oldContent.length() - 1)
+                    if( currentCursorPosition < oldContent.length() )
                         newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
                     toot_content.setText(newContent);
                     toot_space_left.setText(String.valueOf(toot_content.length()));
@@ -1604,7 +1669,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     newContent += deltaSearch;
                     newContent += "#" + tag + " ";
                     int newPosition = newContent.length();
-                    if( currentCursorPosition < oldContent.length() - 1)
+                    if( currentCursorPosition < oldContent.length() )
                         newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
                     toot_content.setText(newContent);
                     toot_space_left.setText(String.valueOf(toot_content.length()));
@@ -1647,13 +1712,23 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     url = attachment.getUrl();
                 final ImageView imageView = new ImageView(getApplicationContext());
                 imageView.setId(Integer.parseInt(attachment.getId()));
-                imageLoader.displayImage(url, imageView, options);
+
                 LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
                 imParams.setMargins(20, 5, 20, 5);
                 imParams.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
                 imageView.setAdjustViewBounds(true);
                 imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 toot_picture_container.addView(imageView, i, imParams);
+
+                Glide.with(imageView.getContext())
+                        .asBitmap()
+                        .load(url)
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                                imageView.setImageBitmap(resource);
+                            }
+                        });
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -1900,50 +1975,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         }
     }
 
-    @Override
-    public void onTranslatedTextview(Translate translate, Status status, String translatedResult, Boolean error) {
 
-    }
-
-    @Override
-    public void onTranslated(Translate translate, Helper.targetField targetField, String translatedResult, Boolean error) {
-        try {
-            String aJsonString;
-            if( translatedResult != null && translatedResult.length() > 0)
-                aJsonString = translate.replace(translatedResult);
-            else
-                aJsonString = "";
-            if( popup_trans != null ) {
-                ProgressBar trans_progress_cw = popup_trans.findViewById(R.id.trans_progress_cw);
-                ProgressBar trans_progress_toot = popup_trans.findViewById(R.id.trans_progress_toot);
-                if( targetField == Helper.targetField.STATUS && trans_progress_toot != null)
-                    trans_progress_toot.setVisibility(View.GONE);
-                if( targetField == Helper.targetField.CW && trans_progress_cw != null)
-                    trans_progress_cw.setVisibility(View.GONE);
-                LinearLayout trans_container = popup_trans.findViewById(R.id.trans_container);
-                if( trans_container != null && aJsonString != null){
-                    TextView toot_trans = popup_trans.findViewById(R.id.toot_trans);
-                    TextView cw_trans = popup_trans.findViewById(R.id.cw_trans);
-                    if( targetField == Helper.targetField.CW && cw_trans != null) {
-                        cw_trans.setVisibility(View.VISIBLE);
-                        cw_trans.setText(aJsonString);
-                    }else if(targetField == Helper.targetField.STATUS && toot_trans != null){
-                        toot_trans.setVisibility(View.VISIBLE);
-                        toot_trans.setText(aJsonString);
-                    }
-                }else {
-                    Toast.makeText(getApplicationContext(), R.string.toast_error_translate, Toast.LENGTH_LONG).show();
-                }
-                if(trans_progress_cw != null && trans_progress_toot != null && trans_progress_cw.getVisibility() == View.GONE && trans_progress_toot.getVisibility() == View.GONE )
-                    if( dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE) != null)
-                        dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE).setEnabled(true);
-            }
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(), R.string.toast_error_translate, Toast.LENGTH_LONG).show();
-        }
-
-    }
 
 
 }

@@ -107,7 +107,7 @@
     <style name="AppThemeDark" parent="Theme.AppCompat">
         <item name="android:textColor">@color/dark_text</item>
         <item name="colorPrimary">@color/mastodonC1</item>
-        <item name="colorPrimaryDark">@color/mastodonC2</item>
+        <item name="colorPrimaryDark">@color/mastodonC1</item>
         <item name="colorAccent">@color/mastodonC4</item>
         <item name="android:buttonStyle">@style/DarkButtonColor</item>
         <item name="headerbg">@style/Header.Dark</item>
@@ -130,7 +130,7 @@
         <item name="android:textColor">@color/dark_text</item>
         <item name="android:scrollbarThumbVertical">@color/transparent</item>
         <item name="colorPrimary">@color/mastodonC1</item>
-        <item name="colorPrimaryDark">@color/mastodonC2</item>
+        <item name="colorPrimaryDark">@color/mastodonC1</item>
         <item name="colorAccent">@color/mastodonC4</item>
         <item name="android:buttonStyle">@style/DarkButtonColor</item>
         <item name="headerbg">@style/Header.Dark</item>

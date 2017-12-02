@@ -31,9 +31,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,18 +55,13 @@ public class AccountsFollowRequestAdapter extends RecyclerView.Adapter implement
 
     private List<Account> accounts;
     private LayoutInflater layoutInflater;
-    private ImageLoader imageLoader;
-    private DisplayImageOptions options;
     private Context context;
     private AccountsFollowRequestAdapter accountsFollowRequestAdapter;
 
     public AccountsFollowRequestAdapter(Context context, List<Account> accounts){
         this.accounts = accounts;
         layoutInflater = LayoutInflater.from(context);
-        imageLoader = ImageLoader.getInstance();
         this.context = context;
-        options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
         accountsFollowRequestAdapter = this;
     }
     
@@ -86,7 +80,9 @@ public class AccountsFollowRequestAdapter extends RecyclerView.Adapter implement
         holder.btn_reject.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.red_1), PorterDuff.Mode.MULTIPLY);
         holder.account_un.setText(String.format("@%s", account.getUsername()));
         //Profile picture
-        imageLoader.displayImage(account.getAvatar(), holder.account_pp, options);
+        Glide.with(holder.account_pp.getContext())
+                .load(account.getAvatar())
+                .into(holder.account_pp);
         holder.account_pp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

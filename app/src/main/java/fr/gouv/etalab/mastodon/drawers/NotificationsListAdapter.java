@@ -48,11 +48,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+
+import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -72,7 +69,6 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
-import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnPostNotificationsActionInterface;
@@ -95,8 +91,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     private Context context;
     private List<Notification> notifications;
     private LayoutInflater layoutInflater;
-    private ImageLoader imageLoader;
-    private DisplayImageOptions options;
     private NotificationsListAdapter notificationsListAdapter;
     private int behaviorWithAttachments;
     private boolean isOnWifi;
@@ -106,12 +100,9 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         this.context = context;
         this.notifications = notifications;
         layoutInflater = LayoutInflater.from(this.context);
-        imageLoader = ImageLoader.getInstance();
         notificationsListAdapter = this;
         this.isOnWifi = isOnWifi;
         this.behaviorWithAttachments = behaviorWithAttachments;
-        options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
     }
 
     
@@ -618,9 +609,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                                     bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
                                                     out.flush();
                                                     out.close();
-                                                } catch (Exception e) {
-                                                    e.printStackTrace();
-                                                }
+                                                } catch (Exception ignored) {}
                                                 b.putString("fileMention", fname);
                                                 b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
                                                 b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
@@ -684,21 +673,9 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         }
 
         //Profile picture
-        imageLoader.displayImage(notification.getAccount().getAvatar(), holder.notification_account_profile, options, new ImageLoadingListener() {
-            @Override
-            public void onLoadingStarted(String imageUri, View view) {
-            }
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                new HttpsConnection(context).download(notification.getAccount().getAvatar(), holder.notification_account_profile, options);
-            }
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-            }
-            @Override
-            public void onLoadingCancelled(String imageUri, View view) {
-            }
-        });
+        Glide.with(holder.notification_account_profile.getContext())
+                .load(notification.getAccount().getAvatar())
+                .into(holder.notification_account_profile);
 
     }
 
@@ -897,7 +874,9 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 if( url == null || url.trim().equals(""))
                     url = attachment.getUrl();
                 if( !url.trim().contains("missing.png"))
-                    imageLoader.displayImage(url, imageView, options);
+                    Glide.with(imageView.getContext())
+                            .load(url)
+                            .into(imageView);
                 final int finalPosition = position;
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -925,7 +904,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         status.setContents(spannableString);
         if( !status.isEmojiFound()) {
             for (int i = 0; i < notificationsListAdapter.getItemCount(); i++) {
-                if (notificationsListAdapter.getItemAt(i) != null && notificationsListAdapter.getItemAt(i).getId().equals(status.getId())) {
+                if (notificationsListAdapter.getItemAt(i) != null && notificationsListAdapter.getItemAt(i).getStatus() != null &&  notificationsListAdapter.getItemAt(i).getStatus().getId().equals(status.getId())) {
                     if( notificationsListAdapter.getItemAt(i).getStatus() != null) {
                         notificationsListAdapter.getItemAt(i).getStatus().setEmojiFound(true);
                         notificationsListAdapter.notifyItemChanged(i);

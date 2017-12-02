@@ -31,12 +31,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import java.io.File;
+
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +42,6 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
-import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
@@ -88,19 +84,6 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         final AccountsListAdapter.ViewHolder holder = (AccountsListAdapter.ViewHolder) viewHolder;
-        ImageLoader imageLoader = ImageLoader.getInstance();
-        File cacheDir = new File(context.getCacheDir(), context.getString(R.string.app_name));
-        ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(context)
-                .imageDownloader(new PatchBaseImageDownloader(context))
-                .threadPoolSize(5)
-                .threadPriority(Thread.MIN_PRIORITY + 3)
-                .denyCacheImageMultipleSizesInMemory()
-                .diskCache(new UnlimitedDiskCache(cacheDir))
-                .build();
-        if( !imageLoader.isInited())
-            imageLoader.init(configImg);
-        DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
         final Account account = accounts.get(position);
 
 
@@ -166,9 +149,9 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
         holder.account_fgc.setText(withSuffix(account.getFollowing_count()));
         holder.account_frc.setText(withSuffix(account.getFollowers_count()));
         //Profile picture
-        imageLoader.displayImage(account.getAvatar(), holder.account_pp, options);
-
-
+        Glide.with(holder.account_pp.getContext())
+                .load(account.getAvatar())
+                .into(holder.account_pp);
 
         if( account.isMakingAction()){
             holder.account_follow.setEnabled(false);

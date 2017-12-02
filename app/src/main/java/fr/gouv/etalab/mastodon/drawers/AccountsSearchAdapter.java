@@ -29,9 +29,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,8 +52,6 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
 
     private List<Account> accounts, tempAccounts, suggestions ;
     private LayoutInflater layoutInflater;
-    private ImageLoader imageLoader;
-    private DisplayImageOptions options;
     private boolean owner;
     private Context context;
 
@@ -65,9 +62,6 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
         this.tempAccounts = new ArrayList<>(accounts);
         this.suggestions = new ArrayList<>(accounts);
         layoutInflater = LayoutInflater.from(context);
-        imageLoader = ImageLoader.getInstance();
-        options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
         this.owner = false;
     }
     public AccountsSearchAdapter(Context context, List<Account> accounts, boolean owner){
@@ -77,9 +71,6 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
         this.tempAccounts = new ArrayList<>(accounts);
         this.suggestions = new ArrayList<>(accounts);
         layoutInflater = LayoutInflater.from(context);
-        imageLoader = ImageLoader.getInstance();
-        options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
         this.owner = owner;
     }
 
@@ -133,8 +124,9 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
             holder.account_dn.setVisibility(View.VISIBLE);
         }
         //Profile picture
-        imageLoader.displayImage(account.getAvatar(), holder.account_pp, options);
-
+        Glide.with(holder.account_pp.getContext())
+                .load(account.getAvatar())
+                .into(holder.account_pp);
         return convertView;
     }
 

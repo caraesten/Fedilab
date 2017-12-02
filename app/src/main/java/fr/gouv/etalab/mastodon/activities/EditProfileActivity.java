@@ -49,17 +49,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
@@ -69,7 +65,6 @@ import fr.gouv.etalab.mastodon.asynctasks.UpdateCredentialAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
-import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateCredentialInterface;
@@ -92,8 +87,6 @@ public class EditProfileActivity extends AppCompatActivity implements OnRetrieve
     private ImageView set_profile_picture, set_header_picture;
     private Button set_change_profile_picture, set_change_header_picture, set_profile_save;
     private TextView set_header_picture_overlay;
-    private ImageLoader imageLoader;
-    private DisplayImageOptions options;
     private static final int PICK_IMAGE_HEADER = 4565;
     private static final int PICK_IMAGE_PROFILE = 6545;
     private String profile_picture, header_picture, profile_username, profile_note;
@@ -144,40 +137,25 @@ public class EditProfileActivity extends AppCompatActivity implements OnRetrieve
         if( url.startsWith("/") ){
             url = "https://" + Helper.getLiveInstance(getApplicationContext()) + account.getAvatar();
         }
-        ImageLoader imageLoader = ImageLoader.getInstance();
-        File cacheDir = new File(getCacheDir(), getString(R.string.app_name));
-        ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(this)
-                .imageDownloader(new PatchBaseImageDownloader(getApplicationContext()))
-                .threadPoolSize(5)
-                .threadPriority(Thread.MIN_PRIORITY + 3)
-                .denyCacheImageMultipleSizesInMemory()
-                .diskCache(new UnlimitedDiskCache(cacheDir))
-                .build();
 
-        this.imageLoader = ImageLoader.getInstance();
-        this.options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 
-        imageLoader.init(configImg);
-        DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
-        imageLoader.loadImage(url, options, new SimpleImageLoadingListener(){
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                super.onLoadingComplete(imageUri, view, loadedImage);
-                BitmapDrawable ppDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(loadedImage, (int) Helper.convertDpToPixel(25, getApplicationContext()), (int) Helper.convertDpToPixel(25, getApplicationContext()), true));
-                if( pp_actionBar != null){
-                    pp_actionBar.setImageDrawable(ppDrawable);
-                } else if( getSupportActionBar() != null){
+        Glide.with(getApplicationContext())
+                .asBitmap()
+                .load(url)
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        BitmapDrawable ppDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(25, getApplicationContext()), (int) Helper.convertDpToPixel(25, getApplicationContext()), true));
+                        if( pp_actionBar != null){
+                            pp_actionBar.setImageDrawable(ppDrawable);
+                        } else if( getSupportActionBar() != null){
 
-                    getSupportActionBar().setIcon(ppDrawable);
-                    getSupportActionBar().setDisplayShowHomeEnabled(true);
-                }
-            }
-            @Override
-            public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
+                            getSupportActionBar().setIcon(ppDrawable);
+                            getSupportActionBar().setDisplayShowHomeEnabled(true);
+                        }
+                    }
+                });
 
-            }});
 
         set_profile_name = findViewById(R.id.set_profile_name);
         set_profile_description = findViewById(R.id.set_profile_description);
@@ -317,9 +295,12 @@ public class EditProfileActivity extends AppCompatActivity implements OnRetrieve
             }
         });
 
-        imageLoader.displayImage(account.getAvatar(), set_profile_picture, options);
-        imageLoader.displayImage(account.getHeader(), set_header_picture, options);
-
+        Glide.with(set_profile_picture.getContext())
+                .load(account.getAvatar())
+                .into(set_profile_picture);
+        Glide.with(set_header_picture.getContext())
+                .load(account.getHeader())
+                .into(set_header_picture);
         if( account.getHeader() == null || account.getHeader().contains("missing.png"))
             set_header_picture_overlay.setVisibility(View.VISIBLE);
 
@@ -458,7 +439,6 @@ public class EditProfileActivity extends AppCompatActivity implements OnRetrieve
 
             } catch (FileNotFoundException e) {
                 Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
-                e.printStackTrace();
             }
         }else if(requestCode == PICK_IMAGE_PROFILE && resultCode == Activity.RESULT_OK) {
             if (data == null) {
@@ -483,7 +463,6 @@ public class EditProfileActivity extends AppCompatActivity implements OnRetrieve
                 profile_picture = "data:image/png;base64, " + Base64.encodeToString(byteArray, Base64.DEFAULT);
             } catch (FileNotFoundException e) {
                 Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
-                e.printStackTrace();
             }
         }
     }

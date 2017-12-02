@@ -144,10 +144,8 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
 
                             } catch (HttpsConnection.HttpsConnectionException e) {
                                 isLoadingInstance = false;
-                                e.printStackTrace();
                             } catch (Exception e) {
                                 isLoadingInstance = false;
-                                e.printStackTrace();
                             }
                         }
                     }).start();
@@ -233,17 +231,11 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
                                   i.putExtra("instance", instance);
                                   startActivity(i);
                               }
-                          } catch (JSONException e) {
-                              e.printStackTrace();
-                          }
+                          } catch (JSONException ignored) {}
                       }
                     });
 
-                } catch (HttpsConnection.HttpsConnectionException e) {
-                    e.printStackTrace();
-                }catch (Exception e) {
-                    e.printStackTrace();
-                }
+                } catch (Exception ignored) {}
             }
         }).start();
 
@@ -287,9 +279,7 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
                                         editor.apply();
                                         //Update the account with the token;
                                         new UpdateAccountInfoAsyncTask(BaseLoginActivity.this, token, instance).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
+                                    } catch (JSONException ignored) {}
                                 }
                             });
                         }catch (HttpsConnection.HttpsConnectionException e) {
@@ -299,7 +289,6 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(),R.string.toast_error_login,Toast.LENGTH_LONG).show();
                                 }
                             });
-                            e.printStackTrace();
                         } catch (Exception e) {
                             runOnUiThread(new Runnable() {
                                 public void run() {
@@ -307,7 +296,6 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(),R.string.toast_error_login,Toast.LENGTH_LONG).show();
                                 }
                             });
-                            e.printStackTrace();
                         }
                     }
                 }).start();

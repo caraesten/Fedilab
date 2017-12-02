@@ -44,19 +44,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -71,7 +67,6 @@ import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
-import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.drawers.AccountSearchDevAdapter;
 import fr.gouv.etalab.mastodon.helper.ExpandableHeightListView;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -152,35 +147,22 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
         if( url.startsWith("/") ){
             url = "https://" + Helper.getLiveInstance(getApplicationContext()) + account.getAvatar();
         }
-        ImageLoader imageLoader = ImageLoader.getInstance();
-        File cacheDir = new File(getCacheDir(), getString(R.string.app_name));
-        ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(this)
-                .imageDownloader(new PatchBaseImageDownloader(getApplicationContext()))
-                .threadPoolSize(5)
-                .threadPriority(Thread.MIN_PRIORITY + 3)
-                .denyCacheImageMultipleSizesInMemory()
-                .diskCache(new UnlimitedDiskCache(cacheDir))
-                .build();
-        imageLoader.init(configImg);
-        DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
-        imageLoader.loadImage(url, options, new SimpleImageLoadingListener(){
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                super.onLoadingComplete(imageUri, view, loadedImage);
-                BitmapDrawable ppDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(loadedImage, (int) Helper.convertDpToPixel(25, getApplicationContext()), (int) Helper.convertDpToPixel(25, getApplicationContext()), true));
-                if( pp_actionBar != null){
-                    pp_actionBar.setImageDrawable(ppDrawable);
-                } else if( getSupportActionBar() != null){
+        Glide.with(getApplicationContext())
+                .asBitmap()
+                .load(url)
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        BitmapDrawable ppDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(25, getApplicationContext()), (int) Helper.convertDpToPixel(25, getApplicationContext()), true));
+                        if( pp_actionBar != null){
+                            pp_actionBar.setImageDrawable(ppDrawable);
+                        } else if( getSupportActionBar() != null){
 
-                    getSupportActionBar().setIcon(ppDrawable);
-                    getSupportActionBar().setDisplayShowHomeEnabled(true);
-                }
-            }
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason){
-
-            }});
+                            getSupportActionBar().setIcon(ppDrawable);
+                            getSupportActionBar().setDisplayShowHomeEnabled(true);
+                        }
+                    }
+                });
 
 
         rf_instance.addTextChangedListener(new TextWatcher() {
@@ -232,10 +214,8 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
 
                             } catch (HttpsConnection.HttpsConnectionException e) {
                                 isLoadingInstance = false;
-                                e.printStackTrace();
                             } catch (Exception e) {
                                 isLoadingInstance = false;
-                                e.printStackTrace();
                             }
                         }
                     }).start();

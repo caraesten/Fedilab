@@ -56,14 +56,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.bumptech.glide.Glide;
+import com.github.stom79.mytransl.MyTransL;
+import com.github.stom79.mytransl.client.HttpsConnectionException;
+import com.github.stom79.mytransl.client.Results;
+import com.github.stom79.mytransl.translate.Translate;
 
 
 import java.io.File;
@@ -87,16 +84,12 @@ import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
-import fr.gouv.etalab.mastodon.client.HttpsConnection;
-import fr.gouv.etalab.mastodon.translation.Translate;
-import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
-import fr.gouv.etalab.mastodon.interfaces.OnTranslatedInterface;
 
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
@@ -107,12 +100,11 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnTranslatedInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface {
+public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface {
 
     private Context context;
     private List<Status> statuses;
     private LayoutInflater layoutInflater;
-    private ImageLoader imageLoader;
     private boolean isOnWifi;
     private int translator;
     private int behaviorWithAttachments;
@@ -374,19 +366,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         if( viewHolder.getItemViewType() == DISPLAYED_STATUS){
             final ViewHolder holder = (ViewHolder) viewHolder;
             final Status status = statuses.get(position);
-            imageLoader = ImageLoader.getInstance();
-            File cacheDir = new File(context.getCacheDir(), context.getString(R.string.app_name));
-            ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(context)
-                    .imageDownloader(new PatchBaseImageDownloader(context))
-                    .threadPoolSize(5)
-                    .threadPriority(Thread.MIN_PRIORITY + 3)
-                    .denyCacheImageMultipleSizesInMemory()
-                    .diskCache(new UnlimitedDiskCache(cacheDir))
-                    .build();
-            if( !imageLoader.isInited())
-                imageLoader.init(configImg);
-            final DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(10)).cacheInMemory(false)
-                    .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             //Retrieves replies
@@ -424,7 +403,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     ImageView imageView = new ImageView(context);
                                     imageView.setMaxHeight((int) Helper.convertDpToPixel(30, context));
                                     imageView.setMaxWidth((int) Helper.convertDpToPixel(30, context));
-                                    imageLoader.displayImage(replies.getAccount().getAvatar(), imageView, options);
                                     LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                                     imParams.setMargins(10, 5, 10, 5);
                                     imParams.height = (int) Helper.convertDpToPixel(30, context);
@@ -613,55 +591,19 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
             if( status.getReblog() != null) {
-                imageLoader.displayImage(ppurl, holder.status_account_profile_boost, options, new ImageLoadingListener() {
-                    @Override
-                    public void onLoadingStarted(String imageUri, View view) {
-                    }
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                        new HttpsConnection(context).download(ppurl, holder.status_account_profile_boost, options);
-                    }
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    }
-                    @Override
-                    public void onLoadingCancelled(String imageUri, View view) {
-                    }
-                });
-                imageLoader.displayImage(status.getAccount().getAvatar(), holder.status_account_profile_boost_by, options, new ImageLoadingListener() {
-                    @Override
-                    public void onLoadingStarted(String imageUri, View view) {
-                    }
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                        new HttpsConnection(context).download(status.getAccount().getAvatar(), holder.status_account_profile_boost_by, options);
-                    }
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    }
-                    @Override
-                    public void onLoadingCancelled(String imageUri, View view) {
-                    }
-                });
+                Glide.with(holder.status_account_profile_boost.getContext())
+                        .load(ppurl)
+                        .into(holder.status_account_profile_boost);
+                Glide.with(holder.status_account_profile_boost_by.getContext())
+                        .load(status.getAccount().getAvatar())
+                        .into(holder.status_account_profile_boost_by);
                 holder.status_account_profile_boost.setVisibility(View.VISIBLE);
                 holder.status_account_profile_boost_by.setVisibility(View.VISIBLE);
                 holder.status_account_profile.setVisibility(View.GONE);
             }else{
-                imageLoader.displayImage(ppurl, holder.status_account_profile, options, new ImageLoadingListener() {
-                    @Override
-                    public void onLoadingStarted(String imageUri, View view) {
-                    }
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                        new HttpsConnection(context).download(ppurl, holder.status_account_profile, options);
-                    }
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    }
-                    @Override
-                    public void onLoadingCancelled(String imageUri, View view) {
-                    }
-                });
+                Glide.with(holder.status_account_profile.getContext())
+                        .load(ppurl)
+                        .into(holder.status_account_profile);
                 holder.status_account_profile_boost.setVisibility(View.GONE);
                 holder.status_account_profile_boost_by.setVisibility(View.GONE);
                 holder.status_account_profile.setVisibility(View.VISIBLE);
@@ -975,12 +917,30 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     return false;
                 }
             });
-
+            final MyTransL myTransL = MyTransL.getInstance(MyTransL.translatorEngine.YANDEX);
+            myTransL.setObfuscation(true);
+            myTransL.setYandexAPIKey(Helper.YANDEX_KEY);
             holder.status_translate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if( !status.isTranslated() ){
-                        new Translate(context, status,StatusListAdapter.this).privacy(status.getContent());
+                        myTransL.translate(status.getContent(), myTransL.getLocale(), new Results() {
+                            @Override
+                            public void onSuccess(Translate translate) {
+                                if( translate.getTranslatedContent() != null) {
+                                    status.setTranslated(true);
+                                    status.setTranslationShown(true);
+                                    status.setContent_translated(translate.getTranslatedContent());
+                                    statusListAdapter.notifyDataSetChanged();
+                                }else {
+                                    Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                                }
+                            }
+                            @Override
+                            public void onFail(HttpsConnectionException e) {
+                                Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                            }
+                        });
                     }else {
                         status.setTranslationShown(!status.isTranslationShown());
                         statusListAdapter.notifyDataSetChanged();
@@ -1115,7 +1075,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 case R.id.action_share:
                                     Intent sendIntent = new Intent(Intent.ACTION_SEND);
                                     sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
-                                    sendIntent.putExtra(Intent.EXTRA_TEXT, status.getUrl());
+                                    sendIntent.putExtra(Intent.EXTRA_TEXT, status.getUri());
                                     sendIntent.setType("text/plain");
                                     context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
                                     return true;
@@ -1141,9 +1101,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                 bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
                                                 out.flush();
                                                 out.close();
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                            }
+                                            } catch (Exception ignored) {}
                                             b.putString("fileMention", fname);
                                             b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
                                             b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());
@@ -1292,10 +1250,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     url = attachment.getUrl();
                 else if( attachment.getType().equals("unknown"))
                     url = attachment.getRemote_url();
-                DisplayImageOptions optionsAttachment = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                        .cacheOnDisk(true).resetViewBeforeLoading(true).build();
                 if( !url.trim().contains("missing.png"))
-                    imageLoader.displayImage(url, imageView, optionsAttachment);
+                    Glide.with(imageView.getContext())
+                            .load(url)
+                            .into(imageView);
                 final int finalPosition = position;
                 if( attachment.getDescription() != null && !attachment.getDescription().equals("null"))
                     imageView.setContentDescription(attachment.getDescription());
@@ -1440,7 +1398,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
                     if( statusListAdapter.getItemAt(i) != null) {
                         statusListAdapter.getItemAt(i).setEmojiFound(true);
-                        statusListAdapter.notifyItemChanged(i);
+                        try {
+                            statusListAdapter.notifyItemChanged(i);
+                        }catch (Exception ignored){}
                     }
                 }
             }
@@ -1452,36 +1412,4 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     public void onRetrieveSearchEmoji(List<Emojis> emojis) {
 
     }
-
-    @Override
-    public void onTranslatedTextview(Translate translate, Status status, String translatedResult, Boolean error) {
-        if( error){
-            Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
-        }else {
-            try {
-                String aJsonString = translate.replace(translatedResult);
-                if( aJsonString != null) {
-                    status.setTranslated(true);
-                    status.setTranslationShown(true);
-                    status.setContent_translated(aJsonString);
-                    statusListAdapter.notifyDataSetChanged();
-                }
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-                Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
-    @Override
-    public void onTranslated(Translate translate, Helper.targetField targetField, String content, Boolean error) {
-    }
-
-
-
-
-
-
-
-
 }

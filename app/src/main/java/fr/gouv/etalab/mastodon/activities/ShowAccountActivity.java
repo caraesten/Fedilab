@@ -25,13 +25,14 @@ import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -39,6 +40,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -57,21 +60,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
+
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountAsyncTask;
@@ -83,8 +80,6 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
-import fr.gouv.etalab.mastodon.client.HttpsConnection;
-import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
@@ -107,8 +102,6 @@ import static fr.gouv.etalab.mastodon.helper.Helper.withSuffix;
 public class ShowAccountActivity extends AppCompatActivity implements OnPostActionInterface, OnRetrieveAccountInterface, OnRetrieveFeedsAccountInterface, OnRetrieveRelationshipInterface, OnRetrieveFeedsInterface {
 
 
-    private ImageLoader imageLoader;
-    private DisplayImageOptions options;
     private List<Status> statuses;
     private StatusListAdapter statusListAdapter;
     private FloatingActionButton account_follow;
@@ -128,7 +121,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     private int maxScrollSize;
     private boolean avatarShown = true;
     private DisplayStatusFragment displayStatusFragment;
-    private CircleImageView account_pp;
+    private ImageView account_pp;
     private TextView account_dn;
     private TextView account_un;
     private Account account;
@@ -177,24 +170,14 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         accountUrl = null;
         showMediaOnly = false;
         showPinned = false;
-        imageLoader = ImageLoader.getInstance();
-        File cacheDir = new File(getCacheDir(), getString(R.string.app_name));
-        ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(this)
-                .imageDownloader(new PatchBaseImageDownloader(getApplicationContext()))
-                .threadPoolSize(5)
-                .threadPriority(Thread.MIN_PRIORITY + 3)
-                .denyCacheImageMultipleSizesInMemory()
-                .diskCache(new UnlimitedDiskCache(cacheDir))
-                .build();
-        imageLoader.init(configImg);
+
         statuses = new ArrayList<>();
         boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
         int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
         int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
 
         statusListAdapter = new StatusListAdapter(getApplicationContext(), RetrieveFeedsAsyncTask.Type.USER, accountId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
-        options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+
 
 
 
@@ -436,30 +419,25 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && !urlHeader.contains("missing.png")) {
 
-            DisplayImageOptions optionNew = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                    .cacheOnDisk(true).resetViewBeforeLoading(true).build();
-            imageLoader.loadImage(urlHeader, optionNew, new SimpleImageLoadingListener() {
-                @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
-                @Override
-                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    super.onLoadingComplete(imageUri, view, loadedImage);
-                    ImageView banner_pp = findViewById(R.id.banner_pp);
-                    Bitmap workingBitmap = Bitmap.createBitmap(loadedImage);
-                    Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
-                    Canvas canvas = new Canvas(mutableBitmap);
-                    Paint p = new Paint(Color.BLACK);
-                    ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);
-                    p.setColorFilter(filter);
-                    canvas.drawBitmap(mutableBitmap, new Matrix(), p);
-                    BitmapDrawable background = new BitmapDrawable(getResources(), mutableBitmap);
-                    banner_pp.setImageDrawable(background);
-                }
+            Glide.with(getApplicationContext())
+                    .asBitmap()
+                    .load(urlHeader)
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            ImageView banner_pp = findViewById(R.id.banner_pp);
+                            Bitmap workingBitmap = Bitmap.createBitmap(resource);
+                            Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
+                            Canvas canvas = new Canvas(mutableBitmap);
+                            Paint p = new Paint(Color.BLACK);
+                            ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);
+                            p.setColorFilter(filter);
+                            canvas.drawBitmap(mutableBitmap, new Matrix(), p);
+                            BitmapDrawable background = new BitmapDrawable(getResources(), mutableBitmap);
+                            banner_pp.setImageDrawable(background);
+                        }
+                    });
 
-                @Override
-                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-
-                }
-            });
         }
         //Redraws icon for locked accounts
         final float scale = getResources().getDisplayMetrics().density;
@@ -481,21 +459,21 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
         if( url.startsWith("/") ){
             url = "https://" + Helper.getLiveInstance(getApplicationContext()) + account.getAvatar();
         }
-        DisplayImageOptions optionsPP = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
-        imageLoader.loadImage(url, optionsPP, new SimpleImageLoadingListener(){
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                super.onLoadingComplete(imageUri, view, loadedImage);
-                BitmapDrawable ppDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(loadedImage, (int) Helper.convertDpToPixel(25, getApplicationContext()), (int) Helper.convertDpToPixel(25, getApplicationContext()), true));
-                if( pp_actionBar != null){
-                    pp_actionBar.setImageDrawable(ppDrawable);
-                }
-            }
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason){
+        Glide.with(getApplicationContext())
+                .asBitmap()
+                .load(url)
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        BitmapDrawable ppDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(25, getApplicationContext()), (int) Helper.convertDpToPixel(25, getApplicationContext()), true));
+                        if( pp_actionBar != null){
+                            pp_actionBar.setImageDrawable(ppDrawable);
+                        }
+                    }
+                });
 
-            }});
+
+
         final AppBarLayout appBar = findViewById(R.id.appBar);
         maxScrollSize = appBar.getTotalScrollRange();
 
@@ -641,25 +619,21 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
 
         }
-
-        imageLoader.displayImage(account.getAvatar(), account_pp, options, new ImageLoadingListener() {
-            @Override
-            public void onLoadingStarted(String imageUri, View view) {
-            }
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                new HttpsConnection(ShowAccountActivity.this).download(account.getAvatar(), account_pp, options);
-            }
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-            }
-            @Override
-            public void onLoadingCancelled(String imageUri, View view) {
-            }
-        });
-
+        Glide.with(getApplicationContext())
+                .asBitmap()
+                .load(account.getAvatar())
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), Helper.addBorder(resource, account_pp.getContext()));
+                        circularBitmapDrawable.setCircular(true);
+                        account_pp.setImageDrawable(circularBitmapDrawable);
+                    }
+                });
 
     }
+
+
 
     @Override
     public void onRetrieveFeedsAccount(List<Status> statuses) {

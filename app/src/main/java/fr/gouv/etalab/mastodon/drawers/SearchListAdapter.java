@@ -31,13 +31,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
-import java.io.File;
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +42,6 @@ import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
-import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.R;
 
@@ -114,19 +109,6 @@ public class SearchListAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        ImageLoader imageLoader = ImageLoader.getInstance();
-        File cacheDir = new File(context.getCacheDir(), context.getString(R.string.app_name));
-        ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(context)
-                .imageDownloader(new PatchBaseImageDownloader(context))
-                .threadPoolSize(5)
-                .threadPriority(Thread.MIN_PRIORITY + 3)
-                .denyCacheImageMultipleSizesInMemory()
-                .diskCache(new UnlimitedDiskCache(cacheDir))
-                .build();
-        if( !imageLoader.isInited())
-            imageLoader.init(configImg);
-        DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
         int type = getItemViewType(position);
         if( type == STATUS_TYPE){
             View v = convertView;
@@ -203,8 +185,9 @@ public class SearchListAdapter extends BaseAdapter {
             holder.status_content.setAutoLinkMask(Linkify.WEB_URLS);
             holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
 
-            imageLoader.displayImage(ppurl, holder.status_account_profile, options);
-
+            Glide.with(holder.status_account_profile.getContext())
+                    .load(ppurl)
+                    .into(holder.status_account_profile);
 
             holder.status_account_profile.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -258,8 +241,9 @@ public class SearchListAdapter extends BaseAdapter {
             holder.account_fgc.setText(String.valueOf(account.getFollowing_count()));
             holder.account_frc.setText(String.valueOf(account.getFollowers_count()));
             //Profile picture
-            imageLoader.displayImage(account.getAvatar(), holder.account_pp, options);
-
+            Glide.with(holder.account_pp.getContext())
+                    .load(account.getAvatar())
+                    .into(holder.account_pp);
 
             holder.main_container.setOnClickListener(new View.OnClickListener() {
                 @Override

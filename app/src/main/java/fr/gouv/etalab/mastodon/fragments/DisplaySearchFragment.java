@@ -92,6 +92,7 @@ public class DisplaySearchFragment extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
                             String keyword = editText.getText().toString().trim();
+                            keyword= keyword.replaceAll("^#+", "");
                             //Empty
                             if( keyword.length() == 0)
                                 return;

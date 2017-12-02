@@ -25,7 +25,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.support.annotation.RequiresApi;
+import android.support.annotation.Nullable;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AlertDialog;
 import android.app.DownloadManager;
@@ -38,7 +38,6 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
@@ -85,18 +84,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.gson.Gson;
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.ImageSize;
-import com.nostra13.universalimageloader.core.assist.ViewScaleType;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import com.nostra13.universalimageloader.core.imageaware.NonViewAware;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -137,7 +132,6 @@ import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
-import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -167,6 +161,7 @@ public class Helper {
 
     //Thekinrar's API: https://instances.social/api/doc/
     public static final String THEKINRAR_SECRET_TOKEN = "jGj9gW3z9ptyIpB8CMGhAlTlslcemMV6AgoiImfw3vPP98birAJTHOWiu5ZWfCkLvcaLsFZw9e3Pb7TIwkbIyrj3z6S7r2oE6uy6EFHvls3YtapP8QKNZ980p9RfzTb4";
+    public static final String YANDEX_KEY = "trnsl.1.1.20170703T074828Z.a95168c920f61b17.699437a40bbfbddc4cd57f345a75c83f0f30c420";
 
     //Some definitions
     public static final String CLIENT_NAME = "client_name";
@@ -363,9 +358,7 @@ public class Helper {
                     emoji.put(str[0],unicode);
             }
             br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException ignored) {}
     }
 
     /***
@@ -383,7 +376,6 @@ public class Helper {
                 InetAddress ipAddr = InetAddress.getByName(instance);
                 return !ipAddr.toString().equals("");
             } catch (Exception e) {
-                e.printStackTrace();
                 return false;
             }
         } else {
@@ -745,34 +737,18 @@ public class Helper {
             Uri uri = Uri.parse("file://" + file.getAbsolutePath());
             intent.setDataAndType(uri, getMimeType(url));
 
-            DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                    .cacheOnDisk(true).resetViewBeforeLoading(true).build();
-            ImageLoader imageLoaderNoty = ImageLoader.getInstance();
-            File cacheDir = new File(context.getCacheDir(), context.getString(R.string.app_name));
-            ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
-                    .imageDownloader(new PatchBaseImageDownloader(context))
-                    .threadPoolSize(5)
-                    .threadPriority(Thread.MIN_PRIORITY + 3)
-                    .denyCacheImageMultipleSizesInMemory()
-                    .diskCache(new UnlimitedDiskCache(cacheDir))
-                    .build();
-            imageLoaderNoty.init(config);
-            imageLoaderNoty.loadImage(preview_url, options, new SimpleImageLoadingListener(){
-                @Override
-                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    super.onLoadingComplete(imageUri, view, loadedImage);
-                    notify_user(context, intent, notificationIdTmp, loadedImage, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
-                    Toast.makeText(context, R.string.toast_saved,Toast.LENGTH_LONG).show();
-                }
-                @Override
-                public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
-                    notify_user(context, intent, notificationIdTmp, BitmapFactory.decodeResource(context.getResources(),
-                                R.drawable.ic_save_white), context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
-                    Toast.makeText(context, R.string.toast_saved,Toast.LENGTH_LONG).show();
-                }});
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+            Glide.with(context)
+                    .asBitmap()
+                    .load(preview_url)
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            notify_user(context, intent, notificationIdTmp, resource, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
+                            Toast.makeText(context, R.string.toast_saved,Toast.LENGTH_LONG).show();
+                        }
+                    });
+        } catch (Exception ignored) {}
     }
 
 
@@ -878,35 +854,23 @@ public class Helper {
                     if( currentSubmenu  == null)
                         continue;
                     final MenuItem item = currentSubmenu.add("@" + account.getAcct());
-                    ImageLoader imageLoader;
-                    DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                            .cacheOnDisk(true).resetViewBeforeLoading(true).build();
-                    imageLoader = ImageLoader.getInstance();
+
                     final ImageView imageView = new ImageView(activity);
                     item.setIcon(R.drawable.ic_person);
                     String url = account.getAvatar();
                     if( url.startsWith("/") ){
                         url = "https://" + Helper.getLiveInstance(activity) + account.getAvatar();
                     }
-                    imageLoader.displayImage(url, imageView, options, new ImageLoadingListener() {
-                        @Override
-                        public void onLoadingStarted(String s, View view) {
-                        }
-
-                        @Override
-                        public void onLoadingFailed(String s, View view, FailReason failReason) {
-                        }
-
-                        @Override
-                        public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-                            item.setIcon(new BitmapDrawable(activity.getResources(), bitmap));
-                            item.getIcon().setColorFilter(0xFFFFFFFF, PorterDuff.Mode.MULTIPLY);
-                        }
-
-                        @Override
-                        public void onLoadingCancelled(String s, View view) {
-                        }
-                    });
+                    Glide.with(activity.getApplicationContext())
+                            .asBitmap()
+                            .load(url)
+                            .into(new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                                    item.setIcon(new BitmapDrawable(activity.getResources(), resource));
+                                    item.getIcon().setColorFilter(0xFFFFFFFF, PorterDuff.Mode.MULTIPLY);
+                                }
+                            });
 
                     item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                         @Override
@@ -1028,26 +992,21 @@ public class Helper {
      * @param url String the url of the profile picture
      */
     public static void loadPictureIcon(final Activity activity, String url, final ImageView imageView){
-        ImageLoader imageLoader;
-        DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
-        imageLoader = ImageLoader.getInstance();
         if( url.startsWith("/") ){
             url = "https://" + Helper.getLiveInstance(activity) + url;
         }
-        imageLoader.loadImage(url, options, new SimpleImageLoadingListener(){
-            @SuppressWarnings("ConstantConditions")
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                super.onLoadingComplete(imageUri, view, loadedImage);
-                Resources res = activity.getResources();
-                BitmapDrawable icon = new BitmapDrawable(res, getRoundedCornerBitmap(loadedImage, 20));
-                imageView.setImageDrawable(icon);
-            }
-            @Override
-            public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
 
-            }});
+        Glide.with(activity.getApplicationContext())
+                .asBitmap()
+                .load(url)
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        Resources res = activity.getResources();
+                        BitmapDrawable icon = new BitmapDrawable(res, getRoundedCornerBitmap(resource, 20));
+                        imageView.setImageDrawable(icon);
+                    }
+                });
     }
 
 
@@ -1056,10 +1015,8 @@ public class Helper {
      * @param activity Activity
      * @param account Account - new account in use
      * @param headerLayout View - the menu header
-     * @param imageLoader ImageLoader - instance of ImageLoader
-     * @param options DisplayImageOptions - current configuration of ImageLoader
      */
-    public static void updateHeaderAccountInfo(final Activity activity, final Account account, final View headerLayout, ImageLoader imageLoader, DisplayImageOptions options){
+    public static void updateHeaderAccountInfo(final Activity activity, final Account account, final View headerLayout){
         ImageView profilePicture = headerLayout.findViewById(R.id.profilePicture);
 
         TextView username = headerLayout.findViewById(R.id.username);
@@ -1077,38 +1034,37 @@ public class Helper {
             if( url.startsWith("/") ){
                 url = "https://" + Helper.getLiveInstance(activity) + account.getAvatar();
             }
-            imageLoader.displayImage(url, profilePicture, options);
+            Glide.with(profilePicture.getContext())
+                    .load(url)
+                    .into(profilePicture);
             String urlHeader = account.getHeader();
             if( urlHeader.startsWith("/") ){
                 urlHeader = "https://" + Helper.getLiveInstance(activity) + account.getHeader();
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && !urlHeader.contains("missing.png")) {
-                DisplayImageOptions optionNew = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                        .cacheOnDisk(true).resetViewBeforeLoading(true).build();
-                imageLoader.loadImage(urlHeader, optionNew, new SimpleImageLoadingListener() {
-                    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        super.onLoadingComplete(imageUri, view, loadedImage);
-                        LinearLayout main_header_container = headerLayout.findViewById(R.id.main_header_container);
-                        Bitmap workingBitmap = Bitmap.createBitmap(loadedImage);
-                        Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
-                        Canvas canvas = new Canvas(mutableBitmap);
-                        Paint p = new Paint(Color.BLACK);
-                        ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);
-                        p.setColorFilter(filter);
-                        canvas.drawBitmap(mutableBitmap, new Matrix(), p);
-                        BitmapDrawable background = new BitmapDrawable(activity.getResources(), mutableBitmap);
-                        main_header_container.setBackground(background);
+            if (!urlHeader.contains("missing.png")) {
 
-                    }
-
-                    @Override
-                    public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason) {
-                        LinearLayout main_header_container = headerLayout.findViewById(R.id.main_header_container);
-                        main_header_container.setBackgroundResource(R.drawable.side_nav_bar);
-                    }
-                });
+                Glide.with(activity.getApplicationContext())
+                        .asBitmap()
+                        .load(urlHeader)
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                                LinearLayout main_header_container = headerLayout.findViewById(R.id.main_header_container);
+                                Bitmap workingBitmap = Bitmap.createBitmap(resource);
+                                Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
+                                Canvas canvas = new Canvas(mutableBitmap);
+                                Paint p = new Paint(Color.BLACK);
+                                ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);
+                                p.setColorFilter(filter);
+                                canvas.drawBitmap(mutableBitmap, new Matrix(), p);
+                                BitmapDrawable background = new BitmapDrawable(activity.getResources(), mutableBitmap);
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                    main_header_container.setBackground(background);
+                                }else {
+                                    main_header_container.setBackgroundDrawable(background);
+                                }
+                            }
+                        });
             }
         }
         profilePicture.setOnClickListener(null);
@@ -1230,40 +1186,45 @@ public class Helper {
 
         if( emojis != null && emojis.size() > 0 ) {
             final int[] i = {0};
-
-            ImageLoader imageLoader;
-            DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                    .cacheOnDisk(true).resetViewBeforeLoading(true).build();
-            imageLoader = ImageLoader.getInstance();
             for (final Emojis emoji : emojis) {
-                NonViewAware imageAware = new NonViewAware(new ImageSize(50, 50), ViewScaleType.CROP);
-                imageLoader.displayImage(emoji.getUrl(), imageAware, options, new SimpleImageLoadingListener() {
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        super.onLoadingComplete(imageUri, view, loadedImage);
-                        final String targetedEmoji = ":" + emoji.getShortcode() + ":";
-                        if (spannableString.toString().contains(targetedEmoji)) {
-                            //emojis can be used several times so we have to loop
-                            for (int startPosition = -1; (startPosition = spannableString.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
-                                final int endPosition = startPosition + targetedEmoji.length();
-                                spannableString.setSpan(
-                                        new ImageSpan(context,
-                                                Bitmap.createScaledBitmap(loadedImage, (int) Helper.convertDpToPixel(20, context),
-                                                        (int) Helper.convertDpToPixel(20, context), false)), startPosition,
-                                        endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                Glide.with(context)
+                        .asBitmap()
+                        .load(emoji.getUrl())
+                        .listener(new RequestListener<Bitmap>()  {
+                            @Override
+                            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                return false;
                             }
-                        }
-                        i[0]++;
-                        if( i[0] ==  (emojis.size()))
-                            listener.onRetrieveEmoji(status, spannableString, false);
-                    }
-                    @Override
-                    public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason) {
-                        i[0]++;
-                        if( i[0] ==  (emojis.size()))
-                            listener.onRetrieveEmoji(status, spannableString, false);
-                    }
-                });
+
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                i[0]++;
+                                if( i[0] ==  (emojis.size()))
+                                    listener.onRetrieveEmoji(status, spannableString, false);
+                                return false;
+                            }
+                        })
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                                final String targetedEmoji = ":" + emoji.getShortcode() + ":";
+                                if (spannableString.toString().contains(targetedEmoji)) {
+                                    //emojis can be used several times so we have to loop
+                                    for (int startPosition = -1; (startPosition = spannableString.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                        final int endPosition = startPosition + targetedEmoji.length();
+                                        spannableString.setSpan(
+                                                new ImageSpan(context,
+                                                        Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
+                                                                (int) Helper.convertDpToPixel(20, context), false)), startPosition,
+                                                endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                    }
+                                }
+                                i[0]++;
+                                if( i[0] ==  (emojis.size()))
+                                    listener.onRetrieveEmoji(status, spannableString, false);
+                            }
+                        });
+
             }
 
 
@@ -1281,19 +1242,19 @@ public class Helper {
                     for(int startPosition = -1 ; (startPosition = spannableString.toString().indexOf(targetedAccount, startPosition + 1)) != -1 ; startPosition++){
                         int endPosition = startPosition + targetedAccount.length();
                         spannableString.setSpan(new ClickableSpan() {
-                                                    @Override
-                                                    public void onClick(View textView) {
-                                                        Intent intent = new Intent(context, ShowAccountActivity.class);
-                                                        Bundle b = new Bundle();
-                                                        b.putString("accountId", mention.getId());
-                                                        intent.putExtras(b);
-                                                        context.startActivity(intent);
-                                                    }
-                                                    @Override
-                                                    public void updateDrawState(TextPaint ds) {
-                                                        super.updateDrawState(ds);
-                                                    }
-                                                },
+                                    @Override
+                                    public void onClick(View textView) {
+                                        Intent intent = new Intent(context, ShowAccountActivity.class);
+                                        Bundle b = new Bundle();
+                                        b.putString("accountId", mention.getId());
+                                        intent.putExtras(b);
+                                        context.startActivity(intent);
+                                    }
+                                    @Override
+                                    public void updateDrawState(TextPaint ds) {
+                                        super.updateDrawState(ds);
+                                    }
+                                },
                                 startPosition, endPosition,
                                 Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }
@@ -1508,9 +1469,7 @@ public class Helper {
             }
             return hexString.toString();
 
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+        } catch (NoSuchAlgorithmException ignored) {}
         return "";
     }
 
@@ -1784,6 +1743,28 @@ public class Helper {
             return String.format( "%.1f %c",
                     count / Math.pow(1000, exp),
                     "kMGTPE".charAt(exp-1));
+    }
+
+
+    public static Bitmap addBorder(Bitmap resource, Context context) {
+        int w = resource.getWidth();
+        int h = resource.getHeight();
+        int radius = Math.min(h / 2, w / 2);
+        Bitmap output = Bitmap.createBitmap(w + 8, h + 8, Bitmap.Config.ARGB_8888);
+        Paint p = new Paint();
+        p.setAntiAlias(true);
+        Canvas c = new Canvas(output);
+        c.drawARGB(0, 0, 0, 0);
+        p.setStyle(Paint.Style.FILL);
+        c.drawCircle((w / 2) + 4, (h / 2) + 4, radius, p);
+        p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        c.drawBitmap(resource, 4, 4, p);
+        p.setXfermode(null);
+        p.setStyle(Paint.Style.STROKE);
+        p.setColor(ContextCompat.getColor(context, R.color.white));
+        p.setStrokeWidth(3);
+        c.drawCircle((w / 2) + 4, (h / 2) + 4, radius, p);
+        return output;
     }
 
 }

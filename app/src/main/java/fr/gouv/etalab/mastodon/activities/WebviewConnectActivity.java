@@ -131,14 +131,8 @@ public class WebviewConnectActivity extends AppCompatActivity {
                                     editor.apply();
                                     //Update the account with the token;
                                     new UpdateAccountInfoAsyncTask(WebviewConnectActivity.this, token, instance).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            } catch (HttpsConnection.HttpsConnectionException e) {
-                                e.printStackTrace();
-                            }catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                                } catch (JSONException ignored) {}
+                            } catch (Exception ignored) {}
                         }}).start();
                     return true;
                 }

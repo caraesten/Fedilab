@@ -16,15 +16,9 @@ package fr.gouv.etalab.mastodon.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.SpannableString;
-import android.widget.ImageView;
 
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import org.json.JSONObject;
 import java.io.BufferedInputStream;
@@ -42,8 +36,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -264,111 +256,12 @@ public class HttpsConnection {
                     error.setError(context.getString(R.string.toast_error));
                     if(httpsURLConnection != null)
                         httpsURLConnection.disconnect();
-                    e.printStackTrace();
                 }
 
             }
         }).start();
     }
 
-
-    public void download(final String downloadUrl, final ImageView imageView, final DisplayImageOptions options) {
-
-        final ImageLoader imageLoader = ImageLoader.getInstance();
-        File cacheDir = new File(context.getCacheDir(), context.getString(R.string.app_name));
-        ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(context)
-                .imageDownloader(new PatchBaseImageDownloader(context))
-                .threadPoolSize(5)
-                .threadPriority(Thread.MIN_PRIORITY + 3)
-                .denyCacheImageMultipleSizesInMemory()
-                .diskCache(new UnlimitedDiskCache(cacheDir))
-                .build();
-        if( !imageLoader.isInited())
-            imageLoader.init(configImg);
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        String cache = sharedpreferences.getString(Helper.SET_PICTURE_URL + Helper.md5(downloadUrl), null);
-
-        if( cache != null){
-            String[] val = cache.split("\\|");
-            if( val.length == 2){
-                Date date = Helper.stringToDate(context, val[0]);
-                final String uri = val[1];
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(new Date());
-                cal.add(Calendar.DATE, -1);
-                Date dateBefore = cal.getTime();
-                if( date.after(dateBefore)){
-                    imageLoader.displayImage(uri, imageView, options);
-                    return;
-                }
-            }
-        }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                URL url;
-                try {
-                    url = new URL(downloadUrl);
-                    httpsURLConnection = (HttpsURLConnection) url.openConnection();
-                    httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
-                    // always check HTTP response code first
-                    String fileName = "";
-                    String disposition = httpsURLConnection.getHeaderField("Content-Disposition");
-
-                    if (disposition != null) {
-                        // extracts file name from header field
-                        int index = disposition.indexOf("filename=");
-                        if (index > 0) {
-                            fileName = disposition.substring(index + 10,
-                                    disposition.length() - 1);
-                        }
-                    } else {
-                        // extracts file name from URL
-                        fileName = downloadUrl.substring(downloadUrl.lastIndexOf("/") + 1,
-                                downloadUrl.length());
-                    }
-                    // opens input stream from the HTTP connection
-                    InputStream inputStream;
-                    if (httpsURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                        inputStream = httpsURLConnection.getInputStream();
-                    }else{
-                        inputStream = httpsURLConnection.getErrorStream();
-                    }
-                    File saveDir = context.getCacheDir();
-                    final String saveFilePath = saveDir + File.separator + fileName;
-
-                    // opens an output stream to save into file
-                    FileOutputStream outputStream = new FileOutputStream(saveFilePath);
-
-                    int bytesRead;
-                    byte[] buffer = new byte[CHUNK_SIZE];
-                    while ((bytesRead = inputStream.read(buffer)) != -1) {
-                        outputStream.write(buffer, 0, bytesRead);
-                    }
-                    if(context instanceof AppCompatActivity)
-                        ((AppCompatActivity)context).runOnUiThread(new Runnable() {
-                            public void run() {
-                                imageLoader.displayImage("file://"+saveFilePath, imageView, options);
-                            }});
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(Helper.SET_PICTURE_URL + Helper.md5(downloadUrl), Helper.dateToString(context, new Date() )+ "|" +"file://"+saveFilePath);
-                    editor.apply();
-                    outputStream.close();
-                    inputStream.close();
-                    httpsURLConnection.disconnect();
-                } catch (Exception e) {
-                    Error error = new Error();
-                    error.setError(context.getString(R.string.toast_error));
-                    if(httpsURLConnection != null)
-                        httpsURLConnection.disconnect();
-                    e.printStackTrace();
-                }
-
-            }
-        }).start();
-
-
-    }
 
     public void upload(final InputStream inputStream, final OnRetrieveAttachmentInterface listener) {
 
@@ -398,11 +291,8 @@ public class HttpsConnection {
                             if (ous != null)
                                 ous.close();
                         }
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    } catch (FileNotFoundException ignored) {
+                    } catch (IOException ignored) {}
                     byte[] pixels = ous.toByteArray();
 
                     int lengthSent = pixels.length;
@@ -497,7 +387,6 @@ public class HttpsConnection {
                             listener.onRetrieveAttachment(attachment, null);
                         }});
                 }catch (Exception e) {
-                    e.printStackTrace();
                     ((TootActivity)context).runOnUiThread(new Runnable() {
                         public void run() {
                             listener.onUpdateProgress(101);
@@ -691,11 +580,10 @@ public class HttpsConnection {
         }
     }
 
-    public int getActionCode() {
+    int getActionCode() {
         try {
             return httpsURLConnection.getResponseCode();
         } catch (IOException e) {
-            e.printStackTrace();
             return -1;
         }
     }
