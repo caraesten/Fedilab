@@ -1044,7 +1044,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
                     Bundle b = new Bundle();
 
                     b.putParcelable("sharedUri", imageUri);
-                    b.putInt("uriNumber", 1);
+                    b.putInt("uriNumberMast", 1);
                     intentToot.putExtras(b);
                     startActivity(intentToot);
                 }
@@ -1058,7 +1058,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
                     Bundle b = new Bundle();
 
                     b.putParcelableArrayList("sharedUri", imageList);
-                    b.putInt("uriNumber", imageList.size());
+                    b.putInt("uriNumberMast", imageList.size());
                     intentToot.putExtras(b);
                     startActivity(intentToot);
                 }

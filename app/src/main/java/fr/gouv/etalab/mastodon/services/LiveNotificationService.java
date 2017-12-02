@@ -218,7 +218,6 @@ public class LiveNotificationService extends IntentService {
                     }
                 }else {
                     httpsURLConnection.disconnect();
-                    return;
                 }
 
             } catch (Exception e) {

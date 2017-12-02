@@ -296,14 +296,14 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             mentionAccount = b.getString("mentionAccount", null);
             restoredScheduled = b.getBoolean("restoredScheduled", false);
             // ACTION_SEND route
-            if (b.getInt("uriNumber", 0) == 1) {
+            if (b.getInt("uriNumberMast", 0) == 1) {
                 Uri fileUri = b.getParcelable("sharedUri");
                 if (fileUri != null) {
                     sharedUri.add(fileUri);
                 }
             }
             // ACTION_SEND_MULTIPLE route
-            else if( b.getInt("uriNumber", 0) > 1) {
+            else if( b.getInt("uriNumberMast", 0) > 1) {
                 ArrayList<Uri> fileUri = b.getParcelableArrayList("sharedUri");
 
                 if (fileUri != null) {
