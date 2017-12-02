@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -371,9 +372,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             receive_picture = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    final String image = intent.getStringExtra("image").startsWith("http://") ?
-                            intent.getStringExtra("image").replace("http://", "https://") :
-                            intent.getStringExtra("image");
+                    final String image = intent.getStringExtra("image");
                     String title = intent.getStringExtra("title");
                     String description = intent.getStringExtra("description");
                     if( description != null && description.length() > 0){
@@ -1201,9 +1200,16 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
             final ImageView imageView = new ImageView(getApplicationContext());
             imageView.setId(Integer.parseInt(attachment.getId()));
+
             Glide.with(imageView.getContext())
+                    .asBitmap()
                     .load(url)
-                    .into(imageView);
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            imageView.setImageBitmap(resource);
+                        }
+                    });
             LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
             imParams.setMargins(20, 5, 20, 5);
             imParams.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
@@ -1707,15 +1713,23 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     url = attachment.getUrl();
                 final ImageView imageView = new ImageView(getApplicationContext());
                 imageView.setId(Integer.parseInt(attachment.getId()));
-                Glide.with(imageView.getContext())
-                        .load(url)
-                        .into(imageView);
+
                 LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
                 imParams.setMargins(20, 5, 20, 5);
                 imParams.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
                 imageView.setAdjustViewBounds(true);
                 imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 toot_picture_container.addView(imageView, i, imParams);
+
+                Glide.with(imageView.getContext())
+                        .asBitmap()
+                        .load(url)
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                                imageView.setImageBitmap(resource);
+                            }
+                        });
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

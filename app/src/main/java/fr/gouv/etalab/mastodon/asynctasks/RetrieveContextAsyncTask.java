@@ -48,7 +48,7 @@ public class RetrieveContextAsyncTask extends AsyncTask<Void, Void, Void> {
         api = new API(this.contextReference.get());
         statusContext = api.getStatusContext(statusId);
         //Retrieves the first toot
-        if( statusContext != null && statusContext.getAncestors().size() > 0 ) {
+        if( statusContext != null && statusContext.getAncestors() != null && statusContext.getAncestors().size() > 0 ) {
             statusFirst = statusContext.getAncestors().get(0);
             statusContext = api.getStatusContext(statusContext.getAncestors().get(0).getId());
         }
