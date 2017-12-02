@@ -25,6 +25,8 @@ import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -38,6 +40,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -64,7 +68,7 @@ import com.bumptech.glide.request.transition.Transition;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
+
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountAsyncTask;
@@ -117,7 +121,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
     private int maxScrollSize;
     private boolean avatarShown = true;
     private DisplayStatusFragment displayStatusFragment;
-    private CircleImageView account_pp;
+    private ImageView account_pp;
     private TextView account_dn;
     private TextView account_un;
     private Account account;
@@ -468,6 +472,8 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
                     }
                 });
 
+
+
         final AppBarLayout appBar = findViewById(R.id.appBar);
         maxScrollSize = appBar.getTotalScrollRange();
 
@@ -613,11 +619,39 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
 
         }
-
         Glide.with(getApplicationContext())
+                .asBitmap()
                 .load(account.getAvatar())
-                .into(account_pp);
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), addBorder(resource, account_pp.getContext()));
+                        circularBitmapDrawable.setCircular(true);
+                        account_pp.setImageDrawable(circularBitmapDrawable);
+                    }
+                });
 
+    }
+
+    private static Bitmap addBorder(Bitmap resource, Context context) {
+        int w = resource.getWidth();
+        int h = resource.getHeight();
+        int radius = Math.min(h / 2, w / 2);
+        Bitmap output = Bitmap.createBitmap(w + 8, h + 8, Bitmap.Config.ARGB_8888);
+        Paint p = new Paint();
+        p.setAntiAlias(true);
+        Canvas c = new Canvas(output);
+        c.drawARGB(0, 0, 0, 0);
+        p.setStyle(Paint.Style.FILL);
+        c.drawCircle((w / 2) + 4, (h / 2) + 4, radius, p);
+        p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        c.drawBitmap(resource, 4, 4, p);
+        p.setXfermode(null);
+        p.setStyle(Paint.Style.STROKE);
+        p.setColor(ContextCompat.getColor(context, R.color.white));
+        p.setStrokeWidth(3);
+        c.drawCircle((w / 2) + 4, (h / 2) + 4, radius, p);
+        return output;
     }
 
     @Override
