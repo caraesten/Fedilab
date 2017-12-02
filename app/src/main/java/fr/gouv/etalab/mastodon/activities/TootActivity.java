@@ -20,7 +20,6 @@ import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -1566,8 +1565,8 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                             newContent += deltaSearch;
                             newContent += "@" + account.getAcct() + " ";
                             int newPosition = newContent.length();
-                            if (currentCursorPosition < oldContent.length() - 1)
-                                newContent += oldContent.substring(currentCursorPosition, oldContent.length() - 1);
+                            if (currentCursorPosition < oldContent.length() )
+                                newContent += oldContent.substring(currentCursorPosition, oldContent.length());
                             toot_content.setText(newContent);
                             toot_space_left.setText(String.valueOf(toot_content.length()));
                             toot_content.setSelection(newPosition);
@@ -1617,7 +1616,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     newContent += deltaSearch;
                     newContent += ":" + shortcode + ": ";
                     int newPosition = newContent.length();
-                    if( currentCursorPosition < oldContent.length() - 1)
+                    if( currentCursorPosition < oldContent.length() )
                         newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
                     toot_content.setText(newContent);
                     toot_space_left.setText(String.valueOf(toot_content.length()));
@@ -1670,7 +1669,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     newContent += deltaSearch;
                     newContent += "#" + tag + " ";
                     int newPosition = newContent.length();
-                    if( currentCursorPosition < oldContent.length() - 1)
+                    if( currentCursorPosition < oldContent.length() )
                         newContent +=   oldContent.substring(currentCursorPosition, oldContent.length()-1);
                     toot_content.setText(newContent);
                     toot_space_left.setText(String.valueOf(toot_content.length()));
