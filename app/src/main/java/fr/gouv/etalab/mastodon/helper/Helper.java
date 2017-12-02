@@ -1757,4 +1757,26 @@ public class Helper {
                     "kMGTPE".charAt(exp-1));
     }
 
+
+    public static Bitmap addBorder(Bitmap resource, Context context) {
+        int w = resource.getWidth();
+        int h = resource.getHeight();
+        int radius = Math.min(h / 2, w / 2);
+        Bitmap output = Bitmap.createBitmap(w + 8, h + 8, Bitmap.Config.ARGB_8888);
+        Paint p = new Paint();
+        p.setAntiAlias(true);
+        Canvas c = new Canvas(output);
+        c.drawARGB(0, 0, 0, 0);
+        p.setStyle(Paint.Style.FILL);
+        c.drawCircle((w / 2) + 4, (h / 2) + 4, radius, p);
+        p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        c.drawBitmap(resource, 4, 4, p);
+        p.setXfermode(null);
+        p.setStyle(Paint.Style.STROKE);
+        p.setColor(ContextCompat.getColor(context, R.color.white));
+        p.setStrokeWidth(3);
+        c.drawCircle((w / 2) + 4, (h / 2) + 4, radius, p);
+        return output;
+    }
+
 }

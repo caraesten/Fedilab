@@ -45,7 +45,6 @@
         tools:ignore="ContentDescription" />
     <VideoView
         android:layout_centerInParent="true"
-        android:layout_below="@+id/appBar"
         android:visibility="gone"
         android:id="@+id/media_video"
         android:layout_width="match_parent"
