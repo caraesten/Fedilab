@@ -91,7 +91,7 @@ public class EmojisSearchAdapter extends ArrayAdapter<Emojis> implements Filtera
 
         holder.emoji_shortcode.setText(String.format("%s", emoji.getShortcode()));
         //Profile picture
-        Glide.with(context)
+        Glide.with(holder.emoji_icon.getContext())
                 .load(emoji.getUrl())
                 .into(holder.emoji_icon);
         return convertView;

@@ -1199,7 +1199,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
             final ImageView imageView = new ImageView(getApplicationContext());
             imageView.setId(Integer.parseInt(attachment.getId()));
-            Glide.with(getApplicationContext())
+            Glide.with(imageView.getContext())
                     .load(url)
                     .into(imageView);
             LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -1705,7 +1705,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     url = attachment.getUrl();
                 final ImageView imageView = new ImageView(getApplicationContext());
                 imageView.setId(Integer.parseInt(attachment.getId()));
-                Glide.with(getApplicationContext())
+                Glide.with(imageView.getContext())
                         .load(url)
                         .into(imageView);
                 LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);

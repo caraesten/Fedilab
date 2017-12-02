@@ -149,7 +149,7 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
         holder.account_fgc.setText(withSuffix(account.getFollowing_count()));
         holder.account_frc.setText(withSuffix(account.getFollowers_count()));
         //Profile picture
-        Glide.with(context)
+        Glide.with(holder.account_pp.getContext())
                 .load(account.getAvatar())
                 .into(holder.account_pp);
 

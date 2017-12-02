@@ -673,7 +673,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         }
 
         //Profile picture
-        Glide.with(context)
+        Glide.with(holder.notification_account_profile.getContext())
                 .load(notification.getAccount().getAvatar())
                 .into(holder.notification_account_profile);
 
@@ -874,7 +874,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 if( url == null || url.trim().equals(""))
                     url = attachment.getUrl();
                 if( !url.trim().contains("missing.png"))
-                    Glide.with(context)
+                    Glide.with(imageView.getContext())
                             .load(url)
                             .into(imageView);
                 final int finalPosition = position;

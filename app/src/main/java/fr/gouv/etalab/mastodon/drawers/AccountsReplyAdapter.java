@@ -108,7 +108,7 @@ public class AccountsReplyAdapter extends BaseAdapter{
             }
         });
         //Profile picture
-        Glide.with(context)
+        Glide.with(holder.account_pp.getContext())
                 .load(account.getAvatar())
                 .into(holder.account_pp);
         return convertView;

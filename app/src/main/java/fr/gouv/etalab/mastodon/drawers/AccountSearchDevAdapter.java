@@ -124,7 +124,7 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
         }
         Helper.changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.mastodonC4);
         //Profile picture
-        Glide.with(context)
+        Glide.with(holder.account_pp.getContext())
                 .load(account.getAvatar())
                 .into(holder.account_pp);
         if( account.isFollowing()){

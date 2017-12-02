@@ -80,7 +80,7 @@ public class AccountsFollowRequestAdapter extends RecyclerView.Adapter implement
         holder.btn_reject.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.red_1), PorterDuff.Mode.MULTIPLY);
         holder.account_un.setText(String.format("@%s", account.getUsername()));
         //Profile picture
-        Glide.with(context)
+        Glide.with(holder.account_pp.getContext())
                 .load(account.getAvatar())
                 .into(holder.account_pp);
         holder.account_pp.setOnClickListener(new View.OnClickListener() {

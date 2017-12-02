@@ -124,7 +124,7 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
             holder.account_dn.setVisibility(View.VISIBLE);
         }
         //Profile picture
-        Glide.with(context)
+        Glide.with(holder.account_pp.getContext())
                 .load(account.getAvatar())
                 .into(holder.account_pp);
         return convertView;

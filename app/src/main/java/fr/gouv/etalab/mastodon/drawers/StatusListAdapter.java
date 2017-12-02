@@ -591,17 +591,17 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
             if( status.getReblog() != null) {
-                Glide.with(context)
+                Glide.with(holder.status_account_profile_boost.getContext())
                         .load(ppurl)
                         .into(holder.status_account_profile_boost);
-                Glide.with(context)
+                Glide.with(holder.status_account_profile_boost_by.getContext())
                         .load(status.getAccount().getAvatar())
                         .into(holder.status_account_profile_boost_by);
                 holder.status_account_profile_boost.setVisibility(View.VISIBLE);
                 holder.status_account_profile_boost_by.setVisibility(View.VISIBLE);
                 holder.status_account_profile.setVisibility(View.GONE);
             }else{
-                Glide.with(context)
+                Glide.with(holder.status_account_profile.getContext())
                         .load(ppurl)
                         .into(holder.status_account_profile);
                 holder.status_account_profile_boost.setVisibility(View.GONE);
@@ -1251,7 +1251,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 else if( attachment.getType().equals("unknown"))
                     url = attachment.getRemote_url();
                 if( !url.trim().contains("missing.png"))
-                    Glide.with(context)
+                    Glide.with(imageView.getContext())
                             .load(url)
                             .into(imageView);
                 final int finalPosition = position;

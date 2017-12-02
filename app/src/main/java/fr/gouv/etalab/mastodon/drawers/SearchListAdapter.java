@@ -185,7 +185,7 @@ public class SearchListAdapter extends BaseAdapter {
             holder.status_content.setAutoLinkMask(Linkify.WEB_URLS);
             holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
 
-            Glide.with(context)
+            Glide.with(holder.status_account_profile.getContext())
                     .load(ppurl)
                     .into(holder.status_account_profile);
 
@@ -241,7 +241,7 @@ public class SearchListAdapter extends BaseAdapter {
             holder.account_fgc.setText(String.valueOf(account.getFollowing_count()));
             holder.account_frc.setText(String.valueOf(account.getFollowers_count()));
             //Profile picture
-            Glide.with(context)
+            Glide.with(holder.account_pp.getContext())
                     .load(account.getAvatar())
                     .into(holder.account_pp);
 

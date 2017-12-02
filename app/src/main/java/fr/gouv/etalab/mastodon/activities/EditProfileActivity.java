@@ -295,10 +295,10 @@ public class EditProfileActivity extends AppCompatActivity implements OnRetrieve
             }
         });
 
-        Glide.with(getApplicationContext())
+        Glide.with(set_profile_picture.getContext())
                 .load(account.getAvatar())
                 .into(set_profile_picture);
-        Glide.with(getApplicationContext())
+        Glide.with(set_header_picture.getContext())
                 .load(account.getHeader())
                 .into(set_header_picture);
         if( account.getHeader() == null || account.getHeader().contains("missing.png"))
