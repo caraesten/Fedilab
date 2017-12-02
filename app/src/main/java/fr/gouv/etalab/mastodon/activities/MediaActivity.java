@@ -26,6 +26,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -41,22 +42,22 @@ import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.github.chrisbanes.photoview.OnMatrixChangedListener;
 import com.github.chrisbanes.photoview.PhotoView;
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import java.io.File;
 import java.util.ArrayList;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
-import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnDownloadInterface;
 
@@ -80,8 +81,6 @@ public class MediaActivity extends AppCompatActivity implements OnDownloadInterf
     private float downX;
     private int mediaPosition;
     MediaActivity.actionSwipe currentAction;
-    private ImageLoader imageLoader;
-    private DisplayImageOptions options;
     static final int MIN_DISTANCE = 100;
     private String finalUrlDownload;
     private String preview_url;
@@ -211,18 +210,6 @@ public class MediaActivity extends AppCompatActivity implements OnDownloadInterf
         setTitle("");
 
         isHiding = false;
-        imageLoader = ImageLoader.getInstance();
-        File cacheDir = new File(getCacheDir(), getString(R.string.app_name));
-        ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(this)
-                .imageDownloader(new PatchBaseImageDownloader(getApplicationContext()))
-                .threadPoolSize(5)
-                .threadPriority(Thread.MIN_PRIORITY + 3)
-                .denyCacheImageMultipleSizesInMemory()
-                .diskCache(new UnlimitedDiskCache(cacheDir))
-                .build();
-        imageLoader.init(configImg);
-        options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
         setTitle("");
         displayMediaAtPosition(actionSwipe.POP);
     }
@@ -321,22 +308,31 @@ public class MediaActivity extends AppCompatActivity implements OnDownloadInterf
         final String finalUrl = url;
         switch (type){
             case "image":
+                Glide.with(getApplicationContext())
+                        .asBitmap()
+                        .load(url)
+                        .listener(new RequestListener() {
 
-                imageLoader.displayImage(url, imageView, options, new SimpleImageLoadingListener(){
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        super.onLoadingComplete(imageUri, view, loadedImage);
-                        loader.setVisibility(View.GONE);
-                        imageView.setVisibility(View.VISIBLE);
-                        downloadedImage = loadedImage;
-                        fileVideo = null;
-                    }
-                    @Override
-                    public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
-                        imageLoader.displayImage(finalUrl, imageView, options);
-                        loader.setVisibility(View.GONE);
-                    }
-                });
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                loader.setVisibility(View.GONE);
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onResourceReady(Object resource, Object model, Target target, DataSource dataSource, boolean isFirstResource) {
+                                return false;
+                            }
+                        })
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                                loader.setVisibility(View.GONE);
+                                imageView.setVisibility(View.VISIBLE);
+                                downloadedImage = resource;
+                                fileVideo = null;
+                            }
+                        });
                 break;
             case "video":
             case "gifv":

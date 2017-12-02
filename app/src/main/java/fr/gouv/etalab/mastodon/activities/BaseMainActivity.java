@@ -62,11 +62,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -84,7 +79,6 @@ import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
-import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayDraftsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayFollowRequestSentFragment;
@@ -126,8 +120,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
     private HashMap<String, Integer> tagItem = new HashMap<>();
     private TextView toolbarTitle;
     private SearchView toolbar_search;
-    private ImageLoader imageLoader;
-    private DisplayImageOptions options;
     private View headerLayout;
     public static String currentLocale;
     private TabLayout tabLayout;
@@ -589,18 +581,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
             return;
         }
         //Image loader configuration
-        imageLoader = ImageLoader.getInstance();
-        File cacheDir = new File(getCacheDir(), getString(R.string.app_name));
-        ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(this)
-                .imageDownloader(new PatchBaseImageDownloader(getApplicationContext()))
-                .threadPoolSize(5)
-                .threadPriority(Thread.MIN_PRIORITY + 3)
-                .denyCacheImageMultipleSizesInMemory()
-                .diskCache(new UnlimitedDiskCache(cacheDir))
-                .build();
-        imageLoader.init(configImg);
-        options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(20)).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
@@ -758,7 +738,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-        updateHeaderAccountInfo(BaseMainActivity.this, account, headerLayout, imageLoader, options);
+        updateHeaderAccountInfo(BaseMainActivity.this, account, headerLayout);
         //Locked account can see follow request
         if (account.isLocked()) {
             navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);
@@ -1365,7 +1345,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
-            updateHeaderAccountInfo(BaseMainActivity.this, account, headerLayout, imageLoader, options);
+            updateHeaderAccountInfo(BaseMainActivity.this, account, headerLayout);
         }
     }
 

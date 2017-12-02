@@ -26,9 +26,8 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,18 +45,15 @@ public class EmojisSearchAdapter extends ArrayAdapter<Emojis> implements Filtera
 
     private List<Emojis> emojis, tempEmojis, suggestions ;
     private LayoutInflater layoutInflater;
-    private ImageLoader imageLoader;
-    private DisplayImageOptions options;
+    private Context context;
 
     public EmojisSearchAdapter(Context context, List<Emojis> emojis){
         super(context, android.R.layout.simple_list_item_1, emojis);
         this.emojis = emojis;
+        this.context = context;
         this.tempEmojis = new ArrayList<>(emojis);
         this.suggestions = new ArrayList<>(emojis);
         layoutInflater = LayoutInflater.from(context);
-        imageLoader = ImageLoader.getInstance();
-        options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
     }
 
 
@@ -95,8 +91,9 @@ public class EmojisSearchAdapter extends ArrayAdapter<Emojis> implements Filtera
 
         holder.emoji_shortcode.setText(String.format("%s", emoji.getShortcode()));
         //Profile picture
-        imageLoader.displayImage(emoji.getUrl(), holder.emoji_icon, options);
-
+        Glide.with(context)
+                .load(emoji.getUrl())
+                .into(holder.emoji_icon);
         return convertView;
     }
 

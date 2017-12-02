@@ -25,15 +25,18 @@ import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.Spannable;
+import android.text.style.ImageSpan;
 import android.view.View;
 
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,7 +62,6 @@ import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
-import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.client.TLSSocketFactory;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -322,46 +324,46 @@ public class LiveNotificationService extends IntentService {
                     long notif_id = Long.parseLong(account.getId());
                     final int notificationId = ((notif_id + 1) > 2147483647) ? (int) (2147483647 - notif_id - 1) : (int) (notif_id + 1);
                     if( notification.getAccount().getAvatar() != null ) {
-                        ImageLoader imageLoaderNoty = ImageLoader.getInstance();
-                        File cacheDir = new File(getCacheDir(), getString(R.string.app_name));
-                        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
-                                .imageDownloader(new PatchBaseImageDownloader(getApplicationContext()))
-                                .threadPoolSize(5)
-                                .threadPriority(Thread.MIN_PRIORITY + 3)
-                                .denyCacheImageMultipleSizesInMemory()
-                                .diskCache(new UnlimitedDiskCache(cacheDir))
-                                .build();
-                        imageLoaderNoty.init(config);
-                        DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+
 
                         final String finalTitle = title;
                         if( title != null) {
-                            imageLoaderNoty.loadImage(notification.getAccount().getAvatar(), options, new SimpleImageLoadingListener() {
-                                @Override
-                                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                                    super.onLoadingComplete(imageUri, view, loadedImage);
-                                    notify_user(getApplicationContext(), intent, notificationId, loadedImage, finalTitle, "@"+account.getAcct()+"@"+account.getInstance());
-                                    String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId(), null);
-                                    if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
-                                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                                        editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId(), notification.getId());
-                                        editor.apply();
-                                    }
-                                }
 
-                                @Override
-                                public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason) {
-                                    notify_user(getApplicationContext(), intent, notificationId, BitmapFactory.decodeResource(getResources(),
-                                            R.drawable.mastodonlogo), finalTitle, "@"+account.getAcct()+"@"+account.getInstance());
-                                    String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId(), null);
-                                    if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
-                                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                                        editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId(), notification.getId());
-                                        editor.apply();
-                                    }
-                                }
-                            });
+                            Glide.with(getApplicationContext())
+                                    .asBitmap()
+                                    .load(notification.getAccount().getAvatar())
+                                    .listener(new RequestListener() {
+
+                                        @Override
+                                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                            notify_user(getApplicationContext(), intent, notificationId, BitmapFactory.decodeResource(getResources(),
+                                                    R.drawable.mastodonlogo), finalTitle, "@"+account.getAcct()+"@"+account.getInstance());
+                                            String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId(), null);
+                                            if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
+                                                SharedPreferences.Editor editor = sharedpreferences.edit();
+                                                editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId(), notification.getId());
+                                                editor.apply();
+                                            }
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public boolean onResourceReady(Object resource, Object model, Target target, DataSource dataSource, boolean isFirstResource) {
+                                            return false;
+                                        }
+                                    })
+                                    .into(new SimpleTarget<Bitmap>() {
+                                        @Override
+                                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                                            notify_user(getApplicationContext(), intent, notificationId, resource, finalTitle, "@"+account.getAcct()+"@"+account.getInstance());
+                                            String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId(), null);
+                                            if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
+                                                SharedPreferences.Editor editor = sharedpreferences.edit();
+                                                editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId(), notification.getId());
+                                                editor.apply();
+                                            }
+                                        }
+                                    });
                         }
                     }
                 }

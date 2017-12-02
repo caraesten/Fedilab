@@ -56,18 +56,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.github.stom79.mytransl.MyTransL;
 import com.github.stom79.mytransl.client.HttpsConnectionException;
 import com.github.stom79.mytransl.client.Results;
 import com.github.stom79.mytransl.translate.Translate;
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 
 import java.io.File;
@@ -91,8 +84,6 @@ import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
-import fr.gouv.etalab.mastodon.client.HttpsConnection;
-import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
@@ -114,7 +105,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private Context context;
     private List<Status> statuses;
     private LayoutInflater layoutInflater;
-    private ImageLoader imageLoader;
     private boolean isOnWifi;
     private int translator;
     private int behaviorWithAttachments;
@@ -376,19 +366,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         if( viewHolder.getItemViewType() == DISPLAYED_STATUS){
             final ViewHolder holder = (ViewHolder) viewHolder;
             final Status status = statuses.get(position);
-            imageLoader = ImageLoader.getInstance();
-            File cacheDir = new File(context.getCacheDir(), context.getString(R.string.app_name));
-            ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(context)
-                    .imageDownloader(new PatchBaseImageDownloader(context))
-                    .threadPoolSize(5)
-                    .threadPriority(Thread.MIN_PRIORITY + 3)
-                    .denyCacheImageMultipleSizesInMemory()
-                    .diskCache(new UnlimitedDiskCache(cacheDir))
-                    .build();
-            if( !imageLoader.isInited())
-                imageLoader.init(configImg);
-            final DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(10)).cacheInMemory(false)
-                    .cacheOnDisk(true).resetViewBeforeLoading(true).build();
 
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             //Retrieves replies
@@ -426,7 +403,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     ImageView imageView = new ImageView(context);
                                     imageView.setMaxHeight((int) Helper.convertDpToPixel(30, context));
                                     imageView.setMaxWidth((int) Helper.convertDpToPixel(30, context));
-                                    imageLoader.displayImage(replies.getAccount().getAvatar(), imageView, options);
                                     LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                                     imParams.setMargins(10, 5, 10, 5);
                                     imParams.height = (int) Helper.convertDpToPixel(30, context);
@@ -615,13 +591,19 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
             if( status.getReblog() != null) {
-                imageLoader.displayImage(ppurl, holder.status_account_profile_boost, options);
-                imageLoader.displayImage(status.getAccount().getAvatar(), holder.status_account_profile_boost_by, options);
+                Glide.with(context)
+                        .load(ppurl)
+                        .into(holder.status_account_profile_boost);
+                Glide.with(context)
+                        .load(status.getAccount().getAvatar())
+                        .into(holder.status_account_profile_boost_by);
                 holder.status_account_profile_boost.setVisibility(View.VISIBLE);
                 holder.status_account_profile_boost_by.setVisibility(View.VISIBLE);
                 holder.status_account_profile.setVisibility(View.GONE);
             }else{
-                imageLoader.displayImage(ppurl, holder.status_account_profile, options);
+                Glide.with(context)
+                        .load(ppurl)
+                        .into(holder.status_account_profile);
                 holder.status_account_profile_boost.setVisibility(View.GONE);
                 holder.status_account_profile_boost_by.setVisibility(View.GONE);
                 holder.status_account_profile.setVisibility(View.VISIBLE);
@@ -1270,10 +1252,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     url = attachment.getUrl();
                 else if( attachment.getType().equals("unknown"))
                     url = attachment.getRemote_url();
-                DisplayImageOptions optionsAttachment = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                        .cacheOnDisk(true).resetViewBeforeLoading(true).build();
                 if( !url.trim().contains("missing.png"))
-                    imageLoader.displayImage(url, imageView, optionsAttachment);
+                    Glide.with(context)
+                            .load(url)
+                            .into(imageView);
                 final int finalPosition = position;
                 if( attachment.getDescription() != null && !attachment.getDescription().equals("null"))
                     imageView.setContentDescription(attachment.getDescription());

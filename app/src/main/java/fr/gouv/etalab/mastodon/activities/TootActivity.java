@@ -82,22 +82,18 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.github.stom79.localepicker.CountryPicker;
 import com.github.stom79.localepicker.CountryPickerListener;
 import com.github.stom79.mytransl.MyTransL;
 import com.github.stom79.mytransl.client.HttpsConnectionException;
 import com.github.stom79.mytransl.translate.Translate;
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -131,7 +127,6 @@ import fr.gouv.etalab.mastodon.interfaces.OnDownloadInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.sqlite.CustomEmojiDAO;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
-import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.drawers.AccountsReplyAdapter;
 import fr.gouv.etalab.mastodon.drawers.AccountsSearchAdapter;
 import fr.gouv.etalab.mastodon.drawers.DraftsListAdapter;
@@ -163,8 +158,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     private String visibility;
     private final int PICK_IMAGE = 56556;
     private ImageButton toot_picture;
-    private ImageLoader imageLoader;
-    private DisplayImageOptions options;
     private LinearLayout toot_picture_container;
     private ArrayList<Attachment> attachments;
     private boolean isSensitive = false;
@@ -236,18 +229,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         //By default the toot is not restored so the id -1 is defined
         currentToId = -1;
         boolean restoredScheduled = false;
-        imageLoader = ImageLoader.getInstance();
-        File cacheDir = new File(getCacheDir(), getString(R.string.app_name));
-        ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(this)
-                .imageDownloader(new PatchBaseImageDownloader(getApplicationContext()))
-                .threadPoolSize(5)
-                .threadPriority(Thread.MIN_PRIORITY + 3)
-                .denyCacheImageMultipleSizesInMemory()
-                .diskCache(new UnlimitedDiskCache(cacheDir))
-                .build();
-        imageLoader.init(configImg);
-        options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+
 
         toot_it = findViewById(R.id.toot_it);
         Button toot_cw = findViewById(R.id.toot_cw);
@@ -363,23 +345,23 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
         if( url.startsWith("/") ){
             url = "https://" + Helper.getLiveInstance(getApplicationContext()) + account.getAvatar();
         }
-        imageLoader.loadImage(url, options, new SimpleImageLoadingListener(){
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                super.onLoadingComplete(imageUri, view, loadedImage);
-                BitmapDrawable ppDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(loadedImage, (int) Helper.convertDpToPixel(25, getApplicationContext()), (int) Helper.convertDpToPixel(25, getApplicationContext()), true));
-                if( pp_actionBar != null){
-                    pp_actionBar.setImageDrawable(ppDrawable);
-                } else if( getSupportActionBar() != null){
+        Glide.with(getApplicationContext())
+                .asBitmap()
+                .load(url)
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        BitmapDrawable ppDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(25, getApplicationContext()), (int) Helper.convertDpToPixel(25, getApplicationContext()), true));
+                        if( pp_actionBar != null){
+                            pp_actionBar.setImageDrawable(ppDrawable);
+                        } else if( getSupportActionBar() != null){
 
-                    getSupportActionBar().setIcon(ppDrawable);
-                    getSupportActionBar().setDisplayShowHomeEnabled(true);
-                }
-            }
-            @Override
-            public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
+                            getSupportActionBar().setIcon(ppDrawable);
+                            getSupportActionBar().setDisplayShowHomeEnabled(true);
+                        }
+                    }
+                });
 
-            }});
 
         if( sharedContent != null ){ //Shared content
 
@@ -1221,7 +1203,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
 
             final ImageView imageView = new ImageView(getApplicationContext());
             imageView.setId(Integer.parseInt(attachment.getId()));
-            imageLoader.displayImage(url, imageView, options);
+            Glide.with(getApplicationContext())
+                    .load(url)
+                    .into(imageView);
             LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
             imParams.setMargins(20, 5, 20, 5);
             imParams.height = (int) Helper.convertDpToPixel(100, getApplicationContext());
@@ -1725,7 +1709,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     url = attachment.getUrl();
                 final ImageView imageView = new ImageView(getApplicationContext());
                 imageView.setId(Integer.parseInt(attachment.getId()));
-                imageLoader.displayImage(url, imageView, options);
+                Glide.with(getApplicationContext())
+                        .load(url)
+                        .into(imageView);
                 LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
                 imParams.setMargins(20, 5, 20, 5);
                 imParams.height = (int) Helper.convertDpToPixel(100, getApplicationContext());

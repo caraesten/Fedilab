@@ -25,20 +25,14 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
-import java.io.File;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
+
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
-import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
-import fr.gouv.etalab.mastodon.R;
 
 /**
  * Created by Thomas on 03/11/2017.
@@ -86,31 +80,16 @@ public class CustomEmojiAdapter extends ArrayAdapter {
         } else {
             imageView = (ImageView) convertView;
         }
-        ImageLoader imageLoader = ImageLoader.getInstance();
-        File cacheDir = new File(context.getCacheDir(), context.getString(R.string.app_name));
-        ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(context)
-                .imageDownloader(new PatchBaseImageDownloader(context))
-                .threadPoolSize(5)
-                .threadPriority(Thread.MIN_PRIORITY + 3)
-                .denyCacheImageMultipleSizesInMemory()
-                .diskCache(new UnlimitedDiskCache(cacheDir))
-                .build();
-        DisplayImageOptions optionNew = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
-        if( !imageLoader.isInited())
-            imageLoader.init(configImg);
-        imageLoader.loadImage(emoji.getUrl(), optionNew, new SimpleImageLoadingListener() {
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                super.onLoadingComplete(imageUri, view, loadedImage);
-                BitmapDrawable icon = new BitmapDrawable(context.getResources(), loadedImage);
-                imageView.setImageDrawable(icon);
-            }
-
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-            }
-        });
+        Glide.with(context)
+                .asBitmap()
+                .load(emoji.getUrl())
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        BitmapDrawable icon = new BitmapDrawable(context.getResources(), resource);
+                        imageView.setImageDrawable(icon);
+                    }
+                });
         return imageView;
     }
 

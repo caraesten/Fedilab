@@ -22,27 +22,25 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.view.View;
+import android.support.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobManager;
 import com.evernote.android.job.JobRequest;
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.APIResponse;
-import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveNotificationsAsyncTask;
@@ -229,43 +227,44 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
             long notif_id = Long.parseLong(userId);
             final int notificationId = ((notif_id + 1) > 2147483647) ? (int) (2147483647 - notif_id - 1) : (int) (notif_id + 1);
             if( notificationUrl != null ){
-                ImageLoader imageLoaderNoty = ImageLoader.getInstance();
-                File cacheDir = new File(getContext().getCacheDir(), getContext().getString(R.string.app_name));
-                ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getContext())
-                        .imageDownloader(new PatchBaseImageDownloader(getContext()))
-                        .threadPoolSize(5)
-                        .threadPriority(Thread.MIN_PRIORITY + 3)
-                        .denyCacheImageMultipleSizesInMemory()
-                        .diskCache(new UnlimitedDiskCache(cacheDir))
-                        .build();
-                imageLoaderNoty.init(config);
-                DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                        .cacheOnDisk(true).resetViewBeforeLoading(true).build();
+
 
                 final String finalTitle = title;
-                imageLoaderNoty.loadImage(notificationUrl, options, new SimpleImageLoadingListener(){
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        super.onLoadingComplete(imageUri, view, loadedImage);
-                        notify_user(getContext(), intent, notificationId, loadedImage, finalTitle, message);
-                        String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
-                        if( lastNotif == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
-                            SharedPreferences.Editor editor = sharedpreferences.edit();
-                            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notifications.get(0).getId());
-                            editor.apply();
-                        }
-                    }
-                    @Override
-                    public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason){
-                        notify_user(getContext(), intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
-                                R.drawable.mastodonlogo), finalTitle, message);
-                        String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
-                        if( lastNotif == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
-                            SharedPreferences.Editor editor = sharedpreferences.edit();
-                            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notifications.get(0).getId());
-                            editor.apply();
-                        }
-                    }});
+                Glide.with(getContext())
+                        .asBitmap()
+                        .load(notificationUrl)
+                        .listener(new RequestListener() {
+
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                notify_user(getContext(), intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
+                                        R.drawable.mastodonlogo), finalTitle, message);
+                                String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
+                                if( lastNotif == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
+                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                    editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notifications.get(0).getId());
+                                    editor.apply();
+                                }
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onResourceReady(Object resource, Object model, Target target, DataSource dataSource, boolean isFirstResource) {
+                                return false;
+                            }
+                        })
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                                notify_user(getContext(), intent, notificationId, resource, finalTitle, message);
+                                String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
+                                if( lastNotif == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
+                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                    editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notifications.get(0).getId());
+                                    editor.apply();
+                                }
+                            }
+                        });
             }
 
         }

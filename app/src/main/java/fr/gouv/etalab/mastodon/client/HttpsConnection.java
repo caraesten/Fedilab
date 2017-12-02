@@ -16,15 +16,9 @@ package fr.gouv.etalab.mastodon.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.SpannableString;
-import android.widget.ImageView;
 
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import org.json.JSONObject;
 import java.io.BufferedInputStream;
@@ -42,8 +36,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;

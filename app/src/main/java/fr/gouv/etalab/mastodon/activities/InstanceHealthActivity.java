@@ -29,7 +29,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
@@ -42,24 +41,19 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 
 import org.json.JSONObject;
 
-import java.io.File;
 import java.util.HashMap;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.InstanceSocial;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
-import fr.gouv.etalab.mastodon.client.PatchBaseImageDownloader;
 import fr.gouv.etalab.mastodon.helper.Helper;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.withSuffix;
@@ -74,8 +68,6 @@ public class InstanceHealthActivity extends AppCompatActivity {
 
     private InstanceSocial instanceSocial;
     private TextView name, values, checked_at, up, uptime;
-    private ImageLoader imageLoader;
-    private DisplayImageOptions option;
     private String instance;
     private LinearLayout container;
 
@@ -121,18 +113,6 @@ public class InstanceHealthActivity extends AppCompatActivity {
             }
         });
 
-        option = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
-        imageLoader = ImageLoader.getInstance();
-        File cacheDir = new File(getCacheDir(), getString(R.string.app_name));
-        ImageLoaderConfiguration configImg = new ImageLoaderConfiguration.Builder(this)
-                .imageDownloader(new PatchBaseImageDownloader(getApplicationContext()))
-                .threadPoolSize(5)
-                .threadPriority(Thread.MIN_PRIORITY + 3)
-                .denyCacheImageMultipleSizesInMemory()
-                .diskCache(new UnlimitedDiskCache(cacheDir))
-                .build();
-        imageLoader.init(configImg);
         checkInstance();
     }
 
@@ -165,26 +145,27 @@ public class InstanceHealthActivity extends AppCompatActivity {
                         @SuppressLint({"SetTextI18n", "DefaultLocale"})
                         public void run() {
                             if( instanceSocial.getThumbnail() != null && !instanceSocial.getThumbnail().equals("null"))
-                                imageLoader.loadImage(instanceSocial.getThumbnail(), option, new SimpleImageLoadingListener() {
-                                    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
-                                    @Override
-                                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                                        super.onLoadingComplete(imageUri, view, loadedImage);
-                                        Bitmap workingBitmap = Bitmap.createBitmap(loadedImage);
-                                        Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
-                                        Canvas canvas = new Canvas(mutableBitmap);
-                                        Paint p = new Paint(Color.BLACK);
-                                        ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);
-                                        p.setColorFilter(filter);
-                                        canvas.drawBitmap(mutableBitmap, new Matrix(), p);
-                                        BitmapDrawable background = new BitmapDrawable(getResources(), mutableBitmap);
-                                        container.setBackground(background);
-
-                                    }
-                                    @Override
-                                    public void onLoadingFailed(java.lang.String imageUri, android.view.View view, FailReason failReason) {
-                                    }
-                                });
+                                Glide.with(getApplicationContext())
+                                        .asBitmap()
+                                        .load(instanceSocial.getThumbnail())
+                                        .into(new SimpleTarget<Bitmap>() {
+                                            @Override
+                                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                                                Bitmap workingBitmap = Bitmap.createBitmap(resource);
+                                                Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
+                                                Canvas canvas = new Canvas(mutableBitmap);
+                                                Paint p = new Paint(Color.BLACK);
+                                                ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);
+                                                p.setColorFilter(filter);
+                                                canvas.drawBitmap(mutableBitmap, new Matrix(), p);
+                                                BitmapDrawable background = new BitmapDrawable(getResources(), mutableBitmap);
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                                    container.setBackground(background);
+                                                }else{
+                                                    container.setBackgroundDrawable(background);
+                                                }
+                                            }
+                                        });
                             name.setText(instanceSocial.getName());
                             if( instanceSocial.isUp()) {
                                 up.setText("Is up!");

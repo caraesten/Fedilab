@@ -48,9 +48,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+
+import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -92,8 +91,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     private Context context;
     private List<Notification> notifications;
     private LayoutInflater layoutInflater;
-    private ImageLoader imageLoader;
-    private DisplayImageOptions options;
     private NotificationsListAdapter notificationsListAdapter;
     private int behaviorWithAttachments;
     private boolean isOnWifi;
@@ -103,12 +100,9 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         this.context = context;
         this.notifications = notifications;
         layoutInflater = LayoutInflater.from(this.context);
-        imageLoader = ImageLoader.getInstance();
         notificationsListAdapter = this;
         this.isOnWifi = isOnWifi;
         this.behaviorWithAttachments = behaviorWithAttachments;
-        options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
     }
 
     
@@ -681,7 +675,9 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         }
 
         //Profile picture
-        imageLoader.displayImage(notification.getAccount().getAvatar(), holder.notification_account_profile, options);
+        Glide.with(context)
+                .load(notification.getAccount().getAvatar())
+                .into(holder.notification_account_profile);
 
     }
 
@@ -880,7 +876,9 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 if( url == null || url.trim().equals(""))
                     url = attachment.getUrl();
                 if( !url.trim().contains("missing.png"))
-                    imageLoader.displayImage(url, imageView, options);
+                    Glide.with(context)
+                            .load(url)
+                            .into(imageView);
                 final int finalPosition = position;
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override

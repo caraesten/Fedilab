@@ -26,9 +26,9 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
@@ -45,8 +45,6 @@ public class AccountsReplyAdapter extends BaseAdapter{
 
     private List<Account> accounts;
     private LayoutInflater layoutInflater;
-    private ImageLoader imageLoader;
-    private DisplayImageOptions options;
     private boolean[] checked;
     private Context context;
 
@@ -54,9 +52,6 @@ public class AccountsReplyAdapter extends BaseAdapter{
         this.accounts = accounts;
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
-        imageLoader = ImageLoader.getInstance();
-        options = new DisplayImageOptions.Builder().displayer(new SimpleBitmapDisplayer()).cacheInMemory(false)
-                .cacheOnDisk(true).resetViewBeforeLoading(true).build();
         this.checked = checked;
     }
 
@@ -113,8 +108,9 @@ public class AccountsReplyAdapter extends BaseAdapter{
             }
         });
         //Profile picture
-        imageLoader.displayImage(account.getAvatar(), holder.account_pp, options);
-
+        Glide.with(context)
+                .load(account.getAvatar())
+                .into(holder.account_pp);
         return convertView;
     }
 
