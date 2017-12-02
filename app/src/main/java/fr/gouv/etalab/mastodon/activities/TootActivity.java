@@ -371,7 +371,9 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             receive_picture = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    final String image = intent.getStringExtra("image");
+                    final String image = intent.getStringExtra("image").startsWith("http://") ?
+                            intent.getStringExtra("image").replace("http://", "https://") :
+                            intent.getStringExtra("image");
                     String title = intent.getStringExtra("title");
                     String description = intent.getStringExtra("description");
                     if( description != null && description.length() > 0){
