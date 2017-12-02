@@ -609,9 +609,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                                     bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
                                                     out.flush();
                                                     out.close();
-                                                } catch (Exception e) {
-                                                    e.printStackTrace();
-                                                }
+                                                } catch (Exception ignored) {}
                                                 b.putString("fileMention", fname);
                                                 b.putString("tootMention", (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
                                                 b.putString("urlMention", (status.getReblog() != null)?status.getReblog().getUrl():status.getUrl());

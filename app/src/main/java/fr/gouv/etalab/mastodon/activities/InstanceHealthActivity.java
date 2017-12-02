@@ -180,11 +180,7 @@ public class InstanceHealthActivity extends AppCompatActivity {
                         }
                     });
 
-                } catch (HttpsConnection.HttpsConnectionException e) {
-                    e.printStackTrace();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                } catch (Exception ignored) {}
             }
         }).start();
     }

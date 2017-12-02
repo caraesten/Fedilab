@@ -439,7 +439,6 @@ public class EditProfileActivity extends AppCompatActivity implements OnRetrieve
 
             } catch (FileNotFoundException e) {
                 Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
-                e.printStackTrace();
             }
         }else if(requestCode == PICK_IMAGE_PROFILE && resultCode == Activity.RESULT_OK) {
             if (data == null) {
@@ -464,7 +463,6 @@ public class EditProfileActivity extends AppCompatActivity implements OnRetrieve
                 profile_picture = "data:image/png;base64, " + Base64.encodeToString(byteArray, Base64.DEFAULT);
             } catch (FileNotFoundException e) {
                 Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
-                e.printStackTrace();
             }
         }
     }

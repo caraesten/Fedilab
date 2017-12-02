@@ -214,10 +214,8 @@ public class RemoteFollowActivity extends AppCompatActivity implements OnRetriev
 
                             } catch (HttpsConnection.HttpsConnectionException e) {
                                 isLoadingInstance = false;
-                                e.printStackTrace();
                             } catch (Exception e) {
                                 isLoadingInstance = false;
-                                e.printStackTrace();
                             }
                         }
                     }).start();

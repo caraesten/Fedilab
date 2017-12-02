@@ -256,7 +256,6 @@ public class HttpsConnection {
                     error.setError(context.getString(R.string.toast_error));
                     if(httpsURLConnection != null)
                         httpsURLConnection.disconnect();
-                    e.printStackTrace();
                 }
 
             }
@@ -292,11 +291,8 @@ public class HttpsConnection {
                             if (ous != null)
                                 ous.close();
                         }
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    } catch (FileNotFoundException ignored) {
+                    } catch (IOException ignored) {}
                     byte[] pixels = ous.toByteArray();
 
                     int lengthSent = pixels.length;
@@ -391,7 +387,6 @@ public class HttpsConnection {
                             listener.onRetrieveAttachment(attachment, null);
                         }});
                 }catch (Exception e) {
-                    e.printStackTrace();
                     ((TootActivity)context).runOnUiThread(new Runnable() {
                         public void run() {
                             listener.onUpdateProgress(101);
@@ -585,11 +580,10 @@ public class HttpsConnection {
         }
     }
 
-    public int getActionCode() {
+    int getActionCode() {
         try {
             return httpsURLConnection.getResponseCode();
         } catch (IOException e) {
-            e.printStackTrace();
             return -1;
         }
     }

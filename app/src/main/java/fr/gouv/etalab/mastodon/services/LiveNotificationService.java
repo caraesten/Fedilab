@@ -211,17 +211,14 @@ public class LiveNotificationService extends IntentService {
                             try {
                                 JSONObject eventJson = new JSONObject(event);
                                 onRetrieveStreaming(eventStreaming, account, eventJson);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                            } catch (JSONException ignored) {}
                         }
                     }
                 }else {
                     httpsURLConnection.disconnect();
                 }
 
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception ignored) {
             }finally {
                 if (reader != null) {
                     try {
@@ -240,7 +237,9 @@ public class LiveNotificationService extends IntentService {
                 SystemClock.sleep(5000);
                 Intent streamingIntent = new Intent(this, LiveNotificationService.class);
                 streamingIntent.putExtra("userId", account.getId());
-                startService(streamingIntent);
+                try {
+                    startService(streamingIntent);
+                }catch (Exception ignored){}
             }
         }
     }
@@ -383,9 +382,7 @@ public class LiveNotificationService extends IntentService {
         }else if( event == Helper.EventStreaming.DELETE){
             try {
                 dataId = response.getString("id");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            } catch (JSONException ignored) {}
         }
         if( account != null)
             b.putString("userIdService",account.getId());

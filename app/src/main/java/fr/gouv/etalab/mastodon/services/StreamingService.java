@@ -152,20 +152,15 @@ public class StreamingService extends IntentService {
                         try {
                             JSONObject eventJson = new JSONObject(event);
                             onRetrieveStreaming(eventStreaming, accountStream, eventJson);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        } catch (JSONException ignored) {}
                     }
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception ignored) {
             }finally {
                 if(reader != null){
                     try{
                         reader.close();
-                    }catch (IOException e){
-                        e.printStackTrace();
-                    }
+                    }catch (IOException ignored){}
                 }
                 SystemClock.sleep(1000);
                 sendBroadcast(new Intent("RestartStreamingService"));
@@ -195,9 +190,7 @@ public class StreamingService extends IntentService {
             try {
                 //noinspection UnusedAssignment
                 dataId = response.getString("id");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            } catch (JSONException ignored) {}
         }
         if( account != null)
             b.putString("userIdService",account.getId());

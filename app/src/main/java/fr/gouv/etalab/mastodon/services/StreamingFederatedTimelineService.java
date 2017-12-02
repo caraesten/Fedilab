@@ -132,19 +132,14 @@ public class StreamingFederatedTimelineService extends IntentService {
                     try {
                         JSONObject eventJson = new JSONObject(event);
                         onRetrieveStreaming(accountStream, eventJson);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    } catch (JSONException ignored) {}
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception ignored) {
             }finally {
                 if(reader != null){
                     try{
                         reader.close();
-                    }catch (IOException e){
-                        e.printStackTrace();
-                    }
+                    }catch (IOException ignored){}
                 }
                 if( sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + accountStream.getId(), true)) {
                     SystemClock.sleep(1000);

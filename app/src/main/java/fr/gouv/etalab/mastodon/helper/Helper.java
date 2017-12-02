@@ -358,9 +358,7 @@ public class Helper {
                     emoji.put(str[0],unicode);
             }
             br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException ignored) {}
     }
 
     /***
@@ -378,7 +376,6 @@ public class Helper {
                 InetAddress ipAddr = InetAddress.getByName(instance);
                 return !ipAddr.toString().equals("");
             } catch (Exception e) {
-                e.printStackTrace();
                 return false;
             }
         } else {
@@ -751,9 +748,7 @@ public class Helper {
                             Toast.makeText(context, R.string.toast_saved,Toast.LENGTH_LONG).show();
                         }
                     });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception ignored) {}
     }
 
 
@@ -1191,16 +1186,11 @@ public class Helper {
 
         if( emojis != null && emojis.size() > 0 ) {
             final int[] i = {0};
-
-
             for (final Emojis emoji : emojis) {
-
-
                 Glide.with(context)
                         .asBitmap()
                         .load(emoji.getUrl())
                         .listener(new RequestListener<Bitmap>()  {
-
                             @Override
                             public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
                                 return false;
@@ -1479,9 +1469,7 @@ public class Helper {
             }
             return hexString.toString();
 
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+        } catch (NoSuchAlgorithmException ignored) {}
         return "";
     }
 

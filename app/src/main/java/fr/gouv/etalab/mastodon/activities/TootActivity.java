@@ -683,7 +683,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                     } catch (FileNotFoundException e) {
                         Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
                         toot_picture.setEnabled(true);
-                        e.printStackTrace();
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
@@ -710,7 +709,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
             } catch (FileNotFoundException e) {
                 Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
                 toot_picture.setEnabled(true);
-                e.printStackTrace();
             }
         }else if(requestCode == Helper.REQ_CODE_SPEECH_INPUT && resultCode == Activity.RESULT_OK){
             if (null != data) {
@@ -828,7 +826,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                                                 dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE).setEnabled(true);
                                     }
                                 } catch (IllegalArgumentException e) {
-                                    e.printStackTrace();
                                     Toast.makeText(getApplicationContext(), R.string.toast_error_translate, Toast.LENGTH_LONG).show();
                                 }
 
@@ -865,7 +862,6 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
                                                 dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE).setEnabled(true);
                                     }
                                 } catch (IllegalArgumentException e) {
-                                    e.printStackTrace();
                                     Toast.makeText(getApplicationContext(), R.string.toast_error_translate, Toast.LENGTH_LONG).show();
                                 }
                             }
