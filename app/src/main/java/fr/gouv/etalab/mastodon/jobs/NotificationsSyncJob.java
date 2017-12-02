@@ -68,7 +68,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
 
     @NonNull
     @Override
-    protected Result onRunJob(Params params) {
+    protected Result onRunJob(@NonNull Params params) {
         //Code refresh here
         callAsynchronousTask();
         return Result.SUCCESS;
@@ -233,7 +233,12 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                 Glide.with(getContext())
                         .asBitmap()
                         .load(notificationUrl)
-                        .listener(new RequestListener() {
+                        .listener(new RequestListener<Bitmap>() {
+
+                            @Override
+                            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                return false;
+                            }
 
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
@@ -245,11 +250,6 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                                     editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notifications.get(0).getId());
                                     editor.apply();
                                 }
-                                return false;
-                            }
-
-                            @Override
-                            public boolean onResourceReady(Object resource, Object model, Target target, DataSource dataSource, boolean isFirstResource) {
                                 return false;
                             }
                         })

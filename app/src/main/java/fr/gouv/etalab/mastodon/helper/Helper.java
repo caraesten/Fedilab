@@ -1199,18 +1199,18 @@ public class Helper {
                 Glide.with(context)
                         .asBitmap()
                         .load(emoji.getUrl())
-                        .listener(new RequestListener() {
+                        .listener(new RequestListener<Bitmap>()  {
+
+                            @Override
+                            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                return false;
+                            }
 
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
                                 i[0]++;
                                 if( i[0] ==  (emojis.size()))
                                     listener.onRetrieveEmoji(status, spannableString, false);
-                                return false;
-                            }
-
-                            @Override
-                            public boolean onResourceReady(Object resource, Object model, Target target, DataSource dataSource, boolean isFirstResource) {
                                 return false;
                             }
                         })

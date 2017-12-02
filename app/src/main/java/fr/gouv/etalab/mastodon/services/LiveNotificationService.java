@@ -25,9 +25,6 @@ import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.text.Spannable;
-import android.text.style.ImageSpan;
-import android.view.View;
 
 
 import com.bumptech.glide.Glide;
@@ -43,7 +40,6 @@ import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -332,7 +328,12 @@ public class LiveNotificationService extends IntentService {
                             Glide.with(getApplicationContext())
                                     .asBitmap()
                                     .load(notification.getAccount().getAvatar())
-                                    .listener(new RequestListener() {
+                                    .listener(new RequestListener<Bitmap>() {
+
+                                        @Override
+                                        public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                            return false;
+                                        }
 
                                         @Override
                                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
@@ -344,11 +345,6 @@ public class LiveNotificationService extends IntentService {
                                                 editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId(), notification.getId());
                                                 editor.apply();
                                             }
-                                            return false;
-                                        }
-
-                                        @Override
-                                        public boolean onResourceReady(Object resource, Object model, Target target, DataSource dataSource, boolean isFirstResource) {
                                             return false;
                                         }
                                     })

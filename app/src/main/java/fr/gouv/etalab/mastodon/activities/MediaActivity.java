@@ -311,16 +311,16 @@ public class MediaActivity extends AppCompatActivity implements OnDownloadInterf
                 Glide.with(getApplicationContext())
                         .asBitmap()
                         .load(url)
-                        .listener(new RequestListener() {
+                        .listener(new RequestListener<Bitmap>() {
 
                             @Override
-                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                loader.setVisibility(View.GONE);
+                            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
                                 return false;
                             }
 
                             @Override
-                            public boolean onResourceReady(Object resource, Object model, Target target, DataSource dataSource, boolean isFirstResource) {
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                loader.setVisibility(View.GONE);
                                 return false;
                             }
                         })
@@ -330,6 +330,7 @@ public class MediaActivity extends AppCompatActivity implements OnDownloadInterf
                                 loader.setVisibility(View.GONE);
                                 imageView.setVisibility(View.VISIBLE);
                                 downloadedImage = resource;
+                                imageView.setImageBitmap(resource);
                                 fileVideo = null;
                             }
                         });
