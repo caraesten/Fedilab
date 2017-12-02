@@ -1252,19 +1252,19 @@ public class Helper {
                     for(int startPosition = -1 ; (startPosition = spannableString.toString().indexOf(targetedAccount, startPosition + 1)) != -1 ; startPosition++){
                         int endPosition = startPosition + targetedAccount.length();
                         spannableString.setSpan(new ClickableSpan() {
-                                                    @Override
-                                                    public void onClick(View textView) {
-                                                        Intent intent = new Intent(context, ShowAccountActivity.class);
-                                                        Bundle b = new Bundle();
-                                                        b.putString("accountId", mention.getId());
-                                                        intent.putExtras(b);
-                                                        context.startActivity(intent);
-                                                    }
-                                                    @Override
-                                                    public void updateDrawState(TextPaint ds) {
-                                                        super.updateDrawState(ds);
-                                                    }
-                                                },
+                                    @Override
+                                    public void onClick(View textView) {
+                                        Intent intent = new Intent(context, ShowAccountActivity.class);
+                                        Bundle b = new Bundle();
+                                        b.putString("accountId", mention.getId());
+                                        intent.putExtras(b);
+                                        context.startActivity(intent);
+                                    }
+                                    @Override
+                                    public void updateDrawState(TextPaint ds) {
+                                        super.updateDrawState(ds);
+                                    }
+                                },
                                 startPosition, endPosition,
                                 Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }
