@@ -366,6 +366,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     imParams.height = (int) Helper.convertDpToPixel(30, context);
                                     imParams.width = (int) Helper.convertDpToPixel(30, context);
                                     holder.status_replies_profile_pictures.addView(imageView, imParams);
+                                    Glide.with(imageView.getContext())
+                                            .load(replies.getAccount().getAvatar())
+                                            .into(imageView);
                                     i++;
                                     addedPictures.add(replies.getAccount().getAcct());
                                 }
