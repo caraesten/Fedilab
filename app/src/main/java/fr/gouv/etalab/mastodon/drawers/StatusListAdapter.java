@@ -553,44 +553,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             //-------- END -> Change the color in gray for accounts in DARK Theme only
 
 
-            /*if( status.getContent_translated() != null && status.getContent_translated().length() > 0){
-                holder.status_content_translated.setMovementMethod(null);
-                SpannableString spannableStringTrans = Helper.clickableElements(context,status.getContent_translated(), status,
-                        true, StatusListAdapter.this);
-                holder.status_content_translated.setText(spannableStringTrans, TextView.BufferType.SPANNABLE);
-                holder.status_content_translated.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        holder.status_content_translated.setFocusableInTouchMode(true);
-                        return false;
-                    }
-                });
-                holder.status_content_translated.setMovementMethod(LinkMovementMethod.getInstance());
-            }*/
-
-            /*if( status.getContentSpan() != null){
-                holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
-            }else{
-                content = content.replaceAll("</p>","<br/><br/>");
-                content = content.replaceAll("<p>","");
-                if( content.endsWith("<br/><br/>") )
-                    content = content.substring(0,content.length() -10);
-                holder.status_content.setMovementMethod(null);
-                final SpannableString spannableString = Helper.clickableElements(context,content,
-                        status, true, StatusListAdapter.this);
-                holder.status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
-            }*/
-
-
-            holder.status_content.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    holder.status_content.setFocusableInTouchMode(true);
-                    return false;
-                }
-            });
-
-            holder.status_content.setMovementMethod(LinkMovementMethod.getInstance());
 
             if( status.getReblog() == null)
                 holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
@@ -722,7 +684,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
                 if( status.isTranslationShown() && status.getContentSpanTranslated() != null){
                     holder.status_content_translated.setText(status.getContentSpanTranslated(), TextView.BufferType.SPANNABLE);
-                    holder.status_content_translated.setMovementMethod(LinkMovementMethod.getInstance());
                     holder.status_content.setVisibility(View.GONE);
                     holder.status_content_translated_container.setVisibility(View.VISIBLE);
                 }else { //Toot is not translated
