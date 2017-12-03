@@ -253,15 +253,19 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }
 
         if( statuses != null && statuses.size() > 0) {
-            for(Status tmpStatus: statuses){
-                if( this.statuses.size() == 0 || Long.parseLong(tmpStatus.getId()) < Long.parseLong(this.statuses.get(this.statuses.size()-1).getId())) {
-                    if( type == RetrieveFeedsAsyncTask.Type.HOME && firstLoad && lastReadStatus != null && Long.parseLong(tmpStatus.getId()) > Long.parseLong(lastReadStatus)){
-                        tmpStatus.setNew(true);
-                        MainActivity.countNewStatus++;
-                    }else {
-                        tmpStatus.setNew(false);
+            if( type == RetrieveFeedsAsyncTask.Type.FAVOURITES ){
+                this.statuses.addAll(statuses);
+            }else {
+                for (Status tmpStatus : statuses) {
+                    if (this.statuses.size() == 0 || Long.parseLong(tmpStatus.getId()) < Long.parseLong(this.statuses.get(this.statuses.size() - 1).getId())) {
+                        if (type == RetrieveFeedsAsyncTask.Type.HOME && firstLoad && lastReadStatus != null && Long.parseLong(tmpStatus.getId()) > Long.parseLong(lastReadStatus)) {
+                            tmpStatus.setNew(true);
+                            MainActivity.countNewStatus++;
+                        } else {
+                            tmpStatus.setNew(false);
+                        }
+                        this.statuses.add(tmpStatus);
                     }
-                    this.statuses.add(tmpStatus);
                 }
             }
             if( firstLoad && type == RetrieveFeedsAsyncTask.Type.HOME && statuses.size() > 0) {
