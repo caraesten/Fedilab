@@ -317,48 +317,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             return new ViewHolderEmpty(layoutInflater.inflate(R.layout.drawer_empty, parent, false));
     }
 
-    /*
-    @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int position, List<Object> payload) {
-        if( viewHolder.getItemViewType() == DISPLAYED_STATUS) {
-            if (!payload.isEmpty()) {
-                if (payload.get(0) instanceof Integer) {
-                    final ViewHolder holder = (ViewHolder) viewHolder;
-                    final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                    final Status status = statuses.get(position);
-                    boolean showPreviewPP = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES_PP, false);
-                    if (showPreviewPP) {
-                        ArrayList<String> addedPictures = new ArrayList<>();
-                        holder.status_replies_profile_pictures.removeAllViews();
-                        int i = 0;
-                        for (Status replies : status.getReplies()) {
-                            if (i > 10)
-                                break;
-                            if (!addedPictures.contains(replies.getAccount().getAcct())) {
-                                DisplayImageOptions options = new DisplayImageOptions.Builder().displayer(new RoundedBitmapDisplayer(10)).cacheInMemory(false)
-                                        .cacheOnDisk(true).resetViewBeforeLoading(true).build();
-                                ImageView imageView = new ImageView(context);
-                                imageView.setMaxHeight((int) Helper.convertDpToPixel(30, context));
-                                imageView.setMaxWidth((int) Helper.convertDpToPixel(30, context));
-                                imageLoader.displayImage(replies.getAccount().getAvatar(), imageView, options);
-                                LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                                imParams.setMargins(10, 5, 10, 5);
-                                imParams.height = (int) Helper.convertDpToPixel(30, context);
-                                imParams.width = (int) Helper.convertDpToPixel(30, context);
-                                holder.status_replies_profile_pictures.addView(imageView, imParams);
-                                i++;
-                                addedPictures.add(replies.getAccount().getAcct());
-                            }
-                        }
-                    }
-                    if (status.getReplies() != null && status.getReplies().size() > 0)
-                        holder.status_reply.setText(String.valueOf(status.getReplies().size()));
-                    holder.status_replies.setVisibility(View.VISIBLE);
-                    holder.loader_replies.setVisibility(View.GONE);
-                }
-            }
-        }
-    }*/
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, @SuppressLint("RecyclerView") final int position) {
@@ -464,6 +422,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_translate,R.color.dark_text);
+
+                holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
             }else {
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_more_horiz,R.color.black);
@@ -475,26 +439,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, R.drawable.ic_photo,R.color.mastodonC4);
                 changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.mastodonC4);
                 changeDrawableColor(context, R.drawable.ic_translate,R.color.white);
-            }
 
-            //Redraws top icons (boost/reply)
-            final float scale = context.getResources().getDisplayMetrics().density;
-            if( status.getReblog() != null){
-                Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
-                img.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
-                holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
-                holder.status_account_displayname.setVisibility(View.VISIBLE);
-            }else{
-                holder.status_account_displayname.setVisibility(View.GONE);
-            }
-
-            if( theme == THEME_DARK){
-                holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
-                holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
-                holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
-                holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
-                holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
-            }else {
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.black));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.black));
                 holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.black));
@@ -502,13 +447,33 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.black));
             }
 
-            String content;
+            //Redraws top icons (boost/reply)
+            final float scale = context.getResources().getDisplayMetrics().density;
+            if( status.getReblog() != null){
+                Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
+                assert img != null;
+                img.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
+                holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
+                holder.status_account_displayname.setVisibility(View.VISIBLE);
+            }else{
+                holder.status_account_displayname.setVisibility(View.GONE);
+            }
+
+            if( !status.isClickable())
+                status.makeClickable(context);
+            if( !status.isEmojiFound())
+                status.makeEmojis(context, StatusListAdapter.this);
+
+            holder.status_content.setText(status.getContentSpan());
+            holder.status_spoiler.setText(status.getContentSpanCW());
+
+
+            //Displays name & emoji in toot header
             final String displayName;
             final String username;
             final String ppurl;
             String name;
             if( status.getReblog() != null){
-                content = status.getReblog().getContent();
                 displayName = Helper.shortnameToUnicode(status.getReblog().getAccount().getDisplay_name(), true);
                 username = status.getReblog().getAccount().getUsername();
                 holder.status_account_displayname.setText(String.format("%s @%s",displayName, username));
@@ -518,11 +483,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 name = String.format("%s @%s",displayName,status.getReblog().getAccount().getAcct());
             }else {
                 ppurl = status.getAccount().getAvatar();
-                content = status.getContent();
                 displayName = Helper.shortnameToUnicode(status.getAccount().getDisplay_name(), true);
                 name = String.format("%s @%s",displayName,status.getAccount().getAcct());
             }
+            //-------- END -> Displays name & emoji in toot header
 
+            //Change the color in gray for accounts in DARK Theme only
             Spannable wordtoSpan = new SpannableString(name);
             if( theme == THEME_DARK) {
                 Pattern hashAcct;
@@ -540,8 +506,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
             holder.status_account_username.setText(wordtoSpan);
 
+            //-------- END -> Change the color in gray for accounts in DARK Theme only
 
-            if( status.getContent_translated() != null && status.getContent_translated().length() > 0){
+
+            /*if( status.getContent_translated() != null && status.getContent_translated().length() > 0){
                 holder.status_content_translated.setMovementMethod(null);
                 SpannableString spannableStringTrans = Helper.clickableElements(context,status.getContent_translated(), status,
                         true, StatusListAdapter.this);
@@ -554,10 +522,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
                 });
                 holder.status_content_translated.setMovementMethod(LinkMovementMethod.getInstance());
-            }
+            }*/
 
-            if( status.getContents() != null){
-                holder.status_content.setText(status.getContents(), TextView.BufferType.SPANNABLE);
+            /*if( status.getContentSpan() != null){
+                holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
             }else{
                 content = content.replaceAll("</p>","<br/><br/>");
                 content = content.replaceAll("<p>","");
@@ -567,7 +535,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 final SpannableString spannableString = Helper.clickableElements(context,content,
                         status, true, StatusListAdapter.this);
                 holder.status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
-            }
+            }*/
+
+
             holder.status_content.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -655,8 +625,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
 
                 if( status.getReblog() == null) {
-                    if( status.getSpoiler_text() != null)
-                        holder.status_spoiler.setText(status.getSpoiler_text());
                     if (status.getMedia_attachments().size() < 1) {
                         holder.status_document_container.setVisibility(View.GONE);
                         holder.status_show_more.setVisibility(View.GONE);
@@ -679,8 +647,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         }
                     }
                 }else { //Attachments for reblogs
-                    if( status.getReblog().getSpoiler_text() != null)
-                        holder.status_spoiler.setText(status.getReblog().getSpoiler_text());
+
                     if (status.getReblog().getMedia_attachments().size() < 1) {
                         holder.status_document_container.setVisibility(View.GONE);
                         holder.status_show_more.setVisibility(View.GONE);
@@ -1391,8 +1358,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
     @Override
-    public void onRetrieveEmoji(Status status, SpannableString spannableString, Boolean error) {
-        status.setContents(spannableString);
+    public void onRetrieveEmoji(Status status) {
         if( !status.isEmojiFound()) {
             for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
                 if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
@@ -1404,7 +1370,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
                 }
             }
-
         }
     }
 

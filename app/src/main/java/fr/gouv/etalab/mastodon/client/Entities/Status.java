@@ -15,13 +15,44 @@
 package fr.gouv.etalab.mastodon.client.Entities;
 
 
+import android.content.*;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.os.Build;
+import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
+import android.text.Html;
+import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.style.ClickableSpan;
+import android.text.style.ImageSpan;
+import android.util.Patterns;
+import android.view.View;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+
+import fr.gouv.etalab.mastodon.activities.HashTagActivity;
+import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
+import fr.gouv.etalab.mastodon.activities.WebviewActivity;
+import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 /**
  * Created by Thomas on 23/04/2017.
@@ -39,8 +70,6 @@ public class Status implements Parcelable {
     private Status reblog;
     private String content;
     private String content_translated;
-    private SpannableString contents;
-    private SpannableString content_translateds;
     private Date created_at;
     private int reblogs_count;
     private int favourites_count;
@@ -61,10 +90,18 @@ public class Status implements Parcelable {
     private String language;
     private boolean isTranslated = false;
     private boolean isEmojiFound = false;
+    private boolean isClickable = false;
     private boolean isTranslationShown = false;
     private boolean isNew = false;
     private boolean isTakingScreenShot = false;
     private boolean isVisible = true;
+    private Status status;
+    private SpannableString contentSpan, contentSpanCW, contentSpanTranslated;
+
+
+    public Status(){
+        this.status = this;
+    }
 
     protected Status(Parcel in) {
         id = in.readString();
@@ -93,7 +130,7 @@ public class Status implements Parcelable {
         pinned = in.readByte() != 0;
     }
 
-    public Status(){}
+
 
     public static final Creator<Status> CREATOR = new Creator<Status>() {
         @Override
@@ -394,21 +431,6 @@ public class Status implements Parcelable {
         this.emojis = emojis;
     }
 
-    public SpannableString getContents() {
-        return contents;
-    }
-
-    public void setContents(SpannableString contents) {
-        this.contents = contents;
-    }
-
-    public SpannableString getContent_translateds() {
-        return content_translateds;
-    }
-
-    public void setContent_translateds(SpannableString content_translateds) {
-        this.content_translateds = content_translateds;
-    }
 
     public boolean isEmojiFound() {
         return isEmojiFound;
@@ -416,5 +438,252 @@ public class Status implements Parcelable {
 
     public void setEmojiFound(boolean emojiFound) {
         isEmojiFound = emojiFound;
+    }
+
+
+    public void makeClickable(Context context){
+
+        SpannableString spannableStringContent, spannableStringCW, spannableStringTranslated;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            spannableStringContent = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent(), Html.FROM_HTML_MODE_LEGACY));
+        else
+            //noinspection deprecation
+            spannableStringContent = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent()));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            spannableStringCW = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getSpoiler_text():status.getSpoiler_text(), Html.FROM_HTML_MODE_LEGACY));
+        else
+            //noinspection deprecation
+            spannableStringCW = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getSpoiler_text():status.getSpoiler_text()));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContent_translated(), Html.FROM_HTML_MODE_LEGACY));
+        else
+            //noinspection deprecation
+            spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContent_translated()));
+
+        status.setContentSpan(treatment(context, spannableStringContent));
+        status.setContentSpanCW(treatment(context, spannableStringCW));
+        status.setContentSpanTranslated(treatment(context, spannableStringTranslated));
+        isClickable = true;
+    }
+
+
+    public void makeEmojis(final Context context, final OnRetrieveEmojiInterface listener){
+
+        final SpannableString spannableStringContent, spannableStringCW, spannableStringTranslated;
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            spannableStringContent = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent(), Html.FROM_HTML_MODE_LEGACY));
+        else
+            //noinspection deprecation
+            spannableStringContent = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent()));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            spannableStringCW = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getSpoiler_text():status.getSpoiler_text(), Html.FROM_HTML_MODE_LEGACY));
+        else
+            //noinspection deprecation
+            spannableStringCW = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getSpoiler_text():status.getSpoiler_text()));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContent_translated(), Html.FROM_HTML_MODE_LEGACY));
+        else
+            //noinspection deprecation
+            spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContent_translated()));
+
+        final List<Emojis> emojis = status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis();
+        if( emojis != null && emojis.size() > 0 ) {
+            final int[] i = {0};
+            for (final Emojis emoji : emojis) {
+                Glide.with(context)
+                        .asBitmap()
+                        .load(emoji.getUrl())
+                        .listener(new RequestListener<Bitmap>()  {
+                            @Override
+                            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                i[0]++;
+                                if( i[0] ==  (emojis.size())) {
+                                    status.setContentSpan(spannableStringContent);
+                                    status.setContentSpanCW(spannableStringCW);
+                                    status.setContentSpanTranslated(spannableStringTranslated);
+                                    listener.onRetrieveEmoji(status);
+                                }
+                                return false;
+                            }
+                        })
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                                final String targetedEmoji = ":" + emoji.getShortcode() + ":";
+                                if (spannableStringContent.toString().contains(targetedEmoji)) {
+                                    //emojis can be used several times so we have to loop
+                                    for (int startPosition = -1; (startPosition = spannableStringContent.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                        final int endPosition = startPosition + targetedEmoji.length();
+                                        spannableStringContent.setSpan(
+                                                new ImageSpan(context,
+                                                        Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
+                                                                (int) Helper.convertDpToPixel(20, context), false)), startPosition,
+                                                endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                    }
+                                }
+                                if (spannableStringCW.toString().contains(targetedEmoji)) {
+                                    //emojis can be used several times so we have to loop
+                                    for (int startPosition = -1; (startPosition = spannableStringCW.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                        final int endPosition = startPosition + targetedEmoji.length();
+                                        spannableStringCW.setSpan(
+                                                new ImageSpan(context,
+                                                        Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
+                                                                (int) Helper.convertDpToPixel(20, context), false)), startPosition,
+                                                endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                    }
+                                }
+                                if (spannableStringTranslated.toString().contains(targetedEmoji)) {
+                                    //emojis can be used several times so we have to loop
+                                    for (int startPosition = -1; (startPosition = spannableStringTranslated.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                        final int endPosition = startPosition + targetedEmoji.length();
+                                        spannableStringTranslated.setSpan(
+                                                new ImageSpan(context,
+                                                        Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
+                                                                (int) Helper.convertDpToPixel(20, context), false)), startPosition,
+                                                endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                    }
+                                }
+                                i[0]++;
+                                if( i[0] ==  (emojis.size())) {
+                                    status.setContentSpan(spannableStringContent);
+                                    status.setContentSpanCW(spannableStringCW);
+                                    status.setContentSpanTranslated(spannableStringTranslated);
+                                    listener.onRetrieveEmoji(status);
+                                }
+                            }
+                        });
+
+            }
+        }
+    }
+
+
+
+    private SpannableString treatment(final Context context, final SpannableString spannableString){
+
+        List<Mention> mentions = status.getReblog() != null ? status.getReblog().getMentions() : status.getMentions();
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
+        if( embedded_browser){
+            Matcher matcher;
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
+                matcher = Patterns.WEB_URL.matcher(spannableString);
+            else
+                matcher = Helper.urlPattern.matcher(spannableString);
+            while (matcher.find()){
+                int matchStart = matcher.start(1);
+                int matchEnd = matcher.end();
+                final String url = spannableString.toString().substring(matchStart, matchEnd);
+                spannableString.setSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(View textView) {
+                        Intent intent = new Intent(context, WebviewActivity.class);
+                        Bundle b = new Bundle();
+                        String finalUrl = url;
+                        if( !url.startsWith("http://") && ! url.startsWith("https://"))
+                            finalUrl = "http://" + url;
+                        b.putString("url", finalUrl);
+                        intent.putExtras(b);
+                        context.startActivity(intent);
+                    }
+                    @Override
+                    public void updateDrawState(TextPaint ds) {
+                        super.updateDrawState(ds);
+                    }
+                },
+                matchStart, matchEnd,
+                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+            }
+        }
+        //Deals with mention to make them clickable
+        if( mentions != null && mentions.size() > 0 ) {
+            //Looping through accounts which are mentioned
+            for (final Mention mention : mentions) {
+                String targetedAccount = "@" + mention.getUsername();
+                if (spannableString.toString().contains(targetedAccount)) {
+
+                    //Accounts can be mentioned several times so we have to loop
+                    for(int startPosition = -1 ; (startPosition = spannableString.toString().indexOf(targetedAccount, startPosition + 1)) != -1 ; startPosition++){
+                        int endPosition = startPosition + targetedAccount.length();
+                        spannableString.setSpan(new ClickableSpan() {
+                                    @Override
+                                    public void onClick(View textView) {
+                                        Intent intent = new Intent(context, ShowAccountActivity.class);
+                                        Bundle b = new Bundle();
+                                        b.putString("accountId", mention.getId());
+                                        intent.putExtras(b);
+                                        context.startActivity(intent);
+                                    }
+                                    @Override
+                                    public void updateDrawState(TextPaint ds) {
+                                        super.updateDrawState(ds);
+                                    }
+                                },
+                                startPosition, endPosition,
+                                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    }
+                }
+
+            }
+        }
+        Matcher matcher = Helper.hashtagPattern.matcher(spannableString);
+        while (matcher.find()){
+            int matchStart = matcher.start(1);
+            int matchEnd = matcher.end();
+            final String tag = spannableString.toString().substring(matchStart, matchEnd);
+            spannableString.setSpan(new ClickableSpan() {
+                @Override
+                public void onClick(View textView) {
+                    Intent intent = new Intent(context, HashTagActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("tag", tag.substring(1));
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+                @Override
+                public void updateDrawState(TextPaint ds) {
+                    super.updateDrawState(ds);
+                }
+            }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        }
+        return spannableString;
+    }
+
+    public SpannableString getContentSpan() {
+        return contentSpan;
+    }
+
+    public void setContentSpan(SpannableString contentSpan) {
+        this.contentSpan = contentSpan;
+    }
+
+    public SpannableString getContentSpanCW() {
+        return contentSpanCW;
+    }
+
+    public void setContentSpanCW(SpannableString contentSpanCW) {
+        this.contentSpanCW = contentSpanCW;
+    }
+
+    public SpannableString getContentSpanTranslated() {
+        return contentSpanTranslated;
+    }
+
+    public void setContentSpanTranslated(SpannableString contentSpanTranslated) {
+        this.contentSpanTranslated = contentSpanTranslated;
+    }
+
+    public boolean isClickable() {
+        return isClickable;
     }
 }

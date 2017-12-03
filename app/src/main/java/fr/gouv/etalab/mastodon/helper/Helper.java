@@ -1128,11 +1128,10 @@ public class Helper {
      * Click on tag => HashTagActivity
      * @param context Context
      * @param fullContent String, should be the st
-     * @param status Status
      * @return TextView
      */
     @SuppressWarnings("SameParameterValue")
-    public static SpannableString clickableElements(final Context context, String fullContent, final Status status, boolean useHTML, final OnRetrieveEmojiInterface listener) {
+    /*public static SpannableString clickableElements(final Context context, String fullContent, final Status status, boolean useHTML, final OnRetrieveEmojiInterface listener) {
         List<Mention> mentions = status.getReblog() != null ? status.getReblog().getMentions() : status.getMentions();
         final List<Emojis> emojis = status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis();
         final SpannableString spannableString;
@@ -1284,7 +1283,7 @@ public class Helper {
         }
 
         return spannableString;
-    }
+    }*/
 
 
     /**
