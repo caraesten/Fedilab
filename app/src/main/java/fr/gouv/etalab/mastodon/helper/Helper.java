@@ -1034,7 +1034,7 @@ public class Helper {
             if( url.startsWith("/") ){
                 url = "https://" + Helper.getLiveInstance(activity) + account.getAvatar();
             }
-            Glide.with(profilePicture.getContext())
+            Glide.with(activity.getApplicationContext())
                     .load(url)
                     .into(profilePicture);
             String urlHeader = account.getHeader();
