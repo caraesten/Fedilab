@@ -1581,7 +1581,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     }
 
     @Override
-    public void onRetrieveEmoji(Status status) {
+    public void onRetrieveEmoji(Status status, boolean fromTranslation) {
 
     }
 

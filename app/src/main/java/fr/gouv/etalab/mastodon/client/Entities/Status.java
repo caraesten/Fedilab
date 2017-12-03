@@ -68,8 +68,6 @@ public class Status implements Parcelable {
     private String in_reply_to_id;
     private String in_reply_to_account_id;
     private Status reblog;
-    private String content;
-    private String content_translated;
     private Date created_at;
     private int reblogs_count;
     private int favourites_count;
@@ -77,7 +75,6 @@ public class Status implements Parcelable {
     private boolean favourited;
     private boolean pinned;
     private boolean sensitive;
-    private String spoiler_text;
     private String visibility;
     private boolean attachmentShown = false;
     private boolean spoilerShown = false;
@@ -90,12 +87,14 @@ public class Status implements Parcelable {
     private String language;
     private boolean isTranslated = false;
     private boolean isEmojiFound = false;
+    private boolean isEmojiTranslateFound = false;
     private boolean isClickable = false;
     private boolean isTranslationShown = false;
     private boolean isNew = false;
     private boolean isTakingScreenShot = false;
     private boolean isVisible = true;
     private Status status;
+    private String content, contentCW, contentTranslated;
     private SpannableString contentSpan, contentSpanCW, contentSpanTranslated;
 
 
@@ -113,13 +112,13 @@ public class Status implements Parcelable {
         account = in.readParcelable(Account.class.getClassLoader());
         mentions = in.readArrayList(Mention.class.getClassLoader());
         content = in.readString();
-        content_translated = in.readString();
+        contentTranslated = in.readString();
         reblogs_count = in.readInt();
         favourites_count = in.readInt();
         reblogged = in.readByte() != 0;
         favourited = in.readByte() != 0;
         sensitive = in.readByte() != 0;
-        spoiler_text = in.readString();
+        contentCW = in.readString();
         visibility = in.readString();
         language = in.readString();
         attachmentShown = in.readByte() != 0;
@@ -261,11 +260,11 @@ public class Status implements Parcelable {
     }
 
     public String getSpoiler_text() {
-        return spoiler_text;
+        return contentCW;
     }
 
     public void setSpoiler_text(String spoiler_text) {
-        this.spoiler_text = spoiler_text;
+        this.contentCW = spoiler_text;
     }
 
 
@@ -334,13 +333,13 @@ public class Status implements Parcelable {
         dest.writeParcelable(account, flags);
         dest.writeList(mentions);
         dest.writeString(content);
-        dest.writeString(content_translated);
+        dest.writeString(contentTranslated);
         dest.writeInt(reblogs_count);
         dest.writeInt(favourites_count);
         dest.writeByte((byte) (reblogged ? 1 : 0));
         dest.writeByte((byte) (favourited ? 1 : 0));
         dest.writeByte((byte) (sensitive ? 1 : 0));
-        dest.writeString(spoiler_text);
+        dest.writeString(contentCW);
         dest.writeString(visibility);
         dest.writeString(language);
         dest.writeByte((byte) (attachmentShown ? 1 : 0));
@@ -383,12 +382,12 @@ public class Status implements Parcelable {
         isTranslationShown = translationShown;
     }
 
-    public String getContent_translated() {
-        return content_translated;
+    public String getContentTranslated() {
+        return contentTranslated;
     }
 
-    public void setContent_translated(String content_translated) {
-        this.content_translated = content_translated;
+    public void setContentTranslated(String content_translated) {
+        this.contentTranslated = content_translated;
     }
 
     public List<Status> getReplies() {
@@ -465,10 +464,10 @@ public class Status implements Parcelable {
 
         SpannableString spannableStringTranslated;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContent_translated(), Html.FROM_HTML_MODE_LEGACY));
+            spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated(), Html.FROM_HTML_MODE_LEGACY));
         else
             //noinspection deprecation
-            spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContent_translated()));
+            spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated()));
 
         status.setContentSpanTranslated(treatment(context, spannableStringTranslated));
     }
@@ -479,7 +478,6 @@ public class Status implements Parcelable {
 
         final SpannableString spannableStringContent;
         final SpannableString spannableStringCW;
-        SpannableString spannableStringTranslated = null;
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -495,19 +493,11 @@ public class Status implements Parcelable {
             //noinspection deprecation
             spannableStringCW = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getSpoiler_text():status.getSpoiler_text()));
 
-        if( status.getContent_translated() != null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContent_translated(), Html.FROM_HTML_MODE_LEGACY));
-            else
-                //noinspection deprecation
-                spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContent_translated()));
-        }
 
         final List<Emojis> emojis = status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis();
         if( emojis != null && emojis.size() > 0 ) {
             final int[] i = {0};
             for (final Emojis emoji : emojis) {
-                final SpannableString finalSpannableStringTranslated = spannableStringTranslated;
                 Glide.with(context)
                         .asBitmap()
                         .load(emoji.getUrl())
@@ -523,9 +513,7 @@ public class Status implements Parcelable {
                                 if( i[0] ==  (emojis.size())) {
                                     status.setContentSpan(spannableStringContent);
                                     status.setContentSpanCW(spannableStringCW);
-                                    if( finalSpannableStringTranslated != null)
-                                        status.setContentSpanTranslated(finalSpannableStringTranslated);
-                                    listener.onRetrieveEmoji(status);
+                                    listener.onRetrieveEmoji(status,false);
                                 }
                                 return false;
                             }
@@ -556,6 +544,63 @@ public class Status implements Parcelable {
                                                 endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                                     }
                                 }
+                                i[0]++;
+                                if( i[0] ==  (emojis.size())) {
+                                    status.setContentSpan(spannableStringContent);
+                                    status.setContentSpanCW(spannableStringCW);
+                                    listener.onRetrieveEmoji(status, false);
+                                }
+                            }
+                        });
+
+            }
+        }
+    }
+
+
+    public void makeEmojisTranslation(final Context context, final OnRetrieveEmojiInterface listener){
+
+        SpannableString spannableStringTranslated = null;
+
+
+        if( status.getContentTranslated() != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated(), Html.FROM_HTML_MODE_LEGACY));
+            else
+                //noinspection deprecation
+                spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated()));
+        }
+
+        final List<Emojis> emojis = status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis();
+        if( emojis != null && emojis.size() > 0 ) {
+            final int[] i = {0};
+            for (final Emojis emoji : emojis) {
+                final SpannableString finalSpannableStringTranslated = spannableStringTranslated;
+                Glide.with(context)
+                        .asBitmap()
+                        .load(emoji.getUrl())
+                        .listener(new RequestListener<Bitmap>()  {
+                            @Override
+                            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                i[0]++;
+                                if( i[0] ==  (emojis.size())) {
+                                    if( finalSpannableStringTranslated != null)
+                                        status.setContentSpanTranslated(finalSpannableStringTranslated);
+                                    listener.onRetrieveEmoji(status, true);
+                                }
+                                return false;
+                            }
+                        })
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                                final String targetedEmoji = ":" + emoji.getShortcode() + ":";
+
                                 if (finalSpannableStringTranslated != null && finalSpannableStringTranslated.toString().contains(targetedEmoji)) {
                                     //emojis can be used several times so we have to loop
                                     for (int startPosition = -1; (startPosition = finalSpannableStringTranslated.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
@@ -569,11 +614,9 @@ public class Status implements Parcelable {
                                 }
                                 i[0]++;
                                 if( i[0] ==  (emojis.size())) {
-                                    status.setContentSpan(spannableStringContent);
-                                    status.setContentSpanCW(spannableStringCW);
                                     if( finalSpannableStringTranslated != null)
                                         status.setContentSpanTranslated(finalSpannableStringTranslated);
-                                    listener.onRetrieveEmoji(status);
+                                    listener.onRetrieveEmoji(status, true);
                                 }
                             }
                         });
@@ -586,7 +629,7 @@ public class Status implements Parcelable {
 
     private SpannableString treatment(final Context context, final SpannableString spannableString){
 
-        List<Mention> mentions = status.getReblog() != null ? status.getReblog().getMentions() : status.getMentions();
+        List<Mention> mentions = this.status.getReblog() != null ? this.status.getReblog().getMentions() : this.status.getMentions();
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
         if( embedded_browser){
@@ -701,5 +744,13 @@ public class Status implements Parcelable {
 
     public boolean isClickable() {
         return isClickable;
+    }
+
+    public boolean isEmojiTranslateFound() {
+        return isEmojiTranslateFound;
+    }
+
+    public void setEmojiTranslateFound(boolean emojiTranslateFound) {
+        isEmojiTranslateFound = emojiTranslateFound;
     }
 }

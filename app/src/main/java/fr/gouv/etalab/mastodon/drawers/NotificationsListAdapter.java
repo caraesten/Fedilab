@@ -32,7 +32,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -906,7 +905,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
 
     @Override
-    public void onRetrieveEmoji(Status status) {
+    public void onRetrieveEmoji(Status status, boolean fromTranslation) {
         if( !status.isEmojiFound()) {
             for (int i = 0; i < notificationsListAdapter.getItemCount(); i++) {
                 if (notificationsListAdapter.getItemAt(i) != null && notificationsListAdapter.getItemAt(i).getStatus() != null &&  notificationsListAdapter.getItemAt(i).getStatus().getId().equals(status.getId())) {

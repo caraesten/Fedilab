@@ -388,7 +388,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.new_element.setVisibility(View.GONE);
             int iconSizePercent = sharedpreferences.getInt(Helper.SET_ICON_SIZE, 130);
             int textSizePercent = sharedpreferences.getInt(Helper.SET_TEXT_SIZE, 110);
-            boolean trans_forced = sharedpreferences.getBoolean(Helper.SET_TRANS_FORCED, false);
+            final boolean trans_forced = sharedpreferences.getBoolean(Helper.SET_TRANS_FORCED, false);
             holder.status_more.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             holder.status_more.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
@@ -464,8 +464,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if( !status.isEmojiFound())
                 status.makeEmojis(context, StatusListAdapter.this);
 
-            holder.status_content.setText(status.getContentSpan());
-            holder.status_spoiler.setText(status.getContentSpanCW());
+            holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
+            holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
 
 
             //Manages translations
@@ -476,16 +476,23 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 @Override
                 public void onClick(View v) {
                     if( !status.isTranslated() ){
-                        myTransL.translate(status.getContent(), myTransL.getLocale(), new Results() {
+                        String statusToTranslate;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                            statusToTranslate = Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
+                        else
+                            //noinspection deprecation
+                            statusToTranslate = Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent()).toString();
+
+                        myTransL.translate(statusToTranslate, myTransL.getLocale(), new Results() {
                             @Override
                             public void onSuccess(Translate translate) {
                                 if( translate.getTranslatedContent() != null) {
                                     status.setTranslated(true);
                                     status.setTranslationShown(true);
-                                    status.setContent_translated(translate.getTranslatedContent());
+                                    status.setContentTranslated(translate.getTranslatedContent());
                                     status.makeClickableTranslation(context);
-                                    holder.status_content_translated.setMovementMethod(LinkMovementMethod.getInstance());
-                                    statusListAdapter.notifyDataSetChanged();
+                                    status.makeEmojisTranslation(context, StatusListAdapter.this);
+                                    notifyStatusChanged(status);
                                 }else {
                                     Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
                                 }
@@ -497,7 +504,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         });
                     }else {
                         status.setTranslationShown(!status.isTranslationShown());
-                        statusListAdapter.notifyDataSetChanged();
+                        notifyStatusChanged(status);
                     }
                 }
             });
@@ -710,12 +717,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
                 Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/DroidSans-Regular.ttf");
                 holder.status_content.setTypeface(tf);
-
+                holder.status_content_translated.setTypeface(tf);
                 //Toot was translated and user asked to see it
-                if( status.isTranslationShown()){
+
+                if( status.isTranslationShown() && status.getContentSpanTranslated() != null){
+                    holder.status_content_translated.setText(status.getContentSpanTranslated(), TextView.BufferType.SPANNABLE);
+                    holder.status_content_translated.setMovementMethod(LinkMovementMethod.getInstance());
                     holder.status_content.setVisibility(View.GONE);
                     holder.status_content_translated_container.setVisibility(View.VISIBLE);
-                    holder.status_content_translated.setTypeface(tf);
                 }else { //Toot is not translated
                     holder.status_content.setVisibility(View.VISIBLE);
                     holder.status_content_translated_container.setVisibility(View.GONE);
@@ -1368,17 +1377,39 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         }
     }
 
+    private void notifyStatusChanged(Status status){
+        for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
+            if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
+                try {
+                    statusListAdapter.notifyItemChanged(i);
+                } catch (Exception ignored) {
+                }
+            }
+        }
+    }
+
 
     @Override
-    public void onRetrieveEmoji(Status status) {
-        if( !status.isEmojiFound()) {
-            for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
-                if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
-                    if( statusListAdapter.getItemAt(i) != null) {
+    public void onRetrieveEmoji(Status status, boolean fromTranslation) {
+        if( !fromTranslation) {
+            if (!status.isEmojiFound()) {
+                for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
+                    if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
                         statusListAdapter.getItemAt(i).setEmojiFound(true);
                         try {
                             statusListAdapter.notifyItemChanged(i);
-                        }catch (Exception ignored){}
+                        } catch (Exception ignored) {}
+                    }
+                }
+            }
+        }else {
+            if (!status.isEmojiTranslateFound()) {
+                for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
+                    if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
+                        statusListAdapter.getItemAt(i).setEmojiTranslateFound(true);
+                        try {
+                            statusListAdapter.notifyItemChanged(i);
+                        } catch (Exception ignored) {}
                     }
                 }
             }
