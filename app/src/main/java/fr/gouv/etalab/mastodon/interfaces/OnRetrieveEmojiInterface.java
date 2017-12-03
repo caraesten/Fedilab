@@ -27,6 +27,6 @@ import fr.gouv.etalab.mastodon.client.Entities.Status;
  * Interface when retrieving emojis
  */
 public interface OnRetrieveEmojiInterface {
-    void onRetrieveEmoji(Status status, SpannableString spannableString, Boolean error);
+    void onRetrieveEmoji(Status status, boolean fromTranslation);
     void onRetrieveSearchEmoji(List<Emojis> emojis);
 }

@@ -32,7 +32,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -246,29 +245,14 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
             Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/DroidSans-Regular.ttf");
             holder.notification_status_content.setTypeface(tf);
-            String content;
 
-            if( status.getContents() != null){
-                holder.notification_status_content.setText(status.getContents(), TextView.BufferType.SPANNABLE);
-            }else {
-                content = status.getContent();
-                if (content != null) {
-                    content = content.replaceAll("</p>", "<br/><br/>");
-                    content = content.replaceAll("<p>", "");
-                    if (content.endsWith("<br/><br/>"))
-                        content = content.substring(0, content.length() - 10);
-                }
+            if( !status.isClickable())
+                status.makeClickable(context);
+            if( !status.isEmojiFound())
+                status.makeEmojis(context, NotificationsListAdapter.this);
+            holder.notification_status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
 
-                SpannableString spannableString = Helper.clickableElements(context, content,
-                        status,  true, NotificationsListAdapter.this);
-                /*SpannableString spannableString = Helper.clickableElements(context, content,
-                        status.getReblog() != null ? status.getReblog().getMentions() : status.getMentions(),
-                        status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis(),
-                        position,
-                        true, NotificationsListAdapter.this);*/
 
-                holder.notification_status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
-            }
             holder.notification_status_content.setMovementMethod(null);
             holder.notification_status_content.setMovementMethod(LinkMovementMethod.getInstance());
             holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
@@ -330,7 +314,9 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
                 }
 
+                assert imgFav != null;
                 imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+                assert imgReblog != null;
                 imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
                 holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
                 holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
@@ -900,14 +886,15 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
 
     @Override
-    public void onRetrieveEmoji(Status status, SpannableString spannableString, Boolean error) {
-        status.setContents(spannableString);
+    public void onRetrieveEmoji(Status status, boolean fromTranslation) {
         if( !status.isEmojiFound()) {
             for (int i = 0; i < notificationsListAdapter.getItemCount(); i++) {
                 if (notificationsListAdapter.getItemAt(i) != null && notificationsListAdapter.getItemAt(i).getStatus() != null &&  notificationsListAdapter.getItemAt(i).getStatus().getId().equals(status.getId())) {
                     if( notificationsListAdapter.getItemAt(i).getStatus() != null) {
                         notificationsListAdapter.getItemAt(i).getStatus().setEmojiFound(true);
-                        notificationsListAdapter.notifyItemChanged(i);
+                        try {
+                            notificationsListAdapter.notifyItemChanged(i);
+                        }catch (Exception ignored){}
                     }
                 }
             }
