@@ -248,7 +248,12 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             holder.notification_status_content.setTypeface(tf);
             String content;
 
-            if( status.getContents() != null){
+            if( !status.isClickable())
+                status.makeClickable(context);
+            if( !status.isEmojiFound())
+                status.makeEmojis(context, NotificationsListAdapter.this);
+
+            /*if( status.getContents() != null){
                 holder.notification_status_content.setText(status.getContents(), TextView.BufferType.SPANNABLE);
             }else {
                 content = status.getContent();
@@ -267,8 +272,9 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                         position,
                         true, NotificationsListAdapter.this);*/
 
-                holder.notification_status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
-            }
+               // holder.notification_status_content.setText(spannableString, TextView.BufferType.SPANNABLE);
+            //}
+
             holder.notification_status_content.setMovementMethod(null);
             holder.notification_status_content.setMovementMethod(LinkMovementMethod.getInstance());
             holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
@@ -900,8 +906,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
 
     @Override
-    public void onRetrieveEmoji(Status status, SpannableString spannableString, Boolean error) {
-        status.setContents(spannableString);
+    public void onRetrieveEmoji(Status status) {
         if( !status.isEmojiFound()) {
             for (int i = 0; i < notificationsListAdapter.getItemCount(); i++) {
                 if (notificationsListAdapter.getItemAt(i) != null && notificationsListAdapter.getItemAt(i).getStatus() != null &&  notificationsListAdapter.getItemAt(i).getStatus().getId().equals(status.getId())) {

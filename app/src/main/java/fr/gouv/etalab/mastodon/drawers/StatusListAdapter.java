@@ -468,6 +468,43 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_spoiler.setText(status.getContentSpanCW());
 
 
+            //Manages translations
+            final MyTransL myTransL = MyTransL.getInstance(MyTransL.translatorEngine.YANDEX);
+            myTransL.setObfuscation(true);
+            myTransL.setYandexAPIKey(Helper.YANDEX_KEY);
+            holder.status_translate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if( !status.isTranslated() ){
+                        myTransL.translate(status.getContent(), myTransL.getLocale(), new Results() {
+                            @Override
+                            public void onSuccess(Translate translate) {
+                                if( translate.getTranslatedContent() != null) {
+                                    status.setTranslated(true);
+                                    status.setTranslationShown(true);
+                                    status.setContent_translated(translate.getTranslatedContent());
+                                    status.makeClickableTranslation(context);
+                                    holder.status_content_translated.setMovementMethod(LinkMovementMethod.getInstance());
+                                    statusListAdapter.notifyDataSetChanged();
+                                }else {
+                                    Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                                }
+                            }
+                            @Override
+                            public void onFail(HttpsConnectionException e) {
+                                Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }else {
+                        status.setTranslationShown(!status.isTranslationShown());
+                        statusListAdapter.notifyDataSetChanged();
+                    }
+                }
+            });
+            //-------- END -> Manages translations
+
+
+
             //Displays name & emoji in toot header
             final String displayName;
             final String username;
@@ -743,8 +780,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 imgReply = ContextCompat.getDrawable(context, R.drawable.ic_reply);
 
 
+                assert imgFav != null;
                 imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+                assert imgReblog != null;
                 imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+                assert imgReply != null;
                 imgReply.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
 
                 holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
@@ -767,6 +807,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             changeDrawableColor(context, R.drawable.ic_pin_drop,R.color.black);
                         imgPin = ContextCompat.getDrawable(context, R.drawable.ic_pin_drop);
                     }
+                    assert imgPin != null;
                     imgPin.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
                     holder.status_pin.setImageDrawable(imgPin);
 
@@ -884,36 +925,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     return false;
                 }
             });
-            final MyTransL myTransL = MyTransL.getInstance(MyTransL.translatorEngine.YANDEX);
-            myTransL.setObfuscation(true);
-            myTransL.setYandexAPIKey(Helper.YANDEX_KEY);
-            holder.status_translate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if( !status.isTranslated() ){
-                        myTransL.translate(status.getContent(), myTransL.getLocale(), new Results() {
-                            @Override
-                            public void onSuccess(Translate translate) {
-                                if( translate.getTranslatedContent() != null) {
-                                    status.setTranslated(true);
-                                    status.setTranslationShown(true);
-                                    status.setContent_translated(translate.getTranslatedContent());
-                                    statusListAdapter.notifyDataSetChanged();
-                                }else {
-                                    Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
-                                }
-                            }
-                            @Override
-                            public void onFail(HttpsConnectionException e) {
-                                Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    }else {
-                        status.setTranslationShown(!status.isTranslationShown());
-                        statusListAdapter.notifyDataSetChanged();
-                    }
-                }
-            });
+
 
             holder.yandex_translate.setOnClickListener(new View.OnClickListener() {
                 @Override

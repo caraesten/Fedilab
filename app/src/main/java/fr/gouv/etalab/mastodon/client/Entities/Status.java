@@ -443,7 +443,7 @@ public class Status implements Parcelable {
 
     public void makeClickable(Context context){
 
-        SpannableString spannableStringContent, spannableStringCW, spannableStringTranslated;
+        SpannableString spannableStringContent, spannableStringCW;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             spannableStringContent = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent(), Html.FROM_HTML_MODE_LEGACY));
         else
@@ -455,22 +455,31 @@ public class Status implements Parcelable {
             //noinspection deprecation
             spannableStringCW = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getSpoiler_text():status.getSpoiler_text()));
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContent_translated(), Html.FROM_HTML_MODE_LEGACY));
-        else
-            //noinspection deprecation
-            spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContent_translated()));
-
         status.setContentSpan(treatment(context, spannableStringContent));
         status.setContentSpanCW(treatment(context, spannableStringCW));
-        status.setContentSpanTranslated(treatment(context, spannableStringTranslated));
         isClickable = true;
     }
 
 
+    public void makeClickableTranslation(Context context){
+
+        SpannableString spannableStringTranslated;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContent_translated(), Html.FROM_HTML_MODE_LEGACY));
+        else
+            //noinspection deprecation
+            spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContent_translated()));
+
+        status.setContentSpanTranslated(treatment(context, spannableStringTranslated));
+    }
+
+
+
     public void makeEmojis(final Context context, final OnRetrieveEmojiInterface listener){
 
-        final SpannableString spannableStringContent, spannableStringCW, spannableStringTranslated;
+        final SpannableString spannableStringContent;
+        final SpannableString spannableStringCW;
+        SpannableString spannableStringTranslated = null;
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -478,22 +487,27 @@ public class Status implements Parcelable {
         else
             //noinspection deprecation
             spannableStringContent = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent()));
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             spannableStringCW = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getSpoiler_text():status.getSpoiler_text(), Html.FROM_HTML_MODE_LEGACY));
         else
             //noinspection deprecation
             spannableStringCW = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getSpoiler_text():status.getSpoiler_text()));
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContent_translated(), Html.FROM_HTML_MODE_LEGACY));
-        else
-            //noinspection deprecation
-            spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContent_translated()));
+        if( status.getContent_translated() != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContent_translated(), Html.FROM_HTML_MODE_LEGACY));
+            else
+                //noinspection deprecation
+                spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContent_translated()));
+        }
 
         final List<Emojis> emojis = status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis();
         if( emojis != null && emojis.size() > 0 ) {
             final int[] i = {0};
             for (final Emojis emoji : emojis) {
+                final SpannableString finalSpannableStringTranslated = spannableStringTranslated;
                 Glide.with(context)
                         .asBitmap()
                         .load(emoji.getUrl())
@@ -509,7 +523,8 @@ public class Status implements Parcelable {
                                 if( i[0] ==  (emojis.size())) {
                                     status.setContentSpan(spannableStringContent);
                                     status.setContentSpanCW(spannableStringCW);
-                                    status.setContentSpanTranslated(spannableStringTranslated);
+                                    if( finalSpannableStringTranslated != null)
+                                        status.setContentSpanTranslated(finalSpannableStringTranslated);
                                     listener.onRetrieveEmoji(status);
                                 }
                                 return false;
@@ -541,11 +556,11 @@ public class Status implements Parcelable {
                                                 endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                                     }
                                 }
-                                if (spannableStringTranslated.toString().contains(targetedEmoji)) {
+                                if (finalSpannableStringTranslated != null && finalSpannableStringTranslated.toString().contains(targetedEmoji)) {
                                     //emojis can be used several times so we have to loop
-                                    for (int startPosition = -1; (startPosition = spannableStringTranslated.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                    for (int startPosition = -1; (startPosition = finalSpannableStringTranslated.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
-                                        spannableStringTranslated.setSpan(
+                                        finalSpannableStringTranslated.setSpan(
                                                 new ImageSpan(context,
                                                         Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
                                                                 (int) Helper.convertDpToPixel(20, context), false)), startPosition,
@@ -556,7 +571,8 @@ public class Status implements Parcelable {
                                 if( i[0] ==  (emojis.size())) {
                                     status.setContentSpan(spannableStringContent);
                                     status.setContentSpanCW(spannableStringCW);
-                                    status.setContentSpanTranslated(spannableStringTranslated);
+                                    if( finalSpannableStringTranslated != null)
+                                        status.setContentSpanTranslated(finalSpannableStringTranslated);
                                     listener.onRetrieveEmoji(status);
                                 }
                             }
