@@ -398,25 +398,23 @@ Vă rugăm să confirmați notificările instant pe care doriți să le primiți
     </string>
   <string name="privacy_API_title">Urmărire și biblioteci</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Universal Image Loader</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
-        - <b>Gson</b> : To save drafts
-    </string>
+Aplicația  <b>nu folosește unelte de urmărire</b> (audiența de măsurare, erori de raportare, etc.) și nu conține reclame.\n\n
+Folosirea librăriilor este minimă: \n
+- <b>Universal Image Loader</b>: Să gestioneze media \n
+- <b>Android-Job</b>: Să gestioneze servicii\n
+- <b>PhotoView</b>: Să gestioneze imagini\n
+ - <b>Gson</b> : Să salveze ciorne    </string>
   <string name="privacy_API_yandex_title">Translation of toots</string>
   <string name="privacy_API_yandex_authorizations">
         The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
     </string>
   <string name="thanks_text">
-        Thank you to Stéphane for the logo.
-    </string>
+Mulțumumiri lui Stéphane pentru logo.    </string>
   <string name="thanks_text_dev">
 Vă mulțumesc:
     </string>
-  <string name="filter_regex">Filter out by regular expressions</string>
-  <string name="search">Search</string>
-  <string name="delete">Delete</string>
+  <string name="filter_regex">Filtrează expresii usuale</string>
+  <string name="search">Căutare</string>
+  <string name="delete">Șterge</string>
 </resources>
