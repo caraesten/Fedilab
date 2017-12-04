@@ -206,9 +206,9 @@
   <string name="no_accounts">Nu există conturi pentru a fi afișate</string>
   <string name="no_follow_request">No follow request</string>
   <string name="status_cnt">Toots \n %1$s</string>
-  <string name="following_cnt">Following \n %1$s</string>
-  <string name="followers_cnt">Followers \n %1$s</string>
-  <string name="pins_cnt">Pinned \n %d</string>
+  <string name="following_cnt">Urmăriți \n %1$s</string>
+  <string name="followers_cnt">Cei care vă urmăresc \n %1$s</string>
+  <string name="pins_cnt">Fixat \n %d</string>
   <string name="authorize">Permite</string>
   <string name="reject">Respinge</string>
   <!-- Scheduled toots -->
@@ -218,7 +218,7 @@
   <string name="media_count">Media: %d</string>
   <string name="toot_scheduled">The toot has been scheduled!</string>
   <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
-  <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+  <string name="warning_battery">Economizor de baterie este activat! Acesta ar putea să nu funcţioneze conform aşteptărilor.</string>
   <!-- Notifications -->
   <string name="no_notifications">No notification to display</string>
   <string name="notif_mention">ai fost menționat</string>
@@ -375,11 +375,10 @@ Vă rugăm să confirmați notificările instant pe care doriți să le primiți
   <!-- PRIVACY -->
   <string name="privacy_data_title">Date înregistrate</string>
   <string name="privacy_data">
-        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
-    </string>
+Doar infomațiile de bază ale conturilor sunt stocate pe aparat.
+Aceste date sunt strict confidențiale și pot fi folosite doar de aplicație.
+Ștergerea aplicației duce la pierderea datelor.\n
+&#9888; Autentificarea și parolele nu sunt niciodate stocate. Sunt folosite doar într-o autentificare sigură (SSL).    </string>
   <string name="privacy_authorizations_title">Permisiuni:</string>
   <string name="privacy_authorizations">
         - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
