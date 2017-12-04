@@ -363,9 +363,8 @@
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Notificări instant</string>
   <string name="settings_popup_message">
-        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
-    </string>
+Vă rugăm să confirmați notificările instant pe care doriți să le primiți
+        Puteți să activați sau dezactivați aceste setări, mai târziu (Fereastra de notificații).    </string>
   <string name="settings_popup_timeline">For unread toots in home time-line?</string>
   <string name="settings_popup_notification">For unread notifications?</string>
   <!-- CACHE -->
@@ -397,7 +396,7 @@
         - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
         <b>&#9888; These actions are carried out only when user requests them.</b>
     </string>
-  <string name="privacy_API_title">Tracking and Libraries</string>
+  <string name="privacy_API_title">Urmărire și biblioteci</string>
   <string name="privacy_API">
         The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
         The use of libraries is minimized: \n
