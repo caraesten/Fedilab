@@ -325,19 +325,19 @@
   <string name="settings_hour_init">Oră începerii</string>
   <string name="settings_hour_end">Ora terminării</string>
   <string name="embedded_browser">Folosește browser-ul încorporat</string>
-  <string name="use_javascript">Enable Javascript</string>
+  <string name="use_javascript">Activează Javascript</string>
   <string name="use_cookies">Allow third-party cookies</string>
   <string name="settings_ui_layout">Layout for timelines: </string>
   <string-array name="settings_menu_tabs">
-    <item>Tabs</item>
+    <item>Ferestre</item>
     <item>Meniu</item>
-    <item>Tabs and menu</item>
+    <item>Ferestre și meniu</item>
   </string-array>
   <string-array name="settings_translation">
     <item>Yandex</item>
     <item>Nu</item>
   </string-array>
-  <string name="set_led_colour">Set LED colour:</string>
+  <string name="set_led_colour">Setează culoarea LED:</string>
   <string-array name="led_colours">
     <item>Albastru</item>
     <item>Turcoaz</item>
@@ -349,19 +349,19 @@
   </string-array>
   <string name="set_title_news">Ştiri</string>
   <string name="set_notification_news">Notify for new toots on the home timeline</string>
-  <string name="set_show_error_messages">Display error messages</string>
-  <string name="action_follow">Follow</string>
-  <string name="action_unfollow">Unfollow</string>
+  <string name="set_show_error_messages">Afişează mesajele de eroare</string>
+  <string name="action_follow">Urmărește</string>
+  <string name="action_unfollow">Nu mai urmări</string>
   <string name="action_block">Blochează</string>
   <string name="action_unblock">Deblochează</string>
   <string name="action_mute">Mute</string>
   <string name="action_no_action">Nici o acțiune</string>
   <string name="action_unmute">Unmute</string>
   <string name="request_sent">Cerere trimisă</string>
-  <string name="followed_by">Follows you</string>
+  <string name="followed_by">Vă urmărește</string>
   <string name="action_search">Căutare</string>
   <!-- Quick settings for notifications -->
-  <string name="settings_popup_title">Push notifications</string>
+  <string name="settings_popup_title">Notificări instant</string>
   <string name="settings_popup_message">
         Please, confirm push notifications that you want to receive.
         You can enable or disable these notifications later in settings (Notifications tab).
