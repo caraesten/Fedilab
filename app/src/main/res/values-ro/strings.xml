@@ -187,24 +187,24 @@
   <string name="select_accounts">Selectați câteva conturi</string>
   <string name="remove_draft">Eliminați ciorna?</string>
   <string name="show_reply">Apăsați butonul pentru a afișa notița originală</string>
-  <string name="upload_form_description">Describe for the visually impaired</string>
+  <string name="upload_form_description">Descrie pentru nevăzători</string>
   <!-- Instance -->
-  <string name="instance_no_description">No description available!</string>
+  <string name="instance_no_description">Nici o descriere disponibilă!</string>
   <!-- About -->
-  <string name="about_vesrion">Release %1$s</string>
+  <string name="about_vesrion">Lansare %1$s</string>
   <string name="about_developer">Programator:</string>
   <string name="about_license">Licență: </string>
   <string name="about_license_action">GNU GPL V3</string>
   <string name="about_code">Sursa codului: </string>
-  <string name="about_yandex">Translation of toots:</string>
+  <string name="about_yandex">Traducerea notițelor:</string>
   <string name="about_thekinrar">Search instances:</string>
   <string name="about_thekinrar_action">instances.social</string>
-  <string name="thanks_text_logo">Icon designer:</string>
+  <string name="thanks_text_logo">Designer-ul iconiței:</string>
   <!-- Conversation -->
   <string name="conversation">Conversație</string>
   <!-- Accounts -->
   <string name="no_accounts">Nu există conturi pentru a fi afișate</string>
-  <string name="no_follow_request">No follow request</string>
+  <string name="no_follow_request">Nici o cerere de urmărire</string>
   <string name="status_cnt">Toots \n %1$s</string>
   <string name="following_cnt">Urmăriți \n %1$s</string>
   <string name="followers_cnt">Cei care vă urmăresc \n %1$s</string>
