@@ -373,18 +373,18 @@ Hesaplardan yalnızca temel bilgiler cihazda saklanır.
          ⚠ Oturum açma ve parolalar asla saklanmaz. Yalnızca bir örneğe sahip güvenli bir kimlik doğrulama (SSL) sırasında kullanılırlar.    </string>
   <string name="privacy_authorizations_title">Izinler:</string>
   <string name="privacy_authorizations">
-- <b> ACCESS_NETWORK_STATE </ 0>: Aygıtın bir WIFI ağına bağlı olup olmadığını saptamak için kullanılır. \ N
-         - <b> INTERNET </ 0>: Bir örneği sorgular için kullanılır. \ N
-         - <b> WRITE_EXTERNAL_STORAGE </ 0>: Ortamı saklamak veya uygulamayı bir SD karta taşımak için kullanılır. \ N
-         - <b> READ_EXTERNAL_STORAGE </ 0>: Toots\'a medya eklemek için kullanılır. \ N
-         - <b> BOOT_COMPLETED </ 0>: Bildirim hizmetini başlatmak için kullanılır. \ N
-         - <b> WAKE_LOCK </ 0>: Bildirim hizmeti sırasında kullanılır.    </string>
+- <b> ACCESS_NETWORK_STATE </b>: Aygıtın bir WIFI ağına bağlı olup olmadığını saptamak için kullanılır. \n
+         - <b> INTERNET </b>: Bir örneği sorgular için kullanılır. \n
+         - <b> WRITE_EXTERNAL_STORAGE </b>: Ortamı saklamak veya uygulamayı bir SD karta taşımak için kullanılır. \n
+         - <b> READ_EXTERNAL_STORAGE </b>: Toots\'a medya eklemek için kullanılır.\n
+         - <b> BOOT_COMPLETED </b>: Bildirim hizmetini başlatmak için kullanılır. \n
+         - <b> WAKE_LOCK </b>: Bildirim hizmeti sırasında kullanılır.    </string>
   <string name="privacy_API_authorizations_title">API izinleri:</string>
   <string name="privacy_API_authorizations">
-- <b> Oku </ 0>: Veri okunur. \ N
-         - <b> Yaz </ 0>: Durumu yayınlar ve durumlar için ortam yükler. \ N
-         - <b> Takip et </ 0>: Takip edin, takiplerini uygulayın, engelleyin, engelini kaldırın. \ N \ n
-         <b> ⚠ Bu eylemler, yalnızca kullanıcı istekleri üzerine gerçekleşir. </ 0>    </string>
+- <b> Oku </b>: Veri okunur. \n
+         - <b> Yaz </b>: Durumu yayınlar ve durumlar için ortam yükler. \n
+         - <b> Takip et </b>: Takip edin, takiplerini uygulayın, engelleyin, engelini kaldırın.\n\n
+         <b> &#9888;  Bu eylemler, yalnızca kullanıcı istekleri üzerine gerçekleşir. </b>    </string>
   <string name="privacy_API_title">İzleme ve kütüphaneler</string>
   <string name="privacy_API">
 Uygulama <b> izleme araçları kullanmaz (kitle ölçümü, hata raporlama, vb.) Ve reklam içermez. \ N \ n
