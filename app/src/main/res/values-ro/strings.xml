@@ -366,10 +366,10 @@
 Vă rugăm să confirmați notificările instant pe care doriți să le primiți
         Puteți să activați sau dezactivați aceste setări, mai târziu (Fereastra de notificații).    </string>
   <string name="settings_popup_timeline">For unread toots in home time-line?</string>
-  <string name="settings_popup_notification">For unread notifications?</string>
+  <string name="settings_popup_notification">Pentru notificări necitite?</string>
   <!-- CACHE -->
   <string name="cache_title">Goliți memoria cache</string>
-  <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+  <string name="cache_message">Sunt %1$s din date în memoria cache. \n\nVreți să le ștergeți?</string>
   <string name="cache_units">Mb</string>
   <string name="toast_cache_clear">Memoria cache a fost golită! %1$s au fost eliberate</string>
   <!-- PRIVACY -->
@@ -391,10 +391,10 @@ Vă rugăm să confirmați notificările instant pe care doriți să le primiți
     </string>
   <string name="privacy_API_authorizations_title">Permisiuni API:</string>
   <string name="privacy_API_authorizations">
-        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
+- <b>Citește</b>: Citește date.\n
+        - <b>Scrie</b>: Postează statusuri și încarcă media pentru statusuri.\n
+        - <b>Urmărește</b>: Urmărește, nu mai urmări, blochează, deblochează.\n\n
+        <b>&#9888; Aceste acțiuni s efectuează doar la cererea utilizatorului.</b>
     </string>
   <string name="privacy_API_title">Urmărire și biblioteci</string>
   <string name="privacy_API">
