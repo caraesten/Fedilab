@@ -200,8 +200,8 @@
   <string name="no_accounts">Sem contas para exibir</string>
   <string name="no_follow_request">Sem solicitações de seguidor</string>
   <string name="status_cnt">Toots \n %1$s</string>
-  <string name="following_cnt">Seguindo \n %1$s</string>
-  <string name="followers_cnt">Seguidores \n %1$s</string>
+  <string name="following_cnt">Following \n %1$s</string>
+  <string name="followers_cnt">Followers \n %1$s</string>
   <string name="pins_cnt">Fixado \n %d</string>
   <string name="authorize">Autorizar</string>
   <string name="reject">Rejeitar</string>
@@ -391,12 +391,12 @@
     </string>
   <string name="privacy_API_title">Rastreamento e bibliotecas</string>
   <string name="privacy_API">
-        O aplicativo <b>não usa ferramentas de rastreamento</b> (medição de audiência, relatório de erros, etc.) e não contém propagandas.\n\n
-        O uso de bibliotecas é mínimo: \n
-        - <b>Universal Image Loader</b>: Para administrar mídia\n
-        - <b>Android-Job</b>: Para administrar serviços\n
-        - <b>PhotoView</b>: Para administrar imagens\n
-        - <b>Gson</b> : Para administrar rascunhos
+        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
+        The use of libraries is minimized: \n
+        - <b>Universal Image Loader</b>: To manage media\n
+        - <b>Android-Job</b>: To manage services\n
+        - <b>PhotoView</b>: To manage images\n
+        - <b>Gson</b> : To save drafts
     </string>
   <string name="privacy_API_yandex_title">Tradução de toots</string>
   <string name="privacy_API_yandex_authorizations">
@@ -409,7 +409,7 @@
   <string name="thanks_text_dev">
         Agradecimentos a:
     </string>
-  <string name="filter_regex">Filtrar com uma expressão regular</string>
-  <string name="search">Pesquisar</string>
-  <string name="delete">Eliminar</string>
+  <string name="filter_regex">Filter out by regular expressions</string>
+  <string name="search">Search</string>
+  <string name="delete">Delete</string>
 </resources>
