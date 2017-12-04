@@ -470,6 +470,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
 
+            holder.status_content.setMovementMethod(null);
+            holder.status_content.setMovementMethod(LinkMovementMethod.getInstance());
 
             //Manages translations
             final MyTransL myTransL = MyTransL.getInstance(MyTransL.translatorEngine.YANDEX);
@@ -511,6 +513,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
                 }
             });
+            holder.status_content_translated.setMovementMethod(null);
+            holder.status_content_translated.setMovementMethod(LinkMovementMethod.getInstance());
             //-------- END -> Manages translations
 
 
