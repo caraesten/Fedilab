@@ -169,11 +169,11 @@
   <string name="toot_select_image">Select a media</string>
   <string name="toot_select_image_error">An error occurred while selecting the media!</string>
   <string name="toot_delete_media">Delete this media?</string>
-  <string name="toot_error_no_content">Your toot is empty!</string>
-  <string name="toot_visibility_tilte">Visibility of the toot</string>
-  <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-  <string name="toot_sent">The toot has been sent!</string>
-  <string name="toot_reply_content_title">You are replying to this toot:</string>
+  <string name="toot_error_no_content">Notița este goală!</string>
+  <string name="toot_visibility_tilte">Vizibilitatea notiței</string>
+  <string name="toots_visibility_tilte">Vizibilitatea implicită a notițelor: </string>
+  <string name="toot_sent">Notița a fost trimisă!</string>
+  <string name="toot_reply_content_title">Răspundeți la această notiță:</string>
   <string name="toot_sensitive">Sensitive content?</string>
   <string-array name="toot_visibility">
     <item>Post to public timelines</item>
@@ -182,11 +182,11 @@
     <item>Post to mentioned users only</item>
   </string-array>
   <string name="no_draft">Nu sunt ciorne!</string>
-  <string name="choose_toot">Choose a toot</string>
+  <string name="choose_toot">Alege o notiță</string>
   <string name="choose_accounts">Alege un cont</string>
-  <string name="select_accounts">Select some accounts</string>
-  <string name="remove_draft">Remove draft?</string>
-  <string name="show_reply">Click on the button to display the original toot</string>
+  <string name="select_accounts">Selectați câteva conturi</string>
+  <string name="remove_draft">Eliminați ciorna?</string>
+  <string name="show_reply">Apăsați butonul pentru a afișa notița originală</string>
   <string name="upload_form_description">Describe for the visually impaired</string>
   <!-- Instance -->
   <string name="instance_no_description">No description available!</string>
@@ -220,35 +220,35 @@
   <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
   <string name="warning_battery">Economizor de baterie este activat! Acesta ar putea să nu funcţioneze conform aşteptărilor.</string>
   <!-- Notifications -->
-  <string name="no_notifications">No notification to display</string>
+  <string name="no_notifications">Nici o notificare de afişat</string>
   <string name="notif_mention">ai fost menționat</string>
   <string name="notif_reblog">boosted your status</string>
   <string name="notif_favourite">favourited your status</string>
-  <string name="notif_follow">followed you</string>
-  <string name="notif_pouet">New toot from %1$s</string>
+  <string name="notif_follow">vă urmărește</string>
+  <string name="notif_pouet">Nouă notiță de la %1$s</string>
   <plurals name="other_notifications">
-    <item quantity="one">and another notification</item>
-    <item quantity="few">and %d other notifications</item>
-    <item quantity="other">and %d other notifications</item>
+    <item quantity="one">și încă o notificare</item>
+    <item quantity="few">și incă %d alte notificări</item>
+    <item quantity="other">și incă %d alte notificări</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="one">and another toot to discover</item>
-    <item quantity="few">and %d other toots to discover</item>
-    <item quantity="other">and %d other toots to discover</item>
+    <item quantity="one">și încă o notiță de descoperit</item>
+    <item quantity="few">și %d altă notiță de descoperit</item>
+    <item quantity="other">și %d altă notiță de descoperit</item>
   </plurals>
   <string name="delete_notification_ask">Ştergeți notificarea?</string>
   <string name="delete_notification_ask_all">Sterge toate notificarile?</string>
-  <string name="delete_notification">The notification has been deleted!</string>
-  <string name="delete_notification_all">All notifications have been deleted!</string>
+  <string name="delete_notification">Notificarea a fost ștearsă!</string>
+  <string name="delete_notification_all">Toate notificările au fost sterse!</string>
   <!-- HEADER -->
-  <string name="following">Following</string>
-  <string name="followers">Followers</string>
-  <string name="pinned_toots">Pinned</string>
+  <string name="following">Urmăriți</string>
+  <string name="followers">Cei care vă urmăresc</string>
+  <string name="pinned_toots">Fixat</string>
   <!-- TOAST -->
-  <string name="client_error">Unable to get client id!</string>
-  <string name="no_internet">No Internet connection!</string>
-  <string name="toast_block">The account was blocked!</string>
-  <string name="toast_unblock">The account is no longer blocked!</string>
+  <string name="client_error">Imposibil de obținut Id-ul clientului!</string>
+  <string name="no_internet">Nu există conexiune la Internet!</string>
+  <string name="toast_block">Contul a fost blocat!</string>
+  <string name="toast_unblock">Contul nu mai este blocat!</string>
   <string name="toast_mute">The account was muted!</string>
   <string name="toast_unmute">The account is no longer muted!</string>
   <string name="toast_follow">The account was followed!</string>
