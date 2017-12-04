@@ -387,12 +387,12 @@ Hesaplardan yalnızca temel bilgiler cihazda saklanır.
          <b> &#9888;  Bu eylemler, yalnızca kullanıcı istekleri üzerine gerçekleşir. </b>    </string>
   <string name="privacy_API_title">İzleme ve kütüphaneler</string>
   <string name="privacy_API">
-Uygulama <b> izleme araçları kullanmaz (kitle ölçümü, hata raporlama, vb.) Ve reklam içermez. \ N \ n
-         Kütüphanelerin kullanımı en aza indirilir: \ n
-         - <b> Universal Image Loader </ 0>: Medyayı yönetmek için \ n
-         - <b> Android-Job </ 0>: Hizmetleri yönetmek için \ n
-         - <b> PhotoView </ 0>: Resimleri yönetmek için \ n
-         - <b> Gson </ 0>: Taslaklar kaydetmek için    </string>
+Uygulama <b> izleme araçları kullanmaz </b>(kitle ölçümü, hata raporlama, vb.) Ve reklam içermez. \n\n
+         Kütüphanelerin kullanımı en aza indirilir: \n
+         - <b> Universal Image Loader </b>: Medyayı yönetmek için \n
+         - <b> Android-Job </b>: Hizmetleri yönetmek için \n
+         - <b> PhotoView </b>: Resimleri yönetmek için\n
+         - <b> Gson </b>: Taslaklar kaydetmek için    </string>
   <string name="privacy_API_yandex_title">Modül tercümesi</string>
   <string name="privacy_API_yandex_authorizations">
 Uygulama cihazın yerel ayarını ve Yandex API\'sini kullanarak toots çevirme olanağı sunar. \ N
