@@ -109,7 +109,7 @@
   <string name="reblog_remove">Oprește amplificarea notiței?</string>
   <string name="pin_add">Fixează această notiță?</string>
   <string name="pin_remove">Anulează fixarea acestei notițe?</string>
-  <string name="more_action_1">Mute</string>
+  <string name="more_action_1">Silenţios</string>
   <string name="more_action_2">Blochează</string>
   <string name="more_action_3">Raportează</string>
   <string name="more_action_4">Elimină</string>
@@ -119,7 +119,7 @@
   <string-array name="more_action_confirm">
     <item>Dezactivează acest cont?</item>
     <item>Blochează acest cont?</item>
-    <item>Report this toot?</item>
+    <item>Raportează acestă notiță?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Remove this toot?</item>
