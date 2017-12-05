@@ -104,11 +104,11 @@
   <string name="reblog_removed">Notița nu mai este amplificată!</string>
   <string name="reblog_by">Amplificat de %1$s</string>
   <string name="favourite_add">Adauga acestă notiță la favorite?</string>
-  <string name="favourite_remove">Remove this toot from your favourites?</string>
-  <string name="reblog_add">Boost this toot?</string>
-  <string name="reblog_remove">Unboost this toot?</string>
-  <string name="pin_add">Pin this toot?</string>
-  <string name="pin_remove">Unpin this toot?</string>
+  <string name="favourite_remove">Înlaătură acestă notiță de la favorite?</string>
+  <string name="reblog_add">Amplifică aceată notiță?</string>
+  <string name="reblog_remove">Oprește amplificarea notiței?</string>
+  <string name="pin_add">Fixează această notiță?</string>
+  <string name="pin_remove">Anulează fixarea acestei notițe?</string>
   <string name="more_action_1">Mute</string>
   <string name="more_action_2">Blochează</string>
   <string name="more_action_3">Raportează</string>
