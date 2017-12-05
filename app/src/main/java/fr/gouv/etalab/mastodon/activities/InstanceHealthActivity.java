@@ -39,6 +39,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -69,7 +71,8 @@ public class InstanceHealthActivity extends AppCompatActivity {
     private InstanceSocial instanceSocial;
     private TextView name, values, checked_at, up, uptime;
     private String instance;
-    private LinearLayout container;
+    private LinearLayout container, instance_container;
+    private RelativeLayout loader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +95,8 @@ public class InstanceHealthActivity extends AppCompatActivity {
         up = findViewById(R.id.up);
         uptime = findViewById(R.id.uptime);
         container = findViewById(R.id.container);
-
+        instance_container = findViewById(R.id.instance_container);
+        loader = findViewById(R.id.loader);
 
         close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,6 +181,8 @@ public class InstanceHealthActivity extends AppCompatActivity {
                             uptime.setText(String.format("Uptime: %.2f %%", (instanceSocial.getUptime()*100)));
                             checked_at.setText(String.format("Checked at: %s", Helper.dateToString(getApplicationContext(), instanceSocial.getChecked_at())));
                             values.setText(String.format("version: %s \n %s users - %s statuses", instanceSocial.getVersion(), withSuffix(instanceSocial.getUsers()), withSuffix(instanceSocial.getStatuses())));
+                            instance_container.setVisibility(View.VISIBLE);
+                            loader.setVisibility(View.GONE);
                         }
                     });
 
