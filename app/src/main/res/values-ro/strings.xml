@@ -4,7 +4,7 @@
   <string name="navigation_drawer_open">Deschide meniul</string>
   <string name="navigation_drawer_close">Închide meniul</string>
   <string name="action_about">Despre</string>
-  <string name="action_about_instance">About the instance</string>
+  <string name="action_about_instance">Despre instanță</string>
   <string name="action_privacy">Confidențialitate</string>
   <string name="action_cache">Memorie cache</string>
   <string name="action_logout">Deconectare</string>
@@ -31,8 +31,8 @@
   <string name="two_factor_authentification">Autentificare în două etape?</string>
   <string name="other_instance">Alt exemplu decât mastodon.etalab.gouv.fr?</string>
   <string name="no_result">Nici un rezultat!</string>
-  <string name="instance">Instance</string>
-  <string name="instance_example">Instance: mastodon.social</string>
+  <string name="instance">Instanță</string>
+  <string name="instance_example">Instanță: mastodon.social</string>
   <string name="toast_account_changed">Acum lucrează cu contul %1$s</string>
   <string name="add_account">Adaugă un cont</string>
   <string name="clipboard">Conținutul notiței a fost copiat în planșetă</string>
