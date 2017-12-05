@@ -249,8 +249,8 @@
   <string name="no_internet">Nu există conexiune la Internet!</string>
   <string name="toast_block">Contul a fost blocat!</string>
   <string name="toast_unblock">Contul nu mai este blocat!</string>
-  <string name="toast_mute">The account was muted!</string>
-  <string name="toast_unmute">The account is no longer muted!</string>
+  <string name="toast_mute">Contul a fost trecut pe modul silențios!</string>
+  <string name="toast_unmute">Contul nu mai este pe modul silențios!</string>
   <string name="toast_follow">Contul a fost urmat!</string>
   <string name="toast_unfollow">Contul nu mai este urmărit!</string>
   <string name="toast_reblog">Notița a fost amplificată!</string>
@@ -264,14 +264,14 @@
   <string name="toast_error">Oops! A apărut o eroare!</string>
   <string name="toast_code_error">A apărut o eroare! Instanța nu a returnat un cod de autorizare!</string>
   <string name="toast_error_instance">Domeniul de instanță nu pare să fie valid!</string>
-  <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
-  <string name="toast_error_search">An error occurred while searching!</string>
-  <string name="toast_error_login">Can not log in!</string>
-  <string name="toast_update_credential_ok">The profile data have been saved!</string>
-  <string name="nothing_to_do">No action can be taken</string>
-  <string name="toast_saved">The media has been saved!</string>
-  <string name="toast_error_translate">An error occurred while translating!</string>
-  <string name="toast_toot_saved">Draft saved!</string>
+  <string name="toast_error_loading_account">A apărut o eroare în timp ce schimbați între conturi!</string>
+  <string name="toast_error_search">S-a produs o eroare în timpul căutării!</string>
+  <string name="toast_error_login">Nu mă pot autentifica!</string>
+  <string name="toast_update_credential_ok">Datele de profil au fost salvate!</string>
+  <string name="nothing_to_do">Nu se poate efectua nici o acțiune</string>
+  <string name="toast_saved">Media a fost salvată!</string>
+  <string name="toast_error_translate">S-a produs o eroare în timpul traducerii!</string>
+  <string name="toast_toot_saved">Ciornă salvată!</string>
   <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
   <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
   <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
@@ -327,7 +327,7 @@
   <string name="embedded_browser">Folosește browser-ul încorporat</string>
   <string name="use_javascript">Activează Javascript</string>
   <string name="use_cookies">Allow third-party cookies</string>
-  <string name="settings_ui_layout">Layout for timelines: </string>
+  <string name="settings_ui_layout">Aspectul cronologiei: </string>
   <string-array name="settings_menu_tabs">
     <item>Ferestre</item>
     <item>Meniu</item>
@@ -348,15 +348,15 @@
     <item>Alb</item>
   </string-array>
   <string name="set_title_news">Ştiri</string>
-  <string name="set_notification_news">Notify for new toots on the home timeline</string>
+  <string name="set_notification_news">Notifică pentru noi notițe pe cronologia de acasă</string>
   <string name="set_show_error_messages">Afişează mesajele de eroare</string>
   <string name="action_follow">Urmărește</string>
   <string name="action_unfollow">Nu mai urmări</string>
   <string name="action_block">Blochează</string>
   <string name="action_unblock">Deblochează</string>
-  <string name="action_mute">Mute</string>
+  <string name="action_mute">Mod silențios</string>
   <string name="action_no_action">Nici o acțiune</string>
-  <string name="action_unmute">Unmute</string>
+  <string name="action_unmute">Înlătură modul silențios</string>
   <string name="request_sent">Cerere trimisă</string>
   <string name="followed_by">Vă urmărește</string>
   <string name="action_search">Căutare</string>
@@ -365,7 +365,7 @@
   <string name="settings_popup_message">
 Vă rugăm să confirmați notificările instant pe care doriți să le primiți
         Puteți să activați sau dezactivați aceste setări, mai târziu (Fereastra de notificații).    </string>
-  <string name="settings_popup_timeline">For unread toots in home time-line?</string>
+  <string name="settings_popup_timeline">Penru notițe necitite în cronologia de acasă?</string>
   <string name="settings_popup_notification">Pentru notificări necitite?</string>
   <!-- CACHE -->
   <string name="cache_title">Goliți memoria cache</string>
@@ -403,7 +403,7 @@ Folosirea librăriilor este minimă: \n
 - <b>Android-Job</b>: Să gestioneze servicii\n
 - <b>PhotoView</b>: Să gestioneze imagini\n
  - <b>Gson</b> : Să salveze ciorne    </string>
-  <string name="privacy_API_yandex_title">Translation of toots</string>
+  <string name="privacy_API_yandex_title">Traducerea notițelor</string>
   <string name="privacy_API_yandex_authorizations">
         The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
