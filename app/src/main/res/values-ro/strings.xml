@@ -71,11 +71,11 @@
   <!--- Menu -->
   <string name="home_menu">Prima pagină</string>
   <string name="local_menu">Cronologie locală</string>
-  <string name="global_menu">Federated timeline</string>
+  <string name="global_menu">Cronologie federată</string>
   <string name="neutral_menu_title">Opțiuni</string>
   <string name="favorites_menu">Favorite</string>
   <string name="communication_menu_title">Comunicare</string>
-  <string name="muted_menu">Muted users</string>
+  <string name="muted_menu">Utilizatori trecuți la modul silențios</string>
   <string name="blocked_menu">Utilizatori blocați</string>
   <string name="remote_follow_menu">Urmăriți la distanţă</string>
   <string name="notifications">Notificări</string>
@@ -272,11 +272,11 @@
   <string name="toast_saved">Media a fost salvată!</string>
   <string name="toast_error_translate">S-a produs o eroare în timpul traducerii!</string>
   <string name="toast_toot_saved">Ciornă salvată!</string>
-  <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
-  <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
-  <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
+  <string name="toast_error_char_limit">Ești sigur că această instanță permite acest număr de caractere? De obicei, această valoare este aproape de 500 de caractere.</string>
+  <string name="toast_visibility_changed">S-a modificat vizibilitatea notițelor pentru contul %1$s</string>
+  <string name="toast_empty_search">Numele instanţei şi numele ecranului nu poate fi gol!</string>
   <!-- Settings -->
-  <string name="settings_title_optimisation">Optimisation of loading</string>
+  <string name="settings_title_optimisation">Optimizarea încărcării</string>
   <string name="set_toots_page">Număr de notițe pe încărcare</string>
   <string name="set_accounts_page">Număr de conturi pe încărcare</string>
   <string name="set_notifications_page">Numărul de notificări pe încărcare</string>
@@ -288,8 +288,8 @@
   <string name="load_attachment_spoiler">Arată mai mult…</string>
   <string name="load_sensitive_attachment">Conţinut sensibil</string>
   <string name="set_display_reply">Arată mesajul anterior în răspunsuri</string>
-  <string name="set_display_local">Display local timeline</string>
-  <string name="set_display_global">Display federated timeline</string>
+  <string name="set_display_local">Afişare cronologie locală</string>
+  <string name="set_display_global">Afişare cronologie federală</string>
   <string name="set_folder_title">Cale: </string>
   <string name="set_auto_store_toot">Salvează ciornele automat</string>
   <string name="set_bubble_counter">Arată contoarele</string>
@@ -298,7 +298,7 @@
   <string name="set_notif_follow">Notifică atunci când cineva vă urmărește</string>
   <string name="set_notif_follow_ask">Notifică atunci când cineva solicită să te urmeze</string>
   <string name="set_notif_follow_share">Notifica atunci când cineva amplifică statusul</string>
-  <string name="set_notif_follow_add">Notify when someone favourites your status</string>
+  <string name="set_notif_follow_add">Notifica atunci când cineva favorizează statusul tău</string>
   <string name="set_notif_follow_mention">Notifică atunci când cineva vă menţionează</string>
   <string name="set_share_validation">Arată caseta de confirmare înainte de amplificare</string>
   <string name="set_share_validation_fav">Arată caseta de confirmare înainte de a adăuga la favorite</string>
@@ -307,17 +307,17 @@
   <string name="set_notify">Notifică?</string>
   <string name="set_notif_silent">Notificații silențioase</string>
   <string name="set_night_mode">Mod de noapte</string>
-  <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
+  <string name="set_nsfw_timeout">NSFW Vezi timp expirare (secunde, 0 înseamnă oprit)</string>
   <string name="settings_title_profile">Editează profilul</string>
   <string name="set_profile_description">Bio…</string>
   <string name="set_save_changes">Salvează modificările</string>
   <string name="set_header_picture_overlay">Alege poză de profil</string>
-  <string name="set_preview_reply">Display the number of replies in home timeline</string>
+  <string name="set_preview_reply">Afişează numărul de răspunsuri în cronologie de acasă</string>
   <string name="set_preview_reply_pp">Afișează poze de profil?</string>
   <string name="set_multiaccount_actions">Permite interacțiuni între conturi?</string>
   <string name="note_no_space">Ai atins 160 de caractere permise!</string>
   <string name="username_no_space">Ai atins 30 de caractere permise!</string>
-  <string name="settings_title_hour">Time slot for notifications:</string>
+  <string name="settings_title_hour">Fus orar pentru notificări:</string>
   <string name="settings_time_from">Între</string>
   <string name="settings_time_to">și</string>
   <string name="settings_time_greater">Data trebuie să fie mai mare decât %1$s</string>
@@ -326,7 +326,7 @@
   <string name="settings_hour_end">Ora terminării</string>
   <string name="embedded_browser">Folosește browser-ul încorporat</string>
   <string name="use_javascript">Activează Javascript</string>
-  <string name="use_cookies">Allow third-party cookies</string>
+  <string name="use_cookies">Permite cookies terțiare</string>
   <string name="settings_ui_layout">Aspectul cronologiei: </string>
   <string-array name="settings_menu_tabs">
     <item>Ferestre</item>
@@ -405,9 +405,9 @@ Folosirea librăriilor este minimă: \n
  - <b>Gson</b> : Să salveze ciorne    </string>
   <string name="privacy_API_yandex_title">Traducerea notițelor</string>
   <string name="privacy_API_yandex_authorizations">
-        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
-    </string>
+Alpicația oferă posibilitatea de a traduce notițe folosind local-ul aparatului și API-ul Yandex.\n 
+        Yandex are propria politică de confidențialitate care poate fi găsită aici:
+ https://yandex.ru/legal/confidential/?lang=en    </string>
   <string name="thanks_text">
 Mulțumumiri lui Stéphane pentru logo.    </string>
   <string name="thanks_text_dev">
