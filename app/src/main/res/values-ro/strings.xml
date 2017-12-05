@@ -77,7 +77,7 @@
   <string name="communication_menu_title">Comunicare</string>
   <string name="muted_menu">Muted users</string>
   <string name="blocked_menu">Utilizatori blocați</string>
-  <string name="remote_follow_menu">Remote follow</string>
+  <string name="remote_follow_menu">Urmăriți la distanţă</string>
   <string name="notifications">Notificări</string>
   <string name="follow_request">Urmărește cererea</string>
   <string name="optimization">Optimizare</string>
@@ -176,10 +176,10 @@
   <string name="toot_reply_content_title">Răspundeți la această notiță:</string>
   <string name="toot_sensitive">Conţinut sensibil?</string>
   <string-array name="toot_visibility">
-    <item>Post to public timelines</item>
-    <item>Do not post to public timelines</item>
-    <item>Post to followers only</item>
-    <item>Post to mentioned users only</item>
+    <item>Postează pe coronologii publice</item>
+    <item>Nu posta pe cronologii publice</item>
+    <item>Postează doar pentru cei care te urmăresc</item>
+    <item>Postează la utilizatorii menționați</item>
   </string-array>
   <string name="no_draft">Nu sunt ciorne!</string>
   <string name="choose_toot">Alege o notiță</string>
@@ -197,33 +197,33 @@
   <string name="about_license_action">GNU GPL V3</string>
   <string name="about_code">Sursa codului: </string>
   <string name="about_yandex">Traducerea notițelor:</string>
-  <string name="about_thekinrar">Search instances:</string>
-  <string name="about_thekinrar_action">instances.social</string>
+  <string name="about_thekinrar">Căutare instanțe:</string>
+  <string name="about_thekinrar_action">instanțe.social</string>
   <string name="thanks_text_logo">Designer-ul iconiței:</string>
   <!-- Conversation -->
   <string name="conversation">Conversație</string>
   <!-- Accounts -->
   <string name="no_accounts">Nu există conturi pentru a fi afișate</string>
   <string name="no_follow_request">Nici o cerere de urmărire</string>
-  <string name="status_cnt">Toots \n %1$s</string>
+  <string name="status_cnt">Notițe \n %1$s</string>
   <string name="following_cnt">Urmăriți \n %1$s</string>
   <string name="followers_cnt">Cei care vă urmăresc \n %1$s</string>
   <string name="pins_cnt">Fixat \n %d</string>
   <string name="authorize">Permite</string>
   <string name="reject">Respinge</string>
   <!-- Scheduled toots -->
-  <string name="no_scheduled_toots">No scheduled toot to display!</string>
-  <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-  <string name="remove_scheduled">Delete scheduled toot?</string>
+  <string name="no_scheduled_toots">Nici o notiță programtă pentru a afișa!</string>
+  <string name="no_scheduled_toots_indications">Scrie o notiță și apoi alege <b>Planifică</b> din meniul de sus.</string>
+  <string name="remove_scheduled">Șterge notița planificată?</string>
   <string name="media_count">Media: %d</string>
-  <string name="toot_scheduled">The toot has been scheduled!</string>
-  <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
+  <string name="toot_scheduled">Notița a fost planificată!</string>
+  <string name="toot_scheduled_date">Data planificării trebuie să fie mai mare decât ora curentă!</string>
   <string name="warning_battery">Economizor de baterie este activat! Acesta ar putea să nu funcţioneze conform aşteptărilor.</string>
   <!-- Notifications -->
   <string name="no_notifications">Nici o notificare de afişat</string>
   <string name="notif_mention">ai fost menționat</string>
-  <string name="notif_reblog">boosted your status</string>
-  <string name="notif_favourite">favourited your status</string>
+  <string name="notif_reblog">a amplificat statusul tău</string>
+  <string name="notif_favourite">a favorizat statusul tău</string>
   <string name="notif_follow">vă urmărește</string>
   <string name="notif_pouet">Nouă notiță de la %1$s</string>
   <plurals name="other_notifications">
@@ -251,19 +251,19 @@
   <string name="toast_unblock">Contul nu mai este blocat!</string>
   <string name="toast_mute">The account was muted!</string>
   <string name="toast_unmute">The account is no longer muted!</string>
-  <string name="toast_follow">The account was followed!</string>
-  <string name="toast_unfollow">The account is no longer followed!</string>
-  <string name="toast_reblog">The toot was boosted!</string>
-  <string name="toast_unreblog">The toot is no longer boosted!</string>
-  <string name="toast_favourite">The toot was added to your favourites!</string>
-  <string name="toast_unfavourite">The toot was removed from your favourites!</string>
-  <string name="toast_report">The toot was reported!</string>
-  <string name="toast_unstatus">The toot was deleted!</string>
-  <string name="toast_pin">The toot was pinned!</string>
-  <string name="toast_unpin">The toot was unpinned!</string>
-  <string name="toast_error">Oops ! An error occurred!</string>
-  <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
-  <string name="toast_error_instance">The instance domain does not seem to be valide!</string>
+  <string name="toast_follow">Contul a fost urmat!</string>
+  <string name="toast_unfollow">Contul nu mai este urmărit!</string>
+  <string name="toast_reblog">Notița a fost amplificată!</string>
+  <string name="toast_unreblog">Notița nu mai este amplificată!</string>
+  <string name="toast_favourite">Notița a fost adaugată la favorite!</string>
+  <string name="toast_unfavourite">Notița a fost înlăturată de la favorite!</string>
+  <string name="toast_report">Notița a fost raportată!</string>
+  <string name="toast_unstatus">Notița a fost ștearsă!</string>
+  <string name="toast_pin">Notița a fost fixată!</string>
+  <string name="toast_unpin">Notița nu mai este fixată!</string>
+  <string name="toast_error">Oops! A apărut o eroare!</string>
+  <string name="toast_code_error">A apărut o eroare! Instanța nu a returnat un cod de autorizare!</string>
+  <string name="toast_error_instance">Domeniul de instanță nu pare să fie valid!</string>
   <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
   <string name="toast_error_search">An error occurred while searching!</string>
   <string name="toast_error_login">Can not log in!</string>
