@@ -18,16 +18,16 @@
   <string name="download_file">Descărcat %1$s</string>
   <string name="download_over">Descărcare terminată</string>
   <string name="save_file">Salvează %1$s</string>
-  <string name="save_over">Media saved</string>
+  <string name="save_over">Media salvate</string>
   <string name="download_from">Fișier: %1$s</string>
   <string name="password">Parolă</string>
   <string name="email">Email</string>
   <string name="accounts">Conturi</string>
-  <string name="toots">Toots</string>
+  <string name="toots">Notițe</string>
   <string name="tags">Etichete</string>
   <string name="token">Token</string>
   <string name="save">Salvează</string>
-  <string name="restore">Restore</string>
+  <string name="restore">Restabilire</string>
   <string name="two_factor_authentification">Autentificare în două etape?</string>
   <string name="other_instance">Alt exemplu decât mastodon.etalab.gouv.fr?</string>
   <string name="no_result">Nici un rezultat!</string>
@@ -35,19 +35,19 @@
   <string name="instance_example">Instance: mastodon.social</string>
   <string name="toast_account_changed">Acum lucrează cu contul %1$s</string>
   <string name="add_account">Adaugă un cont</string>
-  <string name="clipboard">The content of the toot has been copied to the clipboard</string>
+  <string name="clipboard">Conținutul notiței a fost copiat în planșetă</string>
   <string name="change">Modifică</string>
   <string name="choose_picture">Selectează o imagine…</string>
-  <string name="clear">Clean</string>
+  <string name="clear">Elimină</string>
   <string name="microphone">Microfon</string>
   <string name="speech_prompt">Te rog, spune ceva</string>
-  <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
+  <string name="speech_not_supported">Ne pare rău! Dispozitivul nu permite înregistrare vocală!</string>
   <string name="delete_all">Șterge tot</string>
-  <string name="translate_toot">Translate this toot.</string>
+  <string name="translate_toot">Traduceți această notiță.</string>
   <string name="schedule">Planificare</string>
-  <string name="text_size">Text and icon sizes</string>
-  <string name="text_size_change">Change the current text size:</string>
-  <string name="icon_size_change">Change the current icon size:</string>
+  <string name="text_size">Dimensiunea textului și a iconiței</string>
+  <string name="text_size_change">Modificaţi dimensiunea textului:</string>
+  <string name="icon_size_change">Modificați dimensiunea iconiței:</string>
   <string name="next">Următor</string>
   <string name="previous">Anterior</string>
   <string name="open_with">Deschide cu</string>
@@ -60,11 +60,11 @@
   <string name="drafts">Ciorne</string>
   <string name="new_data">Sunt diponibile noi date! Vrei să fie afișate?</string>
   <string name="favourite">Favorite</string>
-  <string name="follow">New followers</string>
+  <string name="follow">Noi persoane care mă urmăresc</string>
   <string name="mention">Mențiuni</string>
-  <string name="reblog">Boosts</string>
-  <string name="show_boosts">Show boosts</string>
-  <string name="show_replies">Show replies</string>
+  <string name="reblog">Amplifică</string>
+  <string name="show_boosts">Arată amplificările</string>
+  <string name="show_replies">Arată răspunsurile</string>
   <string name="action_open_in_web">Deschide în browser</string>
   <string name="translate">Traducere</string>
   <string name="please_wait">Vă rugăm așteptați câteva secunde înainte de a efectua această acțiune.</string>
@@ -79,7 +79,7 @@
   <string name="blocked_menu">Utilizatori blocați</string>
   <string name="remote_follow_menu">Remote follow</string>
   <string name="notifications">Notifications</string>
-  <string name="follow_request">Follow requests</string>
+  <string name="follow_request">Urmărește cererea</string>
   <string name="optimization">Optimizare</string>
   <string name="settings">Setări</string>
   <string name="profile">Profil</string>
@@ -88,7 +88,7 @@
   <string name="delete_account_message">Șterge contul %1$s din aplicație?</string>
   <string name="send_email">Trimite un email</string>
   <string name="choose_file">Vă rugăm să selectați un fișier</string>
-  <string name="choose_file_error">No file explorer found!</string>
+  <string name="choose_file_error">Nici un dosar explorer găsit!</string>
   <string name="click_to_change">Click on the path to change it</string>
   <string name="failed">Nereușit!</string>
   <string name="scheduled_toots">Scheduled toots</string>
@@ -169,11 +169,11 @@
   <string name="toot_select_image">Select a media</string>
   <string name="toot_select_image_error">An error occurred while selecting the media!</string>
   <string name="toot_delete_media">Delete this media?</string>
-  <string name="toot_error_no_content">Your toot is empty!</string>
-  <string name="toot_visibility_tilte">Visibility of the toot</string>
-  <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-  <string name="toot_sent">The toot has been sent!</string>
-  <string name="toot_reply_content_title">You are replying to this toot:</string>
+  <string name="toot_error_no_content">Notița este goală!</string>
+  <string name="toot_visibility_tilte">Vizibilitatea notiței</string>
+  <string name="toots_visibility_tilte">Vizibilitatea implicită a notițelor: </string>
+  <string name="toot_sent">Notița a fost trimisă!</string>
+  <string name="toot_reply_content_title">Răspundeți la această notiță:</string>
   <string name="toot_sensitive">Sensitive content?</string>
   <string-array name="toot_visibility">
     <item>Post to public timelines</item>
@@ -182,33 +182,33 @@
     <item>Post to mentioned users only</item>
   </string-array>
   <string name="no_draft">Nu sunt ciorne!</string>
-  <string name="choose_toot">Choose a toot</string>
+  <string name="choose_toot">Alege o notiță</string>
   <string name="choose_accounts">Alege un cont</string>
-  <string name="select_accounts">Select some accounts</string>
-  <string name="remove_draft">Remove draft?</string>
-  <string name="show_reply">Click on the button to display the original toot</string>
-  <string name="upload_form_description">Describe for the visually impaired</string>
+  <string name="select_accounts">Selectați câteva conturi</string>
+  <string name="remove_draft">Eliminați ciorna?</string>
+  <string name="show_reply">Apăsați butonul pentru a afișa notița originală</string>
+  <string name="upload_form_description">Descrie pentru nevăzători</string>
   <!-- Instance -->
-  <string name="instance_no_description">No description available!</string>
+  <string name="instance_no_description">Nici o descriere disponibilă!</string>
   <!-- About -->
-  <string name="about_vesrion">Release %1$s</string>
+  <string name="about_vesrion">Lansare %1$s</string>
   <string name="about_developer">Programator:</string>
   <string name="about_license">Licență: </string>
   <string name="about_license_action">GNU GPL V3</string>
   <string name="about_code">Sursa codului: </string>
-  <string name="about_yandex">Translation of toots:</string>
+  <string name="about_yandex">Traducerea notițelor:</string>
   <string name="about_thekinrar">Search instances:</string>
   <string name="about_thekinrar_action">instances.social</string>
-  <string name="thanks_text_logo">Icon designer:</string>
+  <string name="thanks_text_logo">Designer-ul iconiței:</string>
   <!-- Conversation -->
   <string name="conversation">Conversație</string>
   <!-- Accounts -->
   <string name="no_accounts">Nu există conturi pentru a fi afișate</string>
-  <string name="no_follow_request">No follow request</string>
+  <string name="no_follow_request">Nici o cerere de urmărire</string>
   <string name="status_cnt">Toots \n %1$s</string>
-  <string name="following_cnt">Following \n %1$s</string>
-  <string name="followers_cnt">Followers \n %1$s</string>
-  <string name="pins_cnt">Pinned \n %d</string>
+  <string name="following_cnt">Urmăriți \n %1$s</string>
+  <string name="followers_cnt">Cei care vă urmăresc \n %1$s</string>
+  <string name="pins_cnt">Fixat \n %d</string>
   <string name="authorize">Permite</string>
   <string name="reject">Respinge</string>
   <!-- Scheduled toots -->
@@ -218,37 +218,37 @@
   <string name="media_count">Media: %d</string>
   <string name="toot_scheduled">The toot has been scheduled!</string>
   <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
-  <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+  <string name="warning_battery">Economizor de baterie este activat! Acesta ar putea să nu funcţioneze conform aşteptărilor.</string>
   <!-- Notifications -->
-  <string name="no_notifications">No notification to display</string>
+  <string name="no_notifications">Nici o notificare de afişat</string>
   <string name="notif_mention">ai fost menționat</string>
   <string name="notif_reblog">boosted your status</string>
   <string name="notif_favourite">favourited your status</string>
-  <string name="notif_follow">followed you</string>
-  <string name="notif_pouet">New toot from %1$s</string>
+  <string name="notif_follow">vă urmărește</string>
+  <string name="notif_pouet">Nouă notiță de la %1$s</string>
   <plurals name="other_notifications">
-    <item quantity="one">and another notification</item>
-    <item quantity="few">and %d other notifications</item>
-    <item quantity="other">and %d other notifications</item>
+    <item quantity="one">și încă o notificare</item>
+    <item quantity="few">și incă %d alte notificări</item>
+    <item quantity="other">și incă %d alte notificări</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="one">and another toot to discover</item>
-    <item quantity="few">and %d other toots to discover</item>
-    <item quantity="other">and %d other toots to discover</item>
+    <item quantity="one">și încă o notiță de descoperit</item>
+    <item quantity="few">și %d altă notiță de descoperit</item>
+    <item quantity="other">și %d altă notiță de descoperit</item>
   </plurals>
   <string name="delete_notification_ask">Ştergeți notificarea?</string>
   <string name="delete_notification_ask_all">Sterge toate notificarile?</string>
-  <string name="delete_notification">The notification has been deleted!</string>
-  <string name="delete_notification_all">All notifications have been deleted!</string>
+  <string name="delete_notification">Notificarea a fost ștearsă!</string>
+  <string name="delete_notification_all">Toate notificările au fost sterse!</string>
   <!-- HEADER -->
-  <string name="following">Following</string>
-  <string name="followers">Followers</string>
-  <string name="pinned_toots">Pinned</string>
+  <string name="following">Urmăriți</string>
+  <string name="followers">Cei care vă urmăresc</string>
+  <string name="pinned_toots">Fixat</string>
   <!-- TOAST -->
-  <string name="client_error">Unable to get client id!</string>
-  <string name="no_internet">No Internet connection!</string>
-  <string name="toast_block">The account was blocked!</string>
-  <string name="toast_unblock">The account is no longer blocked!</string>
+  <string name="client_error">Imposibil de obținut Id-ul clientului!</string>
+  <string name="no_internet">Nu există conexiune la Internet!</string>
+  <string name="toast_block">Contul a fost blocat!</string>
+  <string name="toast_unblock">Contul nu mai este blocat!</string>
   <string name="toast_mute">The account was muted!</string>
   <string name="toast_unmute">The account is no longer muted!</string>
   <string name="toast_follow">The account was followed!</string>
@@ -366,20 +366,19 @@
 Vă rugăm să confirmați notificările instant pe care doriți să le primiți
         Puteți să activați sau dezactivați aceste setări, mai târziu (Fereastra de notificații).    </string>
   <string name="settings_popup_timeline">For unread toots in home time-line?</string>
-  <string name="settings_popup_notification">For unread notifications?</string>
+  <string name="settings_popup_notification">Pentru notificări necitite?</string>
   <!-- CACHE -->
   <string name="cache_title">Goliți memoria cache</string>
-  <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+  <string name="cache_message">Sunt %1$s din date în memoria cache. \n\nVreți să le ștergeți?</string>
   <string name="cache_units">Mb</string>
   <string name="toast_cache_clear">Memoria cache a fost golită! %1$s au fost eliberate</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">Date înregistrate</string>
   <string name="privacy_data">
-        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
-    </string>
+Doar infomațiile de bază ale conturilor sunt stocate pe aparat.
+Aceste date sunt strict confidențiale și pot fi folosite doar de aplicație.
+Ștergerea aplicației duce la pierderea datelor.\n
+&#9888; Autentificarea și parolele nu sunt niciodate stocate. Sunt folosite doar într-o autentificare sigură (SSL).    </string>
   <string name="privacy_authorizations_title">Permisiuni:</string>
   <string name="privacy_authorizations">
         - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
@@ -391,32 +390,30 @@ Vă rugăm să confirmați notificările instant pe care doriți să le primiți
     </string>
   <string name="privacy_API_authorizations_title">Permisiuni API:</string>
   <string name="privacy_API_authorizations">
-        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
+- <b>Citește</b>: Citește date.\n
+        - <b>Scrie</b>: Postează statusuri și încarcă media pentru statusuri.\n
+        - <b>Urmărește</b>: Urmărește, nu mai urmări, blochează, deblochează.\n\n
+        <b>&#9888; Aceste acțiuni s efectuează doar la cererea utilizatorului.</b>
     </string>
   <string name="privacy_API_title">Urmărire și biblioteci</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Universal Image Loader</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
-        - <b>Gson</b> : To save drafts
-    </string>
+Aplicația  <b>nu folosește unelte de urmărire</b> (audiența de măsurare, erori de raportare, etc.) și nu conține reclame.\n\n
+Folosirea librăriilor este minimă: \n
+- <b>Universal Image Loader</b>: Să gestioneze media \n
+- <b>Android-Job</b>: Să gestioneze servicii\n
+- <b>PhotoView</b>: Să gestioneze imagini\n
+ - <b>Gson</b> : Să salveze ciorne    </string>
   <string name="privacy_API_yandex_title">Translation of toots</string>
   <string name="privacy_API_yandex_authorizations">
         The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
     </string>
   <string name="thanks_text">
-        Thank you to Stéphane for the logo.
-    </string>
+Mulțumumiri lui Stéphane pentru logo.    </string>
   <string name="thanks_text_dev">
 Vă mulțumesc:
     </string>
-  <string name="filter_regex">Filter out by regular expressions</string>
-  <string name="search">Search</string>
-  <string name="delete">Delete</string>
+  <string name="filter_regex">Filtrează expresii usuale</string>
+  <string name="search">Căutare</string>
+  <string name="delete">Șterge</string>
 </resources>
