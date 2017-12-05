@@ -70,7 +70,7 @@
   <string name="please_wait">Vă rugăm așteptați câteva secunde înainte de a efectua această acțiune.</string>
   <!--- Menu -->
   <string name="home_menu">Prima pagină</string>
-  <string name="local_menu">Ora locală</string>
+  <string name="local_menu">Cronologie locală</string>
   <string name="global_menu">Federated timeline</string>
   <string name="neutral_menu_title">Opțiuni</string>
   <string name="favorites_menu">Favorite</string>
@@ -78,7 +78,7 @@
   <string name="muted_menu">Muted users</string>
   <string name="blocked_menu">Utilizatori blocați</string>
   <string name="remote_follow_menu">Remote follow</string>
-  <string name="notifications">Notifications</string>
+  <string name="notifications">Notificări</string>
   <string name="follow_request">Urmărește cererea</string>
   <string name="optimization">Optimizare</string>
   <string name="settings">Setări</string>
@@ -89,7 +89,7 @@
   <string name="send_email">Trimite un email</string>
   <string name="choose_file">Vă rugăm să selectați un fișier</string>
   <string name="choose_file_error">Nici un dosar explorer găsit!</string>
-  <string name="click_to_change">Click on the path to change it</string>
+  <string name="click_to_change">Faceţi clic pe cale pentru a o schimba</string>
   <string name="failed">Nereușit!</string>
   <string name="scheduled_toots">Notițe programate</string>
   <string name="disclaimer_full">Informaţiile de mai jos pot reflecta profilul incomplet al utilizatorului.</string>
@@ -174,7 +174,7 @@
   <string name="toots_visibility_tilte">Vizibilitatea implicită a notițelor: </string>
   <string name="toot_sent">Notița a fost trimisă!</string>
   <string name="toot_reply_content_title">Răspundeți la această notiță:</string>
-  <string name="toot_sensitive">Sensitive content?</string>
+  <string name="toot_sensitive">Conţinut sensibil?</string>
   <string-array name="toot_visibility">
     <item>Post to public timelines</item>
     <item>Do not post to public timelines</item>
