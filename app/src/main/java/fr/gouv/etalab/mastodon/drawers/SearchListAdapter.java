@@ -185,6 +185,8 @@ public class SearchListAdapter extends BaseAdapter {
             holder.status_content.setAutoLinkMask(Linkify.WEB_URLS);
             holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
 
+            Helper.absoluteDateTimeReveal(context, holder.status_toot_date, status.getCreated_at());
+
             Glide.with(holder.status_account_profile.getContext())
                     .load(ppurl)
                     .into(holder.status_account_profile);

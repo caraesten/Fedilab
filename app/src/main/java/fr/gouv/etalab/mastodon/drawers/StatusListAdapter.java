@@ -267,7 +267,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_replies_profile_pictures = itemView.findViewById(R.id.status_replies_profile_pictures);
             new_element = itemView.findViewById(R.id.new_element);
             status_action_container = itemView.findViewById(R.id.status_action_container);
-
         }
     }
 
@@ -572,6 +571,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
 
+            Helper.absoluteDateTimeReveal(context, holder.status_toot_date, status.getCreated_at());
 
             if( status.getReblog() != null) {
                 Glide.with(holder.status_account_profile_boost.getContext())

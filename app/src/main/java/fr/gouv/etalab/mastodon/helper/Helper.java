@@ -25,6 +25,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AlertDialog;
@@ -105,6 +106,7 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -477,6 +479,56 @@ public class Helper {
 
         }
         return date;
+    }
+
+    /**
+     * Converts a Date date into a date-time string (SHORT format for both)
+     * @param context
+     * @param date to be converted
+     * @return String
+     */
+
+    public static String shortDateTime(Context context, Date date) {
+        Locale userLocale;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            userLocale = context.getResources().getConfiguration().getLocales().get(0);
+        } else {
+            //noinspection deprecation
+            userLocale = context.getResources().getConfiguration().locale;
+        }
+
+        DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, userLocale);
+
+        return df.format(date);
+    }
+
+    /**
+     * Makes the tvDate TextView field clickable, and displays the absolute date & time of a toot
+     *  for 5 seconds.
+     * @param context Context
+     * @param tvDate TextView
+     * @param date Date
+     */
+
+    public static void absoluteDateTimeReveal(final Context context, final TextView tvDate, final Date date) {
+        tvDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                tvDate.setText(Helper.shortDateTime(context, date));
+
+                new CountDownTimer((5 * 1000), 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+                    }
+
+                    public void onFinish() {
+                        tvDate.setText(Helper.dateDiff(context, date));
+                    }
+                }.start();
+            }
+        });
     }
 
     /**
