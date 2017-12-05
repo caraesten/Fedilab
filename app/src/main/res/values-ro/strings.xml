@@ -297,11 +297,11 @@
   <string name="settings_title_notifications">Gestionarea notificărilor</string>
   <string name="set_notif_follow">Notifică atunci când cineva vă urmărește</string>
   <string name="set_notif_follow_ask">Notifică atunci când cineva solicită să te urmeze</string>
-  <string name="set_notif_follow_share">Notify when someone boosts your status</string>
+  <string name="set_notif_follow_share">Notifica atunci când cineva amplifică statusul</string>
   <string name="set_notif_follow_add">Notify when someone favourites your status</string>
-  <string name="set_notif_follow_mention">Notify when someone mentions you</string>
-  <string name="set_share_validation">Show confirmation dialog before boosting</string>
-  <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
+  <string name="set_notif_follow_mention">Notifică atunci când cineva vă menţionează</string>
+  <string name="set_share_validation">Arată caseta de confirmare înainte de amplificare</string>
+  <string name="set_share_validation_fav">Arată caseta de confirmare înainte de a adăuga la favorite</string>
   <string name="settings_title_more_options">Setări avansate</string>
   <string name="set_wifi_only">Notifică doar în WIFI</string>
   <string name="set_notify">Notifică?</string>
