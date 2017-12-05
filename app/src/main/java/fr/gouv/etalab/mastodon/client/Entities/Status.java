@@ -476,23 +476,6 @@ public class Status implements Parcelable {
 
     public void makeEmojis(final Context context, final OnRetrieveEmojiInterface listener){
 
-        final SpannableString spannableStringContent;
-        final SpannableString spannableStringCW;
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableStringContent = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent(), Html.FROM_HTML_MODE_LEGACY));
-        else
-            //noinspection deprecation
-            spannableStringContent = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent()));
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableStringCW = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getSpoiler_text():status.getSpoiler_text(), Html.FROM_HTML_MODE_LEGACY));
-        else
-            //noinspection deprecation
-            spannableStringCW = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getSpoiler_text():status.getSpoiler_text()));
-
 
         final List<Emojis> emojis = status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis();
         if( emojis != null && emojis.size() > 0 ) {
@@ -511,8 +494,6 @@ public class Status implements Parcelable {
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
                                 i[0]++;
                                 if( i[0] ==  (emojis.size())) {
-                                    status.setContentSpan(spannableStringContent);
-                                    status.setContentSpanCW(spannableStringCW);
                                     listener.onRetrieveEmoji(status,false);
                                 }
                                 return false;
@@ -522,22 +503,22 @@ public class Status implements Parcelable {
                             @Override
                             public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
                                 final String targetedEmoji = ":" + emoji.getShortcode() + ":";
-                                if (spannableStringContent.toString().contains(targetedEmoji)) {
+                                if (contentSpan.toString().contains(targetedEmoji)) {
                                     //emojis can be used several times so we have to loop
-                                    for (int startPosition = -1; (startPosition = spannableStringContent.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                    for (int startPosition = -1; (startPosition = contentSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
-                                        spannableStringContent.setSpan(
+                                        contentSpan.setSpan(
                                                 new ImageSpan(context,
                                                         Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
                                                                 (int) Helper.convertDpToPixel(20, context), false)), startPosition,
                                                 endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                                     }
                                 }
-                                if (spannableStringCW.toString().contains(targetedEmoji)) {
+                                if (contentSpanCW.toString().contains(targetedEmoji)) {
                                     //emojis can be used several times so we have to loop
-                                    for (int startPosition = -1; (startPosition = spannableStringCW.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                    for (int startPosition = -1; (startPosition = contentSpanCW.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
-                                        spannableStringCW.setSpan(
+                                        contentSpanCW.setSpan(
                                                 new ImageSpan(context,
                                                         Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
                                                                 (int) Helper.convertDpToPixel(20, context), false)), startPosition,
@@ -546,8 +527,6 @@ public class Status implements Parcelable {
                                 }
                                 i[0]++;
                                 if( i[0] ==  (emojis.size())) {
-                                    status.setContentSpan(spannableStringContent);
-                                    status.setContentSpanCW(spannableStringCW);
                                     listener.onRetrieveEmoji(status, false);
                                 }
                             }
