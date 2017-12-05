@@ -259,6 +259,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
             holder.status_date.setText(Helper.dateDiff(context, status.getCreated_at()));
 
+            Helper.absoluteDateTimeReveal(context, holder.status_date, status.getCreated_at());
+
             //Adds attachment -> disabled, to enable them uncomment the line below
             //loadAttachments(status, holder);
             holder.notification_status_container.setVisibility(View.VISIBLE);
