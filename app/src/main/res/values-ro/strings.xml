@@ -122,7 +122,7 @@
     <item>Raportează acestă notiță?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>Remove this toot?</item>
+    <item>Eliminați această notiță?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="one">%d răspuns</item>
@@ -161,14 +161,14 @@
   <!-- TOOT -->
   <string name="toot_cw_placeholder">Atenționare</string>
   <string name="toot_placeholder">La ce te gândești?</string>
-  <string name="toot_it">TOOT!</string>
+  <string name="toot_it">Notiță!</string>
   <string name="cw">cw</string>
-  <string name="toot_title">Write a toot</string>
-  <string name="toot_title_reply">Reply to a toot</string>
-  <string name="toot_no_space">You have reached the 500 characters allowed!</string>
-  <string name="toot_select_image">Select a media</string>
-  <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-  <string name="toot_delete_media">Delete this media?</string>
+  <string name="toot_title">Scrie o notiță</string>
+  <string name="toot_title_reply">Răspunde la această notiță</string>
+  <string name="toot_no_space">Ai atins 500 de caractere permise!</string>
+  <string name="toot_select_image">Selectați media</string>
+  <string name="toot_select_image_error">A aparut o eroare în timp ce selectați media!</string>
+  <string name="toot_delete_media">Ștergeți?</string>
   <string name="toot_error_no_content">Notița este goală!</string>
   <string name="toot_visibility_tilte">Vizibilitatea notiței</string>
   <string name="toots_visibility_tilte">Vizibilitatea implicită a notițelor: </string>
@@ -277,26 +277,26 @@
   <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
   <!-- Settings -->
   <string name="settings_title_optimisation">Optimisation of loading</string>
-  <string name="set_toots_page">Number of toots per load</string>
-  <string name="set_accounts_page">Number of accounts per load</string>
-  <string name="set_notifications_page">Number of notifications per load</string>
+  <string name="set_toots_page">Număr de notițe pe încărcare</string>
+  <string name="set_accounts_page">Număr de conturi pe încărcare</string>
+  <string name="set_notifications_page">Numărul de notificări pe încărcare</string>
   <string name="set_attachment_always">Întotdeauna</string>
   <string name="set_attachment_wifi">WIFI</string>
   <string name="set_attachment_ask">Întreabă</string>
-  <string name="set_attachment_action">Load the media</string>
-  <string name="load_attachment">Load the pictures</string>
+  <string name="set_attachment_action">Încărca media</string>
+  <string name="load_attachment">Încarcă imagini</string>
   <string name="load_attachment_spoiler">Arată mai mult…</string>
-  <string name="load_sensitive_attachment">Sensitive content</string>
-  <string name="set_display_reply">Display previous message in responses</string>
+  <string name="load_sensitive_attachment">Conţinut sensibil</string>
+  <string name="set_display_reply">Arată mesajul anterior în răspunsuri</string>
   <string name="set_display_local">Display local timeline</string>
   <string name="set_display_global">Display federated timeline</string>
-  <string name="set_folder_title">Path: </string>
-  <string name="set_auto_store_toot">Save drafts automatically</string>
-  <string name="set_bubble_counter">Display counters</string>
-  <string name="set_auto_add_media_url">Add URL of media in toots</string>
-  <string name="settings_title_notifications">Manage notifications</string>
-  <string name="set_notif_follow">Notify when someone follows you</string>
-  <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
+  <string name="set_folder_title">Cale: </string>
+  <string name="set_auto_store_toot">Salvează ciornele automat</string>
+  <string name="set_bubble_counter">Arată contoarele</string>
+  <string name="set_auto_add_media_url">Adauga URL-ul de media în notițe</string>
+  <string name="settings_title_notifications">Gestionarea notificărilor</string>
+  <string name="set_notif_follow">Notifică atunci când cineva vă urmărește</string>
+  <string name="set_notif_follow_ask">Notifică atunci când cineva solicită să te urmeze</string>
   <string name="set_notif_follow_share">Notify when someone boosts your status</string>
   <string name="set_notif_follow_add">Notify when someone favourites your status</string>
   <string name="set_notif_follow_mention">Notify when someone mentions you</string>
