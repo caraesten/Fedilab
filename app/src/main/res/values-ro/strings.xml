@@ -381,12 +381,12 @@ Aceste date sunt strict confidențiale și pot fi folosite doar de aplicație.
 &#9888; Autentificarea și parolele nu sunt niciodate stocate. Sunt folosite doar într-o autentificare sigură (SSL).    </string>
   <string name="privacy_authorizations_title">Permisiuni:</string>
   <string name="privacy_authorizations">
-        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
-        - <b>INTERNET</b>: Used for queries to an instance.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
-        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
-        - <b>WAKE_LOCK</b>: Used during the notification service.
+        - <b>ACCESS_NETWORK_STATE</b>: Folosit la detectarea daca aparatul este conectat la o rețea de WIFI.\n
+        - <b>INTERNET</b>: Folosit pentru intergogări la o instanță.\n
+        - <b>WRITE_EXTERNAL_STORAGE</b>: Folosit pentru a stoca media sau pentru a muta aplicația pe un card SD.\n
+        - <b>READ_EXTERNAL_STORAGE</b>: Folosit să adauge media la notițe.\n
+        - <b>BOOT_COMPLETED</b>: Folosit la pornirea serviciului de notificare.\n
+        - <b>WAKE_LOCK</b>: Folosit în timpul serviciului de notificare.
     </string>
   <string name="privacy_API_authorizations_title">Permisiuni API:</string>
   <string name="privacy_API_authorizations">
