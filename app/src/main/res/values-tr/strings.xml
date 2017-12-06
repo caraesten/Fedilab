@@ -361,7 +361,7 @@ Lütfen, almak istediğiniz itme bildirimlerini onaylayın.
   <string name="settings_popup_notification">Okunmamış Bildiriler?</string>
   <!-- CACHE -->
   <string name="cache_title">Önbelleği temizle</string>
-  <string name="cache_message">Ekranda bazı öğeler var. Onlar da silinsin mi?</string>
+  <string name="cache_message">Ekranda bazı öğeler %1$s var.\n\n Onlar da silinsin mi?</string>
   <string name="cache_units">Mb</string>
   <string name="toast_cache_clear">Önbelleği temizlendi! %1$s serbest bırakıldı</string>
   <!-- PRIVACY -->
