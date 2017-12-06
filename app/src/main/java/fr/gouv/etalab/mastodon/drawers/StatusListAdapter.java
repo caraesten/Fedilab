@@ -571,8 +571,22 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if( status.isFetchMore()) {
                 holder.fetch_more.setVisibility(View.VISIBLE);
                 holder.fetch_more.setEnabled(true);
-            }else
+            }else {
                 holder.fetch_more.setVisibility(View.GONE);
+
+            }
+
+            holder.fetch_more.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                        status.setFetchMore(false);
+                        holder.fetch_more.setEnabled(false);
+                        holder.fetch_more.setVisibility(View.GONE);
+                        DisplayStatusFragment homeFragment = ((BaseMainActivity) context).getHomeFragment();
+                        if( homeFragment != null)
+                            homeFragment.fetchMore(status.getId());
+                }
+            });
 
             if( status.getReblog() == null)
                 holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
@@ -1246,18 +1260,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         }
         holder.status_show_more.setVisibility(View.GONE);
 
-        holder.fetch_more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(status.isFetchMore()) {
-                    status.setFetchMore(false);
-                    holder.fetch_more.setEnabled(false);
-                    DisplayStatusFragment homeFragment = ((BaseMainActivity) context).getHomeFragment();
-                    if( homeFragment != null)
-                        homeFragment.fetchMore(status.getId());
-                }
-            }
-        });
+
     }
 
 
