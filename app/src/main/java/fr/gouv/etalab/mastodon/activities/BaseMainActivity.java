@@ -804,6 +804,44 @@ public abstract class BaseMainActivity extends AppCompatActivity
         }
         Helper.switchLayout(BaseMainActivity.this);
 
+        receive_data = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Bundle b = intent.getExtras();
+                Helper.EventStreaming eventStreaming = (Helper.EventStreaming) intent.getSerializableExtra("eventStreaming");
+                assert b != null;
+                userIdService = b.getString("userIdService", null);
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                if( userIdService != null && userIdService.equals(userId)) {
+                    if (eventStreaming == Helper.EventStreaming.NOTIFICATION) {
+                        Notification notification = b.getParcelable("data");
+                        if (notificationsFragment != null) {
+                            notificationsFragment.refresh(notification);
+                        }
+                    } else if (eventStreaming == Helper.EventStreaming.UPDATE) {
+                        Status status = b.getParcelable("data");
+                        if (homeFragment != null) {
+                            homeFragment.refresh(status);
+                        }
+                    } else if (eventStreaming == Helper.EventStreaming.DELETE) {
+                        //noinspection unused
+                        String id = b.getString("id");
+                        if (notificationsFragment != null) {
+                            //noinspection StatementWithEmptyBody
+                            if (notificationsFragment.getUserVisibleHint()) {
+
+                            } else {
+
+                            }
+                        }
+                    }
+                    updateNotifCounter();
+                    updateHomeCounter();
+                }
+            }
+        };
+        LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
+
         // Retrieves instance
         new RetrieveInstanceAsyncTask(getApplicationContext(), BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
@@ -1142,43 +1180,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 }
             }
         };
-        receive_data = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Bundle b = intent.getExtras();
-                Helper.EventStreaming eventStreaming = (Helper.EventStreaming) intent.getSerializableExtra("eventStreaming");
-                assert b != null;
-                userIdService = b.getString("userIdService", null);
-                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                if( userIdService != null && userIdService.equals(userId)) {
-                    if (eventStreaming == Helper.EventStreaming.NOTIFICATION) {
-                        Notification notification = b.getParcelable("data");
-                        if (notificationsFragment != null) {
-                            notificationsFragment.refresh(notification);
-                        }
-                    } else if (eventStreaming == Helper.EventStreaming.UPDATE) {
-                        Status status = b.getParcelable("data");
-                        if (homeFragment != null) {
-                            homeFragment.refresh(status);
-                        }
-                    } else if (eventStreaming == Helper.EventStreaming.DELETE) {
-                        //noinspection unused
-                        String id = b.getString("id");
-                        if (notificationsFragment != null) {
-                            //noinspection StatementWithEmptyBody
-                            if (notificationsFragment.getUserVisibleHint()) {
 
-                            } else {
-
-                            }
-                        }
-                    }
-                    updateNotifCounter();
-                    updateHomeCounter();
-                }
-            }
-        };
-        LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_federated_data, new IntentFilter(Helper.RECEIVE_FEDERATED_DATA));
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_local_data, new IntentFilter(Helper.RECEIVE_LOCAL_DATA));
     }
@@ -1194,8 +1196,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
             stopService(streamingIntent);
             editor.apply();
         }
-        if( receive_data != null)
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
         if( receive_federated_data != null)
             LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_federated_data);
         if( receive_local_data != null)
@@ -1211,6 +1211,8 @@ public abstract class BaseMainActivity extends AppCompatActivity
     @Override
     public void onDestroy(){
         super.onDestroy();
+        if( receive_data != null)
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
