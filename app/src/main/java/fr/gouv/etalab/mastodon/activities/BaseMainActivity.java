@@ -141,6 +141,8 @@ public abstract class BaseMainActivity extends AppCompatActivity
     String show_filtered;
     private AppBarLayout appBar;
     private static boolean activityPaused;
+    private String bookmark;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -572,6 +574,8 @@ public abstract class BaseMainActivity extends AppCompatActivity
         });
 
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        //Get the previous bookmark value
+        bookmark = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
         Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
         if( account == null){
             Helper.logout(getApplicationContext());
@@ -1392,6 +1396,14 @@ public abstract class BaseMainActivity extends AppCompatActivity
         editor.putString(Helper.INSTANCE_VERSION + userId + instance, apiResponse.getInstance().getVersion());
         editor.apply();
         Helper.canPin = (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion));
+    }
+
+    public String getBookmark() {
+        return bookmark;
+    }
+
+    public void setBookmark(String bookmark) {
+        this.bookmark = bookmark;
     }
 
 

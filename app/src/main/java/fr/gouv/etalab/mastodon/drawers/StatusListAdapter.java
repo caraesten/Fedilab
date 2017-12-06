@@ -71,6 +71,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
@@ -114,6 +115,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private final int DISPLAYED_STATUS = 1;
     private List<Status> pins;
     private int conversationPosition;
+    private String bookmark = null;
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
         super();
@@ -127,6 +129,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.targetedId = targetedId;
         this.translator = translator;
         pins = new ArrayList<>();
+        if( context instanceof BaseMainActivity){
+            bookmark = ((BaseMainActivity) context).getBookmark();
+        }
     }
 
     public StatusListAdapter(Context context, int position, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
@@ -141,6 +146,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.targetedId = targetedId;
         this.translator = translator;
         pins = new ArrayList<>();
+        if( context instanceof BaseMainActivity){
+            bookmark = ((BaseMainActivity) context).getBookmark();
+        }
     }
 
     @Override
@@ -218,7 +226,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         LinearLayout status_replies;
         LinearLayout status_replies_profile_pictures;
         ProgressBar loader_replies;
-
+        Button fetch_more;
         ImageView new_element;
 
         public View getView(){
@@ -228,6 +236,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ViewHolder(View itemView) {
             super(itemView);
             loader_replies = itemView.findViewById(R.id.loader_replies);
+            fetch_more = itemView.findViewById(R.id.fetch_more);
             status_document_container = itemView.findViewById(R.id.status_document_container);
             status_content = itemView.findViewById(R.id.status_content);
             status_content_translated = itemView.findViewById(R.id.status_content_translated);
@@ -558,7 +567,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             //-------- END -> Change the color in gray for accounts in DARK Theme only
 
-
+            if( status.isFetchMore()) {
+                holder.fetch_more.setVisibility(View.VISIBLE);
+                holder.fetch_more.setEnabled(true);
+            }else
+                holder.fetch_more.setVisibility(View.GONE);
 
             if( status.getReblog() == null)
                 holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
@@ -1145,7 +1158,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
 
-    private void loadAttachments(final Status status, ViewHolder holder){
+    private void loadAttachments(final Status status, final ViewHolder holder){
         List<Attachment> attachments = status.getMedia_attachments();
         if( attachments != null && attachments.size() > 0){
             int i = 0;
@@ -1231,6 +1244,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_document_container.setVisibility(View.GONE);
         }
         holder.status_show_more.setVisibility(View.GONE);
+
+        holder.fetch_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(status.isFetchMore()) {
+                    status.setFetchMore(false);
+                    holder.fetch_more.setEnabled(false);
+                }
+            }
+        });
     }
 
 
@@ -1388,4 +1411,5 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     public void onRetrieveSearchEmoji(List<Emojis> emojis) {
 
     }
+
 }

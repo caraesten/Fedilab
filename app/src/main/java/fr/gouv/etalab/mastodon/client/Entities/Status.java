@@ -93,6 +93,7 @@ public class Status implements Parcelable {
     private boolean isNew = false;
     private boolean isTakingScreenShot = false;
     private boolean isVisible = true;
+    private boolean fetchMore = false;
     private Status status;
     private String content, contentCW, contentTranslated;
     private SpannableString contentSpan, contentSpanCW, contentSpanTranslated;
@@ -731,5 +732,13 @@ public class Status implements Parcelable {
 
     public void setEmojiTranslateFound(boolean emojiTranslateFound) {
         isEmojiTranslateFound = emojiTranslateFound;
+    }
+
+    public boolean isFetchMore() {
+        return fetchMore;
+    }
+
+    public void setFetchMore(boolean fetchMore) {
+        this.fetchMore = fetchMore;
     }
 }

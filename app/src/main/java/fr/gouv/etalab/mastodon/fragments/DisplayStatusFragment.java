@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
@@ -68,10 +69,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private String tag;
     private boolean swiped;
     private RecyclerView lv_status;
-    private boolean isOnWifi;
-    private int behaviorWithAttachments;
     private boolean showMediaOnly, showPinned;
-    private int positionSpinnerTrans;
     private String lastReadStatus;
     private Intent streamingFederatedIntent, streamingLocalIntent;
     LinearLayoutManager mLayoutManager;
@@ -101,10 +99,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
         assert context != null;
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        isOnWifi = Helper.isOnWIFI(context);
-        positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
+        boolean isOnWifi = Helper.isOnWIFI(context);
+        int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
         swipeRefreshLayout = rootView.findViewById(R.id.swipeContainer);
-        behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+        int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         if( type == RetrieveFeedsAsyncTask.Type.HOME)
             lastReadStatus = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
@@ -156,11 +154,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 swiped = true;
                 MainActivity.countNewStatus = 0;
                 if( type == RetrieveFeedsAsyncTask.Type.USER)
-                    asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, null, showMediaOnly, showPinned, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 else if( type == RetrieveFeedsAsyncTask.Type.TAG)
-                    asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 else
-                    asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
         swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
@@ -253,20 +251,37 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }
 
         if( statuses != null && statuses.size() > 0) {
-            if( type == RetrieveFeedsAsyncTask.Type.FAVOURITES ){
-                this.statuses.addAll(statuses);
-            }else {
+            if (type == RetrieveFeedsAsyncTask.Type.HOME) {
+                String bookmark = null;
+                if( context instanceof BaseMainActivity){
+                    bookmark = ((BaseMainActivity) context).getBookmark();
+                }
+                int inc = 0;
                 for (Status tmpStatus : statuses) {
-                    if (this.statuses.size() == 0 || Long.parseLong(tmpStatus.getId()) < Long.parseLong(this.statuses.get(this.statuses.size() - 1).getId())) {
-                        if (type == RetrieveFeedsAsyncTask.Type.HOME && firstLoad && lastReadStatus != null && Long.parseLong(tmpStatus.getId()) > Long.parseLong(lastReadStatus)) {
+                    if (bookmark != null){
+                        if (Long.parseLong(tmpStatus.getId()) > Long.parseLong(bookmark)) {
                             tmpStatus.setNew(true);
                             MainActivity.countNewStatus++;
-                        } else {
-                            tmpStatus.setNew(false);
                         }
+                    }
+                    if( this.statuses != null && this.statuses.size() > 0) {
+                        for (Status status : this.statuses) {
+                            if (Long.parseLong(tmpStatus.getId()) == Long.parseLong(status.getId())) {
+                                break; //This toot was already added (security, should not happen)
+                            }else if (Long.parseLong(tmpStatus.getId()) < Long.parseLong(status.getId())) {
+                                this.statuses.add(tmpStatus);
+                            }
+                            if( inc == statuses.size() -1 && bookmark != null && Long.parseLong(statuses.get(inc).getId()) > Long.parseLong(bookmark) ){
+                                tmpStatus.setFetchMore(true);
+                            }
+                        }
+                    }else {
                         this.statuses.add(tmpStatus);
                     }
+                    inc++;
                 }
+            }else {
+                this.statuses.addAll(statuses);
             }
             if( firstLoad && type == RetrieveFeedsAsyncTask.Type.HOME && statuses.size() > 0) {
                 //Update the id of the last toot retrieved
