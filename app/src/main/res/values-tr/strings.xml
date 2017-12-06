@@ -404,4 +404,5 @@ Teşekkürler:    </string>
   <string name="filter_regex">Düzenli ifadelerle filtreleme</string>
   <string name="search">Search</string>
   <string name="delete">Delete</string>
+    <string name="fetch_more_toots">Fetch more toots…</string>
 </resources>

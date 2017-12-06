@@ -398,4 +398,5 @@
   <string name="filter_regex">按正则表达式进行筛选</string>
   <string name="search">Search</string>
   <string name="delete">Delete</string>
+    <string name="fetch_more_toots">Fetch more toots…</string>
 </resources>
