@@ -1586,4 +1586,8 @@ public abstract class BaseMainActivity extends AppCompatActivity
         }
         startService(streamingIntent);
     }
+
+    public DisplayStatusFragment getHomeFragment(){
+        return homeFragment;
+    }
 }

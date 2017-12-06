@@ -257,6 +257,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     bookmark = ((BaseMainActivity) context).getBookmark();
                 }
                 int inc = 0;
+                ArrayList<Status> statusArrayList = new ArrayList<>();
                 for (Status tmpStatus : statuses) {
                     if (bookmark != null){
                         if (Long.parseLong(tmpStatus.getId()) > Long.parseLong(bookmark)) {
@@ -264,11 +265,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                             MainActivity.countNewStatus++;
                         }
                     }
+
                     if( this.statuses != null && this.statuses.size() > 0) {
-                        for (Status status : this.statuses) {
-                            if (Long.parseLong(tmpStatus.getId()) == Long.parseLong(status.getId())) {
+                        for (Status sts : this.statuses) {
+                            if (Long.parseLong(tmpStatus.getId()) == Long.parseLong(sts.getId())) {
                                 break; //This toot was already added (security, should not happen)
-                            }else if (Long.parseLong(tmpStatus.getId()) < Long.parseLong(status.getId())) {
+                            }else if (Long.parseLong(tmpStatus.getId()) < Long.parseLong(sts.getId())) {
                                 this.statuses.add(tmpStatus);
                             }
                             if( inc == statuses.size() -1 && bookmark != null && Long.parseLong(statuses.get(inc).getId()) > Long.parseLong(bookmark) ){
@@ -276,10 +278,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                             }
                         }
                     }else {
-                        this.statuses.add(tmpStatus);
+                        statusArrayList.add(tmpStatus);
                     }
                     inc++;
                 }
+                this.statuses.addAll(statusArrayList);
             }else {
                 this.statuses.addAll(statuses);
             }
@@ -520,5 +523,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     ((MainActivity) context).updateTimeLine(type, inserted);
             }catch (Exception ignored){}
         }
+    }
+
+    public void fetchMore(String max_id){
+        asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 }

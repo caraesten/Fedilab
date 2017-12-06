@@ -85,6 +85,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
@@ -1251,6 +1252,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 if(status.isFetchMore()) {
                     status.setFetchMore(false);
                     holder.fetch_more.setEnabled(false);
+                    DisplayStatusFragment homeFragment = ((BaseMainActivity) context).getHomeFragment();
+                    if( homeFragment != null)
+                        homeFragment.fetchMore(status.getId());
                 }
             }
         });
