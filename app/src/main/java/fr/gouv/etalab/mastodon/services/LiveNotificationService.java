@@ -212,7 +212,7 @@ public class LiveNotificationService extends IntentService {
                             try {
                                 JSONObject eventJson = new JSONObject(event);
                                 onRetrieveStreaming(eventStreaming, account, eventJson);
-                            } catch (JSONException ignored) {}
+                            } catch (JSONException ignored) {ignored.printStackTrace();}
                         }
                     }
                 }else {
@@ -254,7 +254,6 @@ public class LiveNotificationService extends IntentService {
         fr.gouv.etalab.mastodon.client.Entities.Status status ;
         final Notification notification;
         String dataId = null;
-
         Bundle b = new Bundle();
         if( event == Helper.EventStreaming.NOTIFICATION){
             notification = API.parseNotificationResponse(getApplicationContext(), response);
