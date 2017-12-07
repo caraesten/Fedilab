@@ -21,6 +21,6 @@ import fr.gouv.etalab.mastodon.client.Entities.Error;
  * Interface when a media has been downloaded
  */
 public interface OnDownloadInterface {
-    void onDownloaded(String saveFilePath, Error error);
+    void onDownloaded(String saveFilePath, String downloadUrl, Error error);
     void onUpdateProgress(int progress);
 }

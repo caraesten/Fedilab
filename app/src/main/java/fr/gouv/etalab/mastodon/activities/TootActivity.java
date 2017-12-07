@@ -1260,7 +1260,7 @@ public class TootActivity extends AppCompatActivity implements OnRetrieveSearcAc
     }
 
     @Override
-    public void onDownloaded(String pathToFile, Error error) {
+    public void onDownloaded(String pathToFile, String url, Error error) {
         picture_scrollview.setVisibility(View.VISIBLE);
         Bitmap pictureMention = BitmapFactory.decodeFile(pathToFile);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
