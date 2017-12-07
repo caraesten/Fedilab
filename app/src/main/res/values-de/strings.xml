@@ -89,26 +89,26 @@
   <string name="send_email">Sende eine E-Mail</string>
   <string name="choose_file">Wähle eine Datei</string>
   <string name="choose_file_error">Kein Dateimanager gefunden!</string>
-  <string name="click_to_change">Drück auf den Pfad um ihn zu ändern</string>
+  <string name="click_to_change">Klicke auf den Pfad um ihn zu ändern</string>
   <string name="failed">Fehlgeschlagen!</string>
-  <string name="scheduled_toots">Geplante toots</string>
+  <string name="scheduled_toots">Geplante Toots</string>
   <string name="disclaimer_full">Das Profil wird möglicherweise unvollständig wiedergegeben.</string>
   <string name="insert_emoji">Emoji einfügen</string>
   <string name="no_emoji">Die App hat noch keine Custom Emojis geladen.</string>
   <string name="live_notif">Live-Benachrichtigungen</string>
   <!-- Status -->
-  <string name="no_status">Kein toot zum anzeigen</string>
-  <string name="fav_added">Der toot wurde deinen Favoriten hinzugefügt</string>
+  <string name="no_status">Kein Toot zum anzeigen</string>
+  <string name="fav_added">Der Toot wurde deinen Favoriten hinzugefügt</string>
   <string name="fav_removed">Der Toot wurde aus deinen Favoriten enfernt!</string>
   <string name="reblog_added">Toot wurde geteilt!</string>
   <string name="reblog_removed">Toot wird nicht länger geteilt!</string>
   <string name="reblog_by">Geteilt von %1$s</string>
-  <string name="favourite_add">Diesen toot deinen Favoriten hinzufügen?</string>
-  <string name="favourite_remove">Diesen toot aus deinen Favoriten entfernen?</string>
-  <string name="reblog_add">Teile diesen toot?</string>
+  <string name="favourite_add">Diesen Toot deinen Favoriten hinzufügen?</string>
+  <string name="favourite_remove">Diesen Toot aus deinen Favoriten entfernen?</string>
+  <string name="reblog_add">Teile diesen Toot?</string>
   <string name="reblog_remove">Toot nicht mehr teilen?</string>
-  <string name="pin_add">Diesen toot anheften?</string>
-  <string name="pin_remove">Diesen toot nicht mehr anheften?</string>
+  <string name="pin_add">Diesen Toot anheften?</string>
+  <string name="pin_remove">Diesen Toot nicht mehr anheften?</string>
   <string name="more_action_1">Stummschalten</string>
   <string name="more_action_2">Blockieren</string>
   <string name="more_action_3">Melden</string>
@@ -119,10 +119,10 @@
   <string-array name="more_action_confirm">
     <item>Nutzer stummschalten?</item>
     <item>Diesen Nutzer blockieren?</item>
-    <item>Diesen toot melden?</item>
+    <item>Diesen Toot melden?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>Entferne diesen toot?</item>
+    <item>Entferne diesen Toot?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="one">%d Antwort</item>
@@ -130,15 +130,15 @@
   </plurals>
   <!-- Date -->
   <plurals name="date_seconds">
-    <item quantity="one">Vor %d Sekunden</item>
+    <item quantity="one">Vor %d Sekunde</item>
     <item quantity="other">Vor %d Sekunden</item>
   </plurals>
   <plurals name="date_minutes">
-    <item quantity="one">Vor %d Minuten</item>
+    <item quantity="one">Vor %d Minute</item>
     <item quantity="other">Vor %d Minuten</item>
   </plurals>
   <plurals name="date_hours">
-    <item quantity="one">Vor %d Stunden</item>
+    <item quantity="one">Vor %d Stunde</item>
     <item quantity="other">Vor %d Stunden</item>
   </plurals>
   <string name="date_yesterday">Gestern</string>
@@ -157,30 +157,30 @@
   <string name="toot_placeholder">Was beschäftigt dich?</string>
   <string name="toot_it">TOOT!</string>
   <string name="cw">cw</string>
-  <string name="toot_title">Verfasse einen toot</string>
-  <string name="toot_title_reply">Antworte auf einen toot</string>
+  <string name="toot_title">Verfasse einen Toot</string>
+  <string name="toot_title_reply">Antworte auf einen Toot</string>
   <string name="toot_no_space">Du hast das 500 Zeichen Limit erreicht!</string>
   <string name="toot_select_image">Wähle eine Mediendatei</string>
   <string name="toot_select_image_error">Ein Fehler während der Auswahl ist aufgetreten!</string>
   <string name="toot_delete_media">Lösche diese Datei?</string>
-  <string name="toot_error_no_content">Dein toot ist leer!</string>
-  <string name="toot_visibility_tilte">Sichtbarkeit des toots:</string>
-  <string name="toots_visibility_tilte">Standard Sichtbarkeit der toots:</string>
-  <string name="toot_sent">Der toot wurde gesendet!</string>
-  <string name="toot_reply_content_title">Du antwortest auf diesen toot:</string>
+  <string name="toot_error_no_content">Dein Toot ist leer!</string>
+  <string name="toot_visibility_tilte">Sichtbarkeit des Toots</string>
+  <string name="toots_visibility_tilte">Standard Sichtbarkeit der Toots: </string>
+  <string name="toot_sent">Der Toot wurde gesendet!</string>
+  <string name="toot_reply_content_title">Du antwortest auf diesen Toot:</string>
   <string name="toot_sensitive">Sensibler Inhalt?</string>
   <string-array name="toot_visibility">
     <item>Absenden an öffentliche Zeitleiste</item>
     <item>Nicht an öffentliche Zeitleiste absenden</item>
-    <item>Nur an follower senden</item>
+    <item>Nur an Follower senden</item>
     <item>Nur an erwähnten Nutzer absenden</item>
   </string-array>
   <string name="no_draft">Kein Entwurf!</string>
-  <string name="choose_toot">Wähle einen toot</string>
-  <string name="choose_accounts">Wähle einen konto</string>
+  <string name="choose_toot">Wähle einen Toot</string>
+  <string name="choose_accounts">Wähle ein Konto</string>
   <string name="select_accounts">Wähle einige Konten</string>
   <string name="remove_draft">Entwurf entfernen?</string>
-  <string name="show_reply">Klicke auf das Auge um den ursprünglichen toot zu sehen</string>
+  <string name="show_reply">Klicke auf das Auge um den ursprünglichen Toot zu sehen</string>
   <string name="upload_form_description">Für Menschen mit Sehbehinderung beschreiben</string>
   <!-- Instance -->
   <string name="instance_no_description">Keine Beschreibung verfügbar!</string>
@@ -190,7 +190,7 @@
   <string name="about_license">Lizenz:</string>
   <string name="about_license_action">GNU GPL V3</string>
   <string name="about_code">Quellcode:</string>
-  <string name="about_yandex">Übersetzen von toots:</string>
+  <string name="about_yandex">Übersetzung von Toots:</string>
   <string name="about_thekinrar">Instanzensuche:</string>
   <string name="about_thekinrar_action">instances.social</string>
   <string name="thanks_text_logo">Icondesigner:</string>
@@ -210,26 +210,26 @@
   <string name="authorize">Authorisieren</string>
   <string name="reject">Ablehnen</string>
   <!-- Scheduled toots -->
-  <string name="no_scheduled_toots">Keine geplanten toots vorhanden!</string>
-  <string name="no_scheduled_toots_indications">Schreibe einen toot und wähle <b>Planen</b> im Topmenü.</string>
-  <string name="remove_scheduled">Geplanten toot löschen?</string>
+  <string name="no_scheduled_toots">Keine geplanten Toots vorhanden!</string>
+  <string name="no_scheduled_toots_indications">Schreibe einen Toot und wähle <b>Planen</b> im Topmenü.</string>
+  <string name="remove_scheduled">Geplanten Toot löschen?</string>
   <string name="media_count">Dateien: %d</string>
-  <string name="toot_scheduled">Der toot wurde geplant!</string>
-  <string name="toot_scheduled_date">Der geplante toot muss über der aktuellen Stunde liegen!</string>
-  <string name="warning_battery">Akku Optimierung ist aktiviert! Das führt unter Umständen zu Problemen.</string>
+  <string name="toot_scheduled">Der Toot wurde geplant!</string>
+  <string name="toot_scheduled_date">Der Zeitpunkt muss nach der aktuellen Stunde liegen!</string>
+  <string name="warning_battery">Akkuoptimierung ist aktiviert! Manches funktioniert eventuell nicht wie erwartet.</string>
   <!-- Notifications -->
   <string name="no_notifications">Keine Benachrichtigungen</string>
   <string name="notif_mention">hat deinen Status erwähnt</string>
   <string name="notif_reblog">hat deinen Status geteilt</string>
   <string name="notif_favourite">favorisierte deinen Status</string>
   <string name="notif_follow">folgt dir</string>
-  <string name="notif_pouet">Neuer toot von %1$s</string>
+  <string name="notif_pouet">Neuer Toot von %1$s</string>
   <plurals name="other_notifications">
     <item quantity="one">und eine weitere Benachrichtigung</item>
     <item quantity="other">und %d weitere Benachrichtigungen</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="one">und ein weiterer toot zum entdecken</item>
+    <item quantity="one">und ein weiterer Toot zu entdecken</item>
     <item quantity="other">und %d weitere toots zum entdecken</item>
   </plurals>
   <string name="delete_notification_ask">Entferne Benachrichtigung?</string>
@@ -249,20 +249,20 @@
   <string name="toast_unmute">Nutzer wird nicht länger stummgeschaltet!</string>
   <string name="toast_follow">Du folgst dem Nutzer!</string>
   <string name="toast_unfollow">Du folgst dem Nutzer nicht mehr!</string>
-  <string name="toast_reblog">Der toot wurde geteilt!</string>
-  <string name="toast_unreblog">Der toot wird nicht länger geteilt!</string>
-  <string name="toast_favourite">Der toot wurde deinen Favoriten hinzugefügt!</string>
+  <string name="toast_reblog">Der Toot wurde geteilt!</string>
+  <string name="toast_unreblog">Der Toot wird nicht länger geteilt!</string>
+  <string name="toast_favourite">Der Toot wurde deinen Favoriten hinzugefügt!</string>
   <string name="toast_unfavourite">Der Toot wurde aus deinen Favoriten entfernt!</string>
   <string name="toast_report">Toot wurde gemeldet!</string>
   <string name="toast_unstatus">Toot wurde gelöscht!</string>
   <string name="toast_pin">Toot wurde angeheftet!</string>
   <string name="toast_unpin">Toot wird nicht mehr angeheftet!</string>
-  <string name="toast_error">Oops ! Ein Fehler ist aufgetreten!</string>
-  <string name="toast_code_error">Ein Fehler ist aufgetreten! The instance did not return an authorisation code!</string>
+  <string name="toast_error">Ups! Ein Fehler ist aufgetreten!</string>
+  <string name="toast_code_error">Ein Fehler ist aufgetreten! Die Instanz hat keinen Autorisierungscode gesendet!</string>
   <string name="toast_error_instance">Der Name der Instanz scheint ungültig zu sein!</string>
   <string name="toast_error_loading_account">Ein Fehler ist während des Kontowechsels aufgetreten!</string>
   <string name="toast_error_search">Ein Fehler ist während der Suche aufgetreten!</string>
-  <string name="toast_error_login">Login Fehlgeschlagen!</string>
+  <string name="toast_error_login">Login fehlgeschlagen!</string>
   <string name="toast_update_credential_ok">Das Profil wurde gespeichert!</string>
   <string name="nothing_to_do">Keine Aktion kann durchgeführt werden</string>
   <string name="toast_saved">Datei wurde gespeichert!</string>
@@ -273,9 +273,9 @@
   <string name="toast_empty_search">Instanzname und Benutzername dürfen nicht leer sein!</string>
   <!-- Settings -->
   <string name="settings_title_optimisation">Optimierter Ladevorgang</string>
-  <string name="set_toots_page">Anzahl der toots beim Laden</string>
-  <string name="set_accounts_page">Anzahl der Konten beim Laden</string>
-  <string name="set_notifications_page">Anzahl der Benachrichtigungen beim Laden</string>
+  <string name="set_toots_page">Anzahl der Toots pro Ladevorgang</string>
+  <string name="set_accounts_page">Anzahl der Konten pro Ladevorgang</string>
+  <string name="set_notifications_page">Anzahl der Benachrichtigungen pro Ladevorgang</string>
   <string name="set_attachment_always">Immer</string>
   <string name="set_attachment_wifi">WLAN</string>
   <string name="set_attachment_ask">Fragen</string>
