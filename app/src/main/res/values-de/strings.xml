@@ -99,7 +99,7 @@
   <!-- Status -->
   <string name="no_status">Kein toot zum anzeigen</string>
   <string name="fav_added">Der toot wurde deinen Favoriten hinzugefügt</string>
-  <string name="fav_removed">Der toot wurde aus deinen Favoriten enfernt!</string>
+  <string name="fav_removed">Der Toot wurde aus deinen Favoriten enfernt!</string>
   <string name="reblog_added">Toot wurde geteilt!</string>
   <string name="reblog_removed">Toot wird nicht länger geteilt!</string>
   <string name="reblog_by">Geteilt von %1$s</string>
@@ -193,7 +193,7 @@
   <string name="about_yandex">Übersetzen von toots:</string>
   <string name="about_thekinrar">Instanzensuche:</string>
   <string name="about_thekinrar_action">instances.social</string>
-  <string name="thanks_text_logo">Icon designer:</string>
+  <string name="thanks_text_logo">Icondesigner:</string>
   <!-- Conversation -->
   <string name="conversation">Unterhaltung</string>
   <!-- Accounts -->
@@ -252,7 +252,7 @@
   <string name="toast_reblog">Der toot wurde geteilt!</string>
   <string name="toast_unreblog">Der toot wird nicht länger geteilt!</string>
   <string name="toast_favourite">Der toot wurde deinen Favoriten hinzugefügt!</string>
-  <string name="toast_unfavourite">Der toot wurde aus deinen Favoriten entfernt!</string>
+  <string name="toast_unfavourite">Der Toot wurde aus deinen Favoriten entfernt!</string>
   <string name="toast_report">Toot wurde gemeldet!</string>
   <string name="toast_unstatus">Toot wurde gelöscht!</string>
   <string name="toast_pin">Toot wurde angeheftet!</string>
@@ -269,7 +269,7 @@
   <string name="toast_error_translate">Während der Übersetzung ist ein Fehler aufgetreten!</string>
   <string name="toast_toot_saved">Entwurf gespeichert!</string>
   <string name="toast_error_char_limit">Bist du sicher das diese Instanz die Anzahl an Zeichen unterstützt? Gewöhnlich liegt der Wert bei 500.</string>
-  <string name="toast_visibility_changed">Sichtbarkeit der toots für Nutzer %1$s wurde geändert</string>
+  <string name="toast_visibility_changed">Sichtbarkeit der Toots für Nutzer %1$s wurde geändert</string>
   <string name="toast_empty_search">Instanzname und Benutzername dürfen nicht leer sein!</string>
   <!-- Settings -->
   <string name="settings_title_optimisation">Optimierter Ladevorgang</string>
