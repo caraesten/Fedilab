@@ -149,6 +149,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 flag_loading = true;
                 swiped = true;
                 MainActivity.countNewStatus = 0;
+                if( context instanceof BaseMainActivity){
+                    ((BaseMainActivity) context).setBookmark(null);
+                }
                 if( type == RetrieveFeedsAsyncTask.Type.USER)
                     asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, null, showMediaOnly, showPinned, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 else if( type == RetrieveFeedsAsyncTask.Type.TAG)
@@ -256,6 +259,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             textviewNoAction.setVisibility(View.VISIBLE);
         else
             textviewNoAction.setVisibility(View.GONE);
+
         if( swiped ){
             if (previousPosition > 0) {
                 for (int i = 0; i < previousPosition; i++) {
@@ -274,7 +278,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 }
 
                 //Toots are older than the bookmark -> no special treatment with them
-                if( bookmark!= null && Long.parseLong(statuses.get(0).getId()) < Long.parseLong(bookmark)){
+                if( bookmark == null || Long.parseLong(statuses.get(0).getId()) < Long.parseLong(bookmark)){
                     this.statuses.addAll(statuses);
                     statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
                 }else { //Toots are younger than the bookmark
@@ -293,19 +297,21 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                             while (loop < this.statuses.size() && Long.parseLong(tmpStatus.getId()) < Long.parseLong(this.statuses.get(loop).getId())) {
                                 loop++;
                             }
-                            if(bookmark != null && Long.parseLong(statuses.get(0).getId()) != Long.parseLong(bookmark) ) {
-                                this.statuses.add(loop, tmpStatus);
-                                statusListAdapter.notifyItemInserted(loop);
-                                lastLoop = loop; //Record the last position of the inserted toot in this.statuses
+                            if(Long.parseLong(statuses.get(0).getId()) != Long.parseLong(bookmark) ) {
+                                if( !this.statuses.contains(tmpStatus) ) { //Element not already addeds
+                                    this.statuses.add(loop, tmpStatus);
+                                    statusListAdapter.notifyItemInserted(loop);
+                                    lastLoop = loop; //Record the last position of the inserted toot in this.statuses
+                                }
                             }
                         }
 
                     }
-                    if (bookmark != null && Long.parseLong(statuses.get((statuses.size() - 1)).getId()) > Long.parseLong(bookmark)) {
+                    if (Long.parseLong(statuses.get((statuses.size() - 1)).getId()) > Long.parseLong(bookmark)) {
                         statuses.get(statuses.size() - 1).setFetchMore(true);
-                        if( lastLoop > 0 )
-                            lv_status.scrollToPosition((lastLoop));
                     }
+                    if( lastLoop > 0 ) //Moves to the bookmark
+                        lv_status.scrollToPosition((lastLoop));
                 }
 
             }else {
