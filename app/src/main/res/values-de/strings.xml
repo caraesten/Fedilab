@@ -66,8 +66,8 @@
   <string name="show_boosts">Geteilte Beiträge anzeigen</string>
   <string name="show_replies">Antworten anzeigen</string>
   <string name="action_open_in_web">Im Browser öffnen</string>
-  <string name="translate">Translate</string>
-  <string name="please_wait">Please, wait few seconds before making this action.</string>
+  <string name="translate">Übersetzen</string>
+  <string name="please_wait">Bitte warte ein paar Sekunden, bevor du das machst.</string>
   <!--- Menu -->
   <string name="home_menu">Home</string>
   <string name="local_menu">Lokale Zeitleiste</string>
@@ -94,8 +94,8 @@
   <string name="scheduled_toots">Geplante toots</string>
   <string name="disclaimer_full">Das Profil wird möglicherweise unvollständig wiedergegeben.</string>
   <string name="insert_emoji">Emoji einfügen</string>
-  <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-  <string name="live_notif">Live notifications</string>
+  <string name="no_emoji">Die App hat noch keine Custom Emojis geladen.</string>
+  <string name="live_notif">Live-Benachrichtigungen</string>
   <!-- Status -->
   <string name="no_status">Kein toot zum anzeigen</string>
   <string name="fav_added">Der toot wurde deinen Favoriten hinzugefügt</string>
@@ -178,7 +178,7 @@
   <string name="no_draft">Kein Entwurf!</string>
   <string name="choose_toot">Wähle einen toot</string>
   <string name="choose_accounts">Wähle einen konto</string>
-  <string name="select_accounts">Select some accounts</string>
+  <string name="select_accounts">Wähle einige Konten</string>
   <string name="remove_draft">Entwurf entfernen?</string>
   <string name="show_reply">Klicke auf das Auge um den ursprünglichen toot zu sehen</string>
   <string name="upload_form_description">Für Menschen mit Sehbehinderung beschreiben</string>
@@ -237,11 +237,11 @@
   <string name="delete_notification">Die Benachrichtigung wurde gelöscht!</string>
   <string name="delete_notification_all">Alle Benachrichtigungen wurden gelöscht!</string>
   <!-- HEADER -->
-  <string name="following">Following</string>
+  <string name="following">Folgt</string>
   <string name="followers">Followers</string>
   <string name="pinned_toots">Angeheftet</string>
   <!-- TOAST -->
-  <string name="client_error">Unable to get client id!</string>
+  <string name="client_error">Fehler beim Laden der Client ID!</string>
   <string name="no_internet">Keine Internetverbindung!</string>
   <string name="toast_block">Nutzer wurde blockiert!</string>
   <string name="toast_unblock">Der Nutzer wird nicht länger blockiert!</string>
@@ -264,7 +264,7 @@
   <string name="toast_error_search">Ein Fehler ist während der Suche aufgetreten!</string>
   <string name="toast_error_login">Login Fehlgeschlagen!</string>
   <string name="toast_update_credential_ok">Das Profil wurde gespeichert!</string>
-  <string name="nothing_to_do">No action can be taken</string>
+  <string name="nothing_to_do">Keine Aktion kann durchgeführt werden</string>
   <string name="toast_saved">Datei wurde gespeichert!</string>
   <string name="toast_error_translate">Während der Übersetzung ist ein Fehler aufgetreten!</string>
   <string name="toast_toot_saved">Entwurf gespeichert!</string>
@@ -322,7 +322,7 @@
   <string name="settings_hour_end">Ende</string>
   <string name="embedded_browser">Benutze internen browser</string>
   <string name="use_javascript">Javascript aktivieren</string>
-  <string name="use_cookies">Erlaube cookies von Drittanbietern</string>
+  <string name="use_cookies">Erlaube Cookies von Drittanbietern</string>
   <string name="settings_ui_layout">Zeitlininen wie anzeigen:</string>
   <string-array name="settings_menu_tabs">
     <item>Nur als Reiter</item>
@@ -344,11 +344,11 @@
     <item>Weiß</item>
   </string-array>
   <string name="set_title_news">Neuigkeiten</string>
-  <string name="set_notification_news">Benachrichtigung für neue toots auf der Startleiste</string>
+  <string name="set_notification_news">Benachrichtigung für neue Toots auf der Startleiste</string>
   <string name="set_show_error_messages">Zeige Fehlermeldungen</string>
-  <string name="action_follow">Folge</string>
-  <string name="action_unfollow">Entfolge</string>
-  <string name="action_block">Blockiere</string>
+  <string name="action_follow">Folgen</string>
+  <string name="action_unfollow">Entfolgen</string>
+  <string name="action_block">Blockieren</string>
   <string name="action_unblock">Nicht mehr blockieren</string>
   <string name="action_mute">Stummschalten</string>
   <string name="action_no_action">Keine Aktion</string>
@@ -359,14 +359,14 @@
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Push Benachrichtigungen</string>
   <string name="settings_popup_message">Bitte bestätige welche Push Benachrichtigungen du erhalten möchtest.         Diese können später im Benachrichtungsreiter aktiviert oder deaktiviert werden.</string>
-  <string name="settings_popup_timeline">Für ungelesene toots auf der Startleiste?</string>
+  <string name="settings_popup_timeline">Für ungelesene Toots auf der Startleiste?</string>
   <string name="settings_popup_notification">Für ungelesene Benachrichtigungen?</string>
   <!-- CACHE -->
   <string name="cache_title">Speicher leeren</string>
   <string name="cache_message">Es sind %1$s Daten im Speicher.\n
     \n
     Möchtest du diese löschen?</string>
-  <string name="cache_units">Mb</string>
+  <string name="cache_units">MB</string>
   <string name="toast_cache_clear">Speicher wurde geleert! %1$s wurden freigeben</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">Aufgezeichnete Daten</string>
@@ -393,7 +393,7 @@
              - <b>Android-Job</b>: Dienste verwalten\n
              - <b>PhotoView</b>: Bilder verwalten\n
              - <b>Gson</b> : Entwürfe speichern</string>
-  <string name="privacy_API_yandex_title">Übersetzung von toots</string>
+  <string name="privacy_API_yandex_title">Übersetzung von Toots</string>
   <string name="privacy_API_yandex_authorizations">Die Anwendung bietet die Möglichkeit, toots mithilfe der lokalen sowie Yandex API zu übersetzen.\n
              Yandex hat seine eigene Datenschutzerklärung. Diese kann hier eingehesen werden: https://yandex.ru/legal/confidential/?lang=en</string>
   <string name="thanks_text">Danke an Stéphane für das Logo.</string>
