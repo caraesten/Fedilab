@@ -45,6 +45,7 @@ import com.bumptech.glide.request.transition.Transition;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
@@ -741,4 +742,12 @@ public class Status implements Parcelable {
     public void setFetchMore(boolean fetchMore) {
         this.fetchMore = fetchMore;
     }
+
+
+
+    @Override
+    public boolean equals(Object otherStatus) {
+        return otherStatus != null && (otherStatus == this || otherStatus instanceof Status && this.getId().equals(((Status) otherStatus).getId()));
+    }
+
 }

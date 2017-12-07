@@ -285,11 +285,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     int lastLoop = 0;
                     for (Status tmpStatus : statuses) {
                         //Mark status at new ones when their id is greater than the bookmark id / Also increments counter
-                        if (bookmark != null) {
-                            if (Long.parseLong(tmpStatus.getId()) > Long.parseLong(bookmark)) {
-                                tmpStatus.setNew(true);
-                                MainActivity.countNewStatus++;
-                            }
+                        if (Long.parseLong(tmpStatus.getId()) > Long.parseLong(bookmark)) {
+                            tmpStatus.setNew(true);
+                            MainActivity.countNewStatus++;
                         }
                         //Put the toot at its place in the list (id desc)
                         if (this.statuses != null) {
