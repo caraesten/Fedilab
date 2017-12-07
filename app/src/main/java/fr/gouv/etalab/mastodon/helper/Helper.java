@@ -21,6 +21,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
@@ -61,12 +62,10 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
-import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
-import android.text.style.ImageSpan;
 import android.util.DisplayMetrics;
 import android.util.Patterns;
 import android.view.Menu;
@@ -789,10 +788,24 @@ public class Helper {
             Uri uri = Uri.parse("file://" + file.getAbsolutePath());
             intent.setDataAndType(uri, getMimeType(url));
 
-
             Glide.with(context)
                     .asBitmap()
                     .load(preview_url)
+                    .listener(new RequestListener<Bitmap>(){
+
+                        @Override
+                        public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                            notify_user(context, intent, notificationIdTmp, BitmapFactory.decodeResource(context.getResources(),
+                                    R.mipmap.ic_launcher), context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
+                            Toast.makeText(context, R.string.toast_saved,Toast.LENGTH_LONG).show();
+                            return false;
+                        }
+                    })
                     .into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {

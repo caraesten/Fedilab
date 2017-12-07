@@ -228,12 +228,12 @@ public class HttpsConnection {
                         if(context instanceof TootActivity)
                         ((TootActivity)context).runOnUiThread(new Runnable() {
                             public void run() {
-                                listener.onDownloaded(saveFilePath, null);
+                                listener.onDownloaded(saveFilePath, downloadUrl, null);
                             }});
                         if(context instanceof MediaActivity)
                             ((MediaActivity)context).runOnUiThread(new Runnable() {
                                 public void run() {
-                                    listener.onDownloaded(saveFilePath, null);
+                                    listener.onDownloaded(saveFilePath, downloadUrl,null);
                                 }});
                     } else {
                         final Error error = new Error();
@@ -241,12 +241,12 @@ public class HttpsConnection {
                         if(context instanceof TootActivity)
                             ((TootActivity)context).runOnUiThread(new Runnable() {
                                 public void run() {
-                                    listener.onDownloaded(null, error);
+                                    listener.onDownloaded(null, downloadUrl, error);
                                 }});
                         if(context instanceof MediaActivity)
                             ((MediaActivity)context).runOnUiThread(new Runnable() {
                                 public void run() {
-                                    listener.onDownloaded(null, error);
+                                    listener.onDownloaded(null,downloadUrl, error);
                                 }});
 
                     }

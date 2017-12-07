@@ -379,10 +379,21 @@ public class MediaActivity extends AppCompatActivity implements OnDownloadInterf
     }
 
     @Override
-    public void onDownloaded(String path, Error error) {
+    public void onDownloaded(String path, String originUrl, Error error) {
+
+        File response = new File(path);
+        File dir = getCacheDir();
+        File from = new File(dir, response.getName());
+        File to = new File(dir, Helper.md5(originUrl) + ".mp4");
+        if (from.exists())
+            //noinspection ResultOfMethodCallIgnored
+            from.renameTo(to);
+        fileVideo = to;
+        downloadedImage = null;
         progress.setVisibility(View.GONE);
+        Uri uri = Uri.parse(to.getAbsolutePath());
         videoView.setVisibility(View.VISIBLE);
-        videoView.setVideoURI(Uri.parse(path));
+        videoView.setVideoURI(uri);
         videoView.start();
         MediaController mc = new MediaController(MediaActivity.this);
         videoView.setMediaController(mc);
