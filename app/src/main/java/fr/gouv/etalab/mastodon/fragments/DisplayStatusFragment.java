@@ -299,7 +299,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                                 if( !this.statuses.contains(tmpStatus) ) { //Element not already addeds
                                     this.statuses.add(loop, tmpStatus);
                                     statusListAdapter.notifyItemInserted(loop);
-                                    lastLoop = loop; //Record the last position of the inserted toot in this.statuses
+
+                                    if (Long.parseLong(tmpStatus.getId()) > Long.parseLong(bookmark) && loop > lastLoop)
+                                        lastLoop = loop; //Record the last position of the inserted toot in this.statuses
+
                                 }
                             }
                         }
