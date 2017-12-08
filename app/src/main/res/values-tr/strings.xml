@@ -369,7 +369,7 @@ Lütfen, almak istediğiniz itme bildirimlerini onaylayın.
   <string name="privacy_data">
 Hesaplardan yalnızca temel bilgiler cihazda saklanır.
          Bu veriler kesinlikle gizlidir ve yalnızca uygulama tarafından kullanılabilir.
-         Uygulamanın silinmesi, bu verileri derhal kaldırır. \ N
+         Uygulamanın silinmesi, bu verileri derhal kaldırır. \n
          ⚠ Oturum açma ve parolalar asla saklanmaz. Yalnızca bir örneğe sahip güvenli bir kimlik doğrulama (SSL) sırasında kullanılırlar.    </string>
   <string name="privacy_authorizations_title">Izinler:</string>
   <string name="privacy_authorizations">
@@ -395,7 +395,7 @@ Uygulama <b> izleme araçları kullanmaz </b>(kitle ölçümü, hata raporlama, 
          - <b> Gson </b>: Taslaklar kaydetmek için    </string>
   <string name="privacy_API_yandex_title">Modül tercümesi</string>
   <string name="privacy_API_yandex_authorizations">
-Uygulama cihazın yerel ayarını ve Yandex API\'sini kullanarak toots çevirme olanağı sunar. \ N
+Uygulama cihazın yerel ayarını ve Yandex API\'sini kullanarak toots çevirme olanağı sunar. \n
          Yandex\'in şu adreste bulunabilecek uygun gizlilik politikası vardır: https://yandex.ru/legal/confidential/?lang=en    </string>
   <string name="thanks_text">
 Stephane\'a logo için teşekkür ederiz.    </string>
@@ -404,4 +404,5 @@ Teşekkürler:    </string>
   <string name="filter_regex">Düzenli ifadelerle filtreleme</string>
   <string name="search">Search</string>
   <string name="delete">Delete</string>
+    <string name="fetch_more_toots">Fetch more toots…</string>
 </resources>
