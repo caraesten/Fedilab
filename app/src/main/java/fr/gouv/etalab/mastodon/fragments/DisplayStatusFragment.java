@@ -72,6 +72,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private boolean showMediaOnly, showPinned;
     private Intent streamingFederatedIntent, streamingLocalIntent;
     LinearLayoutManager mLayoutManager;
+    private int calls;
 
     public DisplayStatusFragment(){
     }
@@ -95,7 +96,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         flag_loading = true;
         firstLoad = true;
         swiped = false;
-
+        calls = 0;
         assert context != null;
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean isOnWifi = Helper.isOnWIFI(context);
@@ -136,6 +137,16 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     } else {
                         nextElementLoader.setVisibility(View.GONE);
                     }
+                    if(statuses != null && statuses.size() > firstVisibleItem )
+                    if( context instanceof BaseMainActivity){
+                        ((BaseMainActivity) context).setBookmark(statuses.get(firstVisibleItem).getId());
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                        Long bookmarkL = Long.parseLong(statuses.get(firstVisibleItem).getId()) + 1;
+                        editor.putString(Helper.BOOKMARK_ID + userId, String.valueOf(bookmarkL));
+                        editor.apply();
+                    }
+
                 }
             }
         });
@@ -175,7 +186,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     if( context instanceof BaseMainActivity){
                         bookmark = ((BaseMainActivity) context).getBookmark();
                         if( bookmark != null) {
-                            new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.ONESTATUS, bookmark,null, false,false, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                           // new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.ONESTATUS, bookmark,null, false,false, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             asyncTask = new RetrieveFeedsAsyncTask(context, type, bookmark, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         }
                     }
@@ -197,7 +208,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                                 if( context instanceof BaseMainActivity){
                                     bookmark = ((BaseMainActivity) context).getBookmark();
                                     if( bookmark != null) {
-                                        new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.ONESTATUS, bookmark,null, false,false, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                       // new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.ONESTATUS, bookmark,null, false,false, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                         asyncTask = new RetrieveFeedsAsyncTask(context, type, bookmark, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                     }
                                 }
@@ -250,6 +261,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             flag_loading = false;
             return;
         }
+        calls++;
         int previousPosition = this.statuses.size();
         List<Status> statuses = apiResponse.getStatuses();
         max_id = apiResponse.getMax_id();
@@ -278,14 +290,20 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 }
 
                 //Toots are older than the bookmark -> no special treatment with them
-                if( bookmark == null || Long.parseLong(statuses.get(0).getId()) < Long.parseLong(bookmark)){
+                if( bookmark == null || Long.parseLong(statuses.get(0).getId())+1 < Long.parseLong(bookmark)){
+                    int position = this.statuses.size();
                     this.statuses.addAll(statuses);
                     statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
+                    if( calls == 2 ) {
+                        lv_status.scrollToPosition(position);
+                    }
                 }else { //Toots are younger than the bookmark
-                    int lastLoop = 0;
+                    String currentMaxId = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID, null);
+                    int itemAdded = 0 ;
+                    int itemPosition = -1;
                     for (Status tmpStatus : statuses) {
                         //Mark status at new ones when their id is greater than the bookmark id / Also increments counter
-                        if (Long.parseLong(tmpStatus.getId()) > Long.parseLong(bookmark)) {
+                        if (currentMaxId != null && Long.parseLong(tmpStatus.getId()) > Long.parseLong(currentMaxId)) {
                             tmpStatus.setNew(true);
                             MainActivity.countNewStatus++;
                         }
@@ -297,22 +315,21 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                             }
                             if(Long.parseLong(statuses.get(0).getId()) != Long.parseLong(bookmark) ) {
                                 if( !this.statuses.contains(tmpStatus) ) { //Element not already addeds
+                                    if(itemPosition == -1)
+                                        itemPosition = loop;
                                     this.statuses.add(loop, tmpStatus);
-                                    statusListAdapter.notifyItemInserted(loop);
-
-                                    if (Long.parseLong(tmpStatus.getId()) > Long.parseLong(bookmark) && loop > lastLoop)
-                                        lastLoop = loop; //Record the last position of the inserted toot in this.statuses
-
+                                    itemAdded++;
                                 }
                             }
                         }
-
+                    }
+                    statusListAdapter.notifyItemRangeInserted(itemPosition, itemAdded);
+                    if( calls == 2 ) {
+                        lv_status.scrollToPosition(this.statuses.size());
                     }
                     if (Long.parseLong(statuses.get((statuses.size() - 1)).getId()) > Long.parseLong(bookmark)) {
                         statuses.get(statuses.size() - 1).setFetchMore(true);
                     }
-                    if( lastLoop > 0 ) //Moves to the bookmark
-                        lv_status.scrollToPosition((lastLoop));
                 }
 
             }else {
@@ -322,10 +339,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             if( firstLoad && type == RetrieveFeedsAsyncTask.Type.HOME && statuses.size() > 0) {
                 //Update the id of the last toot retrieved
                 MainActivity.lastHomeId = statuses.get(0).getId();
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, statuses.get(0).getId());
-                editor.apply();
+                updateMaxId(statuses.get(0).getId());
             }
             if( firstLoad && type == RetrieveFeedsAsyncTask.Type.HOME)
             //Display new value in counter
@@ -442,11 +456,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             return;
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
         if (type == RetrieveFeedsAsyncTask.Type.HOME && visible && statuses != null && statuses.size() > 0) {
-            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, statuses.get(0).getId());
-            editor.apply();
+            updateMaxId(statuses.get(0).getId());
         } else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC ){
             if (visible) {
                 SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -517,11 +527,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             lv_status.setAdapter(statusListAdapter);
             //Store last toot id for home timeline to avoid to notify for those that have been already seen
             if (type == RetrieveFeedsAsyncTask.Type.HOME && statuses != null && statuses.size() > 0) {
-                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, statuses.get(0).getId());
-                editor.apply();
+                updateMaxId(statuses.get(0).getId());
             }
         }
     }
@@ -556,5 +562,18 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
     public void fetchMore(String max_id){
         asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    private void updateMaxId(String max_id){
+        if( max_id == null)
+            return;
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String currentMaxId = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID, null);
+        if( currentMaxId == null || Long.parseLong(max_id) > Long.parseLong(currentMaxId)) {
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, max_id);
+            editor.apply();
+        }
     }
 }
