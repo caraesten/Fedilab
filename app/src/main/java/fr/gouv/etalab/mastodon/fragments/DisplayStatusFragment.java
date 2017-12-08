@@ -72,7 +72,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private boolean showMediaOnly, showPinned;
     private Intent streamingFederatedIntent, streamingLocalIntent;
     LinearLayoutManager mLayoutManager;
-    private int calls;
 
     public DisplayStatusFragment(){
     }
@@ -96,7 +95,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         flag_loading = true;
         firstLoad = true;
         swiped = false;
-        calls = 0;
         assert context != null;
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean isOnWifi = Helper.isOnWIFI(context);
@@ -261,7 +259,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             flag_loading = false;
             return;
         }
-        calls++;
         int previousPosition = this.statuses.size();
         List<Status> statuses = apiResponse.getStatuses();
         max_id = apiResponse.getMax_id();
@@ -288,19 +285,17 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 if( context instanceof BaseMainActivity){
                     bookmark = ((BaseMainActivity) context).getBookmark();
                 }
-
                 //Toots are older than the bookmark -> no special treatment with them
                 if( bookmark == null || Long.parseLong(statuses.get(0).getId())+1 < Long.parseLong(bookmark)){
-                    int position = this.statuses.size();
                     this.statuses.addAll(statuses);
                     statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
-                    if( calls == 2 ) {
-                        lv_status.scrollToPosition(position);
-                    }
                 }else { //Toots are younger than the bookmark
                     String currentMaxId = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID, null);
-                    int itemAdded = 0 ;
-                    int itemPosition = -1;
+                    int position = 0;
+                    while (position < this.statuses.size() && Long.parseLong(statuses.get(0).getId()) < Long.parseLong(this.statuses.get(position).getId())) {
+                        position++;
+                    }
+                    ArrayList<Status> tmpStatuses = new ArrayList<>();
                     for (Status tmpStatus : statuses) {
                         //Mark status at new ones when their id is greater than the bookmark id / Also increments counter
                         if (currentMaxId != null && Long.parseLong(tmpStatus.getId()) > Long.parseLong(currentMaxId)) {
@@ -308,25 +303,14 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                             MainActivity.countNewStatus++;
                         }
                         //Put the toot at its place in the list (id desc)
-                        if (this.statuses != null) {
-                            int loop = 0;
-                            while (loop < this.statuses.size() && Long.parseLong(tmpStatus.getId()) < Long.parseLong(this.statuses.get(loop).getId())) {
-                                loop++;
-                            }
-                            if(Long.parseLong(statuses.get(0).getId()) != Long.parseLong(bookmark) ) {
-                                if( !this.statuses.contains(tmpStatus) ) { //Element not already addeds
-                                    if(itemPosition == -1)
-                                        itemPosition = loop;
-                                    this.statuses.add(loop, tmpStatus);
-                                    itemAdded++;
-                                }
-                            }
+                        if( !this.statuses.contains(tmpStatus) ) { //Element not already addeds
+                            tmpStatuses.add(tmpStatus);
                         }
                     }
-                    statusListAdapter.notifyItemRangeInserted(itemPosition, itemAdded);
-                    if( calls == 2 ) {
-                        lv_status.scrollToPosition(this.statuses.size());
-                    }
+                    this.statuses.addAll(position, tmpStatuses);
+                    statusListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
+
+                    lv_status.scrollToPosition(position+tmpStatuses.size());
                     if (Long.parseLong(statuses.get((statuses.size() - 1)).getId()) > Long.parseLong(bookmark)) {
                         statuses.get(statuses.size() - 1).setFetchMore(true);
                     }
