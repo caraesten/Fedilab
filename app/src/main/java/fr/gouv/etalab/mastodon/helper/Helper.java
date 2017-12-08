@@ -190,6 +190,7 @@ public class Helper {
     public static final int HOME_TIMELINE_INTENT = 2;
     public static final int CHANGE_THEME_INTENT = 3;
     public static final int CHANGE_USER_INTENT = 4;
+    public static final int ADD_USER_INTENT = 5;
     //Settings
     public static final String SET_TOOTS_PER_PAGE = "set_toots_per_page";
     public static final String SET_ACCOUNTS_PER_PAGE = "set_accounts_per_page";
