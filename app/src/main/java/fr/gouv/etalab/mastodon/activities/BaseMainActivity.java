@@ -1402,7 +1402,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
         return bookmark;
     }
 
-    public void setBookmark(String bookmark) {
+    public void setBookmark(@SuppressWarnings("SameParameterValue") String bookmark) {
         this.bookmark = bookmark;
     }
 
