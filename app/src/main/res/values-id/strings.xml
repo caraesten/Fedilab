@@ -98,12 +98,12 @@
   <string name="live_notif">Pemberitahuan langsung</string>
   <!-- Status -->
   <string name="no_status">Tidak ada kutipan untuk ditampilkan</string>
-  <string name="fav_added">The toot was added to favourites</string>
-  <string name="fav_removed">The toot was removed from favourites!</string>
-  <string name="reblog_added">The toot was boosted!</string>
-  <string name="reblog_removed">The toot is no longer boosted!</string>
-  <string name="reblog_by">Boosted by %1$s</string>
-  <string name="favourite_add">Add this toot to your favourites?</string>
+  <string name="fav_added">Kutipan ditambahkan ke favorit</string>
+  <string name="fav_removed">Kutipan sudah dihapus dari favorit!</string>
+  <string name="reblog_added">Kutipan ditingkatkan!</string>
+  <string name="reblog_removed">Kutipan tidak lagi ditingkatkan!</string>
+  <string name="reblog_by">Ditingkatkan sebesar %1$s</string>
+  <string name="favourite_add">Tambahkan kutipan ini ke favorit kamu?</string>
   <string name="favourite_remove">Hapus kutipan ini dari kesukaan Anda?</string>
   <string name="reblog_add">Tingkatkan kutipan ini?</string>
   <string name="reblog_remove">Lepaskan tingkatan kutipan ini?</string>
@@ -252,13 +252,13 @@
   <string name="toast_error_search">Terjadi kesalahan saat mencari!</string>
   <string name="toast_error_login">Tidak bisa masuk!</string>
   <string name="toast_update_credential_ok">Data profil telah disimpan!</string>
-  <string name="nothing_to_do">No action can be taken</string>
-  <string name="toast_saved">The media has been saved!</string>
-  <string name="toast_error_translate">An error occurred while translating!</string>
-  <string name="toast_toot_saved">Draft saved!</string>
-  <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
-  <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
-  <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
+  <string name="nothing_to_do">Tidak dapat diambil tindakan</string>
+  <string name="toast_saved">Media telah tersimpan!</string>
+  <string name="toast_error_translate">Terjadi kesalahan saat menerjemahkan!</string>
+  <string name="toast_toot_saved">Konsep tersimpan!</string>
+  <string name="toast_error_char_limit">Apakah anda yakin contoh ini memungkinkan jumlah karakter ini? biasanya, nilai mendekati 500 karakter.</string>
+  <string name="toast_visibility_changed">Visibilitas kutipan telah diubah untuk akun %1$s</string>
+  <string name="toast_empty_search">Contoh nama dan nama layar tidak boleh kosong!</string>
   <!-- Settings -->
   <string name="settings_title_optimisation">Optimisation of loading</string>
   <string name="set_toots_page">Number of toots per load</string>
