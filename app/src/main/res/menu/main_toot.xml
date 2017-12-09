@@ -19,7 +19,7 @@
     <item
         android:id="@+id/action_translate"
         android:title="@string/translate"
-        android:icon="@drawable/ic_g_translate"
+        android:icon="@drawable/ic_translate"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_store"
