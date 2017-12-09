@@ -188,6 +188,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                             firstTootsLoaded = false;
                         }
                     }
+                }else {
+                    asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             }
         }else {
@@ -209,6 +211,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                                         firstTootsLoaded = false;
                                     }
                                 }
+                            }else {
+                                asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             }
                         }
                     }
@@ -260,8 +264,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }
         int previousPosition = this.statuses.size();
         List<Status> statuses = apiResponse.getStatuses();
-        if( max_id == null || (apiResponse.getMax_id() != null && Long.parseLong(max_id) > Long.parseLong(apiResponse.getMax_id())))
+        if( type == RetrieveFeedsAsyncTask.Type.HOME) {
+            if (max_id == null || (apiResponse.getMax_id() != null && Long.parseLong(max_id) > Long.parseLong(apiResponse.getMax_id())))
+                max_id = apiResponse.getMax_id();
+        }else {
             max_id = apiResponse.getMax_id();
+        }
         flag_loading = (max_id == null );
         if( !swiped && firstLoad && (statuses == null || statuses.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
