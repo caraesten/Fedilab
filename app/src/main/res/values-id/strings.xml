@@ -350,15 +350,15 @@
        Tolong konfirmasi penolakan pemberitahuan yang ingin Anda terima.
         Anda dapat mengaktifkan atau menonaktifkan pemberitahuan ini di setelan (Tab pemberitahuan).
     </string>
-  <string name="settings_popup_timeline">For unread toots in home time-line?</string>
-  <string name="settings_popup_notification">For unread notifications?</string>
+  <string name="settings_popup_timeline">Untuk kutipan yang belum dibaca di beranda kronologi?</string>
+  <string name="settings_popup_notification">Untuk pemberitahuan yang belum dibaca?</string>
   <!-- CACHE -->
-  <string name="cache_title">Clear cache</string>
-  <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+  <string name="cache_title">Kosongkan cache</string>
+  <string name="cache_message">Ada %1$s data dalam cache.\n\nApakah Anda ingin menghapusnya?</string>
   <string name="cache_units">Mb</string>
-  <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+  <string name="toast_cache_clear">Cache sudah dikosongkan! %1$s dilepaskan</string>
   <!-- PRIVACY -->
-  <string name="privacy_data_title">Recorded data</string>
+  <string name="privacy_data_title">Data terekam</string>
   <string name="privacy_data">
         Only basic information from accounts are stored on the device.
         These data are strictly confidential and can only be used by the application.
