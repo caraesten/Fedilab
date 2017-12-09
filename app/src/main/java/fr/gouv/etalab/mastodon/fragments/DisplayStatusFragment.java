@@ -72,6 +72,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private boolean showMediaOnly, showPinned;
     private Intent streamingFederatedIntent, streamingLocalIntent;
     LinearLayoutManager mLayoutManager;
+    boolean firstTootsLoaded;
 
     public DisplayStatusFragment(){
     }
@@ -83,6 +84,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         context = getContext();
         Bundle bundle = this.getArguments();
         showMediaOnly = false;
+        //Will allow to load first toots if bookmark != null
+        firstTootsLoaded = true;
         showPinned = false;
         if (bundle != null) {
             type = (RetrieveFeedsAsyncTask.Type) bundle.get("type");
@@ -178,14 +181,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             else if (type == RetrieveFeedsAsyncTask.Type.TAG)
                 asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             else {
-                asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 if( type == RetrieveFeedsAsyncTask.Type.HOME ){
                     String bookmark;
                     if( context instanceof BaseMainActivity){
                         bookmark = ((BaseMainActivity) context).getBookmark();
                         if( bookmark != null) {
-                           // new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.ONESTATUS, bookmark,null, false,false, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             asyncTask = new RetrieveFeedsAsyncTask(context, type, bookmark, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            firstTootsLoaded = false;
                         }
                     }
                 }
@@ -200,14 +202,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         else if (type == RetrieveFeedsAsyncTask.Type.TAG)
                             asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         else {
-                            asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             if( type == RetrieveFeedsAsyncTask.Type.HOME ){
                                 String bookmark;
                                 if( context instanceof BaseMainActivity){
                                     bookmark = ((BaseMainActivity) context).getBookmark();
                                     if( bookmark != null) {
-                                       // new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.ONESTATUS, bookmark,null, false,false, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                         asyncTask = new RetrieveFeedsAsyncTask(context, type, bookmark, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                        firstTootsLoaded = false;
                                     }
                                 }
                             }
@@ -278,7 +279,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
             swiped = false;
         }
-
+        //First toot are loaded as soon as the bookmark has been retrieved
+        if( type == RetrieveFeedsAsyncTask.Type.HOME && !firstTootsLoaded){
+            asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            firstTootsLoaded = true;
+        }
         if( statuses != null && statuses.size() > 0) {
             if (type == RetrieveFeedsAsyncTask.Type.HOME) {
                 String bookmark = null;
@@ -307,13 +312,14 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                             tmpStatuses.add(tmpStatus);
                         }
                     }
+                    if (Long.parseLong(tmpStatuses.get((tmpStatuses.size() - 1)).getId()) > Long.parseLong(bookmark)) {
+                        tmpStatuses.get(tmpStatuses.size() - 1).setFetchMore(true);
+                    }
                     this.statuses.addAll(position, tmpStatuses);
                     statusListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
 
                     lv_status.scrollToPosition(position+tmpStatuses.size());
-                    if (Long.parseLong(statuses.get((statuses.size() - 1)).getId()) > Long.parseLong(bookmark)) {
-                        statuses.get(statuses.size() - 1).setFetchMore(true);
-                    }
+
                 }
 
             }else {
