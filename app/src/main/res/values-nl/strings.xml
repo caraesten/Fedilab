@@ -412,4 +412,5 @@
   <string name="filter_regex">Wegfilteren met reguliere expressies</string>
   <string name="search">Zoeken</string>
   <string name="delete">Verwijderen</string>
+    <string name="fetch_more_toots">Fetch more toots…</string>
 </resources>

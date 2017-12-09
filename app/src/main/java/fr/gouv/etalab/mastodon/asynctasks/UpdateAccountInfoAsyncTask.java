@@ -76,7 +76,7 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void result) {
 
         Intent mainActivity = new Intent(this.contextReference.get(), MainActivity.class);
-        mainActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mainActivity.putExtra(Helper.INTENT_ACTION, Helper.ADD_USER_INTENT);
         this.contextReference.get().startActivity(mainActivity);
         ((Activity) this.contextReference.get()).finish();
 

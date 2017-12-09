@@ -416,5 +416,5 @@ Vă mulțumesc:
   <string name="filter_regex">Filtrează expresii usuale</string>
   <string name="search">Căutare</string>
   <string name="delete">Șterge</string>
-  <string name="fetch_more_toots">Fetch more toots…</string>
+<string name="fetch_more_toots">Fetch more toots…</string>
 </resources>
