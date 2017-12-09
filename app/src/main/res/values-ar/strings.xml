@@ -4,7 +4,7 @@
   <string name="navigation_drawer_open">فتح القائمة</string>
   <string name="navigation_drawer_close">إغلاق القائمة</string>
   <string name="action_about">عن التطبيق</string>
-  <string name="action_about_instance">About the instance</string>
+  <string name="action_about_instance">عن مثيل الخادم</string>
   <string name="action_privacy">الخصوصية</string>
   <string name="action_cache">الذاكرة المؤقتة</string>
   <string name="action_logout">تسجيل الخروج</string>
@@ -17,7 +17,7 @@
   <string name="download">تنزيل</string>
   <string name="download_file">Download %1$s</string>
   <string name="download_over">Download complete</string>
-  <string name="save_file">Save %1$s</string>
+  <string name="save_file">حفظ %1$s</string>
   <string name="save_over">Media saved</string>
   <string name="download_from">ملف : %1$s</string>
   <string name="password">كلمة السر</string>
@@ -28,7 +28,7 @@
   <string name="token">Token</string>
   <string name="save">حفظ</string>
   <string name="restore">إستعادة</string>
-  <string name="two_factor_authentification">Two-step authentication?</string>
+  <string name="two_factor_authentification">المصادقة بخطوتين ؟</string>
   <string name="other_instance">Other instance than mastodon.etalab.gouv.fr?</string>
   <string name="no_result">No results!</string>
   <string name="instance">مثيل الخادم</string>
@@ -44,8 +44,8 @@
   <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
   <string name="delete_all">حذف الكل</string>
   <string name="translate_toot">ترجم هذا التبويق.</string>
-  <string name="schedule">Schedule</string>
-  <string name="text_size">Text and icon sizes</string>
+  <string name="schedule">برمجة</string>
+  <string name="text_size">حجم الخط و الأيقونات</string>
   <string name="text_size_change">Change the current text size:</string>
   <string name="icon_size_change">Change the current icon size:</string>
   <string name="next">التالي</string>
@@ -54,7 +54,7 @@
   <string name="validate">Validate</string>
   <string name="media">الوسائط</string>
   <string name="share_with">شارك بواسطة</string>
-  <string name="shared_via">Shared via Mastalab</string>
+  <string name="shared_via">تمت مشاركته عبر ماستالاب</string>
   <string name="replies">الردود</string>
   <string name="username">إسم المستخدم</string>
   <string name="drafts">المسودات</string>
@@ -77,10 +77,10 @@
   <string name="communication_menu_title">التواصل</string>
   <string name="muted_menu">الحسابات المكتومة</string>
   <string name="blocked_menu">الحسابات المحظورة</string>
-  <string name="remote_follow_menu">Remote follow</string>
+  <string name="remote_follow_menu">تابع عن بعد</string>
   <string name="notifications">الإخطارات</string>
-  <string name="follow_request">Follow requests</string>
-  <string name="optimization">Optimization</string>
+  <string name="follow_request">طلبات المتابعة</string>
+  <string name="optimization">التحسينات</string>
   <string name="settings">الإعدادات</string>
   <string name="profile">الملف الشخصي</string>
   <string name="make_a_choice">What do you want to do?</string>
@@ -91,25 +91,25 @@
   <string name="choose_file_error">No file explorer found!</string>
   <string name="click_to_change">Click on the path to change it</string>
   <string name="failed">فشل !</string>
-  <string name="scheduled_toots">Scheduled toots</string>
+  <string name="scheduled_toots">التبويقات المبرمجة</string>
   <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
   <string name="insert_emoji">Insert emoji</string>
   <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
   <string name="live_notif">Live notifications</string>
   <!-- Status -->
-  <string name="no_status">No toot to display</string>
+  <string name="no_status">لا توجد هناك أية تبويقات لعرضها</string>
   <string name="fav_added">The toot was added to favourites</string>
   <string name="fav_removed">The toot was removed from favourites!</string>
-  <string name="reblog_added">The toot was boosted!</string>
+  <string name="reblog_added">تمت ترقية التبويق !</string>
   <string name="reblog_removed">The toot is no longer boosted!</string>
-  <string name="reblog_by">Boosted by %1$s</string>
+  <string name="reblog_by">رقاه %1$s</string>
   <string name="favourite_add">Add this toot to your favourites?</string>
   <string name="favourite_remove">Remove this toot from your favourites?</string>
-  <string name="reblog_add">Boost this toot?</string>
-  <string name="reblog_remove">Unboost this toot?</string>
-  <string name="pin_add">Pin this toot?</string>
-  <string name="pin_remove">Unpin this toot?</string>
-  <string name="more_action_1">Mute</string>
+  <string name="reblog_add">هل تود ترقية هذا التبويق ؟</string>
+  <string name="reblog_remove">هل تود إلغاء ترقية هذا التبويق ؟</string>
+  <string name="pin_add">هل تود تدبيس هذا التبويق ؟</string>
+  <string name="pin_remove">هل تود فك تدبيس هذا التبويق ؟</string>
+  <string name="more_action_1">كتم</string>
   <string name="more_action_2">حظر</string>
   <string name="more_action_3">الإبلاغ</string>
   <string name="more_action_4">حذف</string>
@@ -117,12 +117,12 @@
   <string name="more_action_6">شارك</string>
   <string name="more_action_7">أذكر</string>
   <string-array name="more_action_confirm">
-    <item>Mute this account?</item>
-    <item>Block this account?</item>
-    <item>Report this toot?</item>
+    <item>هل تود كتم هذا الحساب ؟</item>
+    <item>هل تود حجب هذا الحساب ؟</item>
+    <item>هل تود الإبلاغ عن هذا التبويق ؟</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>Remove this toot?</item>
+    <item>هل تود حذف هذا التبويق ؟</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="zero">%d replies</item>
@@ -134,7 +134,7 @@
   </plurals>
   <!-- Date -->
   <plurals name="date_seconds">
-    <item quantity="zero">%d seconds ago</item>
+    <item quantity="zero">قبل %d ثانية</item>
     <item quantity="one">%d second ago</item>
     <item quantity="two">%d seconds ago</item>
     <item quantity="few">%d seconds ago</item>
@@ -157,11 +157,11 @@
     <item quantity="many">%d hours ago</item>
     <item quantity="other">%d hours ago</item>
   </plurals>
-  <string name="date_yesterday">Yesterday</string>
-  <string name="date_day_before_yesterday">Before yesterday</string>
-  <string name="date_day">%d days ago</string>
+  <string name="date_yesterday">البارحة</string>
+  <string name="date_day_before_yesterday">قبل أمس</string>
+  <string name="date_day">%d أيام</string>
   <plurals name="date_month">
-    <item quantity="zero">%d months ago</item>
+    <item quantity="zero">%d أشهر</item>
     <item quantity="one">%d month ago</item>
     <item quantity="two">%d months ago</item>
     <item quantity="few">%d months ago</item>
@@ -169,7 +169,7 @@
     <item quantity="other">%d months ago</item>
   </plurals>
   <plurals name="date_year">
-    <item quantity="zero">%d years ago</item>
+    <item quantity="zero">منذ سنة</item>
     <item quantity="one">One year ago</item>
     <item quantity="two">%d years ago</item>
     <item quantity="few">%d years ago</item>
@@ -178,38 +178,38 @@
   </plurals>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">تحذير</string>
-  <string name="toot_placeholder">What is on your mind?</string>
+  <string name="toot_placeholder">ما الجديد ؟</string>
   <string name="toot_it">بوِّق !</string>
   <string name="cw">cw</string>
-  <string name="toot_title">Write a toot</string>
-  <string name="toot_title_reply">Reply to a toot</string>
+  <string name="toot_title">تحرير تبويق</string>
+  <string name="toot_title_reply">الرد على تبويق</string>
   <string name="toot_no_space">You have reached the 500 characters allowed!</string>
-  <string name="toot_select_image">Select a media</string>
+  <string name="toot_select_image">تحديد وسائط</string>
   <string name="toot_select_image_error">An error occurred while selecting the media!</string>
   <string name="toot_delete_media">Delete this media?</string>
-  <string name="toot_error_no_content">Your toot is empty!</string>
+  <string name="toot_error_no_content">إن تبويقك فارغ !</string>
   <string name="toot_visibility_tilte">Visibility of the toot</string>
   <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
   <string name="toot_sent">The toot has been sent!</string>
   <string name="toot_reply_content_title">You are replying to this toot:</string>
-  <string name="toot_sensitive">Sensitive content?</string>
+  <string name="toot_sensitive">محتوى حساس ؟</string>
   <string-array name="toot_visibility">
     <item>Post to public timelines</item>
     <item>Do not post to public timelines</item>
     <item>Post to followers only</item>
     <item>Post to mentioned users only</item>
   </string-array>
-  <string name="no_draft">No draft!</string>
+  <string name="no_draft">لا توجد مسودات !</string>
   <string name="choose_toot">إختر تبويقا</string>
-  <string name="choose_accounts">Choose an account</string>
+  <string name="choose_accounts">إختر حسابا</string>
   <string name="select_accounts">Select some accounts</string>
-  <string name="remove_draft">Remove draft?</string>
+  <string name="remove_draft">هل تود حذف المسودة ؟</string>
   <string name="show_reply">Click on the button to display the original toot</string>
   <string name="upload_form_description">Describe for the visually impaired</string>
   <!-- Instance -->
   <string name="instance_no_description">No description available!</string>
   <!-- About -->
-  <string name="about_vesrion">Release %1$s</string>
+  <string name="about_vesrion">الإصدار %1$s</string>
   <string name="about_developer">المطور :</string>
   <string name="about_license">الرخصة :</string>
   <string name="about_license_action">GNU GPL V3</string>
@@ -228,22 +228,22 @@
   <string name="followers_cnt">Followers \n %1$s</string>
   <string name="pins_cnt">Pinned \n %d</string>
   <string name="authorize">Authorize</string>
-  <string name="reject">Reject</string>
+  <string name="reject">رفض</string>
   <!-- Scheduled toots -->
   <string name="no_scheduled_toots">No scheduled toot to display!</string>
   <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
   <string name="remove_scheduled">Delete scheduled toot?</string>
-  <string name="media_count">Media: %d</string>
+  <string name="media_count">الوسائط : %d</string>
   <string name="toot_scheduled">The toot has been scheduled!</string>
   <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
   <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
   <!-- Notifications -->
   <string name="no_notifications">No notification to display</string>
-  <string name="notif_mention">mentioned you</string>
-  <string name="notif_reblog">boosted your status</string>
-  <string name="notif_favourite">favourited your status</string>
+  <string name="notif_mention">أشار إليك</string>
+  <string name="notif_reblog">رقى تبويقك</string>
+  <string name="notif_favourite">أُعجِب بتبويقك</string>
   <string name="notif_follow">يتابعك</string>
-  <string name="notif_pouet">New toot from %1$s</string>
+  <string name="notif_pouet">تبويق حديث مِن %1$s</string>
   <plurals name="other_notifications">
     <item quantity="zero">and %d other notifications</item>
     <item quantity="one">and another notification</item>
@@ -265,7 +265,7 @@
   <string name="delete_notification">The notification has been deleted!</string>
   <string name="delete_notification_all">All notifications have been deleted!</string>
   <!-- HEADER -->
-  <string name="following">Following</string>
+  <string name="following">يتابع</string>
   <string name="followers">المتابِعون</string>
   <string name="pinned_toots">Pinned</string>
   <!-- TOAST -->
@@ -318,7 +318,7 @@
   <string name="set_auto_store_toot">Save drafts automatically</string>
   <string name="set_bubble_counter">Display counters</string>
   <string name="set_auto_add_media_url">Add URL of media in toots</string>
-  <string name="settings_title_notifications">Manage notifications</string>
+  <string name="settings_title_notifications">إدارة الإخطارات</string>
   <string name="set_notif_follow">Notify when someone follows you</string>
   <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
   <string name="set_notif_follow_share">Notify when someone boosts your status</string>
@@ -326,7 +326,7 @@
   <string name="set_notif_follow_mention">Notify when someone mentions you</string>
   <string name="set_share_validation">Show confirmation dialog before boosting</string>
   <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
-  <string name="settings_title_more_options">Advanced settings</string>
+  <string name="settings_title_more_options">الإعدادات المتقدمة</string>
   <string name="set_wifi_only">Notify in WIFI only</string>
   <string name="set_notify">Notify?</string>
   <string name="set_notif_silent">Silent Notifications</string>
@@ -346,8 +346,8 @@
   <string name="settings_time_to">و</string>
   <string name="settings_time_greater">The time must be greater than %1$s</string>
   <string name="settings_time_lower">The time must be lower than %1$s</string>
-  <string name="settings_hour_init">Start time</string>
-  <string name="settings_hour_end">End time</string>
+  <string name="settings_hour_init">من</string>
+  <string name="settings_hour_end">إلى</string>
   <string name="embedded_browser">Use the built-in browser</string>
   <string name="use_javascript">Enable Javascript</string>
   <string name="use_cookies">Allow third-party cookies</string>
@@ -393,7 +393,7 @@
   <string name="settings_popup_timeline">For unread toots in home time-line?</string>
   <string name="settings_popup_notification">For unread notifications?</string>
   <!-- CACHE -->
-  <string name="cache_title">Clear cache</string>
+  <string name="cache_title">مسح ذاكرة التخزين المؤقت</string>
   <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
   <string name="cache_units">Mb</string>
   <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
@@ -430,7 +430,7 @@
         - <b>PhotoView</b>: To manage images\n
         - <b>Gson</b> : To save drafts
     </string>
-  <string name="privacy_API_yandex_title">Translation of toots</string>
+  <string name="privacy_API_yandex_title">ترجمة التبويقات</string>
   <string name="privacy_API_yandex_authorizations">
         The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
@@ -442,5 +442,5 @@
   <string name="filter_regex">Filter out by regular expressions</string>
   <string name="search">البحث</string>
   <string name="delete">حذف</string>
-  <string name="fetch_more_toots">Fetch more toots…</string>
+  <string name="fetch_more_toots">تحميل المزيد من التبويقات ...</string>
 </resources>
