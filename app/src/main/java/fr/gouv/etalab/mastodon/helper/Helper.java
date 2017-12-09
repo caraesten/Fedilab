@@ -576,8 +576,11 @@ public class Helper {
             return context.getResources().getQuantityString(R.plurals.date_hours, (int)hours, (int)hours);
         else if(minutes > 0)
             return context.getResources().getQuantityString(R.plurals.date_minutes, (int)minutes, (int)minutes);
-        else
-            return context.getResources().getQuantityString(R.plurals.date_seconds, (int)seconds, (int)seconds);
+        else {
+            if (seconds < 0)
+                seconds = 0;
+            return context.getResources().getQuantityString(R.plurals.date_seconds, (int) seconds, (int) seconds);
+        }
     }
 
     /***
