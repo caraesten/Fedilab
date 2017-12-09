@@ -301,7 +301,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     this.statuses.addAll(statuses);
                     statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
                 }else { //Toots are younger than the bookmark
-                    String currentMaxId = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID, null);
+                    String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                    String currentMaxId = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
                     int position = 0;
                     while (position < this.statuses.size() && Long.parseLong(statuses.get(0).getId()) < Long.parseLong(this.statuses.get(position).getId())) {
                         position++;
@@ -337,7 +338,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 MainActivity.lastHomeId = statuses.get(0).getId();
                 updateMaxId(statuses.get(0).getId());
             }
-            if( firstLoad && type == RetrieveFeedsAsyncTask.Type.HOME)
+            if( type == RetrieveFeedsAsyncTask.Type.HOME)
             //Display new value in counter
             try {
                 ((MainActivity) context).updateHomeCounter();
@@ -564,10 +565,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         if( max_id == null)
             return;
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        String currentMaxId = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID, null);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String currentMaxId = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
         if( currentMaxId == null || Long.parseLong(max_id) > Long.parseLong(currentMaxId)) {
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, max_id);
             editor.apply();
         }

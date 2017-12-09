@@ -69,7 +69,7 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
 
     @NonNull
     @Override
-    protected Result onRunJob(Params params) {
+    protected Result onRunJob(@NonNull Params params) {
         callAsynchronousTask();
         return Result.SUCCESS;
     }
@@ -118,10 +118,10 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
             //Retrieve users in db that owner has.
             for (Account account: accounts) {
                 String max_id = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_NOTIFICATION_MAX_ID + account.getId(), null);
-                String bookmark = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + account.getId(), null);
-                if( bookmark != null && max_id != null){
-                    if( Long.parseLong(bookmark) > Long.parseLong(max_id)){
-                        max_id = bookmark;
+                String lastHomeSeen = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + account.getId(), null);
+                if( lastHomeSeen != null && max_id != null){
+                    if( Long.parseLong(lastHomeSeen) > Long.parseLong(max_id)){
+                        max_id = lastHomeSeen;
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         editor.putString(Helper.LAST_HOMETIMELINE_NOTIFICATION_MAX_ID + account.getId(), max_id);
                         editor.apply();
