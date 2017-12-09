@@ -360,12 +360,12 @@
   <!-- PRIVACY -->
   <string name="privacy_data_title">Data terekam</string>
   <string name="privacy_data">
-        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
+        Hanya informasi dasar dari akun yang tersimpan pada perangkat.
+        Data ini sangat rahasia dan hanya bisa digunakan oleh aplikasi.
+        Menghapus aplikasi segera menghapus data ini.\n
+        &#9888; masuk dan kata sandi tidak pernah disimpan. Mereka hanya digunakan selama otentikasi aman (SSL) dengan sebuah tuntutan.
     </string>
-  <string name="privacy_authorizations_title">Permissions:</string>
+  <string name="privacy_authorizations_title">Izin:</string>
   <string name="privacy_authorizations">
         - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
         - <b>INTERNET</b>: Used for queries to an instance.\n
