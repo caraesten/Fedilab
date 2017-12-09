@@ -14,14 +14,16 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.activities;
 
-/**
- * Created by Thomas on 23/04/2017.
- * Login activity class which handles the connection
- */
 
-public class LoginActivity extends BaseLoginActivity {
+import com.kobakei.ratethisapp.RateThisApp;
+
+
+public class MainActivity extends BaseMainActivity {
+
     @Override
-    protected void installProviders() {
-        // do nothing
+    protected void rateThisApp() {
+        RateThisApp.onCreate(this);
+        RateThisApp.showRateDialogIfNeeded(this);
     }
+
 }

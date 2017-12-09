@@ -151,7 +151,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
 
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
 
-        installProviders();
 
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
@@ -853,7 +852,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
         new RetrieveInstanceAsyncTask(getApplicationContext(), BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    protected abstract void installProviders();
 
     protected abstract void rateThisApp();
 
