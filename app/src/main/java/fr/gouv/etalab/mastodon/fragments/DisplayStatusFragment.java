@@ -25,7 +25,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -142,7 +141,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 }
                 if(statuses != null && statuses.size() > firstVisibleItem )
                     if( context instanceof BaseMainActivity){
-                        ((BaseMainActivity) context).setBookmark(statuses.get(firstVisibleItem).getId());
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                         Long bookmarkL = Long.parseLong(statuses.get(firstVisibleItem).getId()) + 1;
@@ -312,11 +310,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                             tmpStatuses.add(tmpStatus);
                         }
                     }
+
                     if (Long.parseLong(tmpStatuses.get(tmpStatuses.size()-1).getId()) > Long.parseLong(bookmark)) {
                         tmpStatuses.get(tmpStatuses.size()-1).setFetchMore(true);
                     }
                     this.statuses.addAll(position, tmpStatuses);
-
                     statusListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
 
                     lv_status.scrollToPosition(position+tmpStatuses.size());
