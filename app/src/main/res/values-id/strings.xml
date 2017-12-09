@@ -282,7 +282,7 @@
   <string name="set_notif_follow">Beritahu ketika seseorang mengikuti Anda</string>
   <string name="set_notif_follow_ask">Beritahu ketika seseorang meminta untuk mengikuti Anda</string>
   <string name="set_notif_follow_share">Beritahu ketika seseorang meningkatkan status Anda</string>
-  <string name="set_notif_follow_add">Notify when someone favourites your status</string>
+  <string name="set_notif_follow_add">Beritahu ketika seseorang menyukai status Anda</string>
   <string name="set_notif_follow_mention">Notify when someone mentions you</string>
   <string name="set_share_validation">Show confirmation dialog before boosting</string>
   <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
