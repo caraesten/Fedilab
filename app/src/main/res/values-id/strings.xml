@@ -205,31 +205,31 @@
   <string name="remove_scheduled">Hapus kutipan terjadwal?</string>
   <string name="media_count">Media: %d</string>
   <string name="toot_scheduled">Kutipan yang telah dijadwalkan!</string>
-  <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
-  <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+  <string name="toot_scheduled_date">Tanggal yang dijadwalkan harus lebih besar dari jam saat ini!</string>
+  <string name="warning_battery">Penghemat baterai diaktifkan! Ini mungkin tidak bekerja seperti yang diharapkan.</string>
   <!-- Notifications -->
-  <string name="no_notifications">No notification to display</string>
-  <string name="notif_mention">mentioned you</string>
-  <string name="notif_reblog">boosted your status</string>
-  <string name="notif_favourite">favourited your status</string>
-  <string name="notif_follow">followed you</string>
-  <string name="notif_pouet">New toot from %1$s</string>
+  <string name="no_notifications">Tidak ada pemberitahuan untuk ditampilkan</string>
+  <string name="notif_mention">menyebutmu</string>
+  <string name="notif_reblog">tingkatkan status Kamu</string>
+  <string name="notif_favourite">status kesukaan Kamu</string>
+  <string name="notif_follow">mengikutimu</string>
+  <string name="notif_pouet">Kutipan baru dari %1$s</string>
   <plurals name="other_notifications">
-    <item quantity="other">and %d other notifications</item>
+    <item quantity="other">dan %d pemberitahuan lainnya</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="other">and %d other toots to discover</item>
+    <item quantity="other">dan %d menemukan kutipan lain</item>
   </plurals>
-  <string name="delete_notification_ask">Delete a notification?</string>
-  <string name="delete_notification_ask_all">Delete all notifications?</string>
-  <string name="delete_notification">The notification has been deleted!</string>
-  <string name="delete_notification_all">All notifications have been deleted!</string>
+  <string name="delete_notification_ask">Hapus pemberitahuan?</string>
+  <string name="delete_notification_ask_all">Hapus semua pemberitahuan?</string>
+  <string name="delete_notification">Pemberitahuan telah dihapus!</string>
+  <string name="delete_notification_all">Semua pemberitahuan telah dihapus!</string>
   <!-- HEADER -->
-  <string name="following">Following</string>
-  <string name="followers">Followers</string>
-  <string name="pinned_toots">Pinned</string>
+  <string name="following">Yang diikuti</string>
+  <string name="followers">Pengikut</string>
+  <string name="pinned_toots">Disematkan</string>
   <!-- TOAST -->
-  <string name="client_error">Unable to get client id!</string>
+  <string name="client_error">Tidak menemukan id klien!</string>
   <string name="no_internet">No Internet connection!</string>
   <string name="toast_block">The account was blocked!</string>
   <string name="toast_unblock">The account is no longer blocked!</string>
