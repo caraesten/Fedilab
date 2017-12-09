@@ -20,7 +20,7 @@
   <string name="save_file">Save %1$s</string>
   <string name="save_over">Media saved</string>
   <string name="download_from">File: %1$s</string>
-  <string name="password">Password</string>
+  <string name="password">كلمة السر</string>
   <string name="email">البريد الإلكتروني</string>
   <string name="accounts">الحسابات</string>
   <string name="toots">التبويقات</string>
@@ -34,16 +34,16 @@
   <string name="instance">Instance</string>
   <string name="instance_example">Instance: mastodon.social</string>
   <string name="toast_account_changed">Now works with the account %1$s</string>
-  <string name="add_account">Add an account</string>
+  <string name="add_account">إضافة حساب</string>
   <string name="clipboard">The content of the toot has been copied to the clipboard</string>
-  <string name="change">Change</string>
-  <string name="choose_picture">Select a picture…</string>
-  <string name="clear">Clean</string>
+  <string name="change">تعديل</string>
+  <string name="choose_picture">حدد صورة ...</string>
+  <string name="clear">نظيف</string>
   <string name="microphone">الميكروفون</string>
   <string name="speech_prompt">Please, say something</string>
   <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
   <string name="delete_all">حذف الكل</string>
-  <string name="translate_toot">Translate this toot.</string>
+  <string name="translate_toot">ترجم هذا التبويق.</string>
   <string name="schedule">Schedule</string>
   <string name="text_size">Text and icon sizes</string>
   <string name="text_size_change">Change the current text size:</string>
@@ -52,29 +52,29 @@
   <string name="previous">العودة</string>
   <string name="open_with">فتح بواسطة</string>
   <string name="validate">Validate</string>
-  <string name="media">Media</string>
-  <string name="share_with">Share with</string>
+  <string name="media">الوسائط</string>
+  <string name="share_with">شارك بواسطة</string>
   <string name="shared_via">Shared via Mastalab</string>
-  <string name="replies">Replies</string>
-  <string name="username">User name</string>
-  <string name="drafts">Drafts</string>
+  <string name="replies">الردود</string>
+  <string name="username">إسم المستخدم</string>
+  <string name="drafts">المسودات</string>
   <string name="new_data">New data are available! Do you want to display them?</string>
-  <string name="favourite">Favourites</string>
-  <string name="follow">New followers</string>
-  <string name="mention">Mentions</string>
-  <string name="reblog">Boosts</string>
-  <string name="show_boosts">Show boosts</string>
-  <string name="show_replies">Show replies</string>
+  <string name="favourite">المفضلة</string>
+  <string name="follow">متابِعون جدد</string>
+  <string name="mention">الإشارات</string>
+  <string name="reblog">الترقيات</string>
+  <string name="show_boosts">عرض الترقيات</string>
+  <string name="show_replies">عرض الردود</string>
   <string name="action_open_in_web">Open in browser</string>
-  <string name="translate">Translate</string>
+  <string name="translate">ترجمة</string>
   <string name="please_wait">Please, wait few seconds before making this action.</string>
   <!--- Menu -->
-  <string name="home_menu">Home</string>
-  <string name="local_menu">Local timeline</string>
-  <string name="global_menu">Federated timeline</string>
-  <string name="neutral_menu_title">Options</string>
-  <string name="favorites_menu">Favourites</string>
-  <string name="communication_menu_title">Communication</string>
+  <string name="home_menu">الرئيسية</string>
+  <string name="local_menu">النشرة المحلية</string>
+  <string name="global_menu">النشرة العمومية</string>
+  <string name="neutral_menu_title">الخيارات</string>
+  <string name="favorites_menu">المفضلة</string>
+  <string name="communication_menu_title">التواصل</string>
   <string name="muted_menu">Muted users</string>
   <string name="blocked_menu">الحسابات المحظورة</string>
   <string name="remote_follow_menu">Remote follow</string>
@@ -177,7 +177,7 @@
     <item quantity="other">%d years ago</item>
   </plurals>
   <!-- TOOT -->
-  <string name="toot_cw_placeholder">Warning</string>
+  <string name="toot_cw_placeholder">تحذير</string>
   <string name="toot_placeholder">What is on your mind?</string>
   <string name="toot_it">TOOT!</string>
   <string name="cw">cw</string>
@@ -306,15 +306,15 @@
   <string name="set_notifications_page">Number of notifications per load</string>
   <string name="set_attachment_always">دائما</string>
   <string name="set_attachment_wifi">واي فاي</string>
-  <string name="set_attachment_ask">Ask</string>
-  <string name="set_attachment_action">Load the media</string>
-  <string name="load_attachment">Load the pictures</string>
-  <string name="load_attachment_spoiler">Show more…</string>
+  <string name="set_attachment_ask">اطلب</string>
+  <string name="set_attachment_action">تحميل الوسائط</string>
+  <string name="load_attachment">تحميل الصور</string>
+  <string name="load_attachment_spoiler">عرض المزيد ...</string>
   <string name="load_sensitive_attachment">Sensitive content</string>
   <string name="set_display_reply">Display previous message in responses</string>
   <string name="set_display_local">Display local timeline</string>
   <string name="set_display_global">Display federated timeline</string>
-  <string name="set_folder_title">Path: </string>
+  <string name="set_folder_title">المسار :</string>
   <string name="set_auto_store_toot">Save drafts automatically</string>
   <string name="set_bubble_counter">Display counters</string>
   <string name="set_auto_add_media_url">Add URL of media in toots</string>
@@ -332,9 +332,9 @@
   <string name="set_notif_silent">Silent Notifications</string>
   <string name="set_night_mode">Night mode</string>
   <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
-  <string name="settings_title_profile">Edit profile</string>
+  <string name="settings_title_profile">تعديل الملف الشخصي</string>
   <string name="set_profile_description">Bio…</string>
-  <string name="set_save_changes">Save changes</string>
+  <string name="set_save_changes">حفظ التغييرات</string>
   <string name="set_header_picture_overlay">Choose a header picture</string>
   <string name="set_preview_reply">Display the number of replies in home timeline</string>
   <string name="set_preview_reply_pp">Display profile pictures?</string>
@@ -353,37 +353,37 @@
   <string name="use_cookies">Allow third-party cookies</string>
   <string name="settings_ui_layout">Layout for timelines: </string>
   <string-array name="settings_menu_tabs">
-    <item>Tabs</item>
-    <item>Menu</item>
+    <item>التبويب</item>
+    <item>القائمة</item>
     <item>Tabs and menu</item>
   </string-array>
   <string-array name="settings_translation">
-    <item>Yandex</item>
-    <item>No</item>
+    <item>يانديكس</item>
+    <item>لا</item>
   </string-array>
   <string name="set_led_colour">Set LED colour:</string>
   <string-array name="led_colours">
-    <item>Blue</item>
-    <item>Cyan</item>
-    <item>Magenta</item>
-    <item>Green</item>
-    <item>Red</item>
-    <item>Yellow</item>
-    <item>White</item>
+    <item>أزرق</item>
+    <item>سماوي</item>
+    <item>أرجواني</item>
+    <item>أخضر</item>
+    <item>أحمر</item>
+    <item>أصفر</item>
+    <item>أبيض</item>
   </string-array>
-  <string name="set_title_news">News</string>
+  <string name="set_title_news">الجديد</string>
   <string name="set_notification_news">Notify for new toots on the home timeline</string>
   <string name="set_show_error_messages">Display error messages</string>
-  <string name="action_follow">Follow</string>
-  <string name="action_unfollow">Unfollow</string>
-  <string name="action_block">Block</string>
-  <string name="action_unblock">Unblock</string>
-  <string name="action_mute">Mute</string>
-  <string name="action_no_action">No action</string>
-  <string name="action_unmute">Unmute</string>
-  <string name="request_sent">Request sent</string>
-  <string name="followed_by">Follows you</string>
-  <string name="action_search">Search</string>
+  <string name="action_follow">إتبع</string>
+  <string name="action_unfollow">إلغاء المتابعة</string>
+  <string name="action_block">حظر</string>
+  <string name="action_unblock">إلغاء الحظر</string>
+  <string name="action_mute">كتم</string>
+  <string name="action_no_action">بلا إجراء</string>
+  <string name="action_unmute">إلغاء الكتم</string>
+  <string name="request_sent">تم إرسال الطلب</string>
+  <string name="followed_by">يتابعك</string>
+  <string name="action_search">البحث</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Push notifications</string>
   <string name="settings_popup_message">
@@ -442,7 +442,7 @@
         Thank you to:
     </string>
   <string name="filter_regex">Filter out by regular expressions</string>
-  <string name="search">Search</string>
-  <string name="delete">Delete</string>
+  <string name="search">البحث</string>
+  <string name="delete">حذف</string>
   <string name="fetch_more_toots">Fetch more toots…</string>
 </resources>
