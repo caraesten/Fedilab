@@ -576,7 +576,9 @@ public abstract class BaseMainActivity extends AppCompatActivity
 
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         //Get the previous bookmark value
-        bookmark = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
+        //If null try to use the LAST_HOMETIMELINE_MAX_ID
+        String lastHomeTimeline = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
+        bookmark = sharedpreferences.getString(Helper.BOOKMARK_ID + userId, lastHomeTimeline);
         Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
         if( account == null){
             Helper.logout(getApplicationContext());
