@@ -15,8 +15,8 @@
   <string name="no">لا</string>
   <string name="cancel">إلغاء</string>
   <string name="download">تنزيل</string>
-  <string name="download_file">Download %1$s</string>
-  <string name="download_over">Download complete</string>
+  <string name="download_file">تنزيل %1$s</string>
+  <string name="download_over">إكتمل التنزيل</string>
   <string name="save_file">حفظ %1$s</string>
   <string name="save_over">Media saved</string>
   <string name="download_from">ملف : %1$s</string>
@@ -30,7 +30,7 @@
   <string name="restore">إستعادة</string>
   <string name="two_factor_authentification">المصادقة بخطوتين ؟</string>
   <string name="other_instance">Other instance than mastodon.etalab.gouv.fr?</string>
-  <string name="no_result">No results!</string>
+  <string name="no_result">لم يتم العثور على أية نتيجة !</string>
   <string name="instance">مثيل الخادم</string>
   <string name="instance_example">مثيل الخادم : mastodon.social</string>
   <string name="toast_account_changed">Now works with the account %1$s</string>
@@ -83,9 +83,9 @@
   <string name="optimization">التحسينات</string>
   <string name="settings">الإعدادات</string>
   <string name="profile">الملف الشخصي</string>
-  <string name="make_a_choice">What do you want to do?</string>
+  <string name="make_a_choice">ماذا تريد أن تفعل ؟</string>
   <string name="delete_account_title">حذف حساب</string>
-  <string name="delete_account_message">Delete the account %1$s from the application?</string>
+  <string name="delete_account_message">هل تود إزالة حساب %1$s من التطبيق ؟</string>
   <string name="send_email">إرسال بريد إلكتروني</string>
   <string name="choose_file">يرجى تحديد ملف</string>
   <string name="choose_file_error">No file explorer found!</string>
@@ -147,7 +147,7 @@
     <item quantity="two">%d minutes ago</item>
     <item quantity="few">%d minutes ago</item>
     <item quantity="many">%d minutes ago</item>
-    <item quantity="other">%d minutes ago</item>
+    <item quantity="other">قبل %d دقائق</item>
   </plurals>
   <plurals name="date_hours">
     <item quantity="zero">%d hours ago</item>
@@ -155,7 +155,7 @@
     <item quantity="two">%d hours ago</item>
     <item quantity="few">%d hours ago</item>
     <item quantity="many">%d hours ago</item>
-    <item quantity="other">%d hours ago</item>
+    <item quantity="other">قبل %d ساعات</item>
   </plurals>
   <string name="date_yesterday">البارحة</string>
   <string name="date_day_before_yesterday">قبل أمس</string>
@@ -190,7 +190,7 @@
   <string name="toot_error_no_content">إن تبويقك فارغ !</string>
   <string name="toot_visibility_tilte">Visibility of the toot</string>
   <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-  <string name="toot_sent">The toot has been sent!</string>
+  <string name="toot_sent">تم إرسال التبويق !</string>
   <string name="toot_reply_content_title">You are replying to this toot:</string>
   <string name="toot_sensitive">محتوى حساس ؟</string>
   <string-array name="toot_visibility">
@@ -207,7 +207,7 @@
   <string name="show_reply">Click on the button to display the original toot</string>
   <string name="upload_form_description">Describe for the visually impaired</string>
   <!-- Instance -->
-  <string name="instance_no_description">No description available!</string>
+  <string name="instance_no_description">لا يوجد وصف !</string>
   <!-- About -->
   <string name="about_vesrion">الإصدار %1$s</string>
   <string name="about_developer">المطور :</string>
@@ -221,7 +221,7 @@
   <!-- Conversation -->
   <string name="conversation">محادثة</string>
   <!-- Accounts -->
-  <string name="no_accounts">No account to display</string>
+  <string name="no_accounts">لا توجد حسابات للعرض</string>
   <string name="no_follow_request">No follow request</string>
   <string name="status_cnt">Toots \n %1$s</string>
   <string name="following_cnt">Following \n %1$s</string>
@@ -333,7 +333,7 @@
   <string name="set_night_mode">وضع ليلي</string>
   <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
   <string name="settings_title_profile">تعديل الملف الشخصي</string>
-  <string name="set_profile_description">Bio…</string>
+  <string name="set_profile_description">السيرة الذاتية ...</string>
   <string name="set_save_changes">حفظ التغييرات</string>
   <string name="set_header_picture_overlay">إختيار الصورة الرأسية</string>
   <string name="set_preview_reply">Display the number of replies in home timeline</string>
