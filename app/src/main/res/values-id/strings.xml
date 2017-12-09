@@ -104,11 +104,11 @@
   <string name="reblog_removed">The toot is no longer boosted!</string>
   <string name="reblog_by">Boosted by %1$s</string>
   <string name="favourite_add">Add this toot to your favourites?</string>
-  <string name="favourite_remove">Hapus tiupan ini dari kesukaan Anda?</string>
-  <string name="reblog_add">Tingkatkan tiupan ini?</string>
-  <string name="reblog_remove">Lepaskan tingkatan tiupan ini?</string>
-  <string name="pin_add">Sematkan tiupan ini?</string>
-  <string name="pin_remove">Lepaskan sematan tiupan ini?</string>
+  <string name="favourite_remove">Hapus kutipan ini dari kesukaan Anda?</string>
+  <string name="reblog_add">Tingkatkan kutipan ini?</string>
+  <string name="reblog_remove">Lepaskan tingkatan kutipan ini?</string>
+  <string name="pin_add">Sematkan kutipan ini?</string>
+  <string name="pin_remove">Lepaskan sematan kutipan ini?</string>
   <string name="more_action_1">Bisu</string>
   <string name="more_action_2">Blok</string>
   <string name="more_action_3">Melaporkan</string>
@@ -119,10 +119,10 @@
   <string-array name="more_action_confirm">
     <item>Bisukan akun ini?</item>
     <item>Blok akun ini?</item>
-    <item>Laporkan tiupan ini?</item>
+    <item>Laporkan kutipan ini?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>Menghapus tiupan ini?</item>
+    <item>Menghapus kutipan ini?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="other">%d balasan</item>
@@ -148,17 +148,17 @@
   </plurals>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">Peringatan</string>
-  <string name="toot_placeholder">What is on your mind?</string>
-  <string name="toot_it">TOOT!</string>
+  <string name="toot_placeholder">Apa yang Anda pikirkan?</string>
+  <string name="toot_it">KUTIPAN!</string>
   <string name="cw">cw</string>
-  <string name="toot_title">Write a toot</string>
-  <string name="toot_title_reply">Reply to a toot</string>
-  <string name="toot_no_space">You have reached the 500 characters allowed!</string>
-  <string name="toot_select_image">Select a media</string>
-  <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-  <string name="toot_delete_media">Delete this media?</string>
-  <string name="toot_error_no_content">Your toot is empty!</string>
-  <string name="toot_visibility_tilte">Visibility of the toot</string>
+  <string name="toot_title">Tulis sebuah kutipan</string>
+  <string name="toot_title_reply">Balas ke sebuah kutipan</string>
+  <string name="toot_no_space">Kamu sudah mencapai 500 karakter yang diijinkan!</string>
+  <string name="toot_select_image">Pilih media</string>
+  <string name="toot_select_image_error">Terjadi kesalahan saat memilih media!</string>
+  <string name="toot_delete_media">Hapus media ini?</string>
+  <string name="toot_error_no_content">Kutipan Anda kosong!</string>
+  <string name="toot_visibility_tilte">Visibilitas dari kutipan</string>
   <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
   <string name="toot_sent">The toot has been sent!</string>
   <string name="toot_reply_content_title">You are replying to this toot:</string>
