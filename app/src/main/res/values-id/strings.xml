@@ -159,21 +159,21 @@
   <string name="toot_delete_media">Hapus media ini?</string>
   <string name="toot_error_no_content">Kutipan Anda kosong!</string>
   <string name="toot_visibility_tilte">Visibilitas dari kutipan</string>
-  <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-  <string name="toot_sent">The toot has been sent!</string>
-  <string name="toot_reply_content_title">You are replying to this toot:</string>
-  <string name="toot_sensitive">Sensitive content?</string>
+  <string name="toots_visibility_tilte">Visibilitas kutipan secara standar: </string>
+  <string name="toot_sent">Kutipan telah dikirim!</string>
+  <string name="toot_reply_content_title">Anda membalas kutipan ini:</string>
+  <string name="toot_sensitive">Konten sensitif?</string>
   <string-array name="toot_visibility">
-    <item>Post to public timelines</item>
-    <item>Do not post to public timelines</item>
-    <item>Post to followers only</item>
-    <item>Post to mentioned users only</item>
+    <item>Posting ke kronologi umum</item>
+    <item>Jangan posting ke kronologi umum</item>
+    <item>Posting ke pengikut saja</item>
+    <item>Posting ke pengguna yang disebutkan saja</item>
   </string-array>
-  <string name="no_draft">No draft!</string>
-  <string name="choose_toot">Choose a toot</string>
-  <string name="choose_accounts">Choose an account</string>
-  <string name="select_accounts">Select some accounts</string>
-  <string name="remove_draft">Remove draft?</string>
+  <string name="no_draft">Tidak ada konsep!</string>
+  <string name="choose_toot">Pilih kutipan</string>
+  <string name="choose_accounts">Pilih akun</string>
+  <string name="select_accounts">Pilih beberapa akun</string>
+  <string name="remove_draft">Menghapus konsep?</string>
   <string name="show_reply">Click on the button to display the original toot</string>
   <string name="upload_form_description">Describe for the visually impaired</string>
   <!-- Instance -->
