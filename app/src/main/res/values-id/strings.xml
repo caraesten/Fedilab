@@ -89,15 +89,15 @@
   <string name="send_email">Kirim sebuah surel</string>
   <string name="choose_file">Silahkan pilih file</string>
   <string name="choose_file_error">Penjelajah tidak menemukan file!</string>
-  <string name="click_to_change">Click on the path to change it</string>
-  <string name="failed">Failed!</string>
-  <string name="scheduled_toots">Scheduled toots</string>
-  <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
-  <string name="insert_emoji">Insert emoji</string>
-  <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-  <string name="live_notif">Live notifications</string>
+  <string name="click_to_change">Klik di Jalur untuk mengubahnya</string>
+  <string name="failed">Gagal!</string>
+  <string name="scheduled_toots">Kutipan terjadwal</string>
+  <string name="disclaimer_full">Informasi di bawah ini mungkin mencerminkan profil pengguna tidak lengkap.</string>
+  <string name="insert_emoji">Masukkan karakter</string>
+  <string name="no_emoji">Aplikasi tidak mengumpulkan kostum karakter untuk saat ini.</string>
+  <string name="live_notif">Pemberitahuan langsung</string>
   <!-- Status -->
-  <string name="no_status">No toot to display</string>
+  <string name="no_status">Tidak ada kutipan untuk ditampilkan</string>
   <string name="fav_added">The toot was added to favourites</string>
   <string name="fav_removed">The toot was removed from favourites!</string>
   <string name="reblog_added">The toot was boosted!</string>
