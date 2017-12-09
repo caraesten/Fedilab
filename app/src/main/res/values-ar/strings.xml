@@ -17,7 +17,7 @@
   <string name="download">تنزيل</string>
   <string name="download_file">Download %1$s</string>
   <string name="download_over">Download complete</string>
-  <string name="save_file">Save %1$s</string>
+  <string name="save_file">حفظ %1$s</string>
   <string name="save_over">Media saved</string>
   <string name="download_from">ملف : %1$s</string>
   <string name="password">كلمة السر</string>
@@ -28,7 +28,7 @@
   <string name="token">Token</string>
   <string name="save">حفظ</string>
   <string name="restore">إستعادة</string>
-  <string name="two_factor_authentification">Two-step authentication?</string>
+  <string name="two_factor_authentification">المصادقة بخطوتين ؟</string>
   <string name="other_instance">Other instance than mastodon.etalab.gouv.fr?</string>
   <string name="no_result">No results!</string>
   <string name="instance">مثيل الخادم</string>
@@ -45,7 +45,7 @@
   <string name="delete_all">حذف الكل</string>
   <string name="translate_toot">ترجم هذا التبويق.</string>
   <string name="schedule">برمجة</string>
-  <string name="text_size">Text and icon sizes</string>
+  <string name="text_size">حجم الخط و الأيقونات</string>
   <string name="text_size_change">Change the current text size:</string>
   <string name="icon_size_change">Change the current icon size:</string>
   <string name="next">التالي</string>
@@ -79,7 +79,7 @@
   <string name="blocked_menu">الحسابات المحظورة</string>
   <string name="remote_follow_menu">تابع عن بعد</string>
   <string name="notifications">الإخطارات</string>
-  <string name="follow_request">Follow requests</string>
+  <string name="follow_request">طلبات المتابعة</string>
   <string name="optimization">Optimization</string>
   <string name="settings">الإعدادات</string>
   <string name="profile">الملف الشخصي</string>
@@ -97,18 +97,18 @@
   <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
   <string name="live_notif">Live notifications</string>
   <!-- Status -->
-  <string name="no_status">No toot to display</string>
+  <string name="no_status">لا توجد هناك أية تبويقات لعرضها</string>
   <string name="fav_added">The toot was added to favourites</string>
   <string name="fav_removed">The toot was removed from favourites!</string>
-  <string name="reblog_added">The toot was boosted!</string>
+  <string name="reblog_added">تمت ترقية التبويق !</string>
   <string name="reblog_removed">The toot is no longer boosted!</string>
-  <string name="reblog_by">Boosted by %1$s</string>
+  <string name="reblog_by">رقاه %1$s</string>
   <string name="favourite_add">Add this toot to your favourites?</string>
   <string name="favourite_remove">Remove this toot from your favourites?</string>
-  <string name="reblog_add">Boost this toot?</string>
-  <string name="reblog_remove">Unboost this toot?</string>
+  <string name="reblog_add">هل تود ترقية هذا التبويق ؟</string>
+  <string name="reblog_remove">هل تود إلغاء ترقية هذا التبويق ؟</string>
   <string name="pin_add">هل تود تدبيس هذا التبويق ؟</string>
-  <string name="pin_remove">Unpin this toot?</string>
+  <string name="pin_remove">هل تود فك تدبيس هذا التبويق ؟</string>
   <string name="more_action_1">كتم</string>
   <string name="more_action_2">حظر</string>
   <string name="more_action_3">الإبلاغ</string>
@@ -118,11 +118,11 @@
   <string name="more_action_7">أذكر</string>
   <string-array name="more_action_confirm">
     <item>هل تود كتم هذا الحساب ؟</item>
-    <item>Block this account?</item>
-    <item>Report this toot?</item>
+    <item>هل تود حجب هذا الحساب ؟</item>
+    <item>هل تود الإبلاغ عن هذا التبويق ؟</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>Remove this toot?</item>
+    <item>هل تود حذف هذا التبويق ؟</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="zero">%d replies</item>
@@ -178,7 +178,7 @@
   </plurals>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">تحذير</string>
-  <string name="toot_placeholder">What is on your mind?</string>
+  <string name="toot_placeholder">ما الجديد ؟</string>
   <string name="toot_it">بوِّق !</string>
   <string name="cw">cw</string>
   <string name="toot_title">تحرير تبويق</string>
@@ -187,7 +187,7 @@
   <string name="toot_select_image">تحديد وسائط</string>
   <string name="toot_select_image_error">An error occurred while selecting the media!</string>
   <string name="toot_delete_media">Delete this media?</string>
-  <string name="toot_error_no_content">Your toot is empty!</string>
+  <string name="toot_error_no_content">إن تبويقك فارغ !</string>
   <string name="toot_visibility_tilte">Visibility of the toot</string>
   <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
   <string name="toot_sent">The toot has been sent!</string>
@@ -199,7 +199,7 @@
     <item>Post to followers only</item>
     <item>Post to mentioned users only</item>
   </string-array>
-  <string name="no_draft">No draft!</string>
+  <string name="no_draft">لا توجد مسودات !</string>
   <string name="choose_toot">إختر تبويقا</string>
   <string name="choose_accounts">إختر حسابا</string>
   <string name="select_accounts">Select some accounts</string>
@@ -442,5 +442,5 @@
   <string name="filter_regex">Filter out by regular expressions</string>
   <string name="search">البحث</string>
   <string name="delete">حذف</string>
-  <string name="fetch_more_toots">Fetch more toots…</string>
+  <string name="fetch_more_toots">تحميل المزيد من التبويقات ...</string>
 </resources>
