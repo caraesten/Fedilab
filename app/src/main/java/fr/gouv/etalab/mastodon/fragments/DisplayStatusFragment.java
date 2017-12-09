@@ -320,7 +320,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         }
                     }
 
-                    if (Long.parseLong(tmpStatuses.get(tmpStatuses.size()-1).getId()) > Long.parseLong(bookmark)) {
+                    if (tmpStatuses.size() > 0 && Long.parseLong(tmpStatuses.get(tmpStatuses.size()-1).getId()) > Long.parseLong(bookmark)) {
                         tmpStatuses.get(tmpStatuses.size()-1).setFetchMore(true);
                     }
                     this.statuses.addAll(position, tmpStatuses);
