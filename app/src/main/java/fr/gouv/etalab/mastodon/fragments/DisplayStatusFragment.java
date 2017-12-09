@@ -119,10 +119,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         lv_status.addOnScrollListener(new RecyclerView.OnScrollListener() {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy)
             {
+                int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
                 if(dy > 0){
                     int visibleItemCount = mLayoutManager.getChildCount();
                     int totalItemCount = mLayoutManager.getItemCount();
-                    int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
                     if(firstVisibleItem + visibleItemCount == totalItemCount && context != null) {
                         if(!flag_loading ) {
                             flag_loading = true;
@@ -138,7 +138,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     } else {
                         nextElementLoader.setVisibility(View.GONE);
                     }
-                    if(statuses != null && statuses.size() > firstVisibleItem )
+                }
+                if(statuses != null && statuses.size() > firstVisibleItem )
                     if( context instanceof BaseMainActivity){
                         ((BaseMainActivity) context).setBookmark(statuses.get(firstVisibleItem).getId());
                         SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -147,8 +148,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         editor.putString(Helper.BOOKMARK_ID + userId, String.valueOf(bookmarkL));
                         editor.apply();
                     }
-
-                }
             }
         });
 
