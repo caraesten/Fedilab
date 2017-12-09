@@ -61,15 +61,15 @@
   <string name="new_data">Data baru tersedia! Apakah Anda ingin menampilkan mereka?</string>
   <string name="favourite">Favorit</string>
   <string name="follow">Pengikut baru</string>
-  <string name="mention">Mentions</string>
-  <string name="reblog">Boosts</string>
-  <string name="show_boosts">Show boosts</string>
-  <string name="show_replies">Show replies</string>
-  <string name="action_open_in_web">Open in browser</string>
-  <string name="translate">Translate</string>
-  <string name="please_wait">Please, wait few seconds before making this action.</string>
+  <string name="mention">Menyebutkan</string>
+  <string name="reblog">Dorongan</string>
+  <string name="show_boosts">Tampilkan dorongan</string>
+  <string name="show_replies">Tampilkan balasan</string>
+  <string name="action_open_in_web">Buka di peramban</string>
+  <string name="translate">Menerjemahkan</string>
+  <string name="please_wait">Mohon tunggu beberapa detik sebelum membuat tindakan.</string>
   <!--- Menu -->
-  <string name="home_menu">Home</string>
+  <string name="home_menu">Beranda</string>
   <string name="local_menu">Local timeline</string>
   <string name="global_menu">Federated timeline</string>
   <string name="neutral_menu_title">Options</string>
