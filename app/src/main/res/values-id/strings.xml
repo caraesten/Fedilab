@@ -376,10 +376,10 @@
     </string>
   <string name="privacy_API_authorizations_title">Izin API:</string>
   <string name="privacy_API_authorizations">
-        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
+        - <b>Read</b>: Membaca data.\
+        - <b>Write</b>: Posting status dan unggah media untuk status.\n
+        - <b>Follow</b>: Ikuti, berhenti ikuti, blokir, buka blokir.\n\n
+        <b>&#9888; Tindakan ini hanya saat pengguna memintanya.</b>
     </string>
   <string name="privacy_API_title">Pelacakan dan Perpustakaan</string>
   <string name="privacy_API">
