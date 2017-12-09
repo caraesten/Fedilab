@@ -62,6 +62,7 @@ import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
@@ -619,17 +620,7 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
 
         }
-        Glide.with(getApplicationContext())
-                .asBitmap()
-                .load(account.getAvatar())
-                .into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                        RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), Helper.addBorder(resource, account_pp.getContext()));
-                        circularBitmapDrawable.setCircular(true);
-                        account_pp.setImageDrawable(circularBitmapDrawable);
-                    }
-                });
+        Glide.with(getApplicationContext()).load(account.getAvatar()).apply(RequestOptions.circleCropTransform()).into(account_pp);
 
     }
 

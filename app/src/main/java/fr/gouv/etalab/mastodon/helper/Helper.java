@@ -21,10 +21,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AlertDialog;
@@ -60,12 +62,10 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
-import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
-import android.text.style.ImageSpan;
 import android.util.DisplayMetrics;
 import android.util.Patterns;
 import android.view.Menu;
@@ -105,6 +105,7 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -179,6 +180,8 @@ public class Helper {
     public static final String SHOW_BATTERY_SAVER_MESSAGE = "show_battery_saver_message";
     public static final String LAST_NOTIFICATION_MAX_ID = "last_notification_max_id";
     public static final String LAST_HOMETIMELINE_MAX_ID = "last_hometimeline_max_id";
+    public static final String BOOKMARK_ID = "bookmark_id";
+    public static final String LAST_HOMETIMELINE_NOTIFICATION_MAX_ID = "last_hometimeline_notification_max_id";
     public static final String SHOULD_CONTINUE_STREAMING = "should_continue_streaming";
     public static final String SHOULD_CONTINUE_STREAMING_FEDERATED = "should_continue_streaming_federated";
     public static final String SHOULD_CONTINUE_STREAMING_LOCAL = "should_continue_streaming_local";
@@ -189,6 +192,7 @@ public class Helper {
     public static final int HOME_TIMELINE_INTENT = 2;
     public static final int CHANGE_THEME_INTENT = 3;
     public static final int CHANGE_USER_INTENT = 4;
+    public static final int ADD_USER_INTENT = 5;
     //Settings
     public static final String SET_TOOTS_PER_PAGE = "set_toots_per_page";
     public static final String SET_ACCOUNTS_PER_PAGE = "set_accounts_per_page";
@@ -480,6 +484,56 @@ public class Helper {
     }
 
     /**
+     * Converts a Date date into a date-time string (SHORT format for both)
+     * @param context
+     * @param date to be converted
+     * @return String
+     */
+
+    public static String shortDateTime(Context context, Date date) {
+        Locale userLocale;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            userLocale = context.getResources().getConfiguration().getLocales().get(0);
+        } else {
+            //noinspection deprecation
+            userLocale = context.getResources().getConfiguration().locale;
+        }
+
+        DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, userLocale);
+
+        return df.format(date);
+    }
+
+    /**
+     * Makes the tvDate TextView field clickable, and displays the absolute date & time of a toot
+     *  for 5 seconds.
+     * @param context Context
+     * @param tvDate TextView
+     * @param date Date
+     */
+
+    public static void absoluteDateTimeReveal(final Context context, final TextView tvDate, final Date date) {
+        tvDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                tvDate.setText(Helper.shortDateTime(context, date));
+
+                new CountDownTimer((5 * 1000), 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+                    }
+
+                    public void onFinish() {
+                        tvDate.setText(Helper.dateDiff(context, date));
+                    }
+                }.start();
+            }
+        });
+    }
+
+    /**
      * Check if WIFI is opened
      * @param context Context
      * @return boolean
@@ -737,10 +791,24 @@ public class Helper {
             Uri uri = Uri.parse("file://" + file.getAbsolutePath());
             intent.setDataAndType(uri, getMimeType(url));
 
-
             Glide.with(context)
                     .asBitmap()
                     .load(preview_url)
+                    .listener(new RequestListener<Bitmap>(){
+
+                        @Override
+                        public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                            notify_user(context, intent, notificationIdTmp, BitmapFactory.decodeResource(context.getResources(),
+                                    R.mipmap.ic_launcher), context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
+                            Toast.makeText(context, R.string.toast_saved,Toast.LENGTH_LONG).show();
+                            return false;
+                        }
+                    })
                     .into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {

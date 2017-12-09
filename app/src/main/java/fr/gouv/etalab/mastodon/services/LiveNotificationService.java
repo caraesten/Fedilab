@@ -163,7 +163,8 @@ public class LiveNotificationService extends IntentService {
                 httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
                 httpsURLConnection.setRequestProperty("Keep-Alive", "header");
                 httpsURLConnection.setRequestProperty("Connection", "close");
-                httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
+                    httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
                 httpsURLConnection.setRequestMethod("GET");
                 httpsURLConnection.setConnectTimeout(70000);
                 httpsURLConnection.setReadTimeout(70000);
@@ -211,7 +212,7 @@ public class LiveNotificationService extends IntentService {
                             try {
                                 JSONObject eventJson = new JSONObject(event);
                                 onRetrieveStreaming(eventStreaming, account, eventJson);
-                            } catch (JSONException ignored) {}
+                            } catch (JSONException ignored) {ignored.printStackTrace();}
                         }
                     }
                 }else {
@@ -253,7 +254,6 @@ public class LiveNotificationService extends IntentService {
         fr.gouv.etalab.mastodon.client.Entities.Status status ;
         final Notification notification;
         String dataId = null;
-
         Bundle b = new Bundle();
         if( event == Helper.EventStreaming.NOTIFICATION){
             notification = API.parseNotificationResponse(getApplicationContext(), response);

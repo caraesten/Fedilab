@@ -98,6 +98,7 @@ import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.fragments.TabLayoutSettingsFragment;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.ADD_USER_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_THEME_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_USER_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
@@ -141,6 +142,8 @@ public abstract class BaseMainActivity extends AppCompatActivity
     String show_filtered;
     private AppBarLayout appBar;
     private static boolean activityPaused;
+    private String bookmark;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -572,6 +575,10 @@ public abstract class BaseMainActivity extends AppCompatActivity
         });
 
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        //Get the previous bookmark value
+        //If null try to use the LAST_HOMETIMELINE_MAX_ID
+        String lastHomeTimeline = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
+        bookmark = sharedpreferences.getString(Helper.BOOKMARK_ID + userId, lastHomeTimeline);
         Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
         if( account == null){
             Helper.logout(getApplicationContext());
@@ -804,6 +811,44 @@ public abstract class BaseMainActivity extends AppCompatActivity
         }
         Helper.switchLayout(BaseMainActivity.this);
 
+        receive_data = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Bundle b = intent.getExtras();
+                Helper.EventStreaming eventStreaming = (Helper.EventStreaming) intent.getSerializableExtra("eventStreaming");
+                assert b != null;
+                userIdService = b.getString("userIdService", null);
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                if( userIdService != null && userIdService.equals(userId)) {
+                    if (eventStreaming == Helper.EventStreaming.NOTIFICATION) {
+                        Notification notification = b.getParcelable("data");
+                        if (notificationsFragment != null) {
+                            notificationsFragment.refresh(notification);
+                        }
+                    } else if (eventStreaming == Helper.EventStreaming.UPDATE) {
+                        Status status = b.getParcelable("data");
+                        if (homeFragment != null) {
+                            homeFragment.refresh(status);
+                        }
+                    } else if (eventStreaming == Helper.EventStreaming.DELETE) {
+                        //noinspection unused
+                        String id = b.getString("id");
+                        if (notificationsFragment != null) {
+                            //noinspection StatementWithEmptyBody
+                            if (notificationsFragment.getUserVisibleHint()) {
+
+                            } else {
+
+                            }
+                        }
+                    }
+                    updateNotifCounter();
+                    updateHomeCounter();
+                }
+            }
+        };
+        LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
+
         // Retrieves instance
         new RetrieveInstanceAsyncTask(getApplicationContext(), BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
@@ -984,6 +1029,8 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 if( !toolbar_search.isIconified() ) {
                     toolbar_search.setIconified(true);
                 }
+            }else if (extras.getInt(INTENT_ACTION) == ADD_USER_INTENT){
+                this.recreate();
             }
         }else if( Intent.ACTION_SEND.equals(action) && type != null ) {
             if ("text/plain".equals(type)) {
@@ -1142,43 +1189,7 @@ public abstract class BaseMainActivity extends AppCompatActivity
                 }
             }
         };
-        receive_data = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Bundle b = intent.getExtras();
-                Helper.EventStreaming eventStreaming = (Helper.EventStreaming) intent.getSerializableExtra("eventStreaming");
-                assert b != null;
-                userIdService = b.getString("userIdService", null);
-                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                if( userIdService != null && userIdService.equals(userId)) {
-                    if (eventStreaming == Helper.EventStreaming.NOTIFICATION) {
-                        Notification notification = b.getParcelable("data");
-                        if (notificationsFragment != null) {
-                            notificationsFragment.refresh(notification);
-                        }
-                    } else if (eventStreaming == Helper.EventStreaming.UPDATE) {
-                        Status status = b.getParcelable("data");
-                        if (homeFragment != null) {
-                            homeFragment.refresh(status);
-                        }
-                    } else if (eventStreaming == Helper.EventStreaming.DELETE) {
-                        //noinspection unused
-                        String id = b.getString("id");
-                        if (notificationsFragment != null) {
-                            //noinspection StatementWithEmptyBody
-                            if (notificationsFragment.getUserVisibleHint()) {
 
-                            } else {
-
-                            }
-                        }
-                    }
-                    updateNotifCounter();
-                    updateHomeCounter();
-                }
-            }
-        };
-        LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_federated_data, new IntentFilter(Helper.RECEIVE_FEDERATED_DATA));
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_local_data, new IntentFilter(Helper.RECEIVE_LOCAL_DATA));
     }
@@ -1194,8 +1205,6 @@ public abstract class BaseMainActivity extends AppCompatActivity
             stopService(streamingIntent);
             editor.apply();
         }
-        if( receive_data != null)
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
         if( receive_federated_data != null)
             LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_federated_data);
         if( receive_local_data != null)
@@ -1211,6 +1220,8 @@ public abstract class BaseMainActivity extends AppCompatActivity
     @Override
     public void onDestroy(){
         super.onDestroy();
+        if( receive_data != null)
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -1392,6 +1403,14 @@ public abstract class BaseMainActivity extends AppCompatActivity
         Helper.canPin = (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion));
     }
 
+    public String getBookmark() {
+        return bookmark;
+    }
+
+    public void setBookmark(@SuppressWarnings("SameParameterValue") String bookmark) {
+        this.bookmark = bookmark;
+    }
+
 
     /**
      * Page Adapter for settings
@@ -1571,5 +1590,9 @@ public abstract class BaseMainActivity extends AppCompatActivity
             streamingIntent = new Intent(this, StreamingService.class);
         }
         startService(streamingIntent);
+    }
+
+    public DisplayStatusFragment getHomeFragment(){
+        return homeFragment;
     }
 }

@@ -433,4 +433,20 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
     </LinearLayout>
+    <Button
+        android:id="@+id/fetch_more"
+        android:visibility="gone"
+        android:textAllCaps="false"
+        android:drawableLeft="@drawable/ic_expand_more"
+        android:drawableStart="@drawable/ic_expand_more"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:drawablePadding="5dp"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:maxLines="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:text="@string/fetch_more_toots" />
 </LinearLayout>
