@@ -260,8 +260,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }
         int previousPosition = this.statuses.size();
         List<Status> statuses = apiResponse.getStatuses();
-        max_id = apiResponse.getMax_id();
-
+        if( max_id == null || (apiResponse.getMax_id() != null && Long.parseLong(max_id) > Long.parseLong(apiResponse.getMax_id())))
+            max_id = apiResponse.getMax_id();
         flag_loading = (max_id == null );
         if( !swiped && firstLoad && (statuses == null || statuses.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
@@ -318,7 +318,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     statusListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
 
                     lv_status.scrollToPosition(position+tmpStatuses.size());
-
                 }
 
             }else {
