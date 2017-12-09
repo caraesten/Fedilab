@@ -80,7 +80,7 @@
   <string name="remote_follow_menu">تابع عن بعد</string>
   <string name="notifications">الإخطارات</string>
   <string name="follow_request">طلبات المتابعة</string>
-  <string name="optimization">Optimization</string>
+  <string name="optimization">التحسينات</string>
   <string name="settings">الإعدادات</string>
   <string name="profile">الملف الشخصي</string>
   <string name="make_a_choice">What do you want to do?</string>
@@ -91,7 +91,7 @@
   <string name="choose_file_error">No file explorer found!</string>
   <string name="click_to_change">Click on the path to change it</string>
   <string name="failed">فشل !</string>
-  <string name="scheduled_toots">Scheduled toots</string>
+  <string name="scheduled_toots">التبويقات المبرمجة</string>
   <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
   <string name="insert_emoji">Insert emoji</string>
   <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
@@ -134,7 +134,7 @@
   </plurals>
   <!-- Date -->
   <plurals name="date_seconds">
-    <item quantity="zero">%d seconds ago</item>
+    <item quantity="zero">قبل %d ثانية</item>
     <item quantity="one">%d second ago</item>
     <item quantity="two">%d seconds ago</item>
     <item quantity="few">%d seconds ago</item>
@@ -203,13 +203,13 @@
   <string name="choose_toot">إختر تبويقا</string>
   <string name="choose_accounts">إختر حسابا</string>
   <string name="select_accounts">Select some accounts</string>
-  <string name="remove_draft">Remove draft?</string>
+  <string name="remove_draft">هل تود حذف المسودة ؟</string>
   <string name="show_reply">Click on the button to display the original toot</string>
   <string name="upload_form_description">Describe for the visually impaired</string>
   <!-- Instance -->
   <string name="instance_no_description">No description available!</string>
   <!-- About -->
-  <string name="about_vesrion">Release %1$s</string>
+  <string name="about_vesrion">الإصدار %1$s</string>
   <string name="about_developer">المطور :</string>
   <string name="about_license">الرخصة :</string>
   <string name="about_license_action">GNU GPL V3</string>
@@ -233,17 +233,17 @@
   <string name="no_scheduled_toots">No scheduled toot to display!</string>
   <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
   <string name="remove_scheduled">Delete scheduled toot?</string>
-  <string name="media_count">Media: %d</string>
+  <string name="media_count">الوسائط : %d</string>
   <string name="toot_scheduled">The toot has been scheduled!</string>
   <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
   <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
   <!-- Notifications -->
   <string name="no_notifications">No notification to display</string>
-  <string name="notif_mention">mentioned you</string>
-  <string name="notif_reblog">boosted your status</string>
-  <string name="notif_favourite">favourited your status</string>
+  <string name="notif_mention">أشار إليك</string>
+  <string name="notif_reblog">رقى تبويقك</string>
+  <string name="notif_favourite">أُعجِب بتبويقك</string>
   <string name="notif_follow">يتابعك</string>
-  <string name="notif_pouet">New toot from %1$s</string>
+  <string name="notif_pouet">تبويق حديث مِن %1$s</string>
   <plurals name="other_notifications">
     <item quantity="zero">and %d other notifications</item>
     <item quantity="one">and another notification</item>
@@ -265,7 +265,7 @@
   <string name="delete_notification">The notification has been deleted!</string>
   <string name="delete_notification_all">All notifications have been deleted!</string>
   <!-- HEADER -->
-  <string name="following">Following</string>
+  <string name="following">يتابع</string>
   <string name="followers">المتابِعون</string>
   <string name="pinned_toots">Pinned</string>
   <!-- TOAST -->
@@ -318,7 +318,7 @@
   <string name="set_auto_store_toot">Save drafts automatically</string>
   <string name="set_bubble_counter">Display counters</string>
   <string name="set_auto_add_media_url">Add URL of media in toots</string>
-  <string name="settings_title_notifications">Manage notifications</string>
+  <string name="settings_title_notifications">إدارة الإخطارات</string>
   <string name="set_notif_follow">Notify when someone follows you</string>
   <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
   <string name="set_notif_follow_share">Notify when someone boosts your status</string>
@@ -393,7 +393,7 @@
   <string name="settings_popup_timeline">For unread toots in home time-line?</string>
   <string name="settings_popup_notification">For unread notifications?</string>
   <!-- CACHE -->
-  <string name="cache_title">Clear cache</string>
+  <string name="cache_title">مسح ذاكرة التخزين المؤقت</string>
   <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
   <string name="cache_units">Mb</string>
   <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
