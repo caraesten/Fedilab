@@ -62,8 +62,8 @@
   <string name="favourite">Favorit</string>
   <string name="follow">Pengikut baru</string>
   <string name="mention">Menyebutkan</string>
-  <string name="reblog">Dorongan</string>
-  <string name="show_boosts">Tampilkan dorongan</string>
+  <string name="reblog">Tingkatkan</string>
+  <string name="show_boosts">Tampilkan Tingkatan</string>
   <string name="show_replies">Tampilkan balasan</string>
   <string name="action_open_in_web">Buka di peramban</string>
   <string name="translate">Menerjemahkan</string>
@@ -392,17 +392,18 @@ Aplikasi <b>tidak menggunakan alat pelacakan</b> (Ukuran penonton, kesalahan lap
     </string>
   <string name="privacy_API_yandex_title">Terjemahan dari kutipan</string>
   <string name="privacy_API_yandex_authorizations">
-        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
+        Aplikasi ini menawarkan kemampuan untuk menerjemahkan kutipan menggunakan perangkat lokal dan API Yandex.\n
+        Yandex memiliki kebijakan privasi yang tepat yang dapat ditemukan disini: 
+https://yandex.ru/legal/confidential/?lang=en
     </string>
   <string name="thanks_text">
-        Thank you to Stéphane for the logo.
+        Terima kasih untuk Stéphane untuk logo.
     </string>
   <string name="thanks_text_dev">
-        Thank you to:
+        Terima kasih untuk:
     </string>
-  <string name="filter_regex">Filter out by regular expressions</string>
-  <string name="search">Search</string>
-  <string name="delete">Delete</string>
-  <string name="fetch_more_toots">Fetch more toots…</string>
+  <string name="filter_regex">Saring dengan ekspresi reguler</string>
+  <string name="search">Cari</string>
+  <string name="delete">Hapus</string>
+  <string name="fetch_more_toots">Ambil lebih banyak kutipan…</string>
 </resources>
