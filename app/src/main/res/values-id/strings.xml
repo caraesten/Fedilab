@@ -21,9 +21,9 @@
   <string name="save_over">Media disimpan</string>
   <string name="download_from">Berkas: %1$s</string>
   <string name="password">Kata Sandi</string>
-  <string name="email">Surat Elektronik</string>
+  <string name="email">Surel</string>
   <string name="accounts">Akun</string>
-  <string name="toots">Panjang</string>
+  <string name="toots">Kutipan</string>
   <string name="tags">Label</string>
   <string name="token">Bukti</string>
   <string name="save">Simpan</string>
@@ -177,7 +177,7 @@
   <string name="show_reply">Klik pada tombol untuk menampilkan kutipan asli</string>
   <string name="upload_form_description">Menjelaskan untuk tuna netra</string>
   <!-- Instance -->
-  <string name="instance_no_description">No description available!</string>
+  <string name="instance_no_description">Deskripsi tidak tersedia!</string>
   <!-- About -->
   <string name="about_vesrion">Rilis %1$s</string>
   <string name="about_developer">Pengembang:</string>
@@ -230,12 +230,12 @@
   <string name="pinned_toots">Disematkan</string>
   <!-- TOAST -->
   <string name="client_error">Tidak menemukan id klien!</string>
-  <string name="no_internet">No Internet connection!</string>
-  <string name="toast_block">The account was blocked!</string>
-  <string name="toast_unblock">The account is no longer blocked!</string>
-  <string name="toast_mute">The account was muted!</string>
-  <string name="toast_unmute">The account is no longer muted!</string>
-  <string name="toast_follow">The account was followed!</string>
+  <string name="no_internet">Tidak ada koneksi internet!</string>
+  <string name="toast_block">Akun diblokir!</string>
+  <string name="toast_unblock">Akun tidak lagi diblokir!</string>
+  <string name="toast_mute">Akun dibisukan!</string>
+  <string name="toast_unmute">Akun tidak dibisukan lagi!</string>
+  <string name="toast_follow">Akun itu diikuti!</string>
   <string name="toast_unfollow">Akun tersebut tidak lagi diikuti!</string>
   <string name="toast_reblog">Kutipan itu ditingkatkan!</string>
   <string name="toast_unreblog">Kutipan tidak lagi ditingkatkan!</string>
@@ -303,17 +303,17 @@
   <string name="username_no_space">Kamu telah mencapai 30 karakter yang diizinkan!</string>
   <string name="settings_title_hour">Slot waktu untuk pemberitahuan:</string>
   <string name="settings_time_from">Antara</string>
-  <string name="settings_time_to">and</string>
-  <string name="settings_time_greater">The time must be greater than %1$s</string>
-  <string name="settings_time_lower">The time must be lower than %1$s</string>
-  <string name="settings_hour_init">Start time</string>
-  <string name="settings_hour_end">End time</string>
-  <string name="embedded_browser">Use the built-in browser</string>
-  <string name="use_javascript">Enable Javascript</string>
-  <string name="use_cookies">Allow third-party cookies</string>
-  <string name="settings_ui_layout">Layout for timelines: </string>
+  <string name="settings_time_to">dan</string>
+  <string name="settings_time_greater">Waktunya harus lebih besar dari %1$s</string>
+  <string name="settings_time_lower">Waktunya harus lebih rendah dari %1$s</string>
+  <string name="settings_hour_init">Waktu mulai</string>
+  <string name="settings_hour_end">Waktu akhir</string>
+  <string name="embedded_browser">Gunakan browser built-in</string>
+  <string name="use_javascript">Aktifkan Javascript</string>
+  <string name="use_cookies">Izinkan cookie pihak ketiga</string>
+  <string name="settings_ui_layout">Tata letak untuk kronologi: </string>
   <string-array name="settings_menu_tabs">
-    <item>Tabs</item>
+    <item>Tab</item>
     <item>Menu</item>
     <item>Tabs and menu</item>
   </string-array>
@@ -381,7 +381,7 @@
         - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
         <b>&#9888; These actions are carried out only when user requests them.</b>
     </string>
-  <string name="privacy_API_title">Tracking and Libraries</string>
+  <string name="privacy_API_title">Pelacakan dan Perpustakaan</string>
   <string name="privacy_API">
 Aplikasi <b>tidak menggunakan alat pelacakan</b> (Ukuran penonton, kesalahan laporan, dll) dan tidak mengandung iklan apapun.\n\n
         Penggunaan perpustakaan diminimalkan: \n
