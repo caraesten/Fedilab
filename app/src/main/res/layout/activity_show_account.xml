@@ -52,11 +52,13 @@
                         app:layout_collapseMode="parallax"
                         tools:ignore="ContentDescription" />
                     <ImageView
-                        android:padding="10dp"
+                        android:padding="1dp"
+                        android:layout_margin="10dp"
                         android:id="@+id/account_pp"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
                         app:layout_scrollFlags="scroll"
+                        android:background="@drawable/circle_background_white"
                         android:layout_centerInParent="true"
                         tools:ignore="ContentDescription" />
                     <android.support.design.widget.FloatingActionButton
