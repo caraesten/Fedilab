@@ -110,44 +110,44 @@
   <string name="pin_add">Sematkan tiupan ini?</string>
   <string name="pin_remove">Lepaskan sematan tiupan ini?</string>
   <string name="more_action_1">Bisu</string>
-  <string name="more_action_2">Block</string>
-  <string name="more_action_3">Report</string>
-  <string name="more_action_4">Remove</string>
-  <string name="more_action_5">Copy</string>
-  <string name="more_action_6">Share</string>
-  <string name="more_action_7">Mention</string>
+  <string name="more_action_2">Blok</string>
+  <string name="more_action_3">Melaporkan</string>
+  <string name="more_action_4">Menghapus</string>
+  <string name="more_action_5">Salin</string>
+  <string name="more_action_6">Bagikan</string>
+  <string name="more_action_7">Menyebut</string>
   <string-array name="more_action_confirm">
-    <item>Mute this account?</item>
-    <item>Block this account?</item>
-    <item>Report this toot?</item>
+    <item>Bisukan akun ini?</item>
+    <item>Blok akun ini?</item>
+    <item>Laporkan tiupan ini?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>Remove this toot?</item>
+    <item>Menghapus tiupan ini?</item>
   </string-array>
   <plurals name="preview_replies">
-    <item quantity="other">%d replies</item>
+    <item quantity="other">%d balasan</item>
   </plurals>
   <!-- Date -->
   <plurals name="date_seconds">
-    <item quantity="other">%d seconds ago</item>
+    <item quantity="other">%d detik yang lalu</item>
   </plurals>
   <plurals name="date_minutes">
-    <item quantity="other">%d minutes ago</item>
+    <item quantity="other">%d menit yang lalu</item>
   </plurals>
   <plurals name="date_hours">
-    <item quantity="other">%d hours ago</item>
+    <item quantity="other">%d jam yang lalu</item>
   </plurals>
-  <string name="date_yesterday">Yesterday</string>
-  <string name="date_day_before_yesterday">Before yesterday</string>
-  <string name="date_day">%d days ago</string>
+  <string name="date_yesterday">Kemarin</string>
+  <string name="date_day_before_yesterday">Sebelum kemarin</string>
+  <string name="date_day">%d hari yang lalu</string>
   <plurals name="date_month">
-    <item quantity="other">%d months ago</item>
+    <item quantity="other">%d bulan yang lalu</item>
   </plurals>
   <plurals name="date_year">
-    <item quantity="other">%d years ago</item>
+    <item quantity="other">%d tahun yang lalu</item>
   </plurals>
   <!-- TOOT -->
-  <string name="toot_cw_placeholder">Warning</string>
+  <string name="toot_cw_placeholder">Peringatan</string>
   <string name="toot_placeholder">What is on your mind?</string>
   <string name="toot_it">TOOT!</string>
   <string name="cw">cw</string>
