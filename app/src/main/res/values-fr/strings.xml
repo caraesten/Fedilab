@@ -411,5 +411,5 @@
   <string name="filter_regex">Filtrer avec une expression rationnelle</string>
   <string name="search">Rechercher</string>
   <string name="delete">Supprimer</string>
-  <string name="fetch_more_toots">Afficher plus de pouets…</string>
+  <string name="fetch_more_toots">Fetch more toots…</string>
 </resources>
