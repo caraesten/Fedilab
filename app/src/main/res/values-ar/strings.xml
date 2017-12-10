@@ -395,7 +395,7 @@
   <string name="settings_popup_notification">For unread notifications?</string>
   <!-- CACHE -->
   <string name="cache_title">مسح ذاكرة التخزين المؤقت</string>
-  <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+  <string name="cache_message">هناك %1$s من البيانات في ذاكرة التخزين المؤقتة.\n\nهل تودّ إزالتها ؟</string>
   <string name="cache_units">Mb</string>
   <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
   <!-- PRIVACY -->
