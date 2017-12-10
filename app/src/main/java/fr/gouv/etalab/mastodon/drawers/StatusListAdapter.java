@@ -916,8 +916,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             });
 
-
-
+            
             holder.yandex_translate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
