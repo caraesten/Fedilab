@@ -130,45 +130,45 @@
   </plurals>
   <!-- Date -->
   <plurals name="date_seconds">
-    <item quantity="one">hace %d segundo</item>
-    <item quantity="other">hace %d segundo</item>
+    <item quantity="one">Hace %d segundo</item>
+    <item quantity="other">Hace %d segundos</item>
   </plurals>
   <plurals name="date_minutes">
-    <item quantity="one">hace %d minuto</item>
-    <item quantity="other">hace %d minutos</item>
+    <item quantity="one">Hace %d minuto</item>
+    <item quantity="other">Hace %d minutos</item>
   </plurals>
   <plurals name="date_hours">
-    <item quantity="one">%d hour ago</item>
-    <item quantity="other">%d hours ago</item>
+    <item quantity="one">Hace %d hora</item>
+    <item quantity="other">Hace %d horas</item>
   </plurals>
-  <string name="date_yesterday">Yesterday</string>
-  <string name="date_day_before_yesterday">Before yesterday</string>
-  <string name="date_day">%d days ago</string>
+  <string name="date_yesterday">Ayer</string>
+  <string name="date_day_before_yesterday">Antes de ayer</string>
+  <string name="date_day">Hace %d días</string>
   <plurals name="date_month">
-    <item quantity="one">%d month ago</item>
-    <item quantity="other">%d months ago</item>
+    <item quantity="one">Hace %d mes</item>
+    <item quantity="other">Hace %d meses</item>
   </plurals>
   <plurals name="date_year">
-    <item quantity="one">One year ago</item>
-    <item quantity="other">%d years ago</item>
+    <item quantity="one">Hace un año</item>
+    <item quantity="other">Hace %d años</item>
   </plurals>
   <!-- TOOT -->
-  <string name="toot_cw_placeholder">Warning</string>
-  <string name="toot_placeholder">What is on your mind?</string>
+  <string name="toot_cw_placeholder">Advertencia</string>
+  <string name="toot_placeholder">¿En qué estás pensando?</string>
   <string name="toot_it">TOOT!</string>
   <string name="cw">cw</string>
   <string name="toot_title">Write a toot</string>
   <string name="toot_title_reply">Reply to a toot</string>
-  <string name="toot_no_space">You have reached the 500 characters allowed!</string>
-  <string name="toot_select_image">Select a media</string>
-  <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-  <string name="toot_delete_media">Delete this media?</string>
+  <string name="toot_no_space">¡Has alcanzado los 500 caracteres permitidos!</string>
+  <string name="toot_select_image">Selecciona un medio</string>
+  <string name="toot_select_image_error">¡Un error ocurrió mientras seleccionaba un medio!</string>
+  <string name="toot_delete_media">¿Eliminar este medio?</string>
   <string name="toot_error_no_content">Your toot is empty!</string>
   <string name="toot_visibility_tilte">Visibility of the toot</string>
   <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
   <string name="toot_sent">The toot has been sent!</string>
   <string name="toot_reply_content_title">You are replying to this toot:</string>
-  <string name="toot_sensitive">Sensitive content?</string>
+  <string name="toot_sensitive">¿Contenido sensible?</string>
   <string-array name="toot_visibility">
     <item>Post to public timelines</item>
     <item>Do not post to public timelines</item>
@@ -203,8 +203,8 @@
   <string name="following_cnt">Following \n %1$s</string>
   <string name="followers_cnt">Followers \n %1$s</string>
   <string name="pins_cnt">Pinned \n %d</string>
-  <string name="authorize">Authorize</string>
-  <string name="reject">Reject</string>
+  <string name="authorize">Autorizar</string>
+  <string name="reject">Rechazar</string>
   <!-- Scheduled toots -->
   <string name="no_scheduled_toots">No scheduled toot to display!</string>
   <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
@@ -212,10 +212,10 @@
   <string name="media_count">Media: %d</string>
   <string name="toot_scheduled">The toot has been scheduled!</string>
   <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
-  <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+  <string name="warning_battery">¡Ahorrador de batería activado! Podría no trabajar como lo esperado.</string>
   <!-- Notifications -->
-  <string name="no_notifications">No notification to display</string>
-  <string name="notif_mention">mentioned you</string>
+  <string name="no_notifications">Ninguna notificación para mostrar</string>
+  <string name="notif_mention">te mencionó</string>
   <string name="notif_reblog">boosted your status</string>
   <string name="notif_favourite">favourited your status</string>
   <string name="notif_follow">followed you</string>
