@@ -300,10 +300,10 @@
   <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
   <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
   <!-- Settings -->
-  <string name="settings_title_optimisation">Optimisation of loading</string>
-  <string name="set_toots_page">Number of toots per load</string>
-  <string name="set_accounts_page">Number of accounts per load</string>
-  <string name="set_notifications_page">Number of notifications per load</string>
+  <string name="settings_title_optimisation">التحسينات عند التحميل</string>
+  <string name="set_toots_page">عدد التبويقات التي يتم تحميلها كل مرة</string>
+  <string name="set_accounts_page">عدد الحسابات التي يتم تحميلها كل مرة</string>
+  <string name="set_notifications_page">عدد الإخطارات التي يتم تحميلها كل مرة</string>
   <string name="set_attachment_always">دائما</string>
   <string name="set_attachment_wifi">واي فاي</string>
   <string name="set_attachment_ask">اطلب</string>
@@ -350,7 +350,7 @@
   <string name="settings_hour_init">من</string>
   <string name="settings_hour_end">إلى</string>
   <string name="embedded_browser">إستخدم المتصفح المُدمَج في التطبيق</string>
-  <string name="use_javascript">Enable Javascript</string>
+  <string name="use_javascript">تفعيل الجافاسكريبت</string>
   <string name="use_cookies">Allow third-party cookies</string>
   <string name="settings_ui_layout">Layout for timelines: </string>
   <string-array name="settings_menu_tabs">
@@ -362,7 +362,7 @@
     <item>يانديكس</item>
     <item>لا</item>
   </string-array>
-  <string name="set_led_colour">Set LED colour:</string>
+  <string name="set_led_colour">تحديد لون الإشعار الضوئي :</string>
   <string-array name="led_colours">
     <item>أزرق</item>
     <item>سماوي</item>
