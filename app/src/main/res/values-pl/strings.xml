@@ -402,10 +402,9 @@
   <string name="privacy_API">
         The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
         The use of libraries is minimized: \n
-        - <b>Universal Image Loader</b>: To manage media\n
+        - <b>Glide</b>: To manage media\n
         - <b>Android-Job</b>: To manage services\n
         - <b>PhotoView</b>: To manage images\n
-        - <b>Gson</b> : To save drafts
     </string>
   <string name="privacy_API_yandex_title">Translation of toots</string>
   <string name="privacy_API_yandex_authorizations">
@@ -422,5 +421,4 @@
   <string name="search">Search</string>
   <string name="delete">Delete</string>
   <string name="fetch_more_toots">Fetch more toots…</string>
-    <string name="set_disable_gif">Disable GIF avatars</string>
 </resources>
