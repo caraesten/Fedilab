@@ -65,7 +65,7 @@
   <string name="reblog">الترقيات</string>
   <string name="show_boosts">عرض الترقيات</string>
   <string name="show_replies">عرض الردود</string>
-  <string name="action_open_in_web">فتح في المتصفح</string>
+  <string name="action_open_in_web">إفتح في المتصفح</string>
   <string name="translate">ترجمة</string>
   <string name="please_wait">Please, wait few seconds before making this action.</string>
   <!--- Menu -->
@@ -89,11 +89,11 @@
   <string name="send_email">إرسال بريد إلكتروني</string>
   <string name="choose_file">يرجى تحديد ملف</string>
   <string name="choose_file_error">No file explorer found!</string>
-  <string name="click_to_change">Click on the path to change it</string>
+  <string name="click_to_change">إضغط على رابط المسار لتعديله</string>
   <string name="failed">فشل !</string>
   <string name="scheduled_toots">التبويقات المبرمجة</string>
   <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
-  <string name="insert_emoji">Insert emoji</string>
+  <string name="insert_emoji">إضافة إيموجو</string>
   <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
   <string name="live_notif">Live notifications</string>
   <!-- Status -->
@@ -188,8 +188,8 @@
   <string name="toot_select_image_error">An error occurred while selecting the media!</string>
   <string name="toot_delete_media">Delete this media?</string>
   <string name="toot_error_no_content">إن تبويقك فارغ !</string>
-  <string name="toot_visibility_tilte">Visibility of the toot</string>
-  <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
+  <string name="toot_visibility_tilte">طريقة نشر التبويق</string>
+  <string name="toots_visibility_tilte">الطريقة الإفتراضية لنشر التبويقات :</string>
   <string name="toot_sent">تم إرسال التبويق !</string>
   <string name="toot_reply_content_title">You are replying to this toot:</string>
   <string name="toot_sensitive">محتوى حساس ؟</string>
@@ -231,7 +231,7 @@
   <string name="reject">رفض</string>
   <!-- Scheduled toots -->
   <string name="no_scheduled_toots">ليس عندك أية تبويقات مبرمَجة للعرض !</string>
-  <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
+  <string name="no_scheduled_toots_indications">قم بتحرير تبويق ثم إختر <b>برمَجة</b> على القائمة العلوية.</string>
   <string name="remove_scheduled">Delete scheduled toot?</string>
   <string name="media_count">الوسائط : %d</string>
   <string name="toot_scheduled">The toot has been scheduled!</string>
@@ -328,9 +328,9 @@
   <string name="set_share_validation">Show confirmation dialog before boosting</string>
   <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
   <string name="settings_title_more_options">الإعدادات المتقدمة</string>
-  <string name="set_wifi_only">Notify in WIFI only</string>
+  <string name="set_wifi_only">الإخطار في وضع الواي فاي فقط</string>
   <string name="set_notify">Notify?</string>
-  <string name="set_notif_silent">Silent Notifications</string>
+  <string name="set_notif_silent">إخطارت صامتة</string>
   <string name="set_night_mode">وضع ليلي</string>
   <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
   <string name="settings_title_profile">تعديل الملف الشخصي</string>
@@ -349,7 +349,7 @@
   <string name="settings_time_lower">The time must be lower than %1$s</string>
   <string name="settings_hour_init">من</string>
   <string name="settings_hour_end">إلى</string>
-  <string name="embedded_browser">Use the built-in browser</string>
+  <string name="embedded_browser">إستخدم المتصفح المُدمَج في التطبيق</string>
   <string name="use_javascript">Enable Javascript</string>
   <string name="use_cookies">Allow third-party cookies</string>
   <string name="settings_ui_layout">Layout for timelines: </string>
