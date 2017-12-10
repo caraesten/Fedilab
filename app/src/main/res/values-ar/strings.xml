@@ -258,7 +258,7 @@
     <item quantity="two">and %d other toots to discover</item>
     <item quantity="few">and %d other toots to discover</item>
     <item quantity="many">and %d other toots to discover</item>
-    <item quantity="other">and %d other toots to discover</item>
+    <item quantity="other">و %d تبويقات أخرى إكتشفها</item>
   </plurals>
   <string name="delete_notification_ask">هل تريد حذف الإخطار ؟</string>
   <string name="delete_notification_ask_all">هل تود حذف كل الإخطارات ؟</string>
@@ -271,13 +271,13 @@
   <!-- TOAST -->
   <string name="client_error">Unable to get client id!</string>
   <string name="no_internet">لا يوجد إتصال بشبكة الإنترنت !</string>
-  <string name="toast_block">The account was blocked!</string>
+  <string name="toast_block">تم حجب الحساب !</string>
   <string name="toast_unblock">The account is no longer blocked!</string>
   <string name="toast_mute">تم كتم الحساب !</string>
   <string name="toast_unmute">The account is no longer muted!</string>
   <string name="toast_follow">The account was followed!</string>
   <string name="toast_unfollow">The account is no longer followed!</string>
-  <string name="toast_reblog">The toot was boosted!</string>
+  <string name="toast_reblog">تمت ترقية التبويق !</string>
   <string name="toast_unreblog">The toot is no longer boosted!</string>
   <string name="toast_favourite">The toot was added to your favourites!</string>
   <string name="toast_unfavourite">The toot was removed from your favourites!</string>
@@ -294,7 +294,7 @@
   <string name="toast_update_credential_ok">The profile data have been saved!</string>
   <string name="nothing_to_do">No action can be taken</string>
   <string name="toast_saved">The media has been saved!</string>
-  <string name="toast_error_translate">An error occurred while translating!</string>
+  <string name="toast_error_translate">وقع خطاء أثناء عملية الترجمة !</string>
   <string name="toast_toot_saved">تم حِفظ المُسوَدَّة !</string>
   <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
   <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
