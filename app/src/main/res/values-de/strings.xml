@@ -387,13 +387,13 @@
     \n
              <b>⚠ Diese Aktionen werden nur auf Verlangen des Benutzers durchgeführt.</b></string>
   <string name="privacy_API_title">Tracking und Bibliotheken</string>
-  <string name="privacy_API">Die Anwendung <b>benutzt keine Trackingwerkzeuge</b> (Nutzerbewertung, Fehlerberichte, etc.) und enthält keinerlei Werbung.\n
-    \n
-             Die Nutzung von Bibliotheken ist minimiert: \n
-             - <b>Universal Image Loader</b>: Dateien verwalten\n
-             - <b>Android-Job</b>: Dienste verwalten\n
-             - <b>PhotoView</b>: Bilder verwalten\n
-             - <b>Gson</b> : Entwürfe speichern</string>
+  <string name="privacy_API">
+        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
+        The use of libraries is minimized: \n
+        - <b>Glide</b>: To manage media\n
+        - <b>Android-Job</b>: To manage services\n
+        - <b>PhotoView</b>: To manage images\n
+    </string>
   <string name="privacy_API_yandex_title">Übersetzung von Toots</string>
   <string name="privacy_API_yandex_authorizations">Die Anwendung bietet die Möglichkeit, toots mithilfe der lokalen sowie Yandex API zu übersetzen.\n
              Yandex hat seine eigene Datenschutzerklärung. Diese kann hier eingehesen werden: https://yandex.ru/legal/confidential/?lang=en</string>

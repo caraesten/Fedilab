@@ -282,7 +282,7 @@
   <string name="set_display_reply">Afficher le message précédent lors d\'une réponse</string>
   <string name="set_display_local">Afficher le fil local</string>
   <string name="set_display_global">Afficher le fil public</string>
-  <string name="set_disable_gif">Disable GIF avatars</string>
+  <string name="set_disable_gif">Désactiver l\'animation des avatars</string>
   <string name="set_folder_title">Destination : </string>
   <string name="set_auto_store_toot">Enregistrer les brouillons automatiquement</string>
   <string name="set_bubble_counter">Afficher les compteurs</string>
@@ -393,10 +393,9 @@
   <string name="privacy_API">
         L\'application n\'utilise <b>aucun outil de suivi</b> (mesure d\'audience, rapport d\'erreurs, etc.) et elle ne comporte aucune publicité.\n\n
         L\'utilisation de bibliothèques est réduite au strict minimum :\n
-        - <b>Universal Image Loader</b> : Pour la gestion des médias\n
+        - <b>Glid</b> : Pour la gestion des médias\n
         - <b>Android-Job</b> : Pour la gestion des services\n
         - <b>PhotoView</b> : Pour la gestion des images\n
-        - <b>Gson</b> : Pour la sauvegarde des brouillons
     </string>
   <string name="privacy_API_yandex_title">Traduction des pouets</string>
   <string name="privacy_API_yandex_authorizations">
@@ -412,5 +411,6 @@
   <string name="filter_regex">Filtrer avec une expression rationnelle</string>
   <string name="search">Rechercher</string>
   <string name="delete">Supprimer</string>
-  <string name="fetch_more_toots">Fetch more toots…</string>
+  <string name="fetch_more_toots">Retrouver plus de pouets…</string>
+
 </resources>

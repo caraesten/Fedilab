@@ -398,12 +398,12 @@ Aceste date sunt strict confidențiale și pot fi folosite doar de aplicație.
     </string>
   <string name="privacy_API_title">Urmărire și biblioteci</string>
   <string name="privacy_API">
-Aplicația  <b>nu folosește unelte de urmărire</b> (audiența de măsurare, erori de raportare, etc.) și nu conține reclame.\n\n
-Folosirea librăriilor este minimă: \n
-- <b>Universal Image Loader</b>: Să gestioneze media \n
-- <b>Android-Job</b>: Să gestioneze servicii\n
-- <b>PhotoView</b>: Să gestioneze imagini\n
- - <b>Gson</b> : Să salveze ciorne    </string>
+        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
+        The use of libraries is minimized: \n
+        - <b>Glide</b>: To manage media\n
+        - <b>Android-Job</b>: To manage services\n
+        - <b>PhotoView</b>: To manage images\n
+    </string>
   <string name="privacy_API_yandex_title">Traducerea notițelor</string>
   <string name="privacy_API_yandex_authorizations">
 Alpicația oferă posibilitatea de a traduce notițe folosind local-ul aparatului și API-ul Yandex.\n 
@@ -417,6 +417,5 @@ Vă mulțumesc:
   <string name="filter_regex">Filtrează expresii usuale</string>
   <string name="search">Căutare</string>
   <string name="delete">Șterge</string>
-<string name="fetch_more_toots">Fetch more toots…</string>
-
+  <string name="fetch_more_toots">Fetch more toots…</string>
 </resources>
