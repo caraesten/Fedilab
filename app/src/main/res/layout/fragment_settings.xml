@@ -120,6 +120,14 @@
             android:text="@string/live_notif"
             android:layout_height="wrap_content" />
 
+        <!-- GIF AVATARS -->
+        <CheckBox
+            android:id="@+id/set_disable_gif"
+            android:layout_width="wrap_content"
+            android:text="@string/set_disable_gif"
+            android:layout_height="wrap_content" />
+
+
         <!-- Translation engine -->
         <LinearLayout
             android:layout_marginTop="10dp"
