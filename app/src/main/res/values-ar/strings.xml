@@ -230,7 +230,7 @@
   <string name="authorize">Authorize</string>
   <string name="reject">رفض</string>
   <!-- Scheduled toots -->
-  <string name="no_scheduled_toots">No scheduled toot to display!</string>
+  <string name="no_scheduled_toots">ليس عندك أية تبويقات مبرمَجة للعرض !</string>
   <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
   <string name="remove_scheduled">Delete scheduled toot?</string>
   <string name="media_count">الوسائط : %d</string>
@@ -265,9 +265,9 @@
   <string name="delete_notification">The notification has been deleted!</string>
   <string name="delete_notification_all">All notifications have been deleted!</string>
   <!-- HEADER -->
-  <string name="following">يتابع</string>
+  <string name="following">يتابِع</string>
   <string name="followers">المتابِعون</string>
-  <string name="pinned_toots">Pinned</string>
+  <string name="pinned_toots">التبويقات المُثبَّتة</string>
   <!-- TOAST -->
   <string name="client_error">Unable to get client id!</string>
   <string name="no_internet">No Internet connection!</string>
@@ -444,5 +444,4 @@
   <string name="search">البحث</string>
   <string name="delete">حذف</string>
   <string name="fetch_more_toots">تحميل المزيد من التبويقات ...</string>
-    <string name="set_disable_gif">Disable GIF avatars</string>
 </resources>
