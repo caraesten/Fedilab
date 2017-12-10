@@ -290,6 +290,7 @@
   <string name="set_display_reply">Arată mesajul anterior în răspunsuri</string>
   <string name="set_display_local">Afişare cronologie locală</string>
   <string name="set_display_global">Afişare cronologie federală</string>
+  <string name="set_disable_gif">Disable GIF avatars</string>
   <string name="set_folder_title">Cale: </string>
   <string name="set_auto_store_toot">Salvează ciornele automat</string>
   <string name="set_bubble_counter">Arată contoarele</string>
@@ -416,5 +417,5 @@ Vă mulțumesc:
   <string name="filter_regex">Filtrează expresii usuale</string>
   <string name="search">Căutare</string>
   <string name="delete">Șterge</string>
-<string name="fetch_more_toots">Fetch more toots…</string>
+  <string name="fetch_more_toots">Fetch more toots…</string>
 </resources>
