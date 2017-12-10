@@ -216,6 +216,19 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean disableGif = sharedpreferences.getBoolean(Helper.SET_DISABLE_GIF, false);
+        final CheckBox set_disable_gif = rootView.findViewById(R.id.set_disable_gif);
+        set_disable_gif.setChecked(disableGif);
+        set_disable_gif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_DISABLE_GIF, set_disable_gif.isChecked());
+                editor.apply();
+            }
+        });
+
+
         boolean livenotif = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
         final CheckBox set_live_notif = rootView.findViewById(R.id.set_live_notify);
         set_live_notif.setChecked(livenotif);
@@ -233,6 +246,7 @@ public class SettingsFragment extends Fragment {
                 }
             }
         });
+
 
 
         boolean display_global = sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true);

@@ -56,7 +56,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Login activity class which handles the connection
  */
 
-public abstract class BaseLoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private String client_id;
     private String client_secret;
@@ -71,7 +71,6 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        installProviders();
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
@@ -133,9 +132,9 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
                                             }
                                             login_instance.setAdapter(null);
                                             ArrayAdapter<String> adapter =
-                                                    new ArrayAdapter<>(BaseLoginActivity.this, android.R.layout.simple_list_item_1, instances);
+                                                    new ArrayAdapter<>(LoginActivity.this, android.R.layout.simple_list_item_1, instances);
                                             login_instance.setAdapter(adapter);
-                                            if( login_instance.hasFocus() && !BaseLoginActivity.this.isFinishing())
+                                            if( login_instance.hasFocus() && !LoginActivity.this.isFinishing())
                                                 login_instance.showDropDown();
 
                                         } catch (JSONException ignored) {isLoadingInstance = false;}
@@ -178,7 +177,6 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
         });
     }
 
-    protected abstract void installProviders();
 
     @Override
     protected void onResume(){
@@ -196,7 +194,7 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
         try {
             instance =  URLEncoder.encode(login_instance.getText().toString().trim(), "utf-8");
         } catch (UnsupportedEncodingException e) {
-            Toast.makeText(BaseLoginActivity.this,R.string.client_error, Toast.LENGTH_LONG).show();
+            Toast.makeText(LoginActivity.this,R.string.client_error, Toast.LENGTH_LONG).show();
         }
         final String action = "/api/v1/apps";
         final HashMap<String, String> parameters = new HashMap<>();
@@ -227,7 +225,7 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
                               connectionButton.setEnabled(true);
                               login_two_step.setVisibility(View.VISIBLE);
                               if( client_id_for_webview){
-                                  Intent i = new Intent(BaseLoginActivity.this, WebviewConnectActivity.class);
+                                  Intent i = new Intent(LoginActivity.this, WebviewConnectActivity.class);
                                   i.putExtra("instance", instance);
                                   startActivity(i);
                               }
@@ -278,7 +276,7 @@ public abstract class BaseLoginActivity extends AppCompatActivity {
                                         editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);
                                         editor.apply();
                                         //Update the account with the token;
-                                        new UpdateAccountInfoAsyncTask(BaseLoginActivity.this, token, instance).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                        new UpdateAccountInfoAsyncTask(LoginActivity.this, token, instance).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                     } catch (JSONException ignored) {}
                                 }
                             });

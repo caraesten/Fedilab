@@ -180,6 +180,8 @@ public class Helper {
     public static final String SHOW_BATTERY_SAVER_MESSAGE = "show_battery_saver_message";
     public static final String LAST_NOTIFICATION_MAX_ID = "last_notification_max_id";
     public static final String LAST_HOMETIMELINE_MAX_ID = "last_hometimeline_max_id";
+    public static final String BOOKMARK_ID = "bookmark_id";
+    public static final String LAST_HOMETIMELINE_NOTIFICATION_MAX_ID = "last_hometimeline_notification_max_id";
     public static final String SHOULD_CONTINUE_STREAMING = "should_continue_streaming";
     public static final String SHOULD_CONTINUE_STREAMING_FEDERATED = "should_continue_streaming_federated";
     public static final String SHOULD_CONTINUE_STREAMING_LOCAL = "should_continue_streaming_local";
@@ -214,6 +216,7 @@ public class Helper {
     public static final String INSTANCE_VERSION = "instance_version";
     public static final String SET_LIVE_NOTIFICATIONS = "set_show_replies";
     public static final String SET_PICTURE_URL = "set_picture_url";
+    public static final String SET_DISABLE_GIF = "set_disable_gif";
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;
@@ -574,8 +577,11 @@ public class Helper {
             return context.getResources().getQuantityString(R.plurals.date_hours, (int)hours, (int)hours);
         else if(minutes > 0)
             return context.getResources().getQuantityString(R.plurals.date_minutes, (int)minutes, (int)minutes);
-        else
-            return context.getResources().getQuantityString(R.plurals.date_seconds, (int)seconds, (int)seconds);
+        else {
+            if (seconds < 0)
+                seconds = 0;
+            return context.getResources().getQuantityString(R.plurals.date_seconds, (int) seconds, (int) seconds);
+        }
     }
 
     /***
@@ -1668,5 +1674,27 @@ public class Helper {
         c.drawCircle((w / 2) + 4, (h / 2) + 4, radius, p);
         return output;
     }
+
+
+    public static void loadGiF(final Context context, String url, final ImageView imageView){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean disableGif = sharedpreferences.getBoolean(SET_DISABLE_GIF, false);
+
+        if( !disableGif)
+            Glide.with(imageView.getContext())
+                .load(url)
+                .into(imageView);
+        else
+            Glide.with(context)
+                    .asBitmap()
+                    .load(url)
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            imageView.setImageBitmap(resource);
+                        }
+                    });
+    }
+
 
 }

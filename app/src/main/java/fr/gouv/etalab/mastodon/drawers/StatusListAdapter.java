@@ -375,9 +375,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     imParams.height = (int) Helper.convertDpToPixel(30, context);
                                     imParams.width = (int) Helper.convertDpToPixel(30, context);
                                     holder.status_replies_profile_pictures.addView(imageView, imParams);
-                                    Glide.with(imageView.getContext())
-                                            .load(replies.getAccount().getAvatar())
-                                            .into(imageView);
+                                    Helper.loadGiF(context, replies.getAccount().getAvatar(), imageView);
                                     i++;
                                     addedPictures.add(replies.getAccount().getAcct());
                                 }
@@ -602,19 +600,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             Helper.absoluteDateTimeReveal(context, holder.status_toot_date, status.getCreated_at());
 
             if( status.getReblog() != null) {
-                Glide.with(holder.status_account_profile_boost.getContext())
-                        .load(ppurl)
-                        .into(holder.status_account_profile_boost);
-                Glide.with(holder.status_account_profile_boost_by.getContext())
-                        .load(status.getAccount().getAvatar())
-                        .into(holder.status_account_profile_boost_by);
+                Helper.loadGiF(context, ppurl, holder.status_account_profile_boost);
+                Helper.loadGiF(context, status.getAccount().getAvatar(), holder.status_account_profile_boost_by);
                 holder.status_account_profile_boost.setVisibility(View.VISIBLE);
                 holder.status_account_profile_boost_by.setVisibility(View.VISIBLE);
                 holder.status_account_profile.setVisibility(View.GONE);
             }else{
-                Glide.with(holder.status_account_profile.getContext())
-                        .load(ppurl)
-                        .into(holder.status_account_profile);
+                Helper.loadGiF(context, ppurl, holder.status_account_profile);
                 holder.status_account_profile_boost.setVisibility(View.GONE);
                 holder.status_account_profile_boost_by.setVisibility(View.GONE);
                 holder.status_account_profile.setVisibility(View.VISIBLE);
@@ -911,7 +903,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_favorite_count.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    CrossActions.doCrossAction(context, status, (status.isFavourited()|| (status.getReblog() != null && status.getReblog().isFavourited()))? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, statusListAdapter, StatusListAdapter.this, false);
+                    CrossActions.doCrossAction(context, status, API.StatusAction.FAVOURITE, statusListAdapter, StatusListAdapter.this, false);
                     return true;
                 }
             });
@@ -919,19 +911,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_reblog_count.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    CrossActions.doCrossAction(context, status, (status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged()))? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, statusListAdapter, StatusListAdapter.this, false);
+                    CrossActions.doCrossAction(context, status, API.StatusAction.REBLOG, statusListAdapter, StatusListAdapter.this, false);
                     return true;
                 }
             });
-            holder.status_pin.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    CrossActions.doCrossAction(context, status, (status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned()))? API.StatusAction.UNPIN:API.StatusAction.PIN, statusListAdapter, StatusListAdapter.this, true);
-                    return false;
-                }
-            });
 
-
+            
             holder.yandex_translate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -7,8 +7,8 @@ android {
         applicationId "fr.gouv.etalab.mastodon"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 84
-        versionName "1.6.4.1"
+        versionCode 86
+        versionName "1.6.5.1"
     }
     flavorDimensions "default"
     buildTypes {
@@ -21,7 +21,7 @@ android {
     productFlavors {
         fdroid {
         }
-        safetynet {
+        playstore {
         }
     }
 }
@@ -44,6 +44,5 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.10.3'
     implementation 'com.github.stom79:country-picker-android:1.2.0'
     implementation 'com.github.stom79:mytransl:1.2'
-    safetynetImplementation 'com.google.android.gms:play-services-safetynet:11.6.2'
-    safetynetImplementation 'io.github.kobakei:ratethisapp:1.2.0'
+    playstoreImplementation 'io.github.kobakei:ratethisapp:1.2.0'
 }
