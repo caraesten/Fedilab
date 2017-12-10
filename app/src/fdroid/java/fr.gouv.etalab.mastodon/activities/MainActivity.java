@@ -16,10 +16,6 @@ package fr.gouv.etalab.mastodon.activities;
 
 public class MainActivity extends BaseMainActivity {
 
-    @Override
-    protected void installProviders() {
-        // do nothing
-    }
 
     @Override
     protected void rateThisApp() {

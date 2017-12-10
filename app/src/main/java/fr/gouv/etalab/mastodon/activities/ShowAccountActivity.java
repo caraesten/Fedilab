@@ -620,7 +620,22 @@ public class ShowAccountActivity extends AppCompatActivity implements OnPostActi
 
 
         }
-        Glide.with(getApplicationContext()).load(account.getAvatar()).apply(RequestOptions.circleCropTransform()).into(account_pp);
+        boolean disableGif = sharedpreferences.getBoolean(Helper.SET_DISABLE_GIF, false);
+        if( !disableGif)
+            Glide.with(getApplicationContext()).load(account.getAvatar()).apply(RequestOptions.circleCropTransform()).into(account_pp);
+        else
+            Glide.with(getApplicationContext())
+                    .asBitmap()
+                    .load(account.getAvatar())
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), Helper.addBorder(resource, account_pp.getContext()));
+                            circularBitmapDrawable.setCircular(true);
+                            account_pp.setImageDrawable(circularBitmapDrawable);
+                        }
+                    });
+
 
     }
 

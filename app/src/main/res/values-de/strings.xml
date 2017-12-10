@@ -286,6 +286,7 @@
   <string name="set_display_reply">Zeige vorherige Nachricht beim Antworten</string>
   <string name="set_display_local">Lokale Zeitleiste anzeigen</string>
   <string name="set_display_global">Öffentliche Zeitleiste anzeigen</string>
+  <string name="set_disable_gif">Disable GIF avatars</string>
   <string name="set_folder_title">Pfad:</string>
   <string name="set_auto_store_toot">Speichere Entwürfe automatisch</string>
   <string name="set_bubble_counter">Anzahl neuer Beiträge anzeigen</string>

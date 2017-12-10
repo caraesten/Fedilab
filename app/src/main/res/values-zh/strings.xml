@@ -274,6 +274,7 @@
   <string name="set_display_reply">在回复中显示上一条消息</string>
   <string name="set_display_local">显示本地时间线</string>
   <string name="set_display_global">显示联邦时间线</string>
+  <string name="set_disable_gif">Disable GIF avatars</string>
   <string name="set_folder_title">路径: </string>
   <string name="set_auto_store_toot">自动保存草稿</string>
   <string name="set_bubble_counter">显示计数器</string>

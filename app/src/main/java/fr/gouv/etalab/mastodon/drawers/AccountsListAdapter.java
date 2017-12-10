@@ -32,8 +32,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -149,10 +147,7 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
         holder.account_fgc.setText(withSuffix(account.getFollowing_count()));
         holder.account_frc.setText(withSuffix(account.getFollowers_count()));
         //Profile picture
-        Glide.with(holder.account_pp.getContext())
-                .load(account.getAvatar())
-                .into(holder.account_pp);
-
+        Helper.loadGiF(context, account.getAvatar(), holder.account_pp);
         if( account.isMakingAction()){
             holder.account_follow.setEnabled(false);
         }else {
