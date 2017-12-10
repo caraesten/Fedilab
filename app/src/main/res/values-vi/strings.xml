@@ -274,6 +274,7 @@
   <string name="set_display_reply">Display previous message in responses</string>
   <string name="set_display_local">Display local timeline</string>
   <string name="set_display_global">Display federated timeline</string>
+  <string name="set_disable_gif">Disable GIF avatars</string>
   <string name="set_folder_title">Path: </string>
   <string name="set_auto_store_toot">Save drafts automatically</string>
   <string name="set_bubble_counter">Display counters</string>
@@ -405,5 +406,4 @@
   <string name="search">Search</string>
   <string name="delete">Delete</string>
   <string name="fetch_more_toots">Fetch more toots…</string>
-    <string name="set_disable_gif">Disable GIF avatars</string>
 </resources>
