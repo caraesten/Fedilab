@@ -21,9 +21,9 @@
   <string name="save_over">Media disimpan</string>
   <string name="download_from">Berkas: %1$s</string>
   <string name="password">Kata Sandi</string>
-  <string name="email">Surat Elektronik</string>
+  <string name="email">Surel</string>
   <string name="accounts">Akun</string>
-  <string name="toots">Panjang</string>
+  <string name="toots">Kutipan</string>
   <string name="tags">Label</string>
   <string name="token">Bukti</string>
   <string name="save">Simpan</string>
@@ -177,7 +177,7 @@
   <string name="show_reply">Klik pada tombol untuk menampilkan kutipan asli</string>
   <string name="upload_form_description">Menjelaskan untuk tuna netra</string>
   <!-- Instance -->
-  <string name="instance_no_description">No description available!</string>
+  <string name="instance_no_description">Deskripsi tidak tersedia!</string>
   <!-- About -->
   <string name="about_vesrion">Rilis %1$s</string>
   <string name="about_developer">Pengembang:</string>
@@ -205,37 +205,37 @@
   <string name="remove_scheduled">Hapus kutipan terjadwal?</string>
   <string name="media_count">Media: %d</string>
   <string name="toot_scheduled">Kutipan yang telah dijadwalkan!</string>
-  <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
-  <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+  <string name="toot_scheduled_date">Tanggal yang dijadwalkan harus lebih besar dari jam saat ini!</string>
+  <string name="warning_battery">Penghemat baterai diaktifkan! Ini mungkin tidak bekerja seperti yang diharapkan.</string>
   <!-- Notifications -->
-  <string name="no_notifications">No notification to display</string>
-  <string name="notif_mention">mentioned you</string>
-  <string name="notif_reblog">boosted your status</string>
-  <string name="notif_favourite">favourited your status</string>
-  <string name="notif_follow">followed you</string>
-  <string name="notif_pouet">New toot from %1$s</string>
+  <string name="no_notifications">Tidak ada pemberitahuan untuk ditampilkan</string>
+  <string name="notif_mention">menyebutmu</string>
+  <string name="notif_reblog">tingkatkan status Kamu</string>
+  <string name="notif_favourite">status kesukaan Kamu</string>
+  <string name="notif_follow">mengikutimu</string>
+  <string name="notif_pouet">Kutipan baru dari %1$s</string>
   <plurals name="other_notifications">
-    <item quantity="other">and %d other notifications</item>
+    <item quantity="other">dan %d pemberitahuan lainnya</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="other">and %d other toots to discover</item>
+    <item quantity="other">dan %d menemukan kutipan lain</item>
   </plurals>
-  <string name="delete_notification_ask">Delete a notification?</string>
-  <string name="delete_notification_ask_all">Delete all notifications?</string>
-  <string name="delete_notification">The notification has been deleted!</string>
-  <string name="delete_notification_all">All notifications have been deleted!</string>
+  <string name="delete_notification_ask">Hapus pemberitahuan?</string>
+  <string name="delete_notification_ask_all">Hapus semua pemberitahuan?</string>
+  <string name="delete_notification">Pemberitahuan telah dihapus!</string>
+  <string name="delete_notification_all">Semua pemberitahuan telah dihapus!</string>
   <!-- HEADER -->
-  <string name="following">Following</string>
-  <string name="followers">Followers</string>
-  <string name="pinned_toots">Pinned</string>
+  <string name="following">Yang diikuti</string>
+  <string name="followers">Pengikut</string>
+  <string name="pinned_toots">Disematkan</string>
   <!-- TOAST -->
-  <string name="client_error">Unable to get client id!</string>
-  <string name="no_internet">No Internet connection!</string>
-  <string name="toast_block">The account was blocked!</string>
-  <string name="toast_unblock">The account is no longer blocked!</string>
-  <string name="toast_mute">The account was muted!</string>
-  <string name="toast_unmute">The account is no longer muted!</string>
-  <string name="toast_follow">The account was followed!</string>
+  <string name="client_error">Tidak menemukan id klien!</string>
+  <string name="no_internet">Tidak ada koneksi internet!</string>
+  <string name="toast_block">Akun diblokir!</string>
+  <string name="toast_unblock">Akun tidak lagi diblokir!</string>
+  <string name="toast_mute">Akun dibisukan!</string>
+  <string name="toast_unmute">Akun tidak dibisukan lagi!</string>
+  <string name="toast_follow">Akun itu diikuti!</string>
   <string name="toast_unfollow">Akun tersebut tidak lagi diikuti!</string>
   <string name="toast_reblog">Kutipan itu ditingkatkan!</string>
   <string name="toast_unreblog">Kutipan tidak lagi ditingkatkan!</string>
@@ -303,85 +303,85 @@
   <string name="username_no_space">Kamu telah mencapai 30 karakter yang diizinkan!</string>
   <string name="settings_title_hour">Slot waktu untuk pemberitahuan:</string>
   <string name="settings_time_from">Antara</string>
-  <string name="settings_time_to">and</string>
-  <string name="settings_time_greater">The time must be greater than %1$s</string>
-  <string name="settings_time_lower">The time must be lower than %1$s</string>
-  <string name="settings_hour_init">Start time</string>
-  <string name="settings_hour_end">End time</string>
-  <string name="embedded_browser">Use the built-in browser</string>
-  <string name="use_javascript">Enable Javascript</string>
-  <string name="use_cookies">Allow third-party cookies</string>
-  <string name="settings_ui_layout">Layout for timelines: </string>
+  <string name="settings_time_to">dan</string>
+  <string name="settings_time_greater">Waktunya harus lebih besar dari %1$s</string>
+  <string name="settings_time_lower">Waktunya harus lebih rendah dari %1$s</string>
+  <string name="settings_hour_init">Waktu mulai</string>
+  <string name="settings_hour_end">Waktu akhir</string>
+  <string name="embedded_browser">Gunakan browser built-in</string>
+  <string name="use_javascript">Aktifkan Javascript</string>
+  <string name="use_cookies">Izinkan cookie pihak ketiga</string>
+  <string name="settings_ui_layout">Tata letak untuk kronologi: </string>
   <string-array name="settings_menu_tabs">
-    <item>Tabs</item>
+    <item>Tab</item>
     <item>Menu</item>
-    <item>Tabs and menu</item>
+    <item>Tab dan menu</item>
   </string-array>
   <string-array name="settings_translation">
     <item>Yandex</item>
-    <item>No</item>
+    <item>Tidak</item>
   </string-array>
-  <string name="set_led_colour">Set LED colour:</string>
+  <string name="set_led_colour">Atur warna LED:</string>
   <string-array name="led_colours">
-    <item>Blue</item>
-    <item>Cyan</item>
+    <item>Biru</item>
+    <item>Sian</item>
     <item>Magenta</item>
-    <item>Green</item>
-    <item>Red</item>
-    <item>Yellow</item>
-    <item>White</item>
+    <item>Hijau</item>
+    <item>Merah</item>
+    <item>Kuning</item>
+    <item>Putih</item>
   </string-array>
-  <string name="set_title_news">News</string>
-  <string name="set_notification_news">Notify for new toots on the home timeline</string>
-  <string name="set_show_error_messages">Display error messages</string>
-  <string name="action_follow">Follow</string>
-  <string name="action_unfollow">Unfollow</string>
-  <string name="action_block">Block</string>
-  <string name="action_unblock">Unblock</string>
-  <string name="action_mute">Mute</string>
-  <string name="action_no_action">No action</string>
-  <string name="action_unmute">Unmute</string>
-  <string name="request_sent">Request sent</string>
-  <string name="followed_by">Follows you</string>
-  <string name="action_search">Search</string>
+  <string name="set_title_news">Berita</string>
+  <string name="set_notification_news">Beritahu kutipan baru di beranda kronologi</string>
+  <string name="set_show_error_messages">Tampilkan pesan kesalahan</string>
+  <string name="action_follow">Ikuti</string>
+  <string name="action_unfollow">Berhenti mengikuti</string>
+  <string name="action_block">Blokir</string>
+  <string name="action_unblock">Buka blokir</string>
+  <string name="action_mute">Bisu</string>
+  <string name="action_no_action">Tidak ada tindakan</string>
+  <string name="action_unmute">Bersuara</string>
+  <string name="request_sent">Kirim permintaan</string>
+  <string name="followed_by">Mengikutimu</string>
+  <string name="action_search">Pencarian</string>
   <!-- Quick settings for notifications -->
-  <string name="settings_popup_title">Push notifications</string>
+  <string name="settings_popup_title">Tolak pemberitahuan</string>
   <string name="settings_popup_message">
-        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
+       Tolong konfirmasi penolakan pemberitahuan yang ingin Anda terima.
+        Anda dapat mengaktifkan atau menonaktifkan pemberitahuan ini di setelan (Tab pemberitahuan).
     </string>
-  <string name="settings_popup_timeline">For unread toots in home time-line?</string>
-  <string name="settings_popup_notification">For unread notifications?</string>
+  <string name="settings_popup_timeline">Untuk kutipan yang belum dibaca di beranda kronologi?</string>
+  <string name="settings_popup_notification">Untuk pemberitahuan yang belum dibaca?</string>
   <!-- CACHE -->
-  <string name="cache_title">Clear cache</string>
-  <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+  <string name="cache_title">Kosongkan cache</string>
+  <string name="cache_message">Ada %1$s data dalam cache.\n\nApakah Anda ingin menghapusnya?</string>
   <string name="cache_units">Mb</string>
-  <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+  <string name="toast_cache_clear">Cache sudah dikosongkan! %1$s dilepaskan</string>
   <!-- PRIVACY -->
-  <string name="privacy_data_title">Recorded data</string>
+  <string name="privacy_data_title">Data terekam</string>
   <string name="privacy_data">
-        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
+        Hanya informasi dasar dari akun yang tersimpan pada perangkat.
+        Data ini sangat rahasia dan hanya bisa digunakan oleh aplikasi.
+        Menghapus aplikasi segera menghapus data ini.\n
+        &#9888; masuk dan kata sandi tidak pernah disimpan. Mereka hanya digunakan selama otentikasi aman (SSL) dengan sebuah tuntutan.
     </string>
-  <string name="privacy_authorizations_title">Permissions:</string>
+  <string name="privacy_authorizations_title">Izin:</string>
   <string name="privacy_authorizations">
-        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
-        - <b>INTERNET</b>: Used for queries to an instance.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
-        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
-        - <b>WAKE_LOCK</b>: Used during the notification service.
+        - <b>ACCESS_NETWORK_STATE</b>: Digunakan untuk mendeteksi perangkat terhubung ke jaringan WIFI.\n
+        - <b>INTERNET</b>: Digunakan untuk menanyakan suatu hal.\n
+        - <b>WRITE_EXTERNAL_STORAGE</b>: Digunakan untuk menyimpan media atau memindahkan aplikasi ke kartu SD.\n
+        - <b>READ_EXTERNAL_STORAGE</b>: Digunakan untuk menambahkan media ke kutipan.\n
+        - <b>BOOT_COMPLETED</b>: Digunakan untuk memulai layanan pemberitahuan.\n
+        - <b>WAKE_LOCK</b>: Digunakan selama layanan pemberitahuan.
     </string>
-  <string name="privacy_API_authorizations_title">API permissions:</string>
+  <string name="privacy_API_authorizations_title">Izin API:</string>
   <string name="privacy_API_authorizations">
-        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
+        - <b>Read</b>: Membaca data.\
+        - <b>Write</b>: Posting status dan unggah media untuk status.\n
+        - <b>Follow</b>: Ikuti, berhenti ikuti, blokir, buka blokir.\n\n
+        <b>&#9888; Tindakan ini hanya saat pengguna memintanya.</b>
     </string>
-  <string name="privacy_API_title">Tracking and Libraries</string>
+  <string name="privacy_API_title">Pelacakan dan Perpustakaan</string>
   <string name="privacy_API">
 Aplikasi <b>tidak menggunakan alat pelacakan</b> (Ukuran penonton, kesalahan laporan, dll) dan tidak mengandung iklan apapun.\n\n
         Penggunaan perpustakaan diminimalkan: \n
