@@ -14,11 +14,13 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.client.Entities;
 
+import java.io.Serializable;
+
 /**
  * Created by Thomas on 20/10/2017.
  */
 
-public class Emojis {
+public class Emojis implements Serializable {
 
     private String shortcode;
     private String static_url;

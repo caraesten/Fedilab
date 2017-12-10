@@ -18,12 +18,13 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Patterns;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMetaDataInterface;
 
@@ -47,11 +48,9 @@ public class RetrieveMetaDataAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        String userAgent = "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36";
         String potentialUrl = "";
         try {
             Matcher matcher;
-
             if (url.startsWith("www."))
                 url = "http://" + url;
 
@@ -67,22 +66,27 @@ public class RetrieveMetaDataAsyncTask extends AsyncTask<Void, Void, Void> {
             }
             // If we actually have a URL then make use of it.
             if (potentialUrl.length() > 0) {
-                Document document = Jsoup.connect(potentialUrl).userAgent(userAgent).get();
-                Elements metaOgTitle = document.select("meta[property=og:title]");
-                if (metaOgTitle != null) {
-                    title = metaOgTitle.attr("content");
-                } else {
-                    title = document.title();
-                }
-                Elements metaOgDescription = document.select("meta[property=og:description]");
-                if (metaOgDescription != null) {
-                    description = metaOgDescription.attr("content");
-                } else {
-                    description = "";
-                }
-                Elements metaOgImage = document.select("meta[property=og:image]");
-                if (metaOgImage != null) {
-                    image = metaOgImage.attr("content");
+                Pattern titlePattern = Pattern.compile("meta\\s+property=[\"']og:title[\"']\\s+content=[\"'](.*)[\"']");
+                Pattern descriptionPattern = Pattern.compile("meta\\s+property=[\"']og:description[\"']\\s+content=[\"'](.*)[\"']");
+                Pattern imagePattern = Pattern.compile("meta\\s+property=[\"']og:image[\"']\\s+content=[\"'](.*)[\"']");
+                try {
+                    String response = new HttpsConnection().get(potentialUrl);
+                    Matcher matcherTitle = titlePattern.matcher(response);
+                    Matcher matcherDescription = descriptionPattern.matcher(response);
+                    Matcher matcherImage = imagePattern.matcher(response);
+                    while (matcherTitle.find())
+                        title = matcherTitle.group(1);
+                    while (matcherDescription.find())
+                        description = matcherDescription.group(1);
+                    while (matcherImage.find())
+                        image = matcherImage.group(1);
+
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                } catch (KeyManagementException e) {
+                    e.printStackTrace();
+                } catch (HttpsConnection.HttpsConnectionException e) {
+                    e.printStackTrace();
                 }
             }
         } catch (IOException | IndexOutOfBoundsException e) {

@@ -422,10 +422,9 @@
     <string name="privacy_API">
         The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
         The use of libraries is minimized: \n
-        - <b>Universal Image Loader</b>: To manage media\n
+        - <b>Glide</b>: To manage media\n
         - <b>Android-Job</b>: To manage services\n
         - <b>PhotoView</b>: To manage images\n
-        - <b>Gson</b> : To save drafts
     </string>
 
     <string name="yandex" translatable="false">&lt;a hreh="http://translate.yandex.com/">Powered by Yandex.Translate&lt;/a></string>

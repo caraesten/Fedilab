@@ -14,12 +14,14 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.client.Entities;
 
+import java.io.Serializable;
+
 /**
  * Created by Thomas on 23/04/2017.
  * Manage Tags
  */
 
-public class Tag {
+public class Tag implements Serializable {
 
     private String name;
     private String url;

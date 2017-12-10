@@ -183,10 +183,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     String bookmark;
                     if( context instanceof BaseMainActivity){
                         bookmark = ((BaseMainActivity) context).getBookmark();
-                        if( bookmark != null) {
-                            asyncTask = new RetrieveFeedsAsyncTask(context, type, bookmark, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            firstTootsLoaded = false;
-                        }
+                        asyncTask = new RetrieveFeedsAsyncTask(context, type, bookmark, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        firstTootsLoaded = false;
+
                     }
                 }else {
                     asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -206,10 +205,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                                 String bookmark;
                                 if( context instanceof BaseMainActivity){
                                     bookmark = ((BaseMainActivity) context).getBookmark();
-                                    if( bookmark != null) {
-                                        asyncTask = new RetrieveFeedsAsyncTask(context, type, bookmark, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                        firstTootsLoaded = false;
-                                    }
+                                    asyncTask = new RetrieveFeedsAsyncTask(context, type, bookmark, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    firstTootsLoaded = false;
                                 }
                             }else {
                                 asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
