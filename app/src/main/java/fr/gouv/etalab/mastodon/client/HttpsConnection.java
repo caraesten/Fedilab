@@ -74,6 +74,7 @@ public class HttpsConnection {
         this.context = context;
     }
 
+
     @SuppressWarnings("ConstantConditions")
     public String get(String urlConnection, int timeout, HashMap<String, String> paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
 
@@ -120,6 +121,59 @@ public class HttpsConnection {
                 sb.append((char) c);
             httpsURLConnection.disconnect();
             throw new HttpsConnectionException(httpsURLConnection.getResponseCode(), sb.toString());
+        }
+    }
+
+
+
+    public String get(String urlConnection) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
+        HttpsURLConnection httpsURLConnection;
+        HttpURLConnection httpURLConnection;
+        StringBuilder sb = new StringBuilder();
+        if( urlConnection.startsWith("https://")) {
+            URL url = new URL(urlConnection);
+            httpsURLConnection = (HttpsURLConnection) url.openConnection();
+            httpsURLConnection.setConnectTimeout(30 * 1000);
+            httpsURLConnection.setRequestProperty("http.keepAlive", "false");
+            httpsURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");
+            if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
+                httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+            httpsURLConnection.setRequestMethod("GET");
+            if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
+                Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream(), "UTF-8"));
+                for (int c; (c = in.read()) >= 0; )
+                    sb.append((char) c);
+                httpsURLConnection.disconnect();
+                in.close();
+                return sb.toString();
+            } else {
+                Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getErrorStream(), "UTF-8"));
+                for (int c; (c = in.read()) >= 0; )
+                    sb.append((char) c);
+                httpsURLConnection.disconnect();
+                throw new HttpsConnectionException(httpsURLConnection.getResponseCode(), sb.toString());
+            }
+        }else{
+            URL url = new URL(urlConnection);
+            httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setConnectTimeout(30 * 1000);
+            httpURLConnection.setRequestProperty("http.keepAlive", "false");
+            httpURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");
+            httpURLConnection.setRequestMethod("GET");
+            if (httpURLConnection.getResponseCode() >= 200 && httpURLConnection.getResponseCode() < 400) {
+                Reader in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(), "UTF-8"));
+                for (int c; (c = in.read()) >= 0; )
+                    sb.append((char) c);
+                httpURLConnection.disconnect();
+                in.close();
+                return sb.toString();
+            } else {
+                Reader in = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream(), "UTF-8"));
+                for (int c; (c = in.read()) >= 0; )
+                    sb.append((char) c);
+                httpURLConnection.disconnect();
+                throw new HttpsConnectionException(httpURLConnection.getResponseCode(), sb.toString());
+            }
         }
     }
 
