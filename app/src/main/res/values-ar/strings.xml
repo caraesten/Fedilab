@@ -25,11 +25,11 @@
   <string name="accounts">الحسابات</string>
   <string name="toots">التبويقات</string>
   <string name="tags">الأوسمة</string>
-  <string name="token">Token</string>
+  <string name="token">الرمز المميز</string>
   <string name="save">حفظ</string>
   <string name="restore">إستعادة</string>
   <string name="two_factor_authentification">المصادقة بخطوتين ؟</string>
-  <string name="other_instance">Other instance than mastodon.etalab.gouv.fr?</string>
+  <string name="other_instance">مثيل خادم آخر غير mastodon.etalab.gouv.fr ؟</string>
   <string name="no_result">لم يتم العثور على أية نتيجة !</string>
   <string name="instance">مثيل الخادم</string>
   <string name="instance_example">مثيل الخادم : mastodon.social</string>
@@ -41,13 +41,13 @@
   <string name="clear">نظيف</string>
   <string name="microphone">الميكروفون</string>
   <string name="speech_prompt">Please, say something</string>
-  <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
+  <string name="speech_not_supported">معذرة ! إنّ جهازك لا يدعَم الإدخال الصوتي !</string>
   <string name="delete_all">حذف الكل</string>
   <string name="translate_toot">ترجم هذا التبويق.</string>
   <string name="schedule">برمجة</string>
   <string name="text_size">حجم الخط و الأيقونات</string>
-  <string name="text_size_change">Change the current text size:</string>
-  <string name="icon_size_change">Change the current icon size:</string>
+  <string name="text_size_change">تعديل حجم الخط الحالي :</string>
+  <string name="icon_size_change">تعديل الحجم الحالي للأيقونات :</string>
   <string name="next">التالي</string>
   <string name="previous">العودة</string>
   <string name="open_with">فتح بواسطة</string>
@@ -95,15 +95,15 @@
   <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
   <string name="insert_emoji">إضافة إيموجو</string>
   <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-  <string name="live_notif">Live notifications</string>
+  <string name="live_notif">الإخطارات الحية</string>
   <!-- Status -->
   <string name="no_status">لا توجد هناك أية تبويقات لعرضها</string>
-  <string name="fav_added">The toot was added to favourites</string>
+  <string name="fav_added">تمت إضافة التبويق إلى مفضلاتك</string>
   <string name="fav_removed">The toot was removed from favourites!</string>
   <string name="reblog_added">تمت ترقية التبويق !</string>
   <string name="reblog_removed">The toot is no longer boosted!</string>
   <string name="reblog_by">رقاه %1$s</string>
-  <string name="favourite_add">Add this toot to your favourites?</string>
+  <string name="favourite_add">هل تود إضافة هذا التبويق إلى مفضلاتك ؟</string>
   <string name="favourite_remove">Remove this toot from your favourites?</string>
   <string name="reblog_add">هل تود ترقية هذا التبويق ؟</string>
   <string name="reblog_remove">هل تود إلغاء ترقية هذا التبويق ؟</string>
@@ -135,19 +135,19 @@
   <!-- Date -->
   <plurals name="date_seconds">
     <item quantity="zero">قبل %d ثانية</item>
-    <item quantity="one">%d second ago</item>
+    <item quantity="one">منذ ثانية</item>
     <item quantity="two">%d seconds ago</item>
     <item quantity="few">%d seconds ago</item>
     <item quantity="many">%d seconds ago</item>
-    <item quantity="other">%d seconds ago</item>
+    <item quantity="other">منذ %d ثواني</item>
   </plurals>
   <plurals name="date_minutes">
     <item quantity="zero">%d minutes ago</item>
-    <item quantity="one">%d minute ago</item>
+    <item quantity="one">منذ دقيقة</item>
     <item quantity="two">%d minutes ago</item>
     <item quantity="few">%d minutes ago</item>
     <item quantity="many">%d minutes ago</item>
-    <item quantity="other">قبل %d دقائق</item>
+    <item quantity="other">منذ %d دقائق</item>
   </plurals>
   <plurals name="date_hours">
     <item quantity="zero">%d hours ago</item>
@@ -162,11 +162,11 @@
   <string name="date_day">%d أيام</string>
   <plurals name="date_month">
     <item quantity="zero">%d أشهر</item>
-    <item quantity="one">%d month ago</item>
+    <item quantity="one">منذ شهر</item>
     <item quantity="two">%d months ago</item>
     <item quantity="few">%d months ago</item>
     <item quantity="many">%d months ago</item>
-    <item quantity="other">%d months ago</item>
+    <item quantity="other">قبل %d أشهر</item>
   </plurals>
   <plurals name="date_year">
     <item quantity="zero">منذ سنة</item>
@@ -174,7 +174,7 @@
     <item quantity="two">%d years ago</item>
     <item quantity="few">%d years ago</item>
     <item quantity="many">%d years ago</item>
-    <item quantity="other">%d years ago</item>
+    <item quantity="other">قبل %d أعوام</item>
   </plurals>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">تحذير</string>
@@ -183,7 +183,7 @@
   <string name="cw">cw</string>
   <string name="toot_title">تحرير تبويق</string>
   <string name="toot_title_reply">الرد على تبويق</string>
-  <string name="toot_no_space">You have reached the 500 characters allowed!</string>
+  <string name="toot_no_space">لقد بلغت حد الـ 500 حرف المسموح به !</string>
   <string name="toot_select_image">تحديد وسائط</string>
   <string name="toot_select_image_error">An error occurred while selecting the media!</string>
   <string name="toot_delete_media">Delete this media?</string>
@@ -191,20 +191,20 @@
   <string name="toot_visibility_tilte">طريقة نشر التبويق</string>
   <string name="toots_visibility_tilte">الطريقة الإفتراضية لنشر التبويقات :</string>
   <string name="toot_sent">تم إرسال التبويق !</string>
-  <string name="toot_reply_content_title">You are replying to this toot:</string>
+  <string name="toot_reply_content_title">بصدد الرد على تبويق :</string>
   <string name="toot_sensitive">محتوى حساس ؟</string>
   <string-array name="toot_visibility">
-    <item>Post to public timelines</item>
-    <item>Do not post to public timelines</item>
-    <item>Post to followers only</item>
-    <item>Post to mentioned users only</item>
+    <item>أنشر على الخيوط العمومية</item>
+    <item>لا تقم بالنشر على الخيوط العمومية</item>
+    <item>أنشر إلى متابعيك فقط</item>
+    <item>أنشر إلى المستخدمين المشار إليهم فقط</item>
   </string-array>
   <string name="no_draft">لا توجد مسودات !</string>
   <string name="choose_toot">إختر تبويقا</string>
   <string name="choose_accounts">إختر حسابا</string>
-  <string name="select_accounts">Select some accounts</string>
+  <string name="select_accounts">قم بإختيار بعض من الحسابات</string>
   <string name="remove_draft">هل تود حذف المسودة ؟</string>
-  <string name="show_reply">Click on the button to display the original toot</string>
+  <string name="show_reply">إضغط على الزر لعرض التبويق الأصلي</string>
   <string name="upload_form_description">Describe for the visually impaired</string>
   <!-- Instance -->
   <string name="instance_no_description">لا يوجد وصف !</string>
@@ -222,23 +222,23 @@
   <string name="conversation">محادثة</string>
   <!-- Accounts -->
   <string name="no_accounts">لا توجد حسابات للعرض</string>
-  <string name="no_follow_request">No follow request</string>
-  <string name="status_cnt">Toots \n %1$s</string>
-  <string name="following_cnt">Following \n %1$s</string>
-  <string name="followers_cnt">Followers \n %1$s</string>
+  <string name="no_follow_request">ليس هناك طلبات بالمتابعة</string>
+  <string name="status_cnt">التبويقات \n %1$s</string>
+  <string name="following_cnt">المُتابَعون \n %1$s</string>
+  <string name="followers_cnt">المتابِعون \n %1$s</string>
   <string name="pins_cnt">Pinned \n %d</string>
   <string name="authorize">Authorize</string>
   <string name="reject">رفض</string>
   <!-- Scheduled toots -->
   <string name="no_scheduled_toots">ليس عندك أية تبويقات مبرمَجة للعرض !</string>
   <string name="no_scheduled_toots_indications">قم بتحرير تبويق ثم إختر <b>برمَجة</b> على القائمة العلوية.</string>
-  <string name="remove_scheduled">Delete scheduled toot?</string>
+  <string name="remove_scheduled">هل تود حذف التبويق المُبرمَج ؟</string>
   <string name="media_count">الوسائط : %d</string>
-  <string name="toot_scheduled">The toot has been scheduled!</string>
+  <string name="toot_scheduled">تمت برمجة التبويق بنجاح !</string>
   <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
   <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
   <!-- Notifications -->
-  <string name="no_notifications">No notification to display</string>
+  <string name="no_notifications">لا توجد هناك إخطارات للعرض</string>
   <string name="notif_mention">أشار إليك</string>
   <string name="notif_reblog">رقى تبويقك</string>
   <string name="notif_favourite">أُعجِب بتبويقك</string>
@@ -250,7 +250,7 @@
     <item quantity="two">and %d other notifications</item>
     <item quantity="few">and %d other notifications</item>
     <item quantity="many">and %d other notifications</item>
-    <item quantity="other">and %d other notifications</item>
+    <item quantity="other">و %d إخطارات أخرى</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
     <item quantity="zero">and %d other toots to discover</item>
@@ -258,34 +258,34 @@
     <item quantity="two">and %d other toots to discover</item>
     <item quantity="few">and %d other toots to discover</item>
     <item quantity="many">and %d other toots to discover</item>
-    <item quantity="other">and %d other toots to discover</item>
+    <item quantity="other">و %d تبويقات أخرى إكتشفها</item>
   </plurals>
-  <string name="delete_notification_ask">Delete a notification?</string>
-  <string name="delete_notification_ask_all">Delete all notifications?</string>
-  <string name="delete_notification">The notification has been deleted!</string>
-  <string name="delete_notification_all">All notifications have been deleted!</string>
+  <string name="delete_notification_ask">هل تريد حذف الإخطار ؟</string>
+  <string name="delete_notification_ask_all">هل تود حذف كل الإخطارات ؟</string>
+  <string name="delete_notification">تم حذف الإخطار بنجاح !</string>
+  <string name="delete_notification_all">تم حذف جميع الإخطارات بنجاح !</string>
   <!-- HEADER -->
   <string name="following">يتابِع</string>
   <string name="followers">المتابِعون</string>
   <string name="pinned_toots">التبويقات المُثبَّتة</string>
   <!-- TOAST -->
   <string name="client_error">Unable to get client id!</string>
-  <string name="no_internet">No Internet connection!</string>
-  <string name="toast_block">The account was blocked!</string>
+  <string name="no_internet">لا يوجد إتصال بشبكة الإنترنت !</string>
+  <string name="toast_block">تم حجب الحساب !</string>
   <string name="toast_unblock">The account is no longer blocked!</string>
-  <string name="toast_mute">The account was muted!</string>
+  <string name="toast_mute">تم كتم الحساب !</string>
   <string name="toast_unmute">The account is no longer muted!</string>
   <string name="toast_follow">The account was followed!</string>
   <string name="toast_unfollow">The account is no longer followed!</string>
-  <string name="toast_reblog">The toot was boosted!</string>
+  <string name="toast_reblog">تمت ترقية التبويق !</string>
   <string name="toast_unreblog">The toot is no longer boosted!</string>
   <string name="toast_favourite">The toot was added to your favourites!</string>
   <string name="toast_unfavourite">The toot was removed from your favourites!</string>
-  <string name="toast_report">The toot was reported!</string>
-  <string name="toast_unstatus">The toot was deleted!</string>
-  <string name="toast_pin">The toot was pinned!</string>
-  <string name="toast_unpin">The toot was unpinned!</string>
-  <string name="toast_error">Oops ! An error occurred!</string>
+  <string name="toast_report">تم الإبلاغ عن التبويق !</string>
+  <string name="toast_unstatus">تم حذف التبويق بنجاح !</string>
+  <string name="toast_pin">تم تثبيت التبويق بنجاح !</string>
+  <string name="toast_unpin">تم إلغاء تثبيت التبويق بنجاح !</string>
+  <string name="toast_error">عذراً ! حدث خطأ !</string>
   <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
   <string name="toast_error_instance">The instance domain does not seem to be valide!</string>
   <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
@@ -294,8 +294,8 @@
   <string name="toast_update_credential_ok">The profile data have been saved!</string>
   <string name="nothing_to_do">No action can be taken</string>
   <string name="toast_saved">The media has been saved!</string>
-  <string name="toast_error_translate">An error occurred while translating!</string>
-  <string name="toast_toot_saved">Draft saved!</string>
+  <string name="toast_error_translate">وقع خطاء أثناء عملية الترجمة !</string>
+  <string name="toast_toot_saved">تم حِفظ المُسوَدَّة !</string>
   <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
   <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
   <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
@@ -310,13 +310,13 @@
   <string name="set_attachment_action">تحميل الوسائط</string>
   <string name="load_attachment">تحميل الصور</string>
   <string name="load_attachment_spoiler">عرض المزيد ...</string>
-  <string name="load_sensitive_attachment">Sensitive content</string>
+  <string name="load_sensitive_attachment">محتوى حساس</string>
   <string name="set_display_reply">Display previous message in responses</string>
   <string name="set_display_local">Display local timeline</string>
   <string name="set_display_global">Display federated timeline</string>
-  <string name="set_disable_gif">Disable GIF avatars</string>
+  <string name="set_disable_gif">تعطيل الصور الرمزية المتحركة</string>
   <string name="set_folder_title">المسار :</string>
-  <string name="set_auto_store_toot">Save drafts automatically</string>
+  <string name="set_auto_store_toot">حفظ تلقائي للمسودات</string>
   <string name="set_bubble_counter">Display counters</string>
   <string name="set_auto_add_media_url">Add URL of media in toots</string>
   <string name="settings_title_notifications">إدارة الإخطارات</string>
@@ -338,7 +338,7 @@
   <string name="set_save_changes">حفظ التغييرات</string>
   <string name="set_header_picture_overlay">إختيار الصورة الرأسية</string>
   <string name="set_preview_reply">Display the number of replies in home timeline</string>
-  <string name="set_preview_reply_pp">Display profile pictures?</string>
+  <string name="set_preview_reply_pp">هل تود عرض الصور الرمزية للحسابات ؟</string>
   <string name="set_multiaccount_actions">Allow interactions between accounts?</string>
   <string name="note_no_space">You have reached the 160 characters allowed!</string>
   <string name="username_no_space">You have reached the 30 characters allowed!</string>
@@ -374,7 +374,7 @@
   </string-array>
   <string name="set_title_news">الجديد</string>
   <string name="set_notification_news">Notify for new toots on the home timeline</string>
-  <string name="set_show_error_messages">Display error messages</string>
+  <string name="set_show_error_messages">عرض رسائل الأخطاء</string>
   <string name="action_follow">إتبع</string>
   <string name="action_unfollow">إلغاء المتابعة</string>
   <string name="action_block">حظر</string>
@@ -436,9 +436,7 @@
         The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
     </string>
-  <string name="thanks_text">
-        Thank you to Stéphane for the logo.
-    </string>
+  <string name="thanks_text">شكرا لـ Stéphane على الشارة.</string>
   <string name="thanks_text_dev">الشكر لـ :</string>
   <string name="filter_regex">Filter out by regular expressions</string>
   <string name="search">البحث</string>
