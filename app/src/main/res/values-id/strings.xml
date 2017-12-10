@@ -274,7 +274,7 @@
   <string name="set_display_reply">Tampilan pesan sebelumnya di tanggapan</string>
   <string name="set_display_local">Tampilkan kronologi lokal</string>
   <string name="set_display_global">Tampilkan kronologi federasi</string>
-  <string name="set_disable_gif">Disable GIF avatars</string>
+  <string name="set_disable_gif">Nonaktifkan avatar GIF</string>
   <string name="set_folder_title">Jalur: </string>
   <string name="set_auto_store_toot">Simpan konsep otomatis</string>
   <string name="set_bubble_counter">Tampilkan konter</string>
