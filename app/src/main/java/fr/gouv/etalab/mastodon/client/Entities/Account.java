@@ -17,6 +17,7 @@ package fr.gouv.etalab.mastodon.client.Entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -24,7 +25,7 @@ import java.util.Date;
  * Manage accounts
  */
 
-public class Account implements Parcelable {
+public class Account implements Parcelable, Serializable {
 
     private String id;
     private String username;

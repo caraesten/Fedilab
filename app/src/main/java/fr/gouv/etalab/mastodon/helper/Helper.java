@@ -66,6 +66,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Patterns;
 import android.view.Menu;
@@ -91,9 +92,9 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
-import com.google.gson.Gson;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -101,7 +102,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -129,11 +133,8 @@ import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.client.Entities.Emojis;
-import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
@@ -1510,8 +1511,17 @@ public class Helper {
      * @return String serialized Status
      */
     public static String statusToStringStorage(Status status){
-        Gson gson = new Gson();
-        return gson.toJson(status);
+        String serialized = null;
+        try {
+            ByteArrayOutputStream bo = new ByteArrayOutputStream();
+            ObjectOutputStream so = new ObjectOutputStream(bo);
+            so.writeObject(status);
+            so.flush();
+            serialized = new String(Base64.encode(bo.toByteArray(), Base64.DEFAULT));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return serialized;
     }
 
     /**
@@ -1520,8 +1530,24 @@ public class Helper {
      * @return Status
      */
     public static Status restoreStatusFromString(String serializedStatus){
-        Gson gson = new Gson();
-        return gson.fromJson(serializedStatus, Status.class);
+        Status status = null;
+        if(serializedStatus == null)
+            return null;
+        byte b[];
+        try {
+            b = Base64.decode(serializedStatus.getBytes(), Base64.DEFAULT);
+            ByteArrayInputStream bi = new ByteArrayInputStream(b);
+            ObjectInputStream si = new ObjectInputStream(bi);
+            status = (Status) si.readObject();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return status;
+
     }
 
     /**

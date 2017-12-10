@@ -14,11 +14,13 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.client.Entities;
 
+import java.io.Serializable;
+
 /**
  * Created by Thomas on 23/04/2017.
  */
 
-public class Application {
+public class Application implements Serializable {
 
     public String name;
     public String website;
