@@ -232,13 +232,13 @@
   <!-- Scheduled toots -->
   <string name="no_scheduled_toots">ليس عندك أية تبويقات مبرمَجة للعرض !</string>
   <string name="no_scheduled_toots_indications">قم بتحرير تبويق ثم إختر <b>برمَجة</b> على القائمة العلوية.</string>
-  <string name="remove_scheduled">Delete scheduled toot?</string>
+  <string name="remove_scheduled">هل تود حذف التبويق المُبرمَج ؟</string>
   <string name="media_count">الوسائط : %d</string>
   <string name="toot_scheduled">The toot has been scheduled!</string>
   <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
   <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
   <!-- Notifications -->
-  <string name="no_notifications">No notification to display</string>
+  <string name="no_notifications">لا توجد هناك إخطارات للعرض</string>
   <string name="notif_mention">أشار إليك</string>
   <string name="notif_reblog">رقى تبويقك</string>
   <string name="notif_favourite">أُعجِب بتبويقك</string>
@@ -261,8 +261,8 @@
     <item quantity="other">and %d other toots to discover</item>
   </plurals>
   <string name="delete_notification_ask">Delete a notification?</string>
-  <string name="delete_notification_ask_all">Delete all notifications?</string>
-  <string name="delete_notification">The notification has been deleted!</string>
+  <string name="delete_notification_ask_all">هل تود حذف كل الإخطارات ؟</string>
+  <string name="delete_notification">تم حذف الإخطار بنجاح !</string>
   <string name="delete_notification_all">All notifications have been deleted!</string>
   <!-- HEADER -->
   <string name="following">يتابِع</string>
@@ -282,10 +282,10 @@
   <string name="toast_favourite">The toot was added to your favourites!</string>
   <string name="toast_unfavourite">The toot was removed from your favourites!</string>
   <string name="toast_report">The toot was reported!</string>
-  <string name="toast_unstatus">The toot was deleted!</string>
-  <string name="toast_pin">The toot was pinned!</string>
-  <string name="toast_unpin">The toot was unpinned!</string>
-  <string name="toast_error">Oops ! An error occurred!</string>
+  <string name="toast_unstatus">تم حذف التبويق بنجاح !</string>
+  <string name="toast_pin">تم تثبيت التبويق بنجاح !</string>
+  <string name="toast_unpin">تم إلغاء تثبيت التبويق بنجاح !</string>
+  <string name="toast_error">عذراً ! حدث خطأ !</string>
   <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
   <string name="toast_error_instance">The instance domain does not seem to be valide!</string>
   <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
@@ -295,7 +295,7 @@
   <string name="nothing_to_do">No action can be taken</string>
   <string name="toast_saved">The media has been saved!</string>
   <string name="toast_error_translate">An error occurred while translating!</string>
-  <string name="toast_toot_saved">Draft saved!</string>
+  <string name="toast_toot_saved">تم حِفظ المُسوَدَّة !</string>
   <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
   <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
   <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
@@ -310,7 +310,7 @@
   <string name="set_attachment_action">تحميل الوسائط</string>
   <string name="load_attachment">تحميل الصور</string>
   <string name="load_attachment_spoiler">عرض المزيد ...</string>
-  <string name="load_sensitive_attachment">Sensitive content</string>
+  <string name="load_sensitive_attachment">محتوى حساس</string>
   <string name="set_display_reply">Display previous message in responses</string>
   <string name="set_display_local">Display local timeline</string>
   <string name="set_display_global">Display federated timeline</string>
@@ -374,7 +374,7 @@
   </string-array>
   <string name="set_title_news">الجديد</string>
   <string name="set_notification_news">Notify for new toots on the home timeline</string>
-  <string name="set_show_error_messages">Display error messages</string>
+  <string name="set_show_error_messages">عرض رسائل الأخطاء</string>
   <string name="action_follow">إتبع</string>
   <string name="action_unfollow">إلغاء المتابعة</string>
   <string name="action_block">حظر</string>
@@ -436,9 +436,7 @@
         The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
     </string>
-  <string name="thanks_text">
-        Thank you to Stéphane for the logo.
-    </string>
+  <string name="thanks_text">شكرا لـ Stéphane على الشارة.</string>
   <string name="thanks_text_dev">الشكر لـ :</string>
   <string name="filter_regex">Filter out by regular expressions</string>
   <string name="search">البحث</string>
