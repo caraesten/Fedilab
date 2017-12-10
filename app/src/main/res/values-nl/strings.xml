@@ -282,6 +282,7 @@
   <string name="set_display_reply">Vorig bericht in reacties tonen</string>
   <string name="set_display_local">Lokale tijdlijn tonen</string>
   <string name="set_display_global">Globale tijdlijn tonen</string>
+  <string name="set_disable_gif">Disable GIF avatars</string>
   <string name="set_folder_title">Downloadlocatie: </string>
   <string name="set_auto_store_toot">Concepten automatisch opslaan</string>
   <string name="set_bubble_counter">Aantal nieuwe toots bovenaan tijdlijn tonen</string>
