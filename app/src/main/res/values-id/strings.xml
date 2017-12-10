@@ -384,12 +384,11 @@
     </string>
   <string name="privacy_API_title">Pelacakan dan Perpustakaan</string>
   <string name="privacy_API">
-Aplikasi <b>tidak menggunakan alat pelacakan</b> (Ukuran penonton, kesalahan laporan, dll) dan tidak mengandung iklan apapun.\n\n
-        Penggunaan perpustakaan diminimalkan: \n
-        - <b>Universal Gambar Loader</b>: Untuk mengelola media\n
-        - <b>Pekerjaan-Android</b>: Untuk mengelola layanan\n
-        - <b>Lihat Foto</b>: Untuk mengelola gambar\n
-        - <b>Gson</b>: Untuk simpan konsep
+        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
+        The use of libraries is minimized: \n
+        - <b>Glide</b>: To manage media\n
+        - <b>Android-Job</b>: To manage services\n
+        - <b>PhotoView</b>: To manage images\n
     </string>
   <string name="privacy_API_yandex_title">Terjemahan dari kutipan</string>
   <string name="privacy_API_yandex_authorizations">
