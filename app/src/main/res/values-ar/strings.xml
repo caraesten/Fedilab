@@ -143,7 +143,7 @@
   </plurals>
   <plurals name="date_minutes">
     <item quantity="zero">%d minutes ago</item>
-    <item quantity="one">%d minute ago</item>
+    <item quantity="one">منذ دقيقة</item>
     <item quantity="two">%d minutes ago</item>
     <item quantity="few">%d minutes ago</item>
     <item quantity="many">%d minutes ago</item>
