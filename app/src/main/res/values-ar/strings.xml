@@ -183,7 +183,7 @@
   <string name="cw">cw</string>
   <string name="toot_title">تحرير تبويق</string>
   <string name="toot_title_reply">الرد على تبويق</string>
-  <string name="toot_no_space">You have reached the 500 characters allowed!</string>
+  <string name="toot_no_space">لقد بلغت حد الـ 500 حرف المسموح به !</string>
   <string name="toot_select_image">تحديد وسائط</string>
   <string name="toot_select_image_error">An error occurred while selecting the media!</string>
   <string name="toot_delete_media">Delete this media?</string>
@@ -194,17 +194,17 @@
   <string name="toot_reply_content_title">بصدد الرد على تبويق :</string>
   <string name="toot_sensitive">محتوى حساس ؟</string>
   <string-array name="toot_visibility">
-    <item>Post to public timelines</item>
-    <item>Do not post to public timelines</item>
+    <item>أنشر على الخيوط العمومية</item>
+    <item>لا تقم بالنشر على الخيوط العمومية</item>
     <item>أنشر إلى متابعيك فقط</item>
-    <item>Post to mentioned users only</item>
+    <item>أنشر إلى المستخدمين المشار إليهم فقط</item>
   </string-array>
   <string name="no_draft">لا توجد مسودات !</string>
   <string name="choose_toot">إختر تبويقا</string>
   <string name="choose_accounts">إختر حسابا</string>
   <string name="select_accounts">قم بإختيار بعض من الحسابات</string>
   <string name="remove_draft">هل تود حذف المسودة ؟</string>
-  <string name="show_reply">Click on the button to display the original toot</string>
+  <string name="show_reply">إضغط على الزر لعرض التبويق الأصلي</string>
   <string name="upload_form_description">Describe for the visually impaired</string>
   <!-- Instance -->
   <string name="instance_no_description">لا يوجد وصف !</string>
@@ -234,7 +234,7 @@
   <string name="no_scheduled_toots_indications">قم بتحرير تبويق ثم إختر <b>برمَجة</b> على القائمة العلوية.</string>
   <string name="remove_scheduled">هل تود حذف التبويق المُبرمَج ؟</string>
   <string name="media_count">الوسائط : %d</string>
-  <string name="toot_scheduled">The toot has been scheduled!</string>
+  <string name="toot_scheduled">تمت برمجة التبويق بنجاح !</string>
   <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
   <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
   <!-- Notifications -->
@@ -250,7 +250,7 @@
     <item quantity="two">and %d other notifications</item>
     <item quantity="few">and %d other notifications</item>
     <item quantity="many">and %d other notifications</item>
-    <item quantity="other">and %d other notifications</item>
+    <item quantity="other">و %d إخطارات أخرى</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
     <item quantity="zero">and %d other toots to discover</item>
@@ -260,20 +260,20 @@
     <item quantity="many">and %d other toots to discover</item>
     <item quantity="other">and %d other toots to discover</item>
   </plurals>
-  <string name="delete_notification_ask">Delete a notification?</string>
+  <string name="delete_notification_ask">هل تريد حذف الإخطار ؟</string>
   <string name="delete_notification_ask_all">هل تود حذف كل الإخطارات ؟</string>
   <string name="delete_notification">تم حذف الإخطار بنجاح !</string>
-  <string name="delete_notification_all">All notifications have been deleted!</string>
+  <string name="delete_notification_all">تم حذف جميع الإخطارات بنجاح !</string>
   <!-- HEADER -->
   <string name="following">يتابِع</string>
   <string name="followers">المتابِعون</string>
   <string name="pinned_toots">التبويقات المُثبَّتة</string>
   <!-- TOAST -->
   <string name="client_error">Unable to get client id!</string>
-  <string name="no_internet">No Internet connection!</string>
+  <string name="no_internet">لا يوجد إتصال بشبكة الإنترنت !</string>
   <string name="toast_block">The account was blocked!</string>
   <string name="toast_unblock">The account is no longer blocked!</string>
-  <string name="toast_mute">The account was muted!</string>
+  <string name="toast_mute">تم كتم الحساب !</string>
   <string name="toast_unmute">The account is no longer muted!</string>
   <string name="toast_follow">The account was followed!</string>
   <string name="toast_unfollow">The account is no longer followed!</string>
