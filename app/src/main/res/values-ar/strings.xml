@@ -443,4 +443,5 @@
   <string name="search">البحث</string>
   <string name="delete">حذف</string>
   <string name="fetch_more_toots">تحميل المزيد من التبويقات ...</string>
+    <string name="set_disable_gif">Disable GIF avatars</string>
 </resources>

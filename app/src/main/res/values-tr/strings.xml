@@ -405,4 +405,5 @@ Teşekkürler:    </string>
   <string name="search">Search</string>
   <string name="delete">Delete</string>
 <string name="fetch_more_toots">Fetch more toots…</string>
+    <string name="set_disable_gif">Disable GIF avatars</string>
 </resources>
