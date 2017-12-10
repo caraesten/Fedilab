@@ -35,7 +35,7 @@
   <string name="instance_example">Instance: mastodon.social</string>
   <string name="toast_account_changed">Ahora funciona con la cuenta %1$s</string>
   <string name="add_account">Agregar una cuenta</string>
-  <string name="clipboard">The content of the toot has been copied to the clipboard</string>
+  <string name="clipboard">El contenido del toot ha sido copiado al portapapeles</string>
   <string name="change">Cambiar</string>
   <string name="choose_picture">Seleccionar una imagen…</string>
   <string name="clear">Borrar</string>
@@ -103,12 +103,12 @@
   <string name="reblog_added">¡El toot fue mejorado!</string>
   <string name="reblog_removed">¡El toot ya no está mejorado!</string>
   <string name="reblog_by">Mejorado un %1$s</string>
-  <string name="favourite_add">Add this toot to your favourites?</string>
-  <string name="favourite_remove">Remove this toot from your favourites?</string>
-  <string name="reblog_add">Boost this toot?</string>
-  <string name="reblog_remove">Unboost this toot?</string>
-  <string name="pin_add">Pin this toot?</string>
-  <string name="pin_remove">Unpin this toot?</string>
+  <string name="favourite_add">¿Agregar este toot a favoritos?</string>
+  <string name="favourite_remove">¿Remover este toot de tus favoritos?</string>
+  <string name="reblog_add">¿Mejorar este toot?</string>
+  <string name="reblog_remove">¿Desmejorar este toot?</string>
+  <string name="pin_add">¿Fijar este toot?</string>
+  <string name="pin_remove">¿Remover este toot?</string>
   <string name="more_action_1">Silenciar</string>
   <string name="more_action_2">Bloquear</string>
   <string name="more_action_3">Reportar</string>
@@ -119,10 +119,10 @@
   <string-array name="more_action_confirm">
     <item>¿Silenciar esta cuenta?</item>
     <item>¿Bloquear esta cuenta?</item>
-    <item>Report this toot?</item>
+    <item>¿Reportar este toot?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>Remove this toot?</item>
+    <item>¿Remover este toot?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="one">%d respuesta</item>
@@ -155,19 +155,19 @@
   <!-- TOOT -->
   <string name="toot_cw_placeholder">Advertencia</string>
   <string name="toot_placeholder">¿En qué estás pensando?</string>
-  <string name="toot_it">TOOT!</string>
+  <string name="toot_it">¡Toot!</string>
   <string name="cw">cw</string>
-  <string name="toot_title">Write a toot</string>
-  <string name="toot_title_reply">Reply to a toot</string>
+  <string name="toot_title">Escribe un toot</string>
+  <string name="toot_title_reply">Responder a un toot</string>
   <string name="toot_no_space">¡Has alcanzado los 500 caracteres permitidos!</string>
   <string name="toot_select_image">Selecciona un medio</string>
   <string name="toot_select_image_error">¡Un error ocurrió mientras seleccionaba un medio!</string>
   <string name="toot_delete_media">¿Eliminar este medio?</string>
-  <string name="toot_error_no_content">Your toot is empty!</string>
-  <string name="toot_visibility_tilte">Visibility of the toot</string>
-  <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-  <string name="toot_sent">The toot has been sent!</string>
-  <string name="toot_reply_content_title">You are replying to this toot:</string>
+  <string name="toot_error_no_content">¡Tu toot está vacío!</string>
+  <string name="toot_visibility_tilte">Visibilidad del toot</string>
+  <string name="toots_visibility_tilte">Visibilidad de los toots por defecto: </string>
+  <string name="toot_sent">¡El toot ha sido enviado!</string>
+  <string name="toot_reply_content_title">Tú estas respondiendo a este toot:</string>
   <string name="toot_sensitive">¿Contenido sensible?</string>
   <string-array name="toot_visibility">
     <item>Post to public timelines</item>
@@ -176,11 +176,11 @@
     <item>Post to mentioned users only</item>
   </string-array>
   <string name="no_draft">No draft!</string>
-  <string name="choose_toot">Choose a toot</string>
+  <string name="choose_toot">Elegir un toot</string>
   <string name="choose_accounts">Choose an account</string>
   <string name="select_accounts">Select some accounts</string>
   <string name="remove_draft">Remove draft?</string>
-  <string name="show_reply">Click on the button to display the original toot</string>
+  <string name="show_reply">Click en el botón para mostrar el toot original</string>
   <string name="upload_form_description">Describe for the visually impaired</string>
   <!-- Instance -->
   <string name="instance_no_description">No description available!</string>
@@ -190,7 +190,7 @@
   <string name="about_license">License: </string>
   <string name="about_license_action">GNU GPL V3</string>
   <string name="about_code">Source code: </string>
-  <string name="about_yandex">Translation of toots:</string>
+  <string name="about_yandex">Traducción de los toots:</string>
   <string name="about_thekinrar">Search instances:</string>
   <string name="about_thekinrar_action">instances.social</string>
   <string name="thanks_text_logo">Icon designer:</string>
@@ -202,15 +202,15 @@
   <string name="status_cnt">Toots \n %1$s</string>
   <string name="following_cnt">Siguiendo: \n %1$s</string>
   <string name="followers_cnt">Seguidores \n %1$s</string>
-  <string name="pins_cnt">Anclado \n %d</string>
+  <string name="pins_cnt">Fijar \n %d</string>
   <string name="authorize">Autorizar</string>
   <string name="reject">Rechazar</string>
   <!-- Scheduled toots -->
-  <string name="no_scheduled_toots">No scheduled toot to display!</string>
-  <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-  <string name="remove_scheduled">Delete scheduled toot?</string>
+  <string name="no_scheduled_toots">¡Ningún toot programado para mostrar!</string>
+  <string name="no_scheduled_toots_indications">Escribe un toot y luego elige un <b>programa</b> del menú superior.</string>
+  <string name="remove_scheduled">¿Borrar el toot programado?</string>
   <string name="media_count">Media: %d</string>
-  <string name="toot_scheduled">The toot has been scheduled!</string>
+  <string name="toot_scheduled">¡El toot ha sido programado!</string>
   <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
   <string name="warning_battery">¡Ahorrador de batería activado! Podría no trabajar como lo esperado.</string>
   <!-- Notifications -->
@@ -235,7 +235,7 @@
   <!-- HEADER -->
   <string name="following">Siguiendo</string>
   <string name="followers">Seguidores</string>
-  <string name="pinned_toots">Anclado</string>
+  <string name="pinned_toots">Fijado</string>
   <!-- TOAST -->
   <string name="client_error">¡No se puede obtener la identificación del cliente!</string>
   <string name="no_internet">¡Sin conexión a internet!</string>
@@ -251,8 +251,8 @@
   <string name="toast_unfavourite">The toot was removed from your favourites!</string>
   <string name="toast_report">The toot was reported!</string>
   <string name="toast_unstatus">The toot was deleted!</string>
-  <string name="toast_pin">The toot was pinned!</string>
-  <string name="toast_unpin">The toot was unpinned!</string>
+  <string name="toast_pin">¡Este toot fue fijado!</string>
+  <string name="toast_unpin">¡Este toot ya no está fijado!</string>
   <string name="toast_error">¡Ups! ¡Un error ha ocurrido!</string>
   <string name="toast_code_error">¡Un error ha ocurrido! ¡La instancia no devolvió el código de autorización!</string>
   <string name="toast_error_instance">¡El dominio de la instancia no parece estar validado!</string>
@@ -412,5 +412,5 @@
   <string name="filter_regex">Filter out by regular expressions</string>
   <string name="search">Search</string>
   <string name="delete">Delete</string>
-  <string name="fetch_more_toots">Fetch more toots…</string>
+  <string name="fetch_more_toots">Buscar más toots…</string>
 </resources>
