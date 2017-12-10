@@ -95,15 +95,15 @@
   <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
   <string name="insert_emoji">إضافة إيموجو</string>
   <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-  <string name="live_notif">Live notifications</string>
+  <string name="live_notif">الإخطارات الحية</string>
   <!-- Status -->
   <string name="no_status">لا توجد هناك أية تبويقات لعرضها</string>
-  <string name="fav_added">The toot was added to favourites</string>
+  <string name="fav_added">تمت إضافة التبويق إلى مفضلاتك</string>
   <string name="fav_removed">The toot was removed from favourites!</string>
   <string name="reblog_added">تمت ترقية التبويق !</string>
   <string name="reblog_removed">The toot is no longer boosted!</string>
   <string name="reblog_by">رقاه %1$s</string>
-  <string name="favourite_add">Add this toot to your favourites?</string>
+  <string name="favourite_add">هل تود إضافة هذا التبويق إلى مفضلاتك ؟</string>
   <string name="favourite_remove">Remove this toot from your favourites?</string>
   <string name="reblog_add">هل تود ترقية هذا التبويق ؟</string>
   <string name="reblog_remove">هل تود إلغاء ترقية هذا التبويق ؟</string>
@@ -191,18 +191,18 @@
   <string name="toot_visibility_tilte">طريقة نشر التبويق</string>
   <string name="toots_visibility_tilte">الطريقة الإفتراضية لنشر التبويقات :</string>
   <string name="toot_sent">تم إرسال التبويق !</string>
-  <string name="toot_reply_content_title">You are replying to this toot:</string>
+  <string name="toot_reply_content_title">بصدد الرد على تبويق :</string>
   <string name="toot_sensitive">محتوى حساس ؟</string>
   <string-array name="toot_visibility">
     <item>Post to public timelines</item>
     <item>Do not post to public timelines</item>
-    <item>Post to followers only</item>
+    <item>أنشر إلى متابعيك فقط</item>
     <item>Post to mentioned users only</item>
   </string-array>
   <string name="no_draft">لا توجد مسودات !</string>
   <string name="choose_toot">إختر تبويقا</string>
   <string name="choose_accounts">إختر حسابا</string>
-  <string name="select_accounts">Select some accounts</string>
+  <string name="select_accounts">قم بإختيار بعض من الحسابات</string>
   <string name="remove_draft">هل تود حذف المسودة ؟</string>
   <string name="show_reply">Click on the button to display the original toot</string>
   <string name="upload_form_description">Describe for the visually impaired</string>
@@ -222,10 +222,10 @@
   <string name="conversation">محادثة</string>
   <!-- Accounts -->
   <string name="no_accounts">لا توجد حسابات للعرض</string>
-  <string name="no_follow_request">No follow request</string>
-  <string name="status_cnt">Toots \n %1$s</string>
-  <string name="following_cnt">Following \n %1$s</string>
-  <string name="followers_cnt">Followers \n %1$s</string>
+  <string name="no_follow_request">ليس هناك طلبات بالمتابعة</string>
+  <string name="status_cnt">التبويقات \n %1$s</string>
+  <string name="following_cnt">المُتابَعون \n %1$s</string>
+  <string name="followers_cnt">المتابِعون \n %1$s</string>
   <string name="pins_cnt">Pinned \n %d</string>
   <string name="authorize">Authorize</string>
   <string name="reject">رفض</string>
