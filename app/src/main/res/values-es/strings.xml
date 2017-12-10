@@ -4,7 +4,7 @@
   <string name="navigation_drawer_open">Abra el menú</string>
   <string name="navigation_drawer_close">Cerrar menú</string>
   <string name="action_about">Acerca de</string>
-  <string name="action_about_instance">About the instance</string>
+  <string name="action_about_instance">Sobre la instancia</string>
   <string name="action_privacy">Privacidad</string>
   <string name="action_cache">Caché</string>
   <string name="action_logout">Cerrar sesión</string>
@@ -29,9 +29,9 @@
   <string name="save">Guardar</string>
   <string name="restore">Restaurar</string>
   <string name="two_factor_authentification">¿Verificación en dos pasos?</string>
-  <string name="other_instance">Other instance than mastodon.etalab.gouv.fr?</string>
+  <string name="other_instance">¿Otra instancia que mastodon.etalab.gouv.fr?</string>
   <string name="no_result">¡No hay resultados!</string>
-  <string name="instance">Instance</string>
+  <string name="instance">Instancia</string>
   <string name="instance_example">Instance: mastodon.social</string>
   <string name="toast_account_changed">Ahora funciona con la cuenta %1$s</string>
   <string name="add_account">Agregar una cuenta</string>
@@ -43,7 +43,7 @@
   <string name="speech_prompt">Por favor, di algo</string>
   <string name="speech_not_supported">¡Lo sentimos! ¡Tu dispositivo no es compatible con la entrada de voz!</string>
   <string name="delete_all">Eliminar todo</string>
-  <string name="translate_toot">Translate this toot.</string>
+  <string name="translate_toot">Traducir este toot.</string>
   <string name="schedule">Programa</string>
   <string name="text_size">Texto y tamaño de los íconos</string>
   <string name="text_size_change">Cambiar el tamaño del texto actual:</string>
@@ -53,20 +53,20 @@
   <string name="open_with">Abrir con</string>
   <string name="validate">Validar</string>
   <string name="media">Media</string>
-  <string name="share_with">Share with</string>
-  <string name="shared_via">Shared via Mastalab</string>
-  <string name="replies">Replies</string>
-  <string name="username">User name</string>
-  <string name="drafts">Drafts</string>
-  <string name="new_data">New data are available! Do you want to display them?</string>
-  <string name="favourite">Favourites</string>
-  <string name="follow">New followers</string>
-  <string name="mention">Mentions</string>
-  <string name="reblog">Boosts</string>
-  <string name="show_boosts">Show boosts</string>
-  <string name="show_replies">Show replies</string>
-  <string name="action_open_in_web">Open in browser</string>
-  <string name="translate">Translate</string>
+  <string name="share_with">Compartir con</string>
+  <string name="shared_via">Compartido por Mastalab</string>
+  <string name="replies">Respuestas</string>
+  <string name="username">Nombre de usuario</string>
+  <string name="drafts">Borradores</string>
+  <string name="new_data">¡Nuevos datos están disponibles! ¿Quieres mostrarlos?</string>
+  <string name="favourite">Favoritos</string>
+  <string name="follow">Nuevos seguidores</string>
+  <string name="mention">Menciones</string>
+  <string name="reblog">Mejoras</string>
+  <string name="show_boosts">Mostrar mejoras</string>
+  <string name="show_replies">Mostrar respuestas</string>
+  <string name="action_open_in_web">Abrir en navegador</string>
+  <string name="translate">Traducir</string>
   <string name="please_wait">Please, wait few seconds before making this action.</string>
   <!--- Menu -->
   <string name="home_menu">Home</string>
@@ -305,54 +305,54 @@
   <string name="set_profile_description">Bio…</string>
   <string name="set_save_changes">Guardar cambios</string>
   <string name="set_header_picture_overlay">Elegir una imagen de encabezado</string>
-  <string name="set_preview_reply">Display the number of replies in home timeline</string>
-  <string name="set_preview_reply_pp">Display profile pictures?</string>
-  <string name="set_multiaccount_actions">Allow interactions between accounts?</string>
-  <string name="note_no_space">You have reached the 160 characters allowed!</string>
-  <string name="username_no_space">You have reached the 30 characters allowed!</string>
-  <string name="settings_title_hour">Time slot for notifications:</string>
-  <string name="settings_time_from">Between</string>
-  <string name="settings_time_to">and</string>
-  <string name="settings_time_greater">The time must be greater than %1$s</string>
-  <string name="settings_time_lower">The time must be lower than %1$s</string>
-  <string name="settings_hour_init">Start time</string>
-  <string name="settings_hour_end">End time</string>
+  <string name="set_preview_reply">Mostrar el número de respuesta en el timeline del inicio</string>
+  <string name="set_preview_reply_pp">¿Mostrar imágenes de perfil?</string>
+  <string name="set_multiaccount_actions">¿Permitir interacciones entre cuentas?</string>
+  <string name="note_no_space">¡Has alcanzado los 160 caracteres permitidos!</string>
+  <string name="username_no_space">¡Has alcanzado los 30 caracteres permitidos!</string>
+  <string name="settings_title_hour">Espacio de tiempo para notificaciones:</string>
+  <string name="settings_time_from">Entre</string>
+  <string name="settings_time_to">y</string>
+  <string name="settings_time_greater">Este tiempo debe ser mayor que %1$s</string>
+  <string name="settings_time_lower">Este espacio de tiempo debe ser menor que %1$s</string>
+  <string name="settings_hour_init">Iniciar tiempo</string>
+  <string name="settings_hour_end">Fin</string>
   <string name="embedded_browser">Use the built-in browser</string>
-  <string name="use_javascript">Enable Javascript</string>
-  <string name="use_cookies">Allow third-party cookies</string>
+  <string name="use_javascript">Permitir Javascripts</string>
+  <string name="use_cookies">Permitir cookies de terceros</string>
   <string name="settings_ui_layout">Layout for timelines: </string>
   <string-array name="settings_menu_tabs">
-    <item>Tabs</item>
-    <item>Menu</item>
-    <item>Tabs and menu</item>
+    <item>Pestañas</item>
+    <item>Menú</item>
+    <item>Pestañas y menú</item>
   </string-array>
   <string-array name="settings_translation">
     <item>Yandex</item>
     <item>No</item>
   </string-array>
-  <string name="set_led_colour">Set LED colour:</string>
+  <string name="set_led_colour">Establecer color LED:</string>
   <string-array name="led_colours">
-    <item>Blue</item>
-    <item>Cyan</item>
+    <item>Azul</item>
+    <item>Cian</item>
     <item>Magenta</item>
-    <item>Green</item>
-    <item>Red</item>
-    <item>Yellow</item>
-    <item>White</item>
+    <item>Verde</item>
+    <item>Rojo</item>
+    <item>Amarillo</item>
+    <item>Blanco</item>
   </string-array>
-  <string name="set_title_news">News</string>
+  <string name="set_title_news">Noticias</string>
   <string name="set_notification_news">Notify for new toots on the home timeline</string>
-  <string name="set_show_error_messages">Display error messages</string>
-  <string name="action_follow">Follow</string>
-  <string name="action_unfollow">Unfollow</string>
-  <string name="action_block">Block</string>
-  <string name="action_unblock">Unblock</string>
-  <string name="action_mute">Mute</string>
-  <string name="action_no_action">No action</string>
-  <string name="action_unmute">Unmute</string>
-  <string name="request_sent">Request sent</string>
-  <string name="followed_by">Follows you</string>
-  <string name="action_search">Search</string>
+  <string name="set_show_error_messages">Mostrar mensajes de error</string>
+  <string name="action_follow">Seguir</string>
+  <string name="action_unfollow">Dejar de Seguir</string>
+  <string name="action_block">Bloquear</string>
+  <string name="action_unblock">Desbloquear</string>
+  <string name="action_mute">Silenciar</string>
+  <string name="action_no_action">Ninguna acción</string>
+  <string name="action_unmute">Dejar de silenciar</string>
+  <string name="request_sent">Solicitud enviada</string>
+  <string name="followed_by">Te sigue</string>
+  <string name="action_search">Buscar</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Push notifications</string>
   <string name="settings_popup_message">
