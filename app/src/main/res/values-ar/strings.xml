@@ -70,8 +70,8 @@
   <string name="please_wait">Please, wait few seconds before making this action.</string>
   <!--- Menu -->
   <string name="home_menu">الرئيسية</string>
-  <string name="local_menu">النشرة المحلية</string>
-  <string name="global_menu">النشرة العمومية</string>
+  <string name="local_menu">الخيط المحلي</string>
+  <string name="global_menu">الخيط المُوحَّد</string>
   <string name="neutral_menu_title">الخيارات</string>
   <string name="favorites_menu">المفضلة</string>
   <string name="communication_menu_title">التواصل</string>
@@ -279,7 +279,7 @@
   <string name="toast_unfollow">The account is no longer followed!</string>
   <string name="toast_reblog">تمت ترقية التبويق !</string>
   <string name="toast_unreblog">The toot is no longer boosted!</string>
-  <string name="toast_favourite">The toot was added to your favourites!</string>
+  <string name="toast_favourite">تمت إضافة التبويق إلى مفضلاتك !</string>
   <string name="toast_unfavourite">The toot was removed from your favourites!</string>
   <string name="toast_report">تم الإبلاغ عن التبويق !</string>
   <string name="toast_unstatus">تم حذف التبويق بنجاح !</string>
@@ -306,14 +306,14 @@
   <string name="set_notifications_page">عدد الإخطارات التي يتم تحميلها كل مرة</string>
   <string name="set_attachment_always">دائما</string>
   <string name="set_attachment_wifi">واي فاي</string>
-  <string name="set_attachment_ask">اطلب</string>
+  <string name="set_attachment_ask">أُطلُب</string>
   <string name="set_attachment_action">تحميل الوسائط</string>
   <string name="load_attachment">تحميل الصور</string>
   <string name="load_attachment_spoiler">عرض المزيد ...</string>
   <string name="load_sensitive_attachment">محتوى حساس</string>
   <string name="set_display_reply">Display previous message in responses</string>
-  <string name="set_display_local">Display local timeline</string>
-  <string name="set_display_global">Display federated timeline</string>
+  <string name="set_display_local">إظهار الخيط المحلي</string>
+  <string name="set_display_global">إظهار الخيط المُوحَّد</string>
   <string name="set_disable_gif">تعطيل الصور الرمزية المتحركة</string>
   <string name="set_folder_title">المسار :</string>
   <string name="set_auto_store_toot">حفظ تلقائي للمسودات</string>
@@ -331,7 +331,7 @@
   <string name="set_wifi_only">الإخطار في وضع الواي فاي فقط</string>
   <string name="set_notify">Notify?</string>
   <string name="set_notif_silent">إخطارت صامتة</string>
-  <string name="set_night_mode">وضع ليلي</string>
+  <string name="set_night_mode">الوضع اليلي</string>
   <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
   <string name="settings_title_profile">تعديل الملف الشخصي</string>
   <string name="set_profile_description">السيرة الذاتية ...</string>
