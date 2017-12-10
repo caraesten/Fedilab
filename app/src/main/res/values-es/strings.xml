@@ -19,39 +19,39 @@
   <string name="download_over">Descarga completada</string>
   <string name="save_file">Guardado %1$s</string>
   <string name="save_over">Archivos multimedia guardados</string>
-  <string name="download_from">File: %1$s</string>
-  <string name="password">Password</string>
-  <string name="email">Email</string>
-  <string name="accounts">Accounts</string>
+  <string name="download_from">Archivo: %1$s</string>
+  <string name="password">Contraseña</string>
+  <string name="email">Correo Electrónico</string>
+  <string name="accounts">Cuentas</string>
   <string name="toots">Toots</string>
-  <string name="tags">Tags</string>
+  <string name="tags">Etiquetas</string>
   <string name="token">Token</string>
-  <string name="save">Save</string>
-  <string name="restore">Restore</string>
-  <string name="two_factor_authentification">Two-step authentication?</string>
+  <string name="save">Guardar</string>
+  <string name="restore">Restaurar</string>
+  <string name="two_factor_authentification">¿Verificación en dos pasos?</string>
   <string name="other_instance">Other instance than mastodon.etalab.gouv.fr?</string>
-  <string name="no_result">No results!</string>
+  <string name="no_result">¡No hay resultados!</string>
   <string name="instance">Instance</string>
   <string name="instance_example">Instance: mastodon.social</string>
-  <string name="toast_account_changed">Now works with the account %1$s</string>
-  <string name="add_account">Add an account</string>
+  <string name="toast_account_changed">Ahora funciona con la cuenta %1$s</string>
+  <string name="add_account">Agregar una cuenta</string>
   <string name="clipboard">The content of the toot has been copied to the clipboard</string>
-  <string name="change">Change</string>
-  <string name="choose_picture">Select a picture…</string>
-  <string name="clear">Clean</string>
-  <string name="microphone">Microphone</string>
-  <string name="speech_prompt">Please, say something</string>
-  <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
-  <string name="delete_all">Delete all</string>
+  <string name="change">Cambiar</string>
+  <string name="choose_picture">Seleccionar una imagen…</string>
+  <string name="clear">Borrar</string>
+  <string name="microphone">Micrófono</string>
+  <string name="speech_prompt">Por favor, di algo</string>
+  <string name="speech_not_supported">¡Lo sentimos! ¡Tu dispositivo no es compatible con la entrada de voz!</string>
+  <string name="delete_all">Eliminar todo</string>
   <string name="translate_toot">Translate this toot.</string>
-  <string name="schedule">Schedule</string>
-  <string name="text_size">Text and icon sizes</string>
-  <string name="text_size_change">Change the current text size:</string>
-  <string name="icon_size_change">Change the current icon size:</string>
-  <string name="next">Next</string>
-  <string name="previous">Previous</string>
-  <string name="open_with">Open with</string>
-  <string name="validate">Validate</string>
+  <string name="schedule">Programa</string>
+  <string name="text_size">Texto y tamaño de los íconos</string>
+  <string name="text_size_change">Cambiar el tamaño del texto actual:</string>
+  <string name="icon_size_change">Cambiar el tamaño del ícono actual:</string>
+  <string name="next">Siguiente</string>
+  <string name="previous">Anterior</string>
+  <string name="open_with">Abrir con</string>
+  <string name="validate">Validar</string>
   <string name="media">Media</string>
   <string name="share_with">Share with</string>
   <string name="shared_via">Shared via Mastalab</string>
@@ -95,7 +95,7 @@
   <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
   <string name="insert_emoji">Insert emoji</string>
   <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-  <string name="live_notif">Live notifications</string>
+  <string name="live_notif">Notificaciones</string>
   <!-- Status -->
   <string name="no_status">No toot to display</string>
   <string name="fav_added">The toot was added to favourites</string>
@@ -109,33 +109,33 @@
   <string name="reblog_remove">Unboost this toot?</string>
   <string name="pin_add">Pin this toot?</string>
   <string name="pin_remove">Unpin this toot?</string>
-  <string name="more_action_1">Mute</string>
-  <string name="more_action_2">Block</string>
-  <string name="more_action_3">Report</string>
-  <string name="more_action_4">Remove</string>
-  <string name="more_action_5">Copy</string>
-  <string name="more_action_6">Share</string>
-  <string name="more_action_7">Mention</string>
+  <string name="more_action_1">Silenciar</string>
+  <string name="more_action_2">Bloquear</string>
+  <string name="more_action_3">Reportar</string>
+  <string name="more_action_4">Remover</string>
+  <string name="more_action_5">Copiar</string>
+  <string name="more_action_6">Compartir</string>
+  <string name="more_action_7">Mencionar</string>
   <string-array name="more_action_confirm">
-    <item>Mute this account?</item>
-    <item>Block this account?</item>
+    <item>¿Silenciar esta cuenta?</item>
+    <item>¿Bloquear esta cuenta?</item>
     <item>Report this toot?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Remove this toot?</item>
   </string-array>
   <plurals name="preview_replies">
-    <item quantity="one">%d reply</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="one">%d respuesta</item>
+    <item quantity="other">%d respuesta</item>
   </plurals>
   <!-- Date -->
   <plurals name="date_seconds">
-    <item quantity="one">%d second ago</item>
-    <item quantity="other">%d seconds ago</item>
+    <item quantity="one">hace %d segundo</item>
+    <item quantity="other">hace %d segundo</item>
   </plurals>
   <plurals name="date_minutes">
-    <item quantity="one">%d minute ago</item>
-    <item quantity="other">%d minutes ago</item>
+    <item quantity="one">hace %d minuto</item>
+    <item quantity="other">hace %d minutos</item>
   </plurals>
   <plurals name="date_hours">
     <item quantity="one">%d hour ago</item>
