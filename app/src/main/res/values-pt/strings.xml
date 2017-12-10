@@ -282,6 +282,7 @@
   <string name="set_display_reply">Exibir mensagem anterior nas respostas</string>
   <string name="set_display_local">Exibir timeline local</string>
   <string name="set_display_global">Exibir timeline federada</string>
+  <string name="set_disable_gif">Disable GIF avatars</string>
   <string name="set_folder_title">Caminho: </string>
   <string name="set_auto_store_toot">Salvar rascunhos automaticamente</string>
   <string name="set_bubble_counter">Exibir contadores</string>
@@ -409,7 +410,7 @@
   <string name="thanks_text_dev">
         Agradecimentos a:
     </string>
-<string name="filter_regex">Filtrar com uma expressão regular</string>
+  <string name="filter_regex">Filtrar com uma expressão regular</string>
   <string name="search">Pesquisar</string>
   <string name="delete">Eliminar</string>
   <string name="fetch_more_toots">Fetch more toots…</string>
