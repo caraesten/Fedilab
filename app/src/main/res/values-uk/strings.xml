@@ -128,22 +128,26 @@
     <item quantity="one">%d reply</item>
     <item quantity="few">%d replies</item>
     <item quantity="other">%d replies</item>
+    <item quantity="many">%d replies</item>
   </plurals>
   <!-- Date -->
   <plurals name="date_seconds">
     <item quantity="one">%d second ago</item>
     <item quantity="few">%d seconds ago</item>
     <item quantity="other">%d seconds ago</item>
+    <item quantity="many">%d seconds ago</item>
   </plurals>
   <plurals name="date_minutes">
     <item quantity="one">%d minute ago</item>
     <item quantity="few">%d minutes ago</item>
     <item quantity="other">%d minutes ago</item>
+    <item quantity="many">%d minutes ago</item>
   </plurals>
   <plurals name="date_hours">
     <item quantity="one">%d hour ago</item>
     <item quantity="few">%d hours ago</item>
     <item quantity="other">%d hours ago</item>
+    <item quantity="many">%d hours ago</item>
   </plurals>
   <string name="date_yesterday">Yesterday</string>
   <string name="date_day_before_yesterday">Before yesterday</string>
@@ -152,11 +156,13 @@
     <item quantity="one">%d month ago</item>
     <item quantity="few">%d months ago</item>
     <item quantity="other">%d months ago</item>
+    <item quantity="many">%d months ago</item>
   </plurals>
   <plurals name="date_year">
-    <item quantity="one">One year ago</item>
+    <item quantity="one">%d years ago</item>
     <item quantity="few">%d years ago</item>
     <item quantity="other">%d years ago</item>
+    <item quantity="many">%d years ago</item>
   </plurals>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">Warning</string>
@@ -227,14 +233,16 @@
   <string name="notif_follow">followed you</string>
   <string name="notif_pouet">New toot from %1$s</string>
   <plurals name="other_notifications">
-    <item quantity="one">and another notification</item>
+    <item quantity="one">and %d other notifications</item>
     <item quantity="few">and %d other notifications</item>
     <item quantity="other">and %d other notifications</item>
+    <item quantity="many">and %d other notifications</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="one">and another toot to discover</item>
+    <item quantity="one">and %d other toots to discover</item>
     <item quantity="few">and %d other toots to discover</item>
     <item quantity="other">and %d other toots to discover</item>
+    <item quantity="many">and %d other toots to discover</item>
   </plurals>
   <string name="delete_notification_ask">Delete a notification?</string>
   <string name="delete_notification_ask_all">Delete all notifications?</string>
@@ -422,5 +430,4 @@
   <string name="search">Search</string>
   <string name="delete">Delete</string>
 <string name="fetch_more_toots">Fetch more toots…</string>
-    <string name="set_disable_gif">Disable GIF avatars</string>
 </resources>
