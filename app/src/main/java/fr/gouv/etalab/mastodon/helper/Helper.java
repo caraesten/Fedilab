@@ -1675,4 +1675,26 @@ public class Helper {
         return output;
     }
 
+
+    public static void loadGiF(final Context context, String url, final ImageView imageView){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean disableGif = sharedpreferences.getBoolean(SET_DISABLE_GIF, false);
+
+        if( !disableGif)
+            Glide.with(imageView.getContext())
+                .load(url)
+                .into(imageView);
+        else
+            Glide.with(context)
+                    .asBitmap()
+                    .load(url)
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            imageView.setImageBitmap(resource);
+                        }
+                    });
+    }
+
+
 }
