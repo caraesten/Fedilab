@@ -25,14 +25,14 @@
   <string name="accounts">Cuentas</string>
   <string name="toots">Toots</string>
   <string name="tags">Etiquetas</string>
-  <string name="token">Token</string>
+  <string name="token">Ficha</string>
   <string name="save">Guardar</string>
   <string name="restore">Restaurar</string>
   <string name="two_factor_authentification">¿Verificación en dos pasos?</string>
   <string name="other_instance">¿Otra instancia que mastodon.etalab.gouv.fr?</string>
   <string name="no_result">¡No hay resultados!</string>
   <string name="instance">Instancia</string>
-  <string name="instance_example">Instance: mastodon.social</string>
+  <string name="instance_example">Instancia: mastodon.social</string>
   <string name="toast_account_changed">Ahora funciona con la cuenta %1$s</string>
   <string name="add_account">Agregar una cuenta</string>
   <string name="clipboard">El contenido del toot ha sido copiado al portapapeles</string>
@@ -70,7 +70,7 @@
   <string name="please_wait">Por favor, espere unos segundos antes de realizar esta acción.</string>
   <!--- Menu -->
   <string name="home_menu">Inicio</string>
-  <string name="local_menu">Timeline local</string>
+  <string name="local_menu">Cronología local</string>
   <string name="global_menu">Federated timeline</string>
   <string name="neutral_menu_title">Opciones</string>
   <string name="favorites_menu">Favoritos</string>
@@ -170,7 +170,7 @@
   <string name="toot_reply_content_title">Tú estas respondiendo a este toot:</string>
   <string name="toot_sensitive">¿Contenido sensible?</string>
   <string-array name="toot_visibility">
-    <item>Post to public timelines</item>
+    <item>Publicar en cronologías públicas</item>
     <item>Do not post to public timelines</item>
     <item>Post to followers only</item>
     <item>Post to mentioned users only</item>
@@ -305,7 +305,7 @@
   <string name="set_profile_description">Bio…</string>
   <string name="set_save_changes">Guardar cambios</string>
   <string name="set_header_picture_overlay">Elegir una imagen de encabezado</string>
-  <string name="set_preview_reply">Mostrar el número de respuesta en el timeline del inicio</string>
+  <string name="set_preview_reply">Mostrar el número de respuesta en la cronología del inicio</string>
   <string name="set_preview_reply_pp">¿Mostrar imágenes de perfil?</string>
   <string name="set_multiaccount_actions">¿Permitir interacciones entre cuentas?</string>
   <string name="note_no_space">¡Has alcanzado los 160 caracteres permitidos!</string>
@@ -320,7 +320,7 @@
   <string name="embedded_browser">Use the built-in browser</string>
   <string name="use_javascript">Permitir Javascripts</string>
   <string name="use_cookies">Permitir cookies de terceros</string>
-  <string name="settings_ui_layout">Layout for timelines: </string>
+  <string name="settings_ui_layout">Diseño para líneas de tiempo: </string>
   <string-array name="settings_menu_tabs">
     <item>Pestañas</item>
     <item>Menú</item>
@@ -341,7 +341,7 @@
     <item>Blanco</item>
   </string-array>
   <string name="set_title_news">Noticias</string>
-  <string name="set_notification_news">Notify for new toots on the home timeline</string>
+  <string name="set_notification_news">Notificar para nuevos toots en la cronología de inicio</string>
   <string name="set_show_error_messages">Mostrar mensajes de error</string>
   <string name="action_follow">Seguir</string>
   <string name="action_unfollow">Dejar de Seguir</string>
