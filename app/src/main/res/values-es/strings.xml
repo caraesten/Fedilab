@@ -175,27 +175,27 @@
     <item>Post to followers only</item>
     <item>Post to mentioned users only</item>
   </string-array>
-  <string name="no_draft">No draft!</string>
+  <string name="no_draft">¡No hay borrador!</string>
   <string name="choose_toot">Elegir un toot</string>
-  <string name="choose_accounts">Choose an account</string>
-  <string name="select_accounts">Select some accounts</string>
-  <string name="remove_draft">Remove draft?</string>
+  <string name="choose_accounts">Elegir una cuenta</string>
+  <string name="select_accounts">Seleccionar alguna cuenta</string>
+  <string name="remove_draft">¿Remover cuenta?</string>
   <string name="show_reply">Click en el botón para mostrar el toot original</string>
-  <string name="upload_form_description">Describe for the visually impaired</string>
+  <string name="upload_form_description">Describir para los discapacitados visuales</string>
   <!-- Instance -->
-  <string name="instance_no_description">No description available!</string>
+  <string name="instance_no_description">¡No hay descripción disponible!</string>
   <!-- About -->
-  <string name="about_vesrion">Release %1$s</string>
-  <string name="about_developer">Developer:</string>
-  <string name="about_license">License: </string>
+  <string name="about_vesrion">Liberar %1$s</string>
+  <string name="about_developer">Desarrollador:</string>
+  <string name="about_license">Licencia: </string>
   <string name="about_license_action">GNU GPL V3</string>
-  <string name="about_code">Source code: </string>
+  <string name="about_code">Código fuente: </string>
   <string name="about_yandex">Traducción de los toots:</string>
-  <string name="about_thekinrar">Search instances:</string>
+  <string name="about_thekinrar">Búsqueda de instancias:</string>
   <string name="about_thekinrar_action">instances.social</string>
-  <string name="thanks_text_logo">Icon designer:</string>
+  <string name="thanks_text_logo">Diseñador de ícono:</string>
   <!-- Conversation -->
-  <string name="conversation">Conversation</string>
+  <string name="conversation">Conversación</string>
   <!-- Accounts -->
   <string name="no_accounts">Ninguna cuenta para mostrar</string>
   <string name="no_follow_request">Ninguna solicitud de seguir</string>
@@ -211,7 +211,7 @@
   <string name="remove_scheduled">¿Borrar el toot programado?</string>
   <string name="media_count">Media: %d</string>
   <string name="toot_scheduled">¡El toot ha sido programado!</string>
-  <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
+  <string name="toot_scheduled_date">¡La fecha programada debe ser mayor que la hora actual!</string>
   <string name="warning_battery">¡Ahorrador de batería activado! Podría no trabajar como lo esperado.</string>
   <!-- Notifications -->
   <string name="no_notifications">Ninguna notificación para mostrar</string>
@@ -219,7 +219,7 @@
   <string name="notif_reblog">mejoró tu estado</string>
   <string name="notif_favourite">marcó como favorito tu estado</string>
   <string name="notif_follow">te siguió</string>
-  <string name="notif_pouet">New toot from %1$s</string>
+  <string name="notif_pouet">Nuevo toot de %1$s</string>
   <plurals name="other_notifications">
     <item quantity="one">y otra notificación</item>
     <item quantity="other">y otra notificación</item>
@@ -275,11 +275,11 @@
   <string name="set_attachment_always">Siempre</string>
   <string name="set_attachment_wifi">WI-FI</string>
   <string name="set_attachment_ask">Preguntar</string>
-  <string name="set_attachment_action">Load the media</string>
-  <string name="load_attachment">Load the pictures</string>
-  <string name="load_attachment_spoiler">Show more…</string>
-  <string name="load_sensitive_attachment">Sensitive content</string>
-  <string name="set_display_reply">Display previous message in responses</string>
+  <string name="set_attachment_action">Cargar la media</string>
+  <string name="load_attachment">Cargar las fotos</string>
+  <string name="load_attachment_spoiler">Mostrar más…</string>
+  <string name="load_sensitive_attachment">Contenido sensible</string>
+  <string name="set_display_reply">Mostrar mensajes previos en las respuestas</string>
   <string name="set_display_local">Display local timeline</string>
   <string name="set_display_global">Display federated timeline</string>
   <string name="set_disable_gif">Disable GIF avatars</string>
@@ -287,14 +287,14 @@
   <string name="set_auto_store_toot">Save drafts automatically</string>
   <string name="set_bubble_counter">Display counters</string>
   <string name="set_auto_add_media_url">Add URL of media in toots</string>
-  <string name="settings_title_notifications">Manage notifications</string>
-  <string name="set_notif_follow">Notify when someone follows you</string>
-  <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
-  <string name="set_notif_follow_share">Notify when someone boosts your status</string>
-  <string name="set_notif_follow_add">Notify when someone favourites your status</string>
-  <string name="set_notif_follow_mention">Notify when someone mentions you</string>
-  <string name="set_share_validation">Show confirmation dialog before boosting</string>
-  <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
+  <string name="settings_title_notifications">Gestión de notificaciones</string>
+  <string name="set_notif_follow">Notificar cuando alguien te siga</string>
+  <string name="set_notif_follow_ask">Notificar cuando alguien pide que te siga</string>
+  <string name="set_notif_follow_share">Notificar cuando alguien mejora tu estado</string>
+  <string name="set_notif_follow_add">Notificar cuando alguien agrega a favoritos tu estado</string>
+  <string name="set_notif_follow_mention">Notificar cuando alguien te mencione</string>
+  <string name="set_share_validation">Mostrar diálogo de confirmación antes de mejorar</string>
+  <string name="set_share_validation_fav">Mostrar diálogo de confirmación antes de agregar a favoritos</string>
   <string name="settings_title_more_options">Advanced settings</string>
   <string name="set_wifi_only">Notify in WIFI only</string>
   <string name="set_notify">Notify?</string>
