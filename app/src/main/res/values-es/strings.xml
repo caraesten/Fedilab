@@ -375,19 +375,18 @@ Solo la información básica de las cuentas son guardadas en el dispositivo.
     </string>
   <string name="privacy_authorizations_title">Permisos:</string>
   <string name="privacy_authorizations">
-        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
-        - <b>INTERNET</b>: Used for queries to an instance.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
-        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
-        - <b>WAKE_LOCK</b>: Used during the notification service.
-    </string>
+        - <b>ACCESS_NETWORK_STATE</b>:  Usado para detectar si el dispositivo esta conectado a una red WI-Fi.\n
+        - <b>INTERNET</b>:  Usado por para una instancia.\n
+        - <b>ESCRIBIR_ALMACENAMIENTO_EXTERNO</b>:  Usado para almacenar contenido multimedia o para mover la aplicación a una tarjeta SD.\n
+        - <b>LEER_ALMACENAMIENTO_EXTERNO</b>: Usado para agregar contenido multimedia a toots.\n
+        - <b>INICIO_COMPLETADO</b>: Usado para iniciar servicios de notificación.\n
+        - <b>WAKE_LOCK</b>: Usado para notificación de servicio.    </string>
   <string name="privacy_API_authorizations_title">Permisos API:</string>
   <string name="privacy_API_authorizations">
-        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
+- <b>Leer</b>: Leer data.\n
+        - <b>Escribir</b>: Publicar estados y subir contenido multimedia para estados.\n
+        - <b>Follow</b>: Seguir, dejar de seguir, bloquear, desbloquear.\n\n
+        <b>&#9888; Esas acciones son llevadas solo cuando el usuario lo pida</b>
     </string>
   <string name="privacy_API_title">Rastreadores y librerías</string>
   <string name="privacy_API">
