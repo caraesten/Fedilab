@@ -245,12 +245,12 @@
   <string name="toast_unmute">¡La cuenta ya no esta silenciada!</string>
   <string name="toast_follow">¡La cuenta fue seguida!</string>
   <string name="toast_unfollow">¡La cuenta ya no esta seguida!</string>
-  <string name="toast_reblog">The toot was boosted!</string>
-  <string name="toast_unreblog">The toot is no longer boosted!</string>
-  <string name="toast_favourite">The toot was added to your favourites!</string>
-  <string name="toast_unfavourite">The toot was removed from your favourites!</string>
-  <string name="toast_report">The toot was reported!</string>
-  <string name="toast_unstatus">The toot was deleted!</string>
+  <string name="toast_reblog">¡El toot fue mejorado!</string>
+  <string name="toast_unreblog">¡El toot ya no está mejorado!</string>
+  <string name="toast_favourite">¡El toot fue agregado a tus favoritos!</string>
+  <string name="toast_unfavourite">¡El toot fue removido de tus favoritos!</string>
+  <string name="toast_report">¡El toot fue reportado!</string>
+  <string name="toast_unstatus">¡El toot fue eliminado!</string>
   <string name="toast_pin">¡Este toot fue fijado!</string>
   <string name="toast_unpin">¡Este toot ya no está fijado!</string>
   <string name="toast_error">¡Ups! ¡Un error ha ocurrido!</string>
@@ -265,7 +265,7 @@
   <string name="toast_error_translate">¡Un error ocurrió mientras se traducía!</string>
   <string name="toast_toot_saved">¡Borrador guardado!</string>
   <string name="toast_error_char_limit">¿Estás seguro que esta instancia permite este número de caracteres? Usualmente, este valor es cercano a 500 caracteres.</string>
-  <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
+  <string name="toast_visibility_changed">La visibilidad de los toots ha sido cambiado para la cuenta %1$s</string>
   <string name="toast_empty_search">¡Nombre de la instancia y nombre de pantalla no puede estar en blanco!</string>
   <!-- Settings -->
   <string name="settings_title_optimisation">Optimización de la carga</string>
@@ -354,20 +354,20 @@
   <string name="followed_by">Te sigue</string>
   <string name="action_search">Buscar</string>
   <!-- Quick settings for notifications -->
-  <string name="settings_popup_title">Push notifications</string>
+  <string name="settings_popup_title">Notificaciones Push</string>
   <string name="settings_popup_message">
         Please, confirm push notifications that you want to receive.
         You can enable or disable these notifications later in settings (Notifications tab).
     </string>
-  <string name="settings_popup_timeline">For unread toots in home time-line?</string>
+  <string name="settings_popup_timeline">¿Para toots no leídos en el timeline del inicio?</string>
   <string name="settings_popup_notification">¿Para notificaciones sin leer?</string>
   <!-- CACHE -->
   <string name="cache_title">Borrar caché</string>
-  <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+  <string name="cache_message">Hay %1$s de data en caché.\n\n ¿Quieres eliminarlos?</string>
   <string name="cache_units">Mb</string>
-  <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+  <string name="toast_cache_clear">¡Fue borrando el cache! %1$s liberados</string>
   <!-- PRIVACY -->
-  <string name="privacy_data_title">Recorded data</string>
+  <string name="privacy_data_title">Data grabada</string>
   <string name="privacy_data">
 Solo la información básica de las cuentas son guardadas en el dispositivo. 
         Esa data es estrictamente confidencial y solo puede ser usada por la aplicación.
