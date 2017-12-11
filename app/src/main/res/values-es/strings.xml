@@ -89,7 +89,7 @@
   <string name="send_email">Envíar un correo</string>
   <string name="choose_file">Por favor, seleccione un archivo</string>
   <string name="choose_file_error">¡Ningún explorador de archivos encontrado!</string>
-  <string name="click_to_change">Haga clic en la dirección para cambiarla</string>
+  <string name="click_to_change">Haz clic en la dirección para cambiarla</string>
   <string name="failed">¡Falló!</string>
   <string name="scheduled_toots">Toots programados</string>
   <string name="disclaimer_full">La siguiente información puede mostrar el perfil del usuario incompleto.</string>
@@ -180,7 +180,7 @@
   <string name="choose_accounts">Elegir una cuenta</string>
   <string name="select_accounts">Seleccionar alguna cuenta</string>
   <string name="remove_draft">¿Remover cuenta?</string>
-  <string name="show_reply">Click en el botón para mostrar el toot original</string>
+  <string name="show_reply">Haz clic en el botón para mostrar el toot original</string>
   <string name="upload_form_description">Describir para los discapacitados visuales</string>
   <!-- Instance -->
   <string name="instance_no_description">¡No hay descripción disponible!</string>
