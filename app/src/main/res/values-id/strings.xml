@@ -25,7 +25,7 @@
   <string name="accounts">Akun</string>
   <string name="toots">Kutipan</string>
   <string name="tags">Label</string>
-  <string name="token">Bukti</string>
+  <string name="token">Token</string>
   <string name="save">Simpan</string>
   <string name="restore">Mengembalikan</string>
   <string name="two_factor_authentification">Otentikasi dua langkah?</string>
