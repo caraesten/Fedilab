@@ -71,7 +71,7 @@
   <!--- Menu -->
   <string name="home_menu">Inicio</string>
   <string name="local_menu">Cronología local</string>
-  <string name="global_menu">Federated timeline</string>
+  <string name="global_menu">Timeline federado</string>
   <string name="neutral_menu_title">Opciones</string>
   <string name="favorites_menu">Favoritos</string>
   <string name="communication_menu_title">Comunicación</string>
@@ -225,8 +225,8 @@
     <item quantity="other">y otra notificación</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="one">and another toot to discover</item>
-    <item quantity="other">and %d other toots to discover</item>
+    <item quantity="one">y otro toot para descubrir</item>
+    <item quantity="other">y %d otros toot para descubrir</item>
   </plurals>
   <string name="delete_notification_ask">¿Eliminar una notificación?</string>
   <string name="delete_notification_ask_all">¿Eliminar todas las notificaciones?</string>
@@ -238,7 +238,7 @@
   <string name="pinned_toots">Fijado</string>
   <!-- TOAST -->
   <string name="client_error">¡No se puede obtener la identificación del cliente!</string>
-  <string name="no_internet">¡Sin conexión a internet!</string>
+  <string name="no_internet">¡Sin conexión a Internet!</string>
   <string name="toast_block">¡La cuenta ha sido bloqueada!</string>
   <string name="toast_unblock">¡La cuenta ya no está bloqueada!</string>
   <string name="toast_mute">¡La cuenta ha sido silenciada!</string>
@@ -281,7 +281,7 @@
   <string name="load_sensitive_attachment">Contenido sensible</string>
   <string name="set_display_reply">Mostrar mensajes previos en las respuestas</string>
   <string name="set_display_local">Mostrar timeline local</string>
-  <string name="set_display_global">Display federated timeline</string>
+  <string name="set_display_global">Mostrar timline federado</string>
   <string name="set_disable_gif">Desactivar avatares GIF</string>
   <string name="set_folder_title">Ruta: </string>
   <string name="set_auto_store_toot">Guardar borradores automáticamente</string>
@@ -300,7 +300,7 @@
   <string name="set_notify">¿Notificar?</string>
   <string name="set_notif_silent">Notificaciones silenciosas</string>
   <string name="set_night_mode">Modo nocturno</string>
-  <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
+  <string name="set_nsfw_timeout">Tiempo de vista de contenido sensible (segundos, 0 significa terminado)</string>
   <string name="settings_title_profile">Editar perfil</string>
   <string name="set_profile_description">Bio…</string>
   <string name="set_save_changes">Guardar cambios</string>
@@ -356,9 +356,8 @@
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Notificaciones Push</string>
   <string name="settings_popup_message">
-        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
-    </string>
+Por favor, confirma notificaciones push que quieres recibir. 
+Tú puede activar o desactivar esas notificaciones después en configuración (pestaña de notificaciones).    </string>
   <string name="settings_popup_timeline">¿Para toots no leídos en el timeline del inicio?</string>
   <string name="settings_popup_notification">¿Para notificaciones sin leer?</string>
   <!-- CACHE -->
@@ -392,12 +391,11 @@ Solo la información básica de las cuentas son guardadas en el dispositivo.
     </string>
   <string name="privacy_API_title">Rastreadores y librerías</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
-    </string>
+La aplicación <b>no usa herramientas de rastreo</b> (medidores de audiencia, reportadores de error, entre otro) y no contiene ninguna publicidad.\n\n
+        El uso de librerías es minimizado:\n
+        -<b>Glide</b>: Para gestionar media\n
+        -<b>Android-Job</b>: Para gestionar servicios\n
+<b>PhotoView</b> Para gestionar imágenes\n    </string>
   <string name="privacy_API_yandex_title">Traducción de los toots</string>
   <string name="privacy_API_yandex_authorizations">
         The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
