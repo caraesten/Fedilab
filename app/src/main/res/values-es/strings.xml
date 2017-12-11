@@ -52,7 +52,7 @@
   <string name="previous">Anterior</string>
   <string name="open_with">Abrir con</string>
   <string name="validate">Validar</string>
-  <string name="media">Media</string>
+  <string name="media">Contenido multimedia</string>
   <string name="share_with">Compartir con</string>
   <string name="shared_via">Compartido por Mastalab</string>
   <string name="replies">Respuestas</string>
@@ -161,8 +161,8 @@
   <string name="toot_title_reply">Responder a un toot</string>
   <string name="toot_no_space">¡Has alcanzado los 500 caracteres permitidos!</string>
   <string name="toot_select_image">Selecciona un medio</string>
-  <string name="toot_select_image_error">¡Un error ocurrió mientras seleccionaba un medio!</string>
-  <string name="toot_delete_media">¿Eliminar este medio?</string>
+  <string name="toot_select_image_error">¡Un error ocurrió mientras seleccionaba un contenido multimedia!</string>
+  <string name="toot_delete_media">¿Eliminar este contenido multimedia?</string>
   <string name="toot_error_no_content">¡Tu toot está vacío!</string>
   <string name="toot_visibility_tilte">Visibilidad del toot</string>
   <string name="toots_visibility_tilte">Visibilidad de los toots por defecto: </string>
@@ -209,7 +209,7 @@
   <string name="no_scheduled_toots">¡Ningún toot programado para mostrar!</string>
   <string name="no_scheduled_toots_indications">Escribe un toot y luego elige un <b>programa</b> del menú superior.</string>
   <string name="remove_scheduled">¿Borrar el toot programado?</string>
-  <string name="media_count">Media: %d</string>
+  <string name="media_count">Contenido multimedia: %d</string>
   <string name="toot_scheduled">¡El toot ha sido programado!</string>
   <string name="toot_scheduled_date">¡La fecha programada debe ser mayor que la hora actual!</string>
   <string name="warning_battery">¡Ahorrador de batería activado! Podría no trabajar como lo esperado.</string>
@@ -261,7 +261,7 @@
   <string name="toast_error_login">¡No puede iniciar sesión!</string>
   <string name="toast_update_credential_ok">¡Los datos del perfil han sido guardados!</string>
   <string name="nothing_to_do">Ninguna acción puede ser tomada</string>
-  <string name="toast_saved">¡La media ha sido guardada!</string>
+  <string name="toast_saved">¡El contenido multimedia ha sido guardado!</string>
   <string name="toast_error_translate">¡Un error ocurrió mientras se traducía!</string>
   <string name="toast_toot_saved">¡Borrador guardado!</string>
   <string name="toast_error_char_limit">¿Estás seguro que esta instancia permite este número de caracteres? Usualmente, este valor es cercano a 500 caracteres.</string>
@@ -275,7 +275,7 @@
   <string name="set_attachment_always">Siempre</string>
   <string name="set_attachment_wifi">WI-FI</string>
   <string name="set_attachment_ask">Preguntar</string>
-  <string name="set_attachment_action">Cargar la media</string>
+  <string name="set_attachment_action">Cargar el contenido multimedia</string>
   <string name="load_attachment">Cargar las fotos</string>
   <string name="load_attachment_spoiler">Mostrar más…</string>
   <string name="load_sensitive_attachment">Contenido sensible</string>
@@ -286,7 +286,7 @@
   <string name="set_folder_title">Ruta: </string>
   <string name="set_auto_store_toot">Guardar borradores automáticamente</string>
   <string name="set_bubble_counter">Mostrar contadores</string>
-  <string name="set_auto_add_media_url">Agregar URL de la media en toots</string>
+  <string name="set_auto_add_media_url">Agregar URL del contenido multimedia en toots</string>
   <string name="settings_title_notifications">Gestión de notificaciones</string>
   <string name="set_notif_follow">Notificar cuando alguien te siga</string>
   <string name="set_notif_follow_ask">Notificar cuando alguien pide que te siga</string>
@@ -397,9 +397,9 @@ La aplicación <b>no usa herramientas de rastreo</b> (medidores de audiencia, re
 <b>PhotoView</b> Para gestionar imágenes\n    </string>
   <string name="privacy_API_yandex_title">Traducción de los toots</string>
   <string name="privacy_API_yandex_authorizations">
-        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
-    </string>
+La aplicación ofrece la habilidad de traducir toots usando la localización del dipositivo y el Yandex API\n
+Yandex tine su propia política de privacidad la cual puede ser encontrada aquí:
+https://yandex.ru/legal/confidential/?lang=en    </string>
   <string name="thanks_text">
 Gracias a Stéphane por el logo.
     </string>
