@@ -68,7 +68,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
 public class NotificationsSyncJob extends Job implements OnRetrieveNotificationsInterface{
 
     static final String NOTIFICATION_REFRESH = "job_notification";
-    static { Security.insertProviderAt(Conscrypt.newProvider("GmsCore_OpenSSL"), 1); }
+    static { Security.addProvider(Conscrypt.newProvider());}
 
     @NonNull
     @Override
