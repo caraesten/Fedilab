@@ -77,7 +77,10 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
         return Result.SUCCESS;
     }
 
-    static { Security.addProvider(Conscrypt.newProvider());}
+    static {
+        Security.insertProviderAt(Conscrypt.newProvider("GmsCore_OpenSSL"), 2);
+        Security.addProvider(Conscrypt.newProvider());
+    }
     public static int schedule(boolean updateCurrent){
 
         Set<JobRequest> jobRequests = JobManager.instance().getAllJobRequestsForTag(HOME_TIMELINE);

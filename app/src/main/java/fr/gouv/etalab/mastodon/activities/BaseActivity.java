@@ -11,5 +11,9 @@ import java.security.Security;
  */
 
 public class BaseActivity extends AppCompatActivity {
-    static { Security.addProvider(Conscrypt.newProvider()); }
+    static {
+        Security.insertProviderAt(Conscrypt.newProvider("GmsCore_OpenSSL"), 2);
+        Security.addProvider(Conscrypt.newProvider());
+
+    }
 }

@@ -44,7 +44,10 @@ import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 public class ScheduledTootsSyncJob extends Job {
 
     public static final String SCHEDULED_TOOT = "job_scheduled_toot";
-    static { Security.addProvider(Conscrypt.newProvider());}
+    static {
+        Security.insertProviderAt(Conscrypt.newProvider("GmsCore_OpenSSL"), 2);
+        Security.addProvider(Conscrypt.newProvider());
+    }
 
     @NonNull
     @Override
