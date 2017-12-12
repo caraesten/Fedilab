@@ -47,7 +47,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Instance activity
  */
 
-public class InstanceActivity extends AppCompatActivity implements OnRetrieveInstanceInterface {
+public class InstanceActivity extends BaseActivity implements OnRetrieveInstanceInterface {
 
     private LinearLayout instance_container;
     private RelativeLayout loader;

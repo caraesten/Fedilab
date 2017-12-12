@@ -65,7 +65,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.withSuffix;
  * Instance health activity class
  */
 
-public class InstanceHealthActivity extends AppCompatActivity {
+public class InstanceHealthActivity extends BaseActivity {
 
     private InstanceSocial instanceSocial;
     private TextView name, values, checked_at, up, uptime;

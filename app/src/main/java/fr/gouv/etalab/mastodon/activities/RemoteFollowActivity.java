@@ -83,7 +83,7 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
  * Remote follow activity class
  */
 
-public class RemoteFollowActivity extends AppCompatActivity implements OnRetrieveRemoteAccountInterface, OnRetrieveRelationshipInterface, OnPostActionInterface {
+public class RemoteFollowActivity extends BaseActivity implements OnRetrieveRemoteAccountInterface, OnRetrieveRelationshipInterface, OnPostActionInterface {
 
 
     private ImageView pp_actionBar;

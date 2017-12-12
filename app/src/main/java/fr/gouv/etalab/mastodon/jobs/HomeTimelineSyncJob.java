@@ -35,6 +35,9 @@ import com.evernote.android.job.Job;
 import com.evernote.android.job.JobManager;
 import com.evernote.android.job.JobRequest;
 
+import org.conscrypt.Conscrypt;
+
+import java.security.Security;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -74,7 +77,7 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
         return Result.SUCCESS;
     }
 
-
+    static { Security.insertProviderAt(Conscrypt.newProvider("GmsCore_OpenSSL"), 1); }
     public static int schedule(boolean updateCurrent){
 
         Set<JobRequest> jobRequests = JobManager.instance().getAllJobRequestsForTag(HOME_TIMELINE);

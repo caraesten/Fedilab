@@ -20,6 +20,10 @@ import android.support.annotation.NonNull;
 
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobRequest;
+
+import org.conscrypt.Conscrypt;
+
+import java.security.Security;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -40,6 +44,7 @@ import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 public class ScheduledTootsSyncJob extends Job {
 
     public static final String SCHEDULED_TOOT = "job_scheduled_toot";
+    static { Security.insertProviderAt(Conscrypt.newProvider("GmsCore_OpenSSL"), 1); }
 
     @NonNull
     @Override

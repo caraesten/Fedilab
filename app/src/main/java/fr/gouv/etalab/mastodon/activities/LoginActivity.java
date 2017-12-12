@@ -34,6 +34,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.conscrypt.Conscrypt;
 import org.conscrypt.OpenSSLProvider;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,7 +59,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Login activity class which handles the connection
  */
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     private String client_id;
     private String client_secret;
@@ -70,11 +71,12 @@ public class LoginActivity extends AppCompatActivity {
     private EditText login_passwd;
     boolean isLoadingInstance = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Security.insertProviderAt(new OpenSSLProvider(), 1);
+
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -238,7 +240,7 @@ public class LoginActivity extends AppCompatActivity {
                       }
                     });
 
-                } catch (Exception ignored) {}
+                } catch (Exception ignored) {ignored.printStackTrace();}
             }
         }).start();
 

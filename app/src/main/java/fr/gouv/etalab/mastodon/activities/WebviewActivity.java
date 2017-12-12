@@ -48,7 +48,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.manageDownloads;
  * Webview activity
  */
 
-public class WebviewActivity extends AppCompatActivity {
+public class WebviewActivity extends BaseActivity {
 
     private String url;
     private WebView webView;

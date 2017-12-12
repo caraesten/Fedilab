@@ -48,7 +48,7 @@ import fr.gouv.etalab.mastodon.R;
  * Created by Thomas on 24/04/2017.
  * Webview to connect accounts
  */
-public class WebviewConnectActivity extends AppCompatActivity {
+public class WebviewConnectActivity extends BaseActivity {
 
 
     private WebView webView;

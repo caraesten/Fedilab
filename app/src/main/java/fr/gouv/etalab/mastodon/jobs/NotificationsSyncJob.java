@@ -35,6 +35,9 @@ import com.evernote.android.job.Job;
 import com.evernote.android.job.JobManager;
 import com.evernote.android.job.JobRequest;
 
+import org.conscrypt.Conscrypt;
+
+import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -65,6 +68,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
 public class NotificationsSyncJob extends Job implements OnRetrieveNotificationsInterface{
 
     static final String NOTIFICATION_REFRESH = "job_notification";
+    static { Security.insertProviderAt(Conscrypt.newProvider("GmsCore_OpenSSL"), 1); }
 
     @NonNull
     @Override

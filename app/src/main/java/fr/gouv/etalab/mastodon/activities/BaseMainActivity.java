@@ -113,7 +113,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.updateHeaderAccountInfo;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 
-public abstract class BaseMainActivity extends AppCompatActivity
+public abstract class BaseMainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface {
 
     private FloatingActionButton toot, delete_all, add_new;

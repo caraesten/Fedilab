@@ -7,8 +7,8 @@ android {
         applicationId "fr.gouv.etalab.mastodon"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 87
-        versionName "1.6.6"
+        versionCode 88
+        versionName "1.6.7-beta-1"
     }
     flavorDimensions "default"
     buildTypes {
@@ -43,5 +43,5 @@ dependencies {
     implementation 'com.github.stom79:country-picker-android:1.2.0'
     implementation 'com.github.stom79:mytransl:1.2'
     playstoreImplementation 'io.github.kobakei:ratethisapp:1.2.0'
-    implementation files('libs/conscrypt-openjdk-1.0.0.RC14.jar')
+    compile 'org.conscrypt:conscrypt-android:1.0.0.RC14'
 }
