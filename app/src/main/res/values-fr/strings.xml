@@ -412,4 +412,16 @@
   <string name="search">Rechercher</string>
   <string name="delete">Supprimer</string>
   <string name="fetch_more_toots">Retrouver plus de pouets…</string>
+  <!-- About lists -->
+  <string name="action_lists">Listes</string>
+  <string name="action_lists_confirm_delete">Êtes-vous sûr de vouloir supprimer définitivement cette liste ?</string>
+  <string name="action_lists_empty_content">Il n\'y a rien dans cette liste pour l\'instant.</string>
+  <string name="action_lists_add_to">Ajouter à la liste</string>
+  <string name="action_lists_remove_from">Supprimer de la liste</string>
+  <string name="action_lists_create">Ajouter une liste</string>
+  <string name="action_lists_delete">Supprimer la liste</string>
+  <string name="action_lists_update">Modifier la liste</string>
+  <string name="action_lists_title_placeholder">Titre de la nouvelle liste</string>
+  <string name="action_lists_search_users">Rechercher parmi les gens que vous suivez</string>
+  <string name="action_lists_owner">Vos listes</string>
 </resources>

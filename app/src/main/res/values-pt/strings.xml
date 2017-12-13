@@ -200,8 +200,8 @@
   <string name="no_accounts">Sem contas para exibir</string>
   <string name="no_follow_request">Sem solicitações de seguidor</string>
   <string name="status_cnt">Toots \n %1$s</string>
-  <string name="following_cnt">Following \n %1$s</string>
-  <string name="followers_cnt">Followers \n %1$s</string>
+  <string name="following_cnt">Seguindo \n %1$s</string>
+  <string name="followers_cnt">Seguidores \n %1$s</string>
   <string name="pins_cnt">Fixado \n %d</string>
   <string name="authorize">Autorizar</string>
   <string name="reject">Rejeitar</string>
@@ -409,8 +409,20 @@
   <string name="thanks_text_dev">
         Agradecimentos a:
     </string>
-  <string name="filter_regex">Filter out by regular expressions</string>
-  <string name="search">Search</string>
-  <string name="delete">Delete</string>
+  <string name="filter_regex">Filtrar com uma expressão regular</string>
+  <string name="search">Pesquisar</string>
+  <string name="delete">Eliminar</string>
   <string name="fetch_more_toots">Fetch more toots…</string>
+  <!-- About lists -->
+  <string name="action_lists">Lists</string>
+  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
+  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
+  <string name="action_lists_add_to">Add to list</string>
+  <string name="action_lists_remove_from">Remove from list</string>
+  <string name="action_lists_create">Add list</string>
+  <string name="action_lists_delete">Delete list</string>
+  <string name="action_lists_update">Edit list</string>
+  <string name="action_lists_title_placeholder">New list title</string>
+  <string name="action_lists_search_users">Search among people you follow</string>
+  <string name="action_lists_owner">Your lists</string>
 </resources>
