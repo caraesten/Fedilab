@@ -49,7 +49,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -82,6 +81,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayDraftsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayFollowRequestSentFragment;
+import fr.gouv.etalab.mastodon.fragments.DisplayListsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayScheduledTootsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplaySearchFragment;
@@ -752,6 +752,19 @@ public abstract class BaseMainActivity extends BaseActivity
             navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
         }
 
+        //Check instance release for lists
+        String instance = Helper.getLiveInstance(getApplicationContext());
+        String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
+        if (instanceVersion != null) {
+            Version currentVersion = new Version(instanceVersion);
+            Version minVersion = new Version("2.1");
+            if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
+                navigationView.getMenu().findItem(R.id.nav_list).setVisible(true);
+            } else {
+                navigationView.getMenu().findItem(R.id.nav_list).setVisible(false);
+            }
+        }
+
         LinearLayout owner_container = headerLayout.findViewById(R.id.main_header_container);
         owner_container.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1320,6 +1333,12 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "FOLLOW_REQUEST_SENT";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, followRequestSentFragment, fragmentTag).commit();
+        }else if(id == R.id.nav_list){
+            toot.setVisibility(View.GONE);
+            DisplayListsFragment displayListsFragment = new DisplayListsFragment();
+            fragmentTag = "LISTS";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, displayListsFragment, fragmentTag).commit();
         }
 
         populateTitleWithTag(fragmentTag, item.getTitle().toString(), item.getItemId());

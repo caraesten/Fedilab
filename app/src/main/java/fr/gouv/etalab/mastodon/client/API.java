@@ -1075,13 +1075,24 @@ public class API {
         return results;
     }
 
+
+    /**
+     * Retrieves Accounts when searching (ie: via @...) *synchronously*
+     * Not limited to following
+     * @param query  String search
+     * @return APIResponse
+     */
+    public APIResponse searchAccounts(String query, int count) {
+        return searchAccounts(query, count, false);
+    }
+
     /**
      * Retrieves Accounts when searching (ie: via @...) *synchronously*
      *
      * @param query  String search
      * @return APIResponse
      */
-    public APIResponse searchAccounts(String query, int count) {
+    public APIResponse searchAccounts(String query, int count, boolean following) {
 
         HashMap<String, String> params = new HashMap<>();
         params.put("q", query);
@@ -1089,6 +1100,8 @@ public class API {
             count = 5;
         if( count > 40 )
             count = 40;
+        if( following)
+            params.put("following", Boolean.toString(true));
         params.put("limit", String.valueOf(count));
 
         try {
