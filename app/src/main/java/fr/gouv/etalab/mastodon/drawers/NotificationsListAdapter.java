@@ -68,6 +68,7 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnPostNotificationsActionInterface;
@@ -209,6 +210,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
         holder.status_reply.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
         holder.status_reply.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
+        holder.status_spoiler.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
 
         holder.notification_status_content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
         holder.notification_type.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
@@ -251,7 +253,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             if( !status.isEmojiFound())
                 status.makeEmojis(context, NotificationsListAdapter.this);
             holder.notification_status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
-
+            holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
 
             holder.notification_status_content.setMovementMethod(null);
             holder.notification_status_content.setMovementMethod(LinkMovementMethod.getInstance());
@@ -260,6 +262,10 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             holder.status_date.setText(Helper.dateDiff(context, status.getCreated_at()));
 
             Helper.absoluteDateTimeReveal(context, holder.status_date, status.getCreated_at());
+
+            holder.status_mention_spoiler.setText(Helper.makeMentionsClick(context,status.getMentions()), TextView.BufferType.SPANNABLE);
+            holder.status_mention_spoiler.setMovementMethod(null);
+            holder.status_mention_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
 
             //Adds attachment -> disabled, to enable them uncomment the line below
             //loadAttachments(status, holder);
@@ -321,29 +327,37 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()) {
                         holder.notification_status_container.setVisibility(View.GONE);
                         holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
                         holder.status_spoiler_button.setVisibility(View.VISIBLE);
                         holder.status_spoiler.setVisibility(View.VISIBLE);
                     } else {
                         holder.status_spoiler_button.setVisibility(View.GONE);
                         holder.notification_status_container.setVisibility(View.VISIBLE);
-                        if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0)
+                        if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0) {
                             holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                        else
+                            holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
+                        }else {
                             holder.status_spoiler_container.setVisibility(View.GONE);
+                            holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                        }
                     }
                 }else {
                     if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()) {
                         holder.notification_status_container.setVisibility(View.GONE);
                         holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
                         holder.status_spoiler_button.setVisibility(View.VISIBLE);
                         holder.status_spoiler.setVisibility(View.VISIBLE);
                     } else {
                         holder.status_spoiler_button.setVisibility(View.GONE);
                         holder.notification_status_container.setVisibility(View.VISIBLE);
-                        if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0)
+                        if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0) {
                             holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                        else
+                            holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
+                        }else {
                             holder.status_spoiler_container.setVisibility(View.GONE);
+                            holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                        }
                     }
                 }
 
@@ -420,7 +434,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     }
                 });
 
-                
+
                 switch (status.getVisibility()){
                     case "public":
                         holder.status_privacy.setImageResource(R.drawable.ic_public);
@@ -988,6 +1002,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         LinearLayout notification_status_container;
         RelativeLayout main_container_trans;
         ImageView status_privacy;
+        LinearLayout status_spoiler_mention_container;
+        TextView status_mention_spoiler;
 
         public View getView(){
             return itemView;
@@ -1026,6 +1042,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             status_spoiler_container = itemView.findViewById(R.id.status_spoiler_container);
             status_spoiler = itemView.findViewById(R.id.status_spoiler);
             status_spoiler_button = itemView.findViewById(R.id.status_spoiler_button);
+            status_spoiler_mention_container = itemView.findViewById(R.id.status_spoiler_mention_container);
+            status_mention_spoiler = itemView.findViewById(R.id.status_mention_spoiler);
         }
     }
 

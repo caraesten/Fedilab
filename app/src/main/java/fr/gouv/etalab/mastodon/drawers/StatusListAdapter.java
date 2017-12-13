@@ -84,6 +84,7 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
@@ -229,6 +230,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ProgressBar loader_replies;
         Button fetch_more;
         ImageView new_element;
+        LinearLayout status_spoiler_mention_container;
+        TextView status_mention_spoiler;
 
         public View getView(){
             return itemView;
@@ -277,6 +280,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_replies_profile_pictures = itemView.findViewById(R.id.status_replies_profile_pictures);
             new_element = itemView.findViewById(R.id.new_element);
             status_action_container = itemView.findViewById(R.id.status_action_container);
+            status_spoiler_mention_container = itemView.findViewById(R.id.status_spoiler_mention_container);
+            status_mention_spoiler = itemView.findViewById(R.id.status_mention_spoiler);
         }
     }
 
@@ -586,6 +591,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             });
 
+            holder.status_mention_spoiler.setText(Helper.makeMentionsClick(context,status.getMentions()), TextView.BufferType.SPANNABLE);
+            holder.status_mention_spoiler.setMovementMethod(null);
+            holder.status_mention_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
+
             if( status.getReblog() == null)
                 holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
             else
@@ -631,29 +640,37 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()) {
                         holder.status_content_container.setVisibility(View.GONE);
                         holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
                         holder.status_spoiler_button.setVisibility(View.VISIBLE);
                         holder.status_spoiler.setVisibility(View.VISIBLE);
                     } else {
                         holder.status_spoiler_button.setVisibility(View.GONE);
                         holder.status_content_container.setVisibility(View.VISIBLE);
-                        if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0)
+                        if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0) {
                             holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                        else
+                            holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
+                        }else {
                             holder.status_spoiler_container.setVisibility(View.GONE);
+                            holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                        }
                     }
                 }else {
                     if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()) {
                         holder.status_content_container.setVisibility(View.GONE);
                         holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
                         holder.status_spoiler_button.setVisibility(View.VISIBLE);
                         holder.status_spoiler.setVisibility(View.VISIBLE);
                     } else {
                         holder.status_spoiler_button.setVisibility(View.GONE);
                         holder.status_content_container.setVisibility(View.VISIBLE);
-                        if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0)
+                        if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0) {
                             holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                        else
+                            holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
+                        }else {
                             holder.status_spoiler_container.setVisibility(View.GONE);
+                            holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                        }
                     }
                 }
 
