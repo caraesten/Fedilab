@@ -102,7 +102,7 @@
   <string name="fav_removed">Modül favorilerden kaldırıldı!</string>
   <string name="reblog_added">Modül arttırıldı!</string>
   <string name="reblog_removed">Modül artık arttırılmış değil!</string>
-  <string name="reblog_by">%d%% hızlandırıldı</string>
+  <string name="reblog_by">%1$s hızlandırıldı</string>
   <string name="favourite_add">Bu modülü favorilere ekleyin?</string>
   <string name="favourite_remove">Bu modülü favorilerden kaldırın?</string>
   <string name="reblog_add">Bu modülü arttır?</string>
