@@ -43,5 +43,5 @@ dependencies {
     implementation 'com.github.stom79:country-picker-android:1.2.0'
     implementation 'com.github.stom79:mytransl:1.2'
     playstoreImplementation 'io.github.kobakei:ratethisapp:1.2.0'
-    compile 'org.conscrypt:conscrypt-android:1.0.0.RC14'
+    implementation 'org.conscrypt:conscrypt-android:1.0.0.RC14'
 }
