@@ -23,6 +23,7 @@ import com.evernote.android.job.JobRequest;
 
 import org.conscrypt.Conscrypt;
 
+import java.security.Provider;
 import java.security.Security;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -45,8 +46,15 @@ public class ScheduledTootsSyncJob extends Job {
 
     public static final String SCHEDULED_TOOT = "job_scheduled_toot";
     static {
-        Security.insertProviderAt(Conscrypt.newProvider("GmsCore_OpenSSL"), 2);
-        Security.addProvider(Conscrypt.newProvider());
+        boolean isGmsCore_OpenSSL = false;
+        Provider[] providers = Security.getProviders();
+        for(Provider provider: providers){
+            if( provider.getName().equals("GmsCore_OpenSSL"))
+                isGmsCore_OpenSSL = true;
+        }
+        if( !isGmsCore_OpenSSL)
+            Security.addProvider(Security.getProvider("GmsCore_OpenSSL"));
+        Security.insertProviderAt(Conscrypt.newProvider("GmsCore_OpenSSL"), 1);
     }
 
     @NonNull
