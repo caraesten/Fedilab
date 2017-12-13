@@ -19,7 +19,8 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 @SuppressLint("Registered")
 public class BaseActivity extends AppCompatActivity {
     static {
-        Security.insertProviderAt(Conscrypt.newProvider(), 2);
+        Security.addProvider(Conscrypt.newProvider());
+        //Security.insertProviderAt(Conscrypt.newProvider("GmsCore_OpenSSL"), 1);
 
     }
 

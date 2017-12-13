@@ -46,7 +46,7 @@ public class ScheduledTootsSyncJob extends Job {
 
     public static final String SCHEDULED_TOOT = "job_scheduled_toot";
     static {
-        Security.insertProviderAt(Conscrypt.newProvider(), 2);
+        Security.addProvider(Conscrypt.newProvider());
 
     }
 
