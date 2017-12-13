@@ -1131,6 +1131,33 @@ public class API {
         return apiResponse;
     }
 
+
+    /**
+     * Posts a list
+     * @param title String, the title of the list
+     * @return APIResponse
+     */
+    public APIResponse createList(String title){
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("title",title);
+        List<fr.gouv.etalab.mastodon.client.Entities.List> lists = new ArrayList<>();
+        fr.gouv.etalab.mastodon.client.Entities.List list;
+        try {
+            String response = new HttpsConnection().post(getAbsoluteUrl("/lists"), 60, params, prefKeyOauthTokenT);
+            list = parseList(new JSONObject(response));
+            lists.add(list);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            setDefaultError();
+        }
+        apiResponse.setLists(lists);
+        return apiResponse;
+    }
+
+
+
     /**
      * Parse json response an unique account
      * @param resobj JSONObject
