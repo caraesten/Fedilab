@@ -79,15 +79,7 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
     }
 
     static {
-        boolean isGmsCore_OpenSSL = false;
-        Provider[] providers = Security.getProviders();
-        for(Provider provider: providers){
-            if( provider.getName().equals("GmsCore_OpenSSL"))
-                isGmsCore_OpenSSL = true;
-        }
-        if( !isGmsCore_OpenSSL)
-            Security.addProvider(Security.getProvider("GmsCore_OpenSSL"));
-        Security.insertProviderAt(Conscrypt.newProvider("GmsCore_OpenSSL"), 1);
+        Security.insertProviderAt(Conscrypt.newProvider(), 2);
     }
     public static int schedule(boolean updateCurrent){
 

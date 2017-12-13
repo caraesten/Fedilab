@@ -70,15 +70,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
 
     static final String NOTIFICATION_REFRESH = "job_notification";
     static {
-        boolean isGmsCore_OpenSSL = false;
-        Provider[] providers = Security.getProviders();
-        for(Provider provider: providers){
-            if( provider.getName().equals("GmsCore_OpenSSL"))
-                isGmsCore_OpenSSL = true;
-        }
-        if( !isGmsCore_OpenSSL)
-            Security.addProvider(Security.getProvider("GmsCore_OpenSSL"));
-        Security.insertProviderAt(Conscrypt.newProvider("GmsCore_OpenSSL"), 1);
+        Security.insertProviderAt(Conscrypt.newProvider(), 2);
 
     }
 
