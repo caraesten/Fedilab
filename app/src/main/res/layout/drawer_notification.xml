@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License along with Mastalab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<FrameLayout
+<FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:card_view="http://schemas.android.com/tools"
@@ -50,7 +50,7 @@
                     android:gravity="center_horizontal"
                     android:id="@+id/notification_delete"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_delete"
+                    app:srcCompat="@drawable/ic_delete"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     tools:ignore="ContentDescription" />
@@ -84,6 +84,39 @@
                     android:layout_gravity="end"
                     android:gravity="end"
                     android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:id="@+id/status_spoiler_container"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/status_spoiler"
+                        android:layout_marginTop="10dp"
+                        android:autoLink="web"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <Button
+                        android:id="@+id/status_spoiler_button"
+                        android:textAllCaps="false"
+                        android:drawableLeft="@drawable/ic_remove_red_eye"
+                        android:drawableStart="@drawable/ic_remove_red_eye"
+                        android:gravity="center"
+                        android:drawablePadding="5dp"
+                        android:paddingLeft="10dp"
+                        android:paddingStart="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:maxLines="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Base.Widget.AppCompat.Button.Borderless"
+                        android:text="@string/load_attachment_spoiler" />
+                </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/notification_status_container"
                     android:layout_width="match_parent"
@@ -118,7 +151,7 @@
                                 android:visibility="gone"
                                 android:layout_centerInParent="true"
                                 android:layout_width="20dp"
-                                android:src="@drawable/ic_play_arrow"
+                                app:srcCompat="@drawable/ic_play_arrow"
                                 android:layout_height="20dp"
                                 tools:ignore="ContentDescription" />
                         </RelativeLayout>
@@ -146,7 +179,7 @@
                                     android:id="@+id/status_prev2_play"
                                     android:layout_centerInParent="true"
                                     android:layout_width="20dp"
-                                    android:src="@drawable/ic_play_arrow"
+                                    app:srcCompat="@drawable/ic_play_arrow"
                                     android:layout_height="20dp"
                                     tools:ignore="ContentDescription" />
                             </RelativeLayout>
@@ -173,7 +206,7 @@
                                         android:id="@+id/status_prev3_play"
                                         android:layout_centerInParent="true"
                                         android:layout_width="20dp"
-                                        android:src="@drawable/ic_play_arrow"
+                                        app:srcCompat="@drawable/ic_play_arrow"
                                         android:visibility="gone"
                                         android:layout_height="20dp"
                                         tools:ignore="ContentDescription" />
@@ -196,7 +229,7 @@
                                         android:layout_centerInParent="true"
                                         android:visibility="gone"
                                         android:layout_width="20dp"
-                                        android:src="@drawable/ic_play_arrow"
+                                        app:srcCompat="@drawable/ic_play_arrow"
                                         android:layout_height="20dp"
                                         tools:ignore="ContentDescription" />
                                 </RelativeLayout>
@@ -222,6 +255,19 @@
                         android:layout_height="wrap_content"
                         android:text="@string/load_attachment" />
                 </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/status_spoiler_mention_container"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/status_mention_spoiler"
+                        android:layout_marginTop="10dp"
+                        android:autoLink="web"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
@@ -241,7 +287,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_reply"
+                app:srcCompat="@drawable/ic_reply"
                 tools:ignore="ContentDescription" />
             <TextView
                 android:layout_marginLeft="20dp"
@@ -261,7 +307,6 @@
                 android:id="@+id/status_favorite_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -285,7 +330,7 @@
                     android:id="@+id/status_more"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/ic_more_horiz"
+                    app:srcCompat="@drawable/ic_more_horiz"
                     tools:ignore="ContentDescription" />
             </LinearLayout>
         </LinearLayout>

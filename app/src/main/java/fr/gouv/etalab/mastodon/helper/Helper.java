@@ -112,6 +112,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -133,6 +134,7 @@ import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -1082,6 +1084,43 @@ public class Helper {
                 });
     }
 
+
+    public static SpannableString makeMentionsClick(final Context context, List<Mention> mentions){
+
+        String cw_mention = "";
+        for(Mention mention:mentions){
+            cw_mention = String.format("@%s %s",mention.getAcct(),cw_mention);
+        }
+        SpannableString spannableString = new SpannableString(cw_mention);
+        for (final Mention mention : mentions) {
+            String targetedAccount = "@" + mention.getUsername();
+            if (spannableString.toString().contains(targetedAccount)) {
+
+                //Accounts can be mentioned several times so we have to loop
+                for(int startPosition = -1 ; (startPosition = spannableString.toString().indexOf(targetedAccount, startPosition + 1)) != -1 ; startPosition++){
+                    int endPosition = startPosition + targetedAccount.length();
+                    spannableString.setSpan(new ClickableSpan() {
+                                @Override
+                                public void onClick(View textView) {
+                                    Intent intent = new Intent(context, ShowAccountActivity.class);
+                                    Bundle b = new Bundle();
+                                    b.putString("accountId", mention.getId());
+                                    intent.putExtras(b);
+                                    context.startActivity(intent);
+                                }
+                                @Override
+                                public void updateDrawState(TextPaint ds) {
+                                    super.updateDrawState(ds);
+                                }
+                            },
+                            startPosition, endPosition,
+                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                }
+            }
+
+        }
+        return spannableString;
+    }
 
     /**
      * Update the header with the new selected account
