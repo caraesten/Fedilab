@@ -1240,10 +1240,16 @@ public class API {
      */
     //TODO: it is unclear what is returned here
     //TODO: improves doc https://github.com/tootsuite/documentation/blob/4bb149c73f40fa58fd7265a336703dd2d83efb1c/Using-the-API/API.md#addingremoving-accounts-tofrom-a-list
-    public APIResponse addAccountToList(String id, String account_ids){
+    public APIResponse addAccountToList(String id, String[] account_ids){
 
         HashMap<String, String> params = new HashMap<>();
-        params.put("account_ids",account_ids);
+        StringBuilder parameters = new StringBuilder();
+        for(String val: account_ids)
+            parameters.append("account_ids[]=").append(val).append("&");
+        if( parameters.length() > 0) {
+            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(16));
+            params.put("account_ids[]", parameters.toString());
+        }
         List<fr.gouv.etalab.mastodon.client.Entities.List> lists = new ArrayList<>();
         fr.gouv.etalab.mastodon.client.Entities.List list;
         try {
@@ -1262,10 +1268,18 @@ public class API {
      * @param id String, the id of the list
      * @return APIResponse
      */
-    public int deleteAccountFromList(String id, String account_ids){
+    public int deleteAccountFromList(String id, String[] account_ids){
         try {
             HttpsConnection httpsConnection = new HttpsConnection();
-            httpsConnection.delete(getAbsoluteUrl(String.format("/lists/%s/accounts", id)), 60, null, prefKeyOauthTokenT);
+            StringBuilder parameters = new StringBuilder();
+            HashMap<String, String> params = new HashMap<>();
+            for(String val: account_ids)
+                parameters.append("account_ids[]=").append(val).append("&");
+            if( parameters.length() > 0) {
+                parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(16));
+                params.put("account_ids[]", parameters.toString());
+            }
+            httpsConnection.delete(getAbsoluteUrl(String.format("/lists/%s/accounts", id)), 60, params, prefKeyOauthTokenT);
             actionCode = httpsConnection.getActionCode();
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
