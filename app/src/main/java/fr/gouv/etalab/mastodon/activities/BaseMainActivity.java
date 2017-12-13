@@ -1057,6 +1057,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     b.putString("sharedContent", sharedText);
                     intentToot.putExtras(b);
                     startActivity(intentToot);
+                    finish();
                 }
 
             } else if (type.startsWith("image/")) {
@@ -1072,6 +1073,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     b.putInt("uriNumberMast", 1);
                     intentToot.putExtras(b);
                     startActivity(intentToot);
+                    finish();
                 }
             }
         } else if (Intent.ACTION_SEND_MULTIPLE.equals(action) && type != null ) {
@@ -1086,6 +1088,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     b.putInt("uriNumberMast", imageList.size());
                     intentToot.putExtras(b);
                     startActivity(intentToot);
+                    finish();
                 }
             }
         }
