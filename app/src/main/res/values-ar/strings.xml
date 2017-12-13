@@ -18,7 +18,7 @@
   <string name="download_file">تنزيل %1$s</string>
   <string name="download_over">إكتمل التنزيل</string>
   <string name="save_file">حفظ %1$s</string>
-  <string name="save_over">Media saved</string>
+  <string name="save_over">تم حفظ الصورة</string>
   <string name="download_from">ملف : %1$s</string>
   <string name="password">كلمة السر</string>
   <string name="email">البريد الإلكتروني</string>
@@ -33,7 +33,7 @@
   <string name="no_result">لم يتم العثور على أية نتيجة !</string>
   <string name="instance">مثيل الخادم</string>
   <string name="instance_example">مثيل الخادم : mastodon.social</string>
-  <string name="toast_account_changed">Now works with the account %1$s</string>
+  <string name="toast_account_changed">يعمل الآن بحساب %1$s</string>
   <string name="add_account">إضافة حساب</string>
   <string name="clipboard">The content of the toot has been copied to the clipboard</string>
   <string name="change">تعديل</string>
