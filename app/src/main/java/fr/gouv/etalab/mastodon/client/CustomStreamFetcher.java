@@ -30,7 +30,7 @@ public class CustomStreamFetcher implements DataFetcher<InputStream> {
 
     @Override
     public void loadData(Priority priority, DataCallback<? super InputStream> callback) {
-        new HttpsConnection().getPicture(url.toStringUrl());
+        callback.onDataReady(new HttpsConnection().getPicture(url.toStringUrl()));
     }
 
     @Override
