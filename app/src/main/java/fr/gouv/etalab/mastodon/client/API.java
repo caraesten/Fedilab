@@ -1177,7 +1177,7 @@ public class API {
 
 
     /**
-     * Get accounts in a list for a user 
+     * Get accounts in a list for a user
      * @param listId String, id of the list
      * @param limit int, limit of results
      * @return APIResponse
@@ -1229,6 +1229,50 @@ public class API {
         }
         apiResponse.setLists(lists);
         return apiResponse;
+    }
+
+
+    /**
+     * Add an account in a list
+     * @param id String, id of the list
+     * @param account_ids String, account to add
+     * @return APIResponse
+     */
+    //TODO: it is unclear what is returned here
+    //TODO: improves doc https://github.com/tootsuite/documentation/blob/4bb149c73f40fa58fd7265a336703dd2d83efb1c/Using-the-API/API.md#addingremoving-accounts-tofrom-a-list
+    public APIResponse addAccountToList(String id, String account_ids){
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("account_ids",account_ids);
+        List<fr.gouv.etalab.mastodon.client.Entities.List> lists = new ArrayList<>();
+        fr.gouv.etalab.mastodon.client.Entities.List list;
+        try {
+            new HttpsConnection().post(getAbsoluteUrl(String.format("/lists/%s/accounts", id)), 60, params, prefKeyOauthTokenT);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            setDefaultError();
+        }
+        return apiResponse;
+    }
+
+
+    /**
+     * Delete an account from a list
+     * @param id String, the id of the list
+     * @return APIResponse
+     */
+    public int deleteAccountFromList(String id, String account_ids){
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection();
+            httpsConnection.delete(getAbsoluteUrl(String.format("/lists/%s/accounts", id)), 60, null, prefKeyOauthTokenT);
+            actionCode = httpsConnection.getActionCode();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            setDefaultError();
+        }
+        return actionCode;
     }
 
     /**
