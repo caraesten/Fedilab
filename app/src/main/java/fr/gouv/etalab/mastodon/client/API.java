@@ -1398,6 +1398,44 @@ public class API {
         return emojis;
     }
 
+
+    /**
+     * Parse Lists
+     * @param jsonArray JSONArray
+     * @return List<List> of lists
+     */
+    private List<fr.gouv.etalab.mastodon.client.Entities.List> parseLists(JSONArray jsonArray){
+        List<fr.gouv.etalab.mastodon.client.Entities.List> lists = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length() ) {
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                fr.gouv.etalab.mastodon.client.Entities.List list = parseList(resobj);
+                lists.add(list);
+                i++;
+            }
+        } catch (JSONException e) {
+            setDefaultError();
+        }
+        return lists;
+    }
+
+
+    /**
+     * Parse json response for emoji
+     * @param resobj JSONObject
+     * @return Emojis
+     */
+    private static fr.gouv.etalab.mastodon.client.Entities.List parseList(JSONObject resobj){
+        fr.gouv.etalab.mastodon.client.Entities.List list = new fr.gouv.etalab.mastodon.client.Entities.List();
+        try {
+            list.setId(resobj.get("id").toString());
+            list.setTitle(resobj.get("title").toString());
+        }catch (Exception ignored){}
+        return list;
+    }
+
+
     /**
      * Parse json response an unique account
      * @param resobj JSONObject
