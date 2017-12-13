@@ -1177,6 +1177,39 @@ public class API {
 
 
     /**
+     * Get accounts in a list for a user 
+     * @param listId String, id of the list
+     * @param limit int, limit of results
+     * @return APIResponse
+     */
+    public APIResponse getAccountsInList(String listId, int limit){
+
+        List<fr.gouv.etalab.mastodon.client.Entities.List> lists = new ArrayList<>();
+        fr.gouv.etalab.mastodon.client.Entities.List list;
+        HashMap<String, String> params = new HashMap<>();
+        if( limit < 0)
+            limit = 0;
+        if( limit > 50 )
+            limit = 50;
+        params.put("limit",String.valueOf(limit));
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection();
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/lists/%s/accounts", listId)), 60, params, prefKeyOauthTokenT);
+            accounts = parseAccountResponse(new JSONArray(response));
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            setDefaultError();
+        }
+        apiResponse.setLists(lists);
+        return apiResponse;
+    }
+
+
+
+    /**
      * Get a list
      * @param id String, id of the list
      * @return APIResponse
