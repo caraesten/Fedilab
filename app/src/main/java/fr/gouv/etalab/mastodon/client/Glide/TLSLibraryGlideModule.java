@@ -1,7 +1,6 @@
-package fr.gouv.etalab.mastodon.client;
+package fr.gouv.etalab.mastodon.client.Glide;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
@@ -12,10 +11,9 @@ import com.bumptech.glide.annotation.GlideModule;
 
 import java.io.InputStream;
 
-import fr.gouv.etalab.mastodon.helper.Helper;
-
 /**
  * Created by Thomas on 13/12/2017.
+ * Glide Module to handle https connections with TLSSocketFactory
  */
 
 @GlideModule

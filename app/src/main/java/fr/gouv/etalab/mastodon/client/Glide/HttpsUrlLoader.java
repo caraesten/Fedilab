@@ -1,23 +1,19 @@
-package fr.gouv.etalab.mastodon.client;
+package fr.gouv.etalab.mastodon.client.Glide;
 
-import android.content.Context;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.bumptech.glide.load.Options;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.ModelLoader;
 import com.bumptech.glide.load.model.ModelLoaderFactory;
 import com.bumptech.glide.load.model.MultiModelLoaderFactory;
-import com.bumptech.glide.load.model.stream.UrlLoader;
 
 import java.io.InputStream;
-
-import fr.gouv.etalab.mastodon.helper.Helper;
 
 
 /**
  * Created by Thomas on 13/12/2017.
+ * Custom UrlLoader
  */
 
 public class HttpsUrlLoader implements ModelLoader<GlideUrl, InputStream> {
@@ -42,12 +38,10 @@ public class HttpsUrlLoader implements ModelLoader<GlideUrl, InputStream> {
 
     public static class Factory implements ModelLoaderFactory<GlideUrl, InputStream> {
 
-
         @Override
         public ModelLoader<GlideUrl, InputStream> build(MultiModelLoaderFactory multiFactory) {
             return new HttpsUrlLoader();
         }
-
         @Override
         public void teardown() {
 
