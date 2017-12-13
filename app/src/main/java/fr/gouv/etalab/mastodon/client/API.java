@@ -1154,6 +1154,27 @@ public class API {
         return apiResponse;
     }
 
+    /**
+     * Get lists for a user by its id
+     * @return APIResponse
+     */
+    public APIResponse getLists(String userId){
+
+        List<fr.gouv.etalab.mastodon.client.Entities.List> lists = new ArrayList<>();
+        fr.gouv.etalab.mastodon.client.Entities.List list;
+        try {
+            String response = new HttpsConnection().get(getAbsoluteUrl(String.format("/accounts/%s/lists", userId)), 60, null, prefKeyOauthTokenT);
+            list = parseList(new JSONObject(response));
+            lists.add(list);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            setDefaultError();
+        }
+        apiResponse.setLists(lists);
+        return apiResponse;
+    }
+
 
     /**
      * Get a list
