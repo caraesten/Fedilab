@@ -19,10 +19,7 @@ import java.io.InputStream;
 public class HttpsUrlLoader implements ModelLoader<GlideUrl, InputStream> {
 
 
-
-    @SuppressWarnings("WeakerAccess")
-    public HttpsUrlLoader() {
-    }
+    HttpsUrlLoader() {}
 
     @Nullable
     @Override
