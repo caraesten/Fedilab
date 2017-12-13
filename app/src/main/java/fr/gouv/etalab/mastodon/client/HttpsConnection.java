@@ -314,6 +314,30 @@ public class HttpsConnection {
     }
 
 
+
+    public InputStream getPicture(final String downloadUrl) {
+        try {
+            URL url = new URL(downloadUrl);
+            httpsURLConnection = (HttpsURLConnection) url.openConnection();
+            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+            httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            int responseCode = httpsURLConnection.getResponseCode();
+            // always check HTTP response code first
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                String disposition = httpsURLConnection.getHeaderField("Content-Disposition");
+                // opens input stream from the HTTP connection
+                return httpsURLConnection.getInputStream();
+            }
+            httpsURLConnection.disconnect();
+        } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
+            e.printStackTrace();
+        }
+        if(httpsURLConnection != null)
+            httpsURLConnection.disconnect();
+        return null;
+    }
+
+
     public void upload(final InputStream inputStream, final OnRetrieveAttachmentInterface listener) {
 
         new Thread(new Runnable() {

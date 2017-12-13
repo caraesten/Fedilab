@@ -1,5 +1,6 @@
 package fr.gouv.etalab.mastodon.activities;
 
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import org.conscrypt.Conscrypt;
@@ -16,4 +17,5 @@ public class BaseActivity extends AppCompatActivity {
         Security.addProvider(Conscrypt.newProvider());
 
     }
+
 }
