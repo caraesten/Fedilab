@@ -1184,6 +1184,24 @@ public class API {
 
 
     /**
+     * Delete a list by its id
+     * @param id String, the id of the list
+     * @return APIResponse
+     */
+    public int deleteList(String id){
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection();
+            httpsConnection.delete(getAbsoluteUrl(String.format("/lists/%s", id)), 60, null, prefKeyOauthTokenT);
+            actionCode = httpsConnection.getActionCode();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            setDefaultError();
+        }
+        return actionCode;
+    }
+
+    /**
      * Parse json response an unique account
      * @param resobj JSONObject
      * @return Account
