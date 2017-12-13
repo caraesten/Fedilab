@@ -296,6 +296,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 holder.status_show_more.setVisibility(View.GONE);
                 holder.status_action_container.setVisibility(View.INVISIBLE);
                 holder.status_spoiler_button.setVisibility(View.GONE);
+                holder.status_spoiler_mention_container.setVisibility(View.GONE);
             }else {
                 holder.status_action_container.setVisibility(View.VISIBLE);
 
@@ -327,19 +328,18 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()) {
                         holder.notification_status_container.setVisibility(View.GONE);
                         holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                        holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
                         holder.status_spoiler_button.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
                         holder.status_spoiler.setVisibility(View.VISIBLE);
                     } else {
                         holder.status_spoiler_button.setVisibility(View.GONE);
                         holder.notification_status_container.setVisibility(View.VISIBLE);
-                        if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0) {
+                        holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                        if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0)
                             holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                            holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
-                        }else {
+                        else
                             holder.status_spoiler_container.setVisibility(View.GONE);
-                            holder.status_spoiler_mention_container.setVisibility(View.GONE);
-                        }
+
                     }
                 }else {
                     if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()) {
@@ -350,14 +350,13 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                         holder.status_spoiler.setVisibility(View.VISIBLE);
                     } else {
                         holder.status_spoiler_button.setVisibility(View.GONE);
+                        holder.status_spoiler_mention_container.setVisibility(View.GONE);
                         holder.notification_status_container.setVisibility(View.VISIBLE);
-                        if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0) {
+                        if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0)
                             holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                            holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
-                        }else {
+                        else
                             holder.status_spoiler_container.setVisibility(View.GONE);
-                            holder.status_spoiler_mention_container.setVisibility(View.GONE);
-                        }
+
                     }
                 }
 
@@ -429,7 +428,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     @Override
                     public void onClick(View v) {
                         status.setSpoilerShown(true);
-                        holder.status_spoiler_button.setVisibility(View.GONE);
                         notificationsListAdapter.notifyDataSetChanged();
                     }
                 });
