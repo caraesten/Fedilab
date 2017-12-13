@@ -35,7 +35,7 @@
   <string name="instance_example">مثيل الخادم : mastodon.social</string>
   <string name="toast_account_changed">يعمل الآن بحساب %1$s</string>
   <string name="add_account">إضافة حساب</string>
-  <string name="clipboard">The content of the toot has been copied to the clipboard</string>
+  <string name="clipboard">تم نسخ محتوى التبويق إلى الحافظة</string>
   <string name="change">تعديل</string>
   <string name="choose_picture">حدد صورة ...</string>
   <string name="clear">نظيف</string>
@@ -99,12 +99,12 @@
   <!-- Status -->
   <string name="no_status">لا توجد هناك أية تبويقات لعرضها</string>
   <string name="fav_added">تمت إضافة التبويق إلى مفضلاتك</string>
-  <string name="fav_removed">The toot was removed from favourites!</string>
+  <string name="fav_removed">تمت إزالة التبويق من مفضلاتك !</string>
   <string name="reblog_added">تمت ترقية التبويق !</string>
-  <string name="reblog_removed">The toot is no longer boosted!</string>
+  <string name="reblog_removed">تم إلغاء ترقية التبويق !</string>
   <string name="reblog_by">رقاه %1$s</string>
   <string name="favourite_add">هل تود إضافة هذا التبويق إلى مفضلاتك ؟</string>
-  <string name="favourite_remove">Remove this toot from your favourites?</string>
+  <string name="favourite_remove">هل تود إزالة هذا التبويق من مفضلاتك ؟</string>
   <string name="reblog_add">هل تود ترقية هذا التبويق ؟</string>
   <string name="reblog_remove">هل تود إلغاء ترقية هذا التبويق ؟</string>
   <string name="pin_add">هل تود تدبيس هذا التبويق ؟</string>
@@ -126,7 +126,7 @@
   </string-array>
   <plurals name="preview_replies">
     <item quantity="zero">%d replies</item>
-    <item quantity="one">%d reply</item>
+    <item quantity="one">ردّ واحد</item>
     <item quantity="two">%d replies</item>
     <item quantity="few">%d replies</item>
     <item quantity="many">%d replies</item>
@@ -180,13 +180,13 @@
   <string name="toot_cw_placeholder">تحذير</string>
   <string name="toot_placeholder">ما الجديد ؟</string>
   <string name="toot_it">بوِّق !</string>
-  <string name="cw">cw</string>
+  <string name="cw">ت.م</string>
   <string name="toot_title">تحرير تبويق</string>
   <string name="toot_title_reply">الرد على تبويق</string>
   <string name="toot_no_space">لقد بلغت حد الـ 500 حرف المسموح به !</string>
   <string name="toot_select_image">تحديد وسائط</string>
   <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-  <string name="toot_delete_media">Delete this media?</string>
+  <string name="toot_delete_media">هل تود حذف هذه الصورة ؟</string>
   <string name="toot_error_no_content">إن تبويقك فارغ !</string>
   <string name="toot_visibility_tilte">طريقة نشر التبويق</string>
   <string name="toots_visibility_tilte">الطريقة الإفتراضية لنشر التبويقات :</string>
@@ -272,15 +272,15 @@
   <string name="client_error">Unable to get client id!</string>
   <string name="no_internet">لا يوجد إتصال بشبكة الإنترنت !</string>
   <string name="toast_block">تم حجب الحساب !</string>
-  <string name="toast_unblock">The account is no longer blocked!</string>
+  <string name="toast_unblock">لقد تم إلغاء حظر هذا الحساب !</string>
   <string name="toast_mute">تم كتم الحساب !</string>
-  <string name="toast_unmute">The account is no longer muted!</string>
-  <string name="toast_follow">The account was followed!</string>
-  <string name="toast_unfollow">The account is no longer followed!</string>
+  <string name="toast_unmute">لقد تم إلغاء الكتم عن هذا الحساب !</string>
+  <string name="toast_follow">تمت متابعة الحساب !</string>
+  <string name="toast_unfollow">لم تعد تتابع هذا الحساب !</string>
   <string name="toast_reblog">تمت ترقية التبويق !</string>
-  <string name="toast_unreblog">The toot is no longer boosted!</string>
+  <string name="toast_unreblog">تمت عملية إلغاء ترقية هذا التبويق !</string>
   <string name="toast_favourite">تمت إضافة التبويق إلى مفضلاتك !</string>
-  <string name="toast_unfavourite">The toot was removed from your favourites!</string>
+  <string name="toast_unfavourite">تمت إزالة التبويق من مفضلاتك !</string>
   <string name="toast_report">تم الإبلاغ عن التبويق !</string>
   <string name="toast_unstatus">تم حذف التبويق بنجاح !</string>
   <string name="toast_pin">تم تثبيت التبويق بنجاح !</string>
