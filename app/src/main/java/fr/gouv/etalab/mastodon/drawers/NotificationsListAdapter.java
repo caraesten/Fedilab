@@ -289,6 +289,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 holder.notification_status_content.setVisibility(View.VISIBLE);
                 holder.status_show_more.setVisibility(View.GONE);
                 holder.status_action_container.setVisibility(View.INVISIBLE);
+                holder.status_spoiler_button.setVisibility(View.GONE);
             }else {
                 holder.status_action_container.setVisibility(View.VISIBLE);
 
@@ -314,6 +315,36 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     else
                         changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
                     imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
+                }
+
+                if( status.getReblog() == null) {
+                    if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()) {
+                        holder.notification_status_container.setVisibility(View.GONE);
+                        holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_button.setVisibility(View.VISIBLE);
+                        holder.status_spoiler.setVisibility(View.VISIBLE);
+                    } else {
+                        holder.status_spoiler_button.setVisibility(View.GONE);
+                        holder.notification_status_container.setVisibility(View.VISIBLE);
+                        if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0)
+                            holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                        else
+                            holder.status_spoiler_container.setVisibility(View.GONE);
+                    }
+                }else {
+                    if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()) {
+                        holder.notification_status_container.setVisibility(View.GONE);
+                        holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_button.setVisibility(View.VISIBLE);
+                        holder.status_spoiler.setVisibility(View.VISIBLE);
+                    } else {
+                        holder.status_spoiler_button.setVisibility(View.GONE);
+                        holder.notification_status_container.setVisibility(View.VISIBLE);
+                        if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0)
+                            holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                        else
+                            holder.status_spoiler_container.setVisibility(View.GONE);
+                    }
                 }
 
                 assert imgFav != null;
@@ -378,6 +409,18 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                         }
                     }
                 }
+
+                //Spoiler opens
+                holder.status_spoiler_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        status.setSpoilerShown(true);
+                        holder.status_spoiler_button.setVisibility(View.GONE);
+                        notificationsListAdapter.notifyDataSetChanged();
+                    }
+                });
+
+                
                 switch (status.getVisibility()){
                     case "public":
                         holder.status_privacy.setImageResource(R.drawable.ic_public);
@@ -421,6 +464,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             holder.notification_status_container.setVisibility(View.GONE);
             holder.card_status_container.setOnClickListener(null);
         }
+
+
 
 
         holder.status_favorite_count.setOnClickListener(new View.OnClickListener() {
@@ -915,6 +960,9 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         FrameLayout card_status_container;
         TextView notification_status_content;
         TextView notification_type;
+        LinearLayout status_spoiler_container;
+        TextView status_spoiler;
+        Button status_spoiler_button;
         TextView notification_account_username;
         ImageView notification_account_profile;
         ImageView notification_delete;
@@ -975,6 +1023,9 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             status_prev4_container = itemView.findViewById(R.id.status_prev4_container);
             status_action_container = itemView.findViewById(R.id.status_action_container);
             status_more = itemView.findViewById(R.id.status_more);
+            status_spoiler_container = itemView.findViewById(R.id.status_spoiler_container);
+            status_spoiler = itemView.findViewById(R.id.status_spoiler);
+            status_spoiler_button = itemView.findViewById(R.id.status_spoiler_button);
         }
     }
 
