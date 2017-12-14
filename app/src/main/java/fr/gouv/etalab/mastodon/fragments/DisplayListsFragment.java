@@ -17,6 +17,7 @@ package fr.gouv.etalab.mastodon.fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -40,6 +41,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.ListActivity;
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.ManageListsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.drawers.ListAdapter;
@@ -65,6 +68,7 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
     private ListView lv_lists;
     private RelativeLayout textviewNoAction;
     private FloatingActionButton add_new;
+    private ListAdapter listAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -81,12 +85,17 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
         no_action_text = rootView.findViewById(R.id.no_action_text);
         mainLoader = rootView.findViewById(R.id.loader);
         RelativeLayout nextElementLoader = rootView.findViewById(R.id.loading_next_items);
-        add_new = rootView.findViewById(R.id.add_new);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
-
+        lists = new ArrayList<>();
+        listAdapter = new ListAdapter(context, lists, textviewNoAction);
+        lv_lists.setAdapter(listAdapter);
         no_action_text.setVisibility(View.GONE);
         asyncTask = new ManageListsAsyncTask(context, ManageListsAsyncTask.action.GET_LIST, null, null, null, null, DisplayListsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        try {
+            add_new = ((MainActivity) context).findViewById(R.id.add_new);
+        }catch (Exception ignored){}
+        if( add_new != null)
         add_new.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,6 +120,8 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
                         dialog.dismiss();
                     }
                 });
+
+
                 AlertDialog alertDialog = dialogBuilder.create();
                 alertDialog.setTitle(getString(R.string.action_lists_create));
                 alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -165,17 +176,27 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
         }
         if( actionType == ManageListsAsyncTask.action.GET_LIST) {
             if (apiResponse.getLists() != null && apiResponse.getLists().size() > 0) {
-                ;
-                this.lists = new ArrayList<>();
                 this.lists.addAll(apiResponse.getLists());
-                ListAdapter listAdapter = new ListAdapter(context, this.lists, textviewNoAction);
-                lv_lists.setAdapter(listAdapter);
+                listAdapter.notifyDataSetChanged();
 
             } else {
                 no_action_text.setVisibility(View.VISIBLE);
             }
         }else if( actionType == ManageListsAsyncTask.action.CREATE_LIST){
-
+            if (apiResponse.getLists() != null && apiResponse.getLists().size() > 0) {
+                String listId = apiResponse.getLists().get(0).getId();
+                String title = apiResponse.getLists().get(0).getTitle();
+                Intent intent = new Intent(context, ListActivity.class);
+                Bundle b = new Bundle();
+                b.putString("id", listId);
+                b.putString("title", title);
+                intent.putExtras(b);
+                context.startActivity(intent);
+                this.lists.add(0, apiResponse.getLists().get(0));
+                listAdapter.notifyDataSetChanged();
+            }else{
+                Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            }
         }
     }
 }

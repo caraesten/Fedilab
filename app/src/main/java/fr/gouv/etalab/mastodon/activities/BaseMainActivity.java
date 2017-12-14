@@ -1273,7 +1273,7 @@ public abstract class BaseMainActivity extends BaseActivity
         }else{
             delete_all.setVisibility(View.VISIBLE);
         }
-        if( id != R.id.nav_search){
+        if( id != R.id.nav_search && id != R.id.nav_list){
             add_new.setVisibility(View.GONE);
         }else{
             add_new.setVisibility(View.VISIBLE);

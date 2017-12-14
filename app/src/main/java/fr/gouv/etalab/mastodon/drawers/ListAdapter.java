@@ -17,8 +17,10 @@ package fr.gouv.etalab.mastodon.drawers;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +33,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.ListActivity;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
@@ -100,10 +103,14 @@ public class ListAdapter extends BaseAdapter  {
         holder.search_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context, ListActivity.class);
+                Bundle b = new Bundle();
+                b.putString("id", list.getId());
+                b.putString("title", list.getTitle());
+                intent.putExtras(b);
+                context.startActivity(intent);
             }
         });
-        final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
 
         holder.search_container.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
