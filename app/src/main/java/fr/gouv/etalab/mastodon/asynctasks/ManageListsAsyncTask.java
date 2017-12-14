@@ -16,11 +16,13 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.lang.ref.WeakReference;
 
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnListActionInterface;
 
 
@@ -64,7 +66,7 @@ public class ManageListsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-
+        Log.v(Helper.TAG,"apiAction: " + apiAction);
         if(apiAction == action.GET_LIST){
             apiResponse = new API(contextReference.get()).getLists();
         }else if(apiAction == action.GET_LIST_ACCOUNT){
@@ -85,7 +87,8 @@ public class ManageListsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onActionDone(apiResponse, statusCode);
+        Log.v(Helper.TAG,"onPostExecute: " + apiResponse);
+        listener.onActionDone(this.apiAction, apiResponse, statusCode);
     }
 
 }

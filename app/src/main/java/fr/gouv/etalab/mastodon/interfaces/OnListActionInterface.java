@@ -15,6 +15,7 @@
 package fr.gouv.etalab.mastodon.interfaces;
 
 
+import fr.gouv.etalab.mastodon.asynctasks.ManageListsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 
 /**
@@ -22,5 +23,5 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
  * Interface when actions have been done with lists
  */
 public interface OnListActionInterface {
-    void onActionDone(APIResponse apiResponse, int statusCode);
+    void onActionDone(ManageListsAsyncTask.action actionType, APIResponse apiResponse, int statusCode);
 }

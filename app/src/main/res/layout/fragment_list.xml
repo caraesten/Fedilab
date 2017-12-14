@@ -15,8 +15,8 @@
     You should have received a copy of the GNU General Public License along with Mastalab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingLeft="@dimen/fab_margin"
     android:paddingRight="@dimen/fab_margin"
     android:layout_width="match_parent"
@@ -73,5 +73,13 @@
             android:layout_height="match_parent"
             android:indeterminate="true" />
     </RelativeLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_new"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_action_add_new"/>
 </RelativeLayout>
 

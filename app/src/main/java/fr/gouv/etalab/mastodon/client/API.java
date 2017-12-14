@@ -1153,11 +1153,9 @@ public class API {
     public APIResponse getLists(){
 
         List<fr.gouv.etalab.mastodon.client.Entities.List> lists = new ArrayList<>();
-        fr.gouv.etalab.mastodon.client.Entities.List list;
         try {
             String response = new HttpsConnection().get(getAbsoluteUrl("/lists"), 60, null, prefKeyOauthTokenT);
-            list = parseList(new JSONObject(response));
-            lists.add(list);
+            lists = parseLists(new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {

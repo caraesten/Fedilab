@@ -14,15 +14,23 @@ package fr.gouv.etalab.mastodon.fragments;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,6 +45,9 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.drawers.ListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnListActionInterface;
+import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
+
+import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
 /**
@@ -48,9 +59,12 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
 
     private Context context;
     private AsyncTask<Void, Void, Void> asyncTask;
-    private ListAdapter listAdapter;
     private List<fr.gouv.etalab.mastodon.client.Entities.List> lists;
     private TextView no_action_text;
+    private RelativeLayout mainLoader;
+    private ListView lv_lists;
+    private RelativeLayout textviewNoAction;
+    private FloatingActionButton add_new;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,18 +76,57 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
         lists = new ArrayList<>();
 
 
-        ListView lv_lists = rootView.findViewById(R.id.lv_lists);
+        lv_lists = rootView.findViewById(R.id.lv_lists);
+        textviewNoAction = rootView.findViewById(R.id.no_action);
         no_action_text = rootView.findViewById(R.id.no_action_text);
-        RelativeLayout mainLoader = rootView.findViewById(R.id.loader);
+        mainLoader = rootView.findViewById(R.id.loader);
         RelativeLayout nextElementLoader = rootView.findViewById(R.id.loading_next_items);
-        RelativeLayout textviewNoAction = rootView.findViewById(R.id.no_action);
+        add_new = rootView.findViewById(R.id.add_new);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
-        listAdapter = new ListAdapter(context, this.lists, textviewNoAction);
-        lv_lists.setAdapter(listAdapter);
 
         no_action_text.setVisibility(View.GONE);
         asyncTask = new ManageListsAsyncTask(context, ManageListsAsyncTask.action.GET_LIST, null, null, null, null, DisplayListsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        add_new.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+                LayoutInflater inflater = getLayoutInflater();
+                @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.add_list, null);
+                dialogBuilder.setView(dialogView);
+                final EditText editText = dialogView.findViewById(R.id.add_list);
+                editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(255)});
+                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        if( editText.getText() != null && editText.getText().toString().trim().length() > 0 )
+                            new ManageListsAsyncTask(context, ManageListsAsyncTask.action.CREATE_LIST, null, null, null, editText.getText().toString().trim(), DisplayListsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        dialog.dismiss();
+                        add_new.setEnabled(false);
+                    }
+                });
+                dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog alertDialog = dialogBuilder.create();
+                alertDialog.setTitle(getString(R.string.action_lists_create));
+                alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        //Hide keyboard
+                        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                        assert imm != null;
+                        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                    }
+                });
+                if( alertDialog.getWindow() != null )
+                    alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                alertDialog.show();
+            }
+        });
         return rootView;
     }
 
@@ -100,7 +153,9 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
 
 
     @Override
-    public void onActionDone(APIResponse apiResponse, int statusCode) {
+    public void onActionDone(ManageListsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
+        mainLoader.setVisibility(View.GONE);
+        add_new.setEnabled(true);
         if( apiResponse.getError() != null){
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
@@ -108,11 +163,19 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
                 Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
-        if( this.lists != null && this.lists.size() > 0) {
-            this.lists = apiResponse.getLists();
-            listAdapter.notifyDataSetChanged();
-        }else {
-            no_action_text.setVisibility(View.VISIBLE);
+        if( actionType == ManageListsAsyncTask.action.GET_LIST) {
+            if (apiResponse.getLists() != null && apiResponse.getLists().size() > 0) {
+                ;
+                this.lists = new ArrayList<>();
+                this.lists.addAll(apiResponse.getLists());
+                ListAdapter listAdapter = new ListAdapter(context, this.lists, textviewNoAction);
+                lv_lists.setAdapter(listAdapter);
+
+            } else {
+                no_action_text.setVisibility(View.VISIBLE);
+            }
+        }else if( actionType == ManageListsAsyncTask.action.CREATE_LIST){
+
         }
     }
 }
