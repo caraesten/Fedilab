@@ -35,6 +35,7 @@ public class ManageListsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     public enum action{
         GET_LIST,
+        GET_LIST_TIMELINE,
         GET_LIST_ACCOUNT,
         CREATE_LIST,
         DELETE_LIST,
@@ -52,7 +53,8 @@ public class ManageListsAsyncTask extends AsyncTask<Void, Void, Void> {
     private String[] accountsId;
     private action apiAction;
     private WeakReference<Context> contextReference;
-
+    private String max_id, since_id;
+    private int limit;
 
     public ManageListsAsyncTask(Context context, action apiAction, String[] accountsId, String targetedId, String listId, String title, OnListActionInterface onListActionInterface){
         contextReference = new WeakReference<>(context);
@@ -64,11 +66,22 @@ public class ManageListsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.targetedId = targetedId;
     }
 
+    public ManageListsAsyncTask(Context context, String listId, String max_id, String since_id, OnListActionInterface onListActionInterface){
+        contextReference = new WeakReference<>(context);
+        this.listener = onListActionInterface;
+        this.listId = listId;
+        this.max_id = max_id;
+        this.since_id = since_id;
+        this.limit = 40;
+    }
+
     @Override
     protected Void doInBackground(Void... params) {
-        Log.v(Helper.TAG,"apiAction: " + apiAction);
-        if(apiAction == action.GET_LIST){
+        Log.v(Helper.TAG, "apiAction: " + apiAction);
+        if (apiAction == action.GET_LIST) {
             apiResponse = new API(contextReference.get()).getLists();
+        }else if(apiAction == action.GET_LIST_TIMELINE){
+            apiResponse = new API(contextReference.get()).getListTimeline(this.targetedId, this.max_id, this.since_id, this.limit);
         }else if(apiAction == action.GET_LIST_ACCOUNT){
             apiResponse = new API(contextReference.get()).getLists(this.targetedId);
         }else if( apiAction == action.CREATE_LIST){

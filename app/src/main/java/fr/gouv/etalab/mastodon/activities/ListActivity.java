@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.ManageListsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.drawers.ListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnListActionInterface;
 
@@ -71,7 +73,7 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
         setTitle(title);
         loader.setVisibility(View.VISIBLE);
         lv_status.setVisibility(View.GONE);
-
+        new ManageListsAsyncTask(getApplicationContext(),listId, null ,null, ListActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 

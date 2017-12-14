@@ -1186,6 +1186,40 @@ public class API {
         return apiResponse;
     }
 
+    /**
+     * Retrieves list timeline  *synchronously*
+     * @param list_id   String id of the list
+     * @param max_id   String id max
+     * @param since_id String since the id
+     * @param limit    int limit  - max value 40
+     * @return APIResponse
+     */
+    public APIResponse getListTimeline(String list_id, String max_id, String since_id, int limit) {
+
+        HashMap<String, String> params = new HashMap<>();
+        if (max_id != null)
+            params.put("max_id", max_id);
+        if (since_id != null)
+            params.put("since_id", since_id);
+        if (0 > limit || limit > 80)
+            limit = 80;
+        params.put("limit",String.valueOf(limit));
+        statuses = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection();
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/timelines/list/%s",list_id)), 60, params, prefKeyOauthTokenT);
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+            statuses = parseStatuses(new JSONArray(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            setDefaultError();
+        }
+        apiResponse.setStatuses(statuses);
+        return apiResponse;
+    }
+
 
     /**
      * Get accounts in a list for a user
