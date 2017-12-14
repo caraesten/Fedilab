@@ -70,8 +70,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
 
     static final String NOTIFICATION_REFRESH = "job_notification";
     static {
-        Security.addProvider(Conscrypt.newProvider());
-
+        Helper.installProvider();
     }
 
     @NonNull

@@ -79,7 +79,7 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
     }
 
     static {
-        Security.addProvider(Conscrypt.newProvider());
+        Helper.installProvider();
     }
     public static int schedule(boolean updateCurrent){
 

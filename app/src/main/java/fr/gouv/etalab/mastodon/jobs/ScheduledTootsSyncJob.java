@@ -32,6 +32,7 @@ import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
@@ -46,8 +47,7 @@ public class ScheduledTootsSyncJob extends Job {
 
     public static final String SCHEDULED_TOOT = "job_scheduled_toot";
     static {
-        Security.addProvider(Conscrypt.newProvider());
-
+        Helper.installProvider();
     }
 
     @NonNull
