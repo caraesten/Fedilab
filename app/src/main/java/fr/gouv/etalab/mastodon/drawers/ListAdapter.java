@@ -19,7 +19,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -34,8 +34,10 @@ import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.ListActivity;
+import fr.gouv.etalab.mastodon.asynctasks.ManageListsAsyncTask;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.helper.Helper;
-import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+import fr.gouv.etalab.mastodon.interfaces.OnListActionInterface;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
@@ -44,7 +46,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Created by Thomas on 13/12/2017.
  * Adapter for lists
  */
-public class ListAdapter extends BaseAdapter  {
+public class ListAdapter extends BaseAdapter implements OnListActionInterface {
 
     private List<fr.gouv.etalab.mastodon.client.Entities.List> lists;
     private LayoutInflater layoutInflater;
@@ -124,6 +126,7 @@ public class ListAdapter extends BaseAdapter  {
                             public void onClick(DialogInterface dialog, int which) {
                                 lists.remove(list);
                                 listAdapter.notifyDataSetChanged();
+                                new ManageListsAsyncTask(context, ManageListsAsyncTask.action.DELETE_LIST,null, null, list.getId(), null, ListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 if( lists.size() == 0 && textviewNoAction != null && textviewNoAction.getVisibility() == View.GONE)
                                     textviewNoAction.setVisibility(View.VISIBLE);
                                 dialog.dismiss();
@@ -140,6 +143,11 @@ public class ListAdapter extends BaseAdapter  {
             }
         });
         return convertView;
+    }
+
+    @Override
+    public void onActionDone(ManageListsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
+
     }
 
 
