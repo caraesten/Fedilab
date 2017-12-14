@@ -93,6 +93,8 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 
+import org.conscrypt.Conscrypt;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -109,6 +111,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.Provider;
+import java.security.Security;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -1759,6 +1763,10 @@ public class Helper {
                             imageView.setImageBitmap(resource);
                         }
                     });
+    }
+
+    public static void installProvider(){
+        Security.addProvider(Conscrypt.newProvider());
     }
 
 
