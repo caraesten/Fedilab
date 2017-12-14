@@ -2,12 +2,6 @@ package fr.gouv.etalab.mastodon.activities;
 
 import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-
-import org.conscrypt.Conscrypt;
-
-import java.security.Provider;
-import java.security.Security;
 
 import fr.gouv.etalab.mastodon.helper.Helper;
 
@@ -19,8 +13,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 @SuppressLint("Registered")
 public class BaseActivity extends AppCompatActivity {
     static {
-        Security.insertProviderAt(Conscrypt.newProvider(), 2);
-
+        Helper.installProvider();
     }
 
 }
