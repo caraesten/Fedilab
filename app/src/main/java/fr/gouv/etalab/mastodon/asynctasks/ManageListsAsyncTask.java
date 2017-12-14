@@ -16,13 +16,11 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.lang.ref.WeakReference;
 
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
-import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnListActionInterface;
 
 
@@ -73,15 +71,15 @@ public class ManageListsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.max_id = max_id;
         this.since_id = since_id;
         this.limit = 40;
+        this.apiAction = action.GET_LIST_TIMELINE;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        Log.v(Helper.TAG, "apiAction: " + apiAction);
         if (apiAction == action.GET_LIST) {
             apiResponse = new API(contextReference.get()).getLists();
         }else if(apiAction == action.GET_LIST_TIMELINE){
-            apiResponse = new API(contextReference.get()).getListTimeline(this.targetedId, this.max_id, this.since_id, this.limit);
+            apiResponse = new API(contextReference.get()).getListTimeline(this.listId, this.max_id, this.since_id, this.limit);
         }else if(apiAction == action.GET_LIST_ACCOUNT){
             apiResponse = new API(contextReference.get()).getLists(this.targetedId);
         }else if( apiAction == action.CREATE_LIST){
@@ -100,7 +98,6 @@ public class ManageListsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        Log.v(Helper.TAG,"onPostExecute: " + apiResponse);
         listener.onActionDone(this.apiAction, apiResponse, statusCode);
     }
 

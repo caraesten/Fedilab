@@ -47,6 +47,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         LOCAL,
         PUBLIC,
         HASHTAG,
+        LIST,
         USER,
         FAVOURITES,
         ONESTATUS,

@@ -1213,8 +1213,10 @@ public class API {
             statuses = parseStatuses(new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
+            e.printStackTrace();
         }catch (Exception e) {
             setDefaultError();
+            e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
         return apiResponse;

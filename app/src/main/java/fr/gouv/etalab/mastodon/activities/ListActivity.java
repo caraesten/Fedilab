@@ -18,6 +18,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,10 +27,15 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.ManageListsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
-import fr.gouv.etalab.mastodon.drawers.ListAdapter;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnListActionInterface;
 
@@ -42,8 +49,17 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
 
 
     private RecyclerView lv_status;
-    private RelativeLayout loader;
     private String title, listId;
+    private RelativeLayout mainLoader, nextElementLoader, textviewNoAction;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private boolean swiped;
+    private List<Status> statuses;
+    private String max_id;
+    private boolean firstLoad;
+    private boolean flag_loading;
+    private StatusListAdapter statusListAdapter;
+    LinearLayoutManager mLayoutManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +73,31 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
         }
         setContentView(R.layout.activity_list);
 
-        loader = findViewById(R.id.loader);
+        statuses = new ArrayList<>();
+
         lv_status = findViewById(R.id.lv_status);
+        mainLoader =  findViewById(R.id.loader);
+        nextElementLoader = findViewById(R.id.loading_next_status);
+        textviewNoAction =  findViewById(R.id.no_action);
+        mainLoader.setVisibility(View.VISIBLE);
+        swipeRefreshLayout = findViewById(R.id.swipeContainer);
+        max_id = null;
+        flag_loading = true;
+        firstLoad = true;
+        swiped = false;
+
+
+        mainLoader.setVisibility(View.VISIBLE);
+        nextElementLoader.setVisibility(View.GONE);
+        boolean isOnWifi = Helper.isOnWIFI(ListActivity.this);
+        int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+        int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
+
+        statusListAdapter = new StatusListAdapter(ListActivity.this, RetrieveFeedsAsyncTask.Type.LIST, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
+
+        lv_status.setAdapter(statusListAdapter);
+        mLayoutManager = new LinearLayoutManager(ListActivity.this);
+        lv_status.setLayoutManager(mLayoutManager);
 
         Bundle b = getIntent().getExtras();
         if(b != null){
@@ -71,9 +110,45 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setTitle(title);
-        loader.setVisibility(View.VISIBLE);
-        lv_status.setVisibility(View.GONE);
-        new ManageListsAsyncTask(getApplicationContext(),listId, null ,null, ListActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+
+        lv_status.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+                if(dy > 0){
+                    int visibleItemCount = mLayoutManager.getChildCount();
+                    int totalItemCount = mLayoutManager.getItemCount();
+                    if(firstVisibleItem + visibleItemCount == totalItemCount ) {
+                        if(!flag_loading ) {
+                            flag_loading = true;
+                            new ManageListsAsyncTask(ListActivity.this,listId, max_id ,null, ListActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            nextElementLoader.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+                        nextElementLoader.setVisibility(View.GONE);
+                    }
+                }
+            }
+        });
+
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                max_id = null;
+                firstLoad = true;
+                flag_loading = true;
+                swiped = true;
+                MainActivity.countNewStatus = 0;
+                new ManageListsAsyncTask(ListActivity.this,listId, null ,null, ListActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        });
+        swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
+                R.color.mastodonC2,
+                R.color.mastodonC3);
+
+        new ManageListsAsyncTask(ListActivity.this,listId, null ,null, ListActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 
@@ -91,6 +166,42 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
 
     @Override
     public void onActionDone(ManageListsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
+        mainLoader.setVisibility(View.GONE);
+        nextElementLoader.setVisibility(View.GONE);
+        //Discards 404 - error which can often happen due to toots which have been deleted
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        if( apiResponse.getError() != null ){
+            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+            if( show_error_messages && !apiResponse.getError().getError().startsWith("404 -"))
+                Toast.makeText(ListActivity.this, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            swipeRefreshLayout.setRefreshing(false);
+            swiped = false;
+            flag_loading = false;
+            return;
+        }
+        int previousPosition = this.statuses.size();
+        List<Status> statuses = apiResponse.getStatuses();
+        max_id = apiResponse.getMax_id();
+        flag_loading = (max_id == null );
+        if( !swiped && firstLoad && (statuses == null || statuses.size() == 0))
+            textviewNoAction.setVisibility(View.VISIBLE);
+        else
+            textviewNoAction.setVisibility(View.GONE);
 
+        if( swiped ){
+            if (previousPosition > 0) {
+                for (int i = 0; i < previousPosition; i++) {
+                    this.statuses.remove(0);
+                }
+                statusListAdapter.notifyItemRangeRemoved(0, previousPosition);
+            }
+            swiped = false;
+        }
+        if( statuses != null && statuses.size() > 0) {
+            this.statuses.addAll(statuses);
+            statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
+        }
+        swipeRefreshLayout.setRefreshing(false);
+        firstLoad = false;
     }
 }
