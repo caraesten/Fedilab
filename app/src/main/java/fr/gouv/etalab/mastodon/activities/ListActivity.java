@@ -14,15 +14,24 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputFilter;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -36,6 +45,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
+import fr.gouv.etalab.mastodon.fragments.DisplayListsFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnListActionInterface;
 
@@ -48,7 +58,6 @@ import fr.gouv.etalab.mastodon.interfaces.OnListActionInterface;
 public class ListActivity extends BaseActivity implements OnListActionInterface {
 
 
-    private RecyclerView lv_status;
     private String title, listId;
     private RelativeLayout mainLoader, nextElementLoader, textviewNoAction;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -75,7 +84,7 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
 
         statuses = new ArrayList<>();
 
-        lv_status = findViewById(R.id.lv_status);
+        RecyclerView lv_status = findViewById(R.id.lv_status);
         mainLoader =  findViewById(R.id.loader);
         nextElementLoader = findViewById(R.id.loading_next_status);
         textviewNoAction =  findViewById(R.id.no_action);
@@ -153,10 +162,58 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
 
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_list, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                return true;
+            case R.id.action_add_user:
+                return true;
+
+            case R.id.action_edit_list:
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(ListActivity.this);
+                LayoutInflater inflater = getLayoutInflater();
+                @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.add_list, null);
+                dialogBuilder.setView(dialogView);
+                final EditText editText = dialogView.findViewById(R.id.add_list);
+                editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(255)});
+                editText.setText(title);
+                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        if( editText.getText() != null && editText.getText().toString().trim().length() > 0 )
+                            new ManageListsAsyncTask(ListActivity.this, ManageListsAsyncTask.action.UPDATE_LIST, null, listId, editText.getText().toString(), editText.getText().toString().trim(), ListActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        dialog.dismiss();
+                    }
+                });
+                dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+
+
+                AlertDialog alertDialog = dialogBuilder.create();
+                alertDialog.setTitle(getString(R.string.action_lists_create));
+                alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        //Hide keyboard
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        assert imm != null;
+                        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                    }
+                });
+                if( alertDialog.getWindow() != null )
+                    alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                alertDialog.show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -166,42 +223,47 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
 
     @Override
     public void onActionDone(ManageListsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
-        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        if( apiResponse.getError() != null ){
+        if (apiResponse.getError() != null) {
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages && !apiResponse.getError().getError().startsWith("404 -"))
-                Toast.makeText(ListActivity.this, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            if (show_error_messages && !apiResponse.getError().getError().startsWith("404 -"))
+                Toast.makeText(ListActivity.this, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
             flag_loading = false;
             return;
         }
-        int previousPosition = this.statuses.size();
-        List<Status> statuses = apiResponse.getStatuses();
-        max_id = apiResponse.getMax_id();
-        flag_loading = (max_id == null );
-        if( !swiped && firstLoad && (statuses == null || statuses.size() == 0))
-            textviewNoAction.setVisibility(View.VISIBLE);
-        else
-            textviewNoAction.setVisibility(View.GONE);
+        if( actionType == ManageListsAsyncTask.action.GET_LIST_TIMELINE) {
 
-        if( swiped ){
-            if (previousPosition > 0) {
-                for (int i = 0; i < previousPosition; i++) {
-                    this.statuses.remove(0);
+            int previousPosition = this.statuses.size();
+            List<Status> statuses = apiResponse.getStatuses();
+            max_id = apiResponse.getMax_id();
+            flag_loading = (max_id == null);
+            if (!swiped && firstLoad && (statuses == null || statuses.size() == 0))
+                textviewNoAction.setVisibility(View.VISIBLE);
+            else
+                textviewNoAction.setVisibility(View.GONE);
+
+            if (swiped) {
+                if (previousPosition > 0) {
+                    for (int i = 0; i < previousPosition; i++) {
+                        this.statuses.remove(0);
+                    }
+                    statusListAdapter.notifyItemRangeRemoved(0, previousPosition);
                 }
-                statusListAdapter.notifyItemRangeRemoved(0, previousPosition);
+                swiped = false;
             }
-            swiped = false;
+            if (statuses != null && statuses.size() > 0) {
+                this.statuses.addAll(statuses);
+                statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
+            }
+            swipeRefreshLayout.setRefreshing(false);
+            firstLoad = false;
+        }else if(actionType == ManageListsAsyncTask.action.UPDATE_LIST) {
+
         }
-        if( statuses != null && statuses.size() > 0) {
-            this.statuses.addAll(statuses);
-            statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
-        }
-        swipeRefreshLayout.setRefreshing(false);
-        firstLoad = false;
     }
 }
