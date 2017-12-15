@@ -206,30 +206,30 @@
   <string name="media_count">メディア：％d</string>
   <string name="toot_scheduled">トゥイットが予定されている！</string>
   <string name="toot_scheduled_date">スケジュールされた日付は現在の時間より大きくなければなりません！</string>
-  <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+  <string name="warning_battery">バッテリーセーバーが有効になっています！ 期待どおりに動作しない可能性があります。</string>
   <!-- Notifications -->
-  <string name="no_notifications">No notification to display</string>
-  <string name="notif_mention">mentioned you</string>
-  <string name="notif_reblog">boosted your status</string>
-  <string name="notif_favourite">favourited your status</string>
-  <string name="notif_follow">followed you</string>
-  <string name="notif_pouet">New toot from %1$s</string>
+  <string name="no_notifications">表示する通知なし</string>
+  <string name="notif_mention">あなたに言及した</string>
+  <string name="notif_reblog">あなたのステータスを後押ししました</string>
+  <string name="notif_favourite">あなたのステータスを好きになった</string>
+  <string name="notif_follow">あなたに続いた</string>
+  <string name="notif_pouet">％1 $ sの新着</string>
   <plurals name="other_notifications">
-    <item quantity="other">and %d other notifications</item>
+    <item quantity="other">別の通知</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="other">and %d other toots to discover</item>
+    <item quantity="other">もう一つの発見</item>
   </plurals>
-  <string name="delete_notification_ask">Delete a notification?</string>
-  <string name="delete_notification_ask_all">Delete all notifications?</string>
-  <string name="delete_notification">The notification has been deleted!</string>
-  <string name="delete_notification_all">All notifications have been deleted!</string>
+  <string name="delete_notification_ask">通知を削除しますか？</string>
+  <string name="delete_notification_ask_all">すべての通知を削除しますか？</string>
+  <string name="delete_notification">通知は削除されました！</string>
+  <string name="delete_notification_all">すべての通知が削除されました！</string>
   <!-- HEADER -->
-  <string name="following">Following</string>
-  <string name="followers">Followers</string>
-  <string name="pinned_toots">Pinned</string>
+  <string name="following">以下</string>
+  <string name="followers">フォロワー</string>
+  <string name="pinned_toots">固定</string>
   <!-- TOAST -->
-  <string name="client_error">Unable to get client id!</string>
+  <string name="client_error">クライアントIDを取得できませんでした。</string>
   <string name="no_internet">No Internet connection!</string>
   <string name="toast_block">The account was blocked!</string>
   <string name="toast_unblock">The account is no longer blocked!</string>
