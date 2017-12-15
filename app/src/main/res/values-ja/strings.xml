@@ -174,10 +174,10 @@
   <string name="choose_accounts">アカウントを選択</string>
   <string name="select_accounts">いくつかのアカウントを選択</string>
   <string name="remove_draft">下書きを削除しますか？</string>
-  <string name="show_reply">Click on the button to display the original toot</string>
-  <string name="upload_form_description">Describe for the visually impaired</string>
+  <string name="show_reply">ボタンをクリックすると元の文字が表示されます</string>
+  <string name="upload_form_description">視覚障害者の説明</string>
   <!-- Instance -->
-  <string name="instance_no_description">No description available!</string>
+  <string name="instance_no_description">説明はありません！</string>
   <!-- About -->
   <string name="about_vesrion">Release %1$s</string>
   <string name="about_developer">Developer:</string>
@@ -330,19 +330,19 @@
     <item>緑</item>
     <item>赤</item>
     <item>黄</item>
-    <item>White</item>
+    <item>白</item>
   </string-array>
-  <string name="set_title_news">News</string>
-  <string name="set_notification_news">Notify for new toots on the home timeline</string>
-  <string name="set_show_error_messages">Display error messages</string>
-  <string name="action_follow">Follow</string>
-  <string name="action_unfollow">Unfollow</string>
-  <string name="action_block">Block</string>
-  <string name="action_unblock">Unblock</string>
-  <string name="action_mute">Mute</string>
-  <string name="action_no_action">No action</string>
-  <string name="action_unmute">Unmute</string>
-  <string name="request_sent">Request sent</string>
+  <string name="set_title_news">ニュース</string>
+  <string name="set_notification_news">ホームタイムライン上の新しい発言を通知する</string>
+  <string name="set_show_error_messages">エラーメッセージを表示する</string>
+  <string name="action_follow">フォローする</string>
+  <string name="action_unfollow">アンフォロー</string>
+  <string name="action_block">ブロック</string>
+  <string name="action_unblock">ブロック解除する</string>
+  <string name="action_mute">ミュート</string>
+  <string name="action_no_action">何もしない</string>
+  <string name="action_unmute">ミュート解除</string>
+  <string name="request_sent">リクエスト送信</string>
   <string name="followed_by">あなたについていきます</string>
   <string name="action_search">サーチ</string>
   <!-- Quick settings for notifications -->
