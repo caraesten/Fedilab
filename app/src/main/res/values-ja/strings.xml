@@ -322,14 +322,14 @@
     <item>Yandex</item>
     <item>いいえ</item>
   </string-array>
-  <string name="set_led_colour">Set LED colour:</string>
+  <string name="set_led_colour">セットLEDの色：</string>
   <string-array name="led_colours">
-    <item>Blue</item>
-    <item>Cyan</item>
-    <item>Magenta</item>
-    <item>Green</item>
-    <item>Red</item>
-    <item>Yellow</item>
+    <item>青</item>
+    <item>シアン</item>
+    <item>マゼンタ</item>
+    <item>緑</item>
+    <item>赤</item>
+    <item>黄</item>
     <item>White</item>
   </string-array>
   <string name="set_title_news">News</string>
