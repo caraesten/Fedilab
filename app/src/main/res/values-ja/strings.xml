@@ -344,60 +344,53 @@
   <string name="action_unmute">Unmute</string>
   <string name="request_sent">Request sent</string>
   <string name="followed_by">あなたについていきます</string>
-  <string name="action_search">Search</string>
+  <string name="action_search">サーチ</string>
   <!-- Quick settings for notifications -->
-  <string name="settings_popup_title">Push notifications</string>
+  <string name="settings_popup_title">プッシュ通知</string>
   <string name="settings_popup_message">
-        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
-    </string>
-  <string name="settings_popup_timeline">For unread toots in home time-line?</string>
-  <string name="settings_popup_notification">For unread notifications?</string>
+受信したいプッシュ通知を確認してください。
+ 後でこれらの通知を有効または無効にすることができます（[通知] タブ）。    </string>
+  <string name="settings_popup_timeline">自宅のタイムラインで未読の発言は？</string>
+  <string name="settings_popup_notification">未読の通知については？</string>
   <!-- CACHE -->
-  <string name="cache_title">Clear cache</string>
-  <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+  <string name="cache_title">キャッシュの消去</string>
+  <string name="cache_message">キャッシュに％1 $ sのデータがあります。\ n \ n削除しますか？</string>
   <string name="cache_units">Mb</string>
-  <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+  <string name="toast_cache_clear">キャッシュがクリアされました！ ％1 $ sが解放されました</string>
   <!-- PRIVACY -->
-  <string name="privacy_data_title">Recorded data</string>
+  <string name="privacy_data_title">記録されたデータ</string>
   <string name="privacy_data">
-        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
-    </string>
-  <string name="privacy_authorizations_title">Permissions:</string>
+アカウントの基本情報のみがデバイスに保存されます。
+         これらのデータは厳密に機密情報であり、アプリケーションによってのみ使用できます。
+         アプリケーションを削除すると、すぐにこれらのデータが削除されます。\ n
+         ⚠ログインとパスワードは保存されません。 これらは、インスタンスとのセキュア認証（SSL）中にのみ使用されます。    </string>
+  <string name="privacy_authorizations_title">権限：</string>
   <string name="privacy_authorizations">
-        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
-        - <b>INTERNET</b>: Used for queries to an instance.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
-        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
-        - <b>WAKE_LOCK</b>: Used during the notification service.
-    </string>
-  <string name="privacy_API_authorizations_title">API permissions:</string>
+- <b> ACCESS_NETWORK_STATE </ b>：端末がWIFIネットワークに接続されているかどうかを検出するために使用します。\ n
+         - <b>インターネット</ b>：インスタンスへのクエリに使用されます。\ n
+         - <b> WRITE_EXTERNAL_STORAGE </ b>：メディアを保存したり、SDカードにアプリを移動したりするのに使用します。\ n
+         - <b> READ_EXTERNAL_STORAGE </ b>：吹き出しにメディアを追加するために使用します。\ n
+         - <b> BOOT_COMPLETED </ b>：通知サービスを開始するために使用されます。\ n
+         - <b> WAKE_LOCK </ b>：通知サービスで使用されます。    </string>
+  <string name="privacy_API_authorizations_title">API権限：</string>
   <string name="privacy_API_authorizations">
-        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
-    </string>
-  <string name="privacy_API_title">Tracking and Libraries</string>
+- <b>読み取り</ b>：データを読み取ります。\ n
+         - <b>書き込み</ b>：ステータスを投稿し、ステータスのメディアをアップロードします。\ n
+         - <b>フォロー</ b>：フォロー、アンフォール、ブロック、ブロック解除します。\ n \ n
+         <b>⚠これらの操作は、ユーザーが要求したときにのみ実行されます。</ b>    </string>
+  <string name="privacy_API_title">トラッキングとライブラリ</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
-    </string>
-  <string name="privacy_API_yandex_title">Translation of toots</string>
+アプリケーションは<b>トラッキングツールを使用していません</ b>（オーディエンス測定、エラー報告など）。広告は含まれていません。\ n \ n
+         ライブラリの使用は最小限に抑えられます：\ n
+         - <b>滑り</ b>：メディアを管理する\ n
+         - <b> Android-Job </ b>：サービスを管理するには\ n
+         - <b> PhotoView </ b>：画像を管理する\ n    <b>    </string>
+  <string name="privacy_API_yandex_title">トゥーツの翻訳</string>
   <string name="privacy_API_yandex_authorizations">
-        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
-    </string>
+このアプリケーションは、デバイスのロケールとYandex APIを使用して壷を変換する機能を提供します。\ n
+         Yandexは適切なプライバシーポリシーを持っています。https://yandex.ru/legal/confidential/?lang=ja    </string>
   <string name="thanks_text">
-        Thank you to Stéphane for the logo.
-    </string>
+ロゴはStéphaneにありがとうございました。    </string>
   <string name="thanks_text_dev">
         Thank you to:
     </string>
