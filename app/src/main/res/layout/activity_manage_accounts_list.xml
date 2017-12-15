@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
+    tools:context="fr.gouv.etalab.mastodon.activities.InstanceHealthActivity"
+    android:layout_margin="@dimen/fab_margin"
+    android:id="@+id/container"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="300dp">
+
+    <LinearLayout
+        android:id="@+id/main_account_container"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/list_title"
+            android:textSize="20sp"
+            android:textColor="@color/titleb"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/search_account"
+            android:drawableRight="@drawable/ic_search"
+            android:drawableEnd="@drawable/ic_search"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/lv_accounts_current"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:divider="@null"
+            />
+        <android.support.v7.widget.RecyclerView
+            android:visibility="gone"
+            android:id="@+id/lv_accounts_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:divider="@null"
+            />
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/no_action"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/no_action_text"
+            android:padding="10dp"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:layout_gravity="center"
+            android:textStyle="italic|bold"
+            android:typeface="serif"
+            android:text="@string/action_lists_empty_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/loader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        >
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+    </RelativeLayout>
+</LinearLayout>
