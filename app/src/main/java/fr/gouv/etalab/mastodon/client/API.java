@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1250,7 +1251,7 @@ public class API {
         }catch (Exception e) {
             setDefaultError();
         }
-        apiResponse.setLists(lists);
+        apiResponse.setAccounts(accounts);
         return apiResponse;
     }
 
@@ -1294,7 +1295,7 @@ public class API {
         for(String val: account_ids)
             parameters.append("account_ids[]=").append(val).append("&");
         if( parameters.length() > 0) {
-            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(16));
+            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(14));
             params.put("account_ids[]", parameters.toString());
         }
         List<fr.gouv.etalab.mastodon.client.Entities.List> lists = new ArrayList<>();
@@ -1323,15 +1324,17 @@ public class API {
             for(String val: account_ids)
                 parameters.append("account_ids[]=").append(val).append("&");
             if( parameters.length() > 0) {
-                parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(16));
+                parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(14));
                 params.put("account_ids[]", parameters.toString());
             }
             httpsConnection.delete(getAbsoluteUrl(String.format("/lists/%s/accounts", id)), 60, params, prefKeyOauthTokenT);
             actionCode = httpsConnection.getActionCode();
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
+            e.printStackTrace();
         }catch (Exception e) {
             setDefaultError();
+            e.printStackTrace();
         }
         return actionCode;
     }

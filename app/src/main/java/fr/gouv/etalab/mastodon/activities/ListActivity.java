@@ -17,6 +17,7 @@ package fr.gouv.etalab.mastodon.activities;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -174,8 +175,11 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
                 finish();
                 return true;
             case R.id.action_add_user:
+                Intent intent = new Intent(ListActivity.this, ManageAccountsInListActivity.class);
+                intent.putExtra("title", title);
+                intent.putExtra("id", listId);
+                startActivity(intent);
                 return true;
-
             case R.id.action_edit_list:
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(ListActivity.this);
                 LayoutInflater inflater = getLayoutInflater();

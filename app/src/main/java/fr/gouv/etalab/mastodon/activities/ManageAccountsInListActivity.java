@@ -31,6 +31,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import java.util.ArrayList;
+
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.ManageListsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
@@ -83,14 +85,16 @@ public class ManageAccountsInListActivity extends BaseActivity implements OnList
         lv_accounts_search = findViewById(R.id.lv_accounts_search);
         lv_accounts_current = findViewById(R.id.lv_accounts_current);
         no_action = findViewById(R.id.no_action);
-        accountsInAListAdapter = new AccountsInAListAdapter(ManageAccountsInListActivity.this, AccountsInAListAdapter.type.CURRENT, this.accounts);
+        this.accounts = new ArrayList<>();
+        accountsInAListAdapter = new AccountsInAListAdapter(ManageAccountsInListActivity.this, AccountsInAListAdapter.type.CURRENT, listId, this.accounts);
         lv_accounts_current.setAdapter(accountsInAListAdapter);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(ManageAccountsInListActivity.this);
         lv_accounts_current.setLayoutManager(mLayoutManager);
 
-        accountsSearchInAListAdapter = new AccountsInAListAdapter(ManageAccountsInListActivity.this, AccountsInAListAdapter.type.SEARCH, this.accounts);
+        accountsSearchInAListAdapter = new AccountsInAListAdapter(ManageAccountsInListActivity.this, AccountsInAListAdapter.type.SEARCH, listId, this.accounts);
         lv_accounts_search.setAdapter(accountsSearchInAListAdapter);
-        lv_accounts_search.setLayoutManager(mLayoutManager);
+        LinearLayoutManager mLayoutManager1 = new LinearLayoutManager(ManageAccountsInListActivity.this);
+        lv_accounts_search.setLayoutManager(mLayoutManager1);
 
 
         list_title.setText(title);
@@ -127,7 +131,7 @@ public class ManageAccountsInListActivity extends BaseActivity implements OnList
             if (apiResponse.getAccounts() != null && apiResponse.getAccounts().size() > 0) {
                 this.accounts.addAll(apiResponse.getAccounts());
                 accountsInAListAdapter.notifyDataSetChanged();
-
+                main_account_container.setVisibility(View.VISIBLE);
             } else {
                 no_action.setVisibility(View.VISIBLE);
             }

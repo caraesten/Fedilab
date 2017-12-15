@@ -81,7 +81,7 @@ public class ManageListsAsyncTask extends AsyncTask<Void, Void, Void> {
         }else if(apiAction == action.GET_LIST_TIMELINE){
             apiResponse = new API(contextReference.get()).getListTimeline(this.listId, this.max_id, this.since_id, this.limit);
         }else if(apiAction == action.GET_LIST_ACCOUNT){
-            apiResponse = new API(contextReference.get()).getLists(this.targetedId);
+            apiResponse = new API(contextReference.get()).getAccountsInList(this.listId,0);
         }else if( apiAction == action.CREATE_LIST){
             apiResponse = new API(contextReference.get()).createList(this.title);
         }else if(apiAction == action.DELETE_LIST){

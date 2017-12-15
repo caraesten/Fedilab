@@ -56,7 +56,7 @@ public class AccountsInAListAdapter extends RecyclerView.Adapter implements OnLi
     private Context context;
     private AccountsInAListAdapter accountsInAListAdapter;
     private type actionType;
-
+    private String listId;
 
 
     public enum type{
@@ -64,12 +64,13 @@ public class AccountsInAListAdapter extends RecyclerView.Adapter implements OnLi
         SEARCH
     }
 
-    public AccountsInAListAdapter(Context context, type actionType, List<Account> accounts){
+    public AccountsInAListAdapter(Context context, type actionType, String listId, List<Account> accounts){
         this.context = context;
         this.accounts = accounts;
         layoutInflater = LayoutInflater.from(context);
         this.accountsInAListAdapter = this;
         this.actionType = actionType;
+        this.listId = listId;
     }
 
     @Override
@@ -109,7 +110,7 @@ public class AccountsInAListAdapter extends RecyclerView.Adapter implements OnLi
             @Override
             public void onClick(View view) {
                 if( actionType == type.CURRENT){
-                    new ManageListsAsyncTask(context, ManageListsAsyncTask.action.DELETE_USERS, new String[]{account.getId()}, null, null, null, AccountsInAListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new ManageListsAsyncTask(context, ManageListsAsyncTask.action.DELETE_USERS, new String[]{account.getId()}, null, listId, null, AccountsInAListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     accounts.remove(account);
                     accountsInAListAdapter.notifyDataSetChanged();
                 }else if(actionType == type.SEARCH){
@@ -133,13 +134,9 @@ public class AccountsInAListAdapter extends RecyclerView.Adapter implements OnLi
 
     @Override
     public void onActionDone(ManageListsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
-        if( apiResponse.getError() != null){
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
-            return;
-        }
+       if( actionType == ManageListsAsyncTask.action.DELETE_USERS && statusCode != 200){
+           Toast.makeText(context, context.getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
+       }
     }
 
     @Override

@@ -557,7 +557,6 @@ public class HttpsConnection {
         httpsURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         httpsURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
         httpsURLConnection.setDoOutput(true);
-        getSinceMaxId();
 
         httpsURLConnection.getOutputStream().write(postDataBytes);
         Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream(), "UTF-8"));
@@ -603,11 +602,11 @@ public class HttpsConnection {
         httpsURLConnection.setConnectTimeout(timeout * 1000);
         httpsURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
 
-        getSinceMaxId();
-
+        httpsURLConnection.getOutputStream().write(postDataBytes);
 
 
         if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
+            getSinceMaxId();
             httpsURLConnection.disconnect();
             return httpsURLConnection.getResponseCode();
         }else {
