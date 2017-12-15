@@ -20,7 +20,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -50,14 +53,13 @@ import fr.gouv.etalab.mastodon.interfaces.OnListActionInterface;
 
 public class ManageAccountsInListActivity extends BaseActivity implements OnListActionInterface {
 
-    private TextView list_title;
-    private EditText search_account;
-    private LinearLayout container, main_account_container;
-    private RelativeLayout loader, no_action;
+    public EditText search_account;
+    private LinearLayout main_account_container;
+    private RelativeLayout loader;
     private RecyclerView lv_accounts_current, lv_accounts_search;
     private String title, listId;
     private java.util.List<Account> accounts;
-    private AccountsInAListAdapter accountsInAListAdapter, accountsSearchInAListAdapter;
+    private AccountsInAListAdapter accountsInAListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,31 +79,70 @@ public class ManageAccountsInListActivity extends BaseActivity implements OnList
             Toast.makeText(this,R.string.toast_error,Toast.LENGTH_LONG).show();
         }
 
-        container = findViewById(R.id.container);
         main_account_container = findViewById(R.id.main_account_container);
         loader = findViewById(R.id.loader);
-        list_title = findViewById(R.id.list_title);
+        TextView list_title = findViewById(R.id.list_title);
         search_account = findViewById(R.id.search_account);
         lv_accounts_search = findViewById(R.id.lv_accounts_search);
         lv_accounts_current = findViewById(R.id.lv_accounts_current);
-        no_action = findViewById(R.id.no_action);
+
+
         this.accounts = new ArrayList<>();
         accountsInAListAdapter = new AccountsInAListAdapter(ManageAccountsInListActivity.this, AccountsInAListAdapter.type.CURRENT, listId, this.accounts);
         lv_accounts_current.setAdapter(accountsInAListAdapter);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(ManageAccountsInListActivity.this);
         lv_accounts_current.setLayoutManager(mLayoutManager);
 
-        accountsSearchInAListAdapter = new AccountsInAListAdapter(ManageAccountsInListActivity.this, AccountsInAListAdapter.type.SEARCH, listId, this.accounts);
-        lv_accounts_search.setAdapter(accountsSearchInAListAdapter);
-        LinearLayoutManager mLayoutManager1 = new LinearLayoutManager(ManageAccountsInListActivity.this);
-        lv_accounts_search.setLayoutManager(mLayoutManager1);
 
 
         list_title.setText(title);
         loader.setVisibility(View.VISIBLE);
         new ManageListsAsyncTask(ManageAccountsInListActivity.this, ManageListsAsyncTask.action.GET_LIST_ACCOUNT, null, null, listId, null, ManageAccountsInListActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
+
+        search_account.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (count > 0) {
+                    search_account.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_close, 0);
+                }else{
+                    search_account.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_search, 0);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                if( s != null && s.length() > 0){
+                    new ManageListsAsyncTask(ManageAccountsInListActivity.this, s.toString(),  ManageAccountsInListActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }else{
+                    lv_accounts_search.setVisibility(View.GONE);
+                    lv_accounts_current.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        search_account.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_RIGHT = 2;
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (search_account.length() > 0 && event.getRawX() >= (search_account.getRight() - search_account.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        search_account.setText("");
+                    }
+                }
+
+                return false;
+            }
+        });
     }
+
+    public void addAccount(Account account){
+        search_account.setText("");
+        accounts.add(0,account);
+        accountsInAListAdapter.notifyItemInserted(0);
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -119,6 +160,7 @@ public class ManageAccountsInListActivity extends BaseActivity implements OnList
     @Override
     public void onActionDone(ManageListsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
         loader.setVisibility(View.GONE);
+        main_account_container.setVisibility(View.VISIBLE);
         if( apiResponse.getError() != null){
             final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
@@ -126,14 +168,24 @@ public class ManageAccountsInListActivity extends BaseActivity implements OnList
                 Toast.makeText(ManageAccountsInListActivity.this, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
-
         if( actionType == ManageListsAsyncTask.action.GET_LIST_ACCOUNT){
             if (apiResponse.getAccounts() != null && apiResponse.getAccounts().size() > 0) {
                 this.accounts.addAll(apiResponse.getAccounts());
                 accountsInAListAdapter.notifyDataSetChanged();
-                main_account_container.setVisibility(View.VISIBLE);
-            } else {
-                no_action.setVisibility(View.VISIBLE);
+                lv_accounts_search.setVisibility(View.GONE);
+                lv_accounts_current.setVisibility(View.VISIBLE);
+
+            }
+        }else if( actionType == ManageListsAsyncTask.action.SEARCH_USER){
+            if (apiResponse.getAccounts() != null && apiResponse.getAccounts().size() > 0) {
+                java.util.List<Account> accountsSearch = new ArrayList<>();
+                accountsSearch.addAll(apiResponse.getAccounts());
+                AccountsInAListAdapter accountsSearchInAListAdapter = new AccountsInAListAdapter(ManageAccountsInListActivity.this, AccountsInAListAdapter.type.SEARCH, listId, accountsSearch);
+                lv_accounts_search.setAdapter(accountsSearchInAListAdapter);
+                LinearLayoutManager mLayoutManager1 = new LinearLayoutManager(ManageAccountsInListActivity.this);
+                lv_accounts_search.setLayoutManager(mLayoutManager1);
+                lv_accounts_search.setVisibility(View.VISIBLE);
+                lv_accounts_current.setVisibility(View.GONE);
             }
         }
     }

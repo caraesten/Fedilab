@@ -39,7 +39,8 @@ public class ManageListsAsyncTask extends AsyncTask<Void, Void, Void> {
         DELETE_LIST,
         UPDATE_LIST,
         ADD_USERS,
-        DELETE_USERS
+        DELETE_USERS,
+        SEARCH_USER
     }
 
     private OnListActionInterface listener;
@@ -53,6 +54,7 @@ public class ManageListsAsyncTask extends AsyncTask<Void, Void, Void> {
     private WeakReference<Context> contextReference;
     private String max_id, since_id;
     private int limit;
+    private String search;
 
     public ManageListsAsyncTask(Context context, action apiAction, String[] accountsId, String targetedId, String listId, String title, OnListActionInterface onListActionInterface){
         contextReference = new WeakReference<>(context);
@@ -74,6 +76,13 @@ public class ManageListsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.apiAction = action.GET_LIST_TIMELINE;
     }
 
+    public ManageListsAsyncTask(Context context, String search, OnListActionInterface onListActionInterface){
+        contextReference = new WeakReference<>(context);
+        this.listener = onListActionInterface;
+        this.search = search;
+        this.apiAction = action.SEARCH_USER;
+    }
+
     @Override
     protected Void doInBackground(Void... params) {
         if (apiAction == action.GET_LIST) {
@@ -92,6 +101,8 @@ public class ManageListsAsyncTask extends AsyncTask<Void, Void, Void> {
             apiResponse = new API(contextReference.get()).addAccountToList(this.listId, this.accountsId);
         }else if(apiAction == action.DELETE_USERS){
             statusCode = new API(contextReference.get()).deleteAccountFromList(this.listId, this.accountsId);
+        }else if( apiAction == action.SEARCH_USER){
+            apiResponse = new API(contextReference.get()).searchAccounts(this.search, 20, true);
         }
         return null;
     }

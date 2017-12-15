@@ -16,8 +16,6 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -1113,8 +1111,10 @@ public class API {
             apiResponse.setMax_id(httpsConnection.getMax_id());
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
+            e.printStackTrace();
         }catch (Exception e) {
             setDefaultError();
+            e.printStackTrace();
         }
         apiResponse.setAccounts(accounts);
         return apiResponse;

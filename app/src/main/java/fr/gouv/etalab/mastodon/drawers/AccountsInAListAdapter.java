@@ -16,7 +16,6 @@ package fr.gouv.etalab.mastodon.drawers;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -29,20 +28,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.ManageAccountsInListActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.asynctasks.ManageListsAsyncTask;
-import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.client.Entities.Error;
-import fr.gouv.etalab.mastodon.fragments.DisplayListsFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnListActionInterface;
-import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 
 
 /**
@@ -114,6 +109,8 @@ public class AccountsInAListAdapter extends RecyclerView.Adapter implements OnLi
                     accounts.remove(account);
                     accountsInAListAdapter.notifyDataSetChanged();
                 }else if(actionType == type.SEARCH){
+                    new ManageListsAsyncTask(context, ManageListsAsyncTask.action.ADD_USERS, new String[]{account.getId()}, null, listId, null, AccountsInAListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    ((ManageAccountsInListActivity)context).addAccount(account);
 
                 }
             }

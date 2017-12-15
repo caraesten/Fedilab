@@ -142,6 +142,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
@@ -1625,6 +1626,19 @@ public class Helper {
             } else {
                 if( navigationView.getMenu().findItem(R.id.nav_follow_request) != null)
                     navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
+            }
+
+        }
+        //Check instance release for lists
+        String instance = Helper.getLiveInstance(activity);
+        String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userID + instance, null);
+        if (instanceVersion != null) {
+            Version currentVersion = new Version(instanceVersion);
+            Version minVersion = new Version("2.1");
+            if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
+                navigationView.getMenu().findItem(R.id.nav_list).setVisible(true);
+            } else {
+                navigationView.getMenu().findItem(R.id.nav_list).setVisible(false);
             }
         }
         tableLayout.setVisibility(View.VISIBLE);
