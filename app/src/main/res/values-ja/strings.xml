@@ -392,22 +392,21 @@
   <string name="thanks_text">
 ロゴはStéphaneにありがとうございました。    </string>
   <string name="thanks_text_dev">
-        Thank you to:
-    </string>
-  <string name="filter_regex">Filter out by regular expressions</string>
-  <string name="search">Search</string>
-  <string name="delete">Delete</string>
-  <string name="fetch_more_toots">Fetch more toots…</string>
+ありがとうございました：    </string>
+  <string name="filter_regex">正規表現でフィルタする</string>
+  <string name="search">サーチ</string>
+  <string name="delete">削除</string>
+  <string name="fetch_more_toots">もっとたくさんのツイートを取得する...</string>
   <!-- About lists -->
-  <string name="action_lists">Lists</string>
-  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
-  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-  <string name="action_lists_add_to">Add to list</string>
-  <string name="action_lists_remove_from">Remove from list</string>
-  <string name="action_lists_create">Add list</string>
-  <string name="action_lists_delete">Delete list</string>
-  <string name="action_lists_update">Edit list</string>
-  <string name="action_lists_title_placeholder">New list title</string>
-  <string name="action_lists_search_users">Search among people you follow</string>
+  <string name="action_lists">リスト</string>
+  <string name="action_lists_confirm_delete">このリストを完全に削除してもよろしいですか？</string>
+  <string name="action_lists_empty_content">このリストにはまだ何もありません。 このリストのメンバーが新しいステータスを投稿すると、ここに表示されます。</string>
+  <string name="action_lists_add_to">リストに追加する</string>
+  <string name="action_lists_remove_from">リストから削除する</string>
+  <string name="action_lists_create">リストを追加</string>
+  <string name="action_lists_delete">リストを削除する</string>
+  <string name="action_lists_update">リストを編集する</string>
+  <string name="action_lists_title_placeholder">新しいリストのタイトル</string>
+  <string name="action_lists_search_users">あなたが従う人々の中から検索する</string>
   <string name="action_lists_owner">Your lists</string>
 </resources>
