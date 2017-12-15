@@ -102,8 +102,8 @@
   <string name="fav_removed">トゥーはお気に入りから削除されました！</string>
   <string name="reblog_added">トゥーは増強されました！</string>
   <string name="reblog_removed">トートはもはや後押しされていません！</string>
-  <string name="reblog_by">Boosted by %1$s</string>
-  <string name="favourite_add">Add this toot to your favourites?</string>
+  <string name="reblog_by">％1 $ sでブーストされました</string>
+  <string name="favourite_add">この写真をお気に入りに追加しますか？</string>
   <string name="favourite_remove">从你的收藏夹中去掉这个toot？</string>
   <string name="reblog_add">この爆弾を押し上げる？</string>
   <string name="reblog_remove">この鼓動を解除しますか？</string>
