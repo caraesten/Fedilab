@@ -179,13 +179,13 @@
   <!-- Instance -->
   <string name="instance_no_description">説明はありません！</string>
   <!-- About -->
-  <string name="about_vesrion">Release %1$s</string>
-  <string name="about_developer">Developer:</string>
-  <string name="about_license">License: </string>
+  <string name="about_vesrion">％1 $ sを解放する</string>
+  <string name="about_developer">開発者：</string>
+  <string name="about_license">ライセンス： </string>
   <string name="about_license_action">GNU GPL V3</string>
-  <string name="about_code">Source code: </string>
-  <string name="about_yandex">Translation of toots:</string>
-  <string name="about_thekinrar">Search instances:</string>
+  <string name="about_code">ソースコード： </string>
+  <string name="about_yandex">トートの翻訳：</string>
+  <string name="about_thekinrar">検索インスタンス：</string>
   <string name="about_thekinrar_action">instances.social</string>
   <string name="thanks_text_logo">Icon designer:</string>
   <!-- Conversation -->
