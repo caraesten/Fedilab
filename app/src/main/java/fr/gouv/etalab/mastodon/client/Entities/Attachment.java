@@ -24,7 +24,7 @@ import java.io.Serializable;
  * Manages Media
  */
 
-public class Attachment implements Parcelable, Serializable{
+public class Attachment implements Parcelable{
 
     private String id;
     private String type;

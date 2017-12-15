@@ -61,7 +61,7 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
  * Manage Status (ie: toots)
  */
 
-public class Status implements Parcelable, Serializable{
+public class Status implements Parcelable{
 
     private String id;
     private String uri;

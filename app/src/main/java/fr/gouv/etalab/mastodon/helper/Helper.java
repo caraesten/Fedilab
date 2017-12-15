@@ -92,6 +92,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.gson.Gson;
 
 import org.conscrypt.Conscrypt;
 
@@ -1554,17 +1555,8 @@ public class Helper {
      * @return String serialized Status
      */
     public static String statusToStringStorage(Status status){
-        String serialized = null;
-        try {
-            ByteArrayOutputStream bo = new ByteArrayOutputStream();
-            ObjectOutputStream so = new ObjectOutputStream(bo);
-            so.writeObject(status);
-            so.flush();
-            serialized = new String(Base64.encode(bo.toByteArray(), Base64.DEFAULT));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return serialized;
+        Gson gson = new Gson();
+        return gson.toJson(status);
     }
 
     /**
@@ -1573,24 +1565,12 @@ public class Helper {
      * @return Status
      */
     public static Status restoreStatusFromString(String serializedStatus){
-        Status status = null;
-        if(serializedStatus == null)
-            return null;
-        byte b[];
+        Gson gson = new Gson();
         try {
-            b = Base64.decode(serializedStatus.getBytes(), Base64.DEFAULT);
-            ByteArrayInputStream bi = new ByteArrayInputStream(b);
-            ObjectInputStream si = new ObjectInputStream(bi);
-            status = (Status) si.readObject();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            return gson.fromJson(serializedStatus, Status.class);
+        }catch (Exception e){
+            return null;
         }
-        return status;
-
     }
 
     /**

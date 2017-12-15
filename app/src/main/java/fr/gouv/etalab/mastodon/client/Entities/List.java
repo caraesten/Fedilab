@@ -21,7 +21,7 @@ import java.io.Serializable;
  * Manage List
  */
 
-public class List implements Serializable {
+public class List {
 
     private String id;
     private String title;

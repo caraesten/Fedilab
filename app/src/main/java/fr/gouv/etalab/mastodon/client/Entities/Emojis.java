@@ -20,7 +20,7 @@ import java.io.Serializable;
  * Created by Thomas on 20/10/2017.
  */
 
-public class Emojis implements Serializable {
+public class Emojis {
 
     private String shortcode;
     private String static_url;
