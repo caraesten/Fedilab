@@ -19,7 +19,7 @@
   <string name="download_over">Téléchargement terminé</string>
   <string name="save_file">Enregistrer %1$s</string>
   <string name="save_over">Enregistrement terminé</string>
-  <string name="download_from">Fichier : %1$s</string>
+  <string name="download_from" formatted="false">Fichier : %1$s</string>
   <string name="password">Mot de passe</string>
   <string name="email">Email</string>
   <string name="accounts">Comptes</string>
@@ -33,7 +33,7 @@
   <string name="no_result">Aucun résultat !</string>
   <string name="instance">Instance</string>
   <string name="instance_example">Instance : mastodon.social</string>
-  <string name="toast_account_changed">Utilisation du compte %1$s</string>
+  <string name="toast_account_changed" formatted="false">Utilisation du compte %1$s</string>
   <string name="add_account">Ajouter un compte</string>
   <string name="clipboard">Le contenu du pouet a été copié dans le presse-papier</string>
   <string name="change">Changer</string>
@@ -85,7 +85,7 @@
   <string name="profile">Profil</string>
   <string name="make_a_choice">Que souhaitez-vous faire ?</string>
   <string name="delete_account_title">Supprimer un compte</string>
-  <string name="delete_account_message">Supprimer le compte %1$s de l\'application ?</string>
+  <string name="delete_account_message" formatted="false">Supprimer le compte %1$s de l\'application ?</string>
   <string name="send_email">Envoyer un email</string>
   <string name="choose_file">Veuillez sélectionner un fichier</string>
   <string name="choose_file_error">Aucun explorateur de fichiers trouvé !</string>
@@ -143,7 +143,7 @@
   </plurals>
   <string name="date_yesterday">Hier</string>
   <string name="date_day_before_yesterday">Avant-hier</string>
-  <string name="date_day">Il y a %d jours</string>
+  <string name="date_day" formatted="false">Il y a %d jours</string>
   <plurals name="date_month">
     <item quantity="one">Il y a %d mois</item>
     <item quantity="other">Il y a %d mois</item>
