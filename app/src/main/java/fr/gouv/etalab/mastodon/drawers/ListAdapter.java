@@ -107,8 +107,8 @@ public class ListAdapter extends BaseAdapter implements OnListActionInterface {
         Drawable next = ContextCompat.getDrawable(context, R.drawable.ic_keyboard_arrow_right);
         holder.search_title.setText(list.getTitle());
         assert next != null;
-        next.setBounds(0,0,100,100);
-        assert next != null;
+        final float scale = context.getResources().getDisplayMetrics().density;
+        next.setBounds(0,0,(int) (30  * scale + 0.5f),(int) (30  * scale + 0.5f));
         holder.search_title.setCompoundDrawables(null, null, next, null);
 
         holder.search_container.setOnClickListener(new View.OnClickListener() {

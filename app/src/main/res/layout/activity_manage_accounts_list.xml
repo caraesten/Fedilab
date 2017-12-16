@@ -55,7 +55,7 @@
             android:visibility="gone"
             android:id="@+id/lv_accounts_search"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="300dp"
             android:scrollbars="none"
             android:divider="@null"
             />
