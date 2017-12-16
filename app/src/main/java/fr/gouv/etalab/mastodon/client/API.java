@@ -16,7 +16,6 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -1075,13 +1074,24 @@ public class API {
         return results;
     }
 
+
+    /**
+     * Retrieves Accounts when searching (ie: via @...) *synchronously*
+     * Not limited to following
+     * @param query  String search
+     * @return APIResponse
+     */
+    public APIResponse searchAccounts(String query, int count) {
+        return searchAccounts(query, count, false);
+    }
+
     /**
      * Retrieves Accounts when searching (ie: via @...) *synchronously*
      *
      * @param query  String search
      * @return APIResponse
      */
-    public APIResponse searchAccounts(String query, int count) {
+    public APIResponse searchAccounts(String query, int count, boolean following) {
 
         HashMap<String, String> params = new HashMap<>();
         params.put("q", query);
@@ -1089,6 +1099,8 @@ public class API {
             count = 5;
         if( count > 40 )
             count = 40;
+        if( following)
+            params.put("following", Boolean.toString(true));
         params.put("limit", String.valueOf(count));
 
         try {
@@ -1099,8 +1111,10 @@ public class API {
             apiResponse.setMax_id(httpsConnection.getMax_id());
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
+            e.printStackTrace();
         }catch (Exception e) {
             setDefaultError();
+            e.printStackTrace();
         }
         apiResponse.setAccounts(accounts);
         return apiResponse;
@@ -1129,6 +1143,269 @@ public class API {
         }
         apiResponse.setEmojis(emojis);
         return apiResponse;
+    }
+
+
+
+    /**
+     * Get lists for the user
+     * @return APIResponse
+     */
+    public APIResponse getLists(){
+
+        List<fr.gouv.etalab.mastodon.client.Entities.List> lists = new ArrayList<>();
+        try {
+            String response = new HttpsConnection().get(getAbsoluteUrl("/lists"), 60, null, prefKeyOauthTokenT);
+            lists = parseLists(new JSONArray(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            setDefaultError();
+        }
+        apiResponse.setLists(lists);
+        return apiResponse;
+    }
+
+    /**
+     * Get lists for a user by its id
+     * @return APIResponse
+     */
+    public APIResponse getLists(String userId){
+
+        List<fr.gouv.etalab.mastodon.client.Entities.List> lists = new ArrayList<>();
+        fr.gouv.etalab.mastodon.client.Entities.List list;
+        try {
+            String response = new HttpsConnection().get(getAbsoluteUrl(String.format("/accounts/%s/lists", userId)), 60, null, prefKeyOauthTokenT);
+            list = parseList(new JSONObject(response));
+            lists.add(list);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            setDefaultError();
+        }
+        apiResponse.setLists(lists);
+        return apiResponse;
+    }
+
+    /**
+     * Retrieves list timeline  *synchronously*
+     * @param list_id   String id of the list
+     * @param max_id   String id max
+     * @param since_id String since the id
+     * @param limit    int limit  - max value 40
+     * @return APIResponse
+     */
+    public APIResponse getListTimeline(String list_id, String max_id, String since_id, int limit) {
+
+        HashMap<String, String> params = new HashMap<>();
+        if (max_id != null)
+            params.put("max_id", max_id);
+        if (since_id != null)
+            params.put("since_id", since_id);
+        if (0 > limit || limit > 80)
+            limit = 80;
+        params.put("limit",String.valueOf(limit));
+        statuses = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection();
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/timelines/list/%s",list_id)), 60, params, prefKeyOauthTokenT);
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+            statuses = parseStatuses(new JSONArray(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        }catch (Exception e) {
+            setDefaultError();
+            e.printStackTrace();
+        }
+        apiResponse.setStatuses(statuses);
+        return apiResponse;
+    }
+
+
+    /**
+     * Get accounts in a list for a user
+     * @param listId String, id of the list
+     * @param limit int, limit of results
+     * @return APIResponse
+     */
+    public APIResponse getAccountsInList(String listId, int limit){
+
+        List<fr.gouv.etalab.mastodon.client.Entities.List> lists = new ArrayList<>();
+        fr.gouv.etalab.mastodon.client.Entities.List list;
+        HashMap<String, String> params = new HashMap<>();
+        if( limit < 0)
+            limit = 0;
+        if( limit > 50 )
+            limit = 50;
+        params.put("limit",String.valueOf(limit));
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection();
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/lists/%s/accounts", listId)), 60, params, prefKeyOauthTokenT);
+            accounts = parseAccountResponse(new JSONArray(response));
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            setDefaultError();
+        }
+        apiResponse.setAccounts(accounts);
+        return apiResponse;
+    }
+
+
+
+    /**
+     * Get a list
+     * @param id String, id of the list
+     * @return APIResponse
+     */
+    public APIResponse getList(String id){
+
+        List<fr.gouv.etalab.mastodon.client.Entities.List> lists = new ArrayList<>();
+        fr.gouv.etalab.mastodon.client.Entities.List list;
+        try {
+            String response = new HttpsConnection().get(getAbsoluteUrl(String.format("/lists/%s",id)), 60, null, prefKeyOauthTokenT);
+            list = parseList(new JSONObject(response));
+            lists.add(list);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            setDefaultError();
+        }
+        apiResponse.setLists(lists);
+        return apiResponse;
+    }
+
+
+    /**
+     * Add an account in a list
+     * @param id String, id of the list
+     * @param account_ids String, account to add
+     * @return APIResponse
+     */
+    //TODO: it is unclear what is returned here
+    //TODO: improves doc https://github.com/tootsuite/documentation/blob/4bb149c73f40fa58fd7265a336703dd2d83efb1c/Using-the-API/API.md#addingremoving-accounts-tofrom-a-list
+    public APIResponse addAccountToList(String id, String[] account_ids){
+
+        HashMap<String, String> params = new HashMap<>();
+        StringBuilder parameters = new StringBuilder();
+        for(String val: account_ids)
+            parameters.append("account_ids[]=").append(val).append("&");
+        if( parameters.length() > 0) {
+            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(14));
+            params.put("account_ids[]", parameters.toString());
+        }
+        List<fr.gouv.etalab.mastodon.client.Entities.List> lists = new ArrayList<>();
+        fr.gouv.etalab.mastodon.client.Entities.List list;
+        try {
+            new HttpsConnection().post(getAbsoluteUrl(String.format("/lists/%s/accounts", id)), 60, params, prefKeyOauthTokenT);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            setDefaultError();
+        }
+        return apiResponse;
+    }
+
+
+    /**
+     * Delete an account from a list
+     * @param id String, the id of the list
+     * @return APIResponse
+     */
+    public int deleteAccountFromList(String id, String[] account_ids){
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection();
+            StringBuilder parameters = new StringBuilder();
+            HashMap<String, String> params = new HashMap<>();
+            for(String val: account_ids)
+                parameters.append("account_ids[]=").append(val).append("&");
+            if( parameters.length() > 0) {
+                parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(14));
+                params.put("account_ids[]", parameters.toString());
+            }
+            httpsConnection.delete(getAbsoluteUrl(String.format("/lists/%s/accounts", id)), 60, params, prefKeyOauthTokenT);
+            actionCode = httpsConnection.getActionCode();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        }catch (Exception e) {
+            setDefaultError();
+            e.printStackTrace();
+        }
+        return actionCode;
+    }
+
+    /**
+     * Posts a list
+     * @param title String, the title of the list
+     * @return APIResponse
+     */
+    public APIResponse createList(String title){
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("title",title);
+        List<fr.gouv.etalab.mastodon.client.Entities.List> lists = new ArrayList<>();
+        fr.gouv.etalab.mastodon.client.Entities.List list;
+        try {
+            String response = new HttpsConnection().post(getAbsoluteUrl("/lists"), 60, params, prefKeyOauthTokenT);
+            list = parseList(new JSONObject(response));
+            lists.add(list);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            setDefaultError();
+        }
+        apiResponse.setLists(lists);
+        return apiResponse;
+    }
+
+
+    /**
+     * Update a list by its id
+     * @param id String, the id of the list
+     * @param title String, the title of the list
+     * @return APIResponse
+     */
+    public APIResponse updateList(String id, String title){
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("title",title);
+        List<fr.gouv.etalab.mastodon.client.Entities.List> lists = new ArrayList<>();
+        fr.gouv.etalab.mastodon.client.Entities.List list;
+        try {
+            String response = new HttpsConnection().put(getAbsoluteUrl(String.format("/lists/%s", id)), 60, params, prefKeyOauthTokenT);
+            list = parseList(new JSONObject(response));
+            lists.add(list);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            setDefaultError();
+        }
+        apiResponse.setLists(lists);
+        return apiResponse;
+    }
+
+
+    /**
+     * Delete a list by its id
+     * @param id String, the id of the list
+     * @return APIResponse
+     */
+    public int deleteList(String id){
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection();
+            httpsConnection.delete(getAbsoluteUrl(String.format("/lists/%s", id)), 60, null, prefKeyOauthTokenT);
+            actionCode = httpsConnection.getActionCode();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            setDefaultError();
+        }
+        return actionCode;
     }
 
     /**
@@ -1397,6 +1674,44 @@ public class API {
         }catch (Exception ignored){}
         return emojis;
     }
+
+
+    /**
+     * Parse Lists
+     * @param jsonArray JSONArray
+     * @return List<List> of lists
+     */
+    private List<fr.gouv.etalab.mastodon.client.Entities.List> parseLists(JSONArray jsonArray){
+        List<fr.gouv.etalab.mastodon.client.Entities.List> lists = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length() ) {
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                fr.gouv.etalab.mastodon.client.Entities.List list = parseList(resobj);
+                lists.add(list);
+                i++;
+            }
+        } catch (JSONException e) {
+            setDefaultError();
+        }
+        return lists;
+    }
+
+
+    /**
+     * Parse json response for emoji
+     * @param resobj JSONObject
+     * @return Emojis
+     */
+    private static fr.gouv.etalab.mastodon.client.Entities.List parseList(JSONObject resobj){
+        fr.gouv.etalab.mastodon.client.Entities.List list = new fr.gouv.etalab.mastodon.client.Entities.List();
+        try {
+            list.setId(resobj.get("id").toString());
+            list.setTitle(resobj.get("title").toString());
+        }catch (Exception ignored){}
+        return list;
+    }
+
 
     /**
      * Parse json response an unique account

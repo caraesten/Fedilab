@@ -30,7 +30,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
  * Privacy activity
  */
 
-public class PrivacyActivity extends AppCompatActivity {
+public class PrivacyActivity extends BaseActivity {
     @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

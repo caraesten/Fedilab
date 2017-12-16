@@ -21,7 +21,7 @@ import java.io.Serializable;
  * Manage Tags
  */
 
-public class Tag implements Serializable {
+public class Tag {
 
     private String name;
     private String url;

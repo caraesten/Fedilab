@@ -79,7 +79,7 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
  * Edit profile activity
  */
 
-public class EditProfileActivity extends AppCompatActivity implements OnRetrieveAccountInterface, OnUpdateCredentialInterface {
+public class EditProfileActivity extends BaseActivity implements OnRetrieveAccountInterface, OnUpdateCredentialInterface {
 
 
 

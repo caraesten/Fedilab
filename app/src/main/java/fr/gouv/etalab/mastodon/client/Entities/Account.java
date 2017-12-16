@@ -25,7 +25,7 @@ import java.util.Date;
  * Manage accounts
  */
 
-public class Account implements Parcelable, Serializable {
+public class Account implements Parcelable {
 
     private String id;
     private String username;

@@ -110,7 +110,7 @@ public class DraftsListAdapter extends BaseAdapter  {
 
         final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
 
-        if( this.clickable){
+        if( this.clickable ){
             if (draft.getStatus().getContent().length() > 300)
                 holder.draft_title.setText(String.format("%s…",draft.getStatus().getContent().substring(0, 299)));
             else

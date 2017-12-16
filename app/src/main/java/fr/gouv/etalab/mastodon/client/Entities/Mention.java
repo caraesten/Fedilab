@@ -24,7 +24,7 @@ import java.io.Serializable;
  * Manages mentions in toots
  */
 
-public class Mention implements Parcelable, Serializable {
+public class Mention implements Parcelable {
 
     private String url;
     private String username;

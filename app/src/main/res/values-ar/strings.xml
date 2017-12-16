@@ -125,56 +125,56 @@
     <item>هل تود حذف هذا التبويق ؟</item>
   </string-array>
   <plurals name="preview_replies">
-    <item quantity="zero">%d replies</item>
+    <item quantity="zero">%d  replies</item>
     <item quantity="one">ردّ واحد</item>
-    <item quantity="two">%d replies</item>
-    <item quantity="few">%d replies</item>
-    <item quantity="many">%d replies</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="two">%d  replies</item>
+    <item quantity="few">%d  replies</item>
+    <item quantity="many">%d  replies</item>
+    <item quantity="other">%d  replies</item>
   </plurals>
   <!-- Date -->
   <plurals name="date_seconds">
-    <item quantity="zero">قبل %d ثانية</item>
+    <item quantity="zero">قبل %d  ثانية</item>
     <item quantity="one">منذ ثانية</item>
-    <item quantity="two">%d seconds ago</item>
-    <item quantity="few">%d seconds ago</item>
-    <item quantity="many">%d seconds ago</item>
-    <item quantity="other">منذ %d ثواني</item>
+    <item quantity="two">%d  seconds ago</item>
+    <item quantity="few">%d  seconds ago</item>
+    <item quantity="many">%d  seconds ago</item>
+    <item quantity="other">منذ %d  ثواني</item>
   </plurals>
   <plurals name="date_minutes">
-    <item quantity="zero">%d minutes ago</item>
+    <item quantity="zero">%d  minutes ago</item>
     <item quantity="one">منذ دقيقة</item>
-    <item quantity="two">%d minutes ago</item>
-    <item quantity="few">%d minutes ago</item>
-    <item quantity="many">%d minutes ago</item>
-    <item quantity="other">منذ %d دقائق</item>
+    <item quantity="two">%d  minutes ago</item>
+    <item quantity="few">%d  minutes ago</item>
+    <item quantity="many">%d  minutes ago</item>
+    <item quantity="other">منذ %d  دقائق</item>
   </plurals>
   <plurals name="date_hours">
-    <item quantity="zero">%d hours ago</item>
-    <item quantity="one">%d hour ago</item>
-    <item quantity="two">%d hours ago</item>
-    <item quantity="few">%d hours ago</item>
-    <item quantity="many">%d hours ago</item>
-    <item quantity="other">قبل %d ساعات</item>
+    <item quantity="zero">%d  hours ago</item>
+    <item quantity="one">%d  hour ago</item>
+    <item quantity="two">%d  hours ago</item>
+    <item quantity="few">%d  hours ago</item>
+    <item quantity="many">%d  hours ago</item>
+    <item quantity="other">قبل %d  ساعات</item>
   </plurals>
   <string name="date_yesterday">البارحة</string>
   <string name="date_day_before_yesterday">قبل أمس</string>
-  <string name="date_day">%d أيام</string>
+  <string name="date_day">%d  أيام</string>
   <plurals name="date_month">
-    <item quantity="zero">%d أشهر</item>
+    <item quantity="zero">%d  أشهر</item>
     <item quantity="one">منذ شهر</item>
-    <item quantity="two">%d months ago</item>
-    <item quantity="few">%d months ago</item>
-    <item quantity="many">%d months ago</item>
-    <item quantity="other">قبل %d أشهر</item>
+    <item quantity="two">%d  months ago</item>
+    <item quantity="few">%d  months ago</item>
+    <item quantity="many">%d  months ago</item>
+    <item quantity="other">قبل %d  أشهر</item>
   </plurals>
   <plurals name="date_year">
     <item quantity="zero">منذ سنة</item>
     <item quantity="one">One year ago</item>
-    <item quantity="two">%d years ago</item>
-    <item quantity="few">%d years ago</item>
-    <item quantity="many">%d years ago</item>
-    <item quantity="other">قبل %d أعوام</item>
+    <item quantity="two">%d  years ago</item>
+    <item quantity="few">%d  years ago</item>
+    <item quantity="many">%d  years ago</item>
+    <item quantity="other">قبل %d  أعوام</item>
   </plurals>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">تحذير</string>
@@ -226,14 +226,14 @@
   <string name="status_cnt">التبويقات \n %1$s</string>
   <string name="following_cnt">المُتابَعون \n %1$s</string>
   <string name="followers_cnt">المتابِعون \n %1$s</string>
-  <string name="pins_cnt">Pinned \n %d</string>
+  <string name="pins_cnt">Pinned \n %d </string>
   <string name="authorize">Authorize</string>
   <string name="reject">رفض</string>
   <!-- Scheduled toots -->
   <string name="no_scheduled_toots">ليس عندك أية تبويقات مبرمَجة للعرض !</string>
   <string name="no_scheduled_toots_indications">قم بتحرير تبويق ثم إختر <b>برمَجة</b> على القائمة العلوية.</string>
   <string name="remove_scheduled">هل تود حذف التبويق المُبرمَج ؟</string>
-  <string name="media_count">الوسائط : %d</string>
+  <string name="media_count">الوسائط : %d </string>
   <string name="toot_scheduled">تمت برمجة التبويق بنجاح !</string>
   <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
   <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
@@ -245,20 +245,20 @@
   <string name="notif_follow">يتابعك</string>
   <string name="notif_pouet">تبويق حديث مِن %1$s</string>
   <plurals name="other_notifications">
-    <item quantity="zero">and %d other notifications</item>
+    <item quantity="zero">and %d  other notifications</item>
     <item quantity="one">and another notification</item>
-    <item quantity="two">and %d other notifications</item>
-    <item quantity="few">and %d other notifications</item>
-    <item quantity="many">and %d other notifications</item>
-    <item quantity="other">و %d إخطارات أخرى</item>
+    <item quantity="two">and %d  other notifications</item>
+    <item quantity="few">and %d  other notifications</item>
+    <item quantity="many">and %d  other notifications</item>
+    <item quantity="other">و %d  إخطارات أخرى</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="zero">and %d other toots to discover</item>
+    <item quantity="zero">and %d  other toots to discover</item>
     <item quantity="one">and another toot to discover</item>
-    <item quantity="two">and %d other toots to discover</item>
-    <item quantity="few">and %d other toots to discover</item>
-    <item quantity="many">and %d other toots to discover</item>
-    <item quantity="other">و %d تبويقات أخرى إكتشفها</item>
+    <item quantity="two">and %d  other toots to discover</item>
+    <item quantity="few">and %d  other toots to discover</item>
+    <item quantity="many">and %d  other toots to discover</item>
+    <item quantity="other">و %d  تبويقات أخرى إكتشفها</item>
   </plurals>
   <string name="delete_notification_ask">هل تريد حذف الإخطار ؟</string>
   <string name="delete_notification_ask_all">هل تود حذف كل الإخطارات ؟</string>

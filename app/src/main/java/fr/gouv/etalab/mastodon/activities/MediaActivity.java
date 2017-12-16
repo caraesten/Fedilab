@@ -71,7 +71,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Media Activity
  */
 
-public class MediaActivity extends AppCompatActivity implements OnDownloadInterface {
+public class MediaActivity extends BaseActivity implements OnDownloadInterface {
 
 
     private RelativeLayout loader;

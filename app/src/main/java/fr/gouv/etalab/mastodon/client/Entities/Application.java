@@ -20,7 +20,7 @@ import java.io.Serializable;
  * Created by Thomas on 23/04/2017.
  */
 
-public class Application implements Serializable {
+public class Application {
 
     public String name;
     public String website;

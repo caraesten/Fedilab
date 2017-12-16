@@ -303,6 +303,10 @@ public class StatusStoredDAO {
         StoredStatus storedStatus = new StoredStatus();
         storedStatus.setId(c.getInt(c.getColumnIndex(Sqlite.COL_ID)));
         Status status = Helper.restoreStatusFromString(c.getString(c.getColumnIndex(Sqlite.COL_STATUS_SERIALIZED)));
+        if( status == null){
+            remove(c.getInt(c.getColumnIndex(Sqlite.COL_ID)));
+            return null;
+        }
         storedStatus.setStatus(status);
         Status statusReply = Helper.restoreStatusFromString(c.getString(c.getColumnIndex(Sqlite.COL_STATUS_REPLY_SERIALIZED)));
         storedStatus.setStatusReply(statusReply);
@@ -334,6 +338,10 @@ public class StatusStoredDAO {
             StoredStatus storedStatus = new StoredStatus();
             storedStatus.setId(c.getInt(c.getColumnIndex(Sqlite.COL_ID)));
             Status status = Helper.restoreStatusFromString(c.getString(c.getColumnIndex(Sqlite.COL_STATUS_SERIALIZED)));
+            if( status == null){
+                remove(c.getInt(c.getColumnIndex(Sqlite.COL_ID)));
+                continue;
+            }
             storedStatus.setStatus(status);
             Status statusReply = Helper.restoreStatusFromString(c.getString(c.getColumnIndex(Sqlite.COL_STATUS_REPLY_SERIALIZED)));
             storedStatus.setStatusReply(statusReply);
