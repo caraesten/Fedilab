@@ -34,7 +34,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -197,6 +196,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
             return;
         }
         set_profile_name.setText(account.getDisplay_name());
+        set_profile_name.setSelection(set_profile_name.getText().length());
 
         final String content;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)

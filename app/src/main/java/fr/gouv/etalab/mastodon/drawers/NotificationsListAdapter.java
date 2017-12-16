@@ -247,7 +247,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
             Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/DroidSans-Regular.ttf");
             holder.notification_status_content.setTypeface(tf);
-
+            holder.status_reply.setText("");
             if( !status.isClickable())
                 status.makeClickable(context);
             if( !status.isEmojiFound())
@@ -301,7 +301,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 holder.status_action_container.setVisibility(View.VISIBLE);
 
 
-                Drawable imgFav, imgReblog;
+                Drawable imgFav, imgReblog, imgReply;
                 if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
                     changeDrawableColor(context, R.drawable.ic_star,R.color.marked_icon);
                     imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star);
@@ -323,6 +323,11 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                         changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
                     imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
                 }
+                if( theme == THEME_DARK)
+                    changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
+                else
+                    changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
+                imgReply = ContextCompat.getDrawable(context, R.drawable.ic_reply);
 
                 if( status.getReblog() == null) {
                     if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()) {
@@ -364,14 +369,21 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
                 assert imgReblog != null;
                 imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+                assert imgReply != null;
+                imgReply.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+
                 holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
                 holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
+                holder.status_reply.setCompoundDrawables(imgReply, null, null, null);
+
                 if( theme == THEME_DARK){
                     holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                     holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                    holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 }else {
                     holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.black));
                     holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.black));
+                    holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.black));
                 }
                 if( type.equals("favourite") || type.equals("reblog")){
                     holder.status_document_container.setVisibility(View.GONE);
@@ -981,7 +993,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         TextView status_favorite_count;
         TextView status_reblog_count;
         TextView status_date;
-        ImageView status_reply;
+        TextView status_reply;
         LinearLayout status_document_container;
         LinearLayout status_action_container;
         Button status_show_more;
