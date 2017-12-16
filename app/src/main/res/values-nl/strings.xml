@@ -19,7 +19,7 @@
   <string name="download_over">Downloaden voltooid</string>
   <string name="save_file">%1$s opslaan</string>
   <string name="save_over">Media opgeslagen</string>
-  <string name="download_from">Bestand: %1$s</string>
+  <string name="download_from" formatted="false">Bestand: %1$s</string>
   <string name="password">Wachtwoord</string>
   <string name="email">E-mail</string>
   <string name="accounts">Accounts</string>
@@ -33,7 +33,7 @@
   <string name="no_result">Geen resultaten!</string>
   <string name="instance">Mastodon-server</string>
   <string name="instance_example">Server: bv. mastodon.social</string>
-  <string name="toast_account_changed">Werkt nu met account %1$s</string>
+  <string name="toast_account_changed" formatted="false">Werkt nu met account %1$s</string>
   <string name="add_account">Account toevoegen</string>
   <string name="clipboard">De inhoud van deze toot is naar het klembord gekopieerd</string>
   <string name="change">Veranderen</string>
@@ -66,8 +66,8 @@
   <string name="show_boosts">Boosts tonen</string>
   <string name="show_replies">Reacties tonen</string>
   <string name="action_open_in_web">Open in webbrowser</string>
-  <string name="translate">Vertalen</string>
-  <string name="please_wait">Wacht hier een paar seconden mee.</string>
+  <string name="translate">Translate</string>
+  <string name="please_wait">Please, wait few seconds before making this action.</string>
   <!--- Menu -->
   <string name="home_menu">Start</string>
   <string name="local_menu">Lokale tijdlijn</string>
@@ -85,7 +85,7 @@
   <string name="profile">Profiel</string>
   <string name="make_a_choice">Wat wil je doen?</string>
   <string name="delete_account_title">Account verwijderen</string>
-  <string name="delete_account_message">Account %1$s uit deze app verwijderen?</string>
+  <string name="delete_account_message" formatted="false">Account %1$s uit deze app verwijderen?</string>
   <string name="send_email">E-mail verzenden</string>
   <string name="choose_file">Kies een bestand</string>
   <string name="choose_file_error">Geen bestandsbeheerder gevonden!</string>
@@ -94,8 +94,8 @@
   <string name="scheduled_toots">Ingeplande toots</string>
   <string name="disclaimer_full">De informatie hieronder kan mogelijk een incompleet beeld geven van dit gebruikersprofiel.</string>
   <string name="insert_emoji">Emoji toevoegen</string>
-  <string name="no_emoji">De app heeft nog geen lokale emojis verzameld.</string>
-  <string name="live_notif">Live-meldingen</string>
+  <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
+  <string name="live_notif">Live notifications</string>
   <!-- Status -->
   <string name="no_status">Geen toot om weer te geven</string>
   <string name="fav_added">De toot is aan jouw favorieten toegevoegd</string>
@@ -143,7 +143,7 @@
   </plurals>
   <string name="date_yesterday">Gisteren</string>
   <string name="date_day_before_yesterday">Eergisteren</string>
-  <string name="date_day">%d dagen geleden</string>
+  <string name="date_day" formatted="false">%d dagen geleden</string>
   <plurals name="date_month">
     <item quantity="one">%d maand geleden</item>
     <item quantity="other">%d maanden geleden</item>
@@ -282,7 +282,7 @@
   <string name="set_display_reply">Vorig bericht in reacties tonen</string>
   <string name="set_display_local">Lokale tijdlijn tonen</string>
   <string name="set_display_global">Globale tijdlijn tonen</string>
-  <string name="set_disable_gif">GIF-avatars uitschakelen</string>
+  <string name="set_disable_gif">Disable GIF avatars</string>
   <string name="set_folder_title">Downloadlocatie: </string>
   <string name="set_auto_store_toot">Concepten automatisch opslaan</string>
   <string name="set_bubble_counter">Aantal nieuwe toots bovenaan tijdlijn tonen</string>
@@ -412,17 +412,17 @@
   <string name="filter_regex">Wegfilteren met reguliere expressies</string>
   <string name="search">Zoeken</string>
   <string name="delete">Verwijderen</string>
-  <string name="fetch_more_toots">Meer toots ophalen…</string>
+  <string name="fetch_more_toots">Fetch more toots…</string>
   <!-- About lists -->
-  <string name="action_lists">Lijsten</string>
-  <string name="action_lists_confirm_delete">Weet je zeker dat je deze lijst definitief wilt verwijderen?</string>
-  <string name="action_lists_empty_content">Er is nog niks in deze lijst. Wanneer lijstleden nieuwe toots publiceren, zijn deze hier te zien.</string>
-  <string name="action_lists_add_to">Aan lijst toevoegen</string>
-  <string name="action_lists_remove_from">Uit lijst verwijderen</string>
-  <string name="action_lists_create">Lijst toevoegen</string>
-  <string name="action_lists_delete">Lijst verwijderen</string>
-  <string name="action_lists_update">Lijs verwijderen</string>
-  <string name="action_lists_title_placeholder">Naam nieuwe lijst</string>
-  <string name="action_lists_search_users">Zoek naar mensen die je volgt</string>
-  <string name="action_lists_owner">Jouw lijsten</string>
+  <string name="action_lists">Lists</string>
+  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
+  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
+  <string name="action_lists_add_to">Add to list</string>
+  <string name="action_lists_remove_from">Remove from list</string>
+  <string name="action_lists_create">Add list</string>
+  <string name="action_lists_delete">Delete list</string>
+  <string name="action_lists_update">Edit list</string>
+  <string name="action_lists_title_placeholder">New list title</string>
+  <string name="action_lists_search_users">Search among people you follow</string>
+  <string name="action_lists_owner">Your lists</string>
 </resources>

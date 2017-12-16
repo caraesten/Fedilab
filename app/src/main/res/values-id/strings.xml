@@ -19,7 +19,7 @@
   <string name="download_over">Unduh selesai</string>
   <string name="save_file">Simpan %1$s</string>
   <string name="save_over">Media disimpan</string>
-  <string name="download_from">Berkas: %1$s</string>
+  <string name="download_from" formatted="false">Berkas: %1$s</string>
   <string name="password">Kata Sandi</string>
   <string name="email">Surel</string>
   <string name="accounts">Akun</string>
@@ -33,7 +33,7 @@
   <string name="no_result">Tidak ada hasil!</string>
   <string name="instance">Contoh</string>
   <string name="instance_example">Contoh: mastodon.sosial</string>
-  <string name="toast_account_changed">Sekarang bekerja dengan akun %1$s</string>
+  <string name="toast_account_changed" formatted="false">Sekarang bekerja dengan akun %1$s</string>
   <string name="add_account">Tambahkan sebagai akun</string>
   <string name="clipboard">Isi tiupan telah disalin ke papan klip</string>
   <string name="change">Perubahan</string>
@@ -85,7 +85,7 @@
   <string name="profile">Profil</string>
   <string name="make_a_choice">Apa yang ingin kamu lakukan?</string>
   <string name="delete_account_title">Menghapus akun</string>
-  <string name="delete_account_message">Hapus akun %1$s dari aplikasi?</string>
+  <string name="delete_account_message" formatted="false">Hapus akun %1$s dari aplikasi?</string>
   <string name="send_email">Kirim sebuah surel</string>
   <string name="choose_file">Silahkan pilih file</string>
   <string name="choose_file_error">Penjelajah tidak menemukan file!</string>
@@ -139,7 +139,7 @@
   </plurals>
   <string name="date_yesterday">Kemarin</string>
   <string name="date_day_before_yesterday">Sebelum kemarin</string>
-  <string name="date_day">%d hari yang lalu</string>
+  <string name="date_day" formatted="false">%d hari yang lalu</string>
   <plurals name="date_month">
     <item quantity="other">%d bulan yang lalu</item>
   </plurals>

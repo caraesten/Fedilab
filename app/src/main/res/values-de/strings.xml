@@ -19,7 +19,7 @@
   <string name="download_over">Download abgeschlossen</string>
   <string name="save_file">Speichere %1$s</string>
   <string name="save_over">Datei gespeichert</string>
-  <string name="download_from">Datei: %1$s</string>
+  <string name="download_from" formatted="false">Datei: %1$s</string>
   <string name="password">Passwort</string>
   <string name="email">E-Mail</string>
   <string name="accounts">Konten</string>
@@ -33,7 +33,7 @@
   <string name="no_result">Kein Ergebnis!</string>
   <string name="instance">Instanz</string>
   <string name="instance_example">Instanz: mastodon.social</string>
-  <string name="toast_account_changed">Benutze jetzt Konto %1$s</string>
+  <string name="toast_account_changed" formatted="false">Benutze jetzt Konto %1$s</string>
   <string name="add_account">Konto hinzufügen</string>
   <string name="clipboard">Der Inhalt des toots wurde in die Zwischenablage kopiert</string>
   <string name="change">Ändern</string>
@@ -85,7 +85,7 @@
   <string name="profile">Profil</string>
   <string name="make_a_choice">Was möchtest du machen?</string>
   <string name="delete_account_title">Konten löschen</string>
-  <string name="delete_account_message">Konto %1$s löschen?</string>
+  <string name="delete_account_message" formatted="false">Konto %1$s löschen?</string>
   <string name="send_email">Sende eine E-Mail</string>
   <string name="choose_file">Wähle eine Datei</string>
   <string name="choose_file_error">Kein Dateimanager gefunden!</string>
@@ -143,7 +143,7 @@
   </plurals>
   <string name="date_yesterday">Gestern</string>
   <string name="date_day_before_yesterday">Vorgestern</string>
-  <string name="date_day">Vor %d Tagen</string>
+  <string name="date_day" formatted="false">Vor %d Tagen</string>
   <plurals name="date_month">
     <item quantity="one">Vor %d Monat</item>
     <item quantity="other">Vor %d Monaten</item>
