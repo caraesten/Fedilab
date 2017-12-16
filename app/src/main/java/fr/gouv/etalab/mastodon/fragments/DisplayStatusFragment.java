@@ -316,14 +316,16 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                             tmpStatuses.add(tmpStatus);
                         }
                     }
-
-                    if (tmpStatuses.size() > 0 && Long.parseLong(tmpStatuses.get(tmpStatuses.size()-1).getId()) > Long.parseLong(bookmark)) {
-                        tmpStatuses.get(tmpStatuses.size()-1).setFetchMore(true);
+                    int tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
+                    if( tmpStatuses.size()  != tootPerPage) {
+                        if (tmpStatuses.size() > 0 && Long.parseLong(tmpStatuses.get(tmpStatuses.size() - 1).getId()) > Long.parseLong(bookmark)) {
+                            tmpStatuses.get(tmpStatuses.size() - 1).setFetchMore(true);
+                        }
                     }
                     this.statuses.addAll(position, tmpStatuses);
                     statusListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
-
-                    lv_status.scrollToPosition(position+tmpStatuses.size());
+                    if( position+tmpStatuses.size() > 1) //Avoids to scroll to the second toots due to the offset
+                        lv_status.scrollToPosition(position+tmpStatuses.size());
                 }
 
             }else {
