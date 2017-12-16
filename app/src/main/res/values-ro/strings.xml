@@ -19,7 +19,7 @@
   <string name="download_over">Descărcare terminată</string>
   <string name="save_file">Salvează %1$s</string>
   <string name="save_over">Media salvate</string>
-  <string name="download_from">Fișier: %1$s</string>
+  <string name="download_from" formatted="false">Fișier: %1$s</string>
   <string name="password">Parolă</string>
   <string name="email">Email</string>
   <string name="accounts">Conturi</string>
@@ -33,7 +33,7 @@
   <string name="no_result">Nici un rezultat!</string>
   <string name="instance">Instanță</string>
   <string name="instance_example">Instanță: mastodon.social</string>
-  <string name="toast_account_changed">Acum lucrează cu contul %1$s</string>
+  <string name="toast_account_changed" formatted="false">Acum lucrează cu contul %1$s</string>
   <string name="add_account">Adaugă un cont</string>
   <string name="clipboard">Conținutul notiței a fost copiat în planșetă</string>
   <string name="change">Modifică</string>
@@ -85,7 +85,7 @@
   <string name="profile">Profil</string>
   <string name="make_a_choice">Ce vreți să faceți?</string>
   <string name="delete_account_title">Șterge contul</string>
-  <string name="delete_account_message">Șterge contul %1$s din aplicație?</string>
+  <string name="delete_account_message" formatted="false">Șterge contul %1$s din aplicație?</string>
   <string name="send_email">Trimite un email</string>
   <string name="choose_file">Vă rugăm să selectați un fișier</string>
   <string name="choose_file_error">Nici un dosar explorer găsit!</string>
@@ -147,7 +147,7 @@
   </plurals>
   <string name="date_yesterday">Ieri</string>
   <string name="date_day_before_yesterday">Înainte de ieri</string>
-  <string name="date_day">%d zile în urmă</string>
+  <string name="date_day" formatted="false">%d zile în urmă</string>
   <plurals name="date_month">
     <item quantity="one">%d lună în urmă</item>
     <item quantity="few">%d luni în urmă</item>
