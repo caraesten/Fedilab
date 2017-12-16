@@ -19,7 +19,7 @@
   <string name="download_over">Descarga completada</string>
   <string name="save_file">Guardado %1$s</string>
   <string name="save_over">Archivos multimedia guardados</string>
-  <string name="download_from">Archivo: %1$s</string>
+  <string name="download_from" formatted="false">Archivo: %1$s</string>
   <string name="password">Contraseña</string>
   <string name="email">Correo Electrónico</string>
   <string name="accounts">Cuentas</string>
@@ -33,7 +33,7 @@
   <string name="no_result">¡No hay resultados!</string>
   <string name="instance">Instancia</string>
   <string name="instance_example">Instancia: mastodon.social</string>
-  <string name="toast_account_changed">Ahora funciona con la cuenta %1$s</string>
+  <string name="toast_account_changed" formatted="false">Ahora funciona con la cuenta %1$s</string>
   <string name="add_account">Agregar una cuenta</string>
   <string name="clipboard">El contenido del toot ha sido copiado al portapapeles</string>
   <string name="change">Cambiar</string>
@@ -85,7 +85,7 @@
   <string name="profile">Perfil</string>
   <string name="make_a_choice">¿Qué quieres hacer?</string>
   <string name="delete_account_title">Eliminar una cuenta</string>
-  <string name="delete_account_message">¿Borrar la cuenta %1$s de la aplicación?</string>
+  <string name="delete_account_message" formatted="false">¿Borrar la cuenta %1$s de la aplicación?</string>
   <string name="send_email">Envíar un correo</string>
   <string name="choose_file">Por favor, seleccione un archivo</string>
   <string name="choose_file_error">¡Ningún explorador de archivos encontrado!</string>
@@ -143,7 +143,7 @@
   </plurals>
   <string name="date_yesterday">Ayer</string>
   <string name="date_day_before_yesterday">Antes de ayer</string>
-  <string name="date_day">Hace %d días</string>
+  <string name="date_day" formatted="false">Hace %d días</string>
   <plurals name="date_month">
     <item quantity="one">Hace %d mes</item>
     <item quantity="other">Hace %d meses</item>

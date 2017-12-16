@@ -19,7 +19,7 @@
   <string name="download_over">Download complete</string>
   <string name="save_file">Save %1$s</string>
   <string name="save_over">Media saved</string>
-  <string name="download_from">File: %1$s</string>
+  <string name="download_from" formatted="false">File: %1$s</string>
   <string name="password">Password</string>
   <string name="email">Email</string>
   <string name="accounts">Accounts</string>
@@ -33,7 +33,7 @@
   <string name="no_result">No results!</string>
   <string name="instance">Instance</string>
   <string name="instance_example">Instance: mastodon.social</string>
-  <string name="toast_account_changed">Now works with the account %1$s</string>
+  <string name="toast_account_changed" formatted="false">Now works with the account %1$s</string>
   <string name="add_account">Add an account</string>
   <string name="clipboard">The content of the toot has been copied to the clipboard</string>
   <string name="change">Change</string>
@@ -85,7 +85,7 @@
   <string name="profile">Profile</string>
   <string name="make_a_choice">What do you want to do?</string>
   <string name="delete_account_title">Delete an account</string>
-  <string name="delete_account_message">Delete the account %1$s from the application?</string>
+  <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
   <string name="send_email">Send an email</string>
   <string name="choose_file">Please select a file</string>
   <string name="choose_file_error">No file explorer found!</string>
@@ -147,7 +147,7 @@
   </plurals>
   <string name="date_yesterday">Yesterday</string>
   <string name="date_day_before_yesterday">Before yesterday</string>
-  <string name="date_day">%d days ago</string>
+  <string name="date_day" formatted="false">%d days ago</string>
   <plurals name="date_month">
     <item quantity="one">%d month ago</item>
     <item quantity="few">%d months ago</item>
