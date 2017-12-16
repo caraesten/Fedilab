@@ -1771,7 +1771,7 @@ public class Helper {
     }
 
     public static void installProvider(){
-        Security.addProvider(Conscrypt.newProvider());
+        Security.insertProviderAt(Conscrypt.newProvider(),1);
     }
 
 
