@@ -139,7 +139,7 @@
   </plurals>
   <string name="date_yesterday">昨日</string>
   <string name="date_day_before_yesterday">昨日まで</string>
-  <string name="date_day" formatted="false">％d日前</string>
+  <string name="date_day" formatted="false">%d日前</string>
   <plurals name="date_month">
     <item quantity="other">%d月前</item>
   </plurals>
