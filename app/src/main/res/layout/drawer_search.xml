@@ -24,8 +24,6 @@
     android:paddingTop="5dp"
     android:orientation="vertical">
     <TextView
-        android:drawableRight="@drawable/ic_keyboard_arrow_right"
-        android:drawableEnd="@drawable/ic_keyboard_arrow_right"
         android:id="@+id/search_keyword"
         android:textSize="18sp"
         android:paddingBottom="10dp"
