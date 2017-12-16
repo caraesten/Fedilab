@@ -143,7 +143,7 @@
   </plurals>
   <string name="date_yesterday">Dün</string>
   <string name="date_day_before_yesterday">Dünden önce</string>
-  <string name="date_day">% gün önce</string>
+  <string name="date_day">%d gün önce</string>
   <plurals name="date_month">
     <item quantity="one">%d ay önce</item>
     <item quantity="other">%d ay önce</item>

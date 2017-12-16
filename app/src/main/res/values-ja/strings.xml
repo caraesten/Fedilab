@@ -17,9 +17,9 @@
   <string name="download">ダウンロード</string>
   <string name="download_file">ダウンロード: %1$s</string>
   <string name="download_over">ダウンロード完了</string>
-  <string name="save_file">％1 $ sを保存</string>
+  <string name="save_file"> ％1$s を保存</string>
   <string name="save_over">メディアを保存しました</string>
-  <string name="download_from">ファイル：％1 $ s</string>
+  <string name="download_from">ファイル： ％1$s </string>
   <string name="password">パスワード</string>
   <string name="email">Eメール</string>
   <string name="accounts">アカウント</string>
@@ -33,11 +33,11 @@
   <string name="no_result">結果がありません！</string>
   <string name="instance">インスタンス</string>
   <string name="instance_example">インスタンス：mastodon.social</string>
-  <string name="toast_account_changed">％1 $ sアカウントで動作するようになりました</string>
+  <string name="toast_account_changed"> ％1$s アカウントで動作するようになりました</string>
   <string name="add_account">アカウントを追加</string>
   <string name="clipboard">トゥーの内容がクリップボードにコピーされました</string>
   <string name="change">変化する</string>
-  <string name="choose_picture">画像を選択...</string>
+  <string name="choose_picture">画像を選択…</string>
   <string name="clear">クリーン</string>
   <string name="microphone">マイクロフォン</string>
   <string name="speech_prompt">何かおっしゃってください</string>
@@ -85,7 +85,7 @@
   <string name="profile">プロフィール</string>
   <string name="make_a_choice">何をしたいですか？</string>
   <string name="delete_account_title">アカウントを削除する</string>
-  <string name="delete_account_message">アプリケーションからアカウント％1 $ sを削除しますか？</string>
+  <string name="delete_account_message">アプリケーションからアカウント ％1$s を削除しますか？</string>
   <string name="send_email">メールを送る</string>
   <string name="choose_file">ファイルを選択してください</string>
   <string name="choose_file_error">ファイルエクスプローラが見つかりません！</string>
@@ -102,7 +102,7 @@
   <string name="fav_removed">トゥーはお気に入りから削除されました！</string>
   <string name="reblog_added">トゥーは増強されました！</string>
   <string name="reblog_removed">トートはもはや後押しされていません！</string>
-  <string name="reblog_by">％1 $ sでブーストされました</string>
+  <string name="reblog_by"> ％1$s でブーストされました</string>
   <string name="favourite_add">この写真をお気に入りに追加しますか？</string>
   <string name="favourite_remove">从你的收藏夹中去掉这个toot？</string>
   <string name="reblog_add">この爆弾を押し上げる？</string>
@@ -125,26 +125,26 @@
     <item>この煙草を削除しますか？</item>
   </string-array>
   <plurals name="preview_replies">
-    <item quantity="other">%d 回复</item>
+    <item quantity="other">%d  回复</item>
   </plurals>
   <!-- Date -->
   <plurals name="date_seconds">
-    <item quantity="other">%d 秒前</item>
+    <item quantity="other">%d  秒前</item>
   </plurals>
   <plurals name="date_minutes">
-    <item quantity="other">%d分前</item>
+    <item quantity="other">%d 分前</item>
   </plurals>
   <plurals name="date_hours">
-    <item quantity="other">%d 時間前</item>
+    <item quantity="other">%d  時間前</item>
   </plurals>
   <string name="date_yesterday">昨日</string>
   <string name="date_day_before_yesterday">昨日まで</string>
-  <string name="date_day">％d日前</string>
+  <string name="date_day">％d 日前</string>
   <plurals name="date_month">
-    <item quantity="other">%d月前</item>
+    <item quantity="other">%d 月前</item>
   </plurals>
   <plurals name="date_year">
-    <item quantity="other">％d年前</item>
+    <item quantity="other">％d 年前</item>
   </plurals>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">警告</string>
@@ -179,7 +179,7 @@
   <!-- Instance -->
   <string name="instance_no_description">説明はありません！</string>
   <!-- About -->
-  <string name="about_vesrion">％1 $ sを解放する</string>
+  <string name="about_vesrion"> ％1$s を解放する</string>
   <string name="about_developer">開発者：</string>
   <string name="about_license">ライセンス： </string>
   <string name="about_license_action">GNU GPL V3</string>
@@ -195,15 +195,15 @@
   <string name="no_follow_request">フォローリクエストはありません</string>
   <string name="status_cnt">トゥーツ \n %1$s</string>
   <string name="following_cnt">次の \n %1$s</string>
-  <string name="followers_cnt">フォロワー\ n％1 $ s</string>
-  <string name="pins_cnt">ピン\ n％d</string>
+  <string name="followers_cnt">フォロワー\ n ％1$s </string>
+  <string name="pins_cnt">ピン\ n％d </string>
   <string name="authorize">承認する</string>
   <string name="reject">拒否</string>
   <!-- Scheduled toots -->
   <string name="no_scheduled_toots">予定されていません表示するために！</string>
   <string name="no_scheduled_toots_indications">メッセージを書き、トップメニューから[<b>スケジュール</b>] を選択します。</string>
   <string name="remove_scheduled">予定吹き出しを削除しますか？</string>
-  <string name="media_count">メディア：％d</string>
+  <string name="media_count">メディア：％d </string>
   <string name="toot_scheduled">トゥイットが予定されている！</string>
   <string name="toot_scheduled_date">スケジュールされた日付は現在の時間より大きくなければなりません！</string>
   <string name="warning_battery">バッテリーセーバーが有効になっています！ 期待どおりに動作しない可能性があります。</string>
@@ -213,7 +213,7 @@
   <string name="notif_reblog">あなたのステータスを後押ししました</string>
   <string name="notif_favourite">あなたのステータスを好きになった</string>
   <string name="notif_follow">あなたに続いた</string>
-  <string name="notif_pouet">％1 $ sの新着</string>
+  <string name="notif_pouet"> ％1$s の新着</string>
   <plurals name="other_notifications">
     <item quantity="other">別の通知</item>
   </plurals>
@@ -257,7 +257,7 @@
   <string name="toast_error_translate">検索中にエラーが発生しました!</string>
   <string name="toast_toot_saved">ドラフトが保存されました！</string>
   <string name="toast_error_char_limit">このインスタンスがこの数の文字を許可していますか？ 通常、この値は500文字に近いです。</string>
-  <string name="toast_visibility_changed">％1 $ sアカウントのトゥイットの表示が変更されました</string>
+  <string name="toast_visibility_changed"> ％1$s アカウントのトゥイットの表示が変更されました</string>
   <string name="toast_empty_search">インスタンス名と画面名は空白にすることはできません。</string>
   <!-- Settings -->
   <string name="settings_title_optimisation">負荷の最適化</string>
@@ -305,8 +305,8 @@
   <string name="settings_title_hour">通知のタイムスロット：</string>
   <string name="settings_time_from">の間に</string>
   <string name="settings_time_to">そして</string>
-  <string name="settings_time_greater">時間は％1 $ sより大きくなければなりません</string>
-  <string name="settings_time_lower">時間は％1 $ sより短くなければなりません</string>
+  <string name="settings_time_greater">時間は ％1$s より大きくなければなりません</string>
+  <string name="settings_time_lower">時間は ％1$s より短くなければなりません</string>
   <string name="settings_hour_init">始まる時間</string>
   <string name="settings_hour_end">終了時間</string>
   <string name="embedded_browser">ビルトインブラウザを使用する</string>
@@ -354,9 +354,9 @@
   <string name="settings_popup_notification">未読の通知については？</string>
   <!-- CACHE -->
   <string name="cache_title">キャッシュの消去</string>
-  <string name="cache_message">キャッシュに％1 $ sのデータがあります。\ n \ n削除しますか？</string>
+  <string name="cache_message">キャッシュに ％1$s のデータがあります。\ n \ n削除しますか？</string>
   <string name="cache_units">Mb</string>
-  <string name="toast_cache_clear">キャッシュがクリアされました！ ％1 $ sが解放されました</string>
+  <string name="toast_cache_clear">キャッシュがクリアされました！  ％1$s が解放されました</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">記録されたデータ</string>
   <string name="privacy_data">
@@ -396,7 +396,7 @@
   <string name="filter_regex">正規表現でフィルタする</string>
   <string name="search">サーチ</string>
   <string name="delete">削除</string>
-  <string name="fetch_more_toots">もっとたくさんのツイートを取得する...</string>
+  <string name="fetch_more_toots">もっとたくさんのツイートを取得する…</string>
   <!-- About lists -->
   <string name="action_lists">リスト</string>
   <string name="action_lists_confirm_delete">このリストを完全に削除してもよろしいですか？</string>

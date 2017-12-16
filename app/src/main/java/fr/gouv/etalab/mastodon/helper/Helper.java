@@ -577,7 +577,7 @@ public class Helper {
         else if( months > 0)
             return context.getResources().getQuantityString(R.plurals.date_month, (int)months, (int)months);
         else if( days > 2)
-            return context.getString(R.string.date_day,days);
+            return context.getString(R.string.date_day, days);
         else if(days == 2 )
             return context.getString(R.string.date_day_before_yesterday);
         else if(days == 1 )
@@ -1751,10 +1751,21 @@ public class Helper {
             Glide.with(context)
                     .asBitmap()
                     .load(url)
+                    .listener(new RequestListener<Bitmap>(){
+                        @Override
+                        public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                            return false;
+                        }
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                            return false;
+                        }
+                    })
                     .into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                            imageView.setImageBitmap(resource);
+                            if( resource != null)
+                                imageView.setImageBitmap(resource);
                         }
                     });
     }
