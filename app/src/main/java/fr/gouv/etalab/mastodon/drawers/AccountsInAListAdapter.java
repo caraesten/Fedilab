@@ -89,13 +89,6 @@ public class AccountsInAListAdapter extends RecyclerView.Adapter implements OnLi
         //Profile picture
         Helper.loadGiF(context, account.getAvatar(), holder.account_pp);
 
-        //Follow button
-        holder.account_action.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
         if( actionType == type.CURRENT){
             holder.account_action.setImageResource(R.drawable.ic_close);
         }else if(actionType == type.SEARCH){
