@@ -19,13 +19,13 @@
   <string name="download_over">Unduh selesai</string>
   <string name="save_file">Simpan %1$s</string>
   <string name="save_over">Media disimpan</string>
-  <string name="download_from">Berkas: %1$s</string>
+  <string name="download_from" formatted="false">Berkas: %1$s</string>
   <string name="password">Kata Sandi</string>
   <string name="email">Surel</string>
   <string name="accounts">Akun</string>
   <string name="toots">Kutipan</string>
   <string name="tags">Label</string>
-  <string name="token">Bukti</string>
+  <string name="token">Token</string>
   <string name="save">Simpan</string>
   <string name="restore">Mengembalikan</string>
   <string name="two_factor_authentification">Otentikasi dua langkah?</string>
@@ -33,7 +33,7 @@
   <string name="no_result">Tidak ada hasil!</string>
   <string name="instance">Contoh</string>
   <string name="instance_example">Contoh: mastodon.sosial</string>
-  <string name="toast_account_changed">Sekarang bekerja dengan akun %1$s</string>
+  <string name="toast_account_changed" formatted="false">Sekarang bekerja dengan akun %1$s</string>
   <string name="add_account">Tambahkan sebagai akun</string>
   <string name="clipboard">Isi tiupan telah disalin ke papan klip</string>
   <string name="change">Perubahan</string>
@@ -85,7 +85,7 @@
   <string name="profile">Profil</string>
   <string name="make_a_choice">Apa yang ingin kamu lakukan?</string>
   <string name="delete_account_title">Menghapus akun</string>
-  <string name="delete_account_message">Hapus akun %1$s dari aplikasi?</string>
+  <string name="delete_account_message" formatted="false">Hapus akun %1$s dari aplikasi?</string>
   <string name="send_email">Kirim sebuah surel</string>
   <string name="choose_file">Silahkan pilih file</string>
   <string name="choose_file_error">Penjelajah tidak menemukan file!</string>
@@ -139,7 +139,7 @@
   </plurals>
   <string name="date_yesterday">Kemarin</string>
   <string name="date_day_before_yesterday">Sebelum kemarin</string>
-  <string name="date_day">%d hari yang lalu</string>
+  <string name="date_day" formatted="false">%d hari yang lalu</string>
   <plurals name="date_month">
     <item quantity="other">%d bulan yang lalu</item>
   </plurals>
@@ -274,7 +274,7 @@
   <string name="set_display_reply">Tampilan pesan sebelumnya di tanggapan</string>
   <string name="set_display_local">Tampilkan kronologi lokal</string>
   <string name="set_display_global">Tampilkan kronologi federasi</string>
-  <string name="set_disable_gif">Disable GIF avatars</string>
+  <string name="set_disable_gif">Nonaktifkan avatar GIF</string>
   <string name="set_folder_title">Jalur: </string>
   <string name="set_auto_store_toot">Simpan konsep otomatis</string>
   <string name="set_bubble_counter">Tampilkan konter</string>
@@ -384,12 +384,11 @@
     </string>
   <string name="privacy_API_title">Pelacakan dan Perpustakaan</string>
   <string name="privacy_API">
-Aplikasi <b>tidak menggunakan alat pelacakan</b> (Ukuran penonton, kesalahan laporan, dll) dan tidak mengandung iklan apapun.\n\n
+        Aplikasi <b>tidak menggunakan alat pelacak</b> (pengukuran pemirsa, kesalahan pelaporan, dll.) dan tidak berisi iklan apapun.\n\n
         Penggunaan perpustakaan diminimalkan: \n
-        - <b>Universal Gambar Loader</b>: Untuk mengelola media\n
-        - <b>Pekerjaan-Android</b>: Untuk mengelola layanan\n
-        - <b>Lihat Foto</b>: Untuk mengelola gambar\n
-        - <b>Gson</b>: Untuk simpan konsep
+        - <b>Luncuran</b>: Untuk mengelola media\n
+        - <b>Kerja Android</b>: Untuk mengelola layanan\n
+        - <b>Tampilan Foto</b>: Untuk mengelola gambar\n
     </string>
   <string name="privacy_API_yandex_title">Terjemahan dari kutipan</string>
   <string name="privacy_API_yandex_authorizations">
@@ -407,4 +406,16 @@ https://yandex.ru/legal/confidential/?lang=en
   <string name="search">Cari</string>
   <string name="delete">Hapus</string>
   <string name="fetch_more_toots">Ambil lebih banyak kutipan…</string>
+  <!-- About lists -->
+  <string name="action_lists">Daftar</string>
+  <string name="action_lists_confirm_delete">Apakah Anda yakin ingin menghapus secara permanen daftar ini?</string>
+  <string name="action_lists_empty_content">Belum ada dalam daftar ini. Saat Anggota daftar ini memposting status baru, mereka akan muncul disini.</string>
+  <string name="action_lists_add_to">Tambahkan ke daftar</string>
+  <string name="action_lists_remove_from">Hapus dari daftar</string>
+  <string name="action_lists_create">Tambahkan daftar</string>
+  <string name="action_lists_delete">Hapus daftar</string>
+  <string name="action_lists_update">Edit daftar</string>
+  <string name="action_lists_title_placeholder">Judul daftar baru</string>
+  <string name="action_lists_search_users">Pencarian di antara orang yang Anda ikuti</string>
+  <string name="action_lists_owner">Daftar Anda</string>
 </resources>

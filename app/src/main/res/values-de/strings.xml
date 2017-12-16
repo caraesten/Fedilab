@@ -19,7 +19,7 @@
   <string name="download_over">Download abgeschlossen</string>
   <string name="save_file">Speichere %1$s</string>
   <string name="save_over">Datei gespeichert</string>
-  <string name="download_from">Datei: %1$s</string>
+  <string name="download_from" formatted="false">Datei: %1$s</string>
   <string name="password">Passwort</string>
   <string name="email">E-Mail</string>
   <string name="accounts">Konten</string>
@@ -33,7 +33,7 @@
   <string name="no_result">Kein Ergebnis!</string>
   <string name="instance">Instanz</string>
   <string name="instance_example">Instanz: mastodon.social</string>
-  <string name="toast_account_changed">Benutze jetzt Konto %1$s</string>
+  <string name="toast_account_changed" formatted="false">Benutze jetzt Konto %1$s</string>
   <string name="add_account">Konto hinzufügen</string>
   <string name="clipboard">Der Inhalt des toots wurde in die Zwischenablage kopiert</string>
   <string name="change">Ändern</string>
@@ -85,7 +85,7 @@
   <string name="profile">Profil</string>
   <string name="make_a_choice">Was möchtest du machen?</string>
   <string name="delete_account_title">Konten löschen</string>
-  <string name="delete_account_message">Konto %1$s löschen?</string>
+  <string name="delete_account_message" formatted="false">Konto %1$s löschen?</string>
   <string name="send_email">Sende eine E-Mail</string>
   <string name="choose_file">Wähle eine Datei</string>
   <string name="choose_file_error">Kein Dateimanager gefunden!</string>
@@ -143,7 +143,7 @@
   </plurals>
   <string name="date_yesterday">Gestern</string>
   <string name="date_day_before_yesterday">Vorgestern</string>
-  <string name="date_day">Vor %d Tagen</string>
+  <string name="date_day" formatted="false">Vor %d Tagen</string>
   <plurals name="date_month">
     <item quantity="one">Vor %d Monat</item>
     <item quantity="other">Vor %d Monaten</item>
@@ -387,13 +387,13 @@
     \n
              <b>⚠ Diese Aktionen werden nur auf Verlangen des Benutzers durchgeführt.</b></string>
   <string name="privacy_API_title">Tracking und Bibliotheken</string>
-  <string name="privacy_API">Die Anwendung <b>benutzt keine Trackingwerkzeuge</b> (Nutzerbewertung, Fehlerberichte, etc.) und enthält keinerlei Werbung.\n
-    \n
-             Die Nutzung von Bibliotheken ist minimiert: \n
-             - <b>Universal Image Loader</b>: Dateien verwalten\n
-             - <b>Android-Job</b>: Dienste verwalten\n
-             - <b>PhotoView</b>: Bilder verwalten\n
-             - <b>Gson</b> : Entwürfe speichern</string>
+  <string name="privacy_API">
+        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
+        The use of libraries is minimized: \n
+        - <b>Glide</b>: To manage media\n
+        - <b>Android-Job</b>: To manage services\n
+        - <b>PhotoView</b>: To manage images\n
+    </string>
   <string name="privacy_API_yandex_title">Übersetzung von Toots</string>
   <string name="privacy_API_yandex_authorizations">Die Anwendung bietet die Möglichkeit, toots mithilfe der lokalen sowie Yandex API zu übersetzen.\n
              Yandex hat seine eigene Datenschutzerklärung. Diese kann hier eingehesen werden: https://yandex.ru/legal/confidential/?lang=en</string>
@@ -403,4 +403,16 @@
   <string name="search">Suche</string>
   <string name="delete">Löschen</string>
   <string name="fetch_more_toots">Fetch more toots…</string>
+  <!-- About lists -->
+  <string name="action_lists">Lists</string>
+  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
+  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
+  <string name="action_lists_add_to">Add to list</string>
+  <string name="action_lists_remove_from">Remove from list</string>
+  <string name="action_lists_create">Add list</string>
+  <string name="action_lists_delete">Delete list</string>
+  <string name="action_lists_update">Edit list</string>
+  <string name="action_lists_title_placeholder">New list title</string>
+  <string name="action_lists_search_users">Search among people you follow</string>
+  <string name="action_lists_owner">Your lists</string>
 </resources>

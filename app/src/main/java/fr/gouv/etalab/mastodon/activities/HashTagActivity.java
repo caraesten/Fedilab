@@ -48,7 +48,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
  * Show hashtag stream
  */
 
-public class HashTagActivity extends AppCompatActivity implements OnRetrieveFeedsInterface {
+public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInterface {
 
 
     public static int position;

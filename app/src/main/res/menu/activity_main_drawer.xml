@@ -12,6 +12,10 @@
                         android:title=""
                         android:visible="false"/>
                     <item
+                        android:id="@+id/nav_list"
+                        android:icon="@drawable/ic_list"
+                        android:title="@string/action_lists" />
+                    <item
                         android:id="@+id/nav_scheduled"
                         android:icon="@drawable/ic_schedule"
                         android:title="@string/scheduled_toots" />

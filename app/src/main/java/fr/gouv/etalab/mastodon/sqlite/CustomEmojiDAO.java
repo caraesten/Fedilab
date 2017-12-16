@@ -109,7 +109,7 @@ public class CustomEmojiDAO {
     public List<Emojis> getAllEmojis(){
         String instance = Helper.getLiveInstance(context);
         try {
-            Cursor c = db.query(Sqlite.TABLE_CUSTOM_EMOJI, null, Sqlite.COL_INSTANCE + " = '" + instance+ "'", null, null, null, Sqlite.COL_SHORTCODE + " ASC", null);
+            Cursor c = db.query(Sqlite.TABLE_CUSTOM_EMOJI, null, Sqlite.COL_INSTANCE + " = '" + instance+ "'", null, Sqlite.COL_SHORTCODE , null, Sqlite.COL_SHORTCODE + " ASC", null);
             return cursorToListEmojis(c);
         } catch (Exception e) {
             return null;
@@ -139,7 +139,7 @@ public class CustomEmojiDAO {
     public List<Emojis> getEmojiStartingBy(String shortCode){
         try {
             String instance = Helper.getLiveInstance(context);
-            Cursor c = db.query(Sqlite.TABLE_CUSTOM_EMOJI, null, Sqlite.COL_SHORTCODE + " LIKE \"%" + shortCode + "%\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance+ "\"", null, null, null, null, null);
+            Cursor c = db.query(Sqlite.TABLE_CUSTOM_EMOJI, null, Sqlite.COL_SHORTCODE + " LIKE \"%" + shortCode + "%\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance+ "\"", null, Sqlite.COL_SHORTCODE , null, null, null);
             return cursorToListEmojis(c);
         } catch (Exception e) {
             return null;

@@ -51,7 +51,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
  * About activity
  */
 
-public class AboutActivity extends AppCompatActivity implements OnRetrieveRemoteAccountInterface, OnRetrieveRelationshipInterface {
+public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccountInterface, OnRetrieveRelationshipInterface {
 
     private List<Account> developers = new ArrayList<>();
     private List<Account> contributors = new ArrayList<>();

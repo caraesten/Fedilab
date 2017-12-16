@@ -19,7 +19,7 @@
   <string name="download_over">Download complete</string>
   <string name="save_file">Save %1$s</string>
   <string name="save_over">Media saved</string>
-  <string name="download_from">File: %1$s</string>
+  <string name="download_from" formatted="false">File: %1$s</string>
   <string name="password">Password</string>
   <string name="email">Email</string>
   <string name="accounts">Accounts</string>
@@ -33,7 +33,7 @@
   <string name="no_result">No results!</string>
   <string name="instance">Instance</string>
   <string name="instance_example">Instance: mastodon.social</string>
-  <string name="toast_account_changed">Now works with the account %1$s</string>
+  <string name="toast_account_changed" formatted="false">Now works with the account %1$s</string>
   <string name="add_account">Add an account</string>
   <string name="clipboard">The content of the toot has been copied to the clipboard</string>
   <string name="change">Change</string>
@@ -85,7 +85,7 @@
   <string name="profile">Profile</string>
   <string name="make_a_choice">What do you want to do?</string>
   <string name="delete_account_title">Delete an account</string>
-  <string name="delete_account_message">Delete the account %1$s from the application?</string>
+  <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
   <string name="send_email">Send an email</string>
   <string name="choose_file">Please select a file</string>
   <string name="choose_file_error">No file explorer found!</string>
@@ -128,41 +128,35 @@
     <item quantity="one">%d reply</item>
     <item quantity="few">%d replies</item>
     <item quantity="other">%d replies</item>
-    <item quantity="many">%d replies</item>
   </plurals>
   <!-- Date -->
   <plurals name="date_seconds">
     <item quantity="one">%d second ago</item>
     <item quantity="few">%d seconds ago</item>
     <item quantity="other">%d seconds ago</item>
-    <item quantity="many">%d seconds ago</item>
   </plurals>
   <plurals name="date_minutes">
     <item quantity="one">%d minute ago</item>
     <item quantity="few">%d minutes ago</item>
     <item quantity="other">%d minutes ago</item>
-    <item quantity="many">%d minutes ago</item>
   </plurals>
   <plurals name="date_hours">
     <item quantity="one">%d hour ago</item>
     <item quantity="few">%d hours ago</item>
     <item quantity="other">%d hours ago</item>
-    <item quantity="many">%d hours ago</item>
   </plurals>
   <string name="date_yesterday">Yesterday</string>
   <string name="date_day_before_yesterday">Before yesterday</string>
-  <string name="date_day">%d days ago</string>
+  <string name="date_day" formatted="false">%d days ago</string>
   <plurals name="date_month">
     <item quantity="one">%d month ago</item>
     <item quantity="few">%d months ago</item>
     <item quantity="other">%d months ago</item>
-    <item quantity="many">%d months ago</item>
   </plurals>
   <plurals name="date_year">
-    <item quantity="one">%d years ago</item>
+    <item quantity="one">One year ago</item>
     <item quantity="few">%d years ago</item>
     <item quantity="other">%d years ago</item>
-    <item quantity="many">%d years ago</item>
   </plurals>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">Warning</string>
@@ -233,16 +227,14 @@
   <string name="notif_follow">followed you</string>
   <string name="notif_pouet">New toot from %1$s</string>
   <plurals name="other_notifications">
-    <item quantity="one">and %d other notifications</item>
+    <item quantity="one">and another notification</item>
     <item quantity="few">and %d other notifications</item>
     <item quantity="other">and %d other notifications</item>
-    <item quantity="many">and %d other notifications</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="one">and %d other toots to discover</item>
+    <item quantity="one">and another toot to discover</item>
     <item quantity="few">and %d other toots to discover</item>
     <item quantity="other">and %d other toots to discover</item>
-    <item quantity="many">and %d other toots to discover</item>
   </plurals>
   <string name="delete_notification_ask">Delete a notification?</string>
   <string name="delete_notification_ask_all">Delete all notifications?</string>
@@ -410,10 +402,9 @@
   <string name="privacy_API">
         The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
         The use of libraries is minimized: \n
-        - <b>Universal Image Loader</b>: To manage media\n
+        - <b>Glide</b>: To manage media\n
         - <b>Android-Job</b>: To manage services\n
         - <b>PhotoView</b>: To manage images\n
-        - <b>Gson</b> : To save drafts
     </string>
   <string name="privacy_API_yandex_title">Translation of toots</string>
   <string name="privacy_API_yandex_authorizations">
@@ -429,5 +420,17 @@
   <string name="filter_regex">Filter out by regular expressions</string>
   <string name="search">Search</string>
   <string name="delete">Delete</string>
-<string name="fetch_more_toots">Fetch more toots…</string>
+  <string name="fetch_more_toots">Fetch more toots…</string>
+  <!-- About lists -->
+  <string name="action_lists">Lists</string>
+  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
+  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
+  <string name="action_lists_add_to">Add to list</string>
+  <string name="action_lists_remove_from">Remove from list</string>
+  <string name="action_lists_create">Add list</string>
+  <string name="action_lists_delete">Delete list</string>
+  <string name="action_lists_update">Edit list</string>
+  <string name="action_lists_title_placeholder">New list title</string>
+  <string name="action_lists_search_users">Search among people you follow</string>
+  <string name="action_lists_owner">Your lists</string>
 </resources>

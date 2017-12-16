@@ -66,6 +66,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Patterns;
 import android.view.Menu;
@@ -93,7 +94,10 @@ import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.gson.Gson;
 
+import org.conscrypt.Conscrypt;
+
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -101,13 +105,19 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.Provider;
+import java.security.Security;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -129,11 +139,10 @@ import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
+import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
@@ -568,7 +577,7 @@ public class Helper {
         else if( months > 0)
             return context.getResources().getQuantityString(R.plurals.date_month, (int)months, (int)months);
         else if( days > 2)
-            return context.getString(R.string.date_day,days);
+            return context.getString(R.string.date_day, days);
         else if(days == 2 )
             return context.getString(R.string.date_day_before_yesterday);
         else if(days == 1 )
@@ -1082,6 +1091,43 @@ public class Helper {
     }
 
 
+    public static SpannableString makeMentionsClick(final Context context, List<Mention> mentions){
+
+        String cw_mention = "";
+        for(Mention mention:mentions){
+            cw_mention = String.format("@%s %s",mention.getAcct(),cw_mention);
+        }
+        SpannableString spannableString = new SpannableString(cw_mention);
+        for (final Mention mention : mentions) {
+            String targetedAccount = "@" + mention.getUsername();
+            if (spannableString.toString().contains(targetedAccount)) {
+
+                //Accounts can be mentioned several times so we have to loop
+                for(int startPosition = -1 ; (startPosition = spannableString.toString().indexOf(targetedAccount, startPosition + 1)) != -1 ; startPosition++){
+                    int endPosition = startPosition + targetedAccount.length();
+                    spannableString.setSpan(new ClickableSpan() {
+                                @Override
+                                public void onClick(View textView) {
+                                    Intent intent = new Intent(context, ShowAccountActivity.class);
+                                    Bundle b = new Bundle();
+                                    b.putString("accountId", mention.getId());
+                                    intent.putExtras(b);
+                                    context.startActivity(intent);
+                                }
+                                @Override
+                                public void updateDrawState(TextPaint ds) {
+                                    super.updateDrawState(ds);
+                                }
+                            },
+                            startPosition, endPosition,
+                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                }
+            }
+
+        }
+        return spannableString;
+    }
+
     /**
      * Update the header with the new selected account
      * @param activity Activity
@@ -1521,7 +1567,11 @@ public class Helper {
      */
     public static Status restoreStatusFromString(String serializedStatus){
         Gson gson = new Gson();
-        return gson.fromJson(serializedStatus, Status.class);
+        try {
+            return gson.fromJson(serializedStatus, Status.class);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     /**
@@ -1576,6 +1626,19 @@ public class Helper {
             } else {
                 if( navigationView.getMenu().findItem(R.id.nav_follow_request) != null)
                     navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
+            }
+
+        }
+        //Check instance release for lists
+        String instance = Helper.getLiveInstance(activity);
+        String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userID + instance, null);
+        if (instanceVersion != null) {
+            Version currentVersion = new Version(instanceVersion);
+            Version minVersion = new Version("2.1");
+            if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
+                navigationView.getMenu().findItem(R.id.nav_list).setVisible(true);
+            } else {
+                navigationView.getMenu().findItem(R.id.nav_list).setVisible(false);
             }
         }
         tableLayout.setVisibility(View.VISIBLE);
@@ -1688,12 +1751,27 @@ public class Helper {
             Glide.with(context)
                     .asBitmap()
                     .load(url)
+                    .listener(new RequestListener<Bitmap>(){
+                        @Override
+                        public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                            return false;
+                        }
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                            return false;
+                        }
+                    })
                     .into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                            imageView.setImageBitmap(resource);
+                            if( resource != null)
+                                imageView.setImageBitmap(resource);
                         }
                     });
+    }
+
+    public static void installProvider(){
+        Security.addProvider(Conscrypt.newProvider());
     }
 
 

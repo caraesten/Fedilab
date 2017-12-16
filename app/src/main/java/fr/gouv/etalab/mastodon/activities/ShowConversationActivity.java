@@ -68,7 +68,7 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
  * Show conversation activity class
  */
 
-public class ShowConversationActivity extends AppCompatActivity implements OnRetrieveFeedsInterface, OnRetrieveContextInterface {
+public class ShowConversationActivity extends BaseActivity implements OnRetrieveFeedsInterface, OnRetrieveContextInterface {
 
 
     private String statusId;

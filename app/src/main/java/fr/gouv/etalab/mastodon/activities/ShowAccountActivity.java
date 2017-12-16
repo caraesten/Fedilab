@@ -100,7 +100,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.withSuffix;
  * Show account activity class
  */
 
-public class ShowAccountActivity extends AppCompatActivity implements OnPostActionInterface, OnRetrieveAccountInterface, OnRetrieveFeedsAccountInterface, OnRetrieveRelationshipInterface, OnRetrieveFeedsInterface {
+public class ShowAccountActivity extends BaseActivity implements OnPostActionInterface, OnRetrieveAccountInterface, OnRetrieveFeedsAccountInterface, OnRetrieveRelationshipInterface, OnRetrieveFeedsInterface {
 
 
     private List<Status> statuses;

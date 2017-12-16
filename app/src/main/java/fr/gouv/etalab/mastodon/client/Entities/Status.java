@@ -42,6 +42,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -60,7 +61,7 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
  * Manage Status (ie: toots)
  */
 
-public class Status implements Parcelable {
+public class Status implements Parcelable{
 
     private String id;
     private String uri;

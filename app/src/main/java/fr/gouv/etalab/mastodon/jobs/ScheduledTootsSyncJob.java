@@ -20,6 +20,11 @@ import android.support.annotation.NonNull;
 
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobRequest;
+
+import org.conscrypt.Conscrypt;
+
+import java.security.Provider;
+import java.security.Security;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -27,6 +32,7 @@ import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
@@ -40,6 +46,9 @@ import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 public class ScheduledTootsSyncJob extends Job {
 
     public static final String SCHEDULED_TOOT = "job_scheduled_toot";
+    static {
+        Helper.installProvider();
+    }
 
     @NonNull
     @Override

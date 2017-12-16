@@ -76,7 +76,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
  * Manage service for streaming api and new notifications
  */
 
-public class LiveNotificationService extends IntentService {
+public class LiveNotificationService extends BaseService {
 
 
 
@@ -163,8 +163,7 @@ public class LiveNotificationService extends IntentService {
                 httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
                 httpsURLConnection.setRequestProperty("Keep-Alive", "header");
                 httpsURLConnection.setRequestProperty("Connection", "close");
-                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
-                    httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+                httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
                 httpsURLConnection.setRequestMethod("GET");
                 httpsURLConnection.setConnectTimeout(70000);
                 httpsURLConnection.setReadTimeout(70000);
@@ -219,7 +218,7 @@ public class LiveNotificationService extends IntentService {
                     httpsURLConnection.disconnect();
                 }
 
-            } catch (Exception ignored) {
+            } catch (Exception ignored) { ignored.printStackTrace();
             }finally {
                 if (reader != null) {
                     try {

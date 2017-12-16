@@ -18,8 +18,8 @@
   <string name="download_file">تنزيل %1$s</string>
   <string name="download_over">إكتمل التنزيل</string>
   <string name="save_file">حفظ %1$s</string>
-  <string name="save_over">Media saved</string>
-  <string name="download_from">ملف : %1$s</string>
+  <string name="save_over">تم حفظ الصورة</string>
+  <string name="download_from" formatted="false">ملف : %1$s</string>
   <string name="password">كلمة السر</string>
   <string name="email">البريد الإلكتروني</string>
   <string name="accounts">الحسابات</string>
@@ -33,9 +33,9 @@
   <string name="no_result">لم يتم العثور على أية نتيجة !</string>
   <string name="instance">مثيل الخادم</string>
   <string name="instance_example">مثيل الخادم : mastodon.social</string>
-  <string name="toast_account_changed">Now works with the account %1$s</string>
+  <string name="toast_account_changed" formatted="false">يعمل الآن بحساب %1$s</string>
   <string name="add_account">إضافة حساب</string>
-  <string name="clipboard">The content of the toot has been copied to the clipboard</string>
+  <string name="clipboard">تم نسخ محتوى التبويق إلى الحافظة</string>
   <string name="change">تعديل</string>
   <string name="choose_picture">حدد صورة ...</string>
   <string name="clear">نظيف</string>
@@ -58,7 +58,7 @@
   <string name="replies">الردود</string>
   <string name="username">إسم المستخدم</string>
   <string name="drafts">المسودات</string>
-  <string name="new_data">New data are available! Do you want to display them?</string>
+  <string name="new_data">هناك بيانات جديدة متوفرة ! هل تودّ عرضها ؟</string>
   <string name="favourite">المفضلة</string>
   <string name="follow">متابِعون جدد</string>
   <string name="mention">الإشارات</string>
@@ -70,8 +70,8 @@
   <string name="please_wait">Please, wait few seconds before making this action.</string>
   <!--- Menu -->
   <string name="home_menu">الرئيسية</string>
-  <string name="local_menu">النشرة المحلية</string>
-  <string name="global_menu">النشرة العمومية</string>
+  <string name="local_menu">الخيط المحلي</string>
+  <string name="global_menu">الخيط المُوحَّد</string>
   <string name="neutral_menu_title">الخيارات</string>
   <string name="favorites_menu">المفضلة</string>
   <string name="communication_menu_title">التواصل</string>
@@ -85,7 +85,7 @@
   <string name="profile">الملف الشخصي</string>
   <string name="make_a_choice">ماذا تريد أن تفعل ؟</string>
   <string name="delete_account_title">حذف حساب</string>
-  <string name="delete_account_message">هل تود إزالة حساب %1$s من التطبيق ؟</string>
+  <string name="delete_account_message" formatted="false">هل تود إزالة حساب %1$s من التطبيق ؟</string>
   <string name="send_email">إرسال بريد إلكتروني</string>
   <string name="choose_file">يرجى تحديد ملف</string>
   <string name="choose_file_error">No file explorer found!</string>
@@ -99,12 +99,12 @@
   <!-- Status -->
   <string name="no_status">لا توجد هناك أية تبويقات لعرضها</string>
   <string name="fav_added">تمت إضافة التبويق إلى مفضلاتك</string>
-  <string name="fav_removed">The toot was removed from favourites!</string>
+  <string name="fav_removed">تمت إزالة التبويق من مفضلاتك !</string>
   <string name="reblog_added">تمت ترقية التبويق !</string>
-  <string name="reblog_removed">The toot is no longer boosted!</string>
+  <string name="reblog_removed">تم إلغاء ترقية التبويق !</string>
   <string name="reblog_by">رقاه %1$s</string>
   <string name="favourite_add">هل تود إضافة هذا التبويق إلى مفضلاتك ؟</string>
-  <string name="favourite_remove">Remove this toot from your favourites?</string>
+  <string name="favourite_remove">هل تود إزالة هذا التبويق من مفضلاتك ؟</string>
   <string name="reblog_add">هل تود ترقية هذا التبويق ؟</string>
   <string name="reblog_remove">هل تود إلغاء ترقية هذا التبويق ؟</string>
   <string name="pin_add">هل تود تدبيس هذا التبويق ؟</string>
@@ -126,7 +126,7 @@
   </string-array>
   <plurals name="preview_replies">
     <item quantity="zero">%d replies</item>
-    <item quantity="one">%d reply</item>
+    <item quantity="one">ردّ واحد</item>
     <item quantity="two">%d replies</item>
     <item quantity="few">%d replies</item>
     <item quantity="many">%d replies</item>
@@ -159,7 +159,7 @@
   </plurals>
   <string name="date_yesterday">البارحة</string>
   <string name="date_day_before_yesterday">قبل أمس</string>
-  <string name="date_day">%d أيام</string>
+  <string name="date_day" formatted="false">%d أيام</string>
   <plurals name="date_month">
     <item quantity="zero">%d أشهر</item>
     <item quantity="one">منذ شهر</item>
@@ -180,13 +180,13 @@
   <string name="toot_cw_placeholder">تحذير</string>
   <string name="toot_placeholder">ما الجديد ؟</string>
   <string name="toot_it">بوِّق !</string>
-  <string name="cw">cw</string>
+  <string name="cw">ت.م</string>
   <string name="toot_title">تحرير تبويق</string>
   <string name="toot_title_reply">الرد على تبويق</string>
   <string name="toot_no_space">لقد بلغت حد الـ 500 حرف المسموح به !</string>
   <string name="toot_select_image">تحديد وسائط</string>
   <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-  <string name="toot_delete_media">Delete this media?</string>
+  <string name="toot_delete_media">هل تود حذف هذه الصورة ؟</string>
   <string name="toot_error_no_content">إن تبويقك فارغ !</string>
   <string name="toot_visibility_tilte">طريقة نشر التبويق</string>
   <string name="toots_visibility_tilte">الطريقة الإفتراضية لنشر التبويقات :</string>
@@ -272,15 +272,15 @@
   <string name="client_error">Unable to get client id!</string>
   <string name="no_internet">لا يوجد إتصال بشبكة الإنترنت !</string>
   <string name="toast_block">تم حجب الحساب !</string>
-  <string name="toast_unblock">The account is no longer blocked!</string>
+  <string name="toast_unblock">لقد تم إلغاء حظر هذا الحساب !</string>
   <string name="toast_mute">تم كتم الحساب !</string>
-  <string name="toast_unmute">The account is no longer muted!</string>
-  <string name="toast_follow">The account was followed!</string>
-  <string name="toast_unfollow">The account is no longer followed!</string>
+  <string name="toast_unmute">لقد تم إلغاء الكتم عن هذا الحساب !</string>
+  <string name="toast_follow">تمت متابعة الحساب !</string>
+  <string name="toast_unfollow">لم تعد تتابع هذا الحساب !</string>
   <string name="toast_reblog">تمت ترقية التبويق !</string>
-  <string name="toast_unreblog">The toot is no longer boosted!</string>
-  <string name="toast_favourite">The toot was added to your favourites!</string>
-  <string name="toast_unfavourite">The toot was removed from your favourites!</string>
+  <string name="toast_unreblog">تمت عملية إلغاء ترقية هذا التبويق !</string>
+  <string name="toast_favourite">تمت إضافة التبويق إلى مفضلاتك !</string>
+  <string name="toast_unfavourite">تمت إزالة التبويق من مفضلاتك !</string>
   <string name="toast_report">تم الإبلاغ عن التبويق !</string>
   <string name="toast_unstatus">تم حذف التبويق بنجاح !</string>
   <string name="toast_pin">تم تثبيت التبويق بنجاح !</string>
@@ -289,8 +289,8 @@
   <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
   <string name="toast_error_instance">The instance domain does not seem to be valide!</string>
   <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
-  <string name="toast_error_search">An error occurred while searching!</string>
-  <string name="toast_error_login">Can not log in!</string>
+  <string name="toast_error_search">وقع خطأ أثناء عملية البحث !</string>
+  <string name="toast_error_login">تعذَّر تسجيل الدخول إلى حسابك !</string>
   <string name="toast_update_credential_ok">The profile data have been saved!</string>
   <string name="nothing_to_do">No action can be taken</string>
   <string name="toast_saved">The media has been saved!</string>
@@ -306,32 +306,32 @@
   <string name="set_notifications_page">عدد الإخطارات التي يتم تحميلها كل مرة</string>
   <string name="set_attachment_always">دائما</string>
   <string name="set_attachment_wifi">واي فاي</string>
-  <string name="set_attachment_ask">اطلب</string>
+  <string name="set_attachment_ask">أُطلُب</string>
   <string name="set_attachment_action">تحميل الوسائط</string>
   <string name="load_attachment">تحميل الصور</string>
   <string name="load_attachment_spoiler">عرض المزيد ...</string>
   <string name="load_sensitive_attachment">محتوى حساس</string>
   <string name="set_display_reply">Display previous message in responses</string>
-  <string name="set_display_local">Display local timeline</string>
-  <string name="set_display_global">Display federated timeline</string>
+  <string name="set_display_local">إظهار الخيط المحلي</string>
+  <string name="set_display_global">إظهار الخيط المُوحَّد</string>
   <string name="set_disable_gif">تعطيل الصور الرمزية المتحركة</string>
   <string name="set_folder_title">المسار :</string>
   <string name="set_auto_store_toot">حفظ تلقائي للمسودات</string>
   <string name="set_bubble_counter">Display counters</string>
-  <string name="set_auto_add_media_url">Add URL of media in toots</string>
+  <string name="set_auto_add_media_url">إضافة روابط الوسائط في التبويقات</string>
   <string name="settings_title_notifications">إدارة الإخطارات</string>
   <string name="set_notif_follow">Notify when someone follows you</string>
   <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
   <string name="set_notif_follow_share">Notify when someone boosts your status</string>
   <string name="set_notif_follow_add">Notify when someone favourites your status</string>
   <string name="set_notif_follow_mention">Notify when someone mentions you</string>
-  <string name="set_share_validation">Show confirmation dialog before boosting</string>
-  <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
+  <string name="set_share_validation">عرض مربع حوار للتأكيد قبل ترقية أي تبويق</string>
+  <string name="set_share_validation_fav">عرض مربع حوار للتأكيد قبل إضافة أي تبويق إلى المفضلة</string>
   <string name="settings_title_more_options">الإعدادات المتقدمة</string>
   <string name="set_wifi_only">الإخطار في وضع الواي فاي فقط</string>
   <string name="set_notify">Notify?</string>
   <string name="set_notif_silent">إخطارت صامتة</string>
-  <string name="set_night_mode">وضع ليلي</string>
+  <string name="set_night_mode">الوضع اليلي</string>
   <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
   <string name="settings_title_profile">تعديل الملف الشخصي</string>
   <string name="set_profile_description">السيرة الذاتية ...</string>
@@ -395,7 +395,7 @@
   <string name="settings_popup_notification">For unread notifications?</string>
   <!-- CACHE -->
   <string name="cache_title">مسح ذاكرة التخزين المؤقت</string>
-  <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+  <string name="cache_message">هناك %1$s من البيانات في ذاكرة التخزين المؤقتة.\n\nهل تودّ إزالتها ؟</string>
   <string name="cache_units">Mb</string>
   <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
   <!-- PRIVACY -->
@@ -426,10 +426,9 @@
   <string name="privacy_API">
         The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
         The use of libraries is minimized: \n
-        - <b>Universal Image Loader</b>: To manage media\n
+        - <b>Glide</b>: To manage media\n
         - <b>Android-Job</b>: To manage services\n
         - <b>PhotoView</b>: To manage images\n
-        - <b>Gson</b> : To save drafts
     </string>
   <string name="privacy_API_yandex_title">ترجمة التبويقات</string>
   <string name="privacy_API_yandex_authorizations">
@@ -442,4 +441,16 @@
   <string name="search">البحث</string>
   <string name="delete">حذف</string>
   <string name="fetch_more_toots">تحميل المزيد من التبويقات ...</string>
+  <!-- About lists -->
+  <string name="action_lists">القوائم</string>
+  <string name="action_lists_confirm_delete">هل تود فعلا حذف هذه القائمة ؟</string>
+  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
+  <string name="action_lists_add_to">إضافة إلى القائمة</string>
+  <string name="action_lists_remove_from">إزالة من القائمة</string>
+  <string name="action_lists_create">إضافة قائمة جديدة</string>
+  <string name="action_lists_delete">حذف القائمة</string>
+  <string name="action_lists_update">تعديل القائمة</string>
+  <string name="action_lists_title_placeholder">عنوان جديد للقائمة</string>
+  <string name="action_lists_search_users">البحث فيما بين الحسابات التي تتبعها</string>
+  <string name="action_lists_owner">قوائمك</string>
 </resources>

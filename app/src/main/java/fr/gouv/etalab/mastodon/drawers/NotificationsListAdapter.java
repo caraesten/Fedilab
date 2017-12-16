@@ -68,6 +68,7 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnPostNotificationsActionInterface;
@@ -209,6 +210,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
         holder.status_reply.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
         holder.status_reply.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
+        holder.status_spoiler.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
 
         holder.notification_status_content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
         holder.notification_type.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
@@ -245,13 +247,13 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
             Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/DroidSans-Regular.ttf");
             holder.notification_status_content.setTypeface(tf);
-
+            holder.status_reply.setText("");
             if( !status.isClickable())
                 status.makeClickable(context);
             if( !status.isEmojiFound())
                 status.makeEmojis(context, NotificationsListAdapter.this);
             holder.notification_status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
-
+            holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
 
             holder.notification_status_content.setMovementMethod(null);
             holder.notification_status_content.setMovementMethod(LinkMovementMethod.getInstance());
@@ -260,6 +262,10 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             holder.status_date.setText(Helper.dateDiff(context, status.getCreated_at()));
 
             Helper.absoluteDateTimeReveal(context, holder.status_date, status.getCreated_at());
+
+            holder.status_mention_spoiler.setText(Helper.makeMentionsClick(context,status.getMentions()), TextView.BufferType.SPANNABLE);
+            holder.status_mention_spoiler.setMovementMethod(null);
+            holder.status_mention_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
 
             //Adds attachment -> disabled, to enable them uncomment the line below
             //loadAttachments(status, holder);
@@ -289,11 +295,13 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 holder.notification_status_content.setVisibility(View.VISIBLE);
                 holder.status_show_more.setVisibility(View.GONE);
                 holder.status_action_container.setVisibility(View.INVISIBLE);
+                holder.status_spoiler_button.setVisibility(View.GONE);
+                holder.status_spoiler_mention_container.setVisibility(View.GONE);
             }else {
                 holder.status_action_container.setVisibility(View.VISIBLE);
 
 
-                Drawable imgFav, imgReblog;
+                Drawable imgFav, imgReblog, imgReply;
                 if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
                     changeDrawableColor(context, R.drawable.ic_star,R.color.marked_icon);
                     imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star);
@@ -315,19 +323,67 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                         changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
                     imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
                 }
+                if( theme == THEME_DARK)
+                    changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
+                else
+                    changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
+                imgReply = ContextCompat.getDrawable(context, R.drawable.ic_reply);
+
+                if( status.getReblog() == null) {
+                    if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()) {
+                        holder.notification_status_container.setVisibility(View.GONE);
+                        holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_button.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
+                        holder.status_spoiler.setVisibility(View.VISIBLE);
+                    } else {
+                        holder.status_spoiler_button.setVisibility(View.GONE);
+                        holder.notification_status_container.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                        if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0)
+                            holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                        else
+                            holder.status_spoiler_container.setVisibility(View.GONE);
+
+                    }
+                }else {
+                    if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()) {
+                        holder.notification_status_container.setVisibility(View.GONE);
+                        holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_button.setVisibility(View.VISIBLE);
+                        holder.status_spoiler.setVisibility(View.VISIBLE);
+                    } else {
+                        holder.status_spoiler_button.setVisibility(View.GONE);
+                        holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                        holder.notification_status_container.setVisibility(View.VISIBLE);
+                        if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0)
+                            holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                        else
+                            holder.status_spoiler_container.setVisibility(View.GONE);
+
+                    }
+                }
 
                 assert imgFav != null;
                 imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
                 assert imgReblog != null;
                 imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+                assert imgReply != null;
+                imgReply.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+
                 holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
                 holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
+                holder.status_reply.setCompoundDrawables(imgReply, null, null, null);
+
                 if( theme == THEME_DARK){
                     holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                     holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                    holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 }else {
                     holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.black));
                     holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.black));
+                    holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.black));
                 }
                 if( type.equals("favourite") || type.equals("reblog")){
                     holder.status_document_container.setVisibility(View.GONE);
@@ -378,6 +434,17 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                         }
                     }
                 }
+
+                //Spoiler opens
+                holder.status_spoiler_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        status.setSpoilerShown(true);
+                        notificationsListAdapter.notifyDataSetChanged();
+                    }
+                });
+
+
                 switch (status.getVisibility()){
                     case "public":
                         holder.status_privacy.setImageResource(R.drawable.ic_public);
@@ -421,6 +488,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             holder.notification_status_container.setVisibility(View.GONE);
             holder.card_status_container.setOnClickListener(null);
         }
+
+
 
 
         holder.status_favorite_count.setOnClickListener(new View.OnClickListener() {
@@ -915,13 +984,16 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         FrameLayout card_status_container;
         TextView notification_status_content;
         TextView notification_type;
+        LinearLayout status_spoiler_container;
+        TextView status_spoiler;
+        Button status_spoiler_button;
         TextView notification_account_username;
         ImageView notification_account_profile;
         ImageView notification_delete;
         TextView status_favorite_count;
         TextView status_reblog_count;
         TextView status_date;
-        ImageView status_reply;
+        TextView status_reply;
         LinearLayout status_document_container;
         LinearLayout status_action_container;
         Button status_show_more;
@@ -940,6 +1012,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         LinearLayout notification_status_container;
         RelativeLayout main_container_trans;
         ImageView status_privacy;
+        LinearLayout status_spoiler_mention_container;
+        TextView status_mention_spoiler;
 
         public View getView(){
             return itemView;
@@ -975,6 +1049,11 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             status_prev4_container = itemView.findViewById(R.id.status_prev4_container);
             status_action_container = itemView.findViewById(R.id.status_action_container);
             status_more = itemView.findViewById(R.id.status_more);
+            status_spoiler_container = itemView.findViewById(R.id.status_spoiler_container);
+            status_spoiler = itemView.findViewById(R.id.status_spoiler);
+            status_spoiler_button = itemView.findViewById(R.id.status_spoiler_button);
+            status_spoiler_mention_container = itemView.findViewById(R.id.status_spoiler_mention_container);
+            status_mention_spoiler = itemView.findViewById(R.id.status_mention_spoiler);
         }
     }
 

@@ -46,7 +46,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchStatusInterface;
  * Show search results within two tabs: Toots and accounts
  */
 
-public class SearchResultActivity extends AppCompatActivity implements OnRetrieveSearchInterface, OnRetrieveSearchStatusInterface {
+public class SearchResultActivity extends BaseActivity implements OnRetrieveSearchInterface, OnRetrieveSearchStatusInterface {
 
 
     private String search;

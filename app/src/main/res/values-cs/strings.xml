@@ -19,7 +19,7 @@
   <string name="download_over">Download complete</string>
   <string name="save_file">Save %1$s</string>
   <string name="save_over">Media saved</string>
-  <string name="download_from">File: %1$s</string>
+  <string name="download_from" formatted="false">File: %1$s</string>
   <string name="password">Password</string>
   <string name="email">Email</string>
   <string name="accounts">Accounts</string>
@@ -33,7 +33,7 @@
   <string name="no_result">No results!</string>
   <string name="instance">Instance</string>
   <string name="instance_example">Instance: mastodon.social</string>
-  <string name="toast_account_changed">Now works with the account %1$s</string>
+  <string name="toast_account_changed" formatted="false">Now works with the account %1$s</string>
   <string name="add_account">Add an account</string>
   <string name="clipboard">The content of the toot has been copied to the clipboard</string>
   <string name="change">Change</string>
@@ -85,7 +85,7 @@
   <string name="profile">Profile</string>
   <string name="make_a_choice">What do you want to do?</string>
   <string name="delete_account_title">Delete an account</string>
-  <string name="delete_account_message">Delete the account %1$s from the application?</string>
+  <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
   <string name="send_email">Send an email</string>
   <string name="choose_file">Please select a file</string>
   <string name="choose_file_error">No file explorer found!</string>
@@ -147,7 +147,7 @@
   </plurals>
   <string name="date_yesterday">Yesterday</string>
   <string name="date_day_before_yesterday">Before yesterday</string>
-  <string name="date_day">%d days ago</string>
+  <string name="date_day" formatted="false">%d days ago</string>
   <plurals name="date_month">
     <item quantity="one">%d month ago</item>
     <item quantity="few">%d months ago</item>
@@ -402,10 +402,9 @@
   <string name="privacy_API">
         The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
         The use of libraries is minimized: \n
-        - <b>Universal Image Loader</b>: To manage media\n
+        - <b>Glide</b>: To manage media\n
         - <b>Android-Job</b>: To manage services\n
         - <b>PhotoView</b>: To manage images\n
-        - <b>Gson</b> : To save drafts
     </string>
   <string name="privacy_API_yandex_title">Translation of toots</string>
   <string name="privacy_API_yandex_authorizations">
@@ -422,4 +421,16 @@
   <string name="search">Search</string>
   <string name="delete">Delete</string>
   <string name="fetch_more_toots">Fetch more toots…</string>
+  <!-- About lists -->
+  <string name="action_lists">Lists</string>
+  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
+  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
+  <string name="action_lists_add_to">Add to list</string>
+  <string name="action_lists_remove_from">Remove from list</string>
+  <string name="action_lists_create">Add list</string>
+  <string name="action_lists_delete">Delete list</string>
+  <string name="action_lists_update">Edit list</string>
+  <string name="action_lists_title_placeholder">New list title</string>
+  <string name="action_lists_search_users">Search among people you follow</string>
+  <string name="action_lists_owner">Your lists</string>
 </resources>

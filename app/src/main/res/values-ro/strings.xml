@@ -19,7 +19,7 @@
   <string name="download_over">Descărcare terminată</string>
   <string name="save_file">Salvează %1$s</string>
   <string name="save_over">Media salvate</string>
-  <string name="download_from">Fișier: %1$s</string>
+  <string name="download_from" formatted="false">Fișier: %1$s</string>
   <string name="password">Parolă</string>
   <string name="email">Email</string>
   <string name="accounts">Conturi</string>
@@ -33,7 +33,7 @@
   <string name="no_result">Nici un rezultat!</string>
   <string name="instance">Instanță</string>
   <string name="instance_example">Instanță: mastodon.social</string>
-  <string name="toast_account_changed">Acum lucrează cu contul %1$s</string>
+  <string name="toast_account_changed" formatted="false">Acum lucrează cu contul %1$s</string>
   <string name="add_account">Adaugă un cont</string>
   <string name="clipboard">Conținutul notiței a fost copiat în planșetă</string>
   <string name="change">Modifică</string>
@@ -85,7 +85,7 @@
   <string name="profile">Profil</string>
   <string name="make_a_choice">Ce vreți să faceți?</string>
   <string name="delete_account_title">Șterge contul</string>
-  <string name="delete_account_message">Șterge contul %1$s din aplicație?</string>
+  <string name="delete_account_message" formatted="false">Șterge contul %1$s din aplicație?</string>
   <string name="send_email">Trimite un email</string>
   <string name="choose_file">Vă rugăm să selectați un fișier</string>
   <string name="choose_file_error">Nici un dosar explorer găsit!</string>
@@ -147,7 +147,7 @@
   </plurals>
   <string name="date_yesterday">Ieri</string>
   <string name="date_day_before_yesterday">Înainte de ieri</string>
-  <string name="date_day">%d zile în urmă</string>
+  <string name="date_day" formatted="false">%d zile în urmă</string>
   <plurals name="date_month">
     <item quantity="one">%d lună în urmă</item>
     <item quantity="few">%d luni în urmă</item>
@@ -398,12 +398,12 @@ Aceste date sunt strict confidențiale și pot fi folosite doar de aplicație.
     </string>
   <string name="privacy_API_title">Urmărire și biblioteci</string>
   <string name="privacy_API">
-Aplicația  <b>nu folosește unelte de urmărire</b> (audiența de măsurare, erori de raportare, etc.) și nu conține reclame.\n\n
-Folosirea librăriilor este minimă: \n
-- <b>Universal Image Loader</b>: Să gestioneze media \n
-- <b>Android-Job</b>: Să gestioneze servicii\n
-- <b>PhotoView</b>: Să gestioneze imagini\n
- - <b>Gson</b> : Să salveze ciorne    </string>
+        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
+        The use of libraries is minimized: \n
+        - <b>Glide</b>: To manage media\n
+        - <b>Android-Job</b>: To manage services\n
+        - <b>PhotoView</b>: To manage images\n
+    </string>
   <string name="privacy_API_yandex_title">Traducerea notițelor</string>
   <string name="privacy_API_yandex_authorizations">
 Alpicația oferă posibilitatea de a traduce notițe folosind local-ul aparatului și API-ul Yandex.\n 
@@ -417,6 +417,17 @@ Vă mulțumesc:
   <string name="filter_regex">Filtrează expresii usuale</string>
   <string name="search">Căutare</string>
   <string name="delete">Șterge</string>
-<string name="fetch_more_toots">Fetch more toots…</string>
-
+  <string name="fetch_more_toots">Fetch more toots…</string>
+  <!-- About lists -->
+  <string name="action_lists">Lists</string>
+  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
+  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
+  <string name="action_lists_add_to">Add to list</string>
+  <string name="action_lists_remove_from">Remove from list</string>
+  <string name="action_lists_create">Add list</string>
+  <string name="action_lists_delete">Delete list</string>
+  <string name="action_lists_update">Edit list</string>
+  <string name="action_lists_title_placeholder">New list title</string>
+  <string name="action_lists_search_users">Search among people you follow</string>
+  <string name="action_lists_owner">Your lists</string>
 </resources>

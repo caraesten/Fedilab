@@ -19,7 +19,6 @@ import android.os.Build;
 import android.text.Html;
 import android.text.SpannableString;
 
-
 import org.json.JSONObject;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -74,6 +73,7 @@ public class HttpsConnection {
         this.context = context;
     }
 
+
     @SuppressWarnings("ConstantConditions")
     public String get(String urlConnection, int timeout, HashMap<String, String> paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
 
@@ -99,8 +99,7 @@ public class HttpsConnection {
         httpsURLConnection.setConnectTimeout(timeout * 1000);
         httpsURLConnection.setRequestProperty("http.keepAlive", "false");
         httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+        httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
         if( token != null)
             httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
         httpsURLConnection.setRequestMethod("GET");
@@ -120,6 +119,58 @@ public class HttpsConnection {
                 sb.append((char) c);
             httpsURLConnection.disconnect();
             throw new HttpsConnectionException(httpsURLConnection.getResponseCode(), sb.toString());
+        }
+    }
+
+
+
+    public String get(String urlConnection) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
+        HttpsURLConnection httpsURLConnection;
+        HttpURLConnection httpURLConnection;
+        StringBuilder sb = new StringBuilder();
+        if( urlConnection.startsWith("https://")) {
+            URL url = new URL(urlConnection);
+            httpsURLConnection = (HttpsURLConnection) url.openConnection();
+            httpsURLConnection.setConnectTimeout(30 * 1000);
+            httpsURLConnection.setRequestProperty("http.keepAlive", "false");
+            httpsURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");
+            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+            httpsURLConnection.setRequestMethod("GET");
+            if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
+                Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream(), "UTF-8"));
+                for (int c; (c = in.read()) >= 0; )
+                    sb.append((char) c);
+                httpsURLConnection.disconnect();
+                in.close();
+                return sb.toString();
+            } else {
+                Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getErrorStream(), "UTF-8"));
+                for (int c; (c = in.read()) >= 0; )
+                    sb.append((char) c);
+                httpsURLConnection.disconnect();
+                throw new HttpsConnectionException(httpsURLConnection.getResponseCode(), sb.toString());
+            }
+        }else{
+            URL url = new URL(urlConnection);
+            httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setConnectTimeout(30 * 1000);
+            httpURLConnection.setRequestProperty("http.keepAlive", "false");
+            httpURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");
+            httpURLConnection.setRequestMethod("GET");
+            if (httpURLConnection.getResponseCode() >= 200 && httpURLConnection.getResponseCode() < 400) {
+                Reader in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(), "UTF-8"));
+                for (int c; (c = in.read()) >= 0; )
+                    sb.append((char) c);
+                httpURLConnection.disconnect();
+                in.close();
+                return sb.toString();
+            } else {
+                Reader in = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream(), "UTF-8"));
+                for (int c; (c = in.read()) >= 0; )
+                    sb.append((char) c);
+                httpURLConnection.disconnect();
+                throw new HttpsConnectionException(httpURLConnection.getResponseCode(), sb.toString());
+            }
         }
     }
 
@@ -149,8 +200,7 @@ public class HttpsConnection {
         httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
         httpsURLConnection.setConnectTimeout(timeout * 1000);
         httpsURLConnection.setDoOutput(true);
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+        httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
         httpsURLConnection.setRequestMethod("POST");
         if( token != null)
             httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
@@ -263,6 +313,30 @@ public class HttpsConnection {
     }
 
 
+
+    public InputStream getPicture(final String downloadUrl) {
+        try {
+            URL url = new URL(downloadUrl);
+            httpsURLConnection = (HttpsURLConnection) url.openConnection();
+            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+            httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            int responseCode = httpsURLConnection.getResponseCode();
+            // always check HTTP response code first
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                String disposition = httpsURLConnection.getHeaderField("Content-Disposition");
+                // opens input stream from the HTTP connection
+                return httpsURLConnection.getInputStream();
+            }
+            httpsURLConnection.disconnect();
+        } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
+            e.printStackTrace();
+        }
+        if(httpsURLConnection != null)
+            httpsURLConnection.disconnect();
+        return null;
+    }
+
+
     public void upload(final InputStream inputStream, final OnRetrieveAttachmentInterface listener) {
 
         new Thread(new Runnable() {
@@ -304,8 +378,7 @@ public class HttpsConnection {
                     httpsURLConnection.setFixedLengthStreamingMode(lengthSent);
 
                     httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
-                        httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+                    httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
                     httpsURLConnection.setDoInput(true);
                     httpsURLConnection.setDoOutput(true);
                     httpsURLConnection.setUseCaches(false);
@@ -430,8 +503,7 @@ public class HttpsConnection {
         httpsURLConnection = (HttpsURLConnection)url.openConnection();
         httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
         httpsURLConnection.setConnectTimeout(timeout * 1000);
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+        httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
         if( token != null)
             httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
         httpsURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
@@ -478,15 +550,13 @@ public class HttpsConnection {
         httpsURLConnection = (HttpsURLConnection)url.openConnection();
         httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
         httpsURLConnection.setConnectTimeout(timeout * 1000);
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+        httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
         httpsURLConnection.setRequestMethod("PATCH");
         if( token != null)
             httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
         httpsURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         httpsURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
         httpsURLConnection.setDoOutput(true);
-        getSinceMaxId();
 
         httpsURLConnection.getOutputStream().write(postDataBytes);
         Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream(), "UTF-8"));
@@ -524,8 +594,7 @@ public class HttpsConnection {
 
         httpsURLConnection = (HttpsURLConnection)url.openConnection();
         httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+        httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
         if( token != null)
             httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
         httpsURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
@@ -533,11 +602,11 @@ public class HttpsConnection {
         httpsURLConnection.setConnectTimeout(timeout * 1000);
         httpsURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
 
-        getSinceMaxId();
-
+        httpsURLConnection.getOutputStream().write(postDataBytes);
 
 
         if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
+            getSinceMaxId();
             httpsURLConnection.disconnect();
             return httpsURLConnection.getResponseCode();
         }else {

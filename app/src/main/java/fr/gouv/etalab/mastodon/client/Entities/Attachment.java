@@ -17,12 +17,14 @@ package fr.gouv.etalab.mastodon.client.Entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
+
 /**
  * Created by Thomas on 23/04/2017.
  * Manages Media
  */
 
-public class Attachment implements Parcelable {
+public class Attachment implements Parcelable{
 
     private String id;
     private String type;

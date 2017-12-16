@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -70,7 +71,6 @@ public class StatusStoredDAO {
         values.put(Sqlite.COL_INSTANCE, instance);
         values.put(Sqlite.COL_USER_ID, userId);
         values.put(Sqlite.COL_SENT, 0);
-
         //Inserts stored status
         long last_id;
         try{
@@ -208,6 +208,7 @@ public class StatusStoredDAO {
             Cursor c = db.query(Sqlite.TABLE_STATUSES_STORED, null, Sqlite.COL_USER_ID + " = '" + userId+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_IS_SCHEDULED + " = 0", null, null, null, Sqlite.COL_DATE_CREATION + " DESC", null);
             return cursorToListStatuses(c);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -302,6 +303,10 @@ public class StatusStoredDAO {
         StoredStatus storedStatus = new StoredStatus();
         storedStatus.setId(c.getInt(c.getColumnIndex(Sqlite.COL_ID)));
         Status status = Helper.restoreStatusFromString(c.getString(c.getColumnIndex(Sqlite.COL_STATUS_SERIALIZED)));
+        if( status == null){
+            remove(c.getInt(c.getColumnIndex(Sqlite.COL_ID)));
+            return null;
+        }
         storedStatus.setStatus(status);
         Status statusReply = Helper.restoreStatusFromString(c.getString(c.getColumnIndex(Sqlite.COL_STATUS_REPLY_SERIALIZED)));
         storedStatus.setStatusReply(statusReply);
@@ -333,6 +338,10 @@ public class StatusStoredDAO {
             StoredStatus storedStatus = new StoredStatus();
             storedStatus.setId(c.getInt(c.getColumnIndex(Sqlite.COL_ID)));
             Status status = Helper.restoreStatusFromString(c.getString(c.getColumnIndex(Sqlite.COL_STATUS_SERIALIZED)));
+            if( status == null){
+                remove(c.getInt(c.getColumnIndex(Sqlite.COL_ID)));
+                continue;
+            }
             storedStatus.setStatus(status);
             Status statusReply = Helper.restoreStatusFromString(c.getString(c.getColumnIndex(Sqlite.COL_STATUS_REPLY_SERIALIZED)));
             storedStatus.setStatusReply(statusReply);
