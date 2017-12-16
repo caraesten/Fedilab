@@ -19,7 +19,7 @@
   <string name="download_over">İndirme tamamlandı</string>
   <string name="save_file">%1$s\'i kaydet</string>
   <string name="save_over">Medya kaydedildi</string>
-  <string name="download_from">Dosya Md5: %1$s</string>
+  <string name="download_from" formatted="false">Dosya Md5: %1$s</string>
   <string name="password">Şifre</string>
   <string name="email">E-posta</string>
   <string name="accounts">Hesaplar</string>
@@ -33,7 +33,7 @@
   <string name="no_result">Sonuç bulunamadı!</string>
   <string name="instance">Örnek</string>
   <string name="instance_example">Örnek: mastodon.social</string>
-  <string name="toast_account_changed">Şimdi hesapla birlikte çalışıyor %1$s</string>
+  <string name="toast_account_changed" formatted="false">Şimdi hesapla birlikte çalışıyor %1$s</string>
   <string name="add_account">Hesap ekle</string>
   <string name="clipboard">Modülün içeriği panoya kopyalanmış</string>
   <string name="change">Değiştir</string>
@@ -85,7 +85,7 @@
   <string name="profile">Profil</string>
   <string name="make_a_choice">Ne yapmak istiyorsun?</string>
   <string name="delete_account_title">Hesabı sil</string>
-  <string name="delete_account_message">Hesap %1$s uygulamadan silinsin mi?</string>
+  <string name="delete_account_message" formatted="false">Hesap %1$s uygulamadan silinsin mi?</string>
   <string name="send_email">Bana bir e-posta gönder</string>
   <string name="choose_file">Lütfen bir dosya seçin</string>
   <string name="choose_file_error">Hiçbir dosya keşfedici bulunamadı!</string>
@@ -143,7 +143,7 @@
   </plurals>
   <string name="date_yesterday">Dün</string>
   <string name="date_day_before_yesterday">Dünden önce</string>
-  <string name="date_day">% gün önce</string>
+  <string name="date_day" formatted="false">% gün önce</string>
   <plurals name="date_month">
     <item quantity="one">%d ay önce</item>
     <item quantity="other">%d ay önce</item>
