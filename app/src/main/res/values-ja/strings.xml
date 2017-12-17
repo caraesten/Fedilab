@@ -269,13 +269,13 @@
   <string name="set_attachment_ask">尋ねる</string>
   <string name="set_attachment_action">メディアをロードする</string>
   <string name="load_attachment">写真をロードする</string>
-  <string name="load_attachment_spoiler">もっと見せる…</string>
+  <string name="load_attachment_spoiler">さらに表示…</string>
   <string name="load_sensitive_attachment">機密性の高いコンテンツ</string>
   <string name="set_display_reply">応答に前のメッセージを表示する</string>
-  <string name="set_display_local">ローカルタイムラインを表示する</string>
-  <string name="set_display_global">連合タイムラインを表示する</string>
+  <string name="set_display_local">ローカルタイムラインを表示</string>
+  <string name="set_display_global">連合タイムラインを表示</string>
   <string name="set_disable_gif">GIFアバターを無効にする</string>
-  <string name="set_folder_title">パス： </string>
+  <string name="set_folder_title">パス: </string>
   <string name="set_auto_store_toot">下書きを自動的に保存する</string>
   <string name="set_bubble_counter">カウンターを表示する</string>
   <string name="set_auto_add_media_url">トゥーツにメディアのURLを追加する</string>
