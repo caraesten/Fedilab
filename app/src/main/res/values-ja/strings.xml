@@ -312,7 +312,7 @@
   <string name="embedded_browser">ビルトインブラウザを使用する</string>
   <string name="use_javascript">Javascript を有効にする</string>
   <string name="use_cookies">サードパーティのCookieを許可する</string>
-  <string name="settings_ui_layout">タイムラインのレイアウト： </string>
+  <string name="settings_ui_layout">タイムラインのレイアウト: </string>
   <string-array name="settings_menu_tabs">
     <item>タブ</item>
     <item>メニュー</item>
@@ -322,7 +322,7 @@
     <item>Yandex</item>
     <item>いいえ</item>
   </string-array>
-  <string name="set_led_colour">セットLEDの色：</string>
+  <string name="set_led_colour">LEDの色：</string>
   <string-array name="led_colours">
     <item>青</item>
     <item>シアン</item>
@@ -333,25 +333,25 @@
     <item>白</item>
   </string-array>
   <string name="set_title_news">ニュース</string>
-  <string name="set_notification_news">ホームタイムライン上の新しい発言を通知する</string>
+  <string name="set_notification_news">ホームタイムラインの新しいトゥートを通知</string>
   <string name="set_show_error_messages">エラーメッセージを表示する</string>
   <string name="action_follow">フォローする</string>
-  <string name="action_unfollow">アンフォロー</string>
+  <string name="action_unfollow">フォロー解除</string>
   <string name="action_block">ブロック</string>
-  <string name="action_unblock">ブロック解除する</string>
+  <string name="action_unblock">ブロック解除</string>
   <string name="action_mute">ミュート</string>
   <string name="action_no_action">何もしない</string>
   <string name="action_unmute">ミュート解除</string>
   <string name="request_sent">リクエスト送信</string>
-  <string name="followed_by">あなたについていきます</string>
-  <string name="action_search">サーチ</string>
+  <string name="followed_by">あなたをフォロー</string>
+  <string name="action_search">検索</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">プッシュ通知</string>
   <string name="settings_popup_message">
 受信したいプッシュ通知を確認してください。
- 後でこれらの通知を有効または無効にすることができます（[通知] タブ）。    </string>
-  <string name="settings_popup_timeline">自宅のタイムラインで未読の発言は？</string>
-  <string name="settings_popup_notification">未読の通知については？</string>
+後でこれらの通知を設定で有効または無効にすることができます（通知タブ）。    </string>
+  <string name="settings_popup_timeline">ホームタイムラインでの未読のトゥートは？</string>
+  <string name="settings_popup_notification">未読の通知は？</string>
   <!-- CACHE -->
   <string name="cache_title">キャッシュの消去</string>
   <string name="cache_message">キャッシュに %1$s のデータがあります。\n\n削除しますか？</string>
