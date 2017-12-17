@@ -205,15 +205,15 @@
   <string name="remove_scheduled">スケジュールトゥートを削除しますか？</string>
   <string name="media_count">メディア：%d</string>
   <string name="toot_scheduled">トゥイットが予定されている！</string>
-  <string name="toot_scheduled_date">スケジュールされた日付は現在の時間より大きくなければなりません！</string>
+  <string name="toot_scheduled_date">スケジュールされた日付は現在の時間より後でなければなりません！</string>
   <string name="warning_battery">バッテリーセーバーが有効になっています！ 期待どおりに動作しない可能性があります。</string>
   <!-- Notifications -->
-  <string name="no_notifications">表示する通知なし</string>
-  <string name="notif_mention">あなたに言及した</string>
-  <string name="notif_reblog">あなたのステータスを後押ししました</string>
-  <string name="notif_favourite">あなたのステータスを好きになった</string>
+  <string name="no_notifications">通知はありません</string>
+  <string name="notif_mention">あなたにメンションしました</string>
+  <string name="notif_reblog">あなたのトゥートをブーストしました</string>
+  <string name="notif_favourite">あなたのトゥートをお気に入りに登録しました</string>
   <string name="notif_follow">あなたに続いた</string>
-  <string name="notif_pouet">%1$s の新着</string>
+  <string name="notif_pouet">%1$s からの新しいトゥート</string>
   <plurals name="other_notifications">
     <item quantity="other">別の通知</item>
   </plurals>
@@ -225,19 +225,19 @@
   <string name="delete_notification">通知は削除されました！</string>
   <string name="delete_notification_all">すべての通知が削除されました！</string>
   <!-- HEADER -->
-  <string name="following">以下</string>
+  <string name="following">フォロー中</string>
   <string name="followers">フォロワー</string>
-  <string name="pinned_toots">固定</string>
+  <string name="pinned_toots">ピン留め</string>
   <!-- TOAST -->
   <string name="client_error">クライアントIDを取得できませんでした。</string>
-  <string name="no_internet">インターネットに接続できません！</string>
+  <string name="no_internet">インターネット接続がありません！</string>
   <string name="toast_block">アカウントがブロックされました！</string>
   <string name="toast_unblock">アカウントはもはやブロックされていません！</string>
   <string name="toast_mute">アカウントはミュートされました。</string>
   <string name="toast_unmute">アカウントはもはやミュートされません！</string>
-  <string name="toast_follow">口座は続いた！</string>
+  <string name="toast_follow">アカウントがフォローされました！</string>
   <string name="toast_unfollow">アカウントはもはや追跡されません！</string>
-  <string name="toast_reblog">トゥーは増強されました！</string>
+  <string name="toast_reblog">トゥートがブーストされました！</string>
   <string name="toast_unreblog">トートはもはや後押しされていません！</string>
   <string name="toast_favourite">あなたのお気に入りにトゥーツが追加されました！</string>
   <string name="toast_unfavourite">あなたのお気に入りからトゥーツが削除されました！</string>
