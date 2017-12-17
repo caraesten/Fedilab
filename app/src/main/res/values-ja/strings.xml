@@ -407,8 +407,8 @@
   <string name="action_lists_delete">リストを削除</string>
   <string name="action_lists_update">リストを編集</string>
   <string name="action_lists_title_placeholder">新しいリストのタイトル</string>
-  <string name="action_lists_search_users">あなたが従う人々の中から検索する</string>
+  <string name="action_lists_search_users">フォローしている人の中から検索</string>
   <string name="action_lists_owner">あなたのリスト</string>
   <!-- Migration -->
-  <string name="account_moved_to">%1$s has moved to %2$s</string>
+  <string name="account_moved_to">%1$s は %2$s へ引越しました</string>
 </resources>
