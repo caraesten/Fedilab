@@ -62,6 +62,7 @@ public class API {
         REBLOG,
         UNREBLOG,
         MUTE,
+        MUTE_NOTIFICATIONS,
         UNMUTE,
         BLOCK,
         UNBLOCK,
@@ -731,6 +732,27 @@ public class API {
         return postAction(statusAction, targetedId, null, null);
     }
 
+    /**
+     * Makes the post action for a status
+     * @param targetedId String id of the targeted Id *can be this of a status or an account*
+     * @param muteNotifications - boolean - notifications should be also muted
+     * @return in status code - Should be equal to 200 when action is done
+     */
+    public int muteNotifications(String targetedId, boolean muteNotifications){
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("muting_notifications", Boolean.toString(muteNotifications));
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection();
+            httpsConnection.post(getAbsoluteUrl(String.format("/accounts/%s/mute", targetedId)), 60, params, prefKeyOauthTokenT);
+            actionCode = httpsConnection.getActionCode();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        }catch (Exception e) {
+            setDefaultError();
+        }
+        return actionCode;
+    }
 
     /**
      * Makes the post action

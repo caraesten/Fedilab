@@ -43,6 +43,7 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
     private Account account;
     private fr.gouv.etalab.mastodon.client.Entities.Status remoteStatus;
     private WeakReference<Context> contextReference;
+    private boolean muteNotifications;
 
     public PostActionAsyncTask(Context context, API.StatusAction apiAction, String targetedId, OnPostActionInterface onPostActionInterface){
         this.contextReference = new WeakReference<>(context);
@@ -75,6 +76,13 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
         this.comment = comment;
         this.status = status;
     }
+    public PostActionAsyncTask(Context context, API.StatusAction apiAction, String targetedId, boolean muteNotifications, OnPostActionInterface onPostActionInterface){
+        this.contextReference = new WeakReference<>(context);
+        this.listener = onPostActionInterface;
+        this.apiAction = apiAction;
+        this.targetedId = targetedId;
+        this.muteNotifications = muteNotifications;
+    }
 
     @Override
     protected Void doInBackground(Void... params) {
@@ -100,6 +108,8 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
                 statusCode = api.reportAction(status, comment);
             else if (apiAction == API.StatusAction.CREATESTATUS)
                 statusCode = api.statusAction(status);
+            else if( apiAction == API.StatusAction.MUTE_NOTIFICATIONS)
+                statusCode = api.muteNotifications(targetedId, muteNotifications);
             else
                 statusCode = api.postAction(apiAction, targetedId);
         }
