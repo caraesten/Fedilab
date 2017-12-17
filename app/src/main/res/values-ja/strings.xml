@@ -356,7 +356,7 @@
   <string name="cache_title">キャッシュの消去</string>
   <string name="cache_message">キャッシュに %1$s のデータがあります。\n\n削除しますか？</string>
   <string name="cache_units">Mb</string>
-  <string name="toast_cache_clear">キャッシュがクリアされました！ %1$s が解放されました</string>
+  <string name="toast_cache_clear">キャッシュが消去されました！ %1$s が解放されました</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">記録されたデータ</string>
   <string name="privacy_data">
@@ -366,18 +366,18 @@
          ⚠ログインとパスワードは保存されません。 これらは、インスタンスとのセキュア認証（SSL）中にのみ使用されます。    </string>
   <string name="privacy_authorizations_title">権限：</string>
   <string name="privacy_authorizations">
-- <b> ACCESS_NETWORK_STATE </b>：端末がWIFIネットワークに接続されているかどうかを検出するために使用します。\n
-         - <b>インターネット</b>：インスタンスへのクエリに使用されます。\n
-         - <b> WRITE_EXTERNAL_STORAGE </b>：メディアを保存したり、SDカードにアプリを移動したりするのに使用します。\n
-         - <b> READ_EXTERNAL_STORAGE </b>：吹き出しにメディアを追加するために使用します。\n
-         - <b> BOOT_COMPLETED </b>：通知サービスを開始するために使用されます。\n
-         - <b> WAKE_LOCK </b>：通知サービスで使用されます。    </string>
+        - <b> ACCESS_NETWORK_STATE </b>：端末がWIFIネットワークに接続されているかどうかを検出するために使用します。\n
+        - <b>インターネット</b>：インスタンスへのクエリに使用されます。\n
+        - <b> WRITE_EXTERNAL_STORAGE </b>：メディアを保存したり、SDカードにアプリを移動したりするのに使用します。\n
+        - <b> READ_EXTERNAL_STORAGE </b>：トゥートにメディアを追加するために使用します。\n
+        - <b> BOOT_COMPLETED </b>：通知サービスを開始するために使用されます。\n
+        - <b> WAKE_LOCK </b>：通知サービスで使用されます。    </string>
   <string name="privacy_API_authorizations_title">API権限：</string>
   <string name="privacy_API_authorizations">
-- <b>読み取り</b>：データを読み取ります。\n
-         - <b>書き込み</b>：ステータスを投稿し、ステータスのメディアをアップロードします。\n
-         - <b>フォロー</b>：フォロー、アンフォール、ブロック、ブロック解除します。\n\n
-         <b>&#9888; これらの操作は、ユーザーが要求したときにのみ実行されます。</b>    </string>
+        - <b>読み取り</b>：データを読み取ります。\n
+        - <b>書き込み</b>：トゥートの投稿とメディアのアップロードを行います。\n
+        - <b>フォロー</b>：フォロー、フォロー解除、ブロック、ブロック解除を行います。\n\n
+        <b>&#9888; これらの操作は、ユーザーが要求したときにのみ実行されます。</b>    </string>
   <string name="privacy_API_title">トラッキングとライブラリ</string>
   <string name="privacy_API">
 アプリケーションは<b>トラッキングツールを使用していません</b>（オーディエンス測定、エラー報告など）。広告は含まれていません。\n\n
