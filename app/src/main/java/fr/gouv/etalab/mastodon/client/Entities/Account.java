@@ -61,7 +61,7 @@ public class Account implements Parcelable {
     private followAction followType = followAction.NOTHING;
     private boolean isMakingAction = false;
     private Account moved_to_account;
-
+    private boolean muting_notifications;
 
     public followAction getFollowType() {
         return followType;
@@ -85,6 +85,14 @@ public class Account implements Parcelable {
 
     public void setMoved_to_account(Account moved_to_account) {
         this.moved_to_account = moved_to_account;
+    }
+
+    public boolean isMuting_notifications() {
+        return muting_notifications;
+    }
+
+    public void setMuting_notifications(boolean muting_notifications) {
+        this.muting_notifications = muting_notifications;
     }
 
     public enum followAction{

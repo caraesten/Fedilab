@@ -1800,6 +1800,11 @@ public class API {
             relationship.setFollowed_by(Boolean.valueOf(resobj.get("followed_by").toString()));
             relationship.setBlocking(Boolean.valueOf(resobj.get("blocking").toString()));
             relationship.setMuting(Boolean.valueOf(resobj.get("muting").toString()));
+            try {
+                relationship.setMuting_notifications(Boolean.valueOf(resobj.get("muting_notifications").toString()));
+            }catch (Exception ignored){
+                relationship.setMuting_notifications(true);
+            }
             relationship.setRequested(Boolean.valueOf(resobj.get("requested").toString()));
         } catch (JSONException e) {
             setDefaultError();
