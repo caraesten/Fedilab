@@ -66,8 +66,8 @@
   <string name="show_boosts">Boosts tonen</string>
   <string name="show_replies">Reacties tonen</string>
   <string name="action_open_in_web">Open in webbrowser</string>
-  <string name="translate">Translate</string>
-  <string name="please_wait">Please, wait few seconds before making this action.</string>
+  <string name="translate">Vertalen</string>
+  <string name="please_wait">Wacht hier een paar seconden mee.</string>
   <!--- Menu -->
   <string name="home_menu">Start</string>
   <string name="local_menu">Lokale tijdlijn</string>
@@ -94,8 +94,8 @@
   <string name="scheduled_toots">Ingeplande toots</string>
   <string name="disclaimer_full">De informatie hieronder kan mogelijk een incompleet beeld geven van dit gebruikersprofiel.</string>
   <string name="insert_emoji">Emoji toevoegen</string>
-  <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-  <string name="live_notif">Live notifications</string>
+  <string name="no_emoji">De app heeft nog geen lokale emojis verzameld.</string>
+  <string name="live_notif">Live-meldingen</string>
   <!-- Status -->
   <string name="no_status">Geen toot om weer te geven</string>
   <string name="fav_added">De toot is aan jouw favorieten toegevoegd</string>
@@ -282,7 +282,7 @@
   <string name="set_display_reply">Vorig bericht in reacties tonen</string>
   <string name="set_display_local">Lokale tijdlijn tonen</string>
   <string name="set_display_global">Globale tijdlijn tonen</string>
-  <string name="set_disable_gif">Disable GIF avatars</string>
+  <string name="set_disable_gif">GIF-avatars uitschakelen</string>
   <string name="set_folder_title">Downloadlocatie: </string>
   <string name="set_auto_store_toot">Concepten automatisch opslaan</string>
   <string name="set_bubble_counter">Aantal nieuwe toots bovenaan tijdlijn tonen</string>
@@ -412,17 +412,17 @@
   <string name="filter_regex">Wegfilteren met reguliere expressies</string>
   <string name="search">Zoeken</string>
   <string name="delete">Verwijderen</string>
-  <string name="fetch_more_toots">Fetch more toots…</string>
+  <string name="fetch_more_toots">Meer toots ophalen…</string>
   <!-- About lists -->
-  <string name="action_lists">Lists</string>
-  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
-  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-  <string name="action_lists_add_to">Add to list</string>
-  <string name="action_lists_remove_from">Remove from list</string>
-  <string name="action_lists_create">Add list</string>
-  <string name="action_lists_delete">Delete list</string>
-  <string name="action_lists_update">Edit list</string>
-  <string name="action_lists_title_placeholder">New list title</string>
-  <string name="action_lists_search_users">Search among people you follow</string>
-  <string name="action_lists_owner">Your lists</string>
+  <string name="action_lists">Lijsten</string>
+  <string name="action_lists_confirm_delete">Weet je zeker dat je deze lijst definitief wilt verwijderen?</string>
+  <string name="action_lists_empty_content">Er is nog niks in deze lijst. Wanneer lijstleden nieuwe toots publiceren, zijn deze hier te zien.</string>
+  <string name="action_lists_add_to">Aan lijst toevoegen</string>
+  <string name="action_lists_remove_from">Uit lijst verwijderen</string>
+  <string name="action_lists_create">Lijst toevoegen</string>
+  <string name="action_lists_delete">Lijst verwijderen</string>
+  <string name="action_lists_update">Lijst bewerken</string>
+  <string name="action_lists_title_placeholder">Naam nieuwe lijst</string>
+  <string name="action_lists_search_users">Zoek naar mensen die je volgt</string>
+  <string name="action_lists_owner">Jouw lijsten</string>
 </resources>
