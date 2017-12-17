@@ -418,4 +418,6 @@ https://yandex.ru/legal/confidential/?lang=en
   <string name="action_lists_title_placeholder">Judul daftar baru</string>
   <string name="action_lists_search_users">Pencarian di antara orang yang Anda ikuti</string>
   <string name="action_lists_owner">Daftar Anda</string>
+  <!-- Migration -->
+  <string name="account_moved_to">%1$s has moved to %2$s</string>
 </resources>

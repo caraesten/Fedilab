@@ -424,4 +424,6 @@
   <string name="action_lists_title_placeholder">Titre de la nouvelle liste</string>
   <string name="action_lists_search_users">Rechercher parmi les gens que vous suivez</string>
   <string name="action_lists_owner">Vos listes</string>
+  <!-- Migration -->
+  <string name="account_moved_to">%1$s has moved to %2$s</string>
 </resources>

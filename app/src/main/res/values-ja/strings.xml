@@ -91,38 +91,38 @@
   <string name="choose_file_error">ファイルエクスプローラが見つかりません！</string>
   <string name="click_to_change">パスをクリックして変更します</string>
   <string name="failed">失敗！</string>
-  <string name="scheduled_toots">予定された吹き出し</string>
+  <string name="scheduled_toots">スケジュールトゥート</string>
   <string name="disclaimer_full">以下の情報は、ユーザーのプロファイルが不完全である場合があります。</string>
   <string name="insert_emoji">絵文字を挿入</string>
   <string name="no_emoji">アプリはしなかったしばらくカスタム絵文字を収集することはありません。</string>
   <string name="live_notif">ライブ通知</string>
   <!-- Status -->
-  <string name="no_status">表示しない</string>
+  <string name="no_status">トゥートがありません</string>
   <string name="fav_added">トゥートがお気に入りに追加されました</string>
-  <string name="fav_removed">トゥーはお気に入りから削除されました！</string>
-  <string name="reblog_added">トゥーは増強されました！</string>
+  <string name="fav_removed">トゥートはお気に入りから削除されました！</string>
+  <string name="reblog_added">トゥートがブーストされました！</string>
   <string name="reblog_removed">トートはもはや後押しされていません！</string>
-  <string name="reblog_by">%1$s でブーストされました</string>
-  <string name="favourite_add">この写真をお気に入りに追加しますか？</string>
-  <string name="favourite_remove">从你的收藏夹中去掉这个toot？</string>
-  <string name="reblog_add">この爆弾を押し上げる？</string>
-  <string name="reblog_remove">この鼓動を解除しますか？</string>
-  <string name="pin_add">この歯をピン止めしますか？</string>
-  <string name="pin_remove">この歯を解き放つ？</string>
+  <string name="reblog_by">%1$s にブーストされました</string>
+  <string name="favourite_add">このトゥートをお気に入りに追加しますか？</string>
+  <string name="favourite_remove">このトゥートをお気に入りから削除しますか？</string>
+  <string name="reblog_add">このトゥートをブーストしますか？</string>
+  <string name="reblog_remove">このトゥートのブーストを解除しますか？</string>
+  <string name="pin_add">このトゥートをピン留めしますか？</string>
+  <string name="pin_remove">このトゥートのピン留めを解除しますか？</string>
   <string name="more_action_1">ミュート</string>
   <string name="more_action_2">ブロック</string>
-  <string name="more_action_3">報告する</string>
-  <string name="more_action_4">削除する</string>
+  <string name="more_action_3">報告</string>
+  <string name="more_action_4">削除</string>
   <string name="more_action_5">コピー</string>
   <string name="more_action_6">シェア</string>
-  <string name="more_action_7">言及</string>
+  <string name="more_action_7">メンション</string>
   <string-array name="more_action_confirm">
     <item>このアカウントをミュートしますか？</item>
     <item>このアカウントをブロックしますか？</item>
-    <item>この爆弾を報告しますか？</item>
+    <item>このトゥートを報告しますか？</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>この煙草を削除しますか？</item>
+    <item>このトゥートを削除しますか？</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="other">%d 回复</item>
@@ -139,9 +139,9 @@
   </plurals>
   <string name="date_yesterday">昨日</string>
   <string name="date_day_before_yesterday">昨日まで</string>
-  <string name="date_day" formatted="false">%d日前</string>
+  <string name="date_day" formatted="false">%d 日前</string>
   <plurals name="date_month">
-    <item quantity="other">%d月前</item>
+    <item quantity="other">%d か月前</item>
   </plurals>
   <plurals name="date_year">
     <item quantity="other">%d 年前</item>
@@ -149,71 +149,71 @@
   <!-- TOOT -->
   <string name="toot_cw_placeholder">警告</string>
   <string name="toot_placeholder">あなたの心には何がありますか？</string>
-  <string name="toot_it">トート</string>
+  <string name="toot_it">トゥート！</string>
   <string name="cw">cw</string>
-  <string name="toot_title">トートを書く</string>
-  <string name="toot_title_reply">トゥースに返信する</string>
-  <string name="toot_no_space">あなたは500文字に達しました！</string>
+  <string name="toot_title">トゥートを書く</string>
+  <string name="toot_title_reply">トゥートに返信</string>
+  <string name="toot_no_space">500文字の制限に達しました！</string>
   <string name="toot_select_image">メディアを選択</string>
   <string name="toot_select_image_error">メディアの選択中にエラーが発生しました。</string>
   <string name="toot_delete_media">このメディアを削除しますか？</string>
-  <string name="toot_error_no_content">あなたのおしゃべりは空です！</string>
-  <string name="toot_visibility_tilte">トゥースの視認性</string>
-  <string name="toots_visibility_tilte">既定ではトートの可視性： </string>
-  <string name="toot_sent">トゥーメールが送られました！</string>
-  <string name="toot_reply_content_title">あなたはこの歯に返信しています：</string>
+  <string name="toot_error_no_content">あなたのトゥートは空です！</string>
+  <string name="toot_visibility_tilte">トゥートの公開範囲</string>
+  <string name="toots_visibility_tilte">トゥートの既定の公開範囲: </string>
+  <string name="toot_sent">トゥートが送信されました！</string>
+  <string name="toot_reply_content_title">このトゥートに返信中です：</string>
   <string name="toot_sensitive">敏感なコンテンツ？</string>
   <string-array name="toot_visibility">
     <item>公開タイムラインに投稿</item>
     <item>公開タイムラインに投稿しない</item>
     <item>フォロワーへの投稿のみ</item>
-    <item>上記のユーザーにのみ投稿</item>
+    <item>メンションしたユーザーにのみ投稿</item>
   </string-array>
-  <string name="no_draft">ドラフトなし！</string>
-  <string name="choose_toot">口を選ぶ</string>
+  <string name="no_draft">下書きはありません！</string>
+  <string name="choose_toot">トゥートを選択</string>
   <string name="choose_accounts">アカウントを選択</string>
-  <string name="select_accounts">いくつかのアカウントを選択</string>
+  <string name="select_accounts">複数のアカウントを選択</string>
   <string name="remove_draft">下書きを削除しますか？</string>
-  <string name="show_reply">ボタンをクリックすると元の文字が表示されます</string>
-  <string name="upload_form_description">視覚障害者の説明</string>
+  <string name="show_reply">ボタンをクリックすると元のトゥートが表示されます</string>
+  <string name="upload_form_description">視覚障害者のための説明</string>
   <!-- Instance -->
   <string name="instance_no_description">説明はありません！</string>
   <!-- About -->
-  <string name="about_vesrion">％1 $ sを解放する</string>
+  <string name="about_vesrion">リリース %1$s</string>
   <string name="about_developer">開発者：</string>
   <string name="about_license">ライセンス： </string>
   <string name="about_license_action">GNU GPL V3</string>
   <string name="about_code">ソースコード： </string>
   <string name="about_yandex">トートの翻訳：</string>
-  <string name="about_thekinrar">検索インスタンス：</string>
-  <string name="about_thekinrar_action">インスタンスの社会</string>
+  <string name="about_thekinrar">インスタンスを検索：</string>
+  <string name="about_thekinrar_action">instances.social</string>
   <string name="thanks_text_logo">アイコンデザイナー：</string>
   <!-- Conversation -->
   <string name="conversation">会話</string>
   <!-- Accounts -->
   <string name="no_accounts">表示するアカウントがありません</string>
   <string name="no_follow_request">フォローリクエストはありません</string>
-  <string name="status_cnt">トゥーツ \n %1$s</string>
-  <string name="following_cnt">次の \n %1$s</string>
+  <string name="status_cnt">トゥート \n %1$s</string>
+  <string name="following_cnt">フォロー中 \n %1$s</string>
   <string name="followers_cnt">フォロワー\n %1$s</string>
-  <string name="pins_cnt">ピン\ n％d</string>
+  <string name="pins_cnt">ピン留め \n %d</string>
   <string name="authorize">承認する</string>
   <string name="reject">拒否</string>
   <!-- Scheduled toots -->
-  <string name="no_scheduled_toots">予定されていません表示するために！</string>
-  <string name="no_scheduled_toots_indications">メッセージを書き、トップメニューから[<b>スケジュール</b>] を選択します。</string>
-  <string name="remove_scheduled">予定吹き出しを削除しますか？</string>
+  <string name="no_scheduled_toots">スケジュールトゥートはありません！</string>
+  <string name="no_scheduled_toots_indications">トゥートを書き、トップメニューから <b>スケジュール</b> を選択します。</string>
+  <string name="remove_scheduled">スケジュールトゥートを削除しますか？</string>
   <string name="media_count">メディア：%d</string>
   <string name="toot_scheduled">トゥイットが予定されている！</string>
-  <string name="toot_scheduled_date">スケジュールされた日付は現在の時間より大きくなければなりません！</string>
+  <string name="toot_scheduled_date">スケジュールされた日付は現在の時間より後でなければなりません！</string>
   <string name="warning_battery">バッテリーセーバーが有効になっています！ 期待どおりに動作しない可能性があります。</string>
   <!-- Notifications -->
-  <string name="no_notifications">表示する通知なし</string>
-  <string name="notif_mention">あなたに言及した</string>
-  <string name="notif_reblog">あなたのステータスを後押ししました</string>
-  <string name="notif_favourite">あなたのステータスを好きになった</string>
+  <string name="no_notifications">通知はありません</string>
+  <string name="notif_mention">あなたにメンションしました</string>
+  <string name="notif_reblog">あなたのトゥートをブーストしました</string>
+  <string name="notif_favourite">あなたのトゥートをお気に入りに登録しました</string>
   <string name="notif_follow">あなたに続いた</string>
-  <string name="notif_pouet">%1$s の新着</string>
+  <string name="notif_pouet">%1$s からの新しいトゥート</string>
   <plurals name="other_notifications">
     <item quantity="other">別の通知</item>
   </plurals>
@@ -225,45 +225,45 @@
   <string name="delete_notification">通知は削除されました！</string>
   <string name="delete_notification_all">すべての通知が削除されました！</string>
   <!-- HEADER -->
-  <string name="following">以下</string>
+  <string name="following">フォロー中</string>
   <string name="followers">フォロワー</string>
-  <string name="pinned_toots">固定</string>
+  <string name="pinned_toots">ピン留め</string>
   <!-- TOAST -->
   <string name="client_error">クライアントIDを取得できませんでした。</string>
-  <string name="no_internet">インターネットに接続できません！</string>
+  <string name="no_internet">インターネット接続がありません！</string>
   <string name="toast_block">アカウントがブロックされました！</string>
   <string name="toast_unblock">アカウントはもはやブロックされていません！</string>
   <string name="toast_mute">アカウントはミュートされました。</string>
   <string name="toast_unmute">アカウントはもはやミュートされません！</string>
-  <string name="toast_follow">口座は続いた！</string>
+  <string name="toast_follow">アカウントがフォローされました！</string>
   <string name="toast_unfollow">アカウントはもはや追跡されません！</string>
-  <string name="toast_reblog">トゥーは増強されました！</string>
+  <string name="toast_reblog">トゥートがブーストされました！</string>
   <string name="toast_unreblog">トートはもはや後押しされていません！</string>
-  <string name="toast_favourite">あなたのお気に入りにトゥーツが追加されました！</string>
-  <string name="toast_unfavourite">あなたのお気に入りからトゥーツが削除されました！</string>
-  <string name="toast_report">トゥートが報告された！</string>
-  <string name="toast_unstatus">トゥイットが削除されました！</string>
-  <string name="toast_pin">トゥーがピン止めされました！</string>
-  <string name="toast_unpin">トゥイットは固定解除されました！</string>
-  <string name="toast_error">おっとっと ！ エラーが発生しました！</string>
-  <string name="toast_code_error">エラーが発生しました！ インスタンスは認証コードを返しませんでした!</string>
-  <string name="toast_error_instance">インスタンスドメインが有効ではないようです！</string>
+  <string name="toast_favourite">お気に入りにトゥートが追加されました！</string>
+  <string name="toast_unfavourite">お気に入りからトゥートが削除されました！</string>
+  <string name="toast_report">トゥートが報告されました！</string>
+  <string name="toast_unstatus">トゥートが削除されました！</string>
+  <string name="toast_pin">トゥートがピン留めされました！</string>
+  <string name="toast_unpin">トゥートはピン留めを解除されました！</string>
+  <string name="toast_error">エラーが発生しました！</string>
+  <string name="toast_code_error">エラーが発生しました！ インスタンスは認証コードを返しませんでした！</string>
+  <string name="toast_error_instance">インスタンスのドメインが有効ではないようです！</string>
   <string name="toast_error_loading_account">アカウントの切り替え中にエラーが発生しました。</string>
   <string name="toast_error_search">検索中にエラーが発生しました。</string>
-  <string name="toast_error_login">ログインできませんか！</string>
-  <string name="toast_update_credential_ok">プロファイルデータが保存されました！</string>
+  <string name="toast_error_login">ログインできません！</string>
+  <string name="toast_update_credential_ok">プロフィールデータが保存されました！</string>
   <string name="nothing_to_do">何もすることはできません</string>
   <string name="toast_saved">メディアが保存されました！</string>
-  <string name="toast_error_translate">検索中にエラーが発生しました!</string>
-  <string name="toast_toot_saved">ドラフトが保存されました！</string>
-  <string name="toast_error_char_limit">このインスタンスがこの数の文字を許可していますか？ 通常、この値は500文字に近いです。</string>
-  <string name="toast_visibility_changed">%1$s アカウントのトゥイットの表示が変更されました</string>
-  <string name="toast_empty_search">インスタンス名と画面名は空白にすることはできません。</string>
+  <string name="toast_error_translate">翻訳中にエラーが発生しました！</string>
+  <string name="toast_toot_saved">下書きが保存されました！</string>
+  <string name="toast_error_char_limit">インスタンスはこの文字数を許可していますか？ 通常、この値は500文字程度です。</string>
+  <string name="toast_visibility_changed">アカウント %1$s のトゥートの公開範囲が変更されました</string>
+  <string name="toast_empty_search">インスタンス名と表示名を空白にすることはできません。</string>
   <!-- Settings -->
-  <string name="settings_title_optimisation">負荷の最適化</string>
-  <string name="set_toots_page">負荷あたりのトウの数</string>
-  <string name="set_accounts_page">負荷あたりのアカウント数</string>
-  <string name="set_notifications_page">負荷あたりの通知数</string>
+  <string name="settings_title_optimisation">読み込みの最適化</string>
+  <string name="set_toots_page">読み込みあたりのトゥート数</string>
+  <string name="set_accounts_page">読み込みあたりのアカウント数</string>
+  <string name="set_notifications_page">読み込みあたりの通知の数</string>
   <string name="set_attachment_always">常に</string>
   <string name="set_attachment_wifi">Wi-Fi</string>
   <string name="set_attachment_ask">尋ねる</string>
@@ -409,4 +409,6 @@
   <string name="action_lists_title_placeholder">新しいリストのタイトル</string>
   <string name="action_lists_search_users">あなたが従う人々の中から検索する</string>
   <string name="action_lists_owner">あなたのリスト</string>
+  <!-- Migration -->
+  <string name="account_moved_to">%1$s has moved to %2$s</string>
 </resources>

@@ -433,4 +433,6 @@
   <string name="action_lists_title_placeholder">New list title</string>
   <string name="action_lists_search_users">Search among people you follow</string>
   <string name="action_lists_owner">Your lists</string>
+  <!-- Migration -->
+  <string name="account_moved_to">%1$s has moved to %2$s</string>
 </resources>
