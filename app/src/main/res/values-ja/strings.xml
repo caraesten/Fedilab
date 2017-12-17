@@ -152,27 +152,27 @@
   <string name="toot_it">トゥート！</string>
   <string name="cw">cw</string>
   <string name="toot_title">トゥートを書く</string>
-  <string name="toot_title_reply">トゥースに返信する</string>
-  <string name="toot_no_space">あなたは500文字に達しました！</string>
+  <string name="toot_title_reply">トゥートに返信</string>
+  <string name="toot_no_space">500文字の制限に達しました！</string>
   <string name="toot_select_image">メディアを選択</string>
   <string name="toot_select_image_error">メディアの選択中にエラーが発生しました。</string>
   <string name="toot_delete_media">このメディアを削除しますか？</string>
-  <string name="toot_error_no_content">あなたのおしゃべりは空です！</string>
-  <string name="toot_visibility_tilte">トゥースの視認性</string>
-  <string name="toots_visibility_tilte">既定ではトートの可視性： </string>
-  <string name="toot_sent">トゥーメールが送られました！</string>
-  <string name="toot_reply_content_title">あなたはこの歯に返信しています：</string>
+  <string name="toot_error_no_content">あなたのトゥートは空です！</string>
+  <string name="toot_visibility_tilte">トゥートの公開範囲</string>
+  <string name="toots_visibility_tilte">トゥートの既定の公開範囲: </string>
+  <string name="toot_sent">トゥートが送信されました！</string>
+  <string name="toot_reply_content_title">このトゥートに返信中です：</string>
   <string name="toot_sensitive">敏感なコンテンツ？</string>
   <string-array name="toot_visibility">
     <item>公開タイムラインに投稿</item>
     <item>公開タイムラインに投稿しない</item>
     <item>フォロワーへの投稿のみ</item>
-    <item>上記のユーザーにのみ投稿</item>
+    <item>メンションしたユーザーにのみ投稿</item>
   </string-array>
-  <string name="no_draft">ドラフトなし！</string>
-  <string name="choose_toot">口を選ぶ</string>
+  <string name="no_draft">下書きはありません！</string>
+  <string name="choose_toot">トゥートを選択</string>
   <string name="choose_accounts">アカウントを選択</string>
-  <string name="select_accounts">いくつかのアカウントを選択</string>
+  <string name="select_accounts">複数のアカウントを選択</string>
   <string name="remove_draft">下書きを削除しますか？</string>
   <string name="show_reply">ボタンをクリックすると元の文字が表示されます</string>
   <string name="upload_form_description">視覚障害者の説明</string>
