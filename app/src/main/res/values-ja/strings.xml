@@ -174,35 +174,35 @@
   <string name="choose_accounts">アカウントを選択</string>
   <string name="select_accounts">複数のアカウントを選択</string>
   <string name="remove_draft">下書きを削除しますか？</string>
-  <string name="show_reply">ボタンをクリックすると元の文字が表示されます</string>
-  <string name="upload_form_description">視覚障害者の説明</string>
+  <string name="show_reply">ボタンをクリックすると元のトゥートが表示されます</string>
+  <string name="upload_form_description">視覚障害者のための説明</string>
   <!-- Instance -->
   <string name="instance_no_description">説明はありません！</string>
   <!-- About -->
-  <string name="about_vesrion">％1 $ sを解放する</string>
+  <string name="about_vesrion">リリース %1$s</string>
   <string name="about_developer">開発者：</string>
   <string name="about_license">ライセンス： </string>
   <string name="about_license_action">GNU GPL V3</string>
   <string name="about_code">ソースコード： </string>
   <string name="about_yandex">トートの翻訳：</string>
-  <string name="about_thekinrar">検索インスタンス：</string>
-  <string name="about_thekinrar_action">インスタンスの社会</string>
+  <string name="about_thekinrar">インスタンスを検索：</string>
+  <string name="about_thekinrar_action">instances.social</string>
   <string name="thanks_text_logo">アイコンデザイナー：</string>
   <!-- Conversation -->
   <string name="conversation">会話</string>
   <!-- Accounts -->
   <string name="no_accounts">表示するアカウントがありません</string>
   <string name="no_follow_request">フォローリクエストはありません</string>
-  <string name="status_cnt">トゥーツ \n %1$s</string>
-  <string name="following_cnt">次の \n %1$s</string>
+  <string name="status_cnt">トゥート \n %1$s</string>
+  <string name="following_cnt">フォロー中 \n %1$s</string>
   <string name="followers_cnt">フォロワー\n %1$s</string>
-  <string name="pins_cnt">ピン\ n％d</string>
+  <string name="pins_cnt">ピン留め \n %d</string>
   <string name="authorize">承認する</string>
   <string name="reject">拒否</string>
   <!-- Scheduled toots -->
-  <string name="no_scheduled_toots">予定されていません表示するために！</string>
-  <string name="no_scheduled_toots_indications">メッセージを書き、トップメニューから[<b>スケジュール</b>] を選択します。</string>
-  <string name="remove_scheduled">予定吹き出しを削除しますか？</string>
+  <string name="no_scheduled_toots">スケジュールトゥートはありません！</string>
+  <string name="no_scheduled_toots_indications">トゥートを書き、トップメニューから <b>スケジュール</b> を選択します。</string>
+  <string name="remove_scheduled">スケジュールトゥートを削除しますか？</string>
   <string name="media_count">メディア：%d</string>
   <string name="toot_scheduled">トゥイットが予定されている！</string>
   <string name="toot_scheduled_date">スケジュールされた日付は現在の時間より大きくなければなりません！</string>
