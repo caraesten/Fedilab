@@ -1736,6 +1736,7 @@ public class API {
      * @param resobj JSONObject
      * @return Account
      */
+    @SuppressWarnings("InfiniteRecursion")
     private static Account parseAccountResponse(Context context, JSONObject resobj){
 
         Account account = new Account();
@@ -1750,6 +1751,9 @@ public class API {
             account.setFollowing_count(Integer.valueOf(resobj.get("following_count").toString()));
             account.setStatuses_count(Integer.valueOf(resobj.get("statuses_count").toString()));
             account.setNote(resobj.get("note").toString());
+            try{
+                account.setMoved_to_account(parseAccountResponse(context, resobj.getJSONObject("moved_to_account")));
+            }catch (Exception ignored){}
             account.setUrl(resobj.get("url").toString());
             account.setAvatar(resobj.get("avatar").toString());
             account.setAvatar_static(resobj.get("avatar_static").toString());
