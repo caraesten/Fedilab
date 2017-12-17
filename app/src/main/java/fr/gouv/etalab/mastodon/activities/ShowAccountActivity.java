@@ -511,6 +511,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             //Retrieves content and make account names clickable
             SpannableString spannableString = account.moveToText(ShowAccountActivity.this);
             account_moved.setText(spannableString, TextView.BufferType.SPANNABLE);
+            account_moved.setMovementMethod(LinkMovementMethod.getInstance());
         }
 
         if( account.getAcct().contains("@") )
