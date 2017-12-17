@@ -61,6 +61,7 @@ public class ManageAccountsInListActivity extends BaseActivity implements OnList
     private java.util.List<Account> accounts;
     private AccountsInAListAdapter accountsInAListAdapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

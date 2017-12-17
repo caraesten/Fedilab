@@ -84,7 +84,6 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
-import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
@@ -117,7 +116,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private final int DISPLAYED_STATUS = 1;
     private List<Status> pins;
     private int conversationPosition;
-    private String bookmark = null;
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
         super();
@@ -131,9 +129,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.targetedId = targetedId;
         this.translator = translator;
         pins = new ArrayList<>();
-        if( context instanceof BaseMainActivity){
-            bookmark = ((BaseMainActivity) context).getBookmark();
-        }
     }
 
     public StatusListAdapter(Context context, int position, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
@@ -148,9 +143,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.targetedId = targetedId;
         this.translator = translator;
         pins = new ArrayList<>();
-        if( context instanceof BaseMainActivity){
-            bookmark = ((BaseMainActivity) context).getBookmark();
-        }
     }
 
     @Override

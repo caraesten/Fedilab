@@ -45,12 +45,10 @@ public class EmojisSearchAdapter extends ArrayAdapter<Emojis> implements Filtera
 
     private List<Emojis> emojis, tempEmojis, suggestions ;
     private LayoutInflater layoutInflater;
-    private Context context;
 
     public EmojisSearchAdapter(Context context, List<Emojis> emojis){
         super(context, android.R.layout.simple_list_item_1, emojis);
         this.emojis = emojis;
-        this.context = context;
         this.tempEmojis = new ArrayList<>(emojis);
         this.suggestions = new ArrayList<>(emojis);
         layoutInflater = LayoutInflater.from(context);

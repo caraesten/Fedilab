@@ -136,10 +136,12 @@ public class SearchListAdapter extends BaseAdapter {
             final float scale = context.getResources().getDisplayMetrics().density;
             if( !status.getIn_reply_to_account_id().equals("null") || !status.getIn_reply_to_id().equals("null") ){
                 Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_reply);
+                assert img != null;
                 img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (15 * scale + 0.5f));
                 holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
             }else if( status.getReblog() != null){
                 Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
+                assert img != null;
                 img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (15 * scale + 0.5f));
                 holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
             }else{

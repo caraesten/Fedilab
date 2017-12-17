@@ -37,7 +37,6 @@ import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -100,11 +99,11 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.drawer_account_search, parent, false);
             holder = new ViewHolder();
-            holder.account_pp = (ImageView) convertView.findViewById(R.id.account_pp);
-            holder.account_dn = (TextView) convertView.findViewById(R.id.account_dn);
-            holder.account_un = (TextView) convertView.findViewById(R.id.account_un);
+            holder.account_pp = convertView.findViewById(R.id.account_pp);
+            holder.account_dn = convertView.findViewById(R.id.account_dn);
+            holder.account_un = convertView.findViewById(R.id.account_un);
 
-            holder.account_container = (LinearLayout) convertView.findViewById(R.id.account_container);
+            holder.account_container = convertView.findViewById(R.id.account_container);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();

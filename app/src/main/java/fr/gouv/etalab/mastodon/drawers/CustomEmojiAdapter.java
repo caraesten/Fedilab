@@ -43,13 +43,11 @@ public class CustomEmojiAdapter extends ArrayAdapter {
 
     private Context context;
     private List<Emojis> emojis;
-    private CustomEmojiAdapter customEmojiAdapter;
 
     public CustomEmojiAdapter(@NonNull Context context, int resource, List<Emojis> emojis) {
         super(context, resource, resource);
         this.context = context;
         this.emojis = emojis;
-        customEmojiAdapter = this;
     }
 
     @Override
