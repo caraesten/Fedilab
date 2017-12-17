@@ -125,7 +125,7 @@
     <item>このトゥートを削除しますか？</item>
   </string-array>
   <plurals name="preview_replies">
-    <item quantity="other">%d 回复</item>
+    <item quantity="other">%d が返信</item>
   </plurals>
   <!-- Date -->
   <plurals name="date_seconds">
@@ -161,8 +161,8 @@
   <string name="toot_visibility_tilte">トゥートの公開範囲</string>
   <string name="toots_visibility_tilte">トゥートの既定の公開範囲: </string>
   <string name="toot_sent">トゥートが送信されました！</string>
-  <string name="toot_reply_content_title">このトゥートに返信中です：</string>
-  <string name="toot_sensitive">敏感なコンテンツ？</string>
+  <string name="toot_reply_content_title">このトゥートに返信中：</string>
+  <string name="toot_sensitive">閲覧に注意を要するコンテンツ？</string>
   <string-array name="toot_visibility">
     <item>公開タイムラインに投稿</item>
     <item>公開タイムラインに投稿しない</item>
@@ -270,7 +270,7 @@
   <string name="set_attachment_action">メディアをロードする</string>
   <string name="load_attachment">写真をロードする</string>
   <string name="load_attachment_spoiler">さらに表示…</string>
-  <string name="load_sensitive_attachment">機密性の高いコンテンツ</string>
+  <string name="load_sensitive_attachment">閲覧に注意を要するコンテンツ</string>
   <string name="set_display_reply">応答に前のメッセージを表示する</string>
   <string name="set_display_local">ローカルタイムラインを表示</string>
   <string name="set_display_global">連合タイムラインを表示</string>
