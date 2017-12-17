@@ -24,6 +24,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.util.Linkify;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,7 +81,7 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         final AccountsListAdapter.ViewHolder holder = (AccountsListAdapter.ViewHolder) viewHolder;
         final Account account = accounts.get(position);
 
@@ -114,22 +115,24 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
             holder.account_follow.setVisibility(View.VISIBLE);
             holder.account_follow_request.setVisibility(View.GONE);
         }else if( account.getFollowType() == Account.followAction.MUTE){
+
             if(account.isMuting_notifications())
                 holder.account_mute_notification.setImageResource(R.drawable.ic_notifications_active);
             else
                 holder.account_mute_notification.setImageResource(R.drawable.ic_notifications_off);
+
             holder.account_mute_notification.setVisibility(View.VISIBLE);
-            holder.account_follow.setImageResource(R.drawable.ic_volume_mute);
+            holder.account_follow.setImageResource(R.drawable.ic_volume_up);
             doAction = API.StatusAction.UNMUTE;
             holder.account_follow.setVisibility(View.VISIBLE);
             holder.account_follow_request.setVisibility(View.GONE);
-
+            final int positionFinal = position;
             holder.account_mute_notification.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     account.setMuting_notifications(!account.isMuting_notifications());
-                    new PostActionAsyncTask(context, API.StatusAction.MUTE_NOTIFICATIONS, targetedId, account.isMuting_notifications(), AccountsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    accountsListAdapter.notifyItemChanged(position);
+                    new PostActionAsyncTask(context, API.StatusAction.MUTE_NOTIFICATIONS, account.getId(), account.isMuting_notifications(), AccountsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    accountsListAdapter.notifyItemChanged(positionFinal);
                 }
             });
         }

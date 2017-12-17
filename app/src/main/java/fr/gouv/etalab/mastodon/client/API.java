@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -741,15 +742,17 @@ public class API {
     public int muteNotifications(String targetedId, boolean muteNotifications){
 
         HashMap<String, String> params = new HashMap<>();
-        params.put("muting_notifications", Boolean.toString(muteNotifications));
+        params.put("notifications", Boolean.toString(muteNotifications));
         try {
             HttpsConnection httpsConnection = new HttpsConnection();
             httpsConnection.post(getAbsoluteUrl(String.format("/accounts/%s/mute", targetedId)), 60, params, prefKeyOauthTokenT);
             actionCode = httpsConnection.getActionCode();
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
+            e.printStackTrace();
         }catch (Exception e) {
             setDefaultError();
+            e.printStackTrace();
         }
         return actionCode;
     }
@@ -1775,7 +1778,7 @@ public class API {
             account.setNote(resobj.get("note").toString());
             try{
                 account.setMoved_to_account(parseAccountResponse(context, resobj.getJSONObject("moved")));
-            }catch (Exception ignored){ignored.printStackTrace();}
+            }catch (Exception ignored){account.setMoved_to_account(null);}
             account.setUrl(resobj.get("url").toString());
             account.setAvatar(resobj.get("avatar").toString());
             account.setAvatar_static(resobj.get("avatar_static").toString());

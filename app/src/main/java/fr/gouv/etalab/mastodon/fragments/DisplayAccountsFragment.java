@@ -224,8 +224,8 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
                         account.setFollowType(Account.followAction.NOTHING);
                         continue;
                     }
-                    account.setMuting_notifications(relationship.isMuting_notifications());
                     if( account.getId().equals(relationship.getId())){
+                        account.setMuting_notifications(relationship.isMuting_notifications());
                         if( relationship.isFollowing())
                             account.setFollowType(Account.followAction.FOLLOW);
                         else
