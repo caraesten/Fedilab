@@ -91,19 +91,19 @@
   <string name="choose_file_error">ファイルエクスプローラが見つかりません！</string>
   <string name="click_to_change">パスをクリックして変更します</string>
   <string name="failed">失敗！</string>
-  <string name="scheduled_toots">予定された吹き出し</string>
+  <string name="scheduled_toots">スケジュールトゥート</string>
   <string name="disclaimer_full">以下の情報は、ユーザーのプロファイルが不完全である場合があります。</string>
   <string name="insert_emoji">絵文字を挿入</string>
   <string name="no_emoji">アプリはしなかったしばらくカスタム絵文字を収集することはありません。</string>
   <string name="live_notif">ライブ通知</string>
   <!-- Status -->
-  <string name="no_status">表示しない</string>
+  <string name="no_status">トゥートがありません</string>
   <string name="fav_added">トゥートがお気に入りに追加されました</string>
-  <string name="fav_removed">トゥーはお気に入りから削除されました！</string>
-  <string name="reblog_added">トゥーは増強されました！</string>
+  <string name="fav_removed">トゥートはお気に入りから削除されました！</string>
+  <string name="reblog_added">トゥートがブーストされました！</string>
   <string name="reblog_removed">トートはもはや後押しされていません！</string>
-  <string name="reblog_by">%1$s でブーストされました</string>
-  <string name="favourite_add">この写真をお気に入りに追加しますか？</string>
+  <string name="reblog_by">%1$s にブーストされました</string>
+  <string name="favourite_add">このトゥートをお気に入りに追加しますか？</string>
   <string name="favourite_remove">从你的收藏夹中去掉这个toot？</string>
   <string name="reblog_add">この爆弾を押し上げる？</string>
   <string name="reblog_remove">この鼓動を解除しますか？</string>
@@ -409,4 +409,6 @@
   <string name="action_lists_title_placeholder">新しいリストのタイトル</string>
   <string name="action_lists_search_users">あなたが従う人々の中から検索する</string>
   <string name="action_lists_owner">あなたのリスト</string>
+  <!-- Migration -->
+  <string name="account_moved_to">%1$s has moved to %2$s</string>
 </resources>
