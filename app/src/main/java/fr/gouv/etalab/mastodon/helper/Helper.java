@@ -28,6 +28,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AlertDialog;
 import android.app.DownloadManager;
@@ -1742,6 +1743,14 @@ public class Helper {
     public static void loadGiF(final Context context, String url, final ImageView imageView){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean disableGif = sharedpreferences.getBoolean(SET_DISABLE_GIF, false);
+
+        if (context instanceof FragmentActivity) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && ((FragmentActivity) context).isDestroyed())
+            {
+                return;
+            }
+        }
 
         if( !disableGif)
             Glide.with(imageView.getContext())
