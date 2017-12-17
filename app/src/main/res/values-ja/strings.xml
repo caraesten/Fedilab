@@ -380,32 +380,32 @@
         <b>&#9888; これらの操作は、ユーザーが要求したときにのみ実行されます。</b>    </string>
   <string name="privacy_API_title">トラッキングとライブラリ</string>
   <string name="privacy_API">
-アプリケーションは<b>トラッキングツールを使用していません</b>（オーディエンス測定、エラー報告など）。広告は含まれていません。\n\n
-         ライブラリの使用は最小限に抑えられます：\n
-         - <b>滑り</b>：メディアを管理する\n
-         - <b> Android-Job </b>：サービスを管理するには\n
-         - <b> PhotoView </b>：画像を管理する\n    </string>
-  <string name="privacy_API_yandex_title">トゥーツの翻訳</string>
+        アプリケーションは<b>トラッキングツールを使用していません</b>（オーディエンス測定、エラー報告など）。広告は含まれていません。\n\n
+        ライブラリの使用は最小限です：\n
+        - <b>Glide</b>: メディアの管理\n
+        - <b>Android-Job</b>: サービスの管理\n
+        - <b>PhotoView</b>: 画像の管理\n    </string>
+  <string name="privacy_API_yandex_title">トゥートの翻訳</string>
   <string name="privacy_API_yandex_authorizations">
-このアプリケーションは、デバイスのロケールとYandex APIを使用して壷を変換する機能を提供します。\ n
-         Yandexは適切なプライバシーポリシーを持っています。https://yandex.ru/legal/confidential/?lang=ja    </string>
+        このアプリケーションは、デバイスのロケールとYandex APIを使用してトゥートを翻訳する機能を提供します。\n
+        Yandexは適切なプライバシーポリシーを持っています: https://yandex.ru/legal/confidential/?lang=ja    </string>
   <string name="thanks_text">
-ロゴはStéphaneにありがとうございました。    </string>
+        ロゴについて、Stéphaneに感謝します。    </string>
   <string name="thanks_text_dev">
-ありがとうございました：    </string>
+        感謝：    </string>
   <string name="filter_regex">正規表現でフィルタする</string>
-  <string name="search">サーチ</string>
+  <string name="search">検索</string>
   <string name="delete">削除</string>
-  <string name="fetch_more_toots">もっとたくさんのツイートを取得する…</string>
+  <string name="fetch_more_toots">さらにトゥートを取得する…</string>
   <!-- About lists -->
   <string name="action_lists">リスト</string>
   <string name="action_lists_confirm_delete">このリストを完全に削除してもよろしいですか？</string>
   <string name="action_lists_empty_content">このリストにはまだ何もありません。 このリストのメンバーが新しいステータスを投稿すると、ここに表示されます。</string>
-  <string name="action_lists_add_to">リストに追加する</string>
-  <string name="action_lists_remove_from">リストから削除する</string>
+  <string name="action_lists_add_to">リストに追加</string>
+  <string name="action_lists_remove_from">リストから削除</string>
   <string name="action_lists_create">リストを追加</string>
-  <string name="action_lists_delete">リストを削除する</string>
-  <string name="action_lists_update">リストを編集する</string>
+  <string name="action_lists_delete">リストを削除</string>
+  <string name="action_lists_update">リストを編集</string>
   <string name="action_lists_title_placeholder">新しいリストのタイトル</string>
   <string name="action_lists_search_users">あなたが従う人々の中から検索する</string>
   <string name="action_lists_owner">あなたのリスト</string>
