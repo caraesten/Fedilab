@@ -1,23 +1,23 @@
 package fr.gouv.etalab.mastodon.services;
 
+import android.annotation.SuppressLint;
 import android.app.IntentService;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 
-import org.conscrypt.Conscrypt;
 
-import java.security.Security;
+import fr.gouv.etalab.mastodon.helper.Helper;
 
 /**
  * Created by Thomas on 13/12/2017.
+ * BaseService class to install provider
  */
 
+@SuppressLint("Registered")
 public class BaseService extends IntentService {
 
     static {
-        Security.insertProviderAt(Conscrypt.newProvider("GmsCore_OpenSSL"), 2);
-        Security.addProvider(Conscrypt.newProvider());
-
+        Helper.installProvider();
     }
 
     public BaseService(String name) {

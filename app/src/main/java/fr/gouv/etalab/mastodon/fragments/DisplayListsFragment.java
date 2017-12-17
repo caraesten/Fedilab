@@ -48,9 +48,6 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.drawers.ListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnListActionInterface;
-import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
-
-import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
 /**
@@ -65,8 +62,6 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
     private List<fr.gouv.etalab.mastodon.client.Entities.List> lists;
     private TextView no_action_text;
     private RelativeLayout mainLoader;
-    private ListView lv_lists;
-    private RelativeLayout textviewNoAction;
     private FloatingActionButton add_new;
     private ListAdapter listAdapter;
 
@@ -80,8 +75,8 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
         lists = new ArrayList<>();
 
 
-        lv_lists = rootView.findViewById(R.id.lv_lists);
-        textviewNoAction = rootView.findViewById(R.id.no_action);
+        ListView lv_lists = rootView.findViewById(R.id.lv_lists);
+        RelativeLayout textviewNoAction = rootView.findViewById(R.id.no_action);
         no_action_text = rootView.findViewById(R.id.no_action_text);
         mainLoader = rootView.findViewById(R.id.loader);
         RelativeLayout nextElementLoader = rootView.findViewById(R.id.loading_next_items);

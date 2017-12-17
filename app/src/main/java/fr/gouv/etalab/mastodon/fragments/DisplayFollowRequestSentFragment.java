@@ -18,6 +18,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
@@ -62,7 +63,7 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
     private boolean swiped;
     private RecyclerView lv_accounts;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         //View for fragment is the same that fragment accounts
         View rootView = inflater.inflate(R.layout.fragment_accounts, container, false);

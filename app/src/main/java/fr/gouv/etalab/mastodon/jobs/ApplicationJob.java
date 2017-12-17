@@ -13,6 +13,8 @@ package fr.gouv.etalab.mastodon.jobs;
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
+import android.support.annotation.NonNull;
+
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobCreator;
 import com.evernote.android.job.JobManager;
@@ -24,7 +26,7 @@ import com.evernote.android.job.JobManager;
 
 public class ApplicationJob implements JobCreator {
     @Override
-    public Job create(String tag) {
+    public Job create(@NonNull String tag) {
         switch (tag) {
             case NotificationsSyncJob.NOTIFICATION_REFRESH:
                 return new NotificationsSyncJob();

@@ -35,10 +35,6 @@ import com.evernote.android.job.Job;
 import com.evernote.android.job.JobManager;
 import com.evernote.android.job.JobRequest;
 
-import org.conscrypt.Conscrypt;
-
-import java.security.Provider;
-import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;

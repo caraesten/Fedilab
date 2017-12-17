@@ -13,7 +13,7 @@ package fr.gouv.etalab.mastodon.services;
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
-import android.app.IntentService;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;

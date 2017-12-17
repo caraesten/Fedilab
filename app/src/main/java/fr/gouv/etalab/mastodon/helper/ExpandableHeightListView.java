@@ -57,7 +57,7 @@ public class ExpandableHeightListView extends ListView
         }
     }
 
-    public void setExpanded(boolean expanded)
+    public void setExpanded(@SuppressWarnings("SameParameterValue") boolean expanded)
     {
         this.expanded = expanded;
     }
