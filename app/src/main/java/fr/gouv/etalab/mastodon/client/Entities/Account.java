@@ -111,7 +111,6 @@ public class Account implements Parcelable {
         acct = in.readString();
         display_name = in.readString();
         locked = in.readByte() != 0;
-        moved_to_account = in.readParcelable(Account.class.getClassLoader());
         followers_count = in.readInt();
         following_count = in.readInt();
         statuses_count = in.readInt();
@@ -286,7 +285,6 @@ public class Account implements Parcelable {
         dest.writeString(username);
         dest.writeString(acct);
         dest.writeString(display_name);
-        dest.writeParcelable(moved_to_account, flags);
         dest.writeByte((byte) (locked ? 1 : 0));
         dest.writeInt(followers_count);
         dest.writeInt(following_count);
