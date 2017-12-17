@@ -17,10 +17,12 @@ public class Version implements Comparable<Version> {
 
     public Version(String version) {
         if(version == null)
-            version = "2.0";
+            version = "2.1";
+        if( version.endsWith("."))
+            version = version.substring(0, version.length() - 1);
         version = version.replaceAll("[^\\d.]", "");
         if(!version.matches("[0-9]+(\\.[0-9]+)*"))
-            version = "2.0";
+            version = "2.1";
         this.version = version;
     }
 

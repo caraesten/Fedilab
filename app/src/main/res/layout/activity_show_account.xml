@@ -120,14 +120,15 @@
                         android:gravity="center"
                         android:orientation="horizontal"
                         android:layout_height="wrap_content"
-                        >
+                        android:baselineAligned="false">
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:orientation="vertical"
                             android:layout_gravity="center_horizontal"
                             android:gravity="center_horizontal"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            tools:ignore="UselessParent">
                             <TextView
                                 android:id="@+id/account_dn"
                                 android:textColor="@color/mastodonC4"
@@ -150,7 +151,6 @@
                                     android:textSize="14sp"
                                     android:layout_height="wrap_content"
                                     />
-
                             </LinearLayout>
 
                             <LinearLayout
@@ -183,6 +183,16 @@
                                     android:layout_height="wrap_content"
                                     />
                             </LinearLayout>
+                            <TextView
+                                android:layout_marginTop="5dp"
+                                android:textSize="16sp"
+                                android:visibility="gone"
+                                android:drawablePadding="4dp"
+                                android:id="@+id/account_moved"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
                         </LinearLayout>
 
                     </LinearLayout>

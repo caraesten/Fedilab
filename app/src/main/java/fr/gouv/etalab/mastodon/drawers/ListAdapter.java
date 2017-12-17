@@ -19,8 +19,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -94,6 +96,7 @@ public class ListAdapter extends BaseAdapter implements OnListActionInterface {
         }
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+
         if( theme == Helper.THEME_LIGHT){
             holder.search_container.setBackgroundResource(R.color.mastodonC3__);
             changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right,R.color.black);
@@ -101,7 +104,13 @@ public class ListAdapter extends BaseAdapter implements OnListActionInterface {
             holder.search_container.setBackgroundResource(R.color.mastodonC1_);
             changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right,R.color.dark_text);
         }
+        Drawable next = ContextCompat.getDrawable(context, R.drawable.ic_keyboard_arrow_right);
         holder.search_title.setText(list.getTitle());
+        assert next != null;
+        final float scale = context.getResources().getDisplayMetrics().density;
+        next.setBounds(0,0,(int) (30  * scale + 0.5f),(int) (30  * scale + 0.5f));
+        holder.search_title.setCompoundDrawables(null, null, next, null);
+
         holder.search_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

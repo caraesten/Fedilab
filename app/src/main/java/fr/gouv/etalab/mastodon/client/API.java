@@ -134,18 +134,36 @@ public class API {
 
         HashMap<String, String> requestParams = new HashMap<>();
         if( display_name != null)
-            requestParams.put("display_name",display_name);
+            try {
+                requestParams.put("display_name",URLEncoder.encode(display_name, "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                requestParams.put("display_name",display_name);
+            }
         if( note != null)
-            requestParams.put("note",note);
+            try {
+                requestParams.put("note",URLEncoder.encode(note, "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                requestParams.put("note",note);
+            }
         if( avatar != null)
-            requestParams.put("avatar",avatar);
+            try {
+                requestParams.put("avatar",URLEncoder.encode(avatar, "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                requestParams.put("avatar",avatar);
+            }
         if( header != null)
-            requestParams.put("header",header);
+            try {
+                requestParams.put("header",URLEncoder.encode(header, "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                requestParams.put("header",header);
+            }
         try {
             new HttpsConnection().patch(getAbsoluteUrl("/accounts/update_credentials"), 60, requestParams, prefKeyOauthTokenT);
         } catch (HttpsConnection.HttpsConnectionException e) {
+            e.printStackTrace();
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
+            e.printStackTrace();
             setDefaultError();
         }
         return apiResponse;
@@ -1718,6 +1736,7 @@ public class API {
      * @param resobj JSONObject
      * @return Account
      */
+    @SuppressWarnings("InfiniteRecursion")
     private static Account parseAccountResponse(Context context, JSONObject resobj){
 
         Account account = new Account();
@@ -1732,6 +1751,9 @@ public class API {
             account.setFollowing_count(Integer.valueOf(resobj.get("following_count").toString()));
             account.setStatuses_count(Integer.valueOf(resobj.get("statuses_count").toString()));
             account.setNote(resobj.get("note").toString());
+            try{
+                account.setMoved_to_account(parseAccountResponse(context, resobj.getJSONObject("moved")));
+            }catch (Exception ignored){ignored.printStackTrace();}
             account.setUrl(resobj.get("url").toString());
             account.setAvatar(resobj.get("avatar").toString());
             account.setAvatar_static(resobj.get("avatar_static").toString());
