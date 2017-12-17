@@ -104,25 +104,25 @@
   <string name="reblog_removed">トートはもはや後押しされていません！</string>
   <string name="reblog_by">%1$s にブーストされました</string>
   <string name="favourite_add">このトゥートをお気に入りに追加しますか？</string>
-  <string name="favourite_remove">从你的收藏夹中去掉这个toot？</string>
-  <string name="reblog_add">この爆弾を押し上げる？</string>
-  <string name="reblog_remove">この鼓動を解除しますか？</string>
-  <string name="pin_add">この歯をピン止めしますか？</string>
-  <string name="pin_remove">この歯を解き放つ？</string>
+  <string name="favourite_remove">このトゥートをお気に入りから削除しますか？</string>
+  <string name="reblog_add">このトゥートをブーストしますか？</string>
+  <string name="reblog_remove">このトゥートのブーストを解除しますか？</string>
+  <string name="pin_add">このトゥートをピン留めしますか？</string>
+  <string name="pin_remove">このトゥートのピン留めを解除しますか？</string>
   <string name="more_action_1">ミュート</string>
   <string name="more_action_2">ブロック</string>
-  <string name="more_action_3">報告する</string>
-  <string name="more_action_4">削除する</string>
+  <string name="more_action_3">報告</string>
+  <string name="more_action_4">削除</string>
   <string name="more_action_5">コピー</string>
   <string name="more_action_6">シェア</string>
-  <string name="more_action_7">言及</string>
+  <string name="more_action_7">メンション</string>
   <string-array name="more_action_confirm">
     <item>このアカウントをミュートしますか？</item>
     <item>このアカウントをブロックしますか？</item>
-    <item>この爆弾を報告しますか？</item>
+    <item>このトゥートを報告しますか？</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>この煙草を削除しますか？</item>
+    <item>このトゥートを削除しますか？</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="other">%d 回复</item>
@@ -139,9 +139,9 @@
   </plurals>
   <string name="date_yesterday">昨日</string>
   <string name="date_day_before_yesterday">昨日まで</string>
-  <string name="date_day" formatted="false">%d日前</string>
+  <string name="date_day" formatted="false">%d 日前</string>
   <plurals name="date_month">
-    <item quantity="other">%d月前</item>
+    <item quantity="other">%d か月前</item>
   </plurals>
   <plurals name="date_year">
     <item quantity="other">%d 年前</item>
@@ -149,9 +149,9 @@
   <!-- TOOT -->
   <string name="toot_cw_placeholder">警告</string>
   <string name="toot_placeholder">あなたの心には何がありますか？</string>
-  <string name="toot_it">トート</string>
+  <string name="toot_it">トゥート！</string>
   <string name="cw">cw</string>
-  <string name="toot_title">トートを書く</string>
+  <string name="toot_title">トゥートを書く</string>
   <string name="toot_title_reply">トゥースに返信する</string>
   <string name="toot_no_space">あなたは500文字に達しました！</string>
   <string name="toot_select_image">メディアを選択</string>
