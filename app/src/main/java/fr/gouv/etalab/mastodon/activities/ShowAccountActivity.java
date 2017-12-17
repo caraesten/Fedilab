@@ -91,6 +91,8 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRelationshipInterface;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
+
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.withSuffix;
 
@@ -494,6 +496,23 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 startActivity(intent);
             }
         });
+        //This account was moved to another one
+        if( account.getMoved_to_account() != null){
+            TextView account_moved = findViewById(R.id.account_moved);
+            account_moved.setVisibility(View.VISIBLE);
+            if( theme == THEME_DARK)
+                changeDrawableColor(ShowAccountActivity.this, R.drawable.ic_card_travel,R.color.dark_icon);
+            else
+                changeDrawableColor(ShowAccountActivity.this, R.drawable.ic_card_travel,R.color.black);
+            Drawable imgTravel = ContextCompat.getDrawable(ShowAccountActivity.this, R.drawable.ic_card_travel);
+            assert imgTravel != null;
+            imgTravel.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (20  * scale + 0.5f));
+            account_moved.setCompoundDrawables(imgTravel, null, null, null);
+            //Retrieves content and make account names clickable
+            SpannableString spannableString = account.moveToText(ShowAccountActivity.this);
+            account_moved.setText(spannableString, TextView.BufferType.SPANNABLE);
+        }
+
         if( account.getAcct().contains("@") )
             warning_message.setVisibility(View.VISIBLE);
         else

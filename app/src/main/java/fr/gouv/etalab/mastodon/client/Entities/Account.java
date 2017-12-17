@@ -14,11 +14,21 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.client.Entities;
 
+import android.content.*;
+import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.style.ClickableSpan;
+import android.view.View;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 
 /**
  * Created by Thomas on 23/04/2017.
@@ -51,6 +61,7 @@ public class Account implements Parcelable {
     private followAction followType = followAction.NOTHING;
     private boolean isMakingAction = false;
     private Account moved_to_account;
+
 
     public followAction getFollowType() {
         return followType;
@@ -312,5 +323,37 @@ public class Account implements Parcelable {
 
     public void setStatuses_count_str(String statuses_count_str) {
         this.statuses_count_str = statuses_count_str;
+    }
+
+    /**
+     * Makes the move to account clickable
+     * @param context Context
+     * @return SpannableString
+     */
+    public SpannableString moveToText(final android.content.Context context){
+        SpannableString spannableString = null;
+        if( this.getMoved_to_account() != null) {
+            spannableString = new SpannableString(context.getString(R.string.account_moved_to, this.getAcct(), "@"+this.getMoved_to_account().getAcct()));
+            int startPositionTar = spannableString.toString().indexOf("@"+this.getMoved_to_account().getAcct());
+            int endPositionTar = startPositionTar + ("@"+this.getMoved_to_account().getAcct()).length();
+            final String idTar = this.getMoved_to_account().getId();
+            spannableString.setSpan(new ClickableSpan() {
+                        @Override
+                        public void onClick(View textView) {
+                            Intent intent = new Intent(context, ShowAccountActivity.class);
+                            Bundle b = new Bundle();
+                            b.putString("accountId", idTar);
+                            intent.putExtras(b);
+                            context.startActivity(intent);
+                        }
+                        @Override
+                        public void updateDrawState(TextPaint ds) {
+                            super.updateDrawState(ds);
+                        }
+                    },
+                    startPositionTar, endPositionTar,
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        }
+        return spannableString;
     }
 }

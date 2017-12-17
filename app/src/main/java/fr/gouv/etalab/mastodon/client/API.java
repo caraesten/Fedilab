@@ -1752,8 +1752,8 @@ public class API {
             account.setStatuses_count(Integer.valueOf(resobj.get("statuses_count").toString()));
             account.setNote(resobj.get("note").toString());
             try{
-                account.setMoved_to_account(parseAccountResponse(context, resobj.getJSONObject("moved_to_account")));
-            }catch (Exception ignored){}
+                account.setMoved_to_account(parseAccountResponse(context, resobj.getJSONObject("moved")));
+            }catch (Exception ignored){ignored.printStackTrace();}
             account.setUrl(resobj.get("url").toString());
             account.setAvatar(resobj.get("avatar").toString());
             account.setAvatar_static(resobj.get("avatar_static").toString());
