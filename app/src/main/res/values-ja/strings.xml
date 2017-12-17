@@ -94,14 +94,14 @@
   <string name="scheduled_toots">スケジュールトゥート</string>
   <string name="disclaimer_full">以下の情報は、ユーザーのプロフィールが完全には反映されていない場合があります。</string>
   <string name="insert_emoji">絵文字を挿入</string>
-  <string name="no_emoji">アプリはしなかったしばらくカスタム絵文字を収集することはありません。</string>
+  <string name="no_emoji">アプリはしばらくの間カスタム絵文字を収集していません。</string>
   <string name="live_notif">ライブ通知</string>
   <!-- Status -->
   <string name="no_status">トゥートがありません</string>
   <string name="fav_added">トゥートがお気に入りに追加されました</string>
   <string name="fav_removed">トゥートはお気に入りから削除されました！</string>
   <string name="reblog_added">トゥートがブーストされました！</string>
-  <string name="reblog_removed">トートはもはや後押しされていません！</string>
+  <string name="reblog_removed">トゥートはブーストされていません！</string>
   <string name="reblog_by">%1$s にブーストされました</string>
   <string name="favourite_add">このトゥートをお気に入りに追加しますか？</string>
   <string name="favourite_remove">このトゥートをお気に入りから削除しますか？</string>
@@ -232,13 +232,13 @@
   <string name="client_error">クライアントIDを取得できませんでした。</string>
   <string name="no_internet">インターネット接続がありません！</string>
   <string name="toast_block">アカウントがブロックされました！</string>
-  <string name="toast_unblock">アカウントはもはやブロックされていません！</string>
+  <string name="toast_unblock">アカウントはブロックされていません！</string>
   <string name="toast_mute">アカウントはミュートされました。</string>
-  <string name="toast_unmute">アカウントはもはやミュートされません！</string>
+  <string name="toast_unmute">アカウントはミュートされません！</string>
   <string name="toast_follow">アカウントがフォローされました！</string>
-  <string name="toast_unfollow">アカウントはもはや追跡されません！</string>
+  <string name="toast_unfollow">アカウントはフォローされていません！</string>
   <string name="toast_reblog">トゥートがブーストされました！</string>
-  <string name="toast_unreblog">トートはもはや後押しされていません！</string>
+  <string name="toast_unreblog">トゥートはブーストされていません！</string>
   <string name="toast_favourite">お気に入りにトゥートが追加されました！</string>
   <string name="toast_unfavourite">お気に入りからトゥートが削除されました！</string>
   <string name="toast_report">トゥートが報告されました！</string>
