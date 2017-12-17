@@ -27,6 +27,7 @@ public class Relationship {
     private boolean blocking;
     private boolean muting;
     private boolean requested;
+    private boolean muting_notifications;
 
     public String getId() {
         return id;
@@ -74,5 +75,13 @@ public class Relationship {
 
     public void setRequested(boolean requested) {
         this.requested = requested;
+    }
+
+    public boolean isMuting_notifications() {
+        return muting_notifications;
+    }
+
+    public void setMuting_notifications(boolean muting_notifications) {
+        this.muting_notifications = muting_notifications;
     }
 }

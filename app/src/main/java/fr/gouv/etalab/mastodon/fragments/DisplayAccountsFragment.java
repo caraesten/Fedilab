@@ -201,7 +201,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         }
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
-        if( type != RetrieveAccountsAsyncTask.Type.BLOCKED && type != RetrieveAccountsAsyncTask.Type.MUTED)
+        if( type != RetrieveAccountsAsyncTask.Type.BLOCKED )
             new RetrieveManyRelationshipsAsyncTask(context, accounts,DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
@@ -225,15 +225,16 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
                         continue;
                     }
                     if( account.getId().equals(relationship.getId())){
+                        account.setMuting_notifications(relationship.isMuting_notifications());
                         if( relationship.isFollowing())
                             account.setFollowType(Account.followAction.FOLLOW);
                         else
                             account.setFollowType(Account.followAction.NOT_FOLLOW);
                         if(relationship.isBlocking())
                             account.setFollowType(Account.followAction.BLOCK);
-                        else if(relationship.isMuting())
+                        else if(relationship.isMuting()) {
                             account.setFollowType(Account.followAction.MUTE);
-                        else if(relationship.isRequested())
+                        }else if(relationship.isRequested())
                             account.setFollowType(Account.followAction.REQUEST_SENT);
                         break;
                     }

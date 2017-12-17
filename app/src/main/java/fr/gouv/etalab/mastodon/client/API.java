@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -62,6 +63,7 @@ public class API {
         REBLOG,
         UNREBLOG,
         MUTE,
+        MUTE_NOTIFICATIONS,
         UNMUTE,
         BLOCK,
         UNBLOCK,
@@ -731,6 +733,29 @@ public class API {
         return postAction(statusAction, targetedId, null, null);
     }
 
+    /**
+     * Makes the post action for a status
+     * @param targetedId String id of the targeted Id *can be this of a status or an account*
+     * @param muteNotifications - boolean - notifications should be also muted
+     * @return in status code - Should be equal to 200 when action is done
+     */
+    public int muteNotifications(String targetedId, boolean muteNotifications){
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("notifications", Boolean.toString(muteNotifications));
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection();
+            httpsConnection.post(getAbsoluteUrl(String.format("/accounts/%s/mute", targetedId)), 60, params, prefKeyOauthTokenT);
+            actionCode = httpsConnection.getActionCode();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        }catch (Exception e) {
+            setDefaultError();
+            e.printStackTrace();
+        }
+        return actionCode;
+    }
 
     /**
      * Makes the post action
@@ -1753,7 +1778,7 @@ public class API {
             account.setNote(resobj.get("note").toString());
             try{
                 account.setMoved_to_account(parseAccountResponse(context, resobj.getJSONObject("moved")));
-            }catch (Exception ignored){ignored.printStackTrace();}
+            }catch (Exception ignored){account.setMoved_to_account(null);}
             account.setUrl(resobj.get("url").toString());
             account.setAvatar(resobj.get("avatar").toString());
             account.setAvatar_static(resobj.get("avatar_static").toString());
@@ -1800,6 +1825,11 @@ public class API {
             relationship.setFollowed_by(Boolean.valueOf(resobj.get("followed_by").toString()));
             relationship.setBlocking(Boolean.valueOf(resobj.get("blocking").toString()));
             relationship.setMuting(Boolean.valueOf(resobj.get("muting").toString()));
+            try {
+                relationship.setMuting_notifications(Boolean.valueOf(resobj.get("muting_notifications").toString()));
+            }catch (Exception ignored){
+                relationship.setMuting_notifications(true);
+            }
             relationship.setRequested(Boolean.valueOf(resobj.get("requested").toString()));
         } catch (JSONException e) {
             setDefaultError();
