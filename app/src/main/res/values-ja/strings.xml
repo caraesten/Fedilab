@@ -43,7 +43,7 @@
   <string name="speech_prompt">何か話してみてください</string>
   <string name="speech_not_supported">お使いのデバイスは音声入力をサポートしておりません！</string>
   <string name="delete_all">すべて削除</string>
-  <string name="translate_toot">このトゥートを翻訳してください。</string>
+  <string name="translate_toot">このトゥートを翻訳します。</string>
   <string name="schedule">スケジュール</string>
   <string name="text_size">テキストとアイコンのサイズ</string>
   <string name="text_size_change">現在のテキストサイズを変更する：</string>
@@ -92,7 +92,7 @@
   <string name="click_to_change">パスをクリックして変更します</string>
   <string name="failed">失敗！</string>
   <string name="scheduled_toots">スケジュールトゥート</string>
-  <string name="disclaimer_full">以下の情報は、ユーザーのプロファイルが不完全である場合があります。</string>
+  <string name="disclaimer_full">以下の情報は、ユーザーのプロフィールが完全には反映されていない場合があります。</string>
   <string name="insert_emoji">絵文字を挿入</string>
   <string name="no_emoji">アプリはしなかったしばらくカスタム絵文字を収集することはありません。</string>
   <string name="live_notif">ライブ通知</string>
@@ -350,7 +350,7 @@
   <string name="settings_popup_message">
 受信したいプッシュ通知を確認してください。
 後でこれらの通知を設定で有効または無効にすることができます（通知タブ）。    </string>
-  <string name="settings_popup_timeline">ホームタイムラインでの未読のトゥートは？</string>
+  <string name="settings_popup_timeline">ホームタイムラインでの未読トゥートは？</string>
   <string name="settings_popup_notification">未読の通知は？</string>
   <!-- CACHE -->
   <string name="cache_title">キャッシュの消去</string>
