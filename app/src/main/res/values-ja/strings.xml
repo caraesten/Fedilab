@@ -211,8 +211,8 @@
   <string name="no_notifications">通知はありません</string>
   <string name="notif_mention">あなたにメンションしました</string>
   <string name="notif_reblog">あなたのトゥートをブーストしました</string>
-  <string name="notif_favourite">あなたのトゥートをお気に入りに登録しました</string>
-  <string name="notif_follow">あなたに続いた</string>
+  <string name="notif_favourite">があなたのトゥートをお気に入りに登録しました</string>
+  <string name="notif_follow">があなたをフォローしました</string>
   <string name="notif_pouet">%1$s の新着</string>
   <plurals name="other_notifications">
     <item quantity="other">別の通知</item>
