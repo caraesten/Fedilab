@@ -114,7 +114,7 @@
   <string name="more_action_3">報告</string>
   <string name="more_action_4">削除</string>
   <string name="more_action_5">コピー</string>
-  <string name="more_action_6">シェア</string>
+  <string name="more_action_6">共有</string>
   <string name="more_action_7">メンション</string>
   <string-array name="more_action_confirm">
     <item>このアカウントをミュートしますか？</item>
@@ -210,9 +210,9 @@
   <!-- Notifications -->
   <string name="no_notifications">通知はありません</string>
   <string name="notif_mention">あなたにメンションしました</string>
-  <string name="notif_reblog">あなたのトゥートをブーストしました</string>
-  <string name="notif_favourite">あなたのトゥートをお気に入りに登録しました</string>
-  <string name="notif_follow">あなたに続いた</string>
+  <string name="notif_reblog">があなたのトゥートをブーストしました</string>
+  <string name="notif_favourite">があなたのトゥートをお気に入りに登録しました</string>
+  <string name="notif_follow">があなたをフォローしました</string>
   <string name="notif_pouet">%1$s の新着</string>
   <plurals name="other_notifications">
     <item quantity="other">別の通知</item>
