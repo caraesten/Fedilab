@@ -1052,7 +1052,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 case R.id.action_share:
                                     Intent sendIntent = new Intent(Intent.ACTION_SEND);
                                     sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
-                                    sendIntent.putExtra(Intent.EXTRA_TEXT, status.getUri());
+                                    String url;
+                                    if( status.getReblog() != null)
+                                        url = status.getReblog().getUri();
+                                    else
+                                        url = status.getUri();
+                                    sendIntent.putExtra(Intent.EXTRA_TEXT, url);
                                     sendIntent.setType("text/plain");
                                     context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
                                     return true;
