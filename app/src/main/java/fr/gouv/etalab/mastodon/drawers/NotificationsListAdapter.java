@@ -18,6 +18,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.content.Context;
@@ -480,6 +481,31 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     holder.status_show_more.setVisibility(View.GONE);
                     status.setAttachmentShown(true);
                     notificationsListAdapter.notifyDataSetChanged();
+
+                    /*
+                    Added a Countdown Timer, so that Sensitive (NSFW)
+                    images only get displayed for user set time,
+                    giving the user time to click on them to expand them,
+                    if they want. Images are then hidden again.
+                    -> Default value is set to 5 seconds
+                    */
+                    final int timeout = sharedpreferences.getInt(Helper.SET_NSFW_TIMEOUT, 5);
+
+                    if (timeout > 0) {
+
+                        new CountDownTimer((timeout * 1000), 1000) {
+
+                            public void onTick(long millisUntilFinished) {
+                            }
+
+                            public void onFinish() {
+                                status.setAttachmentShown(false);
+                                holder.status_show_more.setVisibility(View.VISIBLE);
+
+                                notificationsListAdapter.notifyDataSetChanged();
+                            }
+                        }.start();
+                    }
                 }
             });
 
