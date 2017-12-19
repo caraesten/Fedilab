@@ -12,7 +12,7 @@
   <!-- common -->
   <string name="close">Zamknij</string>
   <string name="yes">Tak</string>
-  <string name="no">No</string>
+  <string name="no">Nie</string>
   <string name="cancel">Cancel</string>
   <string name="download">Download</string>
   <string name="download_file">Download %1$s</string>
