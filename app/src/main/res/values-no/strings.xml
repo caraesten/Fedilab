@@ -53,41 +53,41 @@
   <string name="open_with">Åpne med</string>
   <string name="validate">Validere</string>
   <string name="media">Media</string>
-  <string name="share_with">Share with</string>
-  <string name="shared_via">Shared via Mastalab</string>
-  <string name="replies">Replies</string>
-  <string name="username">User name</string>
-  <string name="drafts">Drafts</string>
-  <string name="new_data">New data are available! Do you want to display them?</string>
-  <string name="favourite">Favourites</string>
-  <string name="follow">New followers</string>
-  <string name="mention">Mentions</string>
-  <string name="reblog">Boosts</string>
-  <string name="show_boosts">Show boosts</string>
-  <string name="show_replies">Show replies</string>
-  <string name="action_open_in_web">Open in browser</string>
-  <string name="translate">Translate</string>
-  <string name="please_wait">Please, wait few seconds before making this action.</string>
+  <string name="share_with">Del med</string>
+  <string name="shared_via">Delt via Mastalab</string>
+  <string name="replies">Svar</string>
+  <string name="username">Brukernavn</string>
+  <string name="drafts">Utkast</string>
+  <string name="new_data">Nye data er tilgjengelige! Vil du vise dem?</string>
+  <string name="favourite">Favoritter</string>
+  <string name="follow">Nye følgere</string>
+  <string name="mention">Nevner</string>
+  <string name="reblog">Øker</string>
+  <string name="show_boosts">Vis øker</string>
+  <string name="show_replies">Vis svar</string>
+  <string name="action_open_in_web">Åpne i nettleseren</string>
+  <string name="translate">Oversette</string>
+  <string name="please_wait">Vennligst vent noen sekunder før du gjør denne handlingen.</string>
   <!--- Menu -->
-  <string name="home_menu">Home</string>
-  <string name="local_menu">Local timeline</string>
-  <string name="global_menu">Federated timeline</string>
-  <string name="neutral_menu_title">Options</string>
-  <string name="favorites_menu">Favourites</string>
-  <string name="communication_menu_title">Communication</string>
-  <string name="muted_menu">Muted users</string>
-  <string name="blocked_menu">Blocked users</string>
-  <string name="remote_follow_menu">Remote follow</string>
-  <string name="notifications">Notifications</string>
-  <string name="follow_request">Follow requests</string>
-  <string name="optimization">Optimization</string>
-  <string name="settings">Settings</string>
-  <string name="profile">Profile</string>
-  <string name="make_a_choice">What do you want to do?</string>
-  <string name="delete_account_title">Delete an account</string>
-  <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
-  <string name="send_email">Send an email</string>
-  <string name="choose_file">Please select a file</string>
+  <string name="home_menu">Hjem</string>
+  <string name="local_menu">Lokal tidslinje</string>
+  <string name="global_menu">Federated tidslinje</string>
+  <string name="neutral_menu_title">Alternativer</string>
+  <string name="favorites_menu">Favoritter</string>
+  <string name="communication_menu_title">Kommunikasjon</string>
+  <string name="muted_menu">Muted brukere</string>
+  <string name="blocked_menu">Blokkerte brukere</string>
+  <string name="remote_follow_menu">Fjernfølge</string>
+  <string name="notifications">Varsler</string>
+  <string name="follow_request">Følg forespørsler</string>
+  <string name="optimization">Optimalisering</string>
+  <string name="settings">Innstillinger</string>
+  <string name="profile">Profil</string>
+  <string name="make_a_choice">Hva vil du gjøre?</string>
+  <string name="delete_account_title">Slett en konto</string>
+  <string name="delete_account_message" formatted="false">Slett kontoen% 1 $ s fra programmet?</string>
+  <string name="send_email">Send en epost</string>
+  <string name="choose_file">Vennligst velg en fil</string>
   <string name="choose_file_error">No file explorer found!</string>
   <string name="click_to_change">Click on the path to change it</string>
   <string name="failed">Failed!</string>
@@ -159,27 +159,27 @@
   <string name="cw">cw</string>
   <string name="toot_title">Skriv et toot</string>
   <string name="toot_title_reply">Svar på et toot</string>
-  <string name="toot_no_space">You have reached the 500 characters allowed!</string>
-  <string name="toot_select_image">Select a media</string>
-  <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-  <string name="toot_delete_media">Delete this media?</string>
-  <string name="toot_error_no_content">Your toot is empty!</string>
-  <string name="toot_visibility_tilte">Visibility of the toot</string>
-  <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-  <string name="toot_sent">The toot has been sent!</string>
-  <string name="toot_reply_content_title">You are replying to this toot:</string>
-  <string name="toot_sensitive">Sensitive content?</string>
+  <string name="toot_no_space">Du har nådd de 500 tegnene som er tillatt!</string>
+  <string name="toot_select_image">Velg et medie</string>
+  <string name="toot_select_image_error">Det oppsto en feil under valg av media!</string>
+  <string name="toot_delete_media">Slett dette mediet?</string>
+  <string name="toot_error_no_content">Din toot er tom!</string>
+  <string name="toot_visibility_tilte">Sikt på tooten</string>
+  <string name="toots_visibility_tilte">Synlighet av toots som standard: </string>
+  <string name="toot_sent">Tooten er sendt!</string>
+  <string name="toot_reply_content_title">Du svarer på dette toot:</string>
+  <string name="toot_sensitive">Følsomt innhold?</string>
   <string-array name="toot_visibility">
-    <item>Post to public timelines</item>
-    <item>Do not post to public timelines</item>
-    <item>Post to followers only</item>
-    <item>Post to mentioned users only</item>
+    <item>Post til offentlige tidslinjer</item>
+    <item>Ikke legg inn til offentlige tidslinjer</item>
+    <item>Legg kun til følgere</item>
+    <item>Legg kun til nevnte brukere</item>
   </string-array>
-  <string name="no_draft">No draft!</string>
-  <string name="choose_toot">Choose a toot</string>
-  <string name="choose_accounts">Choose an account</string>
-  <string name="select_accounts">Select some accounts</string>
-  <string name="remove_draft">Remove draft?</string>
+  <string name="no_draft">Ingen utkast!</string>
+  <string name="choose_toot">Velg et toot</string>
+  <string name="choose_accounts">Velg en konto</string>
+  <string name="select_accounts">Velg noen kontoer</string>
+  <string name="remove_draft">Fjern utkast?</string>
   <string name="show_reply">Klikk på knappen for å vise originaltårnet</string>
   <string name="upload_form_description">Beskriv for synskadede</string>
   <!-- Instance -->
