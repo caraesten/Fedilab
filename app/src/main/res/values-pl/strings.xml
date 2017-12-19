@@ -317,48 +317,48 @@
   <string name="set_preview_reply_pp">Wyświetlać zdjęcia profilowe?</string>
   <string name="set_multiaccount_actions">Zezwalać na interakcje między kontami?</string>
   <string name="note_no_space">Osiągnąłeś 160 dozwolonych znaków!</string>
-  <string name="username_no_space">You have reached the 30 characters allowed!</string>
-  <string name="settings_title_hour">Time slot for notifications:</string>
-  <string name="settings_time_from">Between</string>
-  <string name="settings_time_to">and</string>
-  <string name="settings_time_greater">The time must be greater than %1$s</string>
-  <string name="settings_time_lower">The time must be lower than %1$s</string>
-  <string name="settings_hour_init">Start time</string>
-  <string name="settings_hour_end">End time</string>
-  <string name="embedded_browser">Use the built-in browser</string>
-  <string name="use_javascript">Enable Javascript</string>
-  <string name="use_cookies">Allow third-party cookies</string>
-  <string name="settings_ui_layout">Layout for timelines: </string>
+  <string name="username_no_space">Osiągnąłeś 30 dozwolonych znaków!</string>
+  <string name="settings_title_hour">Odstęp czasu dla powiadomień:</string>
+  <string name="settings_time_from">Między</string>
+  <string name="settings_time_to">i</string>
+  <string name="settings_time_greater">Czas musi być większy niż %1$s</string>
+  <string name="settings_time_lower">Czas musi być niższy niż %1$s</string>
+  <string name="settings_hour_init">Godzina rozpoczęcia</string>
+  <string name="settings_hour_end">Czas zakończenia</string>
+  <string name="embedded_browser">Korzystaj z wbudowanej przeglądarki</string>
+  <string name="use_javascript">Włącz Javascript</string>
+  <string name="use_cookies">Zezwalaj na pliki cookie innych firm</string>
+  <string name="settings_ui_layout">Układ osi czasu: </string>
   <string-array name="settings_menu_tabs">
-    <item>Tabs</item>
+    <item>Zakładki</item>
     <item>Menu</item>
-    <item>Tabs and menu</item>
+    <item>Zakładki i menu</item>
   </string-array>
   <string-array name="settings_translation">
     <item>Yandex</item>
-    <item>No</item>
+    <item>Nie</item>
   </string-array>
-  <string name="set_led_colour">Set LED colour:</string>
+  <string name="set_led_colour">Ustaw kolor diody LED:</string>
   <string-array name="led_colours">
-    <item>Blue</item>
-    <item>Cyan</item>
-    <item>Magenta</item>
-    <item>Green</item>
-    <item>Red</item>
-    <item>Yellow</item>
-    <item>White</item>
+    <item>Niebieski</item>
+    <item>Błękitny</item>
+    <item>Purpurowy</item>
+    <item>Zielony</item>
+    <item>Czerwony</item>
+    <item>Żółty</item>
+    <item>Biały</item>
   </string-array>
-  <string name="set_title_news">News</string>
-  <string name="set_notification_news">Notify for new toots on the home timeline</string>
-  <string name="set_show_error_messages">Display error messages</string>
-  <string name="action_follow">Follow</string>
-  <string name="action_unfollow">Unfollow</string>
-  <string name="action_block">Block</string>
-  <string name="action_unblock">Unblock</string>
-  <string name="action_mute">Mute</string>
-  <string name="action_no_action">No action</string>
-  <string name="action_unmute">Unmute</string>
-  <string name="request_sent">Request sent</string>
+  <string name="set_title_news">Aktualności</string>
+  <string name="set_notification_news">Powiadom mnie o nowych toot na domowej osi czasu</string>
+  <string name="set_show_error_messages">Wyświetlaj komunikaty o błędach</string>
+  <string name="action_follow">Obserwuj</string>
+  <string name="action_unfollow">Przestań obserwować</string>
+  <string name="action_block">Zablokuj</string>
+  <string name="action_unblock">Odblokuj</string>
+  <string name="action_mute">Wycisz</string>
+  <string name="action_no_action">Brak czynności</string>
+  <string name="action_unmute">Wycisz</string>
+  <string name="request_sent">Żądanie wysłane</string>
   <string name="followed_by">Obserwuje Cię</string>
   <string name="action_search">Wyszykaj</string>
   <!-- Quick settings for notifications -->
