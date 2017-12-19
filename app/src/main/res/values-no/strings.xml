@@ -104,61 +104,61 @@
   <string name="reblog_removed">The toot is no longer boosted!</string>
   <string name="reblog_by">Boosted by %1$s</string>
   <string name="favourite_add">Add this toot to your favourites?</string>
-  <string name="favourite_remove">Remove this toot from your favourites?</string>
-  <string name="reblog_add">Boost this toot?</string>
-  <string name="reblog_remove">Unboost this toot?</string>
-  <string name="pin_add">Pin this toot?</string>
-  <string name="pin_remove">Unpin this toot?</string>
-  <string name="more_action_1">Mute</string>
-  <string name="more_action_2">Block</string>
-  <string name="more_action_3">Report</string>
-  <string name="more_action_4">Remove</string>
-  <string name="more_action_5">Copy</string>
-  <string name="more_action_6">Share</string>
-  <string name="more_action_7">Mention</string>
+  <string name="favourite_remove">Fjern denne tooten fra favorittene dine?</string>
+  <string name="reblog_add">Boost denne tooten?</string>
+  <string name="reblog_remove">Unboost denne tooten?</string>
+  <string name="pin_add">Klem denne tooten?</string>
+  <string name="pin_remove">Unpin denne tooten?</string>
+  <string name="more_action_1">Stum</string>
+  <string name="more_action_2">Blokkere</string>
+  <string name="more_action_3">Rapportere</string>
+  <string name="more_action_4">Fjerne</string>
+  <string name="more_action_5">Kopiere</string>
+  <string name="more_action_6">Dele</string>
+  <string name="more_action_7">Nevne</string>
   <string-array name="more_action_confirm">
-    <item>Mute this account?</item>
-    <item>Block this account?</item>
-    <item>Report this toot?</item>
+    <item>Slå av denne kontoen?</item>
+    <item>Blokker denne kontoen?</item>
+    <item>Rapporter denne tooten?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>Remove this toot?</item>
+    <item>Fjern denne tooten?</item>
   </string-array>
   <plurals name="preview_replies">
-    <item quantity="one">%d reply</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="one">% d svar</item>
+    <item quantity="other">% d svar % d svar</item>
   </plurals>
   <!-- Date -->
   <plurals name="date_seconds">
-    <item quantity="one">%d second ago</item>
-    <item quantity="other">%d seconds ago</item>
+    <item quantity="one">% d andre siden</item>
+    <item quantity="other">% d andre siden</item>
   </plurals>
   <plurals name="date_minutes">
-    <item quantity="one">%d minute ago</item>
-    <item quantity="other">%d minutes ago</item>
+    <item quantity="one">% d minutt siden</item>
+    <item quantity="other">% d minutt siden</item>
   </plurals>
   <plurals name="date_hours">
-    <item quantity="one">%d hour ago</item>
-    <item quantity="other">%d hours ago</item>
+    <item quantity="one">% d time siden</item>
+    <item quantity="other">% d time siden</item>
   </plurals>
-  <string name="date_yesterday">Yesterday</string>
-  <string name="date_day_before_yesterday">Before yesterday</string>
-  <string name="date_day" formatted="false">%d days ago</string>
+  <string name="date_yesterday">I går</string>
+  <string name="date_day_before_yesterday">Før i går</string>
+  <string name="date_day" formatted="false">% d dager siden</string>
   <plurals name="date_month">
-    <item quantity="one">%d month ago</item>
-    <item quantity="other">%d months ago</item>
+    <item quantity="one">% d måneder siden</item>
+    <item quantity="other">% d måneder siden</item>
   </plurals>
   <plurals name="date_year">
-    <item quantity="one">One year ago</item>
-    <item quantity="other">%d years ago</item>
+    <item quantity="one">Ett år siden</item>
+    <item quantity="other">Ett år siden</item>
   </plurals>
   <!-- TOOT -->
-  <string name="toot_cw_placeholder">Warning</string>
-  <string name="toot_placeholder">What is on your mind?</string>
+  <string name="toot_cw_placeholder">Advarsel</string>
+  <string name="toot_placeholder">Hva tenker du på?</string>
   <string name="toot_it">TOOT!</string>
   <string name="cw">cw</string>
-  <string name="toot_title">Write a toot</string>
-  <string name="toot_title_reply">Reply to a toot</string>
+  <string name="toot_title">Skriv et toot</string>
+  <string name="toot_title_reply">Svar på et toot</string>
   <string name="toot_no_space">You have reached the 500 characters allowed!</string>
   <string name="toot_select_image">Select a media</string>
   <string name="toot_select_image_error">An error occurred while selecting the media!</string>
@@ -217,33 +217,33 @@
   <string name="no_notifications">Ingen melding for å vise</string>
   <string name="notif_mention">nevnte deg</string>
   <string name="notif_reblog">økt statusen din</string>
-  <string name="notif_favourite">favourited your status</string>
-  <string name="notif_follow">followed you</string>
-  <string name="notif_pouet">New toot from %1$s</string>
+  <string name="notif_favourite">favoriserte statusen din</string>
+  <string name="notif_follow">fulgte deg</string>
+  <string name="notif_pouet">Ny toot fra% 1 $ s</string>
   <plurals name="other_notifications">
-    <item quantity="one">and another notification</item>
-    <item quantity="other">and %d other notifications</item>
+    <item quantity="one">og% d andre varsler</item>
+    <item quantity="other">og% d andre varsler</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="one">and another toot to discover</item>
-    <item quantity="other">and %d other toots to discover</item>
+    <item quantity="one">og en annen toot å oppdage</item>
+    <item quantity="other">og en annen toot å oppdage</item>
   </plurals>
-  <string name="delete_notification_ask">Delete a notification?</string>
-  <string name="delete_notification_ask_all">Delete all notifications?</string>
-  <string name="delete_notification">The notification has been deleted!</string>
-  <string name="delete_notification_all">All notifications have been deleted!</string>
+  <string name="delete_notification_ask">Slett et varsel?</string>
+  <string name="delete_notification_ask_all">Slett alle varsler?</string>
+  <string name="delete_notification">Meldingen er slettet!</string>
+  <string name="delete_notification_all">Alle varsler er slettet!</string>
   <!-- HEADER -->
-  <string name="following">Following</string>
-  <string name="followers">Followers</string>
-  <string name="pinned_toots">Pinned</string>
+  <string name="following">Følgende</string>
+  <string name="followers">Etterfølgere</string>
+  <string name="pinned_toots">Festet</string>
   <!-- TOAST -->
-  <string name="client_error">Unable to get client id!</string>
-  <string name="no_internet">No Internet connection!</string>
-  <string name="toast_block">The account was blocked!</string>
-  <string name="toast_unblock">The account is no longer blocked!</string>
-  <string name="toast_mute">The account was muted!</string>
-  <string name="toast_unmute">The account is no longer muted!</string>
-  <string name="toast_follow">The account was followed!</string>
+  <string name="client_error">Kunne ikke få klient Id!</string>
+  <string name="no_internet">Ingen Internett-tilkobling!</string>
+  <string name="toast_block">Kontoen ble blokkert!</string>
+  <string name="toast_unblock">Kontoen er ikke lenger blokkert!</string>
+  <string name="toast_mute">Kontoen ble dempet!</string>
+  <string name="toast_unmute">Kontoen er ikke lenger dempet!</string>
+  <string name="toast_follow">Kontoen ble fulgt!</string>
   <string name="toast_unfollow">Kontoen følger ikke lenger!</string>
   <string name="toast_reblog">Tooten ble økt!</string>
   <string name="toast_unreblog">Tooten ble økt!</string>
