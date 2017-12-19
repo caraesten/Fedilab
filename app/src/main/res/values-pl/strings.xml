@@ -178,14 +178,14 @@
   <string-array name="toot_visibility">
     <item>Zapostuj na publicznej osi czasu</item>
     <item>Nie postuj do publicznych osi czasu</item>
-    <item>Post to followers only</item>
-    <item>Post to mentioned users only</item>
+    <item>Zapostuj tylko do obserwujących</item>
+    <item>Zapostuj tylko do wymienionych użytkowników</item>
   </string-array>
-  <string name="no_draft">No draft!</string>
-  <string name="choose_toot">Choose a toot</string>
-  <string name="choose_accounts">Choose an account</string>
-  <string name="select_accounts">Select some accounts</string>
-  <string name="remove_draft">Remove draft?</string>
+  <string name="no_draft">Brak projektu!</string>
+  <string name="choose_toot">Wybierz toot</string>
+  <string name="choose_accounts">Wybierz konto</string>
+  <string name="select_accounts">Wybierz wiele kont</string>
+  <string name="remove_draft">Usunąć projekt?</string>
   <string name="show_reply">Click on the button to display the original toot</string>
   <string name="upload_form_description">Describe for the visually impaired</string>
   <!-- Instance -->
@@ -252,15 +252,15 @@
   <string name="toast_mute">The account was muted!</string>
   <string name="toast_unmute">The account is no longer muted!</string>
   <string name="toast_follow">The account was followed!</string>
-  <string name="toast_unfollow">The account is no longer followed!</string>
-  <string name="toast_reblog">The toot was boosted!</string>
-  <string name="toast_unreblog">The toot is no longer boosted!</string>
-  <string name="toast_favourite">The toot was added to your favourites!</string>
-  <string name="toast_unfavourite">The toot was removed from your favourites!</string>
-  <string name="toast_report">The toot was reported!</string>
-  <string name="toast_unstatus">The toot was deleted!</string>
-  <string name="toast_pin">The toot was pinned!</string>
-  <string name="toast_unpin">The toot was unpinned!</string>
+  <string name="toast_unfollow">Konto nie jest już obserwowane!</string>
+  <string name="toast_reblog">Toot został wzmocniony!</string>
+  <string name="toast_unreblog">Toot już nie jest wzmacniany!</string>
+  <string name="toast_favourite">Toot został dodany do ulubionych!</string>
+  <string name="toast_unfavourite">Toot został usunięty z ulubionych!</string>
+  <string name="toast_report">Toot został zraportowany!</string>
+  <string name="toast_unstatus">Toot został usunięty!</string>
+  <string name="toast_pin">Toot był przypięty!</string>
+  <string name="toast_unpin">Toot był odpięty!</string>
   <string name="toast_error">Oops ! An error occurred!</string>
   <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
   <string name="toast_error_instance">The instance domain does not seem to be valide!</string>
