@@ -234,23 +234,23 @@
   <plurals name="other_notif_hometimeline">
     <item quantity="one">and another toot to discover</item>
     <item quantity="few">and %d other toots to discover</item>
-    <item quantity="other">and %d other toots to discover</item>
+    <item quantity="other">i kolejne %d toot do odkrycia</item>
   </plurals>
-  <string name="delete_notification_ask">Delete a notification?</string>
-  <string name="delete_notification_ask_all">Delete all notifications?</string>
-  <string name="delete_notification">The notification has been deleted!</string>
-  <string name="delete_notification_all">All notifications have been deleted!</string>
+  <string name="delete_notification_ask">Usunąć powiadomienie?</string>
+  <string name="delete_notification_ask_all">Usunąć wszystkie powiadomienia?</string>
+  <string name="delete_notification">Powiadomienie zostało usunięte!</string>
+  <string name="delete_notification_all">Wszystkie powiadomienia zostały usunięte!</string>
   <!-- HEADER -->
-  <string name="following">Following</string>
-  <string name="followers">Followers</string>
-  <string name="pinned_toots">Pinned</string>
+  <string name="following">Obserwowanie</string>
+  <string name="followers">Obserwujący</string>
+  <string name="pinned_toots">Przypięte</string>
   <!-- TOAST -->
-  <string name="client_error">Unable to get client id!</string>
-  <string name="no_internet">No Internet connection!</string>
-  <string name="toast_block">The account was blocked!</string>
-  <string name="toast_unblock">The account is no longer blocked!</string>
-  <string name="toast_mute">The account was muted!</string>
-  <string name="toast_unmute">The account is no longer muted!</string>
+  <string name="client_error">Nie można pobrać identyfikatora klienta!</string>
+  <string name="no_internet">Brak połączenia z internetem!</string>
+  <string name="toast_block">Konto zostało zablokowane!</string>
+  <string name="toast_unblock">Konto nie jest już zablokowane!</string>
+  <string name="toast_mute">Konto zostało wyciszone!</string>
+  <string name="toast_unmute">Konto nie jest już wyciszone!</string>
   <string name="toast_follow">The account was followed!</string>
   <string name="toast_unfollow">Konto nie jest już obserwowane!</string>
   <string name="toast_reblog">Toot został wzmocniony!</string>
