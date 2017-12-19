@@ -13,22 +13,22 @@
   <string name="close">Zamknij</string>
   <string name="yes">Tak</string>
   <string name="no">Nie</string>
-  <string name="cancel">Cancel</string>
-  <string name="download">Download</string>
-  <string name="download_file">Download %1$s</string>
-  <string name="download_over">Download complete</string>
-  <string name="save_file">Save %1$s</string>
-  <string name="save_over">Media saved</string>
-  <string name="download_from" formatted="false">File: %1$s</string>
-  <string name="password">Password</string>
+  <string name="cancel">Anuluj</string>
+  <string name="download">Pobierz</string>
+  <string name="download_file">Pobierz %1$s</string>
+  <string name="download_over">Pobieranie zakończone</string>
+  <string name="save_file">Zapisz %1$s</string>
+  <string name="save_over">Pliki zapisane</string>
+  <string name="download_from" formatted="false">Plik: %1$s</string>
+  <string name="password">Hasło</string>
   <string name="email">Email</string>
-  <string name="accounts">Accounts</string>
-  <string name="toots">Toots</string>
-  <string name="tags">Tags</string>
+  <string name="accounts">Konta</string>
+  <string name="toots">Narzędzia</string>
+  <string name="tags">Tagi</string>
   <string name="token">Token</string>
-  <string name="save">Save</string>
-  <string name="restore">Restore</string>
-  <string name="two_factor_authentification">Two-step authentication?</string>
+  <string name="save">Zapisz</string>
+  <string name="restore">Przywracanie</string>
+  <string name="two_factor_authentification">Dwustopniowe uwierzytelnianie?</string>
   <string name="other_instance">Other instance than mastodon.etalab.gouv.fr?</string>
   <string name="no_result">No results!</string>
   <string name="instance">Instance</string>
