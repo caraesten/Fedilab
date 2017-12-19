@@ -51,7 +51,7 @@
   <string name="next">Następne</string>
   <string name="previous">Poprzednie</string>
   <string name="open_with">Otwórz za pomocą</string>
-  <string name="validate">Validate</string>
+  <string name="validate">Zatwierdź</string>
   <string name="media">Media</string>
   <string name="share_with">Share with</string>
   <string name="shared_via">Shared via Mastalab</string>
@@ -104,30 +104,30 @@
   <string name="reblog_removed">The toot is no longer boosted!</string>
   <string name="reblog_by">Boosted by %1$s</string>
   <string name="favourite_add">Add this toot to your favourites?</string>
-  <string name="favourite_remove">Remove this toot from your favourites?</string>
-  <string name="reblog_add">Boost this toot?</string>
-  <string name="reblog_remove">Unboost this toot?</string>
-  <string name="pin_add">Pin this toot?</string>
-  <string name="pin_remove">Unpin this toot?</string>
-  <string name="more_action_1">Mute</string>
-  <string name="more_action_2">Block</string>
-  <string name="more_action_3">Report</string>
-  <string name="more_action_4">Remove</string>
-  <string name="more_action_5">Copy</string>
-  <string name="more_action_6">Share</string>
-  <string name="more_action_7">Mention</string>
+  <string name="favourite_remove">Usunąć ten toot z ulubionych?</string>
+  <string name="reblog_add">Ulepszyć ten toot?</string>
+  <string name="reblog_remove">Spowolnić ten toot?</string>
+  <string name="pin_add">Przypiąć ten toot?</string>
+  <string name="pin_remove">Odpiąć ten toot?</string>
+  <string name="more_action_1">Wycisz</string>
+  <string name="more_action_2">Zablokuj</string>
+  <string name="more_action_3">Raport</string>
+  <string name="more_action_4">Usuń</string>
+  <string name="more_action_5">Kopiuj</string>
+  <string name="more_action_6">Udostępnij</string>
+  <string name="more_action_7">Wspomnij</string>
   <string-array name="more_action_confirm">
-    <item>Mute this account?</item>
-    <item>Block this account?</item>
-    <item>Report this toot?</item>
+    <item>Wyciszyć tę ilość?</item>
+    <item>Zablokuj tę ilość?</item>
+    <item>Raportować ten toot?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>Remove this toot?</item>
+    <item>Usunąć ren toot?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="one">%d reply</item>
     <item quantity="few">%d replies</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="other">%d odpowiedzi</item>
   </plurals>
   <!-- Date -->
   <plurals name="date_seconds">
