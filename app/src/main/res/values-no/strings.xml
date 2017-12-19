@@ -88,22 +88,22 @@
   <string name="delete_account_message" formatted="false">Slett kontoen% 1 $ s fra programmet?</string>
   <string name="send_email">Send en epost</string>
   <string name="choose_file">Vennligst velg en fil</string>
-  <string name="choose_file_error">No file explorer found!</string>
-  <string name="click_to_change">Click on the path to change it</string>
-  <string name="failed">Failed!</string>
-  <string name="scheduled_toots">Scheduled toots</string>
-  <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
-  <string name="insert_emoji">Insert emoji</string>
-  <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-  <string name="live_notif">Live notifications</string>
+  <string name="choose_file_error">Ingen filutforsker funnet!</string>
+  <string name="click_to_change">Klikk på banen for å endre den</string>
+  <string name="failed">Feilet!</string>
+  <string name="scheduled_toots">Planlagte toots</string>
+  <string name="disclaimer_full">Informasjon nedenfor kan gjenspeile brukerens profil ufullstendig.</string>
+  <string name="insert_emoji">Sett inn emoji</string>
+  <string name="no_emoji">Appen samler ikke tilpassede emojis for øyeblikket.</string>
+  <string name="live_notif">Live varsler</string>
   <!-- Status -->
-  <string name="no_status">No toot to display</string>
-  <string name="fav_added">The toot was added to favourites</string>
-  <string name="fav_removed">The toot was removed from favourites!</string>
-  <string name="reblog_added">The toot was boosted!</string>
-  <string name="reblog_removed">The toot is no longer boosted!</string>
-  <string name="reblog_by">Boosted by %1$s</string>
-  <string name="favourite_add">Add this toot to your favourites?</string>
+  <string name="no_status">Ingen toot å vise</string>
+  <string name="fav_added">Tooten ble lagt til i favoritter</string>
+  <string name="fav_removed">Tooten ble fjernet fra favoritter!</string>
+  <string name="reblog_added">Tooten ble økt!</string>
+  <string name="reblog_removed">Tooten er ikke lenger økt!</string>
+  <string name="reblog_by">Boostet av% 1 $ s</string>
+  <string name="favourite_add">Legg til denne tooten til dine favoritter?</string>
   <string name="favourite_remove">Fjern denne tooten fra favorittene dine?</string>
   <string name="reblog_add">Boost denne tooten?</string>
   <string name="reblog_remove">Unboost denne tooten?</string>
