@@ -244,8 +244,8 @@
   <string name="toast_mute">The account was muted!</string>
   <string name="toast_unmute">The account is no longer muted!</string>
   <string name="toast_follow">The account was followed!</string>
-  <string name="toast_unfollow">The account is no longer followed!</string>
-  <string name="toast_reblog">The toot was boosted!</string>
+  <string name="toast_unfollow">Kontoen følger ikke lenger!</string>
+  <string name="toast_reblog">Tooten ble økt!</string>
   <string name="toast_unreblog">The toot is no longer boosted!</string>
   <string name="toast_favourite">The toot was added to your favourites!</string>
   <string name="toast_unfavourite">The toot was removed from your favourites!</string>
@@ -295,62 +295,62 @@
   <string name="set_notif_follow_mention">Notify when someone mentions you</string>
   <string name="set_share_validation">Show confirmation dialog before boosting</string>
   <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
-  <string name="settings_title_more_options">Advanced settings</string>
-  <string name="set_wifi_only">Notify in WIFI only</string>
-  <string name="set_notify">Notify?</string>
+  <string name="settings_title_more_options">Avanserte innstillinger</string>
+  <string name="set_wifi_only">Varsle kun på WIFI</string>
+  <string name="set_notify">Gi beskjed?</string>
   <string name="set_notif_silent">Silent Notifications</string>
-  <string name="set_night_mode">Night mode</string>
-  <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
-  <string name="settings_title_profile">Edit profile</string>
+  <string name="set_night_mode">Nattmodus</string>
+  <string name="set_nsfw_timeout">NSFW vise timeout (sekunder, 0 betyr av)</string>
+  <string name="settings_title_profile">Rediger profil</string>
   <string name="set_profile_description">Bio…</string>
-  <string name="set_save_changes">Save changes</string>
-  <string name="set_header_picture_overlay">Choose a header picture</string>
-  <string name="set_preview_reply">Display the number of replies in home timeline</string>
-  <string name="set_preview_reply_pp">Display profile pictures?</string>
-  <string name="set_multiaccount_actions">Allow interactions between accounts?</string>
-  <string name="note_no_space">You have reached the 160 characters allowed!</string>
-  <string name="username_no_space">You have reached the 30 characters allowed!</string>
-  <string name="settings_title_hour">Time slot for notifications:</string>
-  <string name="settings_time_from">Between</string>
-  <string name="settings_time_to">and</string>
-  <string name="settings_time_greater">The time must be greater than %1$s</string>
-  <string name="settings_time_lower">The time must be lower than %1$s</string>
-  <string name="settings_hour_init">Start time</string>
-  <string name="settings_hour_end">End time</string>
-  <string name="embedded_browser">Use the built-in browser</string>
-  <string name="use_javascript">Enable Javascript</string>
-  <string name="use_cookies">Allow third-party cookies</string>
-  <string name="settings_ui_layout">Layout for timelines: </string>
+  <string name="set_save_changes">Lagre endringer</string>
+  <string name="set_header_picture_overlay">Velg et topptekstbilde</string>
+  <string name="set_preview_reply">Vis antall svar på hjemmelinjen</string>
+  <string name="set_preview_reply_pp">Vis profilbilder?</string>
+  <string name="set_multiaccount_actions">Tillat samhandling mellom kontoer?</string>
+  <string name="note_no_space">Du har nådd de 160 tegnene som er tillatt!</string>
+  <string name="username_no_space">Du har nådd de 30 tegnene som er tillatt!</string>
+  <string name="settings_title_hour">Tidsspor for varsler:</string>
+  <string name="settings_time_from">Mellom</string>
+  <string name="settings_time_to">og</string>
+  <string name="settings_time_greater">Tiden må være større enn% 1 $ s</string>
+  <string name="settings_time_lower">Tiden må være lavere enn% 1 $ s</string>
+  <string name="settings_hour_init">Starttid</string>
+  <string name="settings_hour_end">Sluttid</string>
+  <string name="embedded_browser">Bruk den innebygde nettleseren</string>
+  <string name="use_javascript">Aktiver Javascript</string>
+  <string name="use_cookies">Tillat cookies fra tredjeparter</string>
+  <string name="settings_ui_layout">Oppsett for tidslinjer: </string>
   <string-array name="settings_menu_tabs">
     <item>Tabs</item>
-    <item>Menu</item>
-    <item>Tabs and menu</item>
+    <item>Meny</item>
+    <item>Faner og meny</item>
   </string-array>
   <string-array name="settings_translation">
     <item>Yandex</item>
-    <item>No</item>
+    <item>Nei</item>
   </string-array>
-  <string name="set_led_colour">Set LED colour:</string>
+  <string name="set_led_colour">Angi LED-farge:</string>
   <string-array name="led_colours">
-    <item>Blue</item>
+    <item>Blå</item>
     <item>Cyan</item>
     <item>Magenta</item>
-    <item>Green</item>
-    <item>Red</item>
-    <item>Yellow</item>
-    <item>White</item>
+    <item>Grønn</item>
+    <item>Rød</item>
+    <item>Gul</item>
+    <item>Hvit</item>
   </string-array>
-  <string name="set_title_news">News</string>
-  <string name="set_notification_news">Notify for new toots on the home timeline</string>
-  <string name="set_show_error_messages">Display error messages</string>
-  <string name="action_follow">Follow</string>
-  <string name="action_unfollow">Unfollow</string>
-  <string name="action_block">Block</string>
+  <string name="set_title_news">Nyheter</string>
+  <string name="set_notification_news">Varsle om nye toots på hjemme tidslinjen</string>
+  <string name="set_show_error_messages">Vis feilmeldinger</string>
+  <string name="action_follow">Følg</string>
+  <string name="action_unfollow">Slutt å følge</string>
+  <string name="action_block">Blokkere</string>
   <string name="action_unblock">Unblock</string>
-  <string name="action_mute">Mute</string>
-  <string name="action_no_action">No action</string>
-  <string name="action_unmute">Unmute</string>
-  <string name="request_sent">Request sent</string>
+  <string name="action_mute">Stum</string>
+  <string name="action_no_action">Ingen handling</string>
+  <string name="action_unmute">Mikrofon</string>
+  <string name="request_sent">Forespørsel sendt</string>
   <string name="followed_by">Følger deg</string>
   <string name="action_search">Søke</string>
   <!-- Quick settings for notifications -->
