@@ -300,9 +300,9 @@
   <string name="set_notif_follow_ask">Powiadom mnie, gdy ktoś zażąda obserwowania mnie</string>
   <string name="set_notif_follow_share">Powiadom mnie, gdy ktoś zwiększy mój status</string>
   <string name="set_notif_follow_add">Powiadom mnie, gdy ktoś polubi mój status</string>
-  <string name="set_notif_follow_mention">Notify when someone mentions you</string>
-  <string name="set_share_validation">Show confirmation dialog before boosting</string>
-  <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
+  <string name="set_notif_follow_mention">Powiadom mnie, gdy ktoś wspomni o mnie</string>
+  <string name="set_share_validation">Pokaż potwierdzenie dialogu przed zwiększeniem</string>
+  <string name="set_share_validation_fav">Pokaż dialog informacyjny przed dodaniem do ulubionych</string>
   <string name="settings_title_more_options">Advanced settings</string>
   <string name="set_wifi_only">Notify in WIFI only</string>
   <string name="set_notify">Notify?</string>
@@ -359,18 +359,17 @@
   <string name="action_no_action">No action</string>
   <string name="action_unmute">Unmute</string>
   <string name="request_sent">Request sent</string>
-  <string name="followed_by">Follows you</string>
-  <string name="action_search">Search</string>
+  <string name="followed_by">Obserwuje Cię</string>
+  <string name="action_search">Wyszykaj</string>
   <!-- Quick settings for notifications -->
-  <string name="settings_popup_title">Push notifications</string>
+  <string name="settings_popup_title">Powiadomienia push</string>
   <string name="settings_popup_message">
-        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
-    </string>
-  <string name="settings_popup_timeline">For unread toots in home time-line?</string>
-  <string name="settings_popup_notification">For unread notifications?</string>
+Proszę potwierdzić powiadomienia push, które chcesz otrzymywać.
+        Możesz włączyć i wyłączyć te powiadomienia w ustawieniach (karta powiadomień).    </string>
+  <string name="settings_popup_timeline">Dla nie przeczytanych toots w domowej osi czasu?</string>
+  <string name="settings_popup_notification">Dla nie przeczytanych powiadomień?</string>
   <!-- CACHE -->
-  <string name="cache_title">Clear cache</string>
+  <string name="cache_title">Wyczyść pamięć podręczną</string>
   <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
   <string name="cache_units">Mb</string>
   <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
