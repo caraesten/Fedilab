@@ -1633,7 +1633,7 @@ public class Helper {
         //Check instance release for lists
         String instance = Helper.getLiveInstance(activity);
         String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userID + instance, null);
-        if (instanceVersion != null) {
+        if (instanceVersion != null && navigationView.getMenu().findItem(R.id.nav_list) != null) {
             Version currentVersion = new Version(instanceVersion);
             Version minVersion = new Version("2.1");
             if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
