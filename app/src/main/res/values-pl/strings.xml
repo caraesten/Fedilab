@@ -29,10 +29,10 @@
   <string name="save">Zapisz</string>
   <string name="restore">Przywracanie</string>
   <string name="two_factor_authentification">Dwustopniowe uwierzytelnianie?</string>
-  <string name="other_instance">Other instance than mastodon.etalab.gouv.fr?</string>
-  <string name="no_result">No results!</string>
-  <string name="instance">Instance</string>
-  <string name="instance_example">Instance: mastodon.social</string>
+  <string name="other_instance">Inne wystąpienie, niż mastodon.etalab.gouv.fr?</string>
+  <string name="no_result">Brak wyników!</string>
+  <string name="instance">Wystąpienie</string>
+  <string name="instance_example">Wystąpienie: mastodon.social</string>
   <string name="toast_account_changed" formatted="false">Now works with the account %1$s</string>
   <string name="add_account">Add an account</string>
   <string name="clipboard">The content of the toot has been copied to the clipboard</string>
