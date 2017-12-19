@@ -186,31 +186,31 @@
   <string name="choose_accounts">Wybierz konto</string>
   <string name="select_accounts">Wybierz wiele kont</string>
   <string name="remove_draft">Usunąć projekt?</string>
-  <string name="show_reply">Click on the button to display the original toot</string>
-  <string name="upload_form_description">Describe for the visually impaired</string>
+  <string name="show_reply">Kliknij przycisk, aby wyświetlić oryginalny toot</string>
+  <string name="upload_form_description">Opisać dla niedowidzących</string>
   <!-- Instance -->
-  <string name="instance_no_description">No description available!</string>
+  <string name="instance_no_description">Brak dostępnego opisu!</string>
   <!-- About -->
-  <string name="about_vesrion">Release %1$s</string>
-  <string name="about_developer">Developer:</string>
-  <string name="about_license">License: </string>
+  <string name="about_vesrion">Wypuść %1$s</string>
+  <string name="about_developer">Deweloper:</string>
+  <string name="about_license">Licencja: </string>
   <string name="about_license_action">GNU GPL V3</string>
-  <string name="about_code">Source code: </string>
-  <string name="about_yandex">Translation of toots:</string>
-  <string name="about_thekinrar">Search instances:</string>
+  <string name="about_code">Kod źródłowy: </string>
+  <string name="about_yandex">Tłumaczenie toot:</string>
+  <string name="about_thekinrar">Wyszukiwaj wystąpienia:</string>
   <string name="about_thekinrar_action">instances.social</string>
-  <string name="thanks_text_logo">Icon designer:</string>
+  <string name="thanks_text_logo">Projektant ikon:</string>
   <!-- Conversation -->
-  <string name="conversation">Conversation</string>
+  <string name="conversation">Rozmowa</string>
   <!-- Accounts -->
-  <string name="no_accounts">No account to display</string>
-  <string name="no_follow_request">No follow request</string>
-  <string name="status_cnt">Toots \n %1$s</string>
-  <string name="following_cnt">Following \n %1$s</string>
-  <string name="followers_cnt">Followers \n %1$s</string>
-  <string name="pins_cnt">Pinned \n %d</string>
-  <string name="authorize">Authorize</string>
-  <string name="reject">Reject</string>
+  <string name="no_accounts">Brak konta do wyświetlenia</string>
+  <string name="no_follow_request">Brak żądania obserwacji</string>
+  <string name="status_cnt">Toot \n %1$s</string>
+  <string name="following_cnt">Obserwowanie \n %1$s</string>
+  <string name="followers_cnt">Obserwujący \n %1$s</string>
+  <string name="pins_cnt">Przypięte \n %d</string>
+  <string name="authorize">Autoryzuj</string>
+  <string name="reject">Odrzucić</string>
   <!-- Scheduled toots -->
   <string name="no_scheduled_toots">No scheduled toot to display!</string>
   <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
@@ -307,12 +307,12 @@
   <string name="set_wifi_only">Powiadamiaj tylko w WIFI</string>
   <string name="set_notify">Powiadamiać?</string>
   <string name="set_notif_silent">Ciche powiadomienia</string>
-  <string name="set_night_mode">Night mode</string>
-  <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
-  <string name="settings_title_profile">Edit profile</string>
+  <string name="set_night_mode">Tryb nocny</string>
+  <string name="set_nsfw_timeout">Timeout widoku NSFW (sekundy, 0 oznacza wyłącznie)</string>
+  <string name="settings_title_profile">Edytuj profil</string>
   <string name="set_profile_description">Bio…</string>
-  <string name="set_save_changes">Save changes</string>
-  <string name="set_header_picture_overlay">Choose a header picture</string>
+  <string name="set_save_changes">Zapisz zmiany</string>
+  <string name="set_header_picture_overlay">Wybierz zdjęcie nagłówka</string>
   <string name="set_preview_reply">Display the number of replies in home timeline</string>
   <string name="set_preview_reply_pp">Display profile pictures?</string>
   <string name="set_multiaccount_actions">Allow interactions between accounts?</string>
