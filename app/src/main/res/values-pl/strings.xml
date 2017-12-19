@@ -165,19 +165,19 @@
   <string name="cw">cw</string>
   <string name="toot_title">Napisz toot</string>
   <string name="toot_title_reply">Odpowiedz na toot</string>
-  <string name="toot_no_space">You have reached the 500 characters allowed!</string>
-  <string name="toot_select_image">Select a media</string>
-  <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-  <string name="toot_delete_media">Delete this media?</string>
-  <string name="toot_error_no_content">Your toot is empty!</string>
-  <string name="toot_visibility_tilte">Visibility of the toot</string>
-  <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-  <string name="toot_sent">The toot has been sent!</string>
-  <string name="toot_reply_content_title">You are replying to this toot:</string>
-  <string name="toot_sensitive">Sensitive content?</string>
+  <string name="toot_no_space">Osiągnąłeś limit 500 znaków!</string>
+  <string name="toot_select_image">Wybierz media</string>
+  <string name="toot_select_image_error">Podczas wybotu mediów wystąpił błąd!</string>
+  <string name="toot_delete_media">Usunąć te media?</string>
+  <string name="toot_error_no_content">Twój toot jest pusty!</string>
+  <string name="toot_visibility_tilte">Widoczność toot</string>
+  <string name="toots_visibility_tilte">Widoczność toot domyślnie: </string>
+  <string name="toot_sent">Toot został wysłany!</string>
+  <string name="toot_reply_content_title">Odpowiadasz na ten toot:</string>
+  <string name="toot_sensitive">Poufne treści?</string>
   <string-array name="toot_visibility">
-    <item>Post to public timelines</item>
-    <item>Do not post to public timelines</item>
+    <item>Zapostuj na publicznej osi czasu</item>
+    <item>Nie postuj do publicznych osi czasu</item>
     <item>Post to followers only</item>
     <item>Post to mentioned users only</item>
   </string-array>
