@@ -212,24 +212,24 @@
   <string name="authorize">Autoryzuj</string>
   <string name="reject">Odrzucić</string>
   <!-- Scheduled toots -->
-  <string name="no_scheduled_toots">No scheduled toot to display!</string>
-  <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-  <string name="remove_scheduled">Delete scheduled toot?</string>
+  <string name="no_scheduled_toots">Brak zaplanowanych toot do wyświetlenia!</string>
+  <string name="no_scheduled_toots_indications">Napisz toot i wybierz <b>harmonogram</b> z górnego menu.</string>
+  <string name="remove_scheduled">Usunąć zaplanowany toot?</string>
   <string name="media_count">Media: %d</string>
-  <string name="toot_scheduled">The toot has been scheduled!</string>
-  <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
-  <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+  <string name="toot_scheduled">Toot został zaplanowany!</string>
+  <string name="toot_scheduled_date">Zaplanowana data musi być większa niż bieżąca godzina!</string>
+  <string name="warning_battery">Włączony jest tryb oszczędzania baterii! To może nie działać zgodnie z oczekiwaniami.</string>
   <!-- Notifications -->
-  <string name="no_notifications">No notification to display</string>
-  <string name="notif_mention">mentioned you</string>
-  <string name="notif_reblog">boosted your status</string>
-  <string name="notif_favourite">favourited your status</string>
-  <string name="notif_follow">followed you</string>
-  <string name="notif_pouet">New toot from %1$s</string>
+  <string name="no_notifications">Brak powiadomień do wyświetlenia</string>
+  <string name="notif_mention">wspomniał o tobie</string>
+  <string name="notif_reblog">wzmocnił twój status</string>
+  <string name="notif_favourite">polubił twój status</string>
+  <string name="notif_follow">zaobserwował Cię</string>
+  <string name="notif_pouet">Niwy toot od %1$s</string>
   <plurals name="other_notifications">
     <item quantity="one">and another notification</item>
     <item quantity="few">and %d other notifications</item>
-    <item quantity="other">and %d other notifications</item>
+    <item quantity="other">dodaj %d innych powiadomień</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
     <item quantity="one">and another toot to discover</item>
