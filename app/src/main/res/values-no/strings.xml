@@ -8,50 +8,50 @@
   <string name="action_privacy">Personvern</string>
   <string name="action_cache">Cache</string>
   <string name="action_logout">Logg ut</string>
-  <string name="login">Login</string>
+  <string name="login">Logg Inn</string>
   <!-- common -->
-  <string name="close">Close</string>
-  <string name="yes">Yes</string>
-  <string name="no">No</string>
-  <string name="cancel">Cancel</string>
-  <string name="download">Download</string>
-  <string name="download_file">Download %1$s</string>
-  <string name="download_over">Download complete</string>
-  <string name="save_file">Save %1$s</string>
-  <string name="save_over">Media saved</string>
-  <string name="download_from" formatted="false">File: %1$s</string>
-  <string name="password">Password</string>
-  <string name="email">Email</string>
-  <string name="accounts">Accounts</string>
+  <string name="close">Lukk</string>
+  <string name="yes">Ja</string>
+  <string name="no">Nei</string>
+  <string name="cancel">Avbryt</string>
+  <string name="download">Nedlasting</string>
+  <string name="download_file">Last ned% 1 $ s</string>
+  <string name="download_over">Nedlasting ferdig</string>
+  <string name="save_file">Lagre% 1 $ s</string>
+  <string name="save_over">Media lagret</string>
+  <string name="download_from" formatted="false">Fil:% 1 $ s</string>
+  <string name="password">Passord</string>
+  <string name="email">E-post</string>
+  <string name="accounts">Kontoer</string>
   <string name="toots">Toots</string>
   <string name="tags">Tags</string>
-  <string name="token">Token</string>
-  <string name="save">Save</string>
-  <string name="restore">Restore</string>
-  <string name="two_factor_authentification">Two-step authentication?</string>
-  <string name="other_instance">Other instance than mastodon.etalab.gouv.fr?</string>
-  <string name="no_result">No results!</string>
-  <string name="instance">Instance</string>
-  <string name="instance_example">Instance: mastodon.social</string>
-  <string name="toast_account_changed" formatted="false">Now works with the account %1$s</string>
-  <string name="add_account">Add an account</string>
-  <string name="clipboard">The content of the toot has been copied to the clipboard</string>
-  <string name="change">Change</string>
-  <string name="choose_picture">Select a picture…</string>
-  <string name="clear">Clean</string>
-  <string name="microphone">Microphone</string>
-  <string name="speech_prompt">Please, say something</string>
-  <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
-  <string name="delete_all">Delete all</string>
-  <string name="translate_toot">Translate this toot.</string>
-  <string name="schedule">Schedule</string>
-  <string name="text_size">Text and icon sizes</string>
-  <string name="text_size_change">Change the current text size:</string>
-  <string name="icon_size_change">Change the current icon size:</string>
-  <string name="next">Next</string>
-  <string name="previous">Previous</string>
-  <string name="open_with">Open with</string>
-  <string name="validate">Validate</string>
+  <string name="token">Pollett</string>
+  <string name="save">Lagre</string>
+  <string name="restore">Restaurere</string>
+  <string name="two_factor_authentification">To-trinns autentisering?</string>
+  <string name="other_instance">Annet enn mastodon.etalab.gouv.fr?</string>
+  <string name="no_result">Ingen resultater!</string>
+  <string name="instance">Forekomst</string>
+  <string name="instance_example">Tilfelle: mastodon.social</string>
+  <string name="toast_account_changed" formatted="false">Nå jobber med kontoen% 1 $ s</string>
+  <string name="add_account">Legg til en konto</string>
+  <string name="clipboard">Innholdet av tooten er kopiert til utklippstavlen</string>
+  <string name="change">Endring</string>
+  <string name="choose_picture">Velg et bilde…</string>
+  <string name="clear">Ren</string>
+  <string name="microphone">Mikrofon</string>
+  <string name="speech_prompt">Si noe, vær så snill</string>
+  <string name="speech_not_supported">Beklager! Enheten støtter ikke taleinngangen!</string>
+  <string name="delete_all">Slette alle</string>
+  <string name="translate_toot">Oversett denne tooten.</string>
+  <string name="schedule">Rute</string>
+  <string name="text_size">Tekst- og ikonstørrelser</string>
+  <string name="text_size_change">Endre gjeldende tekststørrelse:</string>
+  <string name="icon_size_change">Endre gjeldende ikonstørrelse:</string>
+  <string name="next">Neste</string>
+  <string name="previous">Tidligere</string>
+  <string name="open_with">Åpne med</string>
+  <string name="validate">Validere</string>
   <string name="media">Media</string>
   <string name="share_with">Share with</string>
   <string name="shared_via">Shared via Mastalab</string>
@@ -351,38 +351,35 @@
   <string name="action_no_action">No action</string>
   <string name="action_unmute">Unmute</string>
   <string name="request_sent">Request sent</string>
-  <string name="followed_by">Follows you</string>
-  <string name="action_search">Search</string>
+  <string name="followed_by">Følger deg</string>
+  <string name="action_search">Søke</string>
   <!-- Quick settings for notifications -->
-  <string name="settings_popup_title">Push notifications</string>
+  <string name="settings_popup_title">Trykk på varsler</string>
   <string name="settings_popup_message">
-        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
-    </string>
-  <string name="settings_popup_timeline">For unread toots in home time-line?</string>
-  <string name="settings_popup_notification">For unread notifications?</string>
+Vennligst bekreft push notifications som du vil motta.
+Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldinger-fanen.    </string>
+  <string name="settings_popup_timeline">For uleste toots i hjemmetidslinjen?</string>
+  <string name="settings_popup_notification">For uleste varsler?</string>
   <!-- CACHE -->
-  <string name="cache_title">Clear cache</string>
-  <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+  <string name="cache_title">Tøm cache</string>
+  <string name="cache_message">Det er% 1 $ s med data i hurtigbufferen. \ N \ nVil du slette dem?</string>
   <string name="cache_units">Mb</string>
-  <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+  <string name="toast_cache_clear">Cachen ble ryddet! % 1 $ s ble utgitt</string>
   <!-- PRIVACY -->
-  <string name="privacy_data_title">Recorded data</string>
+  <string name="privacy_data_title">Registrerte data</string>
   <string name="privacy_data">
-        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
-    </string>
-  <string name="privacy_authorizations_title">Permissions:</string>
+Bare grunnleggende informasjon fra kontoer lagres på enheten.
+ Disse dataene er strengt konfidensielle og kan bare brukes av søknaden.
+ Hvis du sletter programmet, fjerner du umiddelbart disse dataene. \ N
+ &#9888; Logg inn og passord lagres aldri. De brukes kun under sikker autentisering (SSL) med en forekomst.    </string>
+  <string name="privacy_authorizations_title">Tillatelser:</string>
   <string name="privacy_authorizations">
-        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
-        - <b>INTERNET</b>: Used for queries to an instance.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
-        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
-        - <b>WAKE_LOCK</b>: Used during the notification service.
-    </string>
+<b> ACCESS_NETWORK_STATE </ b>: Brukes til å oppdage om enheten er koblet til et WIFI-nettverk. \ n
+         - <b> INTERNET </ b>: Brukes for spørringer til en forekomst. \ n
+         - <b> WRITE_EXTERNAL_STORAGE </ b>: Brukes til å lagre media eller flytte appen på et SD-kort. \ n
+         - <b> READ_EXTERNAL_STORAGE </ b>: Brukes til å legge til media til toots. \ n
+         - <b> BOOT_COMPLETED </ b>: Brukes til å starte varslingstjenesten. \ n
+         - <b> WAKE_LOCK </ b>: Brukes under varslingstjenesten.    </string>
   <string name="privacy_API_authorizations_title">API permissions:</string>
   <string name="privacy_API_authorizations">
         - <b>Read</b>: Read data.\n
