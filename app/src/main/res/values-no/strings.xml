@@ -180,43 +180,43 @@
   <string name="choose_accounts">Choose an account</string>
   <string name="select_accounts">Select some accounts</string>
   <string name="remove_draft">Remove draft?</string>
-  <string name="show_reply">Click on the button to display the original toot</string>
-  <string name="upload_form_description">Describe for the visually impaired</string>
+  <string name="show_reply">Klikk på knappen for å vise originaltårnet</string>
+  <string name="upload_form_description">Beskriv for synskadede</string>
   <!-- Instance -->
-  <string name="instance_no_description">No description available!</string>
+  <string name="instance_no_description">Ingen beskrivelse tilgjengelig!</string>
   <!-- About -->
-  <string name="about_vesrion">Release %1$s</string>
-  <string name="about_developer">Developer:</string>
-  <string name="about_license">License: </string>
+  <string name="about_vesrion">Slett% 1 $ s</string>
+  <string name="about_developer">Utvikler:</string>
+  <string name="about_license">Tillatelse: </string>
   <string name="about_license_action">GNU GPL V3</string>
-  <string name="about_code">Source code: </string>
-  <string name="about_yandex">Translation of toots:</string>
-  <string name="about_thekinrar">Search instances:</string>
+  <string name="about_code">Kildekode: </string>
+  <string name="about_yandex">Oversettelse av toots:</string>
+  <string name="about_thekinrar">Søk forekomster:</string>
   <string name="about_thekinrar_action">instances.social</string>
-  <string name="thanks_text_logo">Icon designer:</string>
+  <string name="thanks_text_logo">Ikon designer:</string>
   <!-- Conversation -->
-  <string name="conversation">Conversation</string>
+  <string name="conversation">Samtale</string>
   <!-- Accounts -->
-  <string name="no_accounts">No account to display</string>
-  <string name="no_follow_request">No follow request</string>
-  <string name="status_cnt">Toots \n %1$s</string>
-  <string name="following_cnt">Following \n %1$s</string>
-  <string name="followers_cnt">Followers \n %1$s</string>
-  <string name="pins_cnt">Pinned \n %d</string>
-  <string name="authorize">Authorize</string>
-  <string name="reject">Reject</string>
+  <string name="no_accounts">Ingen konto å vise</string>
+  <string name="no_follow_request">Ingen følg forespørsel</string>
+  <string name="status_cnt">Toots \ n% 1 $ s</string>
+  <string name="following_cnt">Følger \ n% 1 $ s</string>
+  <string name="followers_cnt">Følgere \ n% 1 $ s</string>
+  <string name="pins_cnt">Pinned \ n% d</string>
+  <string name="authorize">Autorisere</string>
+  <string name="reject">Autorisere</string>
   <!-- Scheduled toots -->
-  <string name="no_scheduled_toots">No scheduled toot to display!</string>
-  <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-  <string name="remove_scheduled">Delete scheduled toot?</string>
-  <string name="media_count">Media: %d</string>
-  <string name="toot_scheduled">The toot has been scheduled!</string>
-  <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
-  <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+  <string name="no_scheduled_toots">Ingen planlagt toot å vise!</string>
+  <string name="no_scheduled_toots_indications">Skriv et toot og velg deretter <b> Planlegg </ b> fra toppmenyen.</string>
+  <string name="remove_scheduled">Slett planlagt toot?</string>
+  <string name="media_count">Medier:% d</string>
+  <string name="toot_scheduled">Trollet har blitt planlagt!</string>
+  <string name="toot_scheduled_date">Den planlagte datoen må være større enn den nåværende timen!</string>
+  <string name="warning_battery">Batterisparer er aktivert! Det virker kanskje ikke som forventet.</string>
   <!-- Notifications -->
-  <string name="no_notifications">No notification to display</string>
-  <string name="notif_mention">mentioned you</string>
-  <string name="notif_reblog">boosted your status</string>
+  <string name="no_notifications">Ingen melding for å vise</string>
+  <string name="notif_mention">nevnte deg</string>
+  <string name="notif_reblog">økt statusen din</string>
   <string name="notif_favourite">favourited your status</string>
   <string name="notif_follow">followed you</string>
   <string name="notif_pouet">New toot from %1$s</string>
@@ -294,7 +294,7 @@
   <string name="set_notif_follow_add">Gi beskjed når noen favoriserer statusen din</string>
   <string name="set_notif_follow_mention">Gi beskjed når noen nevner deg</string>
   <string name="set_share_validation">Vis bekreftelsesdialog før du øker</string>
-  <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
+  <string name="set_share_validation_fav">Vis bekreftelsesdialog før du legger til i favoritter</string>
   <string name="settings_title_more_options">Avanserte innstillinger</string>
   <string name="set_wifi_only">Varsle kun på WIFI</string>
   <string name="set_notify">Gi beskjed?</string>
