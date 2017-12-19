@@ -380,48 +380,43 @@ Bare grunnleggende informasjon fra kontoer lagres på enheten.
          - <b> READ_EXTERNAL_STORAGE </ b>: Brukes til å legge til media til toots. \ n
          - <b> BOOT_COMPLETED </ b>: Brukes til å starte varslingstjenesten. \ n
          - <b> WAKE_LOCK </ b>: Brukes under varslingstjenesten.    </string>
-  <string name="privacy_API_authorizations_title">API permissions:</string>
+  <string name="privacy_API_authorizations_title">API-tillatelser:</string>
   <string name="privacy_API_authorizations">
-        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
-    </string>
-  <string name="privacy_API_title">Tracking and Libraries</string>
+- <b> Les </ b>: Les data. \ n
+         - <b> Skriv </ b>: Legg inn statuser og last opp medier for statuser. \ n
+         - <b> Følg </ b>: Følg, unollow, block, unblock. \ n \ n
+         <b> ⚠ Disse handlingene utføres bare når brukeren ber om dem. </ b>    </string>
+  <string name="privacy_API_title">Sporing og biblioteker</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
-    </string>
-  <string name="privacy_API_yandex_title">Translation of toots</string>
+Søknaden <b> bruker ikke sporingsverktøy </ b> (målgruppemåling, feilrapportering, etc.) og inneholder ingen reklame. \ N \ n
+         Bruken av biblioteker minimeres: \ n
+         - <b> Glid </ b>: For å administrere media \ n
+         - <b> Android-jobb </ b>: For å administrere tjenester \ n
+         - <b> PhotoView </ b>: For å administrere bilder \ n    </string>
+  <string name="privacy_API_yandex_title">Oversettelse av toots</string>
   <string name="privacy_API_yandex_authorizations">
-        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
-    </string>
+Programmet tilbyr muligheten til å oversette toots ved hjelp av lokaliteten til enheten og Yandex API. \ N
+         Yandex har sin riktige personvernpolicy som finnes her: https://yandex.ru/legal/confidential/?lang=en    </string>
   <string name="thanks_text">
-        Thank you to Stéphane for the logo.
-    </string>
+Takk til Stéphane for logoen.    </string>
   <string name="thanks_text_dev">
-        Thank you to:
-    </string>
-  <string name="filter_regex">Filter out by regular expressions</string>
-  <string name="search">Search</string>
-  <string name="delete">Delete</string>
-  <string name="fetch_more_toots">Fetch more toots…</string>
+Takk til:    </string>
+  <string name="filter_regex">Filtrer ut med vanlige uttrykk</string>
+  <string name="search">Søke</string>
+  <string name="delete">Slett</string>
+  <string name="fetch_more_toots">Hent flere toots…</string>
   <!-- About lists -->
-  <string name="action_lists">Lists</string>
-  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
-  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-  <string name="action_lists_add_to">Add to list</string>
-  <string name="action_lists_remove_from">Remove from list</string>
-  <string name="action_lists_create">Add list</string>
-  <string name="action_lists_delete">Delete list</string>
-  <string name="action_lists_update">Edit list</string>
-  <string name="action_lists_title_placeholder">New list title</string>
-  <string name="action_lists_search_users">Search among people you follow</string>
-  <string name="action_lists_owner">Your lists</string>
+  <string name="action_lists">Lister</string>
+  <string name="action_lists_confirm_delete">Er du sikker på at du vil slette denne listen permanent?</string>
+  <string name="action_lists_empty_content">Det er ingenting i denne listen enda. Når medlemmer av denne listen legger inn nye statuser, vises de her.</string>
+  <string name="action_lists_add_to">Legg til i listen</string>
+  <string name="action_lists_remove_from">Fjern fra liste</string>
+  <string name="action_lists_create">Legg til liste</string>
+  <string name="action_lists_delete">Slett liste</string>
+  <string name="action_lists_update">Rediger liste</string>
+  <string name="action_lists_title_placeholder">Ny tittel tittel</string>
+  <string name="action_lists_search_users">Søk blant personer du følger</string>
+  <string name="action_lists_owner">Dine lister</string>
   <!-- Migration -->
-  <string name="account_moved_to">%1$s has moved to %2$s</string>
+  <string name="account_moved_to">% 1 $ s er flyttet til% 2 $ s</string>
 </resources>
