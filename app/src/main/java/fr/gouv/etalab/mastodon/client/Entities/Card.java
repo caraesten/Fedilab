@@ -14,8 +14,6 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.client.Entities;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 
 /**
  * Created by Thomas on 23/04/2017.
@@ -24,7 +22,7 @@ import android.os.Parcelable;
  * All values are not implemented
  */
 
-public class Card implements Parcelable {
+public class Card{
 
     private String url;
     private String title;
@@ -34,25 +32,6 @@ public class Card implements Parcelable {
 
     public Card(){}
 
-    public Card(Parcel in) {
-        url = in.readString();
-        title = in.readString();
-        description = in.readString();
-        image = in.readString();
-        type = in.readString();
-    }
-
-    public static final Creator<Card> CREATOR = new Creator<Card>() {
-        @Override
-        public Card createFromParcel(Parcel in) {
-            return new Card(in);
-        }
-
-        @Override
-        public Card[] newArray(int size) {
-            return new Card[size];
-        }
-    };
 
     public String getUrl() {
         return url;
@@ -94,17 +73,5 @@ public class Card implements Parcelable {
         this.type = type;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(url);
-        parcel.writeString(title);
-        parcel.writeString(description);
-        parcel.writeString(image);
-        parcel.writeString(type);
-    }
 }
