@@ -187,6 +187,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     private AlertDialog dialogTrans;
     private AlertDialog alertDialogEmoji;
     private String mentionAccount;
+    private String idRedirect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -274,6 +275,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             sharedContentIni = b.getString("sharedContent", null);
             sharedSubject = b.getString("sharedSubject", null);
             mentionAccount = b.getString("mentionAccount", null);
+            idRedirect =  b.getString("idRedirect", null);
             restoredScheduled = b.getBoolean("restoredScheduled", false);
             // ACTION_SEND route
             if (b.getInt("uriNumberMast", 0) == 1) {
@@ -1506,7 +1508,10 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 if( status != null ) {
                     Intent intent = new Intent(getApplicationContext(), ShowConversationActivity.class);
                     Bundle b = new Bundle();
-                    b.putString("statusId", status.getId());
+                    if( idRedirect == null)
+                        b.putString("statusId", status.getId());
+                    else
+                        b.putString("statusId", idRedirect);
                     intent.putExtras(b);
                     startActivity(intent);
                     finish();

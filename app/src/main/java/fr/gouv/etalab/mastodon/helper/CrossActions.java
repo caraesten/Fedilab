@@ -26,6 +26,8 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +38,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
+import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.AccountsSearchAdapter;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
@@ -210,25 +213,48 @@ public class CrossActions {
             });
             builderSingle.setAdapter(accountsSearchAdapter, new DialogInterface.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Account account = accountArray[which];
-                    Intent intent = new Intent(context, TootActivity.class);
-                    Bundle b = new Bundle();
-                    if( status.getReblog() != null )
-                        b.putParcelable("tootReply", status.getReblog());
-                    else
-                        b.putParcelable("tootReply", status);
-                    b.putParcelable("accountReply", account);
-                    intent.putExtras(b); //Put your id to your next Intent
-                    context.startActivity(intent);
-                    if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
-                        try {
-                            //Avoid to open multi activities when replying in a conversation
-                            ((ShowConversationActivity)context).finish();
-                        }catch (Exception ignored){}
+                public void onClick(final DialogInterface dialog, int which) {
+                    final Account account = accountArray[which];
 
-                    }
-                    dialog.dismiss();
+                    new AsyncTask<Void, Void, Void>() {
+                        private List<fr.gouv.etalab.mastodon.client.Entities.Status> remoteStatuses;
+                        private WeakReference<Context> contextReference = new WeakReference<>(context);
+
+                        @Override
+                        protected Void doInBackground(Void... voids) {
+                            API api = new API(contextReference.get(), account.getInstance(), account.getToken());
+                            Results search = api.search(status.getReblog()!=null?status.getReblog().getUri():status.getUri());
+                            if( search != null){
+                                remoteStatuses = search.getStatuses();
+                            }
+                            return null;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Void result) {
+                            Intent intent = new Intent(contextReference.get(), TootActivity.class);
+                            Bundle b = new Bundle();
+                            if( remoteStatuses.get(0).getReblog() != null ) {
+                                b.putParcelable("tootReply", remoteStatuses.get(0).getReblog());
+                                b.putString("idRedirect", status.getReblog().getId());
+                            }else {
+                                b.putParcelable("tootReply", remoteStatuses.get(0));
+                                b.putString("idRedirect", status.getId());
+                            }
+                            b.putParcelable("accountReply", account);
+                            intent.putExtras(b); //Put your id to your next Intent
+                            contextReference.get().startActivity(intent);
+                            if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
+                                try {
+                                    //Avoid to open multi activities when replying in a conversation
+                                    ((ShowConversationActivity)contextReference.get()).finish();
+                                }catch (Exception ignored){}
+
+                            }
+                            dialog.dismiss();
+                        }
+                    }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
+
                 }
             });
             builderSingle.show();
