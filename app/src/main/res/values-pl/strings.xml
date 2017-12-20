@@ -127,26 +127,22 @@
   <plurals name="preview_replies">
     <item quantity="one">%d odpowiedzi</item>
     <item quantity="few">%d odpowiedzi</item>
-    <item quantity="many">%d odpowiedzi</item>
     <item quantity="other">%d odpowiedzi</item>
   </plurals>
   <!-- Date -->
   <plurals name="date_seconds">
     <item quantity="one">%d sekund temu</item>
     <item quantity="few">%d sekund temu</item>
-    <item quantity="many">%d sekund temu</item>
     <item quantity="other">%d sekund temu</item>
   </plurals>
   <plurals name="date_minutes">
     <item quantity="one">%d minuty temu</item>
     <item quantity="few">%d minuty temu</item>
-    <item quantity="many">%d minuty temu</item>
     <item quantity="other">%d minuty temu</item>
   </plurals>
   <plurals name="date_hours">
     <item quantity="one">%d godzin temu</item>
     <item quantity="few">%d godzin temu</item>
-    <item quantity="many">%d godzin temu</item>
     <item quantity="other">%d godzin temu</item>
   </plurals>
   <string name="date_yesterday">Wczoraj</string>
@@ -155,13 +151,11 @@
   <plurals name="date_month">
     <item quantity="one">%d miesiące temu</item>
     <item quantity="few">%d miesiące temu</item>
-    <item quantity="many">%d miesiące temu</item>
     <item quantity="other">%d miesiące temu</item>
   </plurals>
   <plurals name="date_year">
     <item quantity="one">%d lat temu</item>
     <item quantity="few">%d lat temu</item>
-    <item quantity="many">%d lat temu</item>
     <item quantity="other">%d lat temu</item>
   </plurals>
   <!-- TOOT -->
@@ -235,13 +229,11 @@
   <plurals name="other_notifications">
     <item quantity="one">dodaj %d innych powiadomień</item>
     <item quantity="few">dodaj %d innych powiadomień</item>
-    <item quantity="many">dodaj %d innych powiadomień</item>
     <item quantity="other">dodaj %d innych powiadomień</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
     <item quantity="one">i kolejne %d toot do odkrycia</item>
     <item quantity="few">i kolejne %d toot do odkrycia</item>
-    <item quantity="many">i kolejne %d toot do odkrycia</item>
     <item quantity="other">i kolejne %d toot do odkrycia</item>
   </plurals>
   <string name="delete_notification_ask">Usunąć powiadomienie?</string>
