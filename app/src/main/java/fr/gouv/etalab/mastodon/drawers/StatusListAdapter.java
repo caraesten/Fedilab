@@ -76,6 +76,7 @@ import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
+import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRepliesAsyncTask;
@@ -224,7 +225,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ImageView new_element;
         LinearLayout status_spoiler_mention_container;
         TextView status_mention_spoiler;
-
+        LinearLayout status_cardview;
+        ImageView status_cardview_image;
+        TextView status_cardview_title, status_cardview_content, status_cardview_url;
         public View getView(){
             return itemView;
         }
@@ -274,6 +277,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_action_container = itemView.findViewById(R.id.status_action_container);
             status_spoiler_mention_container = itemView.findViewById(R.id.status_spoiler_mention_container);
             status_mention_spoiler = itemView.findViewById(R.id.status_mention_spoiler);
+            status_cardview = itemView.findViewById(R.id.status_cardview);
+            status_cardview_image = itemView.findViewById(R.id.status_cardview_image);
+            status_cardview_title = itemView.findViewById(R.id.status_cardview_title);
+            status_cardview_content = itemView.findViewById(R.id.status_cardview_content);
+            status_cardview_url = itemView.findViewById(R.id.status_cardview_url);
         }
     }
 
@@ -858,18 +866,42 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.main_container.setBackgroundResource(R.color.mastodonC1_);
                 }
             }else {
-                if( theme == Helper.THEME_LIGHT){
-                    if( position == conversationPosition){
+                if( position == conversationPosition){
+                    if( theme == Helper.THEME_LIGHT)
                         holder.main_container.setBackgroundResource(R.color.mastodonC3_);
-                    }else {
-                        holder.main_container.setBackgroundResource(R.color.mastodonC3__);
-                    }
-                }else {
-                    if( position == conversationPosition){
+                    else
                         holder.main_container.setBackgroundResource(R.color.mastodonC1___);
+                    if( status.getCard() != null){
+                        holder.status_cardview_content.setText(status.getCard().getDescription());
+                        holder.status_cardview_title.setText(status.getCard().getTitle());
+                        holder.status_cardview_url.setText(status.getCard().getUrl());
+                        if( status.getCard().getImage() != null) {
+                            holder.status_cardview_image.setVisibility(View.VISIBLE);
+                            Glide.with(holder.status_cardview_image.getContext())
+                                    .load(status.getCard().getImage())
+                                    .into(holder.status_cardview_image);
+                        }else
+                            holder.status_cardview_image.setVisibility(View.GONE);
+                        holder.status_cardview.setVisibility(View.VISIBLE);
+                        holder.status_cardview.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(context, WebviewActivity.class);
+                                Bundle b = new Bundle();
+                                b.putString("url", status.getCard().getUrl());
+                                intent.putExtras(b);
+                                context.startActivity(intent);
+                            }
+                        });
                     }else {
-                        holder.main_container.setBackgroundResource(R.color.mastodonC1_);
+                        holder.status_cardview.setVisibility(View.GONE);
                     }
+
+                }else {
+                    if( theme == Helper.THEME_LIGHT)
+                        holder.main_container.setBackgroundResource(R.color.mastodonC3__);
+                    else
+                        holder.main_container.setBackgroundResource(R.color.mastodonC1_);
                 }
             }
 

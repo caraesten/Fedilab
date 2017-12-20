@@ -47,15 +47,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveCardAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveContextAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Card;
 import fr.gouv.etalab.mastodon.client.Entities.Context;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveCardInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveContextInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -67,7 +70,7 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
  * Show conversation activity class
  */
 
-public class ShowConversationActivity extends BaseActivity implements OnRetrieveFeedsInterface, OnRetrieveContextInterface {
+public class ShowConversationActivity extends BaseActivity implements OnRetrieveFeedsInterface, OnRetrieveContextInterface, OnRetrieveCardInterface {
 
 
     private String statusId;
@@ -77,7 +80,7 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
     private boolean isRefreshed;
     private ImageView pp_actionBar;
     private List<Status> statuses;
-
+    private StatusListAdapter statusListAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -257,7 +260,7 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
             }
         }
 
-        StatusListAdapter statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, position, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
+        statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, position, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
         lv_status.setAdapter(statusListAdapter);
         statusListAdapter.notifyDataSetChanged();
         loader.setVisibility(View.GONE);
@@ -268,7 +271,21 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         }else {
             lv_status.smoothScrollToPosition(position);
         }
+        new RetrieveCardAsyncTask(getApplicationContext(), initialStatus.getId(), ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
 
+    @Override
+    public void onRetrieveAccount(Card card) {
+        int position = 0;
+        for(Status status: this.statuses) {
+            if( initialStatus.getId().equals(status.getId())) {
+                this.statuses.get(position).setCard(card);
+                initialStatus.setCard(card);
+                statusListAdapter.notifyItemChanged(position);
+                return;
+            }
+            position++;
+        }
+    }
 }

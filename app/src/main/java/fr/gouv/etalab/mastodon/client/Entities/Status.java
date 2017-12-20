@@ -86,6 +86,7 @@ public class Status implements Parcelable{
     private List<Emojis> emojis;
     private List<Tag> tags;
     private Application application;
+    private Card card;
     private String language;
     private boolean isTranslated = false;
     private boolean isEmojiFound = false;
@@ -112,6 +113,7 @@ public class Status implements Parcelable{
         in_reply_to_id = in.readString();
         in_reply_to_account_id = in.readString();
         reblog = in.readParcelable(Status.class.getClassLoader());
+        card = in.readParcelable(Card.class.getClassLoader());
         account = in.readParcelable(Account.class.getClassLoader());
         mentions = in.readArrayList(Mention.class.getClassLoader());
         content = in.readString();
@@ -334,6 +336,7 @@ public class Status implements Parcelable{
         dest.writeString(in_reply_to_account_id);
         dest.writeParcelable(reblog, flags);
         dest.writeParcelable(account, flags);
+        dest.writeParcelable(card, flags);
         dest.writeList(mentions);
         dest.writeString(content);
         dest.writeString(contentTranslated);
@@ -751,4 +754,11 @@ public class Status implements Parcelable{
         return otherStatus != null && (otherStatus == this || otherStatus instanceof Status && this.getId().equals(((Status) otherStatus).getId()));
     }
 
+    public Card getCard() {
+        return card;
+    }
+
+    public void setCard(Card card) {
+        this.card = card;
+    }
 }

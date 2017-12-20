@@ -1408,6 +1408,21 @@ public class API {
 
 
     /**
+     * Get card
+     * @param statusId String, the id of the status
+     * @return Card, the card (null if none)
+     */
+    public Card getCard(String statusId){
+
+        Card card = null;
+        try {
+            String response = new HttpsConnection().get(getAbsoluteUrl(String.format("/statuses/%s/card", statusId)), 60, null, prefKeyOauthTokenT);
+            card = parseCardResponse(new JSONObject(response));
+        }catch (Exception ignored) {ignored.printStackTrace();}
+        return card;
+    }
+
+    /**
      * Update a list by its id
      * @param id String, the id of the list
      * @param title String, the title of the list
@@ -1469,6 +1484,25 @@ public class API {
         return results;
     }
 
+    /**
+     * Parse json response an unique Car
+     * @param resobj JSONObject
+     * @return Card
+     */
+    private Card parseCardResponse(JSONObject resobj){
+
+        Card card = new Card();
+        try {
+            card.setUrl(resobj.get("url").toString());
+            card.setTitle(resobj.get("title").toString());
+            card.setDescription(resobj.get("description").toString());
+            card.setImage(resobj.get("image").toString());
+            card.setType(resobj.get("type").toString());
+        } catch (JSONException e) {
+            card = null;
+        }
+        return card;
+    }
 
     /**
      * Parse json response an unique instance social result
