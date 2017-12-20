@@ -65,6 +65,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -72,10 +73,12 @@ import java.util.regex.Matcher;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveInstanceAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMetaDataAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteDataAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
+import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
@@ -88,6 +91,7 @@ import fr.gouv.etalab.mastodon.fragments.DisplaySearchFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveInstanceInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMetaDataInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
 import fr.gouv.etalab.mastodon.services.LiveNotificationService;
 import fr.gouv.etalab.mastodon.services.StreamingService;
@@ -114,7 +118,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 
 public abstract class BaseMainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface {
+        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface, OnRetrieveRemoteAccountInterface {
 
     private FloatingActionButton toot, delete_all, add_new;
     private HashMap<String, String> tagTile = new HashMap<>();
@@ -1104,6 +1108,23 @@ public abstract class BaseMainActivity extends BaseActivity
                     finish();
                 }
             }
+        }else if (Intent.ACTION_VIEW.equals(action)) {
+            String url = intent.getDataString();
+            if( url == null)
+                return;
+            Matcher matcher;
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
+                matcher = Patterns.WEB_URL.matcher(url);
+            else
+                matcher = Helper.urlPattern.matcher(url);
+            boolean isUrl = false;
+            while (matcher.find()){
+                isUrl = true;
+            }
+            if(!isUrl)
+                return;
+            //Here we know that the intent contains a valid URL
+            new RetrieveRemoteDataAsyncTask(BaseMainActivity.this, url, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
         intent.replaceExtras(new Bundle());
         intent.setAction("");
@@ -1429,6 +1450,27 @@ public abstract class BaseMainActivity extends BaseActivity
 
     public void setBookmark(@SuppressWarnings("SameParameterValue") String bookmark) {
         this.bookmark = bookmark;
+    }
+
+    @Override
+    public void onRetrieveRemoteAccount(Results results) {
+        if (results == null)
+            return;
+        List<Account> accounts = results.getAccounts();
+        List<Status> statuses = results.getStatuses();
+        if( accounts !=null && accounts.size() > 0){
+            Intent intent = new Intent(BaseMainActivity.this, ShowAccountActivity.class);
+            Bundle b = new Bundle();
+            b.putString("accountId", accounts.get(0).getId());
+            intent.putExtras(b);
+            startActivity(intent);
+        }else if( statuses != null && statuses.size() > 0){
+            Intent intent = new Intent(getApplicationContext(), ShowConversationActivity.class);
+            Bundle b = new Bundle();
+            b.putString("statusId", statuses.get(0).getId());
+            intent.putExtras(b);
+            startActivity(intent);
+        }
     }
 
 

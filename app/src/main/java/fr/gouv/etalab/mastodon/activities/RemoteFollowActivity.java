@@ -59,7 +59,7 @@ import java.util.List;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRelationshipAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteAccountsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteDataAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
@@ -238,7 +238,7 @@ public class RemoteFollowActivity extends BaseActivity implements OnRetrieveRemo
                 rf_no_result.setVisibility(View.GONE);
                 if( screen_name.startsWith("@"))
                     screen_name = screen_name.substring(1);
-                new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), screen_name, instance_name, RemoteFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new RetrieveRemoteDataAsyncTask(getApplicationContext(), screen_name, instance_name, RemoteFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 assert imm != null;
                 imm.hideSoftInputFromWindow(rf_search.getWindowToken(), 0);

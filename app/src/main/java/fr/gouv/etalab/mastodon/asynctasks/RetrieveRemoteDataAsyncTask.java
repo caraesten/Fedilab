@@ -26,23 +26,30 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
 
 /**
  * Created by Thomas on 22/07/2017.
- * Retrieves a remote account via its webpage
+ * Retrieves a remote account via its web page
+ * Update of 20/12/2017: extended to other URLs
  */
 
-public class RetrieveRemoteAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
+
+public class RetrieveRemoteDataAsyncTask extends AsyncTask<Void, Void, Void> {
 
     private OnRetrieveRemoteAccountInterface listener;
     private String url;
     private Results results;
     private WeakReference<Context> contextReference;
 
-    public RetrieveRemoteAccountsAsyncTask(Context context, String username, String instance, OnRetrieveRemoteAccountInterface onRetrieveRemoteAccountInterface){
+
+    public RetrieveRemoteDataAsyncTask(Context context, String username, String instance, OnRetrieveRemoteAccountInterface onRetrieveRemoteAccountInterface){
         this.url = "https://" + instance  + "/@" + username;
         this.listener = onRetrieveRemoteAccountInterface;
         this.contextReference = new WeakReference<>(context);
     }
 
-
+    public RetrieveRemoteDataAsyncTask(Context context, String url, OnRetrieveRemoteAccountInterface onRetrieveRemoteAccountInterface){
+        this.url = url;
+        this.listener = onRetrieveRemoteAccountInterface;
+        this.contextReference = new WeakReference<>(context);
+    }
 
     @Override
     protected Void doInBackground(Void... params) {

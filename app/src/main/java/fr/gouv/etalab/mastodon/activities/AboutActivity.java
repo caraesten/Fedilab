@@ -33,7 +33,7 @@ import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRelationshipAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteAccountsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteDataAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
@@ -148,10 +148,10 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         accountSearchWebAdapterDeveloper = new AccountSearchDevAdapter(AboutActivity.this, developers);
         lv_developers.setAdapter(accountSearchWebAdapterDeveloper);
 
-        new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), "tom79", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), "daycode", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), "PhotonQyv", "mastodon.xyz", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new RetrieveRemoteAccountsAsyncTask(getApplicationContext(), "angrytux", "social.tchncs.de", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new RetrieveRemoteDataAsyncTask(getApplicationContext(), "tom79", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new RetrieveRemoteDataAsyncTask(getApplicationContext(), "daycode", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new RetrieveRemoteDataAsyncTask(getApplicationContext(), "PhotonQyv", "mastodon.xyz", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new RetrieveRemoteDataAsyncTask(getApplicationContext(), "angrytux", "social.tchncs.de", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 
