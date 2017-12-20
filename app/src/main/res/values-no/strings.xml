@@ -33,7 +33,7 @@
     <string name="no_result">Ingen resultater!</string>
     <string name="instance">Forekomst</string>
     <string name="instance_example">Tilfelle: mastodon.social</string>
-    <string name="toast_account_changed" formatted="false">Nå jobber med kontoen% 1 $ s</string>
+    <string name="toast_account_changed" formatted="false">Nå jobber med kontoen %1$s</string>
     <string name="add_account">Legg til en konto</string>
     <string name="clipboard">Innholdet av tooten er kopiert til utklippstavlen</string>
     <string name="change">Endring</string>
@@ -85,7 +85,7 @@
     <string name="profile">Profil</string>
     <string name="make_a_choice">Hva vil du gjøre?</string>
     <string name="delete_account_title">Slett en konto</string>
-    <string name="delete_account_message" formatted="false">Slett kontoen% 1 $ s fra programmet?</string>
+    <string name="delete_account_message" formatted="false">Slett kontoen %1$s fra programmet?</string>
     <string name="send_email">Send en epost</string>
     <string name="choose_file">Vennligst velg en fil</string>
     <string name="choose_file_error">Ingen filutforsker funnet!</string>
@@ -102,7 +102,7 @@
     <string name="fav_removed">Tooten ble fjernet fra favoritter!</string>
     <string name="reblog_added">Tooten ble økt!</string>
     <string name="reblog_removed">Tooten er ikke lenger økt!</string>
-    <string name="reblog_by">Boostet av% 1 $ s</string>
+    <string name="reblog_by">Boostet av %1$s</string>
     <string name="favourite_add">Legg til denne tooten til dine favoritter?</string>
     <string name="favourite_remove">Fjern denne tooten fra favorittene dine?</string>
     <string name="reblog_add">Boost denne tooten?</string>
@@ -125,28 +125,28 @@
         <item>Fjern denne tooten?</item>
     </string-array>
     <plurals name="preview_replies">
-        <item quantity="one">% d svar</item>
-        <item quantity="other">% d svar % d svar</item>
+        <item quantity="one">%d svar</item>
+        <item quantity="other">%d svar</item>
     </plurals>
     <!-- Date -->
     <plurals name="date_seconds">
-        <item quantity="one">% d andre siden</item>
-        <item quantity="other">% d andre siden</item>
+        <item quantity="one">%d andre siden</item>
+        <item quantity="other">%d andre siden</item>
     </plurals>
     <plurals name="date_minutes">
-        <item quantity="one">% d minutt siden</item>
-        <item quantity="other">% d minutt siden</item>
+        <item quantity="one">%d minutt siden</item>
+        <item quantity="other">%d minutt siden</item>
     </plurals>
     <plurals name="date_hours">
-        <item quantity="one">% d time siden</item>
-        <item quantity="other">% d time siden</item>
+        <item quantity="one">%d time siden</item>
+        <item quantity="other">%d time siden</item>
     </plurals>
     <string name="date_yesterday">I går</string>
     <string name="date_day_before_yesterday">Før i går</string>
-    <string name="date_day" formatted="false">% d dager siden</string>
+    <string name="date_day" formatted="false">%d dager siden</string>
     <plurals name="date_month">
-        <item quantity="one">% d måneder siden</item>
-        <item quantity="other">% d måneder siden</item>
+        <item quantity="one">%d måneder siden</item>
+        <item quantity="other">%d måneder siden</item>
     </plurals>
     <plurals name="date_year">
         <item quantity="one">Ett år siden</item>
@@ -185,7 +185,7 @@
     <!-- Instance -->
     <string name="instance_no_description">Ingen beskrivelse tilgjengelig!</string>
     <!-- About -->
-    <string name="about_vesrion">Slett% 1 $ s</string>
+    <string name="about_vesrion">Slett %1$s</string>
     <string name="about_developer">Utvikler:</string>
     <string name="about_license">Tillatelse: </string>
     <string name="about_license_action">GNU GPL V3</string>
@@ -199,17 +199,17 @@
     <!-- Accounts -->
     <string name="no_accounts">Ingen konto å vise</string>
     <string name="no_follow_request">Ingen følg forespørsel</string>
-    <string name="status_cnt">Toots \n% 1 $ s</string>
-    <string name="following_cnt">Følger \n% 1 $ s</string>
-    <string name="followers_cnt">Følgere \n% 1 $ s</string>
-    <string name="pins_cnt">Pinned \n% d</string>
+    <string name="status_cnt">Toots \n %1$s</string>
+    <string name="following_cnt">Følger \n %1$s</string>
+    <string name="followers_cnt">Følgere \n %1$s</string>
+    <string name="pins_cnt">Pinned \n %d</string>
     <string name="authorize">Autorisere</string>
     <string name="reject">Autorisere</string>
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">Ingen planlagt toot å vise!</string>
     <string name="no_scheduled_toots_indications">Skriv et toot og velg deretter <b> Planlegg </b> fra toppmenyen.</string>
     <string name="remove_scheduled">Slett planlagt toot?</string>
-    <string name="media_count">Medier:% d</string>
+    <string name="media_count">Medier: %d</string>
     <string name="toot_scheduled">Trollet har blitt planlagt!</string>
     <string name="toot_scheduled_date">Den planlagte datoen må være større enn den nåværende timen!</string>
     <string name="warning_battery">Batterisparer er aktivert! Det virker kanskje ikke som forventet.</string>
@@ -219,10 +219,10 @@
     <string name="notif_reblog">økt statusen din</string>
     <string name="notif_favourite">favoriserte statusen din</string>
     <string name="notif_follow">fulgte deg</string>
-    <string name="notif_pouet">Ny toot fra% 1 $ s</string>
+    <string name="notif_pouet">Ny toot fra %1$s</string>
     <plurals name="other_notifications">
-        <item quantity="one">og% d andre varsler</item>
-        <item quantity="other">og% d andre varsler</item>
+        <item quantity="one">og %d andre varsler</item>
+        <item quantity="other">og %d andre varsler</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
         <item quantity="one">og en annen toot å oppdage</item>
@@ -265,7 +265,7 @@
     <string name="toast_error_translate">Det oppstod en feil under oversettelsen!</string>
     <string name="toast_toot_saved">Utkast lagret!</string>
     <string name="toast_error_char_limit">Er du sikker på at denne forekomsten tillater dette antall tegn? Vanligvis er denne verdien nær 500 tegn.</string>
-    <string name="toast_visibility_changed">Synligheten til toots er endret for kontoen% 1 $ s</string>
+    <string name="toast_visibility_changed">Synligheten til toots er endret for kontoen %1$s</string>
     <string name="toast_empty_search">Instansnavn og skjermnavn kan ikke være tomt!</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimalisering av lasting</string>
@@ -313,8 +313,8 @@
     <string name="settings_title_hour">Tidsspor for varsler:</string>
     <string name="settings_time_from">Mellom</string>
     <string name="settings_time_to">og</string>
-    <string name="settings_time_greater">Tiden må være større enn% 1 $ s</string>
-    <string name="settings_time_lower">Tiden må være lavere enn% 1 $ s</string>
+    <string name="settings_time_greater">Tiden må være større enn %1$s</string>
+    <string name="settings_time_lower">Tiden må være lavere enn %1$s</string>
     <string name="settings_hour_init">Starttid</string>
     <string name="settings_hour_end">Sluttid</string>
     <string name="embedded_browser">Bruk den innebygde nettleseren</string>
@@ -362,9 +362,9 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="settings_popup_notification">For uleste varsler?</string>
     <!-- CACHE -->
     <string name="cache_title">Tøm cache</string>
-    <string name="cache_message">Det er% 1 $ s med data i hurtigbufferen. \n \nVil du slette dem?</string>
+    <string name="cache_message">Det er %1$s med data i hurtigbufferen. \n \nVil du slette dem?</string>
     <string name="cache_units">Mb</string>
-    <string name="toast_cache_clear">Cachen ble ryddet! % 1 $ s ble utgitt</string>
+    <string name="toast_cache_clear">Cachen ble ryddet!  %1$s ble utgitt</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Registrerte data</string>
     <string name="privacy_data">
@@ -418,5 +418,5 @@ Takk til:    </string>
     <string name="action_lists_search_users">Søk blant personer du følger</string>
     <string name="action_lists_owner">Dine lister</string>
     <!-- Migration -->
-    <string name="account_moved_to">% 1 $ s er flyttet til% 2 $ s</string>
+    <string name="account_moved_to"> %1$s er flyttet til %2$s</string>
 </resources>
