@@ -125,37 +125,43 @@
     <item>Usunąć ren toot?</item>
   </string-array>
   <plurals name="preview_replies">
-    <item quantity="one">%d reply</item>
-    <item quantity="few">%d replies</item>
+    <item quantity="one">%d odpowiedzi</item>
+    <item quantity="few">%d odpowiedzi</item>
+    <item quantity="many">%d odpowiedzi</item>
     <item quantity="other">%d odpowiedzi</item>
   </plurals>
   <!-- Date -->
   <plurals name="date_seconds">
-    <item quantity="one">%d second ago</item>
-    <item quantity="few">%d seconds ago</item>
+    <item quantity="one">%d sekund temu</item>
+    <item quantity="few">%d sekund temu</item>
+    <item quantity="many">%d sekund temu</item>
     <item quantity="other">%d sekund temu</item>
   </plurals>
   <plurals name="date_minutes">
-    <item quantity="one">%d minute ago</item>
+    <item quantity="one">%d minuty temu</item>
     <item quantity="few">%d minuty temu</item>
-    <item quantity="other">%d minutes ago</item>
+    <item quantity="many">%d minuty temu</item>
+    <item quantity="other">%d minuty temu</item>
   </plurals>
   <plurals name="date_hours">
-    <item quantity="one">%d hour ago</item>
-    <item quantity="few">%d hours ago</item>
+    <item quantity="one">%d godzin temu</item>
+    <item quantity="few">%d godzin temu</item>
+    <item quantity="many">%d godzin temu</item>
     <item quantity="other">%d godzin temu</item>
   </plurals>
   <string name="date_yesterday">Wczoraj</string>
   <string name="date_day_before_yesterday">Przedwczoraj</string>
   <string name="date_day" formatted="false">%d dni temu</string>
   <plurals name="date_month">
-    <item quantity="one">%d month ago</item>
-    <item quantity="few">%d months ago</item>
+    <item quantity="one">%d miesiące temu</item>
+    <item quantity="few">%d miesiące temu</item>
+    <item quantity="many">%d miesiące temu</item>
     <item quantity="other">%d miesiące temu</item>
   </plurals>
   <plurals name="date_year">
-    <item quantity="one">One year ago</item>
-    <item quantity="few">%d years ago</item>
+    <item quantity="one">%d lat temu</item>
+    <item quantity="few">%d lat temu</item>
+    <item quantity="many">%d lat temu</item>
     <item quantity="other">%d lat temu</item>
   </plurals>
   <!-- TOOT -->
@@ -227,13 +233,15 @@
   <string name="notif_follow">zaobserwował Cię</string>
   <string name="notif_pouet">Niwy toot od %1$s</string>
   <plurals name="other_notifications">
-    <item quantity="one">and another notification</item>
-    <item quantity="few">and %d other notifications</item>
+    <item quantity="one">dodaj %d innych powiadomień</item>
+    <item quantity="few">dodaj %d innych powiadomień</item>
+    <item quantity="many">dodaj %d innych powiadomień</item>
     <item quantity="other">dodaj %d innych powiadomień</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="one">and another toot to discover</item>
-    <item quantity="few">and %d other toots to discover</item>
+    <item quantity="one">i kolejne %d toot do odkrycia</item>
+    <item quantity="few">i kolejne %d toot do odkrycia</item>
+    <item quantity="many">i kolejne %d toot do odkrycia</item>
     <item quantity="other">i kolejne %d toot do odkrycia</item>
   </plurals>
   <string name="delete_notification_ask">Usunąć powiadomienie?</string>
