@@ -50,7 +50,7 @@
                     android:gravity="center_horizontal"
                     android:id="@+id/notification_delete"
                     android:layout_gravity="center_horizontal"
-                    app:srcCompat="@drawable/ic_delete"
+                    android:src="@drawable/ic_delete"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     tools:ignore="ContentDescription" />
@@ -151,7 +151,7 @@
                                 android:visibility="gone"
                                 android:layout_centerInParent="true"
                                 android:layout_width="20dp"
-                                app:srcCompat="@drawable/ic_play_arrow"
+                                android:src="@drawable/ic_play_arrow"
                                 android:layout_height="20dp"
                                 tools:ignore="ContentDescription" />
                         </RelativeLayout>
@@ -179,7 +179,7 @@
                                     android:id="@+id/status_prev2_play"
                                     android:layout_centerInParent="true"
                                     android:layout_width="20dp"
-                                    app:srcCompat="@drawable/ic_play_arrow"
+                                    android:src="@drawable/ic_play_arrow"
                                     android:layout_height="20dp"
                                     tools:ignore="ContentDescription" />
                             </RelativeLayout>
@@ -206,7 +206,7 @@
                                         android:id="@+id/status_prev3_play"
                                         android:layout_centerInParent="true"
                                         android:layout_width="20dp"
-                                        app:srcCompat="@drawable/ic_play_arrow"
+                                        android:src="@drawable/ic_play_arrow"
                                         android:visibility="gone"
                                         android:layout_height="20dp"
                                         tools:ignore="ContentDescription" />
@@ -229,7 +229,7 @@
                                         android:layout_centerInParent="true"
                                         android:visibility="gone"
                                         android:layout_width="20dp"
-                                        app:srcCompat="@drawable/ic_play_arrow"
+                                        android:src="@drawable/ic_play_arrow"
                                         android:layout_height="20dp"
                                         tools:ignore="ContentDescription" />
                                 </RelativeLayout>
@@ -330,7 +330,7 @@
                     android:id="@+id/status_more"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    app:srcCompat="@drawable/ic_more_horiz"
+                    android:src="@drawable/ic_more_horiz"
                     tools:ignore="ContentDescription" />
             </LinearLayout>
         </LinearLayout>

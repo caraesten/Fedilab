@@ -9,8 +9,6 @@ android {
         targetSdkVersion 27
         versionCode 95
         versionName "1.6.8"
-        vectorDrawables.useSupportLibrary = true
-
     }
     flavorDimensions "default"
     buildTypes {

@@ -875,7 +875,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         holder.status_cardview_content.setText(status.getCard().getDescription());
                         holder.status_cardview_title.setText(status.getCard().getTitle());
                         holder.status_cardview_url.setText(status.getCard().getUrl());
-                        if( status.getCard().getImage() != null) {
+                        if( status.getCard().getImage() != null && status.getCard().getImage().length() > 10) {
                             holder.status_cardview_image.setVisibility(View.VISIBLE);
                             Glide.with(holder.status_cardview_image.getContext())
                                     .load(status.getCard().getImage())
