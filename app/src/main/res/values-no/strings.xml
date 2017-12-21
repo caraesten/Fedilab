@@ -199,7 +199,7 @@
   <!-- Accounts -->
   <string name="no_accounts">Ingen konto å vise</string>
   <string name="no_follow_request">Ingen følg forespørsel</string>
-  <string name="status_cnt">Toots \ n% 1 $ s</string>
+  <string name="status_cnt">Toots \n %1$s</string>
   <string name="following_cnt">Følger \n %1$s</string>
   <string name="followers_cnt">Følgere \n %1$s</string>
   <string name="pins_cnt">Pinned \ n% d</string>
