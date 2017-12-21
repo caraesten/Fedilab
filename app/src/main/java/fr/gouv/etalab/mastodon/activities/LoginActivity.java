@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -173,8 +174,15 @@ public class LoginActivity extends BaseActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 connectionButton.setEnabled(false);
                 login_two_step.setVisibility(View.INVISIBLE);
+                TextInputLayout login_instance_layout = findViewById(R.id.login_instance_layout);
                 if (!hasFocus) {
                     retrievesClientId();
+                    if(login_instance.getText() == null || login_instance.getText().toString().length() == 0 ) {
+                        login_instance_layout.setError(getString(R.string.toast_error_instance));
+                        login_instance_layout.setErrorEnabled(true);
+                    }
+                }else{
+                    login_instance_layout.setErrorEnabled(false);
                 }
             }
         });
