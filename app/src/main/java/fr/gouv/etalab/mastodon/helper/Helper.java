@@ -575,23 +575,19 @@ public class Helper {
         long years = days / 365;
 
         if( years > 0)
-            return context.getResources().getQuantityString(R.plurals.date_year, (int)years, (int)years);
+            return context.getResources().getString(R.string.date_year, (int)years);
         else if( months > 0)
-            return context.getResources().getQuantityString(R.plurals.date_month, (int)months, (int)months);
-        else if( days > 2)
+            return context.getResources().getString(R.string.date_month, (int)months);
+        else if( days > 0)
             return context.getString(R.string.date_day, days);
-        else if(days == 2 )
-            return context.getString(R.string.date_day_before_yesterday);
-        else if(days == 1 )
-            return context.getString(R.string.date_yesterday);
         else if(hours > 0)
-            return context.getResources().getQuantityString(R.plurals.date_hours, (int)hours, (int)hours);
+            return context.getResources().getString(R.string.date_hours, (int)hours);
         else if(minutes > 0)
-            return context.getResources().getQuantityString(R.plurals.date_minutes, (int)minutes, (int)minutes);
+            return context.getResources().getString(R.string.date_minutes, (int)minutes);
         else {
             if (seconds < 0)
                 seconds = 0;
-            return context.getResources().getQuantityString(R.plurals.date_seconds, (int) seconds, (int) seconds);
+            return context.getResources().getString(R.string.date_seconds, (int) seconds);
         }
     }
 
