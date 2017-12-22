@@ -130,34 +130,10 @@
     <item quantity="other">%d răspunsuri</item>
   </plurals>
   <!-- Date -->
-  <plurals name="date_seconds">
-    <item quantity="one">%d secundă în urmă</item>
-    <item quantity="few">%d secunde în urmă</item>
-    <item quantity="other">%d secunde în urmă</item>
-  </plurals>
-  <plurals name="date_minutes">
-    <item quantity="one">%d minut în urmă</item>
-    <item quantity="few">%d minute în urmă</item>
-    <item quantity="other">%d minute în urmă</item>
-  </plurals>
-  <plurals name="date_hours">
-    <item quantity="one">%d oră în urmă</item>
-    <item quantity="few">%d ore în urmă</item>
-    <item quantity="other">%d ore în urmă</item>
-  </plurals>
-  <string name="date_yesterday">Ieri</string>
-  <string name="date_day_before_yesterday">Înainte de ieri</string>
-  <string name="date_day" formatted="false">%d zile în urmă</string>
-  <plurals name="date_month">
-    <item quantity="one">%d lună în urmă</item>
-    <item quantity="few">%d luni în urmă</item>
-    <item quantity="other">%d luni în urmă</item>
-  </plurals>
-  <plurals name="date_year">
-    <item quantity="one">Acum un an</item>
-    <item quantity="few">Acum %d ani</item>
-    <item quantity="other">Acum %d ani</item>
-  </plurals>
+  <string name="date_seconds">%d s</string>
+  <string name="date_minutes">%d m</string>
+  <string name="date_hours">%d h</string>
+  <string name="date_day">%d d</string>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">Atenționare</string>
   <string name="toot_placeholder">La ce te gândești?</string>

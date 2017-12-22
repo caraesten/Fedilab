@@ -129,29 +129,10 @@
     <item quantity="other">%d respostas</item>
   </plurals>
   <!-- Date -->
-  <plurals name="date_seconds">
-    <item quantity="one">Há %d segundo</item>
-    <item quantity="other">Há %d segundos</item>
-  </plurals>
-  <plurals name="date_minutes">
-    <item quantity="one">Há %d minuto</item>
-    <item quantity="other">Há %d minutos</item>
-  </plurals>
-  <plurals name="date_hours">
-    <item quantity="one">Há %d hora</item>
-    <item quantity="other">Há %d horas</item>
-  </plurals>
-  <string name="date_yesterday">Ontem</string>
-  <string name="date_day_before_yesterday">Anteontem</string>
-  <string name="date_day" formatted="false">Há %d dias</string>
-  <plurals name="date_month">
-    <item quantity="one">Há %d mês</item>
-    <item quantity="other">Há %d mês</item>
-  </plurals>
-  <plurals name="date_year">
-    <item quantity="one">Há %d ano</item>
-    <item quantity="other">Há %d anos</item>
-  </plurals>
+  <string name="date_seconds">%d s</string>
+  <string name="date_minutes">%d m</string>
+  <string name="date_hours">%d h</string>
+  <string name="date_day">%d d</string>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">Alerta de conteúdo</string>
   <string name="toot_placeholder">No que você está pensando?</string>
@@ -200,8 +181,8 @@
   <string name="no_accounts">Sem contas para exibir</string>
   <string name="no_follow_request">Sem solicitações de seguidor</string>
   <string name="status_cnt">Toots \n %1$s</string>
-  <string name="following_cnt">Following \n %1$s</string>
-  <string name="followers_cnt">Followers \n %1$s</string>
+  <string name="following_cnt">Seguindo \n %1$s</string>
+  <string name="followers_cnt">Seguidores \n %1$s</string>
   <string name="pins_cnt">Fixado \n %d</string>
   <string name="authorize">Autorizar</string>
   <string name="reject">Rejeitar</string>
@@ -409,9 +390,9 @@
   <string name="thanks_text_dev">
         Agradecimentos a:
     </string>
-  <string name="filter_regex">Filter out by regular expressions</string>
-  <string name="search">Search</string>
-  <string name="delete">Delete</string>
+  <string name="filter_regex">Filtrar com uma expressão regular</string>
+  <string name="search">Pesquisar</string>
+  <string name="delete">Eliminar</string>
   <string name="fetch_more_toots">Fetch more toots…</string>
   <!-- About lists -->
   <string name="action_lists">Lists</string>

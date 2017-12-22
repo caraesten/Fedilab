@@ -129,29 +129,10 @@
     <item quantity="other">%d yorum</item>
   </plurals>
   <!-- Date -->
-  <plurals name="date_seconds">
-    <item quantity="one">%d saniye önce</item>
-    <item quantity="other">%d saniye önce</item>
-  </plurals>
-  <plurals name="date_minutes">
-    <item quantity="one">%d dakika önce</item>
-    <item quantity="other">%d dakika önce</item>
-  </plurals>
-  <plurals name="date_hours">
-    <item quantity="one">%d saat önce</item>
-    <item quantity="other">%d saat önce</item>
-  </plurals>
-  <string name="date_yesterday">Dün</string>
-  <string name="date_day_before_yesterday">Dünden önce</string>
-  <string name="date_day" formatted="false">% gün önce</string>
-  <plurals name="date_month">
-    <item quantity="one">%d ay önce</item>
-    <item quantity="other">%d ay önce</item>
-  </plurals>
-  <plurals name="date_year">
-    <item quantity="one">Bir yıl önce</item>
-    <item quantity="other">%d yıl önce</item>
-  </plurals>
+  <string name="date_seconds">%d s</string>
+  <string name="date_minutes">%d m</string>
+  <string name="date_hours">%d h</string>
+  <string name="date_day">%d d</string>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">Uyarı</string>
   <string name="toot_placeholder">Aklınızda ki nedir?</string>

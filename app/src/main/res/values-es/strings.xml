@@ -129,29 +129,10 @@
     <item quantity="other">%d respuesta</item>
   </plurals>
   <!-- Date -->
-  <plurals name="date_seconds">
-    <item quantity="one">Hace %d segundo</item>
-    <item quantity="other">Hace %d segundos</item>
-  </plurals>
-  <plurals name="date_minutes">
-    <item quantity="one">Hace %d minuto</item>
-    <item quantity="other">Hace %d minutos</item>
-  </plurals>
-  <plurals name="date_hours">
-    <item quantity="one">Hace %d hora</item>
-    <item quantity="other">Hace %d horas</item>
-  </plurals>
-  <string name="date_yesterday">Ayer</string>
-  <string name="date_day_before_yesterday">Antes de ayer</string>
-  <string name="date_day" formatted="false">Hace %d días</string>
-  <plurals name="date_month">
-    <item quantity="one">Hace %d mes</item>
-    <item quantity="other">Hace %d meses</item>
-  </plurals>
-  <plurals name="date_year">
-    <item quantity="one">Hace un año</item>
-    <item quantity="other">Hace %d años</item>
-  </plurals>
+  <string name="date_seconds">%d s</string>
+  <string name="date_minutes">%d m</string>
+  <string name="date_hours">%d h</string>
+  <string name="date_day">%d d</string>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">Advertencia</string>
   <string name="toot_placeholder">¿En qué estás pensando?</string>
