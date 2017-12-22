@@ -25,6 +25,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -76,12 +77,16 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
-            setTheme(R.style.AppTheme);
+            setTheme(R.style.AppTheme_NoActionBar);
         }else {
-            setTheme(R.style.AppThemeDark);
+            setTheme(R.style.AppThemeDark_NoActionBar);
         }
         setContentView(R.layout.activity_list);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
+        if( getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         statuses = new ArrayList<>();
 
         RecyclerView lv_status = findViewById(R.id.lv_status);
