@@ -427,4 +427,12 @@
   <!-- Migration -->
   <string name="account_moved_to">%1$s a été déplacé vers %2$s</string>
   <string name="show_boost_count">Afficher le nombre de partages/favoris</string>
+  <string name="issue_login_title">Problème de connexion ?</string>
+  <string name="issue_login_message">
+<b>Voici quelques vérifications qui pourraient aider :</b> \n\n 
+- Vérifier qu\'il n\'y a pas d\'erreur dans le nom de l\'instance\n\n 
+- Vérifiez que votre instance est fonctionnelle\n\n 
+- Si vous utilisez l’authentification en deux étapes (2FA), veuillez utiliser le lien en bas (une fois le nom de l\'instance renseigné) \n\n 
+- Vous pouvez également utiliser ce lien sans utiliser la 2FA\n\n 
+- Si cela ne fonctionne toujours pas, vous pouvez reporter ce problème sur Github : https://github.com/stom79/mastalab/issues    </string>
 </resources>
