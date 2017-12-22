@@ -423,4 +423,5 @@ Gracias a:    </string>
   <string name="action_lists_owner">Tus listas</string>
   <!-- Migration -->
   <string name="account_moved_to">%1$s se ha movido a %2$s</string>
+  <string name="show_boost_count">Show boosts/favourites count</string>
 </resources>
