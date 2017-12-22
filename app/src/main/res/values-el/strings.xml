@@ -5,26 +5,26 @@
   <string name="navigation_drawer_close">Κλείστε το μενού</string>
   <string name="action_about">Σχετικά</string>
   <string name="action_about_instance">Για την υπόσταση</string>
-  <string name="action_privacy">Privacy</string>
-  <string name="action_cache">Cache</string>
-  <string name="action_logout">Logout</string>
-  <string name="login">Login</string>
+  <string name="action_privacy">Απόρρητο</string>
+  <string name="action_cache">Ενδιάμεση καταχωρηση</string>
+  <string name="action_logout">Αποσύνδεση</string>
+  <string name="login">Σύνδεση</string>
   <!-- common -->
-  <string name="close">Close</string>
-  <string name="yes">Yes</string>
-  <string name="no">No</string>
-  <string name="cancel">Cancel</string>
-  <string name="download">Download</string>
-  <string name="download_file">Download %1$s</string>
-  <string name="download_over">Download complete</string>
-  <string name="save_file">Save %1$s</string>
-  <string name="save_over">Media saved</string>
-  <string name="download_from" formatted="false">File: %1$s</string>
-  <string name="password">Password</string>
+  <string name="close">Κλείστε</string>
+  <string name="yes">Ναι</string>
+  <string name="no">Όχι</string>
+  <string name="cancel">Ακύρωση</string>
+  <string name="download">Λήψη</string>
+  <string name="download_file">Λήψη %1$s</string>
+  <string name="download_over">Η λήψη ολοκληρώθηκε</string>
+  <string name="save_file">Αποθήκευση %1$s</string>
+  <string name="save_over">Το μέσο αποθηκεύτηκε</string>
+  <string name="download_from" formatted="false">Αρχείο: %1$s</string>
+  <string name="password">Συνθηματικό</string>
   <string name="email">Email</string>
-  <string name="accounts">Accounts</string>
+  <string name="accounts">Λογαριασμοί</string>
   <string name="toots">Toots</string>
-  <string name="tags">Tags</string>
+  <string name="tags">Ετικέτες</string>
   <string name="token">Token</string>
   <string name="save">Save</string>
   <string name="restore">Restore</string>
