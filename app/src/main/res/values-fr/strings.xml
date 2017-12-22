@@ -129,29 +129,10 @@
     <item quantity="other">%d réponses</item>
   </plurals>
   <!-- Date -->
-  <plurals name="date_seconds">
-    <item quantity="one">Il y a %d seconde</item>
-    <item quantity="other">Il y a %d secondes</item>
-  </plurals>
-  <plurals name="date_minutes">
-    <item quantity="one">Il y a %d minute</item>
-    <item quantity="other">Il y a %d minutes</item>
-  </plurals>
-  <plurals name="date_hours">
-    <item quantity="one">Il y a %d heure</item>
-    <item quantity="other">Il y a %d heures</item>
-  </plurals>
-  <string name="date_yesterday">Hier</string>
-  <string name="date_day_before_yesterday">Avant-hier</string>
-  <string name="date_day" formatted="false">Il y a %d jours</string>
-  <plurals name="date_month">
-    <item quantity="one">Il y a %d mois</item>
-    <item quantity="other">Il y a %d mois</item>
-  </plurals>
-  <plurals name="date_year">
-    <item quantity="one">Il y a %d an</item>
-    <item quantity="other">Il y a %d ans</item>
-  </plurals>
+  <string name="date_seconds">%d s</string>
+  <string name="date_minutes">%d m</string>
+  <string name="date_hours">%d h</string>
+  <string name="date_day">%d d</string>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">Avertissement</string>
   <string name="toot_placeholder">Qu\'avez-vous en tête ?</string>
