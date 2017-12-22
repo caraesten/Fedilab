@@ -267,6 +267,7 @@ public class Helper {
     public static final String SET_DISPLAY_LOCAL = "set_display_local";
     public static final String SET_DISPLAY_GLOBAL = "set_display_global";
     public static final String SET_ALLOW_CROSS_ACTIONS = "set_allow_cross_actions";
+    public static final String SET_DISPLAY_BOOST_COUNT = "set_display_boost_count";
     //End points
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 

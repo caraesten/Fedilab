@@ -128,6 +128,13 @@
             android:layout_height="wrap_content" />
 
 
+        <!-- BOOST/FAVOURITE COUNT -->
+        <CheckBox
+            android:id="@+id/set_disable_counts"
+            android:layout_width="wrap_content"
+            android:text="@string/show_boost_count"
+            android:layout_height="wrap_content" />
+
         <!-- Translation engine -->
         <LinearLayout
             android:layout_marginTop="10dp"

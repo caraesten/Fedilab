@@ -127,6 +127,14 @@
             android:text="@string/set_disable_gif"
             android:layout_height="wrap_content" />
 
+
+        <!-- BOOST/FAVOURITE COUNT -->
+        <CheckBox
+            android:id="@+id/set_disable_counts"
+            android:layout_width="wrap_content"
+            android:text="@string/show_boost_count"
+            android:layout_height="wrap_content" />
+
         <!-- TABS Layout -->
         <LinearLayout
             android:id="@+id/translation_layout_container"

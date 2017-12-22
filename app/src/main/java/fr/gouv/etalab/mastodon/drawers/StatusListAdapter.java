@@ -595,15 +595,17 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_mention_spoiler.setMovementMethod(null);
             holder.status_mention_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
 
-            if( status.getReblog() == null)
-                holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
-            else
-                holder.status_favorite_count.setText(String.valueOf(status.getReblog().getFavourites_count()));
-            if( status.getReblog() == null)
-                holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
-            else
-                holder.status_reblog_count.setText(String.valueOf(status.getReblog().getReblogs_count()));
-
+            boolean displayBoost = sharedpreferences.getBoolean(Helper.SET_DISPLAY_BOOST_COUNT, true);
+            if( displayBoost) {
+                if( status.getReblog() == null)
+                    holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
+                else
+                    holder.status_favorite_count.setText(String.valueOf(status.getReblog().getFavourites_count()));
+                if (status.getReblog() == null)
+                    holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
+                else
+                    holder.status_reblog_count.setText(String.valueOf(status.getReblog().getReblogs_count()));
+            }
             holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
 
             Helper.absoluteDateTimeReveal(context, holder.status_toot_date, status.getCreated_at());

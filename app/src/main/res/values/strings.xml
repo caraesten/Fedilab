@@ -466,4 +466,6 @@
 
     <!-- Migration -->
     <string name="account_moved_to">%1$s has moved to %2$s</string>
+
+    <string name="show_boost_count">Show boosts/favourites count</string>
 </resources>
