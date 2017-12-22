@@ -130,11 +130,9 @@
   </plurals>
   <!-- Date -->
   <string name="date_seconds">%d s</string>
-  <string name="date_minutes">%d min</string>
+  <string name="date_minutes">%d m</string>
   <string name="date_hours">%d h</string>
   <string name="date_day">%d d</string>
-  <string name="date_month">%d m</string>
-  <string name="date_year">%d y</string>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">Advertencia</string>
   <string name="toot_placeholder">¿En qué estás pensando?</string>
