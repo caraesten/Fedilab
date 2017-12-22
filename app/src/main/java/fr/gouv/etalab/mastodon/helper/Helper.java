@@ -1097,7 +1097,7 @@ public class Helper {
 
         String cw_mention = "";
         for(Mention mention:mentions){
-            cw_mention = String.format("@%s %s",mention.getAcct(),cw_mention);
+            cw_mention = String.format("@%s %s",mention.getUsername(),cw_mention);
         }
         SpannableString spannableString = new SpannableString(cw_mention);
         for (final Mention mention : mentions) {
