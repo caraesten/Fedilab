@@ -456,4 +456,13 @@
   <!-- Migration -->
   <string name="account_moved_to">%1$s has moved to %2$s</string>
   <string name="show_boost_count">Show boosts/favourites count</string>
+  <string name="issue_login_title">Authentication does not work?</string>
+  <string name="issue_login_message">
+        <b>Here are some checks that might help:</b>\n\n
+        - Check there is no spelling mistakes in the instance name\n\n
+        - Check that your instance is not down\n\n
+        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
+        - You can also use this link without using the 2FA\n\n
+        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
+    </string>
 </resources>
