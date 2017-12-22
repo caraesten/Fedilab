@@ -72,6 +72,13 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 />
+
+            <TextView
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:id="@+id/login_issue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <Button
                 android:id="@+id/login_button"
                 android:textAllCaps="false"

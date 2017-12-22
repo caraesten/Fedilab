@@ -15,6 +15,7 @@
 package fr.gouv.etalab.mastodon.activities;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
@@ -22,8 +23,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
+import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
+import android.text.style.UnderlineSpan;
+import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,6 +55,7 @@ import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.helper.Helper;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
+import static fr.gouv.etalab.mastodon.helper.Helper.convertDpToPixel;
 
 
 /**
@@ -184,6 +191,33 @@ public class LoginActivity extends BaseActivity {
                 }else{
                     login_instance_layout.setErrorEnabled(false);
                 }
+            }
+        });
+
+
+        final TextView login_issue = findViewById(R.id.login_issue);
+        SpannableString content = new SpannableString(getString(R.string.issue_login_title));
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        login_issue.setText(content);
+        login_issue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                builder.setTitle(R.string.issue_login_title);
+                TextView message = new TextView(LoginActivity.this);
+                final SpannableString s =
+                        new SpannableString(getText(R.string.issue_login_message));
+                Linkify.addLinks(s, Linkify.WEB_URLS);
+                message.setText(s);
+                message.setPadding((int) convertDpToPixel(10,LoginActivity.this), (int) convertDpToPixel(10,LoginActivity.this), (int) convertDpToPixel(10,LoginActivity.this), (int) convertDpToPixel(10,LoginActivity.this));
+                message.setMovementMethod(LinkMovementMethod.getInstance());
+                builder.setView(message);
+                builder.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.setIcon(android.R.drawable.ic_dialog_alert).show();
             }
         });
     }
