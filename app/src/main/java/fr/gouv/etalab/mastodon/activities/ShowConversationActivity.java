@@ -280,9 +280,11 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         int position = 0;
         for(Status status: this.statuses) {
             if( initialStatus.getId().equals(status.getId())) {
-                this.statuses.get(position).setCard(card);
-                initialStatus.setCard(card);
-                statusListAdapter.notifyItemChanged(position);
+                if( card != null) {
+                    this.statuses.get(position).setCard(card);
+                    initialStatus.setCard(card);
+                    statusListAdapter.notifyItemChanged(position);
+                }
                 return;
             }
             position++;
