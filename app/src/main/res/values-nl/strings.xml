@@ -129,29 +129,10 @@
     <item quantity="other">%d reacties</item>
   </plurals>
   <!-- Date -->
-  <plurals name="date_seconds">
-    <item quantity="one">%d seconde geleden</item>
-    <item quantity="other">%d seconden geleden</item>
-  </plurals>
-  <plurals name="date_minutes">
-    <item quantity="one">%d minuut geleden</item>
-    <item quantity="other">%d minuten geleden</item>
-  </plurals>
-  <plurals name="date_hours">
-    <item quantity="one">%d uur geleden</item>
-    <item quantity="other">%d uur geleden</item>
-  </plurals>
-  <string name="date_yesterday">Gisteren</string>
-  <string name="date_day_before_yesterday">Eergisteren</string>
-  <string name="date_day" formatted="false">%d dagen geleden</string>
-  <plurals name="date_month">
-    <item quantity="one">%d maand geleden</item>
-    <item quantity="other">%d maanden geleden</item>
-  </plurals>
-  <plurals name="date_year">
-    <item quantity="one">Een jaar geleden</item>
-    <item quantity="other">%d jaar geleden</item>
-  </plurals>
+  <string name="date_seconds">%d s</string>
+  <string name="date_minutes">%d m</string>
+  <string name="date_hours">%d h</string>
+  <string name="date_day">%d d</string>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">Waarschuwing</string>
   <string name="toot_placeholder">Wat wil je kwijt?</string>

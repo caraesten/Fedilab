@@ -128,24 +128,10 @@
     <item quantity="other">%d 回复</item>
   </plurals>
   <!-- Date -->
-  <plurals name="date_seconds">
-    <item quantity="other">%d 秒前</item>
-  </plurals>
-  <plurals name="date_minutes">
-    <item quantity="other">%d 分钟前</item>
-  </plurals>
-  <plurals name="date_hours">
-    <item quantity="other">%d 小时前</item>
-  </plurals>
-  <string name="date_yesterday">昨天</string>
-  <string name="date_day_before_yesterday">前天</string>
-  <string name="date_day" formatted="false">%d 天前</string>
-  <plurals name="date_month">
-    <item quantity="other">%d 月前</item>
-  </plurals>
-  <plurals name="date_year">
-    <item quantity="other">%d 年前</item>
-  </plurals>
+  <string name="date_seconds">%d s</string>
+  <string name="date_minutes">%d m</string>
+  <string name="date_hours">%d h</string>
+  <string name="date_day">%d d</string>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">警告</string>
   <string name="toot_placeholder">你在想什么？</string>
