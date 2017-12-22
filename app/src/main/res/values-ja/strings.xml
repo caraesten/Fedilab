@@ -411,4 +411,5 @@
   <string name="action_lists_owner">あなたのリスト</string>
   <!-- Migration -->
   <string name="account_moved_to">%1$s は %2$s へ引越しました</string>
+  <string name="show_boost_count">Show boosts/favourites count</string>
 </resources>
