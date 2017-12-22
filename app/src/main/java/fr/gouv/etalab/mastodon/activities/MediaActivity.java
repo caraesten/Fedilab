@@ -27,6 +27,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -89,7 +90,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     private File fileVideo;
     private TextView progress;
     private boolean canSwipe;
-
+    private AppBarLayout appBar;
 
 
 
@@ -167,7 +168,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 public void run() {
                     // DO DELAYED STUFF
                     if(canSwipe)
-                        getSupportActionBar().hide();
+                        appBar.setExpanded(false);
                 }
             }, 2000);
         }
@@ -177,6 +178,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         loader = findViewById(R.id.loader);
         imageView = findViewById(R.id.media_picture);
         videoView = findViewById(R.id.media_video);
+        appBar = findViewById(R.id.appBar);
         prev = findViewById(R.id.media_prev);
         next = findViewById(R.id.media_next);
         changeDrawableColor(getApplicationContext(), prev,R.color.mastodonC4);
@@ -200,7 +202,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             public void onMatrixChanged(RectF rect) {
                 canSwipe = (imageView.getScale() == 1 );
                 if( !canSwipe && getSupportActionBar() != null && getSupportActionBar().isShowing()){
-                    getSupportActionBar().hide();
+                    appBar.setExpanded(false);
                 }
             }
         });
@@ -224,13 +226,13 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     public boolean dispatchTouchEvent(MotionEvent event) {
 
         if( event.getAction() == MotionEvent.ACTION_DOWN){
-            if( getSupportActionBar() != null && !getSupportActionBar().isShowing() && canSwipe) {
-                getSupportActionBar().show();
+            if( getSupportActionBar() != null  && canSwipe) {
+                appBar.setExpanded(true);
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        getSupportActionBar().hide();
+                        appBar.setExpanded(false);
                     }
                 }, 2000);
             }
