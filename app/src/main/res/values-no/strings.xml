@@ -15,11 +15,11 @@
   <string name="no">Nei</string>
   <string name="cancel">Avbryt</string>
   <string name="download">Nedlasting</string>
-  <string name="download_file">Last ned% 1 $ s</string>
+  <string name="download_file">Last ned %1$s</string>
   <string name="download_over">Nedlasting ferdig</string>
-  <string name="save_file">Lagre% 1 $ s</string>
+  <string name="save_file">Lagre %1$s</string>
   <string name="save_over">Media lagret</string>
-  <string name="download_from" formatted="false">Fil:% 1 $ s</string>
+  <string name="download_from" formatted="false">Fil: %1$s</string>
   <string name="password">Passord</string>
   <string name="email">E-post</string>
   <string name="accounts">Kontoer</string>
@@ -202,7 +202,7 @@
   <string name="status_cnt">Toots \n %1$s</string>
   <string name="following_cnt">Følger \n %1$s</string>
   <string name="followers_cnt">Følgere \n %1$s</string>
-  <string name="pins_cnt">Pinned \ n% d</string>
+  <string name="pins_cnt">Pinned \n %d</string>
   <string name="authorize">Autorisere</string>
   <string name="reject">Autorisere</string>
   <!-- Scheduled toots -->
