@@ -38,7 +38,7 @@
   <string name="clipboard">Το περιεχόμενο του toot αντιγράφηκε ως απόκομμα</string>
   <string name="change">Αλλαγή</string>
   <string name="choose_picture">Επιλογή φωτογραφίας…</string>
-  <string name="clear">Καθάρισε</string>
+  <string name="clear">Καθαρισμός</string>
   <string name="microphone">Μικρόφωνο</string>
   <string name="speech_prompt">Σε παρακαλώ πες κάτι</string>
   <string name="speech_not_supported">Λυπάμαι, η συσκευή σου δεν υποστηρίζει φωνητική εισαγωγή!</string>
