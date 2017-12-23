@@ -91,18 +91,18 @@
   <string name="choose_file_error">Không tìm thấy thám hiểm tệp!</string>
   <string name="click_to_change">Nhấp vào đường dẫn để thay đổi nó</string>
   <string name="failed">Thất bại!</string>
-  <string name="scheduled_toots">Scheduled toots</string>
-  <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
-  <string name="insert_emoji">Insert emoji</string>
-  <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-  <string name="live_notif">Live notifications</string>
+  <string name="scheduled_toots">Các thổi còi theo lịch</string>
+  <string name="disclaimer_full">Thông tin dưới đây có thể phản ánh hồ sơ của người dùng không đầy đủ.</string>
+  <string name="insert_emoji">Chèn eoji</string>
+  <string name="no_emoji">Các ứng dụng đã không thu thập emojis tùy chỉnh cho thời điểm này.</string>
+  <string name="live_notif">Thông báo trực tiếp</string>
   <!-- Status -->
-  <string name="no_status">No toot to display</string>
-  <string name="fav_added">The toot was added to favourites</string>
-  <string name="fav_removed">The toot was removed from favourites!</string>
-  <string name="reblog_added">The toot was boosted!</string>
-  <string name="reblog_removed">The toot is no longer boosted!</string>
-  <string name="reblog_by">Boosted by %1$s</string>
+  <string name="no_status">Không thổi còi để hiển thị</string>
+  <string name="fav_added">Các thổi còi đã được thêm vào mục yêu thích</string>
+  <string name="fav_removed">Các thổi còi đã được gỡ bỏ khỏi mục yêu thích!</string>
+  <string name="reblog_added">Thổi còi đã được đẩy mạnh!</string>
+  <string name="reblog_removed">Thổi còi không còn được tăng cường!</string>
+  <string name="reblog_by">Được thúc đẩy bởi %1$s</string>
   <string name="favourite_add">Add this toot to your favourites?</string>
   <string name="favourite_remove">Remove this toot from your favourites?</string>
   <string name="reblog_add">Boost this toot?</string>
@@ -165,38 +165,38 @@
   <!-- Instance -->
   <string name="instance_no_description">No description available!</string>
   <!-- About -->
-  <string name="about_vesrion">Release %1$s</string>
-  <string name="about_developer">Developer:</string>
-  <string name="about_license">License: </string>
+  <string name="about_vesrion">Phát hành %1$s</string>
+  <string name="about_developer">Nhà phát triển:</string>
+  <string name="about_license">Giấy phép: </string>
   <string name="about_license_action">GNU GPL V3</string>
-  <string name="about_code">Source code: </string>
-  <string name="about_yandex">Translation of toots:</string>
-  <string name="about_thekinrar">Search instances:</string>
+  <string name="about_code">Mã nguồn: </string>
+  <string name="about_yandex">Dịch của thổi còi:</string>
+  <string name="about_thekinrar">Trường hợp tìm kiếm:</string>
   <string name="about_thekinrar_action">instances.social</string>
-  <string name="thanks_text_logo">Icon designer:</string>
+  <string name="thanks_text_logo">Người thiết kế biểu tượng:</string>
   <!-- Conversation -->
-  <string name="conversation">Conversation</string>
+  <string name="conversation">Cuộc hội thoại</string>
   <!-- Accounts -->
-  <string name="no_accounts">No account to display</string>
-  <string name="no_follow_request">No follow request</string>
-  <string name="status_cnt">Toots \n %1$s</string>
-  <string name="following_cnt">Following \n %1$s</string>
-  <string name="followers_cnt">Followers \n %1$s</string>
-  <string name="pins_cnt">Pinned \n %d</string>
-  <string name="authorize">Authorize</string>
-  <string name="reject">Reject</string>
+  <string name="no_accounts">Không có tài khoản để hiển thị</string>
+  <string name="no_follow_request">Không theo yêu cầu</string>
+  <string name="status_cnt">Thổi còi\n %1$s</string>
+  <string name="following_cnt">Tiếp theo\n %1$s</string>
+  <string name="followers_cnt">Người theo dõi \n %1$s</string>
+  <string name="pins_cnt">Đã ghim \n %d</string>
+  <string name="authorize">Ủy quyền</string>
+  <string name="reject">Từ chối</string>
   <!-- Scheduled toots -->
-  <string name="no_scheduled_toots">No scheduled toot to display!</string>
-  <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-  <string name="remove_scheduled">Delete scheduled toot?</string>
-  <string name="media_count">Media: %d</string>
-  <string name="toot_scheduled">The toot has been scheduled!</string>
-  <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
-  <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+  <string name="no_scheduled_toots">Không có lịch trình thổi còi để hiển thị!</string>
+  <string name="no_scheduled_toots_indications">Viết toot và sau đó chọn <b>Lịch</b> từ trình đơn trên cùng.</string>
+  <string name="remove_scheduled">Xóa nhịp cầu định kỳ?</string>
+  <string name="media_count">Phương tiện truyền thông: %d</string>
+  <string name="toot_scheduled">Các thổi còi đã được lên kế hoạch!</string>
+  <string name="toot_scheduled_date">Ngày dự kiến ​​phải lớn hơn giờ hiện tại!</string>
+  <string name="warning_battery">Trình tiết kiệm pin đã được kích hoạt! Nó có thể không hoạt động như mong đợi.</string>
   <!-- Notifications -->
-  <string name="no_notifications">No notification to display</string>
-  <string name="notif_mention">mentioned you</string>
-  <string name="notif_reblog">boosted your status</string>
+  <string name="no_notifications">Không có thông báo để hiển thị</string>
+  <string name="notif_mention">đề cập đến bạn</string>
+  <string name="notif_reblog">đẩy mạnh tình trạng của bạn</string>
   <string name="notif_favourite">favourited your status</string>
   <string name="notif_follow">followed you</string>
   <string name="notif_pouet">New toot from %1$s</string>
