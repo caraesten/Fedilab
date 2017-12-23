@@ -117,12 +117,12 @@
   <string name="more_action_6">Chia sẻ</string>
   <string name="more_action_7">Ghi chép</string>
   <string-array name="more_action_confirm">
-    <item>Mute this account?</item>
-    <item>Block this account?</item>
-    <item>Report this toot?</item>
+    <item>Ẩn tài khoản này?</item>
+    <item>Chặn tài khoản này?</item>
+    <item>Báo cáo này thổi còi?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>Remove this toot?</item>
+    <item>Hủy bỏ thổi còi này?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="other">%d replies</item>
@@ -133,37 +133,37 @@
   <string name="date_hours">%d h</string>
   <string name="date_day">%d d</string>
   <!-- TOOT -->
-  <string name="toot_cw_placeholder">Warning</string>
-  <string name="toot_placeholder">What is on your mind?</string>
-  <string name="toot_it">TOOT!</string>
+  <string name="toot_cw_placeholder">Cảnh báo</string>
+  <string name="toot_placeholder">Bạn đang nghĩ cái gì thế?</string>
+  <string name="toot_it">Thổi còi!</string>
   <string name="cw">cw</string>
-  <string name="toot_title">Write a toot</string>
-  <string name="toot_title_reply">Reply to a toot</string>
-  <string name="toot_no_space">You have reached the 500 characters allowed!</string>
-  <string name="toot_select_image">Select a media</string>
-  <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-  <string name="toot_delete_media">Delete this media?</string>
-  <string name="toot_error_no_content">Your toot is empty!</string>
-  <string name="toot_visibility_tilte">Visibility of the toot</string>
-  <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-  <string name="toot_sent">The toot has been sent!</string>
-  <string name="toot_reply_content_title">You are replying to this toot:</string>
-  <string name="toot_sensitive">Sensitive content?</string>
+  <string name="toot_title">Viết một cái còi</string>
+  <string name="toot_title_reply">Trả lời thổi còi</string>
+  <string name="toot_no_space">Bạn đã đạt đến 500 ký tự cho phép!</string>
+  <string name="toot_select_image">Chọn phương tiện</string>
+  <string name="toot_select_image_error">Đã xảy ra lỗi khi chọn phương tiện!</string>
+  <string name="toot_delete_media">Xóa phương tiện này?</string>
+  <string name="toot_error_no_content">Thổi còi của bạn trống!</string>
+  <string name="toot_visibility_tilte">Tầm nhìn của thổi còi</string>
+  <string name="toots_visibility_tilte">Khả năng hiển thị của các toots theo mặc định: </string>
+  <string name="toot_sent">Thổi còi đã được gửi!</string>
+  <string name="toot_reply_content_title">Bạn đang trả lời cho thổi còi này:</string>
+  <string name="toot_sensitive">Nội dung nhạy cảm?</string>
   <string-array name="toot_visibility">
-    <item>Post to public timelines</item>
-    <item>Do not post to public timelines</item>
-    <item>Post to followers only</item>
-    <item>Post to mentioned users only</item>
+    <item>Đăng lên các mốc công khai</item>
+    <item>Không đăng lên các dòng thời gian công khai</item>
+    <item>Đăng lên người theo dõi chỉ</item>
+    <item>Đăng lên chỉ những người dùng được đề cập</item>
   </string-array>
-  <string name="no_draft">No draft!</string>
-  <string name="choose_toot">Choose a toot</string>
-  <string name="choose_accounts">Choose an account</string>
-  <string name="select_accounts">Select some accounts</string>
-  <string name="remove_draft">Remove draft?</string>
-  <string name="show_reply">Click on the button to display the original toot</string>
-  <string name="upload_form_description">Describe for the visually impaired</string>
+  <string name="no_draft">Không có bản nháp!</string>
+  <string name="choose_toot">Chọn một cái còi</string>
+  <string name="choose_accounts">Chọn một tài khoản</string>
+  <string name="select_accounts">Chọn một số tài khoản</string>
+  <string name="remove_draft">Xóa dự thảo?</string>
+  <string name="show_reply">Nhấp chuột vào nút để hiển thị các thổi còi ban đầu</string>
+  <string name="upload_form_description">Mô tả cho người khiếm thị</string>
   <!-- Instance -->
-  <string name="instance_no_description">No description available!</string>
+  <string name="instance_no_description">Không có mô tả nào!</string>
   <!-- About -->
   <string name="about_vesrion">Phát hành %1$s</string>
   <string name="about_developer">Nhà phát triển:</string>
