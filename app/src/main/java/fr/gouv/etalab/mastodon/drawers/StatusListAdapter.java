@@ -316,6 +316,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }else
                 return DISPLAYED_STATUS;
         }else {
+            if( context instanceof ShowAccountActivity){
+                if (status.getReblog() != null && !((ShowAccountActivity)context).showBoosts())
+                    return HIDDEN_STATUS;
+                else if( status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !((ShowAccountActivity)context).showReplies())
+                    return HIDDEN_STATUS;
+                else
+                    return DISPLAYED_STATUS;
+            }else
             return DISPLAYED_STATUS;
         }
     }

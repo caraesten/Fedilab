@@ -954,7 +954,6 @@ public abstract class BaseMainActivity extends BaseActivity
                     final SharedPreferences.Editor editor = sharedpreferences.edit();
                     switch (item.getItemId()) {
                         case R.id.action_show_boosts:
-
                             show_boosts = !show_boosts;
                             editor.putBoolean(Helper.SET_SHOW_BOOSTS, show_boosts);
                             itemShowBoosts.setChecked(show_boosts);

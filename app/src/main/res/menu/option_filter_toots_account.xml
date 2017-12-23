@@ -15,4 +15,17 @@
         android:title="@string/media"
         app:actionViewClass="android.widget.CheckBox"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_show_boosts"
+        android:checkable="true"
+        android:title="@string/show_boosts"
+        app:actionViewClass="android.widget.CheckBox"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+    <item
+        android:id="@+id/action_show_replies"
+        android:checkable="true"
+        android:title="@string/show_replies"
+        app:actionViewClass="android.widget.CheckBox"
+        app:showAsAction="always" />
 </menu>

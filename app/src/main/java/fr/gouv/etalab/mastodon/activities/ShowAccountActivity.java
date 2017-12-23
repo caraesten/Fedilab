@@ -125,6 +125,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     private TextView account_dn;
     private TextView account_un;
     private Account account;
+    private boolean show_boosts, show_replies;
 
     public enum action{
         FOLLOW,
@@ -170,6 +171,8 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         accountUrl = null;
         showMediaOnly = false;
         showPinned = false;
+        show_boosts = true;
+        show_replies = true;
 
         statuses = new ArrayList<>();
         boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
@@ -554,6 +557,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 }
             }
         });
+
         account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
         account_un.setText(String.format("@%s", account.getAcct()));
         SpannableString spannableString = Helper.clickableElementsDescription(ShowAccountActivity.this, account.getNote());
@@ -582,9 +586,14 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     }
                     final MenuItem itemShowPined = menu.findItem(R.id.action_show_pinned);
                     final MenuItem itemShowMedia = menu.findItem(R.id.action_show_media);
+                    final MenuItem itemShowBoosts = menu.findItem(R.id.action_show_boosts);
+                    final MenuItem itemShowReplies = menu.findItem(R.id.action_show_replies);
 
                     itemShowMedia.setChecked(showMediaOnly);
                     itemShowPined.setChecked(showPinned);
+                    itemShowBoosts.setChecked(show_boosts);
+                    itemShowReplies.setChecked(show_replies);
+
                     popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
                         @Override
                         public void onDismiss(PopupMenu menu) {
@@ -610,23 +619,27 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                             switch (item.getItemId()) {
                                 case R.id.action_show_pinned:
                                     showPinned = !showPinned;
-                                    if( tabLayout.getTabAt(0) != null)
-                                        //noinspection ConstantConditions
-                                        tabLayout.getTabAt(0).select();
-                                    PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-                                    mPager.setAdapter(mPagerAdapter);
                                     break;
                                 case R.id.action_show_media:
                                     showMediaOnly = !showMediaOnly;
-                                    if( tabLayout.getTabAt(0) != null)
-                                        //noinspection ConstantConditions
-                                        tabLayout.getTabAt(0).select();
-                                    mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-                                    mPager.setAdapter(mPagerAdapter);
+                                    break;
+                                case R.id.action_show_boosts:
+                                    show_boosts = !show_boosts;
+
+                                    break;
+                                case R.id.action_show_replies:
+                                    show_replies = !show_replies;
                                     break;
                             }
+                            if( tabLayout.getTabAt(0) != null)
+                                //noinspection ConstantConditions
+                                tabLayout.getTabAt(0).select();
+                            PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+                            mPager.setAdapter(mPagerAdapter);
                             itemShowMedia.setChecked(showMediaOnly);
                             itemShowPined.setChecked(showPinned);
+                            itemShowReplies.setChecked(show_replies);
+                            itemShowBoosts.setChecked(show_boosts);
                             return false;
                         }
                     });
@@ -794,6 +807,14 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         public int getCount() {
             return NUM_PAGES;
         }
+    }
+
+    public boolean showReplies(){
+        return show_replies;
+    }
+
+    public boolean showBoosts(){
+        return show_boosts;
     }
 
 }
