@@ -22,6 +22,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -136,6 +138,19 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
                 startActivity(browserIntent);
             }
         });
+
+        TextView about_wiki = findViewById(R.id.about_wiki);
+        SpannableString content = new SpannableString(about_wiki.getText().toString());
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        about_wiki.setText(content);
+        about_wiki.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/stom79/mastalab/wiki"));
+                startActivity(browserIntent);
+            }
+        });
+
         setTitle(R.string.action_about);
         lv_contributors.setExpanded(true);
         lv_developers.setExpanded(true);

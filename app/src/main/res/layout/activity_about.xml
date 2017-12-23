@@ -64,6 +64,18 @@
             android:divider="@null"/>
 
         <TextView
+            android:id="@+id/about_wiki"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:autoLink="web"
+            android:text="WIKI"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="HardcodedText" />
+
+        <TextView
             android:id="@+id/about_website"
             android:layout_gravity="center"
             android:gravity="center"
