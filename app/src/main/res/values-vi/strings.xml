@@ -103,19 +103,19 @@
   <string name="reblog_added">Thổi còi đã được đẩy mạnh!</string>
   <string name="reblog_removed">Thổi còi không còn được tăng cường!</string>
   <string name="reblog_by">Được thúc đẩy bởi %1$s</string>
-  <string name="favourite_add">Add this toot to your favourites?</string>
-  <string name="favourite_remove">Remove this toot from your favourites?</string>
-  <string name="reblog_add">Boost this toot?</string>
-  <string name="reblog_remove">Unboost this toot?</string>
-  <string name="pin_add">Pin this toot?</string>
-  <string name="pin_remove">Unpin this toot?</string>
-  <string name="more_action_1">Mute</string>
-  <string name="more_action_2">Block</string>
-  <string name="more_action_3">Report</string>
-  <string name="more_action_4">Remove</string>
-  <string name="more_action_5">Copy</string>
-  <string name="more_action_6">Share</string>
-  <string name="more_action_7">Mention</string>
+  <string name="favourite_add">Thêm cái còi này vào mục yêu thích của bạn?</string>
+  <string name="favourite_remove">Loại bỏ thổi còi này khỏi mục yêu thích của bạn?</string>
+  <string name="reblog_add">Tăng thổi còi này?</string>
+  <string name="reblog_remove">Tháo nốt nhạc này?</string>
+  <string name="pin_add">Pin này thổi còi?</string>
+  <string name="pin_remove">Hủy bỏ cái thổi còi này?</string>
+  <string name="more_action_1">Tắt tiếng</string>
+  <string name="more_action_2">Súc cây</string>
+  <string name="more_action_3">Báo cáo</string>
+  <string name="more_action_4">Tẩy</string>
+  <string name="more_action_5">Sao chép</string>
+  <string name="more_action_6">Chia sẻ</string>
+  <string name="more_action_7">Ghi chép</string>
   <string-array name="more_action_confirm">
     <item>Mute this account?</item>
     <item>Block this account?</item>
@@ -308,33 +308,33 @@ và %d toots khác để khám phá</item>
   </string-array>
   <string-array name="settings_translation">
     <item>Yandex</item>
-    <item>No</item>
+    <item>Không</item>
   </string-array>
-  <string name="set_led_colour">Set LED colour:</string>
+  <string name="set_led_colour">Đặt màu LED:</string>
   <string-array name="led_colours">
-    <item>Blue</item>
-    <item>Cyan</item>
-    <item>Magenta</item>
-    <item>Green</item>
-    <item>Red</item>
-    <item>Yellow</item>
-    <item>White</item>
+    <item>Màu xanh da trời</item>
+    <item>Màu lục lam</item>
+    <item>Màu đỏ tươi</item>
+    <item>Màu xanh lá</item>
+    <item>Đỏ</item>
+    <item>Màu vàng</item>
+    <item>Trắng</item>
   </string-array>
-  <string name="set_title_news">News</string>
-  <string name="set_notification_news">Notify for new toots on the home timeline</string>
-  <string name="set_show_error_messages">Display error messages</string>
-  <string name="action_follow">Follow</string>
-  <string name="action_unfollow">Unfollow</string>
-  <string name="action_block">Block</string>
-  <string name="action_unblock">Unblock</string>
-  <string name="action_mute">Mute</string>
-  <string name="action_no_action">No action</string>
-  <string name="action_unmute">Unmute</string>
-  <string name="request_sent">Request sent</string>
-  <string name="followed_by">Follows you</string>
-  <string name="action_search">Search</string>
+  <string name="set_title_news">Tin tức</string>
+  <string name="set_notification_news">Thông báo cho những con rết mới trên dòng thời gian nhà</string>
+  <string name="set_show_error_messages">Hiển thị thông báo lỗi</string>
+  <string name="action_follow">Theo</string>
+  <string name="action_unfollow">Hủy theo dõi</string>
+  <string name="action_block">Khối</string>
+  <string name="action_unblock">Mở khóa</string>
+  <string name="action_mute">Tắt tiếng</string>
+  <string name="action_no_action">Không có hành động</string>
+  <string name="action_unmute">Bật tiếng</string>
+  <string name="request_sent">Đã gửi yêu cầu</string>
+  <string name="followed_by">Sau bạn</string>
+  <string name="action_search">Tìm kiếm</string>
   <!-- Quick settings for notifications -->
-  <string name="settings_popup_title">Push notifications</string>
+  <string name="settings_popup_title">Push thông báo</string>
   <string name="settings_popup_message">
         Please, confirm push notifications that you want to receive.
         You can enable or disable these notifications later in settings (Notifications tab).
