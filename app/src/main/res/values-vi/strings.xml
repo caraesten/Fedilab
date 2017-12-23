@@ -7,23 +7,23 @@
   <string name="action_about_instance">Về ví dụ</string>
   <string name="action_privacy">Riêng tư</string>
   <string name="action_cache">Cache</string>
-  <string name="action_logout">Logout</string>
-  <string name="login">Login</string>
+  <string name="action_logout">Đăng xuất</string>
+  <string name="login">Đăng nhập</string>
   <!-- common -->
-  <string name="close">Close</string>
-  <string name="yes">Yes</string>
-  <string name="no">No</string>
-  <string name="cancel">Cancel</string>
-  <string name="download">Download</string>
-  <string name="download_file">Download %1$s</string>
-  <string name="download_over">Download complete</string>
-  <string name="save_file">Save %1$s</string>
-  <string name="save_over">Media saved</string>
-  <string name="download_from" formatted="false">File: %1$s</string>
-  <string name="password">Password</string>
-  <string name="email">Email</string>
-  <string name="accounts">Accounts</string>
-  <string name="toots">Toots</string>
+  <string name="close">Gần</string>
+  <string name="yes">Vâng</string>
+  <string name="no">Không</string>
+  <string name="cancel">Hủy</string>
+  <string name="download">Tải về</string>
+  <string name="download_file">Tải về %1$s</string>
+  <string name="download_over">Hoan thanh tải</string>
+  <string name="save_file">Lưu %1$s</string>
+  <string name="save_over">Đã lưu phương tiện</string>
+  <string name="download_from" formatted="false">Tập tin: %1$s</string>
+  <string name="password">Mật khẩu</string>
+  <string name="email">E-mail</string>
+  <string name="accounts">Tài khoản</string>
+  <string name="toots">Thổi còi</string>
   <string name="tags">Tags</string>
   <string name="token">Token</string>
   <string name="save">Save</string>
