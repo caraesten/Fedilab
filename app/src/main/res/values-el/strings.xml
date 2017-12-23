@@ -60,14 +60,14 @@
   <string name="drafts">Προσχέδια</string>
   <string name="new_data">Είναι διαθέσιμα νέα δεδομένα! Να εμφανιστούν;</string>
   <string name="favourite">Αγαπημένα</string>
-  <string name="follow">New followers</string>
-  <string name="mention">Mentions</string>
+  <string name="follow">Νέοι ακόλουθοι</string>
+  <string name="mention">Αναφορές</string>
   <string name="reblog">Boosts</string>
-  <string name="show_boosts">Show boosts</string>
-  <string name="show_replies">Show replies</string>
-  <string name="action_open_in_web">Open in browser</string>
-  <string name="translate">Translate</string>
-  <string name="please_wait">Please, wait few seconds before making this action.</string>
+  <string name="show_boosts">Εμφάνισε τα boosts</string>
+  <string name="show_replies">Εμφάνισε τις αναφορές</string>
+  <string name="action_open_in_web">Άνοιξε στον περιηγητή</string>
+  <string name="translate">Μετέφρασε</string>
+  <string name="please_wait">Παρακαλώ, πριν κάνετε αυτή την ενέργεια περιμένετε μερικά δευτερολεπτα.</string>
   <!--- Menu -->
   <string name="home_menu">Home</string>
   <string name="local_menu">Local timeline</string>
