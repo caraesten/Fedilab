@@ -316,6 +316,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         final String finalUrl = url;
         switch (type){
             case "image":
+                pbar_inf.setScaleY(1f);
                 imageView.setVisibility(View.VISIBLE);
                 fileVideo = null;
                 pbar_inf.setIndeterminate(true);
@@ -352,6 +353,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             case "video":
             case "gifv":
                 pbar_inf.setIndeterminate(false);
+                pbar_inf.setScaleY(3f);
                 File file = new File(getCacheDir() + "/" + Helper.md5(url)+".mp4");
                 if(file.exists()) {
                     Uri uri = Uri.parse(file.getAbsolutePath());
@@ -431,6 +433,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     @Override
     public void onUpdateProgress(int progressPercentage) {
         progress.setText(String.format("%s%%",String.valueOf(progressPercentage)));
+        pbar_inf.setProgress(progressPercentage);
     }
 
 }
