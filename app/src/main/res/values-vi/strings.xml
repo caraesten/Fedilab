@@ -91,41 +91,41 @@
   <string name="choose_file_error">Không tìm thấy thám hiểm tệp!</string>
   <string name="click_to_change">Nhấp vào đường dẫn để thay đổi nó</string>
   <string name="failed">Thất bại!</string>
-  <string name="scheduled_toots">Scheduled toots</string>
-  <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
-  <string name="insert_emoji">Insert emoji</string>
-  <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-  <string name="live_notif">Live notifications</string>
+  <string name="scheduled_toots">Các thổi còi theo lịch</string>
+  <string name="disclaimer_full">Thông tin dưới đây có thể phản ánh hồ sơ của người dùng không đầy đủ.</string>
+  <string name="insert_emoji">Chèn eoji</string>
+  <string name="no_emoji">Các ứng dụng đã không thu thập emojis tùy chỉnh cho thời điểm này.</string>
+  <string name="live_notif">Thông báo trực tiếp</string>
   <!-- Status -->
-  <string name="no_status">No toot to display</string>
-  <string name="fav_added">The toot was added to favourites</string>
-  <string name="fav_removed">The toot was removed from favourites!</string>
-  <string name="reblog_added">The toot was boosted!</string>
-  <string name="reblog_removed">The toot is no longer boosted!</string>
-  <string name="reblog_by">Boosted by %1$s</string>
-  <string name="favourite_add">Add this toot to your favourites?</string>
-  <string name="favourite_remove">Remove this toot from your favourites?</string>
-  <string name="reblog_add">Boost this toot?</string>
-  <string name="reblog_remove">Unboost this toot?</string>
-  <string name="pin_add">Pin this toot?</string>
-  <string name="pin_remove">Unpin this toot?</string>
-  <string name="more_action_1">Mute</string>
-  <string name="more_action_2">Block</string>
-  <string name="more_action_3">Report</string>
-  <string name="more_action_4">Remove</string>
-  <string name="more_action_5">Copy</string>
-  <string name="more_action_6">Share</string>
-  <string name="more_action_7">Mention</string>
+  <string name="no_status">Không thổi còi để hiển thị</string>
+  <string name="fav_added">Các thổi còi đã được thêm vào mục yêu thích</string>
+  <string name="fav_removed">Các thổi còi đã được gỡ bỏ khỏi mục yêu thích!</string>
+  <string name="reblog_added">Thổi còi đã được đẩy mạnh!</string>
+  <string name="reblog_removed">Thổi còi không còn được tăng cường!</string>
+  <string name="reblog_by">Được thúc đẩy bởi %1$s</string>
+  <string name="favourite_add">Thêm cái còi này vào mục yêu thích của bạn?</string>
+  <string name="favourite_remove">Loại bỏ thổi còi này khỏi mục yêu thích của bạn?</string>
+  <string name="reblog_add">Tăng thổi còi này?</string>
+  <string name="reblog_remove">Tháo nốt nhạc này?</string>
+  <string name="pin_add">Pin này thổi còi?</string>
+  <string name="pin_remove">Hủy bỏ cái thổi còi này?</string>
+  <string name="more_action_1">Tắt tiếng</string>
+  <string name="more_action_2">Súc cây</string>
+  <string name="more_action_3">Báo cáo</string>
+  <string name="more_action_4">Tẩy</string>
+  <string name="more_action_5">Sao chép</string>
+  <string name="more_action_6">Chia sẻ</string>
+  <string name="more_action_7">Ghi chép</string>
   <string-array name="more_action_confirm">
-    <item>Mute this account?</item>
-    <item>Block this account?</item>
-    <item>Report this toot?</item>
+    <item>Ẩn tài khoản này?</item>
+    <item>Chặn tài khoản này?</item>
+    <item>Báo cáo này thổi còi?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>Remove this toot?</item>
+    <item>Hủy bỏ thổi còi này?</item>
   </string-array>
   <plurals name="preview_replies">
-    <item quantity="other">%d replies</item>
+    <item quantity="other">%d 	đáp lại</item>
   </plurals>
   <!-- Date -->
   <string name="date_seconds">%d s</string>
@@ -133,286 +133,284 @@
   <string name="date_hours">%d h</string>
   <string name="date_day">%d d</string>
   <!-- TOOT -->
-  <string name="toot_cw_placeholder">Warning</string>
-  <string name="toot_placeholder">What is on your mind?</string>
-  <string name="toot_it">TOOT!</string>
+  <string name="toot_cw_placeholder">Cảnh báo</string>
+  <string name="toot_placeholder">Bạn đang nghĩ cái gì thế?</string>
+  <string name="toot_it">Thổi còi!</string>
   <string name="cw">cw</string>
-  <string name="toot_title">Write a toot</string>
-  <string name="toot_title_reply">Reply to a toot</string>
-  <string name="toot_no_space">You have reached the 500 characters allowed!</string>
-  <string name="toot_select_image">Select a media</string>
-  <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-  <string name="toot_delete_media">Delete this media?</string>
-  <string name="toot_error_no_content">Your toot is empty!</string>
-  <string name="toot_visibility_tilte">Visibility of the toot</string>
-  <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-  <string name="toot_sent">The toot has been sent!</string>
-  <string name="toot_reply_content_title">You are replying to this toot:</string>
-  <string name="toot_sensitive">Sensitive content?</string>
+  <string name="toot_title">Viết một cái còi</string>
+  <string name="toot_title_reply">Trả lời thổi còi</string>
+  <string name="toot_no_space">Bạn đã đạt đến 500 ký tự cho phép!</string>
+  <string name="toot_select_image">Chọn phương tiện</string>
+  <string name="toot_select_image_error">Đã xảy ra lỗi khi chọn phương tiện!</string>
+  <string name="toot_delete_media">Xóa phương tiện này?</string>
+  <string name="toot_error_no_content">Thổi còi của bạn trống!</string>
+  <string name="toot_visibility_tilte">Tầm nhìn của thổi còi</string>
+  <string name="toots_visibility_tilte">Khả năng hiển thị của các toots theo mặc định: </string>
+  <string name="toot_sent">Thổi còi đã được gửi!</string>
+  <string name="toot_reply_content_title">Bạn đang trả lời cho thổi còi này:</string>
+  <string name="toot_sensitive">Nội dung nhạy cảm?</string>
   <string-array name="toot_visibility">
-    <item>Post to public timelines</item>
-    <item>Do not post to public timelines</item>
-    <item>Post to followers only</item>
-    <item>Post to mentioned users only</item>
+    <item>Đăng lên các mốc công khai</item>
+    <item>Không đăng lên các dòng thời gian công khai</item>
+    <item>Đăng lên người theo dõi chỉ</item>
+    <item>Đăng lên chỉ những người dùng được đề cập</item>
   </string-array>
-  <string name="no_draft">No draft!</string>
-  <string name="choose_toot">Choose a toot</string>
-  <string name="choose_accounts">Choose an account</string>
-  <string name="select_accounts">Select some accounts</string>
-  <string name="remove_draft">Remove draft?</string>
-  <string name="show_reply">Click on the button to display the original toot</string>
-  <string name="upload_form_description">Describe for the visually impaired</string>
+  <string name="no_draft">Không có bản nháp!</string>
+  <string name="choose_toot">Chọn một cái còi</string>
+  <string name="choose_accounts">Chọn một tài khoản</string>
+  <string name="select_accounts">Chọn một số tài khoản</string>
+  <string name="remove_draft">Xóa dự thảo?</string>
+  <string name="show_reply">Nhấp chuột vào nút để hiển thị các thổi còi ban đầu</string>
+  <string name="upload_form_description">Mô tả cho người khiếm thị</string>
   <!-- Instance -->
-  <string name="instance_no_description">No description available!</string>
+  <string name="instance_no_description">Không có mô tả nào!</string>
   <!-- About -->
-  <string name="about_vesrion">Release %1$s</string>
-  <string name="about_developer">Developer:</string>
-  <string name="about_license">License: </string>
+  <string name="about_vesrion">Phát hành %1$s</string>
+  <string name="about_developer">Nhà phát triển:</string>
+  <string name="about_license">Giấy phép: </string>
   <string name="about_license_action">GNU GPL V3</string>
-  <string name="about_code">Source code: </string>
-  <string name="about_yandex">Translation of toots:</string>
-  <string name="about_thekinrar">Search instances:</string>
+  <string name="about_code">Mã nguồn: </string>
+  <string name="about_yandex">Dịch của thổi còi:</string>
+  <string name="about_thekinrar">Trường hợp tìm kiếm:</string>
   <string name="about_thekinrar_action">instances.social</string>
-  <string name="thanks_text_logo">Icon designer:</string>
+  <string name="thanks_text_logo">Người thiết kế biểu tượng:</string>
   <!-- Conversation -->
-  <string name="conversation">Conversation</string>
+  <string name="conversation">Cuộc hội thoại</string>
   <!-- Accounts -->
-  <string name="no_accounts">No account to display</string>
-  <string name="no_follow_request">No follow request</string>
-  <string name="status_cnt">Toots \n %1$s</string>
-  <string name="following_cnt">Following \n %1$s</string>
-  <string name="followers_cnt">Followers \n %1$s</string>
-  <string name="pins_cnt">Pinned \n %d</string>
-  <string name="authorize">Authorize</string>
-  <string name="reject">Reject</string>
+  <string name="no_accounts">Không có tài khoản để hiển thị</string>
+  <string name="no_follow_request">Không theo yêu cầu</string>
+  <string name="status_cnt">Thổi còi\n %1$s</string>
+  <string name="following_cnt">Tiếp theo\n %1$s</string>
+  <string name="followers_cnt">Người theo dõi \n %1$s</string>
+  <string name="pins_cnt">Đã ghim \n %d</string>
+  <string name="authorize">Ủy quyền</string>
+  <string name="reject">Từ chối</string>
   <!-- Scheduled toots -->
-  <string name="no_scheduled_toots">No scheduled toot to display!</string>
-  <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-  <string name="remove_scheduled">Delete scheduled toot?</string>
-  <string name="media_count">Media: %d</string>
-  <string name="toot_scheduled">The toot has been scheduled!</string>
-  <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
-  <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+  <string name="no_scheduled_toots">Không có lịch trình thổi còi để hiển thị!</string>
+  <string name="no_scheduled_toots_indications">Viết toot và sau đó chọn <b>Lịch</b> từ trình đơn trên cùng.</string>
+  <string name="remove_scheduled">Xóa nhịp cầu định kỳ?</string>
+  <string name="media_count">Phương tiện truyền thông: %d</string>
+  <string name="toot_scheduled">Các thổi còi đã được lên kế hoạch!</string>
+  <string name="toot_scheduled_date">Ngày dự kiến ​​phải lớn hơn giờ hiện tại!</string>
+  <string name="warning_battery">Trình tiết kiệm pin đã được kích hoạt! Nó có thể không hoạt động như mong đợi.</string>
   <!-- Notifications -->
-  <string name="no_notifications">No notification to display</string>
-  <string name="notif_mention">mentioned you</string>
-  <string name="notif_reblog">boosted your status</string>
-  <string name="notif_favourite">favourited your status</string>
-  <string name="notif_follow">followed you</string>
-  <string name="notif_pouet">New toot from %1$s</string>
+  <string name="no_notifications">Không có thông báo để hiển thị</string>
+  <string name="notif_mention">đề cập đến bạn</string>
+  <string name="notif_reblog">đẩy mạnh tình trạng của bạn</string>
+  <string name="notif_favourite">ưu đãi tình trạng của bạn</string>
+  <string name="notif_follow">đã theo bạn</string>
+  <string name="notif_pouet">Thổi còi mới từ %1$s</string>
   <plurals name="other_notifications">
-    <item quantity="other">and %d other notifications</item>
+    <item quantity="other">và một thông báo khác
+và %d thông báo khác</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="other">and %d other toots to discover</item>
+    <item quantity="other">và một cái còi khác để khám phá
+và %d toots khác để khám phá</item>
   </plurals>
-  <string name="delete_notification_ask">Delete a notification?</string>
-  <string name="delete_notification_ask_all">Delete all notifications?</string>
-  <string name="delete_notification">The notification has been deleted!</string>
-  <string name="delete_notification_all">All notifications have been deleted!</string>
+  <string name="delete_notification_ask">Xóa thông báo?</string>
+  <string name="delete_notification_ask_all">Xóa tất cả các thông báo?</string>
+  <string name="delete_notification">Thông báo đã bị xóa!</string>
+  <string name="delete_notification_all">Tất cả các thông báo đã bị xóa!</string>
   <!-- HEADER -->
-  <string name="following">Following</string>
-  <string name="followers">Followers</string>
-  <string name="pinned_toots">Pinned</string>
+  <string name="following">Tiếp theo</string>
+  <string name="followers">Người theo dõi</string>
+  <string name="pinned_toots">Đã ghim</string>
   <!-- TOAST -->
-  <string name="client_error">Unable to get client id!</string>
-  <string name="no_internet">No Internet connection!</string>
-  <string name="toast_block">The account was blocked!</string>
-  <string name="toast_unblock">The account is no longer blocked!</string>
-  <string name="toast_mute">The account was muted!</string>
-  <string name="toast_unmute">The account is no longer muted!</string>
-  <string name="toast_follow">The account was followed!</string>
-  <string name="toast_unfollow">The account is no longer followed!</string>
-  <string name="toast_reblog">The toot was boosted!</string>
-  <string name="toast_unreblog">The toot is no longer boosted!</string>
-  <string name="toast_favourite">The toot was added to your favourites!</string>
-  <string name="toast_unfavourite">The toot was removed from your favourites!</string>
-  <string name="toast_report">The toot was reported!</string>
-  <string name="toast_unstatus">The toot was deleted!</string>
-  <string name="toast_pin">The toot was pinned!</string>
-  <string name="toast_unpin">The toot was unpinned!</string>
-  <string name="toast_error">Oops ! An error occurred!</string>
-  <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
-  <string name="toast_error_instance">The instance domain does not seem to be valide!</string>
-  <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
-  <string name="toast_error_search">An error occurred while searching!</string>
-  <string name="toast_error_login">Can not log in!</string>
-  <string name="toast_update_credential_ok">The profile data have been saved!</string>
-  <string name="nothing_to_do">No action can be taken</string>
-  <string name="toast_saved">The media has been saved!</string>
-  <string name="toast_error_translate">An error occurred while translating!</string>
-  <string name="toast_toot_saved">Draft saved!</string>
-  <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
-  <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
-  <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
+  <string name="client_error">Không thể lấy id khách hàng!</string>
+  <string name="no_internet">Không có kết nối Internet!</string>
+  <string name="toast_block">Tài khoản đã bị chặn!</string>
+  <string name="toast_unblock">Tài khoản không còn bị chặn!</string>
+  <string name="toast_mute">Tài khoản đã bị tắt tiếng!</string>
+  <string name="toast_unmute">Tài khoản không còn bị tắt tiếng nữa!</string>
+  <string name="toast_follow">Tài khoản đã được theo sau!</string>
+  <string name="toast_unfollow">Tài khoản không còn theo sau!</string>
+  <string name="toast_reblog">Thổi còi đã được đẩy mạnh!</string>
+  <string name="toast_unreblog">Thổi còi không còn được tăng cường!</string>
+  <string name="toast_favourite">Các thổi còi đã được thêm vào mục yêu thích của bạn!</string>
+  <string name="toast_unfavourite">Các thổi còi đã được gỡ bỏ khỏi mục yêu thích của bạn!</string>
+  <string name="toast_report">Các thổi còi đã được báo cáo!</string>
+  <string name="toast_unstatus">Các thổi còi đã bị xóa!</string>
+  <string name="toast_pin">Thổi còi đã được gắn!</string>
+  <string name="toast_unpin">Cái thổi còi bị bỏng!</string>
+  <string name="toast_error">Rất tiếc! Đã xảy ra lỗi!</string>
+  <string name="toast_code_error">Đã xảy ra lỗi! Trường hợp đã không trả lại mã ủy quyền!</string>
+  <string name="toast_error_instance">Miền dụ không có vẻ là valide!</string>
+  <string name="toast_error_loading_account">Đã xảy ra lỗi khi chuyển đổi giữa các tài khoản!</string>
+  <string name="toast_error_search">Đã xảy ra lỗi khi tìm kiếm!</string>
+  <string name="toast_error_login">Không thể đăng nhập!</string>
+  <string name="toast_update_credential_ok">Dữ liệu tiểu sử đã được lưu!</string>
+  <string name="nothing_to_do">Không thể thực hiện hành động</string>
+  <string name="toast_saved">Các phương tiện truyền thông đã được cứu!</string>
+  <string name="toast_error_translate">Đã xảy ra lỗi khi dịch!</string>
+  <string name="toast_toot_saved">Bản nháp đã được lưu!</string>
+  <string name="toast_error_char_limit">Bạn có chắc là trường hợp này cho phép số nhân vật này? Thông thường, giá trị này gần 500 ký tự.</string>
+  <string name="toast_visibility_changed">Tầm nhìn của các toots đã được thay đổi cho tài khoản %1$s</string>
+  <string name="toast_empty_search">Tên sơ thẩm và tên màn hình không được để trống!</string>
   <!-- Settings -->
-  <string name="settings_title_optimisation">Optimisation of loading</string>
-  <string name="set_toots_page">Number of toots per load</string>
-  <string name="set_accounts_page">Number of accounts per load</string>
-  <string name="set_notifications_page">Number of notifications per load</string>
-  <string name="set_attachment_always">Always</string>
+  <string name="settings_title_optimisation">Tối ưu hoá tải</string>
+  <string name="set_toots_page">Số lượng các toots trên mỗi lần tải</string>
+  <string name="set_accounts_page">Số tài khoản trên mỗi lần tải</string>
+  <string name="set_notifications_page">Số thông báo trên mỗi lần tải</string>
+  <string name="set_attachment_always">Luôn luôn</string>
   <string name="set_attachment_wifi">WIFI</string>
-  <string name="set_attachment_ask">Ask</string>
-  <string name="set_attachment_action">Load the media</string>
-  <string name="load_attachment">Load the pictures</string>
-  <string name="load_attachment_spoiler">Show more…</string>
-  <string name="load_sensitive_attachment">Sensitive content</string>
-  <string name="set_display_reply">Display previous message in responses</string>
-  <string name="set_display_local">Display local timeline</string>
-  <string name="set_display_global">Display federated timeline</string>
-  <string name="set_disable_gif">Disable GIF avatars</string>
-  <string name="set_folder_title">Path: </string>
-  <string name="set_auto_store_toot">Save drafts automatically</string>
-  <string name="set_bubble_counter">Display counters</string>
-  <string name="set_auto_add_media_url">Add URL of media in toots</string>
-  <string name="settings_title_notifications">Manage notifications</string>
-  <string name="set_notif_follow">Notify when someone follows you</string>
-  <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
-  <string name="set_notif_follow_share">Notify when someone boosts your status</string>
-  <string name="set_notif_follow_add">Notify when someone favourites your status</string>
-  <string name="set_notif_follow_mention">Notify when someone mentions you</string>
-  <string name="set_share_validation">Show confirmation dialog before boosting</string>
-  <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
-  <string name="settings_title_more_options">Advanced settings</string>
-  <string name="set_wifi_only">Notify in WIFI only</string>
-  <string name="set_notify">Notify?</string>
-  <string name="set_notif_silent">Silent Notifications</string>
-  <string name="set_night_mode">Night mode</string>
-  <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
-  <string name="settings_title_profile">Edit profile</string>
-  <string name="set_profile_description">Bio…</string>
-  <string name="set_save_changes">Save changes</string>
-  <string name="set_header_picture_overlay">Choose a header picture</string>
-  <string name="set_preview_reply">Display the number of replies in home timeline</string>
-  <string name="set_preview_reply_pp">Display profile pictures?</string>
-  <string name="set_multiaccount_actions">Allow interactions between accounts?</string>
-  <string name="note_no_space">You have reached the 160 characters allowed!</string>
-  <string name="username_no_space">You have reached the 30 characters allowed!</string>
-  <string name="settings_title_hour">Time slot for notifications:</string>
-  <string name="settings_time_from">Between</string>
-  <string name="settings_time_to">and</string>
-  <string name="settings_time_greater">The time must be greater than %1$s</string>
-  <string name="settings_time_lower">The time must be lower than %1$s</string>
-  <string name="settings_hour_init">Start time</string>
-  <string name="settings_hour_end">End time</string>
-  <string name="embedded_browser">Use the built-in browser</string>
-  <string name="use_javascript">Enable Javascript</string>
-  <string name="use_cookies">Allow third-party cookies</string>
-  <string name="settings_ui_layout">Layout for timelines: </string>
+  <string name="set_attachment_ask">Hỏi</string>
+  <string name="set_attachment_action">Nạp vật liệu in</string>
+  <string name="load_attachment">Tải hình ảnh</string>
+  <string name="load_attachment_spoiler">Cho xem nhiều hơn…</string>
+  <string name="load_sensitive_attachment">Nội dung nhạy cảm</string>
+  <string name="set_display_reply">Hiển thị thông báo trước trong câu trả lời</string>
+  <string name="set_display_local">Hiển thị thời gian biểu địa phương</string>
+  <string name="set_display_global">Hiển thị thời gian liên kết</string>
+  <string name="set_disable_gif">Tắt hình đại diện GIF</string>
+  <string name="set_folder_title">Con đường: </string>
+  <string name="set_auto_store_toot">Tự động lưu dự thảo</string>
+  <string name="set_bubble_counter">Quầy hiển thị</string>
+  <string name="set_auto_add_media_url">Thêm URL của phương tiện truyền thông vào các toots</string>
+  <string name="settings_title_notifications">Quản lý thông báo</string>
+  <string name="set_notif_follow">Thông báo khi ai đó theo bạn</string>
+  <string name="set_notif_follow_ask">Thông báo khi ai đó yêu cầu bạn theo dõi bạn</string>
+  <string name="set_notif_follow_share">Thông báo khi ai đó tăng tình trạng của bạn</string>
+  <string name="set_notif_follow_add">Thông báo khi ai đó yêu thích trạng thái của bạn</string>
+  <string name="set_notif_follow_mention">Thông báo khi ai đó đề cập đến bạn</string>
+  <string name="set_share_validation">Hiển thị hộp thoại xác nhận trước khi tăng</string>
+  <string name="set_share_validation_fav">Hiển thị hộp thoại xác nhận trước khi thêm vào mục yêu thích</string>
+  <string name="settings_title_more_options">Cài đặt nâng cao</string>
+  <string name="set_wifi_only">Chỉ thông báo bằng WIFI</string>
+  <string name="set_notify">Thông báo?</string>
+  <string name="set_notif_silent">Thông báo im lặng</string>
+  <string name="set_night_mode">Chế độ ban đêm</string>
+  <string name="set_nsfw_timeout">Thời gian chờ của NSFW (giây, 0 có nghĩa là tắt)</string>
+  <string name="settings_title_profile">Chỉnh sửa tiểu sử</string>
+  <string name="set_profile_description">Tiểu sử…</string>
+  <string name="set_save_changes">Lưu thay đổi</string>
+  <string name="set_header_picture_overlay">Chọn một hình ảnh tiêu đề</string>
+  <string name="set_preview_reply">Hiển thị số lượng bài trả lời trong dòng thời gian</string>
+  <string name="set_preview_reply_pp">Hiển thị ảnh tiểu sử?</string>
+  <string name="set_multiaccount_actions">Cho phép tương tác giữa các tài khoản?</string>
+  <string name="note_no_space">Bạn đã đạt đến 160 ký tự cho phép!</string>
+  <string name="username_no_space">Bạn đã đạt đến 30 ký tự!</string>
+  <string name="settings_title_hour">Khoảng thời gian để thông báo:</string>
+  <string name="settings_time_from">Giữa</string>
+  <string name="settings_time_to">và</string>
+  <string name="settings_time_greater">Thời gian phải lớn hơn %1$s</string>
+  <string name="settings_time_lower">Thời gian phải thấp hơn %1$s</string>
+  <string name="settings_hour_init">Thời gian bắt đầu</string>
+  <string name="settings_hour_end">Thời gian kết thúc</string>
+  <string name="embedded_browser">Sử dụng trình duyệt tích hợp</string>
+  <string name="use_javascript">Bật Javascript</string>
+  <string name="use_cookies">Cho phép cookie của bên thứ ba</string>
+  <string name="settings_ui_layout">Giao diện cho các mốc thời gian: </string>
   <string-array name="settings_menu_tabs">
-    <item>Tabs</item>
-    <item>Menu</item>
-    <item>Tabs and menu</item>
+    <item>Tab</item>
+    <item>Thực đơn</item>
+    <item>Tab và trình đơn</item>
   </string-array>
   <string-array name="settings_translation">
     <item>Yandex</item>
-    <item>No</item>
+    <item>Không</item>
   </string-array>
-  <string name="set_led_colour">Set LED colour:</string>
+  <string name="set_led_colour">Đặt màu LED:</string>
   <string-array name="led_colours">
-    <item>Blue</item>
-    <item>Cyan</item>
-    <item>Magenta</item>
-    <item>Green</item>
-    <item>Red</item>
-    <item>Yellow</item>
-    <item>White</item>
+    <item>Màu xanh da trời</item>
+    <item>Màu lục lam</item>
+    <item>Màu đỏ tươi</item>
+    <item>Màu xanh lá</item>
+    <item>Đỏ</item>
+    <item>Màu vàng</item>
+    <item>Trắng</item>
   </string-array>
-  <string name="set_title_news">News</string>
-  <string name="set_notification_news">Notify for new toots on the home timeline</string>
-  <string name="set_show_error_messages">Display error messages</string>
-  <string name="action_follow">Follow</string>
-  <string name="action_unfollow">Unfollow</string>
-  <string name="action_block">Block</string>
-  <string name="action_unblock">Unblock</string>
-  <string name="action_mute">Mute</string>
-  <string name="action_no_action">No action</string>
-  <string name="action_unmute">Unmute</string>
-  <string name="request_sent">Request sent</string>
-  <string name="followed_by">Follows you</string>
-  <string name="action_search">Search</string>
+  <string name="set_title_news">Tin tức</string>
+  <string name="set_notification_news">Thông báo cho những con rết mới trên dòng thời gian nhà</string>
+  <string name="set_show_error_messages">Hiển thị thông báo lỗi</string>
+  <string name="action_follow">Theo</string>
+  <string name="action_unfollow">Hủy theo dõi</string>
+  <string name="action_block">Khối</string>
+  <string name="action_unblock">Mở khóa</string>
+  <string name="action_mute">Tắt tiếng</string>
+  <string name="action_no_action">Không có hành động</string>
+  <string name="action_unmute">Bật tiếng</string>
+  <string name="request_sent">Đã gửi yêu cầu</string>
+  <string name="followed_by">Sau bạn</string>
+  <string name="action_search">Tìm kiếm</string>
   <!-- Quick settings for notifications -->
-  <string name="settings_popup_title">Push notifications</string>
+  <string name="settings_popup_title">Push thông báo</string>
   <string name="settings_popup_message">
-        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
+Vui lòng xác nhận thông báo đẩy mà bạn muốn nhận.         
+        Bạn có thể bật hoặc tắt các thông báo này sau trong cài đặt (tab Thông báo).
     </string>
-  <string name="settings_popup_timeline">For unread toots in home time-line?</string>
-  <string name="settings_popup_notification">For unread notifications?</string>
+  <string name="settings_popup_timeline">Đối với những con rồng chưa đọc trong dòng thời gian ở nhà?</string>
+  <string name="settings_popup_notification">Đối với thông báo chưa đọc?</string>
   <!-- CACHE -->
-  <string name="cache_title">Clear cache</string>
-  <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+  <string name="cache_title">Xóa bộ nhớ chổ dấu</string>
+  <string name="cache_message">Có %1$s dữ liệu trong bộ nhớ cache.\n\nBạn có muốn xóa chúng?</string>
   <string name="cache_units">Mb</string>
-  <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+  <string name="toast_cache_clear">Cache đã bị xóa! %1$s đã được phát hành</string>
   <!-- PRIVACY -->
-  <string name="privacy_data_title">Recorded data</string>
+  <string name="privacy_data_title">Dữ liệu đã ghi</string>
   <string name="privacy_data">
-        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
+Chỉ có thông tin cơ bản từ các tài khoản được lưu trữ trên thiết bị.
+        Những dữ liệu này là bí mật và chỉ có thể được sử dụng bởi các ứng dụng.
+        Xóa ứng dụng sẽ xóa ngay các dữ liệu này.\n
+        &#9888; Đăng nhập và mật khẩu không bao giờ được lưu trữ. Chúng chỉ được sử dụng trong quá trình xác thực an toàn (SSL) với một cá thể.
     </string>
-  <string name="privacy_authorizations_title">Permissions:</string>
+  <string name="privacy_authorizations_title">Quyền:</string>
   <string name="privacy_authorizations">
-        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
-        - <b>INTERNET</b>: Used for queries to an instance.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
-        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
-        - <b>WAKE_LOCK</b>: Used during the notification service.
-    </string>
-  <string name="privacy_API_authorizations_title">API permissions:</string>
+-<b>ACCESS_NETWORK_STATE</b>: Được dùng để phát hiện nếu thiết bị được kết nối với mạng WIFI.\n
+         -<b>INTERNET</b>: Được sử dụng cho truy vấn đến một cá thể.\n
+         -<b>WRITE_EXTERNAL_STORAGE</b>: Được sử dụng để lưu trữ phương tiện hoặc để di chuyển ứng dụng trên thẻ SD.\n
+         -<b>READ_EXTERNAL_STORAGE</b>: Được sử dụng để thêm phương tiện vào toots.\n
+         -<b>BOOT_COMPLETED</b>: Được sử dụng để bắt đầu dịch vụ thông báo.\n
+         -<b>WAKE_LOCK</b>: Được sử dụng trong dịch vụ thông báo.    </string>
+  <string name="privacy_API_authorizations_title">Quyền của API:</string>
   <string name="privacy_API_authorizations">
-        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
-    </string>
-  <string name="privacy_API_title">Tracking and Libraries</string>
+-<b>Đọc</b>: Đọc dữ liệu.\n
+         -<b>Viết</b>: Đăng trạng thái và phương tiện tải lên cho các trạng thái.\n
+         - <b> Thực hiện theo</b>: Theo dõi, hủy theo dõi, chặn, bỏ chặn.\n\n
+         <b>&#9888; Những hành động này chỉ được thực hiện khi người dùng yêu cầu họ.</b>    </string>
+  <string name="privacy_API_title">Theo dõi và Thư viện</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
-    </string>
-  <string name="privacy_API_yandex_title">Translation of toots</string>
+Ứng dụng<b>không sử dụng công cụ theo dõi</b>(đo lường đối tượng, báo cáo lỗi, v. v.) và không chứa bất kỳ quảng cáo nào.\n\n
+         Việc sử dụng thư viện được giảm thiểu:\n
+         -<b>Glide </b>: Để quản lý phương tiện truyền thông\n
+         -<b>Android-Job</b>: Để quản lý các dịch vụ\n
+         -<b>PhotoView</b>: Để quản lý hình ảnh\n    </string>
+  <string name="privacy_API_yandex_title">Dịch thổi còi</string>
   <string name="privacy_API_yandex_authorizations">
-        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
+Ứng dụng cung cấp khả năng dịch toots bằng cách sử dụng miền địa phương của thiết bị và API Yandex.\n
+        Yandex có chính sách riêng tư phù hợp của nó có thể được tìm thấy ở đây: https://yandex.ru/legal/confidential/?lang=en
     </string>
   <string name="thanks_text">
-        Thank you to Stéphane for the logo.
+Cảm ơn Stéphane vì đã có logo.
     </string>
   <string name="thanks_text_dev">
-        Thank you to:
-    </string>
-  <string name="filter_regex">Filter out by regular expressions</string>
-  <string name="search">Search</string>
-  <string name="delete">Delete</string>
-  <string name="fetch_more_toots">Fetch more toots…</string>
+Cảm ơn bạn:    </string>
+  <string name="filter_regex">Lọc theo biểu thức thông thường</string>
+  <string name="search">Tìm kiếm</string>
+  <string name="delete">Xóa bỏ</string>
+  <string name="fetch_more_toots">Tìm nạp thêm thổi còi…</string>
   <!-- About lists -->
-  <string name="action_lists">Lists</string>
-  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
-  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-  <string name="action_lists_add_to">Add to list</string>
-  <string name="action_lists_remove_from">Remove from list</string>
-  <string name="action_lists_create">Add list</string>
-  <string name="action_lists_delete">Delete list</string>
-  <string name="action_lists_update">Edit list</string>
-  <string name="action_lists_title_placeholder">New list title</string>
-  <string name="action_lists_search_users">Search among people you follow</string>
-  <string name="action_lists_owner">Your lists</string>
+  <string name="action_lists">Danh sách</string>
+  <string name="action_lists_confirm_delete">Bạn có chắc chắn muốn xóa vĩnh viễn danh sách này?</string>
+  <string name="action_lists_empty_content">Không có gì trong danh sách này. Khi các thành viên của danh sách này đăng các trạng thái mới, chúng sẽ xuất hiện ở đây.</string>
+  <string name="action_lists_add_to">Thêm vào danh sách</string>
+  <string name="action_lists_remove_from">Xóa từ danh sách</string>
+  <string name="action_lists_create">Thêm vào danh sách</string>
+  <string name="action_lists_delete">Xoá danh sách</string>
+  <string name="action_lists_update">Chỉnh sửa danh sách</string>
+  <string name="action_lists_title_placeholder">Tiêu đề danh sách mới</string>
+  <string name="action_lists_search_users">Tìm kiếm trong những người bạn theo dõi</string>
+  <string name="action_lists_owner">Danh sách của bạn</string>
   <!-- Migration -->
-  <string name="account_moved_to">%1$s has moved to %2$s</string>
-  <string name="show_boost_count">Show boosts/favourites count</string>
-  <string name="issue_login_title">Authentication does not work?</string>
+  <string name="account_moved_to">%1$s đã chuyển sang %2$s</string>
+  <string name="show_boost_count">Hiển thị số lần tăng/số lần yêu thích</string>
+  <string name="issue_login_title">Xác thực không hoạt động?</string>
   <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
+<b>Dưới đây là một số kiểm tra có thể giúp:</b>\n\n
+        - Kiểm tra không có lỗi chính tả trong tên dụ\n\n
+        - Kiểm tra rằng trường hợp của bạn không xuống\n\n
+        - Nếu bạn sử dụng xác thực hai yếu tố (2FA), vui lòng sử dụng liên kết ở cuối (khi tên cá thể được điền)\n\n
+        - Bạn cũng có thể sử dụng liên kết này mà không sử dụng 2FA\n\n
+        - Nếu vẫn không hoạt động, vui lòng nêu lên một vấn đề về Github tại https://github.com/stom79/mastalab/issues
     </string>
 </resources>
