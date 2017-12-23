@@ -35,12 +35,10 @@ public class RetrieveRepliesAsyncTask extends AsyncTask<Void, Void, Void> {
     private OnRetrieveRepliesInterface listener;
     private fr.gouv.etalab.mastodon.client.Entities.Status status;
     private WeakReference<Context> contextReference;
-    private int position;
 
-    public RetrieveRepliesAsyncTask(Context context, int position, fr.gouv.etalab.mastodon.client.Entities.Status status, OnRetrieveRepliesInterface onRetrieveRepliesInterface){
+    public RetrieveRepliesAsyncTask(Context context, fr.gouv.etalab.mastodon.client.Entities.Status status, OnRetrieveRepliesInterface onRetrieveRepliesInterface){
         this.contextReference = new WeakReference<>(context);
         this.status = status;
-        this.position = position;
         this.listener = onRetrieveRepliesInterface;
     }
 
@@ -59,7 +57,7 @@ public class RetrieveRepliesAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveReplies(position, apiResponse);
+        listener.onRetrieveReplies(apiResponse);
     }
 
 }

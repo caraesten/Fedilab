@@ -21,5 +21,5 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
  * Interface when replies have been retrieved
  */
 public interface OnRetrieveRepliesInterface {
-    void onRetrieveReplies(int position, APIResponse apiResponse);
+    void onRetrieveReplies(APIResponse apiResponse);
 }

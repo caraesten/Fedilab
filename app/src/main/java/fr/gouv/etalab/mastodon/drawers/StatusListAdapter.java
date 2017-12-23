@@ -164,15 +164,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     }
 
     @Override
-    public void onRetrieveReplies(int position, APIResponse apiResponse) {
+    public void onRetrieveReplies(APIResponse apiResponse) {
         if( apiResponse.getError() != null || apiResponse.getStatuses() == null || apiResponse.getStatuses().size() == 0){
             return;
         }
         List<Status> modifiedStatus = apiResponse.getStatuses();
-        if( statuses !=null && statuses.size() > position && modifiedStatus != null && modifiedStatus.size() == 1){
-            statuses.get(position).setReplies(modifiedStatus.get(0).getReplies());
-            statusListAdapter.notifyItemChanged(position, modifiedStatus.get(0).getReplies());
-        }
+        notifyStatusChanged(modifiedStatus.get(0));
     }
 
     private class ViewHolderEmpty extends RecyclerView.ViewHolder{
@@ -345,7 +342,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);
                 //Retrieves attached replies to a toot
                 if (showPreview && status.getReplies() == null) {
-                    new RetrieveRepliesAsyncTask(context, position, status, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new RetrieveRepliesAsyncTask(context, status, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             }
 
