@@ -17,6 +17,7 @@ package fr.gouv.etalab.mastodon.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -39,13 +40,16 @@ import android.view.ViewGroup;
 import android.webkit.URLUtil;
 import android.widget.ImageView;
 import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.FutureTarget;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
@@ -54,6 +58,8 @@ import com.github.chrisbanes.photoview.OnMatrixChangedListener;
 import com.github.chrisbanes.photoview.PhotoView;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
@@ -91,7 +97,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     private TextView progress;
     private boolean canSwipe;
     private AppBarLayout appBar;
-
+    private ProgressBar pbar_inf;
 
 
     private enum actionSwipe{
@@ -153,10 +159,10 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
                             ActivityCompat.requestPermissions(MediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST_CODE);
                         } else {
-                            Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
+                            storeFile(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
                         }
                     }else{
-                        Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
+                        storeFile(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
                     }
                 }
             });
@@ -208,6 +214,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         });
 
         progress = findViewById(R.id.loader_progress);
+        pbar_inf = findViewById(R.id.pbar_inf);
         setTitle("");
 
         isHiding = false;
@@ -215,6 +222,21 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         displayMediaAtPosition(actionSwipe.POP);
     }
 
+
+    private void storeFile(final Context context, final String preview_url, final String url, Bitmap bitmap, File fileVideo){
+        File file;
+        if( fileVideo != null) {
+            file = new File(getCacheDir() + "/" + Helper.md5(url) + ".mp4");
+            if(file.exists()) {
+                Helper.manageMoveFileDownload(context, preview_url, url, null,  fileVideo);
+            }else {
+                new HttpsConnection(MediaActivity.this).download(url, MediaActivity.this );
+            }
+        }else{
+            Helper.manageMoveFileDownload(context, preview_url, url, bitmap, null);
+        }
+
+    }
 
     /**
      * Manage touch event
@@ -309,6 +331,13 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         final String finalUrl = url;
         switch (type){
             case "image":
+                imageView.setVisibility(View.VISIBLE);
+                fileVideo = null;
+                pbar_inf.setIndeterminate(true);
+                loader.setVisibility(View.VISIBLE);
+                Glide.with(getApplicationContext())
+                        .asBitmap()
+                        .load(preview_url).into(imageView);
                 Glide.with(getApplicationContext())
                         .asBitmap()
                         .load(url)
@@ -329,7 +358,6 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                             @Override
                             public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
                                 loader.setVisibility(View.GONE);
-                                imageView.setVisibility(View.VISIBLE);
                                 downloadedImage = resource;
                                 imageView.setImageBitmap(resource);
                                 fileVideo = null;
@@ -338,7 +366,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 break;
             case "video":
             case "gifv":
-
+                pbar_inf.setIndeterminate(false);
                 File file = new File(getCacheDir() + "/" + Helper.md5(url)+".mp4");
                 if(file.exists()) {
                     Uri uri = Uri.parse(file.getAbsolutePath());
@@ -359,9 +387,16 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                     fileVideo = file;
                     downloadedImage = null;
                 }else{
-                    progress.setText("0 %");
-                    progress.setVisibility(View.VISIBLE);
-                    new HttpsConnection(MediaActivity.this).download(finalUrl, MediaActivity.this );
+                    Uri video = Uri.parse(finalUrl);
+                    MediaController mc = new MediaController(MediaActivity.this);
+                    videoView.setMediaController(mc);
+                    videoView.setVideoURI(video);
+                    videoView.requestFocus();
+                    videoView.setVisibility(View.VISIBLE);
+                    videoView.start();
+                    //progress.setText("0 %");
+                    //progress.setVisibility(View.VISIBLE);
+                    //new HttpsConnection(MediaActivity.this).download(finalUrl, MediaActivity.this );
                 }
                 break;
         }
