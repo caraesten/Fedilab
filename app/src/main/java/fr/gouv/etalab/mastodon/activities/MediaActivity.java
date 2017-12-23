@@ -159,10 +159,10 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
                             ActivityCompat.requestPermissions(MediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST_CODE);
                         } else {
-                            storeFile(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
+                            Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
                         }
                     }else{
-                        storeFile(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
+                        Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
                     }
                 }
             });
@@ -222,21 +222,6 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         displayMediaAtPosition(actionSwipe.POP);
     }
 
-
-    private void storeFile(final Context context, final String preview_url, final String url, Bitmap bitmap, File fileVideo){
-        File file;
-        if( fileVideo != null) {
-            file = new File(getCacheDir() + "/" + Helper.md5(url) + ".mp4");
-            if(file.exists()) {
-                Helper.manageMoveFileDownload(context, preview_url, url, null,  fileVideo);
-            }else {
-                new HttpsConnection(MediaActivity.this).download(url, MediaActivity.this );
-            }
-        }else{
-            Helper.manageMoveFileDownload(context, preview_url, url, bitmap, null);
-        }
-
-    }
 
     /**
      * Manage touch event
@@ -387,16 +372,13 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                     fileVideo = file;
                     downloadedImage = null;
                 }else{
-                    Uri video = Uri.parse(finalUrl);
-                    MediaController mc = new MediaController(MediaActivity.this);
-                    videoView.setMediaController(mc);
-                    videoView.setVideoURI(video);
-                    videoView.requestFocus();
-                    videoView.setVisibility(View.VISIBLE);
-                    videoView.start();
-                    //progress.setText("0 %");
-                    //progress.setVisibility(View.VISIBLE);
-                    //new HttpsConnection(MediaActivity.this).download(finalUrl, MediaActivity.this );
+                    imageView.setVisibility(View.VISIBLE);
+                    Glide.with(getApplicationContext())
+                            .asBitmap()
+                            .load(preview_url).into(imageView);
+                    progress.setText("0 %");
+                    progress.setVisibility(View.VISIBLE);
+                    new HttpsConnection(MediaActivity.this).download(finalUrl, MediaActivity.this );
                 }
                 break;
         }
@@ -439,6 +421,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 loader.setVisibility(View.GONE);
                 mp.start();
                 mp.setLooping(true);
+                imageView.setVisibility(View.GONE);
             }
         });
         videoView.setVisibility(View.VISIBLE);
