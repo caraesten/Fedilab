@@ -88,7 +88,7 @@
   <string name="delete_account_message" formatted="false">Διέγραψε τον λογαριασμό %1$s από την εφαρμογή;</string>
   <string name="send_email">Στείλε ένα email</string>
   <string name="choose_file">Please select a file</string>
-  <string name="choose_file_error">No file explorer found!</string>
+  <string name="choose_file_error">Δεν βρέθηκε εφαρμογή περίηγησης αρχείων!</string>
   <string name="click_to_change">Click on the path to change it</string>
   <string name="failed">Failed!</string>
   <string name="scheduled_toots">Scheduled toots</string>
