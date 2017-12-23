@@ -125,7 +125,7 @@
     <item>Hủy bỏ thổi còi này?</item>
   </string-array>
   <plurals name="preview_replies">
-    <item quantity="other">%d replies</item>
+    <item quantity="other">%d 	đáp lại</item>
   </plurals>
   <!-- Date -->
   <string name="date_seconds">%d s</string>
@@ -227,21 +227,21 @@ và %d toots khác để khám phá</item>
   <string name="toast_unfollow">Tài khoản không còn theo sau!</string>
   <string name="toast_reblog">Thổi còi đã được đẩy mạnh!</string>
   <string name="toast_unreblog">Thổi còi không còn được tăng cường!</string>
-  <string name="toast_favourite">The toot was added to your favourites!</string>
-  <string name="toast_unfavourite">The toot was removed from your favourites!</string>
-  <string name="toast_report">The toot was reported!</string>
-  <string name="toast_unstatus">The toot was deleted!</string>
-  <string name="toast_pin">The toot was pinned!</string>
-  <string name="toast_unpin">The toot was unpinned!</string>
-  <string name="toast_error">Oops ! An error occurred!</string>
-  <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
-  <string name="toast_error_instance">The instance domain does not seem to be valide!</string>
-  <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
-  <string name="toast_error_search">An error occurred while searching!</string>
-  <string name="toast_error_login">Can not log in!</string>
-  <string name="toast_update_credential_ok">The profile data have been saved!</string>
-  <string name="nothing_to_do">No action can be taken</string>
-  <string name="toast_saved">The media has been saved!</string>
+  <string name="toast_favourite">Các thổi còi đã được thêm vào mục yêu thích của bạn!</string>
+  <string name="toast_unfavourite">Các thổi còi đã được gỡ bỏ khỏi mục yêu thích của bạn!</string>
+  <string name="toast_report">Các thổi còi đã được báo cáo!</string>
+  <string name="toast_unstatus">Các thổi còi đã bị xóa!</string>
+  <string name="toast_pin">Thổi còi đã được gắn!</string>
+  <string name="toast_unpin">Cái thổi còi bị bỏng!</string>
+  <string name="toast_error">Rất tiếc! Đã xảy ra lỗi!</string>
+  <string name="toast_code_error">Đã xảy ra lỗi! Trường hợp đã không trả lại mã ủy quyền!</string>
+  <string name="toast_error_instance">Miền dụ không có vẻ là valide!</string>
+  <string name="toast_error_loading_account">Đã xảy ra lỗi khi chuyển đổi giữa các tài khoản!</string>
+  <string name="toast_error_search">Đã xảy ra lỗi khi tìm kiếm!</string>
+  <string name="toast_error_login">Không thể đăng nhập!</string>
+  <string name="toast_update_credential_ok">Dữ liệu tiểu sử đã được lưu!</string>
+  <string name="nothing_to_do">Không thể thực hiện hành động</string>
+  <string name="toast_saved">Các phương tiện truyền thông đã được cứu!</string>
   <string name="toast_error_translate">An error occurred while translating!</string>
   <string name="toast_toot_saved">Draft saved!</string>
   <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
@@ -365,19 +365,17 @@ Chỉ có thông tin cơ bản từ các tài khoản được lưu trữ trên 
     </string>
   <string name="privacy_API_authorizations_title">Quyền của API:</string>
   <string name="privacy_API_authorizations">
-        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
-    </string>
+-<b>Đọc</b>: Đọc dữ liệu.\n
+         -<b>Viết</b>: Đăng trạng thái và phương tiện tải lên cho các trạng thái.\n
+         - <b> Thực hiện theo</b>: Theo dõi, hủy theo dõi, chặn, bỏ chặn.\n\n
+         <b>&#9888; Những hành động này chỉ được thực hiện khi người dùng yêu cầu họ.</b>    </string>
   <string name="privacy_API_title">Theo dõi và Thư viện</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
-    </string>
+Ứng dụng<b>không sử dụng công cụ theo dõi</b>(đo lường đối tượng, báo cáo lỗi, v. v.) và không chứa bất kỳ quảng cáo nào.\n\n
+         Việc sử dụng thư viện được giảm thiểu:\n
+         -<b>Glide </b>: Để quản lý phương tiện truyền thông\n
+         -<b>Android-Job</b>: Để quản lý các dịch vụ\n
+         -<b>PhotoView</b>: Để quản lý hình ảnh\n    </string>
   <string name="privacy_API_yandex_title">Dịch thổi còi</string>
   <string name="privacy_API_yandex_authorizations">
 Ứng dụng cung cấp khả năng dịch toots bằng cách sử dụng miền địa phương của thiết bị và API Yandex.\n
@@ -409,11 +407,11 @@ Cảm ơn bạn:    </string>
   <string name="show_boost_count">Hiển thị số lần tăng/số lần yêu thích</string>
   <string name="issue_login_title">Xác thực không hoạt động?</string>
   <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
+<b>Dưới đây là một số kiểm tra có thể giúp:</b>\n\n
+        - Kiểm tra không có lỗi chính tả trong tên dụ\n\n
+        - Kiểm tra rằng trường hợp của bạn không xuống\n\n
+        - Nếu bạn sử dụng xác thực hai yếu tố (2FA), vui lòng sử dụng liên kết ở cuối (khi tên cá thể được điền)\n\n
+        - Bạn cũng có thể sử dụng liên kết này mà không sử dụng 2FA\n\n
+        - Nếu vẫn không hoạt động, vui lòng nêu lên một vấn đề về Github tại https://github.com/stom79/mastalab/issues
     </string>
 </resources>
