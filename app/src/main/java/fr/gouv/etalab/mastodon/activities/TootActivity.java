@@ -440,7 +440,6 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 }
             }
         }
-
         toot_sensitive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -1830,26 +1829,28 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         else
             userId = accountReply.getId();
 
-        switch (tootReply.getVisibility()){
-            case "public":
-                visibility = "public";
-                toot_visibility.setImageResource(R.drawable.ic_public_toot);
-                break;
-            case "unlisted":
-                visibility = "unlisted";
-                toot_visibility.setImageResource(R.drawable.ic_lock_open_toot);
-                break;
-            case "private":
-                visibility = "private";
-                toot_visibility.setImageResource(R.drawable.ic_lock_outline_toot);
-                break;
-            case "direct":
-                visibility = "direct";
-                toot_visibility.setImageResource(R.drawable.ic_mail_outline_toot);
-                break;
-        }
         //If toot is not restored
         if( restored == -1 ){
+
+            switch (tootReply.getVisibility()){
+                case "public":
+                    visibility = "public";
+                    toot_visibility.setImageResource(R.drawable.ic_public_toot);
+                    break;
+                case "unlisted":
+                    visibility = "unlisted";
+                    toot_visibility.setImageResource(R.drawable.ic_lock_open_toot);
+                    break;
+                case "private":
+                    visibility = "private";
+                    toot_visibility.setImageResource(R.drawable.ic_lock_outline_toot);
+                    break;
+                case "direct":
+                    visibility = "direct";
+                    toot_visibility.setImageResource(R.drawable.ic_mail_outline_toot);
+                    break;
+            }
+
             if( tootReply.getSpoiler_text() != null && tootReply.getSpoiler_text().length() > 0) {
                 toot_cw_content.setText(tootReply.getSpoiler_text());
                 toot_cw_content.setVisibility(View.VISIBLE);
