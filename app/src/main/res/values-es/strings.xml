@@ -132,7 +132,7 @@
   <string name="date_seconds">%d s</string>
   <string name="date_minutes">%d m</string>
   <string name="date_hours">%d h</string>
-  <string name="date_day">%d d</string>
+  <string name="date_day">%d</string>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">Advertencia</string>
   <string name="toot_placeholder">¿En qué estás pensando?</string>
@@ -404,8 +404,8 @@ Gracias a:    </string>
   <string name="action_lists_owner">Tus listas</string>
   <!-- Migration -->
   <string name="account_moved_to">%1$s se ha movido a %2$s</string>
-  <string name="show_boost_count">Show boosts/favourites count</string>
-  <string name="issue_login_title">Authentication does not work?</string>
+  <string name="show_boost_count">Mostrar contador de mejoras/favoritos</string>
+  <string name="issue_login_title">¿No funciona la autenticación?</string>
   <string name="issue_login_message">
         <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
