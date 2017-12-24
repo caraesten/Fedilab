@@ -113,6 +113,17 @@
                 android:layout_height="20dp"
                 tools:ignore="ContentDescription" />
 
+            <TextView
+                android:visibility="gone"
+                android:background="@drawable/media_message_border"
+                android:id="@+id/message_ready"
+                android:textColor="@color/dark_text"
+                android:text="@string/media_ready"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"/>
         </RelativeLayout>
     </android.support.design.widget.CoordinatorLayout>
 </android.support.v4.widget.DrawerLayout>

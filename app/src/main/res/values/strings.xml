@@ -460,4 +460,5 @@
         - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
     </string>
 
+    <string name="media_ready">Media has been loaded. Click here to display it.</string>
 </resources>

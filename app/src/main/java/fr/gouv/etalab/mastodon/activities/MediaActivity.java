@@ -94,6 +94,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     private boolean canSwipe;
     private AppBarLayout appBar;
     private ProgressBar pbar_inf;
+    private TextView message_ready;
 
 
     private enum actionSwipe{
@@ -126,7 +127,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         }else {
             main_container_media.setBackgroundResource(R.color.mastodonC1_);
         }
-
+        message_ready = findViewById(R.id.message_ready);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if( getSupportActionBar() != null) {
@@ -338,11 +339,24 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                         })
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
-                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            public void onResourceReady(final Bitmap resource, Transition<? super Bitmap> transition) {
                                 loader.setVisibility(View.GONE);
-                                downloadedImage = resource;
-                                imageView.setImageBitmap(resource);
+                                if( imageView.getScale() < 1.1) {
+                                    downloadedImage = resource;
+                                    imageView.setImageBitmap(resource);
+                                }else{
+                                    message_ready.setVisibility(View.VISIBLE);
+                                }
+                                message_ready.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        downloadedImage = resource;
+                                        imageView.setImageBitmap(resource);
+                                        message_ready.setVisibility(View.GONE);
+                                    }
+                                });
                                 fileVideo = null;
+
                             }
                         });
                 break;
