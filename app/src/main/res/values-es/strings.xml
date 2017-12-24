@@ -407,11 +407,10 @@ Gracias a:    </string>
   <string name="show_boost_count">Mostrar contador de mejoras/favoritos</string>
   <string name="issue_login_title">¿No funciona la autenticación?</string>
   <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
-    </string>
+<b>Aquí hay una lista de vistos que pueden ayudar </b>\n\n
+-Revisa que no hay ningún error de escritura en la instancia del nombre \n\n
+-Revisa que tu instancia no está caída \n\n
+-Si tu usas el factor de autenticación de dos pasos (2FA), por favor usa el link al pie (una vez que el nombre de la instancia esta lleno) \n\n
+-Puedes usar también este link sin usar el \"Fa \n\n
+-Si eso todavía no funciona, por favor notifica el problema en Github https://github.com/stom79/mastalab/issues    </string>
 </resources>
