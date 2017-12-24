@@ -132,7 +132,7 @@
   <string name="date_seconds">%d s</string>
   <string name="date_minutes">%d m</string>
   <string name="date_hours">%d h</string>
-  <string name="date_day">%d</string>
+  <string name="date_day">%d d</string>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">Advertencia</string>
   <string name="toot_placeholder">¿En qué estás pensando?</string>
@@ -413,4 +413,5 @@ Gracias a:    </string>
 -Si tu usas el factor de autenticación de dos pasos (2FA), por favor usa el link al pie (una vez que el nombre de la instancia esta lleno) \n\n
 -Puedes usar también este link sin usar el \"Fa \n\n
 -Si eso todavía no funciona, por favor notifica el problema en Github https://github.com/stom79/mastalab/issues    </string>
+  <string name="media_ready">Media has been loaded. Click here to display it.</string>
 </resources>
