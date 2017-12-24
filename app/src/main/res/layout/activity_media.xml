@@ -84,6 +84,7 @@
                 android:layout_height="match_parent"
                 tools:ignore="ContentDescription" />
             <VideoView
+                android:layout_below="@+id/loader"
                 android:layout_centerInParent="true"
                 android:visibility="gone"
                 android:id="@+id/media_video"

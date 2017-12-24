@@ -380,14 +380,24 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                             mp.setLooping(true);
                         }
                     });
-                    videoView.setVisibility(View.VISIBLE);
                     fileVideo = file;
                     downloadedImage = null;
                 }else{
-                    imageView.setVisibility(View.VISIBLE);
-                    Glide.with(getApplicationContext())
-                            .asBitmap()
-                            .load(preview_url).into(imageView);
+                    videoView.setVisibility(View.VISIBLE);
+                    Uri uri = Uri.parse(url);
+                    videoView.setVideoURI(uri);
+                    videoView.start();
+                    MediaController mc = new MediaController(MediaActivity.this);
+                    mc.setAnchorView(videoView);
+                    videoView.setMediaController(mc);
+                    videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mp) {
+                            mp.start();
+                            mp.setLooping(true);
+                        }
+                    });
+                    videoView.start();
                     progress.setText("0 %");
                     progress.setVisibility(View.VISIBLE);
                     new HttpsConnection(MediaActivity.this).download(finalUrl, MediaActivity.this );
@@ -421,22 +431,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         fileVideo = to;
         downloadedImage = null;
         progress.setVisibility(View.GONE);
-        Uri uri = Uri.parse(to.getAbsolutePath());
-        videoView.setVisibility(View.VISIBLE);
-        videoView.setVideoURI(uri);
-        videoView.start();
-        MediaController mc = new MediaController(MediaActivity.this);
-        videoView.setMediaController(mc);
-        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                loader.setVisibility(View.GONE);
-                mp.start();
-                mp.setLooping(true);
-                imageView.setVisibility(View.GONE);
-            }
-        });
-        videoView.setVisibility(View.VISIBLE);
+        loader.setVisibility(View.GONE);
     }
 
 
