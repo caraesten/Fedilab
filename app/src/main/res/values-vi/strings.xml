@@ -413,4 +413,5 @@ Cảm ơn bạn:    </string>
         - Bạn cũng có thể sử dụng liên kết này mà không sử dụng 2FA\n\n
         - Nếu vẫn không hoạt động, vui lòng nêu lên một vấn đề về Github tại https://github.com/stom79/mastalab/issues
     </string>
+  <string name="media_ready">Media has been loaded. Click here to display it.</string>
 </resources>

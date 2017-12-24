@@ -416,5 +416,5 @@
 - Si vous utilisez l’authentification en deux étapes (2FA), veuillez utiliser le lien en bas (une fois le nom de l\'instance renseigné) \n\n 
 - Vous pouvez également utiliser ce lien sans utiliser la 2FA\n\n 
 - Si cela ne fonctionne toujours pas, vous pouvez reporter ce problème sur Github : https://github.com/stom79/mastalab/issues    </string>
-  <string name="media_ready">Media has been loaded. Click here to display it.</string>
+  <string name="media_ready">L\'image a été chargée. Cliquez ici pour l\'afficher.</string>
 </resources>
