@@ -259,6 +259,7 @@
   <string name="set_attachment_action">Carregar mídia</string>
   <string name="load_attachment">Carregar imagens</string>
   <string name="load_attachment_spoiler">Mostrar mais…</string>
+  <string name="load_attachment_spoiler_less">Show less…</string>
   <string name="load_sensitive_attachment">Conteúdo sensível</string>
   <string name="set_display_reply">Exibir mensagem anterior nas respostas</string>
   <string name="set_display_local">Exibir timeline local</string>

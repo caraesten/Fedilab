@@ -263,6 +263,7 @@
   <string name="set_attachment_action">Lade Anhang</string>
   <string name="load_attachment">Lade Bilder</string>
   <string name="load_attachment_spoiler">Mehr anzeigen…</string>
+  <string name="load_attachment_spoiler_less">Show less…</string>
   <string name="load_sensitive_attachment">Sensibler Inhalt</string>
   <string name="set_display_reply">Zeige vorherige Nachricht beim Antworten</string>
   <string name="set_display_local">Lokale Zeitleiste anzeigen</string>

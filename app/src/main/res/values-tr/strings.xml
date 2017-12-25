@@ -259,6 +259,7 @@
   <string name="set_attachment_action">Medya yükle</string>
   <string name="load_attachment">Resimleri yükle</string>
   <string name="load_attachment_spoiler">Daha fazla göster…</string>
+  <string name="load_attachment_spoiler_less">Show less…</string>
   <string name="load_sensitive_attachment">Hassas içerik</string>
   <string name="set_display_reply">Ekran yanıt-e doğru önceki iletide</string>
   <string name="set_display_local">Görüntü yerel zaman çizelgesi</string>

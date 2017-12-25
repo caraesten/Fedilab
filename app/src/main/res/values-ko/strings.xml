@@ -256,6 +256,7 @@
   <string name="set_attachment_action">Load the media</string>
   <string name="load_attachment">Load the pictures</string>
   <string name="load_attachment_spoiler">Show more…</string>
+  <string name="load_attachment_spoiler_less">Show less…</string>
   <string name="load_sensitive_attachment">Sensitive content</string>
   <string name="set_display_reply">Display previous message in responses</string>
   <string name="set_display_local">Display local timeline</string>

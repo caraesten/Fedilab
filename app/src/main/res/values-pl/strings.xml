@@ -262,6 +262,7 @@
   <string name="set_attachment_action">Załaduj media</string>
   <string name="load_attachment">Załaduj zdjęcia</string>
   <string name="load_attachment_spoiler">Pokaż więcej…</string>
+  <string name="load_attachment_spoiler_less">Show less…</string>
   <string name="load_sensitive_attachment">Poufne treści</string>
   <string name="set_display_reply">Wyświetl poprzednią wiadomość w odpowiedziach</string>
   <string name="set_display_local">Wyświetl lokalną oś czasu</string>
