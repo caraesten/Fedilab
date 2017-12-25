@@ -758,9 +758,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         }
 
         //Profile picture
-        Glide.with(holder.notification_account_profile.getContext())
-                .load(notification.getAccount().getAvatar())
-                .into(holder.notification_account_profile);
+        Helper.loadGiF(context, notification.getAccount().getAvatar(), holder.notification_account_profile);
 
     }
 

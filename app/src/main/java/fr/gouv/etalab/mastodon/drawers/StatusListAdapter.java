@@ -57,6 +57,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.github.stom79.mytransl.MyTransL;
 import com.github.stom79.mytransl.client.HttpsConnectionException;
 import com.github.stom79.mytransl.client.Results;
@@ -1271,6 +1273,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 if( !url.trim().contains("missing.png"))
                     Glide.with(imageView.getContext())
                             .load(url)
+                            .thumbnail(0.1f)
+                            .transition(DrawableTransitionOptions.withCrossFade())
                             .into(imageView);
                 final int finalPosition = position;
                 if( attachment.getDescription() != null && !attachment.getDescription().equals("null"))
