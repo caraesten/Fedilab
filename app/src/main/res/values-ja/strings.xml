@@ -256,6 +256,7 @@
   <string name="set_attachment_action">メディアをロードする</string>
   <string name="load_attachment">写真をロードする</string>
   <string name="load_attachment_spoiler">さらに表示…</string>
+  <string name="load_attachment_spoiler_less">Show less…</string>
   <string name="load_sensitive_attachment">閲覧に注意を要するコンテンツ</string>
   <string name="set_display_reply">応答に前のメッセージを表示する</string>
   <string name="set_display_local">ローカルタイムラインを表示</string>
