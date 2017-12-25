@@ -483,9 +483,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 public void onClick(View v) {
                     loadAttachments(status, holder);
                     holder.status_show_more.setVisibility(View.GONE);
-                    status.setAttachmentShown(true);
-                    notificationsListAdapter.notifyDataSetChanged();
-
+                    notification.getStatus().setAttachmentShown(true);
+                    notifyNotificationChanged(notification);
                     /*
                     Added a Countdown Timer, so that Sensitive (NSFW)
                     images only get displayed for user set time,
@@ -503,10 +502,10 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                             }
 
                             public void onFinish() {
-                                status.setAttachmentShown(false);
+                                notification.getStatus().setAttachmentShown(false);
                                 holder.status_show_more.setVisibility(View.VISIBLE);
 
-                                notificationsListAdapter.notifyDataSetChanged();
+                                notifyNotificationChanged(notification);
                             }
                         }.start();
                     }
