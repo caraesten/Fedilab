@@ -333,38 +333,39 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 imgReply = ContextCompat.getDrawable(context, R.drawable.ic_reply);
 
                 if( status.getReblog() == null) {
-                    if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()) {
-                        holder.notification_status_container.setVisibility(View.GONE);
+                    if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 ) {
                         holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                        holder.status_spoiler_button.setVisibility(View.VISIBLE);
-                        holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
-                        holder.status_spoiler.setVisibility(View.VISIBLE);
+                        if( !status.isSpoilerShown()) {
+                            holder.notification_status_container.setVisibility(View.GONE);
+                            holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
+                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
+                        }else {
+                            holder.notification_status_container.setVisibility(View.VISIBLE);
+                            holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
+                        }
                     } else {
-                        holder.status_spoiler_button.setVisibility(View.GONE);
-                        holder.notification_status_container.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_container.setVisibility(View.GONE);
                         holder.status_spoiler_mention_container.setVisibility(View.GONE);
-                        if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0)
-                            holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                        else
-                            holder.status_spoiler_container.setVisibility(View.GONE);
-
+                        holder.notification_status_container.setVisibility(View.VISIBLE);
                     }
+
                 }else {
-                    if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()) {
-                        holder.notification_status_container.setVisibility(View.GONE);
+                    if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0) {
                         holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                        holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
-                        holder.status_spoiler_button.setVisibility(View.VISIBLE);
-                        holder.status_spoiler.setVisibility(View.VISIBLE);
+                        if( !status.isSpoilerShown()) {
+                            holder.notification_status_container.setVisibility(View.GONE);
+                            holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
+                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
+                        }else {
+                            holder.notification_status_container.setVisibility(View.VISIBLE);
+                            holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
+                        }
                     } else {
-                        holder.status_spoiler_button.setVisibility(View.GONE);
+                        holder.status_spoiler_container.setVisibility(View.GONE);
                         holder.status_spoiler_mention_container.setVisibility(View.GONE);
                         holder.notification_status_container.setVisibility(View.VISIBLE);
-                        if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0)
-                            holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                        else
-                            holder.status_spoiler_container.setVisibility(View.GONE);
-
                     }
                 }
 
@@ -442,8 +443,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 holder.status_spoiler_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        status.setSpoilerShown(true);
-                        notificationsListAdapter.notifyDataSetChanged();
+                        notification.getStatus().setSpoilerShown(!status.isSpoilerShown());
+                        notifyNotificationChanged(notification);
                     }
                 });
 
@@ -482,9 +483,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 public void onClick(View v) {
                     loadAttachments(status, holder);
                     holder.status_show_more.setVisibility(View.GONE);
-                    status.setAttachmentShown(true);
-                    notificationsListAdapter.notifyDataSetChanged();
-
+                    notification.getStatus().setAttachmentShown(true);
+                    notifyNotificationChanged(notification);
                     /*
                     Added a Countdown Timer, so that Sensitive (NSFW)
                     images only get displayed for user set time,
@@ -502,10 +502,10 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                             }
 
                             public void onFinish() {
-                                status.setAttachmentShown(false);
+                                notification.getStatus().setAttachmentShown(false);
                                 holder.status_show_more.setVisibility(View.VISIBLE);
 
-                                notificationsListAdapter.notifyDataSetChanged();
+                                notifyNotificationChanged(notification);
                             }
                         }.start();
                     }
@@ -758,10 +758,19 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         }
 
         //Profile picture
-        Glide.with(holder.notification_account_profile.getContext())
-                .load(notification.getAccount().getAvatar())
-                .into(holder.notification_account_profile);
+        Helper.loadGiF(context, notification.getAccount().getAvatar(), holder.notification_account_profile);
 
+    }
+
+    private void notifyNotificationChanged(Notification notification){
+        for (int i = 0; i < notificationsListAdapter.getItemCount(); i++) {
+            if (notificationsListAdapter.getItemAt(i) != null && notificationsListAdapter.getItemAt(i).getId().equals(notification.getId())) {
+                try {
+                    notificationsListAdapter.notifyItemChanged(i);
+                } catch (Exception ignored) {
+                }
+            }
+        }
     }
 
     @Override
