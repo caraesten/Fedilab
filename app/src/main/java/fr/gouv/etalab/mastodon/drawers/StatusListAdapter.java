@@ -645,39 +645,38 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.status_translate.setVisibility(View.GONE);
                 }
                 if( status.getReblog() == null) {
-                    if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()) {
-                        holder.status_content_container.setVisibility(View.GONE);
+                    if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 ) {
                         holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                        holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
-                        holder.status_spoiler_button.setVisibility(View.VISIBLE);
-                        holder.status_spoiler.setVisibility(View.VISIBLE);
+                        if( !status.isSpoilerShown()) {
+                            holder.status_content_container.setVisibility(View.GONE);
+                            holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
+                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
+                        }else {
+                            holder.status_content_container.setVisibility(View.VISIBLE);
+                            holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
+                        }
                     } else {
-                        holder.status_spoiler_button.setVisibility(View.GONE);
+                        holder.status_spoiler_container.setVisibility(View.GONE);
                         holder.status_spoiler_mention_container.setVisibility(View.GONE);
                         holder.status_content_container.setVisibility(View.VISIBLE);
-                        if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0)
-                            holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                        else
-                            holder.status_spoiler_container.setVisibility(View.GONE);
-
                     }
                 }else {
-                    if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0 && !status.isSpoilerShown()) {
-                        holder.status_content_container.setVisibility(View.GONE);
+                    if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0) {
                         holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                        holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
-                        holder.status_spoiler_button.setVisibility(View.VISIBLE);
-                        holder.status_spoiler.setVisibility(View.VISIBLE);
-                    } else {
-                        holder.status_spoiler_button.setVisibility(View.GONE);
-                        holder.status_content_container.setVisibility(View.VISIBLE);
-                        if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0) {
-                            holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                        if( !status.isSpoilerShown()) {
+                            holder.status_content_container.setVisibility(View.GONE);
                             holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
+                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
                         }else {
-                            holder.status_spoiler_container.setVisibility(View.GONE);
+                            holder.status_content_container.setVisibility(View.VISIBLE);
                             holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
                         }
+                    } else {
+                        holder.status_spoiler_container.setVisibility(View.GONE);
+                        holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                        holder.status_content_container.setVisibility(View.VISIBLE);
                     }
                 }
 
@@ -976,8 +975,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_spoiler_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    status.setSpoilerShown(true);
-                    statusListAdapter.notifyDataSetChanged();
+                    status.setSpoilerShown(!status.isSpoilerShown());
+                    notifyStatusChanged(status);
                 }
             });
 
@@ -987,8 +986,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     loadAttachments(status, holder);
                     holder.status_show_more.setVisibility(View.GONE);
                     status.setAttachmentShown(true);
-                    statusListAdapter.notifyDataSetChanged();
-
+                    notifyStatusChanged(status);
                 /*
                     Added a Countdown Timer, so that Sensitive (NSFW)
                     images only get displayed for user set time,
@@ -1008,8 +1006,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             public void onFinish() {
                                 status.setAttachmentShown(false);
                                 holder.status_show_more.setVisibility(View.VISIBLE);
-
-                                statusListAdapter.notifyDataSetChanged();
+                                notifyStatusChanged(status);
                             }
                         }.start();
                     }
