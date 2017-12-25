@@ -258,6 +258,7 @@ và %d toots khác để khám phá</item>
   <string name="set_attachment_action">Nạp vật liệu in</string>
   <string name="load_attachment">Tải hình ảnh</string>
   <string name="load_attachment_spoiler">Cho xem nhiều hơn…</string>
+  <string name="load_attachment_spoiler_less">Show less…</string>
   <string name="load_sensitive_attachment">Nội dung nhạy cảm</string>
   <string name="set_display_reply">Hiển thị thông báo trước trong câu trả lời</string>
   <string name="set_display_local">Hiển thị thời gian biểu địa phương</string>
