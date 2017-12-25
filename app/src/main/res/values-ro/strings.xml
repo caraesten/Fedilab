@@ -262,6 +262,7 @@
   <string name="set_attachment_action">Încărca media</string>
   <string name="load_attachment">Încarcă imagini</string>
   <string name="load_attachment_spoiler">Arată mai mult…</string>
+  <string name="load_attachment_spoiler_less">Show less…</string>
   <string name="load_sensitive_attachment">Conţinut sensibil</string>
   <string name="set_display_reply">Arată mesajul anterior în răspunsuri</string>
   <string name="set_display_local">Afişare cronologie locală</string>
