@@ -196,8 +196,8 @@
   <!-- Notifications -->
   <string name="no_notifications">通知はありません</string>
   <string name="notif_mention">あなたにメンションしました</string>
-  <string name="notif_reblog">があなたのトゥートをブーストしました</string>
-  <string name="notif_favourite">があなたのトゥートをお気に入りに登録しました</string>
+  <string name="notif_reblog">がブーストしました</string>
+  <string name="notif_favourite">がお気に入りに登録しました</string>
   <string name="notif_follow">があなたをフォローしました</string>
   <string name="notif_pouet">%1$s の新着</string>
   <plurals name="other_notifications">
@@ -267,11 +267,11 @@
   <string name="set_bubble_counter">カウンターを表示する</string>
   <string name="set_auto_add_media_url">トゥートにメディアのURLを追加する</string>
   <string name="settings_title_notifications">通知の管理</string>
-  <string name="set_notif_follow">誰かがあなたをフォローしたときに通知</string>
-  <string name="set_notif_follow_ask">誰かがあなたにフォローのリクエストをしたときに通知</string>
-  <string name="set_notif_follow_share">誰かがあなたのトゥートをブーストしたときに通知</string>
-  <string name="set_notif_follow_add">誰かがあなたのトゥートをお気に入りに追加したときに通知</string>
-  <string name="set_notif_follow_mention">誰かがあなたにメンションしたときに通知</string>
+  <string name="set_notif_follow">フォローされたときに通知</string>
+  <string name="set_notif_follow_ask">フォローリクエストを受け取ったときに通知</string>
+  <string name="set_notif_follow_share">トゥートがブーストされたときに通知</string>
+  <string name="set_notif_follow_add">トゥートがお気に入りに追加されたときに通知</string>
+  <string name="set_notif_follow_mention">メンションを受け取ったときに通知</string>
   <string name="set_share_validation">ブースト前に確認ダイアログを表示する</string>
   <string name="set_share_validation_fav">お気に入りに追加する前に確認ダイアログを表示する</string>
   <string name="settings_title_more_options">高度な設定</string>
