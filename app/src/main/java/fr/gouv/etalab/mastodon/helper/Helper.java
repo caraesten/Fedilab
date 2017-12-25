@@ -577,12 +577,11 @@ public class Helper {
         long months = days / 30;
         long years = days / 365;
 
+        String format = DateFormat.getDateInstance(DateFormat.SHORT).format(dateToot);
         if( years > 0 ) {
-            SimpleDateFormat format = new SimpleDateFormat("M/d/yy", Locale.getDefault());
-            return format.format(dateToot);
+            return format;
         } else if( months > 0 || days > 7) {
-            SimpleDateFormat format = new SimpleDateFormat("M/d", Locale.getDefault());
-            return format.format(dateToot);
+            return format.substring(0,5);
         }else if( days > 0 )
             return context.getString(R.string.date_day, days);
         else if(hours > 0)

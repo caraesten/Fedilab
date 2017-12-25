@@ -198,7 +198,7 @@
 
                 <LinearLayout
                     android:id="@+id/status_cardview"
-                    android:padding="10dp"
+                    android:padding="5dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     android:visibility="gone"
@@ -209,15 +209,15 @@
                     <ImageView
                         android:layout_gravity="center"
                         android:id="@+id/status_cardview_image"
-                        android:layout_width="60dp"
+                        android:layout_width="80dp"
                         android:gravity="center"
-                        android:layout_height="60dp"
+                        android:layout_height="80dp"
                         tools:ignore="ContentDescription" />
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="0dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginStart="2dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content">
                         <TextView
