@@ -128,10 +128,10 @@
     <item quantity="other">%d が返信</item>
   </plurals>
   <!-- Date -->
-  <string name="date_seconds">%d s</string>
-  <string name="date_minutes">%d m</string>
-  <string name="date_hours">%d h</string>
-  <string name="date_day">%d d</string>
+  <string name="date_seconds">%d 秒</string>
+  <string name="date_minutes">%d 分</string>
+  <string name="date_hours">%d 時間</string>
+  <string name="date_day">%d 日</string>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">警告</string>
   <string name="toot_placeholder">あなたの心には何がありますか？</string>
@@ -196,8 +196,8 @@
   <!-- Notifications -->
   <string name="no_notifications">通知はありません</string>
   <string name="notif_mention">あなたにメンションしました</string>
-  <string name="notif_reblog">があなたのトゥートをブーストしました</string>
-  <string name="notif_favourite">があなたのトゥートをお気に入りに登録しました</string>
+  <string name="notif_reblog">がブーストしました</string>
+  <string name="notif_favourite">がお気に入りに登録しました</string>
   <string name="notif_follow">があなたをフォローしました</string>
   <string name="notif_pouet">%1$s の新着</string>
   <plurals name="other_notifications">
@@ -256,7 +256,7 @@
   <string name="set_attachment_action">メディアをロードする</string>
   <string name="load_attachment">写真をロードする</string>
   <string name="load_attachment_spoiler">さらに表示…</string>
-  <string name="load_attachment_spoiler_less">Show less…</string>
+  <string name="load_attachment_spoiler_less">一部のみ表示...</string>
   <string name="load_sensitive_attachment">閲覧に注意を要するコンテンツ</string>
   <string name="set_display_reply">応答に前のメッセージを表示する</string>
   <string name="set_display_local">ローカルタイムラインを表示</string>
@@ -267,11 +267,11 @@
   <string name="set_bubble_counter">カウンターを表示する</string>
   <string name="set_auto_add_media_url">トゥートにメディアのURLを追加する</string>
   <string name="settings_title_notifications">通知の管理</string>
-  <string name="set_notif_follow">誰かがあなたをフォローしたときに通知</string>
-  <string name="set_notif_follow_ask">誰かがあなたにフォローのリクエストをしたときに通知</string>
-  <string name="set_notif_follow_share">誰かがあなたのトゥートをブーストしたときに通知</string>
-  <string name="set_notif_follow_add">誰かがあなたのトゥートをお気に入りに追加したときに通知</string>
-  <string name="set_notif_follow_mention">誰かがあなたにメンションしたときに通知</string>
+  <string name="set_notif_follow">フォローされたときに通知</string>
+  <string name="set_notif_follow_ask">フォローリクエストを受け取ったときに通知</string>
+  <string name="set_notif_follow_share">トゥートがブーストされたときに通知</string>
+  <string name="set_notif_follow_add">トゥートがお気に入りに追加されたときに通知</string>
+  <string name="set_notif_follow_mention">メンションを受け取ったときに通知</string>
   <string name="set_share_validation">ブースト前に確認ダイアログを表示する</string>
   <string name="set_share_validation_fav">お気に入りに追加する前に確認ダイアログを表示する</string>
   <string name="settings_title_more_options">高度な設定</string>
@@ -398,15 +398,15 @@
   <string name="action_lists_owner">あなたのリスト</string>
   <!-- Migration -->
   <string name="account_moved_to">%1$s は %2$s へ引越しました</string>
-  <string name="show_boost_count">Show boosts/favourites count</string>
-  <string name="issue_login_title">Authentication does not work?</string>
+  <string name="show_boost_count">ブースト/お気に入りの数を表示</string>
+  <string name="issue_login_title">認証が機能していませんか？</string>
   <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
+        <b>役立つかもしれない確認事項:</b>\n\n
+        - インスタンス名の記述に間違いが無いかをチェック\n\n
+        - インスタンスがダウンしていないかをチェック\n\n
+        - もし2段階認証（2FA）を利用している場合は、下部のリンクを使用してください（先にインスタンス名を入力）\n\n
+        - このリンクは、2FAを利用していなくても使用することができます\n\n
+        - もしまだ解決しない場合、Github（https://github.com/stom79/mastalab/issues）にissueを投稿してください
     </string>
-  <string name="media_ready">Media has been loaded. Click here to display it.</string>
+  <string name="media_ready">メディアが読み込まれました。表示するにはここをクリックします。</string>
 </resources>
