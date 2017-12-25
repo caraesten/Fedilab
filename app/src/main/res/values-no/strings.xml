@@ -259,6 +259,7 @@
   <string name="set_attachment_action">Legg i mediet</string>
   <string name="load_attachment">Legg bildene</string>
   <string name="load_attachment_spoiler">Vis mer…</string>
+  <string name="load_attachment_spoiler_less">Show less…</string>
   <string name="load_sensitive_attachment">Følsomt innhold</string>
   <string name="set_display_reply">Vis tidligere melding i svar</string>
   <string name="set_display_local">Vis lokal tidslinje</string>
