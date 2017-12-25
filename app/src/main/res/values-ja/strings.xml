@@ -128,9 +128,9 @@
     <item quantity="other">%d が返信</item>
   </plurals>
   <!-- Date -->
-  <string name="date_seconds">%d s</string>
-  <string name="date_minutes">%d m</string>
-  <string name="date_hours">%d h</string>
+  <string name="date_seconds">%d 秒</string>
+  <string name="date_minutes">%d 分</string>
+  <string name="date_hours">%d 時間</string>
   <string name="date_day">%d d</string>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">警告</string>
