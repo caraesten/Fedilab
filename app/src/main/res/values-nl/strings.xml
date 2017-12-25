@@ -259,6 +259,7 @@
   <string name="set_attachment_action">Media laden</string>
   <string name="load_attachment">Laad de afbeeldingen of video</string>
   <string name="load_attachment_spoiler">Meer tonen</string>
+  <string name="load_attachment_spoiler_less">Show less…</string>
   <string name="load_sensitive_attachment">Gevoelige inhoud</string>
   <string name="set_display_reply">Vorig bericht in reacties tonen</string>
   <string name="set_display_local">Lokale tijdlijn tonen</string>
