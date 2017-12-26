@@ -15,6 +15,7 @@ package fr.gouv.etalab.mastodon.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Handler;
@@ -47,8 +48,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -95,6 +99,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
+import fr.gouv.etalab.mastodon.webview.MastalabWebViewClient;
 
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
@@ -227,6 +232,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         LinearLayout status_cardview;
         ImageView status_cardview_image;
         TextView status_cardview_title, status_cardview_content, status_cardview_url;
+        FrameLayout status_cardview_video;
+        WebView status_cardview_webview;
         public View getView(){
             return itemView;
         }
@@ -281,6 +288,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_cardview_title = itemView.findViewById(R.id.status_cardview_title);
             status_cardview_content = itemView.findViewById(R.id.status_cardview_content);
             status_cardview_url = itemView.findViewById(R.id.status_cardview_url);
+            status_cardview_video = itemView.findViewById(R.id.status_cardview_video);
+            status_cardview_webview = itemView.findViewById(R.id.status_cardview_webview);
         }
     }
 
@@ -339,6 +348,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     }
 
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, @SuppressLint("RecyclerView") final int position) {
 
@@ -880,6 +890,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     else
                         holder.main_container.setBackgroundResource(R.color.mastodonC1___);
                     if( status.getCard() != null){
+
                         holder.status_cardview_content.setText(status.getCard().getDescription());
                         holder.status_cardview_title.setText(status.getCard().getTitle());
                         holder.status_cardview_url.setText(status.getCard().getUrl());
@@ -890,19 +901,40 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     .into(holder.status_cardview_image);
                         }else
                             holder.status_cardview_image.setVisibility(View.GONE);
-                        holder.status_cardview.setVisibility(View.VISIBLE);
-                        holder.status_cardview.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Intent intent = new Intent(context, WebviewActivity.class);
-                                Bundle b = new Bundle();
-                                b.putString("url", status.getCard().getUrl());
-                                intent.putExtras(b);
-                                context.startActivity(intent);
+                        if( !status.getCard().getType().equals("video")) {
+                            holder.status_cardview.setVisibility(View.VISIBLE);
+                            holder.status_cardview_video.setVisibility(View.GONE);
+                            holder.status_cardview.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(context, WebviewActivity.class);
+                                    Bundle b = new Bundle();
+                                    b.putString("url", status.getCard().getUrl());
+                                    intent.putExtras(b);
+                                    context.startActivity(intent);
+                                }
+                            });
+                        }else {
+                            holder.status_cardview.setVisibility(View.GONE);
+                            holder.status_cardview_video.setVisibility(View.VISIBLE);
+                            holder.status_cardview_webview.setWebViewClient(new WebViewClient() {
+                                public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                                    holder.status_cardview_video.setVisibility(View.GONE);
+                                }
+                            });
+                            holder.status_cardview_webview.getSettings().setJavaScriptEnabled(true);
+                            String html = status.getCard().getHtml();
+                            String src = status.getCard().getUrl();
+                            if( html != null){
+                                Matcher matcher = Pattern.compile("src=\"([^\"]+)\"").matcher(html);
+                                if( matcher.find())
+                                    src = matcher.group(1);
                             }
-                        });
+                            holder.status_cardview_webview.loadUrl(src);
+                        }
                     }else {
                         holder.status_cardview.setVisibility(View.GONE);
+                        holder.status_cardview_video.setVisibility(View.GONE);
                     }
 
                 }else {

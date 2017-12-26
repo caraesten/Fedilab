@@ -1497,6 +1497,7 @@ public class API {
             card.setTitle(resobj.get("title").toString());
             card.setDescription(resobj.get("description").toString());
             card.setImage(resobj.get("image").toString());
+            card.setHtml(resobj.get("html").toString());
             card.setType(resobj.get("type").toString());
         } catch (JSONException e) {
             card = null;

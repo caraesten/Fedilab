@@ -244,6 +244,16 @@
                             android:layout_height="wrap_content" />
                     </LinearLayout>
                 </LinearLayout>
+                <FrameLayout
+                    android:visibility="gone"
+                    android:id="@+id/status_cardview_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp">
+                    <WebView
+                        android:id="@+id/status_cardview_webview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </FrameLayout>
 
                 <LinearLayout
                     android:id="@+id/status_document_container"

@@ -29,6 +29,7 @@ public class Card{
     private String description;
     private String image;
     private String type;
+    private String html;
 
     public Card(){}
 
@@ -74,4 +75,11 @@ public class Card{
     }
 
 
+    public String getHtml() {
+        return html;
+    }
+
+    public void setHtml(String html) {
+        this.html = html;
+    }
 }
