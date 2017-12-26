@@ -133,10 +133,10 @@
     <item quantity="other">%d replies</item>
   </plurals>
   <!-- Date -->
-  <string name="date_seconds">%d s</string>
-  <string name="date_minutes">%d m</string>
-  <string name="date_hours">%d h</string>
-  <string name="date_day">%d d</string>
+  <string name="date_seconds">%d ثا</string>
+  <string name="date_minutes">%d د</string>
+  <string name="date_hours">%d سا</string>
+  <string name="date_day">%d يو</string>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">تحذير</string>
   <string name="toot_placeholder">ما الجديد ؟</string>
@@ -271,7 +271,7 @@
   <string name="set_attachment_action">تحميل الوسائط</string>
   <string name="load_attachment">تحميل الصور</string>
   <string name="load_attachment_spoiler">عرض المزيد ...</string>
-  <string name="load_attachment_spoiler_less">Show less…</string>
+  <string name="load_attachment_spoiler_less">إعرض أقل …</string>
   <string name="load_sensitive_attachment">محتوى حساس</string>
   <string name="set_display_reply">Display previous message in responses</string>
   <string name="set_display_local">إظهار الخيط المحلي</string>
@@ -291,7 +291,7 @@
   <string name="set_share_validation_fav">عرض مربع حوار للتأكيد قبل إضافة أي تبويق إلى المفضلة</string>
   <string name="settings_title_more_options">الإعدادات المتقدمة</string>
   <string name="set_wifi_only">الإخطار في وضع الواي فاي فقط</string>
-  <string name="set_notify">Notify?</string>
+  <string name="set_notify">هل تود الإخطار ؟</string>
   <string name="set_notif_silent">إخطارت صامتة</string>
   <string name="set_night_mode">الوضع اليلي</string>
   <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
@@ -348,7 +348,7 @@
   <string name="followed_by">يتابعك</string>
   <string name="action_search">البحث</string>
   <!-- Quick settings for notifications -->
-  <string name="settings_popup_title">Push notifications</string>
+  <string name="settings_popup_title">الإخطارات المدفوعة</string>
   <string name="settings_popup_message">
         Please, confirm push notifications that you want to receive.
         You can enable or disable these notifications later in settings (Notifications tab).
