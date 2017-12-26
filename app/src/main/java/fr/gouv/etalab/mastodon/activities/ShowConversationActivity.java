@@ -110,6 +110,15 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
             ImageView action_refresh = getSupportActionBar().getCustomView().findViewById(R.id.action_refresh);
             title.setText(R.string.conversation);
             ImageView close_conversation = getSupportActionBar().getCustomView().findViewById(R.id.close_conversation);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if( lv_status != null) {
+                        lv_status.setAdapter(statusListAdapter);
+                    }
+                }
+            });
             if( close_conversation != null){
                 close_conversation.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -136,6 +145,7 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         }else{
             setTitle(R.string.conversation);
         }
+
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         Account account = new AccountDAO(getApplicationContext(),db).getAccountByID(userId);

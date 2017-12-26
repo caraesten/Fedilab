@@ -246,9 +246,11 @@
                 </LinearLayout>
                 <FrameLayout
                     android:visibility="gone"
+                    android:layout_gravity="center"
                     android:id="@+id/status_cardview_video"
-                    android:layout_width="match_parent"
-                    android:layout_height="220dp">
+                    android:layout_width="300dp"
+                    android:layout_height="220dp"
+                    tools:ignore="WebViewLayout">
                     <WebView
                         android:id="@+id/status_cardview_webview"
                         android:layout_width="match_parent"

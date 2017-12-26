@@ -15,6 +15,7 @@ package fr.gouv.etalab.mastodon.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Handler;
@@ -881,6 +882,35 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.main_container.setBackgroundResource(R.color.mastodonC1_);
                 }
             }else {
+
+                holder.status_content.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, ShowConversationActivity.class);
+                        Bundle b = new Bundle();
+                        if( status.getReblog() == null)
+                            b.putString("statusId", status.getId());
+                        else
+                            b.putString("statusId", status.getReblog().getId());
+                        intent.putExtras(b);
+                        context.startActivity(intent);
+                        ((ShowConversationActivity)context).finish();
+                    }
+                });
+                holder.main_container.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, ShowConversationActivity.class);
+                        Bundle b = new Bundle();
+                        if( status.getReblog() == null)
+                            b.putString("statusId", status.getId());
+                        else
+                            b.putString("statusId", status.getReblog().getId());
+                        intent.putExtras(b);
+                        context.startActivity(intent);
+                        ((ShowConversationActivity)context).finish();
+                    }
+                });
                 if( position == conversationPosition){
                     if( theme == Helper.THEME_LIGHT)
                         holder.main_container.setBackgroundResource(R.color.mastodonC3_);
