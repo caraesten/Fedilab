@@ -1874,18 +1874,16 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                         toot_content.setText(String.format("%s ", (toot_content.getText().toString() +  tootTemp.trim())));
                     }
                 }
+
+                toot_content.setText(toot_content.getText().toString().trim());
+                if (toot_content.getText().toString().startsWith("@")) {
+                    toot_content.append("\n");
+                }
+                toot_space_left.setText(String.valueOf(toot_content.length()));
+                toot_content.requestFocus();
                 if( mentionedAccountsAdded.size() == 1){
-                    toot_content.setText(toot_content.getText().toString().trim());
-                    if (toot_content.getText().toString().startsWith("@")) {
-                        toot_content.append("\n");
-                    }
-                    toot_space_left.setText(String.valueOf(toot_content.length()));
-                    toot_content.requestFocus();
                     toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
                 }else {
-                    toot_content.setText(toot_content.getText().toString().trim());
-                    toot_space_left.setText(String.valueOf(toot_content.length()));
-                    toot_content.requestFocus();
                     if (cursorReply > 0 && cursorReply < toot_content.getText().length())
                         toot_content.setSelection(cursorReply);
                     else
