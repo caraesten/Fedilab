@@ -320,45 +320,94 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 loader.setVisibility(View.VISIBLE);
                 Glide.with(getApplicationContext())
                         .asBitmap()
-                        .load(preview_url).into(imageView);
-                Glide.with(getApplicationContext())
-                        .asBitmap()
-                        .load(url)
-                        .listener(new RequestListener<Bitmap>() {
+                        .load(preview_url).listener(new RequestListener<Bitmap>() {
 
-                            @Override
-                            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                                return false;
-                            }
+                    @Override
+                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                        Glide.with(getApplicationContext())
+                                .asBitmap()
+                                .load(finalUrl)
+                                .listener(new RequestListener<Bitmap>() {
 
-                            @Override
-                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                loader.setVisibility(View.GONE);
-                                return false;
-                            }
-                        })
-                        .into(new SimpleTarget<Bitmap>() {
-                            @Override
-                            public void onResourceReady(final Bitmap resource, Transition<? super Bitmap> transition) {
-                                loader.setVisibility(View.GONE);
-                                if( imageView.getScale() < 1.1) {
-                                    downloadedImage = resource;
-                                    imageView.setImageBitmap(resource);
-                                }else{
-                                    message_ready.setVisibility(View.VISIBLE);
-                                }
-                                message_ready.setOnClickListener(new View.OnClickListener() {
                                     @Override
-                                    public void onClick(View view) {
-                                        downloadedImage = resource;
-                                        imageView.setImageBitmap(resource);
-                                        message_ready.setVisibility(View.GONE);
+                                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                        loader.setVisibility(View.GONE);
+                                        return false;
+                                    }
+                                })
+                                .into(new SimpleTarget<Bitmap>() {
+                                    @Override
+                                    public void onResourceReady(final Bitmap resource, Transition<? super Bitmap> transition) {
+                                        loader.setVisibility(View.GONE);
+                                        if( imageView.getScale() < 1.1) {
+                                            downloadedImage = resource;
+                                            imageView.setImageBitmap(resource);
+                                        }else{
+                                            message_ready.setVisibility(View.VISIBLE);
+                                        }
+                                        message_ready.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                downloadedImage = resource;
+                                                imageView.setImageBitmap(resource);
+                                                message_ready.setVisibility(View.GONE);
+                                            }
+                                        });
+                                        fileVideo = null;
                                     }
                                 });
-                                fileVideo = null;
+                        return false;
+                    }
 
-                            }
-                        });
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                        Glide.with(getApplicationContext())
+                                .asBitmap()
+                                .load(finalUrl)
+                                .listener(new RequestListener<Bitmap>() {
+
+                                    @Override
+                                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                        loader.setVisibility(View.GONE);
+                                        return false;
+                                    }
+                                })
+                                .into(new SimpleTarget<Bitmap>() {
+                                    @Override
+                                    public void onResourceReady(final Bitmap resource, Transition<? super Bitmap> transition) {
+                                        loader.setVisibility(View.GONE);
+                                        if( imageView.getScale() < 1.1) {
+                                            downloadedImage = resource;
+                                            imageView.setImageBitmap(resource);
+                                        }else{
+                                            message_ready.setVisibility(View.VISIBLE);
+                                        }
+                                        message_ready.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                downloadedImage = resource;
+                                                imageView.setImageBitmap(resource);
+                                                message_ready.setVisibility(View.GONE);
+                                            }
+                                        });
+                                        fileVideo = null;
+
+                                    }
+                                });
+                        return false;
+                    }
+                }).into(imageView);
+
                 break;
             case "video":
             case "gifv":
