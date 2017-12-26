@@ -1864,7 +1864,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 //Evaluate the cursor position => mention length + 1 char for carriage return
                 cursorReply = toot_content.getText().toString().length() + 1;
             }
-            if( tootReply.getMentions() != null && tootReply.getMentions().size() > 0){
+            if( tootReply.getMentions() != null ){
                 //Put other accounts mentioned at the bottom
                 toot_content.setText(String.format("%s", (toot_content.getText().toString() + "\n\n")));
                 for(Mention mention : tootReply.getMentions()){
@@ -1874,21 +1874,23 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                         toot_content.setText(String.format("%s ", (toot_content.getText().toString() +  tootTemp.trim())));
                     }
                 }
-                toot_content.setText(toot_content.getText().toString().trim());
-                toot_space_left.setText(String.valueOf(toot_content.length()));
-                toot_content.requestFocus();
-                if( cursorReply > 0 && cursorReply < toot_content.getText().length())
-                    toot_content.setSelection(cursorReply);
-                else
+                if( mentionedAccountsAdded.size() == 1){
+                    toot_content.setText(toot_content.getText().toString().trim());
+                    if (toot_content.getText().toString().startsWith("@")) {
+                        toot_content.append("\n");
+                    }
+                    toot_space_left.setText(String.valueOf(toot_content.length()));
+                    toot_content.requestFocus();
                     toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
-            }else{
-                toot_content.setText(toot_content.getText().toString().trim());
-                if (toot_content.getText().toString().startsWith("@")) {
-                    toot_content.append("\n");
+                }else {
+                    toot_content.setText(toot_content.getText().toString().trim());
+                    toot_space_left.setText(String.valueOf(toot_content.length()));
+                    toot_content.requestFocus();
+                    if (cursorReply > 0 && cursorReply < toot_content.getText().length())
+                        toot_content.setSelection(cursorReply);
+                    else
+                        toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
                 }
-                toot_space_left.setText(String.valueOf(toot_content.length()));
-                toot_content.requestFocus();
-                toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
             }
 
         }
