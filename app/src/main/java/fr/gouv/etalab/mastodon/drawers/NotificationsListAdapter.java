@@ -512,63 +512,58 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 }
             });
 
+            holder.status_favorite_count.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CrossActions.doCrossAction(context, status, status.isFavourited()? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, notificationsListAdapter, NotificationsListAdapter.this, true);
+                }
+            });
+
+            holder.status_reblog_count.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CrossActions.doCrossAction(context, status, status.isReblogged()? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, notificationsListAdapter, NotificationsListAdapter.this, true);
+
+                }
+            });
+
+            holder.status_reply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CrossActions.doCrossReply(context, status, RetrieveFeedsAsyncTask.Type.LOCAL, true);
+                }
+            });
+
+            if( !status.getVisibility().equals("direct"))
+            holder.status_favorite_count.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    CrossActions.doCrossAction(context, status, status.isFavourited()? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, notificationsListAdapter, NotificationsListAdapter.this, false);
+                    return true;
+                }
+            });
+            if( !status.getVisibility().equals("direct"))
+            holder.status_reply.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    CrossActions.doCrossReply(context, status, RetrieveFeedsAsyncTask.Type.LOCAL, false);
+                    return true;
+                }
+            });
+            if( !status.getVisibility().equals("direct"))
+            holder.status_reblog_count.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    CrossActions.doCrossAction(context, status, status.isReblogged()? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, notificationsListAdapter, NotificationsListAdapter.this, false);
+                    return true;
+                }
+            });
         }else {
             holder.notification_status_container.setVisibility(View.GONE);
             holder.card_status_container.setOnClickListener(null);
         }
 
 
-
-
-        holder.status_favorite_count.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if( status != null)
-                    CrossActions.doCrossAction(context, status, status.isFavourited()? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, notificationsListAdapter, NotificationsListAdapter.this, true);
-            }
-        });
-
-        holder.status_reblog_count.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if( status != null)
-                    CrossActions.doCrossAction(context, status, status.isReblogged()? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, notificationsListAdapter, NotificationsListAdapter.this, true);
-
-            }
-        });
-        holder.status_reply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CrossActions.doCrossReply(context, status, RetrieveFeedsAsyncTask.Type.LOCAL, true);
-            }
-        });
-
-
-        holder.status_favorite_count.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                if( status != null)
-                    CrossActions.doCrossAction(context, status, status.isFavourited()? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, notificationsListAdapter, NotificationsListAdapter.this, false);
-                return true;
-            }
-        });
-
-        holder.status_reply.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                CrossActions.doCrossReply(context, status, RetrieveFeedsAsyncTask.Type.LOCAL, false);
-                return true;
-            }
-        });
-
-        holder.status_reblog_count.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                if( status != null)
-                    CrossActions.doCrossAction(context, status, status.isReblogged()? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, notificationsListAdapter, NotificationsListAdapter.this, false);
-                return true;
-            }
-        });
 
         holder.notification_account_profile.setOnClickListener(new View.OnClickListener() {
             @Override

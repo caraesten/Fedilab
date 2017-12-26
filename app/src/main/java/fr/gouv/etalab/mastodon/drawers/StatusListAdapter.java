@@ -920,13 +920,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             });
 
-            holder.status_reply.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    CrossActions.doCrossReply(context, status, type, false);
-                    return true;
-                }
-            });
 
             holder.status_favorite_count.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -948,7 +941,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             });
 
-
+            if( !status.getVisibility().equals("direct"))
             holder.status_favorite_count.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
@@ -956,7 +949,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     return true;
                 }
             });
-
+            if( !status.getVisibility().equals("direct"))
             holder.status_reblog_count.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
@@ -964,7 +957,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     return true;
                 }
             });
-
+            if( !status.getVisibility().equals("direct"))
+                holder.status_reply.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        CrossActions.doCrossReply(context, status, type, false);
+                        return true;
+                    }
+                });
             
             holder.yandex_translate.setOnClickListener(new View.OnClickListener() {
                 @Override

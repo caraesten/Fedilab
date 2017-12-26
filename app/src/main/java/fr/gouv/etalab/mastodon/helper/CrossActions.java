@@ -234,6 +234,10 @@ public class CrossActions {
                         protected void onPostExecute(Void result) {
                             Intent intent = new Intent(contextReference.get(), TootActivity.class);
                             Bundle b = new Bundle();
+                            if( remoteStatuses == null || remoteStatuses.size() == 0){
+                                dialog.dismiss();
+                                return;
+                            }
                             if( remoteStatuses.get(0).getReblog() != null ) {
                                 b.putParcelable("tootReply", remoteStatuses.get(0).getReblog());
                                 b.putString("idRedirect", status.getReblog().getId());
