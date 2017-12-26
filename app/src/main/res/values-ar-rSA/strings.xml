@@ -40,7 +40,7 @@
   <string name="choose_picture">حدد صورة ...</string>
   <string name="clear">نظيف</string>
   <string name="microphone">الميكروفون</string>
-  <string name="speech_prompt">Please, say something</string>
+  <string name="speech_prompt">قل شيئا من فضلك</string>
   <string name="speech_not_supported">معذرة ! إنّ جهازك لا يدعَم الإدخال الصوتي !</string>
   <string name="delete_all">حذف الكل</string>
   <string name="translate_toot">ترجم هذا التبويق.</string>
@@ -187,8 +187,8 @@
   <string name="status_cnt">التبويقات \n %1$s</string>
   <string name="following_cnt">المُتابَعون \n %1$s</string>
   <string name="followers_cnt">المتابِعون \n %1$s</string>
-  <string name="pins_cnt">Pinned \n %d</string>
-  <string name="authorize">Authorize</string>
+  <string name="pins_cnt">تم تثبيت \n%d</string>
+  <string name="authorize">تصريح</string>
   <string name="reject">رفض</string>
   <!-- Scheduled toots -->
   <string name="no_scheduled_toots">ليس عندك أية تبويقات مبرمَجة للعرض !</string>
@@ -254,7 +254,7 @@
   <string name="toast_error_login">تعذَّر تسجيل الدخول إلى حسابك !</string>
   <string name="toast_update_credential_ok">The profile data have been saved!</string>
   <string name="nothing_to_do">No action can be taken</string>
-  <string name="toast_saved">The media has been saved!</string>
+  <string name="toast_saved">تم حفظ الصورة بنجاح !</string>
   <string name="toast_error_translate">وقع خطاء أثناء عملية الترجمة !</string>
   <string name="toast_toot_saved">تم حِفظ المُسوَدَّة !</string>
   <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
@@ -282,11 +282,11 @@
   <string name="set_bubble_counter">Display counters</string>
   <string name="set_auto_add_media_url">إضافة روابط الوسائط في التبويقات</string>
   <string name="settings_title_notifications">إدارة الإخطارات</string>
-  <string name="set_notif_follow">Notify when someone follows you</string>
-  <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
-  <string name="set_notif_follow_share">Notify when someone boosts your status</string>
-  <string name="set_notif_follow_add">Notify when someone favourites your status</string>
-  <string name="set_notif_follow_mention">Notify when someone mentions you</string>
+  <string name="set_notif_follow">تنبيهي عندما يتبعني أحدهم</string>
+  <string name="set_notif_follow_ask">تنبيهي عندما أتلقى طلبا بالمتابعة</string>
+  <string name="set_notif_follow_share">تنبيهي عندما يقوم أحدهم بترقية منشوري</string>
+  <string name="set_notif_follow_add">تنبيهي عندما يُعجَب أحدهم بأحد منشوراتي</string>
+  <string name="set_notif_follow_mention">إخطاري عندما يُشار إليّ</string>
   <string name="set_share_validation">عرض مربع حوار للتأكيد قبل ترقية أي تبويق</string>
   <string name="set_share_validation_fav">عرض مربع حوار للتأكيد قبل إضافة أي تبويق إلى المفضلة</string>
   <string name="settings_title_more_options">الإعدادات المتقدمة</string>
@@ -416,9 +416,9 @@
   <string name="action_lists_search_users">البحث فيما بين الحسابات التي تتبعها</string>
   <string name="action_lists_owner">قوائمك</string>
   <!-- Migration -->
-  <string name="account_moved_to">%1$s has moved to %2$s</string>
+  <string name="account_moved_to">%1$s إنتقلَ إلى %2$s</string>
   <string name="show_boost_count">Show boosts/favourites count</string>
-  <string name="issue_login_title">Authentication does not work?</string>
+  <string name="issue_login_title">هل المصادقة لا تعمل ؟</string>
   <string name="issue_login_message">
         <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
