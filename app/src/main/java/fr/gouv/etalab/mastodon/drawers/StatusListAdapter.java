@@ -15,7 +15,6 @@ package fr.gouv.etalab.mastodon.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Handler;
@@ -62,7 +61,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestOptions;
 import com.github.stom79.mytransl.MyTransL;
 import com.github.stom79.mytransl.client.HttpsConnectionException;
 import com.github.stom79.mytransl.client.Results;
@@ -99,7 +97,6 @@ import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
-import fr.gouv.etalab.mastodon.webview.MastalabWebViewClient;
 
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
@@ -917,11 +914,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         }else {
                             holder.status_cardview.setVisibility(View.GONE);
                             holder.status_cardview_video.setVisibility(View.VISIBLE);
-                            holder.status_cardview_webview.setWebViewClient(new WebViewClient() {
-                                public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                                    holder.status_cardview_video.setVisibility(View.GONE);
-                                }
-                            });
                             holder.status_cardview_webview.getSettings().setJavaScriptEnabled(true);
                             String html = status.getCard().getHtml();
                             String src = status.getCard().getUrl();
@@ -930,7 +922,24 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 if( matcher.find())
                                     src = matcher.group(1);
                             }
-                            holder.status_cardview_webview.loadUrl(src);
+                            final String finalSrc = src;
+                            holder.status_cardview_webview.setWebViewClient(new WebViewClient() {
+                                @Override
+                                public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                                    holder.status_cardview_video.setVisibility(View.GONE);
+                                }
+                                @Override
+                                public boolean shouldOverrideUrlLoading (WebView view, String url){
+                                    Intent intent = new Intent(context, WebviewActivity.class);
+                                    Bundle b = new Bundle();
+                                    b.putString("url", url);
+                                    intent.putExtras(b);
+                                    context.startActivity(intent);
+                                    holder.status_cardview_webview.loadUrl(finalSrc);
+                                    return true;
+                                }
+                            });
+                            holder.status_cardview_webview.loadUrl(finalSrc);
                         }
                     }else {
                         holder.status_cardview.setVisibility(View.GONE);
