@@ -1857,27 +1857,31 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             }
             //Retrieves mentioned accounts + OP and adds them at the beginin of the toot
             ArrayList<String> mentionedAccountsAdded = new ArrayList<>();
+            int cursorReply = 0;
             if( tootReply.getAccount() != null && tootReply.getAccount().getAcct() != null && !tootReply.getAccount().getId().equals(userId)) {
-                toot_content.setText(String.format("@%s ", tootReply.getAccount().getAcct()));
+                toot_content.setText(String.format("@%s", tootReply.getAccount().getAcct()));
                 mentionedAccountsAdded.add(tootReply.getAccount().getAcct());
+                //Evaluate the cursor position => mention length + 1 char for carriage return
+                cursorReply = toot_content.getText().toString().length() + 1;
             }
             if( tootReply.getMentions() != null ){
+                //Put other accounts mentioned at the bottom
+                toot_content.setText(String.format("%s", (toot_content.getText().toString() + "\n\n")));
                 for(Mention mention : tootReply.getMentions()){
                     if(  mention.getAcct() != null && !mention.getId().equals(userId) && !mentionedAccountsAdded.contains(mention.getAcct())) {
                         mentionedAccountsAdded.add(mention.getAcct());
                         String tootTemp = String.format("@%s ", mention.getAcct());
-                        toot_content.setText(String.format("%s ", (toot_content.getText().toString() + " " + tootTemp)));
+                        toot_content.setText(String.format("%s ", (toot_content.getText().toString() +  tootTemp.trim())));
                     }
                 }
             }
-
             toot_content.setText(toot_content.getText().toString().trim());
-            if (toot_content.getText().toString().startsWith("@")) {
-                toot_content.append("\n");
-            }
             toot_space_left.setText(String.valueOf(toot_content.length()));
             toot_content.requestFocus();
-            toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
+            if( cursorReply > 0 )
+                toot_content.setSelection(cursorReply);
+            else
+                toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
         }
         initialContent = toot_content.getText().toString();
     }
