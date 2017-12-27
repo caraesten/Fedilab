@@ -220,7 +220,11 @@ public class HttpsConnection {
 
     }
 
-
+    /***
+     * Download method which works for http and https connections
+     * @param downloadUrl String download url
+     * @param listener OnDownloadInterface, listener which manages progress
+     */
     public void download(final String downloadUrl, final OnDownloadInterface listener) {
         new Thread(new Runnable() {
             @Override
@@ -432,6 +436,11 @@ public class HttpsConnection {
     }
 
 
+    /**
+     * Upload method - https only
+     * @param inputStream InputStream of the file to upload
+     * @param listener - OnRetrieveAttachmentInterface: listener to send information about attachment once uploaded.
+     */
     public void upload(final InputStream inputStream, final OnRetrieveAttachmentInterface listener) {
 
         new Thread(new Runnable() {
