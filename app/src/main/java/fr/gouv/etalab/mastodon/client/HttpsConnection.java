@@ -226,88 +226,183 @@ public class HttpsConnection {
             @Override
             public void run() {
                 URL url;
-                try {
-                    url = new URL(downloadUrl);
-                    httpsURLConnection = (HttpsURLConnection) url.openConnection();
-                    httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
-                    int responseCode = httpsURLConnection.getResponseCode();
+                HttpsURLConnection httpsURLConnection = null;
+                HttpURLConnection httpURLConnection = null;
+                if (downloadUrl.startsWith("https://")) {
+                    try {
+                        url = new URL(downloadUrl);
+                        httpsURLConnection = (HttpsURLConnection) url.openConnection();
+                        httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+                        int responseCode = httpsURLConnection.getResponseCode();
 
-                    // always check HTTP response code first
-                    if (responseCode == HttpURLConnection.HTTP_OK) {
-                        String fileName = "";
-                        String disposition = httpsURLConnection.getHeaderField("Content-Disposition");
+                        // always check HTTP response code first
+                        if (responseCode == HttpURLConnection.HTTP_OK) {
+                            String fileName = "";
+                            String disposition = httpsURLConnection.getHeaderField("Content-Disposition");
 
-                        if (disposition != null) {
-                            // extracts file name from header field
-                            int index = disposition.indexOf("filename=");
-                            if (index > 0) {
-                                fileName = disposition.substring(index + 10,
-                                        disposition.length() - 1);
+                            if (disposition != null) {
+                                // extracts file name from header field
+                                int index = disposition.indexOf("filename=");
+                                if (index > 0) {
+                                    fileName = disposition.substring(index + 10,
+                                            disposition.length() - 1);
+                                }
+                            } else {
+                                // extracts file name from URL
+                                fileName = downloadUrl.substring(downloadUrl.lastIndexOf("/") + 1,
+                                        downloadUrl.length());
                             }
-                        } else {
-                            // extracts file name from URL
-                            fileName = downloadUrl.substring(downloadUrl.lastIndexOf("/") + 1,
-                                    downloadUrl.length());
-                        }
-                        // opens input stream from the HTTP connection
-                        InputStream inputStream = httpsURLConnection.getInputStream();
-                        File saveDir = context.getCacheDir();
-                        final String saveFilePath = saveDir + File.separator + fileName;
+                            // opens input stream from the HTTP connection
+                            InputStream inputStream = httpsURLConnection.getInputStream();
+                            File saveDir = context.getCacheDir();
+                            final String saveFilePath = saveDir + File.separator + fileName;
 
-                        // opens an output stream to save into file
-                        FileOutputStream outputStream = new FileOutputStream(saveFilePath);
+                            // opens an output stream to save into file
+                            FileOutputStream outputStream = new FileOutputStream(saveFilePath);
 
-                        int bytesRead;
-                        byte[] buffer = new byte[CHUNK_SIZE];
-                        int contentSize = httpsURLConnection.getContentLength();
-                        int downloadedFileSize = 0;
-                        while ((bytesRead = inputStream.read(buffer)) != -1) {
-                            outputStream.write(buffer, 0, bytesRead);
-                            downloadedFileSize += bytesRead;
-                            if( context instanceof MediaActivity) {
-                                final int currentProgress = (downloadedFileSize *100 )/ contentSize;
-                                ((MediaActivity) context).runOnUiThread(new Runnable() {
+                            int bytesRead;
+                            byte[] buffer = new byte[CHUNK_SIZE];
+                            int contentSize = httpsURLConnection.getContentLength();
+                            int downloadedFileSize = 0;
+                            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                                outputStream.write(buffer, 0, bytesRead);
+                                downloadedFileSize += bytesRead;
+                                if (context instanceof MediaActivity) {
+                                    final int currentProgress = (downloadedFileSize * 100) / contentSize;
+                                    ((MediaActivity) context).runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            listener.onUpdateProgress(currentProgress);
+                                        }
+                                    });
+                                }
+                            }
+                            outputStream.close();
+                            inputStream.close();
+                            if (context instanceof TootActivity)
+                                ((TootActivity) context).runOnUiThread(new Runnable() {
                                     public void run() {
-                                        listener.onUpdateProgress(currentProgress);
+                                        listener.onDownloaded(saveFilePath, downloadUrl, null);
                                     }
                                 });
-                            }
+                            if (context instanceof MediaActivity)
+                                ((MediaActivity) context).runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        listener.onDownloaded(saveFilePath, downloadUrl, null);
+                                    }
+                                });
+                        } else {
+                            final Error error = new Error();
+                            error.setError(String.valueOf(responseCode));
+                            if (context instanceof TootActivity)
+                                ((TootActivity) context).runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        listener.onDownloaded(null, downloadUrl, error);
+                                    }
+                                });
+                            if (context instanceof MediaActivity)
+                                ((MediaActivity) context).runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        listener.onDownloaded(null, downloadUrl, error);
+                                    }
+                                });
+
                         }
-                        outputStream.close();
-                        inputStream.close();
-                        if(context instanceof TootActivity)
-                        ((TootActivity)context).runOnUiThread(new Runnable() {
-                            public void run() {
-                                listener.onDownloaded(saveFilePath, downloadUrl, null);
-                            }});
-                        if(context instanceof MediaActivity)
-                            ((MediaActivity)context).runOnUiThread(new Runnable() {
-                                public void run() {
-                                    listener.onDownloaded(saveFilePath, downloadUrl,null);
-                                }});
-                    } else {
-                        final Error error = new Error();
-                        error.setError(String.valueOf(responseCode));
-                        if(context instanceof TootActivity)
-                            ((TootActivity)context).runOnUiThread(new Runnable() {
-                                public void run() {
-                                    listener.onDownloaded(null, downloadUrl, error);
-                                }});
-                        if(context instanceof MediaActivity)
-                            ((MediaActivity)context).runOnUiThread(new Runnable() {
-                                public void run() {
-                                    listener.onDownloaded(null,downloadUrl, error);
-                                }});
-
-                    }
-                    httpsURLConnection.disconnect();
-                } catch (IOException e) {
-                    Error error = new Error();
-                    error.setError(context.getString(R.string.toast_error));
-                    if(httpsURLConnection != null)
                         httpsURLConnection.disconnect();
-                }
+                    } catch (IOException e) {
+                        Error error = new Error();
+                        error.setError(context.getString(R.string.toast_error));
+                        if (httpsURLConnection != null)
+                            httpsURLConnection.disconnect();
+                    }
 
+                } else {
+                    try {
+                        url = new URL(downloadUrl);
+                        httpURLConnection = (HttpURLConnection) url.openConnection();
+                        httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+                        int responseCode = httpURLConnection.getResponseCode();
+
+                        // always check HTTP response code first
+                        if (responseCode == HttpURLConnection.HTTP_OK) {
+                            String fileName = "";
+                            String disposition = httpURLConnection.getHeaderField("Content-Disposition");
+
+                            if (disposition != null) {
+                                // extracts file name from header field
+                                int index = disposition.indexOf("filename=");
+                                if (index > 0) {
+                                    fileName = disposition.substring(index + 10,
+                                            disposition.length() - 1);
+                                }
+                            } else {
+                                // extracts file name from URL
+                                fileName = downloadUrl.substring(downloadUrl.lastIndexOf("/") + 1,
+                                        downloadUrl.length());
+                            }
+                            // opens input stream from the HTTP connection
+                            InputStream inputStream = httpURLConnection.getInputStream();
+                            File saveDir = context.getCacheDir();
+                            final String saveFilePath = saveDir + File.separator + fileName;
+
+                            // opens an output stream to save into file
+                            FileOutputStream outputStream = new FileOutputStream(saveFilePath);
+
+                            int bytesRead;
+                            byte[] buffer = new byte[CHUNK_SIZE];
+                            int contentSize = httpURLConnection.getContentLength();
+                            int downloadedFileSize = 0;
+                            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                                outputStream.write(buffer, 0, bytesRead);
+                                downloadedFileSize += bytesRead;
+                                if (context instanceof MediaActivity) {
+                                    final int currentProgress = (downloadedFileSize * 100) / contentSize;
+                                    ((MediaActivity) context).runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            listener.onUpdateProgress(currentProgress);
+                                        }
+                                    });
+                                }
+                            }
+                            outputStream.close();
+                            inputStream.close();
+                            if (context instanceof TootActivity)
+                                ((TootActivity) context).runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        listener.onDownloaded(saveFilePath, downloadUrl, null);
+                                    }
+                                });
+                            if (context instanceof MediaActivity)
+                                ((MediaActivity) context).runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        listener.onDownloaded(saveFilePath, downloadUrl, null);
+                                    }
+                                });
+                        } else {
+                            final Error error = new Error();
+                            error.setError(String.valueOf(responseCode));
+                            if (context instanceof TootActivity)
+                                ((TootActivity) context).runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        listener.onDownloaded(null, downloadUrl, error);
+                                    }
+                                });
+                            if (context instanceof MediaActivity)
+                                ((MediaActivity) context).runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        listener.onDownloaded(null, downloadUrl, error);
+                                    }
+                                });
+
+                        }
+                        httpURLConnection.disconnect();
+                    } catch (IOException e) {
+                        Error error = new Error();
+                        error.setError(context.getString(R.string.toast_error));
+                        if (httpURLConnection != null)
+                            httpURLConnection.disconnect();
+                    }
+
+                }
             }
         }).start();
     }
