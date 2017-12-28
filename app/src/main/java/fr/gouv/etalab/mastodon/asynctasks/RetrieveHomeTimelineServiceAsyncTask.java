@@ -21,6 +21,7 @@ import java.lang.ref.WeakReference;
 
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveHomeTimelineServiceInterface;
 
 /**
@@ -32,32 +33,27 @@ public class RetrieveHomeTimelineServiceAsyncTask extends AsyncTask<Void, Void, 
 
     private APIResponse apiResponse;
     private String since_id;
-    private String acct, userId;
+    private Account account;
     private OnRetrieveHomeTimelineServiceInterface listener;
-    private String instance;
-    private String token;
     private WeakReference<Context> contextReference;
 
-    public RetrieveHomeTimelineServiceAsyncTask(Context context, String instance, String token, String since_id, String acct, String userId, OnRetrieveHomeTimelineServiceInterface onRetrieveHomeTimelineServiceInterface){
+    public RetrieveHomeTimelineServiceAsyncTask(Context context, Account account, String since_id, OnRetrieveHomeTimelineServiceInterface onRetrieveHomeTimelineServiceInterface){
         this.contextReference = new WeakReference<>(context);
         this.since_id = since_id;
         this.listener = onRetrieveHomeTimelineServiceInterface;
-        this.acct = acct;
-        this.instance = instance;
-        this.userId = userId;
-        this.token = token;
+        this.account = account;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        API api = new API(this.contextReference.get(), instance, token);
+        API api = new API(this.contextReference.get(), this.account.getInstance(), this.account.getToken());
         apiResponse = api.getHomeTimelineSinceId(since_id);
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveHomeTimelineService(apiResponse, acct, userId);
+        listener.onRetrieveHomeTimelineService(apiResponse, this.account);
     }
 
 }

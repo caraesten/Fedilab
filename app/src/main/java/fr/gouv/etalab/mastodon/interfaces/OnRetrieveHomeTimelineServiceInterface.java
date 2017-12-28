@@ -16,11 +16,12 @@ package fr.gouv.etalab.mastodon.interfaces;
 
 
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
 
 /**
  * Created by Thomas on 20/05/2017.
  * Interface when home timeline toots have been retrieved
  */
 public interface OnRetrieveHomeTimelineServiceInterface {
-    void onRetrieveHomeTimelineService(APIResponse apiResponse, String acct, String userId);
+    void onRetrieveHomeTimelineService(APIResponse apiResponse, Account account);
 }

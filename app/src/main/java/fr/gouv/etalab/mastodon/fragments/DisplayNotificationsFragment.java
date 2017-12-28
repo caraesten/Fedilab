@@ -65,7 +65,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private boolean swiped;
     private RecyclerView lv_notifications;
     private String lastReadNotifications;
-    private String userId;
+    private String userId, instance;
     private SharedPreferences sharedpreferences;
     LinearLayoutManager mLayoutManager;
 
@@ -96,6 +96,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         boolean isOnWifi = Helper.isOnWIFI(context);
         int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        instance = sharedpreferences.getString(Helper.PREF_INSTANCE, context!=null?Helper.getLiveInstance(context):null);
         lastReadNotifications = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
         notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments,this.notifications);
         lv_notifications.setAdapter(notificationsListAdapter);
@@ -318,12 +319,12 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
      */
     private void updateNotificationLastId(String notificationId){
 
-        String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
+        String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, null);
         if( lastNotif == null || Long.parseLong(notificationId) > Long.parseLong(lastNotif)){
             this.lastReadNotifications = notificationId;
             MainActivity.countNewNotifications = 0;
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notificationId);
+            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, notificationId);
             editor.apply();
         }
     }

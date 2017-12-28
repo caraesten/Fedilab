@@ -53,6 +53,7 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
+import static fr.gouv.etalab.mastodon.helper.Helper.PREF_INSTANCE;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
 import static fr.gouv.etalab.mastodon.helper.Helper.canNotify;
 import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
@@ -119,17 +120,17 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
                 return;
             //Retrieve users in db that owner has.
             for (Account account: accounts) {
-                String max_id = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_NOTIFICATION_MAX_ID + account.getId(), null);
-                String lastHomeSeen = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + account.getId(), null);
+                String max_id = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
+                String lastHomeSeen = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + account.getId() + account.getInstance(), null);
                 if( lastHomeSeen != null && max_id != null){
                     if( Long.parseLong(lastHomeSeen) > Long.parseLong(max_id)){
                         max_id = lastHomeSeen;
                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putString(Helper.LAST_HOMETIMELINE_NOTIFICATION_MAX_ID + account.getId(), max_id);
+                        editor.putString(Helper.LAST_HOMETIMELINE_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), max_id);
                         editor.apply();
                     }
                 }
-                new RetrieveHomeTimelineServiceAsyncTask(getContext(), account.getInstance(), account.getToken(), max_id, account.getAcct(), account.getId(), HomeTimelineSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new RetrieveHomeTimelineServiceAsyncTask(getContext(), account, max_id, HomeTimelineSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
             }
         }
@@ -137,13 +138,14 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
 
 
     @Override
-    public void onRetrieveHomeTimelineService(APIResponse apiResponse, String acct, final String userId) {
+    public void onRetrieveHomeTimelineService(APIResponse apiResponse, final Account account) {
         final List<Status> statuses = apiResponse.getStatuses();
         if( apiResponse.getError() != null || statuses == null || statuses.size() == 0)
             return;
+
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
-        final String max_id = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_NOTIFICATION_MAX_ID + userId, null);
+        final String max_id = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
 
         //No previous notifications in cache, so no notification will be sent
         String message;
@@ -151,7 +153,7 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
         for(Status status: statuses){
             //The notification associated to max_id is discarded as it is supposed to have already been sent
             //Also, if the toot comes from the owner, we will avoid to warn him/her...
-            if( max_id != null && (status.getId().equals(max_id)) || (acct != null && status.getAccount().getAcct().trim().equals(acct.trim()) ))
+            if( max_id != null && (status.getId().equals(max_id)) || (account.getAcct() != null && status.getAccount().getAcct().trim().equals(account.getAcct().trim()) ))
                 continue;
             String notificationUrl = status.getAccount().getAvatar();
 
@@ -162,8 +164,9 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
             final Intent intent = new Intent(getContext(), MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
             intent.putExtra(INTENT_ACTION, HOME_TIMELINE_INTENT);
-            intent.putExtra(PREF_KEY_ID, userId);
-            long notif_id = Long.parseLong(userId);
+            intent.putExtra(PREF_KEY_ID, account.getId());
+            intent.putExtra(PREF_INSTANCE, account.getInstance());
+            long notif_id = Long.parseLong(account.getId());
             final int notificationId = ((notif_id + 2) > 2147483647) ? (int) (2147483647 - notif_id - 2) : (int) (notif_id + 2);
 
             if( notificationUrl != null){
@@ -190,7 +193,7 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
                                 notify_user(getContext(), intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
                                         R.drawable.mastodonlogo), finalTitle, finalMessage);
                                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                                editor.putString(Helper.LAST_HOMETIMELINE_NOTIFICATION_MAX_ID + userId, statuses.get(0).getId());
+                                editor.putString(Helper.LAST_HOMETIMELINE_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), statuses.get(0).getId());
                                 editor.apply();
                                 return false;
                             }
@@ -200,7 +203,7 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
                             public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
                                 notify_user(getContext(), intent, notificationId, resource, finalTitle, finalMessage);
                                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                                editor.putString(Helper.LAST_HOMETIMELINE_NOTIFICATION_MAX_ID + userId, statuses.get(0).getId());
+                                editor.putString(Helper.LAST_HOMETIMELINE_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), statuses.get(0).getId());
                                 editor.apply();
                             }
                         });

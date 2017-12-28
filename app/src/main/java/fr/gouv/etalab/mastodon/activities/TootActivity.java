@@ -188,11 +188,14 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     private AlertDialog alertDialogEmoji;
     private String mentionAccount;
     private String idRedirect;
+    private String userId, instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
             setTheme(R.style.AppTheme);
@@ -308,11 +311,11 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 setTitle(R.string.toot_title);
         }
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        String userId;
+        String userIdReply;
         if( accountReply == null)
-            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            userIdReply = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         else
-            userId = accountReply.getId();
+            userIdReply = accountReply.getId();
 
         if( mentionAccount != null){
             toot_content.setText(String.format("@%s\n", mentionAccount));
@@ -337,7 +340,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         initialContent = toot_content.getText().toString();
         Account account;
         if( accountReply == null)
-            account = new AccountDAO(getApplicationContext(),db).getAccountByID(userId);
+            account = new AccountDAO(getApplicationContext(),db).getAccountByID(userIdReply);
         else
             account = accountReply;
 
@@ -1137,8 +1140,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 itemViewReply.setVisible(false);
         }
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        String instance = Helper.getLiveInstance(getApplicationContext());
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+
         String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
         Version currentVersion = new Version(instanceVersion);
         Version minVersion = new Version("2.0");
@@ -1231,8 +1233,6 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                     return false;
                 }
             });
-            String instance = Helper.getLiveInstance(getApplicationContext());
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
             if (instanceVersion != null) {
                 Version currentVersion = new Version(instanceVersion);
@@ -1735,8 +1735,6 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                     @Override
                     public void onClick(View view) {
                         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-                        String instance = Helper.getLiveInstance(getApplicationContext());
-                        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                         String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
                         if (instanceVersion != null) {
                             Version currentVersion = new Version(instanceVersion);
@@ -1823,11 +1821,11 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             title.setText(getString(R.string.toot_title_reply));
         else
             setTitle(R.string.toot_title_reply);
-        String userId;
+        String userIdReply;
         if( accountReply == null)
-            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            userIdReply = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         else
-            userId = accountReply.getId();
+            userIdReply = accountReply.getId();
 
         //If toot is not restored
         if( restored == -1 ){
@@ -1858,7 +1856,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             //Retrieves mentioned accounts + OP and adds them at the beginin of the toot
             ArrayList<String> mentionedAccountsAdded = new ArrayList<>();
             int cursorReply = 0;
-            if( tootReply.getAccount() != null && tootReply.getAccount().getAcct() != null && !tootReply.getAccount().getId().equals(userId)) {
+            if( tootReply.getAccount() != null && tootReply.getAccount().getAcct() != null && !tootReply.getAccount().getId().equals(userIdReply)) {
                 toot_content.setText(String.format("@%s", tootReply.getAccount().getAcct()));
                 mentionedAccountsAdded.add(tootReply.getAccount().getAcct());
                 //Evaluate the cursor position => mention length + 1 char for carriage return
@@ -1868,7 +1866,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 //Put other accounts mentioned at the bottom
                 toot_content.setText(String.format("%s", (toot_content.getText().toString() + "\n\n")));
                 for(Mention mention : tootReply.getMentions()){
-                    if(  mention.getAcct() != null && !mention.getId().equals(userId) && !mentionedAccountsAdded.contains(mention.getAcct())) {
+                    if(  mention.getAcct() != null && !mention.getId().equals(userIdReply) && !mentionedAccountsAdded.contains(mention.getAcct())) {
                         mentionedAccountsAdded.add(mention.getAcct());
                         String tootTemp = String.format("@%s ", mention.getAcct());
                         toot_content.setText(String.format("%s ", (toot_content.getText().toString() +  tootTemp.trim())));

@@ -147,7 +147,8 @@ public abstract class BaseMainActivity extends BaseActivity
     private AppBarLayout appBar;
     private static boolean activityPaused;
     private String bookmark;
-
+    private String userId;
+    private String instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -577,11 +578,13 @@ public abstract class BaseMainActivity extends BaseActivity
             }
         });
 
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
+
         //Get the previous bookmark value
         //If null try to use the LAST_HOMETIMELINE_MAX_ID
-        String lastHomeTimeline = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
-        bookmark = sharedpreferences.getString(Helper.BOOKMARK_ID + userId, lastHomeTimeline);
+        String lastHomeTimeline = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId + instance, null);
+        bookmark = sharedpreferences.getString(Helper.BOOKMARK_ID + userId + instance, lastHomeTimeline);
         Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
         if( account == null){
             Helper.logout(getApplicationContext());
@@ -757,7 +760,6 @@ public abstract class BaseMainActivity extends BaseActivity
         }
 
         //Check instance release for lists
-        String instance = Helper.getLiveInstance(getApplicationContext());
         String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
         if (instanceVersion != null) {
             Version currentVersion = new Version(instanceVersion);
@@ -834,7 +836,6 @@ public abstract class BaseMainActivity extends BaseActivity
                 Helper.EventStreaming eventStreaming = (Helper.EventStreaming) intent.getSerializableExtra("eventStreaming");
                 assert b != null;
                 userIdService = b.getString("userIdService", null);
-                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 if( userIdService != null && userIdService.equals(userId)) {
                     if (eventStreaming == Helper.EventStreaming.NOTIFICATION) {
                         Notification notification = b.getParcelable("data");
@@ -1192,14 +1193,12 @@ public abstract class BaseMainActivity extends BaseActivity
     @Override
     public void onStart(){
         super.onStart();
-        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         receive_federated_data = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 Bundle b = intent.getExtras();
                 assert b != null;
                 userIdService = b.getString("userIdService", null);
-                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 if( userIdService != null && userIdService.equals(userId)) {
                     Status status = b.getParcelable("data");
                     if (federatedFragment != null) {
@@ -1214,7 +1213,6 @@ public abstract class BaseMainActivity extends BaseActivity
                 Bundle b = intent.getExtras();
                 assert b != null;
                 userIdService = b.getString("userIdService", null);
-                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 if( userIdService != null && userIdService.equals(userId)) {
                     Status status = b.getParcelable("data");
                     if (localFragment != null) {
@@ -1234,7 +1232,6 @@ public abstract class BaseMainActivity extends BaseActivity
         if( streamingIntent != null) {
             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED+userId, false);
             stopService(streamingIntent);
             editor.apply();
@@ -1392,8 +1389,6 @@ public abstract class BaseMainActivity extends BaseActivity
             startActivity(myIntent);
             finish();
         }else {
-            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
             updateHeaderAccountInfo(BaseMainActivity.this, account, headerLayout);
@@ -1436,8 +1431,6 @@ public abstract class BaseMainActivity extends BaseActivity
         Version minVersion = new Version("1.6");
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
-        String instance = Helper.getLiveInstance(getApplicationContext());
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         editor.putString(Helper.INSTANCE_VERSION + userId + instance, apiResponse.getInstance().getVersion());
         editor.apply();
         Helper.canPin = (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion));

@@ -74,7 +74,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     LinearLayoutManager mLayoutManager;
     boolean firstTootsLoaded;
     private String lastReadStatus;
-    private String userId;
+    private String userId, instance;
     private SharedPreferences sharedpreferences;
 
     public DisplayStatusFragment(){
@@ -118,7 +118,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         mLayoutManager = new LinearLayoutManager(context);
         lv_status.setLayoutManager(mLayoutManager);
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        lastReadStatus = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
+        lastReadStatus = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, null);
+        instance = sharedpreferences.getString(Helper.PREF_INSTANCE, context!=null?Helper.getLiveInstance(context):null);
 
         lv_status.addOnScrollListener(new RecyclerView.OnScrollListener() {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy)
@@ -147,7 +148,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     if( context instanceof BaseMainActivity){
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         Long bookmarkL = Long.parseLong(statuses.get(firstVisibleItem).getId()) + 1;
-                        editor.putString(Helper.BOOKMARK_ID + userId, String.valueOf(bookmarkL));
+                        editor.putString(Helper.BOOKMARK_ID + userId + instance, String.valueOf(bookmarkL));
                         editor.apply();
                     }
             }
@@ -300,7 +301,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     this.statuses.addAll(statuses);
                     statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
                 }else { //Toots are younger than the bookmark
-                    String currentMaxId = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
+                    String currentMaxId = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId + instance, null);
                     int position = 0;
                     while (position < this.statuses.size() && Long.parseLong(statuses.get(0).getId()) < Long.parseLong(this.statuses.get(position).getId())) {
                         position++;
@@ -551,12 +552,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
      */
     private void updateStatusLastId(String statusId){
 
-        String lastNotif = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
+        String lastNotif = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId + instance, null);
         if( lastNotif == null || Long.parseLong(statusId) > Long.parseLong(lastNotif)){
             this.lastReadStatus = statusId;
             MainActivity.countNewStatus = 0;
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, statusId);
+            editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId + instance, statusId);
             editor.apply();
         }
     }

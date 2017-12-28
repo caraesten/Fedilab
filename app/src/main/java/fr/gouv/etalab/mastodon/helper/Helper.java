@@ -882,6 +882,8 @@ public class Helper {
     }
 
 
+
+
     /**
      * Converts dp to pixel
      * @param dp float - the value in dp to convert
