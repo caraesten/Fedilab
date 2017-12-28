@@ -21,6 +21,7 @@ import java.lang.ref.WeakReference;
 
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveNotificationsInterface;
 
 
@@ -35,22 +36,17 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
 
     private APIResponse apiResponse;
     private String max_id;
-    private String acct, userId;
+    private Account account;
     private OnRetrieveNotificationsInterface listener;
-    private String instance;
-    private String token;
     private boolean refreshData;
     private WeakReference<Context> contextReference;
     private boolean display;
 
-    public RetrieveNotificationsAsyncTask(Context context, boolean display, String instance, String token, String max_id, String acct, String userId, OnRetrieveNotificationsInterface onRetrieveNotificationsInterface){
+    public RetrieveNotificationsAsyncTask(Context context, boolean display, Account account, String max_id, OnRetrieveNotificationsInterface onRetrieveNotificationsInterface){
         this.contextReference = new WeakReference<>(context);
         this.max_id = max_id;
         this.listener = onRetrieveNotificationsInterface;
-        this.acct = acct;
-        this.instance = instance;
-        this.userId = userId;
-        this.token = token;
+        this.account = account;
         this.refreshData = true;
         this.display = display;
     }
@@ -58,8 +54,8 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
 
     @Override
     protected Void doInBackground(Void... params) {
-        API api = new API(this.contextReference.get(), instance, token);
-        if( acct == null)
+        API api = new API(this.contextReference.get(), account.getInstance(), account.getToken());
+        if( account == null)
             apiResponse = api.getNotifications(max_id, display);
         else
             apiResponse = api.getNotificationsSince(max_id, display);
@@ -68,7 +64,7 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveNotifications(apiResponse, acct, userId, refreshData);
+        listener.onRetrieveNotifications(apiResponse, account, refreshData);
     }
 
 }

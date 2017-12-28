@@ -37,6 +37,7 @@ import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingNotificationsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMissingNotificationsInterface;
@@ -112,7 +113,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                     if (firstVisibleItem + visibleItemCount == totalItemCount && context != null) {
                         if (!flag_loading) {
                             flag_loading = true;
-                            asyncTask = new RetrieveNotificationsAsyncTask(context, true, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            asyncTask = new RetrieveNotificationsAsyncTask(context, true, null,  max_id,   DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             nextElementLoader.setVisibility(View.VISIBLE);
                         }
                     } else {
@@ -131,20 +132,20 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 swiped = true;
                 MainActivity.countNewNotifications = 0;
                 if( context != null)
-                    asyncTask = new RetrieveNotificationsAsyncTask(context, true, null, null, null, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    asyncTask = new RetrieveNotificationsAsyncTask(context, true, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
         swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
                 R.color.mastodonC2,
                 R.color.mastodonC3);
         if( context != null)
-            asyncTask = new RetrieveNotificationsAsyncTask(context, true, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            asyncTask = new RetrieveNotificationsAsyncTask(context, true, null,  max_id,  DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         else
             new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     if( context != null)
-                        asyncTask = new RetrieveNotificationsAsyncTask(context, true, null, null, max_id, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        asyncTask = new RetrieveNotificationsAsyncTask(context, true, null,  max_id,  DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             }, 500);
         return rootView;
@@ -173,7 +174,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     }
 
     @Override
-    public void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId, boolean refreshData) {
+    public void onRetrieveNotifications(APIResponse apiResponse, Account account, boolean refreshData) {
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         if( apiResponse.getError() != null){
@@ -266,7 +267,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         flag_loading = true;
         swiped = true;
         MainActivity.countNewNotifications = 0;
-        asyncTask = new RetrieveNotificationsAsyncTask(context, true, null, null, null, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        asyncTask = new RetrieveNotificationsAsyncTask(context, true, null,  null,   DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 

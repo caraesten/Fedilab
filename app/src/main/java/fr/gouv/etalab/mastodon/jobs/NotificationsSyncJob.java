@@ -52,6 +52,7 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
+import static fr.gouv.etalab.mastodon.helper.Helper.PREF_INSTANCE;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
 import static fr.gouv.etalab.mastodon.helper.Helper.canNotify;
 import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
@@ -124,7 +125,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                 return;
             //Retrieve users in db that owner has.
             for (Account account: accounts) {
-                new RetrieveNotificationsAsyncTask(getContext(), false, account.getInstance(), account.getToken(), null, account.getAcct(), account.getId(), NotificationsSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new RetrieveNotificationsAsyncTask(getContext(), false, account, null, NotificationsSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
     }
@@ -132,7 +133,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
 
 
     @Override
-    public void onRetrieveNotifications(APIResponse apiResponse, String acct, final String userId, boolean refreshData) {
+    public void onRetrieveNotifications(APIResponse apiResponse, final Account account, boolean refreshData) {
         List<Notification> notificationsReceived = apiResponse.getNotifications();
         if( apiResponse.getError() != null || notificationsReceived == null || notificationsReceived.size() == 0)
             return;
@@ -141,7 +142,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
         boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
         boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
         boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
-        final String max_id = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
+        final String max_id = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
         final  List<Notification> notifications = new ArrayList<>();
         int pos = 0;
         for(Notification notif: notificationsReceived){
@@ -226,8 +227,9 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
             final Intent intent = new Intent(getContext(), MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
             intent.putExtra(INTENT_ACTION, NOTIFICATION_INTENT);
-            intent.putExtra(PREF_KEY_ID, userId);
-            long notif_id = Long.parseLong(userId);
+            intent.putExtra(PREF_KEY_ID, account.getId());
+            intent.putExtra(PREF_INSTANCE, account.getInstance());
+            long notif_id = Long.parseLong(account.getId());
             final int notificationId = ((notif_id + 1) > 2147483647) ? (int) (2147483647 - notif_id - 1) : (int) (notif_id + 1);
             if( notificationUrl != null ){
 
@@ -247,10 +249,10 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
                                 notify_user(getContext(), intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
                                         R.drawable.mastodonlogo), finalTitle, message);
-                                String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
+                                String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
                                 if( lastNotif == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
                                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                                    editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notifications.get(0).getId());
+                                    editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notifications.get(0).getId());
                                     editor.apply();
                                 }
                                 return false;
@@ -260,10 +262,10 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                             @Override
                             public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
                                 notify_user(getContext(), intent, notificationId, resource, finalTitle, message);
-                                String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
+                                String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
                                 if( lastNotif == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
                                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                                    editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notifications.get(0).getId());
+                                    editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notifications.get(0).getId());
                                     editor.apply();
                                 }
                             }

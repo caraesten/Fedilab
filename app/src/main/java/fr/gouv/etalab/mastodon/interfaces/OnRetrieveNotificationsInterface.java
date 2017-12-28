@@ -15,11 +15,12 @@
 package fr.gouv.etalab.mastodon.interfaces;
 
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
 
 /**
  * Created by Thomas on 28/04/2017.
  * Interface when notifications have been retrieved
  */
 public interface OnRetrieveNotificationsInterface {
-    void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId, boolean refreshData);
+    void onRetrieveNotifications(APIResponse apiResponse, Account account, boolean refreshData);
 }
