@@ -15,7 +15,6 @@ package fr.gouv.etalab.mastodon.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Handler;
@@ -1162,10 +1161,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     Intent sendIntent = new Intent(Intent.ACTION_SEND);
                                     sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
                                     String url;
-                                    if( status.getReblog() != null)
-                                        url = status.getReblog().getUri();
-                                    else
-                                        url = status.getUri();
+
+                                    if( status.getReblog() != null) {
+                                        if( status.getReblog().getUri().startsWith("http"))
+                                            url = status.getReblog().getUri();
+                                        else
+                                            url = status.getReblog().getUrl();
+                                    }else {
+                                        if( status.getUri().startsWith("http"))
+                                            url = status.getUri();
+                                        else
+                                            url = status.getUrl();
+                                    }
                                     sendIntent.putExtra(Intent.EXTRA_TEXT, url);
                                     sendIntent.setType("text/plain");
                                     context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));

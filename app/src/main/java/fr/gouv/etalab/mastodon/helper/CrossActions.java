@@ -222,8 +222,21 @@ public class CrossActions {
 
                         @Override
                         protected Void doInBackground(Void... voids) {
+
                             API api = new API(contextReference.get(), account.getInstance(), account.getToken());
-                            Results search = api.search(status.getReblog()!=null?status.getReblog().getUri():status.getUri());
+                            String uri;
+                            if(status.getReblog() != null ){
+                                if( status.getReblog().getUri().startsWith("http"))
+                                    uri = status.getReblog().getUri();
+                                else
+                                    uri = status.getReblog().getUrl();
+                            }else {
+                                if( status.getUri().startsWith("http"))
+                                    uri = status.getUri();
+                                else
+                                    uri = status.getUrl();
+                            }
+                            Results search = api.search(uri);
                             if( search != null){
                                 remoteStatuses = search.getStatuses();
                             }

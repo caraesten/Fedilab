@@ -1111,8 +1111,10 @@ public class API {
             results = parseResultsResponse(new JSONObject(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
+            e.printStackTrace();
         }catch (Exception e) {
             setDefaultError();
+            e.printStackTrace();
         }
         return results;
     }
