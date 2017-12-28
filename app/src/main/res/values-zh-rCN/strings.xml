@@ -192,7 +192,7 @@
   <string name="media_count">媒体: %d</string>
   <string name="toot_scheduled">Toot 将在预定时间发送！</string>
   <string name="toot_scheduled_date">预定的时间必须晚于当前时间！</string>
-  <string name="warning_battery">已启用电池保护程序! 它可能无法按预期方式工作。</string>
+  <string name="warning_battery">已启用省电模式！它可能无法按预期方式工作。</string>
   <!-- Notifications -->
   <string name="no_notifications">没有要显示的通知</string>
   <string name="notif_mention">提到你</string>
