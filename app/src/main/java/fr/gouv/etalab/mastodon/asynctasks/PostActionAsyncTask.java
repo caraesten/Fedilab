@@ -93,7 +93,19 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
         else
             api = new API(contextReference.get());
         if( remoteStatus != null){
-            Results search = api.search(remoteStatus.getReblog()!=null?remoteStatus.getReblog().getUri():remoteStatus.getUri());
+            String uri;
+            if( remoteStatus.getReblog() != null){
+                if( remoteStatus.getReblog().getUri().startsWith("http"))
+                    uri = remoteStatus.getReblog().getUri();
+                else
+                    uri = remoteStatus.getReblog().getUrl();
+            }else {
+                if( remoteStatus.getUri().startsWith("http"))
+                    uri = remoteStatus.getUri();
+                else
+                    uri = remoteStatus.getUrl();
+            }
+            Results search = api.search(uri);
             if( search != null){
                 List<fr.gouv.etalab.mastodon.client.Entities.Status> remoteStatuses = search.getStatuses();
                 if( remoteStatuses != null && remoteStatuses.size() > 0 ){
