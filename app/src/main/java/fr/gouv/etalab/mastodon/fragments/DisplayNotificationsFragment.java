@@ -211,7 +211,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             if( firstLoad) {
                 //Update the id of the last notification retrieved
                 MainActivity.lastNotificationId = notifications.get(0).getId();
-                updateNotificationLastId(sharedpreferences, this.userId, notifications.get(0).getId());
+                if (notifications.size() > 0)
+                    updateNotificationLastId(sharedpreferences, this.userId, notifications.get(0).getId());
             }
             notificationsListAdapter.notifyItemRangeInserted(previousPosition, notifications.size());
         }
@@ -249,8 +250,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
         //Store last notification id to avoid to notify for those that have been already seen
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        if (notifications != null && notifications.size() > 0) {
-            updateNotificationLastId(sharedpreferences, this.userId, notifications.get(0).getId());
+        if (this.notifications != null && this.notifications.size() > 0) {
+            updateNotificationLastId(sharedpreferences, this.userId, this.notifications.get(0).getId());
         }
     }
 
@@ -307,6 +308,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         }
     }
 
+
+
     /**
      * Records the id of the notification only if its greater than the previous one.
      * @param sharedPreferences SharedPreferences
@@ -314,12 +317,14 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
      * @param notificationId String current notification id to check
      */
     private void updateNotificationLastId(SharedPreferences sharedPreferences, String userId, String notificationId){
+
+
         String lastNotif = sharedPreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
-        if( lastNotif != null && notificationId != null && Long.parseLong(notificationId) > Long.parseLong(lastNotif)){
+        if( lastNotif == null || Long.parseLong(notificationId) > Long.parseLong(lastNotif)){
+            this.lastReadNotifications = notificationId;
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notificationId);
             editor.apply();
         }
-        lastReadNotifications = notificationId;
     }
 }
