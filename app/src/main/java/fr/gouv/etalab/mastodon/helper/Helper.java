@@ -67,7 +67,6 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
-import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Patterns;
 import android.view.Menu;
@@ -101,7 +100,6 @@ import com.google.gson.Gson;
 import org.conscrypt.Conscrypt;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -109,19 +107,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.Provider;
 import java.security.Security;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -229,7 +222,6 @@ public class Helper {
     public static final String SET_SHOW_REPLIES = "set_show_replies";
     public static final String INSTANCE_VERSION = "instance_version";
     public static final String SET_LIVE_NOTIFICATIONS = "set_show_replies";
-    public static final String SET_PICTURE_URL = "set_picture_url";
     public static final String SET_DISABLE_GIF = "set_disable_gif";
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
@@ -307,16 +299,9 @@ public class Helper {
             Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 
     public static final Pattern hashtagPattern = Pattern.compile("(#[\\w_À-ú-]+)");
-    public static final Pattern mentionPattern = Pattern.compile("(@[\\w]+)");
-    public static final Pattern mentionOtherInstancePattern = Pattern.compile("(@[\\w]*@[\\w.-]+)");
-    public static final Pattern blacklistPattern = Pattern.compile("(%[\\w_À-ú-]+)");
+    private static final Pattern mentionPattern = Pattern.compile("(@[\\w]+)");
 
-    //Targeted field after translation
-    public enum targetField{
-        STATUS,
-        CW,
-        SIMPLE
-    }
+
     //Event Type
     public enum EventStreaming{
         UPDATE,
@@ -502,12 +487,12 @@ public class Helper {
 
     /**
      * Converts a Date date into a date-time string (SHORT format for both)
-     * @param context
+     * @param context Context
      * @param date to be converted
      * @return String
      */
 
-    public static String shortDateTime(Context context, Date date) {
+    private static String shortDateTime(Context context, Date date) {
         Locale userLocale;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -941,8 +926,6 @@ public class Helper {
                     if( currentSubmenu  == null)
                         continue;
                     final MenuItem item = currentSubmenu.add("@" + account.getAcct());
-
-                    final ImageView imageView = new ImageView(activity);
                     item.setIcon(R.drawable.ic_person);
                     String url = account.getAvatar();
                     if( url.startsWith("/") ){
@@ -1336,7 +1319,7 @@ public class Helper {
                                         if( val.length == 2){
                                             username = val[1];
                                             Pattern urlAccountPattern = Pattern.compile(
-                                                    "https:\\/\\/[\\w._-]+\\/@"+ username);
+                                                    "https://[\\w._-]+/@"+ username);
                                             Matcher matcherAccount = urlAccountPattern.matcher(finalFullContent);
                                             while (matcherAccount.find()){
                                                 String url = matcherAccount.group(0);
@@ -1442,6 +1425,7 @@ public class Helper {
     public static Drawable changeDrawableColor(Context context, int drawable, int hexaColor){
         Drawable mDrawable = ContextCompat.getDrawable(context, drawable);
         int color = Color.parseColor(context.getString(hexaColor));
+        assert mDrawable != null;
         mDrawable.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
         DrawableCompat.setTint(mDrawable, ContextCompat.getColor(context, hexaColor));
         return mDrawable;
@@ -1696,14 +1680,6 @@ public class Helper {
         return returnedBitmap;
     }
 
-    public static Bitmap resizeImage(Bitmap originalPicture,  float maxImageSize) {
-        float ratio = Math.min(
-                maxImageSize / originalPicture.getWidth(),
-                maxImageSize / originalPicture.getHeight());
-        int width = Math.round(ratio * originalPicture.getWidth());
-        int height = Math.round(ratio * originalPicture.getHeight());
-        return Bitmap.createScaledBitmap(originalPicture, width, height, false);
-    }
 
     @SuppressLint("DefaultLocale")
     public static String withSuffix(long count) {

@@ -345,10 +345,10 @@ public class LiveNotificationService extends BaseService {
                                                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
                                                     notify_user(getApplicationContext(), intent, notificationId, BitmapFactory.decodeResource(getResources(),
                                                             R.drawable.mastodonlogo), finalTitle, "@"+account.getAcct()+"@"+account.getInstance());
-                                                    String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId(), null);
+                                                    String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
                                                     if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
                                                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                                                        editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId(), notification.getId());
+                                                        editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notification.getId());
                                                         editor.apply();
                                                     }
                                                     return false;
@@ -358,10 +358,10 @@ public class LiveNotificationService extends BaseService {
                                                 @Override
                                                 public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
                                                     notify_user(getApplicationContext(), intent, notificationId, resource, finalTitle, "@"+account.getAcct()+"@"+account.getInstance());
-                                                    String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId(), null);
+                                                    String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
                                                     if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
                                                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                                                        editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId(), notification.getId());
+                                                        editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notification.getId());
                                                         editor.apply();
                                                     }
                                                 }

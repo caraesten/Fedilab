@@ -54,11 +54,14 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
 
     @Override
     protected Void doInBackground(Void... params) {
-        API api = new API(this.contextReference.get(), account.getInstance(), account.getToken());
-        if( account == null)
+        API api;
+        if( account == null) {
+            api = new API(this.contextReference.get());
             apiResponse = api.getNotifications(max_id, display);
-        else
+        }else {
+            api = new API(this.contextReference.get(), account.getInstance(), account.getToken());
             apiResponse = api.getNotificationsSince(max_id, display);
+        }
         return null;
     }
 
