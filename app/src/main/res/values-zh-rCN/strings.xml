@@ -25,11 +25,11 @@
   <string name="accounts">帐户</string>
   <string name="toots">Toots</string>
   <string name="tags">标签</string>
-  <string name="token">代币</string>
+  <string name="token">令牌</string>
   <string name="save">保存</string>
   <string name="restore">恢复</string>
   <string name="two_factor_authentification">两步验证？</string>
-  <string name="other_instance">其他实例比 mastodon.etalab.gouv.fr 更...？</string>
+  <string name="other_instance">mastodon.etalab.gouv.fr 之外的其他实例...？</string>
   <string name="no_result">没有结果!</string>
   <string name="instance">实例</string>
   <string name="instance_example">实例: mastodon.social</string>
@@ -43,7 +43,7 @@
   <string name="speech_prompt">请说点什么</string>
   <string name="speech_not_supported">抱歉! 您的设备不支持语音输入!</string>
   <string name="delete_all">删除全部</string>
-  <string name="translate_toot">翻译这个toot。</string>
+  <string name="translate_toot">翻译此条 toot。</string>
   <string name="schedule">定时发布</string>
   <string name="text_size">文本和图标大小</string>
   <string name="text_size_change">更改当前文本大小:</string>
@@ -99,7 +99,7 @@
   <!-- Status -->
   <string name="no_status">无toot显示</string>
   <string name="fav_added">Toot被加入了收藏</string>
-  <string name="fav_removed">Toot被从收藏中移除了!</string>
+  <string name="fav_removed">已从收藏中移除该 toot！</string>
   <string name="reblog_added">已转发此条 toot！</string>
   <string name="reblog_removed">已撤销转发此条 toot！</string>
   <string name="reblog_by">由 %1$s 转发</string>
@@ -107,8 +107,8 @@
   <string name="favourite_remove">从你的收藏夹中去掉这个toot？</string>
   <string name="reblog_add">转发此条 toot？</string>
   <string name="reblog_remove">取消转发此条 toot？</string>
-  <string name="pin_add">把这个toot显示到前端？</string>
-  <string name="pin_remove">取消这个toot的前端显示操作？</string>
+  <string name="pin_add">将这条 toot 置顶？</string>
+  <string name="pin_remove">取消这条 toot 的置顶状态？</string>
   <string name="more_action_1">静音</string>
   <string name="more_action_2">阻止</string>
   <string name="more_action_3">报告</string>
@@ -119,10 +119,10 @@
   <string-array name="more_action_confirm">
     <item>是否将此帐户静音？</item>
     <item>是否将此帐户屏蔽？</item>
-    <item>报告这个toot？</item>
+    <item>举报这条 toot？</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>移除这个toot？</item>
+    <item>移除这条 toot？</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="other">%d 个回复</item>
@@ -139,14 +139,14 @@
   <string name="cw">顺时针</string>
   <string name="toot_title">写一个toot</string>
   <string name="toot_title_reply">回复一个toot</string>
-  <string name="toot_no_space">您已达到允许的500字符!</string>
+  <string name="toot_no_space">您已达到允许的 500 字符上限！</string>
   <string name="toot_select_image">选择媒体</string>
   <string name="toot_select_image_error">选择介质时出错!</string>
   <string name="toot_delete_media">是否删除此媒体？</string>
-  <string name="toot_error_no_content">你的toot是空的!</string>
+  <string name="toot_error_no_content">您的 toot 是空的！</string>
   <string name="toot_visibility_tilte">Toot可见性</string>
   <string name="toots_visibility_tilte">默认情况下, toot的可见性: </string>
-  <string name="toot_sent">Toot已被发送!</string>
+  <string name="toot_sent">Toot 已发送！</string>
   <string name="toot_reply_content_title">您正在回复此toot:</string>
   <string name="toot_sensitive">敏感内容？</string>
   <string-array name="toot_visibility">
@@ -156,11 +156,11 @@
     <item>仅张贴给所述用户</item>
   </string-array>
   <string name="no_draft">没有草稿!</string>
-  <string name="choose_toot">选择一个toot</string>
+  <string name="choose_toot">选择一条 toot</string>
   <string name="choose_accounts">选择帐号</string>
   <string name="select_accounts">选择一些帐户</string>
   <string name="remove_draft">删除草稿？</string>
-  <string name="show_reply">点击按钮显示初始toot</string>
+  <string name="show_reply">点击按钮显示原始 toot</string>
   <string name="upload_form_description">为视觉障碍人士描述</string>
   <!-- Instance -->
   <string name="instance_no_description">没有可用的描述!</string>
@@ -170,9 +170,9 @@
   <string name="about_license">许可证: </string>
   <string name="about_license_action">GNU GPL V3</string>
   <string name="about_code">源代码: </string>
-  <string name="about_yandex">Toot的翻译:</string>
+  <string name="about_yandex">Toot 的翻译：</string>
   <string name="about_thekinrar">搜索实例:</string>
-  <string name="about_thekinrar_action">实例. 社会</string>
+  <string name="about_thekinrar_action">instances.social</string>
   <string name="thanks_text_logo">图标设计者:</string>
   <!-- Conversation -->
   <string name="conversation">会话</string>
@@ -192,24 +192,24 @@
   <string name="media_count">媒体: %d</string>
   <string name="toot_scheduled">Toot 将在预定时间发送！</string>
   <string name="toot_scheduled_date">预定的时间必须晚于当前时间！</string>
-  <string name="warning_battery">已启用电池保护程序! 它可能无法按预期方式工作。</string>
+  <string name="warning_battery">已启用省电模式！它可能无法按预期方式工作。</string>
   <!-- Notifications -->
   <string name="no_notifications">没有要显示的通知</string>
   <string name="notif_mention">提到你</string>
   <string name="notif_reblog">转发了您的状态</string>
   <string name="notif_favourite">收藏您的状态</string>
   <string name="notif_follow">关注了您</string>
-  <string name="notif_pouet">来自 %1$s 的新toot</string>
+  <string name="notif_pouet">来自 %1$s 的新 toot</string>
   <plurals name="other_notifications">
     <item quantity="other">和另外一个通知</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="other">和 %d 其他的toot等待发现</item>
+    <item quantity="other">和 %d 条其他的 toot 等待发现</item>
   </plurals>
   <string name="delete_notification_ask">是否删除通知？</string>
   <string name="delete_notification_ask_all">是否删除所有通知？</string>
-  <string name="delete_notification">通知已被删除!</string>
-  <string name="delete_notification_all">所有通知都已删除!</string>
+  <string name="delete_notification">已删除该通知！</string>
+  <string name="delete_notification_all">已删除所有通知！</string>
   <!-- HEADER -->
   <string name="following">关注中</string>
   <string name="followers">关注者</string>
@@ -232,7 +232,7 @@
   <string name="toast_pin">Toot被置于前端了！</string>
   <string name="toast_unpin">Toot被取消置于前端了！</string>
   <string name="toast_error">哎呀! 发生错误!</string>
-  <string name="toast_code_error">发生错误! 该实例未返回授权代码!</string>
+  <string name="toast_code_error">发生错误！该实例未返回认证代码！</string>
   <string name="toast_error_instance">实例范围貌似非法！</string>
   <string name="toast_error_loading_account">在帐户间切换时发生错误!</string>
   <string name="toast_error_search">搜索时出错!</string>
@@ -243,7 +243,7 @@
   <string name="toast_error_translate">翻译时出错!</string>
   <string name="toast_toot_saved">草稿被保存!</string>
   <string name="toast_error_char_limit">您确定此实例是否允许此数量的字符？通常, 此值接近500个字符。</string>
-  <string name="toast_visibility_changed">%1$s 帐户的toot可见性已更改</string>
+  <string name="toast_visibility_changed">已更改帐户 %1$s 的 toot 可见性</string>
   <string name="toast_empty_search">实例名称和屏幕名称不能为空!</string>
   <!-- Settings -->
   <string name="settings_title_optimisation">优化加载</string>
@@ -265,7 +265,7 @@
   <string name="set_folder_title">路径: </string>
   <string name="set_auto_store_toot">自动保存草稿</string>
   <string name="set_bubble_counter">显示计数器</string>
-  <string name="set_auto_add_media_url">在toots里添加媒体的 URL</string>
+  <string name="set_auto_add_media_url">在 toots 里添加媒体的 URL</string>
   <string name="settings_title_notifications">管理通知</string>
   <string name="set_notif_follow">当有人关注您时通知</string>
   <string name="set_notif_follow_ask">当某人请求您关注时通知</string>
@@ -287,7 +287,7 @@
   <string name="set_preview_reply">在首页时间线中显示回复的数量</string>
   <string name="set_preview_reply_pp">是否显示配置文件图片？</string>
   <string name="set_multiaccount_actions">允许客户之间的交互？</string>
-  <string name="note_no_space">您已达到允许的160字符!</string>
+  <string name="note_no_space">您已达到允许的 160 字符上限！</string>
   <string name="username_no_space">您已达到允许的30字符!</string>
   <string name="settings_title_hour">通知的时间段:</string>
   <string name="settings_time_from">介于</string>
