@@ -340,7 +340,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 if( MainActivity.lastHomeId == null || Long.parseLong(statuses.get(0).getId()) > Long.parseLong(MainActivity.lastHomeId))
                     MainActivity.lastHomeId = statuses.get(0).getId();
                 if( firstLoad )
-                    updateNotificationLastId(statuses.get(0).getId());
+                    updateStatusLastId(statuses.get(0).getId());
             }
             if( type == RetrieveFeedsAsyncTask.Type.HOME)
             //Display new value in counter
@@ -450,7 +450,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             return;
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
         if (type == RetrieveFeedsAsyncTask.Type.HOME && visible && statuses != null && statuses.size() > 0) {
-            updateNotificationLastId(statuses.get(0).getId());
+            updateStatusLastId(statuses.get(0).getId());
         } else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC ){
             if (visible) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -509,7 +509,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             lv_status.setAdapter(statusListAdapter);
             //Store last toot id for home timeline to avoid to notify for those that have been already seen
             if (type == RetrieveFeedsAsyncTask.Type.HOME && statuses != null && statuses.size() > 0) {
-                updateNotificationLastId(statuses.get(0).getId());
+                updateStatusLastId(statuses.get(0).getId());
             }
         }
     }
@@ -549,7 +549,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
      * Records the id of the status only if its greater than the previous one.
      * @param statusId String current status id to check
      */
-    private void updateNotificationLastId(String statusId){
+    private void updateStatusLastId(String statusId){
 
         String lastNotif = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
         if( lastNotif == null || Long.parseLong(statusId) > Long.parseLong(lastNotif)){
