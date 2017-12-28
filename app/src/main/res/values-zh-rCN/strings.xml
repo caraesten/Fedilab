@@ -99,7 +99,7 @@
   <!-- Status -->
   <string name="no_status">无toot显示</string>
   <string name="fav_added">Toot被加入了收藏</string>
-  <string name="fav_removed">Toot被从收藏中移除了!</string>
+  <string name="fav_removed">已从收藏中移除该 toot！</string>
   <string name="reblog_added">已转发此条 toot！</string>
   <string name="reblog_removed">已撤销转发此条 toot！</string>
   <string name="reblog_by">由 %1$s 转发</string>
@@ -208,8 +208,8 @@
   </plurals>
   <string name="delete_notification_ask">是否删除通知？</string>
   <string name="delete_notification_ask_all">是否删除所有通知？</string>
-  <string name="delete_notification">通知已被删除!</string>
-  <string name="delete_notification_all">所有通知都已删除!</string>
+  <string name="delete_notification">已删除该通知！</string>
+  <string name="delete_notification_all">已删除所有通知！</string>
   <!-- HEADER -->
   <string name="following">关注中</string>
   <string name="followers">关注者</string>
