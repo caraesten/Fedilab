@@ -73,6 +73,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private Intent streamingFederatedIntent, streamingLocalIntent;
     LinearLayoutManager mLayoutManager;
     boolean firstTootsLoaded;
+    private String lastReadStatus;
+    private String userId;
+    private SharedPreferences sharedpreferences;
 
     public DisplayStatusFragment(){
     }
@@ -99,7 +102,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         firstLoad = true;
         swiped = false;
         assert context != null;
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean isOnWifi = Helper.isOnWIFI(context);
         int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
         swipeRefreshLayout = rootView.findViewById(R.id.swipeContainer);
@@ -114,7 +117,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         lv_status.setAdapter(statusListAdapter);
         mLayoutManager = new LinearLayoutManager(context);
         lv_status.setLayoutManager(mLayoutManager);
-
+        userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        lastReadStatus = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
 
         lv_status.addOnScrollListener(new RecyclerView.OnScrollListener() {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy)
@@ -142,7 +146,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 if(statuses != null && statuses.size() > firstVisibleItem )
                     if( context instanceof BaseMainActivity){
                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                         Long bookmarkL = Long.parseLong(statuses.get(firstVisibleItem).getId()) + 1;
                         editor.putString(Helper.BOOKMARK_ID + userId, String.valueOf(bookmarkL));
                         editor.apply();
@@ -249,7 +252,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( apiResponse.getError() != null ){
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages && !apiResponse.getError().getError().startsWith("404 -"))
@@ -298,7 +300,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     this.statuses.addAll(statuses);
                     statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
                 }else { //Toots are younger than the bookmark
-                    String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                     String currentMaxId = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
                     int position = 0;
                     while (position < this.statuses.size() && Long.parseLong(statuses.get(0).getId()) < Long.parseLong(this.statuses.get(position).getId())) {
@@ -334,10 +335,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 this.statuses.addAll(statuses);
                 statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
             }
-            if( firstLoad && type == RetrieveFeedsAsyncTask.Type.HOME && statuses.size() > 0) {
+            if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
                 //Update the id of the last toot retrieved
-                MainActivity.lastHomeId = statuses.get(0).getId();
-                updateMaxId(statuses.get(0).getId());
+                if( MainActivity.lastHomeId == null || Long.parseLong(statuses.get(0).getId()) > Long.parseLong(MainActivity.lastHomeId))
+                    MainActivity.lastHomeId = statuses.get(0).getId();
+                if( firstLoad )
+                    updateNotificationLastId(statuses.get(0).getId());
             }
             if( type == RetrieveFeedsAsyncTask.Type.HOME)
             //Display new value in counter
@@ -363,17 +366,18 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 && Long.parseLong(status.getId()) > Long.parseLong(statuses.get(0).getId())) {
             if (type == RetrieveFeedsAsyncTask.Type.HOME) {
 
-                //Update the id of the last toot retrieved
-                MainActivity.lastHomeId = status.getId();
-                status.setReplies(new ArrayList<Status>());
-                statuses.add(0, status);
-                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                if (!status.getAccount().getId().equals(userId))
-                    MainActivity.countNewStatus++;
-                statusListAdapter.notifyItemInserted(0);
-                if (textviewNoAction.getVisibility() == View.VISIBLE)
-                    textviewNoAction.setVisibility(View.GONE);
+                //Makes sure the status is not already displayed
+                if( lastReadStatus == null ||  Long.parseLong(status.getId()) > Long.parseLong(lastReadStatus)) {
+                    //Update the id of the last toot retrieved
+                    MainActivity.lastHomeId = status.getId();
+                    status.setReplies(new ArrayList<Status>());
+                    statuses.add(0, status);
+                    if (!status.getAccount().getId().equals(userId))
+                        MainActivity.countNewStatus++;
+                    statusListAdapter.notifyItemInserted(0);
+                    if (textviewNoAction.getVisibility() == View.VISIBLE)
+                        textviewNoAction.setVisibility(View.GONE);
+                }
 
             } else if (type == RetrieveFeedsAsyncTask.Type.PUBLIC || type == RetrieveFeedsAsyncTask.Type.LOCAL) {
 
@@ -405,9 +409,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         if( type == RetrieveFeedsAsyncTask.Type.PUBLIC){
 
             if( getUserVisibleHint() ){
-                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED+userId, true);
                 editor.apply();
                 streamingFederatedIntent = new Intent(context, StreamingFederatedTimelineService.class);
@@ -418,9 +420,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }else if (type == RetrieveFeedsAsyncTask.Type.LOCAL){
 
             if( getUserVisibleHint() ){
-                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL+userId, true);
                 editor.apply();
                 streamingLocalIntent = new Intent(context, StreamingLocalTimelineService.class);
@@ -450,12 +450,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             return;
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
         if (type == RetrieveFeedsAsyncTask.Type.HOME && visible && statuses != null && statuses.size() > 0) {
-            updateMaxId(statuses.get(0).getId());
+            updateNotificationLastId(statuses.get(0).getId());
         } else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC ){
             if (visible) {
-                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED+userId, true);
                 editor.apply();
                 streamingFederatedIntent = new Intent(context, StreamingFederatedTimelineService.class);
@@ -464,9 +462,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     retrieveMissingToots(statuses.get(0).getId());
             }else {
                 if( streamingFederatedIntent != null ){
-                    SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                     editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED+userId, false);
                     editor.apply();
                     context.stopService(streamingFederatedIntent);
@@ -474,9 +470,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
         }else if (type == RetrieveFeedsAsyncTask.Type.LOCAL){
             if (visible) {
-                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL+userId, true);
                 editor.apply();
                 streamingLocalIntent = new Intent(context, StreamingLocalTimelineService.class);
@@ -485,9 +479,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     retrieveMissingToots(statuses.get(0).getId());
             }else {
                 if( streamingLocalIntent != null ){
-                    SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                     editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL+userId, false);
                     editor.apply();
                     context.stopService(streamingLocalIntent);
@@ -500,16 +492,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     public void onStop(){
         super.onStop();
         if( type == RetrieveFeedsAsyncTask.Type.PUBLIC && streamingFederatedIntent != null){
-            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED+userId, false);
             editor.apply();
             context.stopService(streamingFederatedIntent);
         }else if(type == RetrieveFeedsAsyncTask.Type.LOCAL && streamingLocalIntent != null){
-            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL+userId, false);
             editor.apply();
             context.stopService(streamingLocalIntent);
@@ -521,7 +509,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             lv_status.setAdapter(statusListAdapter);
             //Store last toot id for home timeline to avoid to notify for those that have been already seen
             if (type == RetrieveFeedsAsyncTask.Type.HOME && statuses != null && statuses.size() > 0) {
-                updateMaxId(statuses.get(0).getId());
+                updateNotificationLastId(statuses.get(0).getId());
             }
         }
     }
@@ -538,8 +526,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     inserted++;
                     statuses.get(i).setReplies(new ArrayList<Status>());
                     this.statuses.add(0, statuses.get(i));
-                    SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                    String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                     if (type == RetrieveFeedsAsyncTask.Type.HOME && !statuses.get(i).getAccount().getId().equals(userId))
                         MainActivity.countNewStatus++;
                 }
@@ -558,15 +544,19 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    private void updateMaxId(String max_id){
-        if( max_id == null)
-            return;
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        String currentMaxId = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
-        if( currentMaxId == null || Long.parseLong(max_id) > Long.parseLong(currentMaxId)) {
+
+    /**
+     * Records the id of the status only if its greater than the previous one.
+     * @param statusId String current status id to check
+     */
+    private void updateNotificationLastId(String statusId){
+
+        String lastNotif = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, null);
+        if( lastNotif == null || Long.parseLong(statusId) > Long.parseLong(lastNotif)){
+            this.lastReadStatus = statusId;
+            MainActivity.countNewStatus = 0;
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, max_id);
+            editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId, statusId);
             editor.apply();
         }
     }
