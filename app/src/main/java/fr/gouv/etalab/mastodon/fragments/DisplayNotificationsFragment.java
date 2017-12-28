@@ -66,6 +66,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private RecyclerView lv_notifications;
     private String lastReadNotifications;
     private String userId;
+    private SharedPreferences sharedpreferences;
     LinearLayoutManager mLayoutManager;
 
     public DisplayNotificationsFragment(){
@@ -81,9 +82,10 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         flag_loading = true;
         notifications = new ArrayList<>();
         swiped = false;
-
         swipeRefreshLayout = rootView.findViewById(R.id.swipeContainer);
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
+
         lv_notifications = rootView.findViewById(R.id.lv_notifications);
         lv_notifications.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         mainLoader = rootView.findViewById(R.id.loader);
@@ -171,7 +173,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
 
     @Override
     public void onRetrieveNotifications(APIResponse apiResponse, String acct, String userId, boolean refreshData) {
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         if( apiResponse.getError() != null){
@@ -211,11 +212,14 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             }
             if( firstLoad) {
                 //Update the id of the last notification retrieved
-                MainActivity.lastNotificationId = notifications.get(0).getId();
-                if (notifications.size() > 0)
-                    updateNotificationLastId(sharedpreferences, this.userId, notifications.get(0).getId());
+                if( MainActivity.lastNotificationId == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(MainActivity.lastNotificationId))
+                    MainActivity.lastNotificationId = notifications.get(0).getId();
+                updateNotificationLastId(notifications.get(0).getId());
             }
             notificationsListAdapter.notifyItemRangeInserted(previousPosition, notifications.size());
+        }else {
+            if( firstLoad)
+                textviewNoAction.setVisibility(View.VISIBLE);
         }
         if( firstLoad )
             ((MainActivity)context).updateNotifCounter();
@@ -239,9 +243,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         if( context == null)
             return;
         //Store last notification id to avoid to notify for those that have been already seen
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if (visible && notifications != null && notifications.size() > 0) {
-            updateNotificationLastId(sharedpreferences, this.userId, notifications.get(0).getId());
+            updateNotificationLastId(notifications.get(0).getId());
         }
     }
 
@@ -249,10 +252,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         if( lv_notifications != null)
             lv_notifications.setAdapter(notificationsListAdapter);
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
-        //Store last notification id to avoid to notify for those that have been already seen
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if (this.notifications != null && this.notifications.size() > 0) {
-            updateNotificationLastId(sharedpreferences, this.userId, this.notifications.get(0).getId());
+            updateNotificationLastId(this.notifications.get(0).getId());
         }
     }
 
@@ -313,17 +314,15 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
 
     /**
      * Records the id of the notification only if its greater than the previous one.
-     * @param sharedPreferences SharedPreferences
-     * @param userId String current logged user
      * @param notificationId String current notification id to check
      */
-    private void updateNotificationLastId(SharedPreferences sharedPreferences, String userId, String notificationId){
+    private void updateNotificationLastId(String notificationId){
 
-
-        String lastNotif = sharedPreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
+        String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId, null);
         if( lastNotif == null || Long.parseLong(notificationId) > Long.parseLong(lastNotif)){
             this.lastReadNotifications = notificationId;
-            SharedPreferences.Editor editor = sharedPreferences.edit();
+            MainActivity.countNewNotifications = 0;
+            SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId, notificationId);
             editor.apply();
         }
