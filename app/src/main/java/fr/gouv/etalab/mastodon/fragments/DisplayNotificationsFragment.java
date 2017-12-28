@@ -183,6 +183,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             swiped = false;
             return;
         }
+
         int previousPosition = notifications.size();
         max_id = apiResponse.getMax_id();
         List<Notification> notifications = apiResponse.getNotifications();
@@ -272,8 +273,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             return;
         if( notification != null){
             //Makes sure the notifications is not already displayed
-            if( notification.getId() != null && notifications != null && notifications.size() > 0 && notifications.get(0)!= null
-                    && Long.parseLong(notification.getId()) > Long.parseLong(notifications.get(0).getId())) {
+            if( lastReadNotifications == null ||  Long.parseLong(notification.getId()) > Long.parseLong(lastReadNotifications)) {
                 //Update the id of the last notification retrieved
                 MainActivity.lastNotificationId = notification.getId();
                 notifications.add(0, notification);
@@ -293,6 +293,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
 
     @Override
     public void onRetrieveMissingNotifications(List<Notification> notifications) {
+
         if( notifications != null && notifications.size() > 0) {
             for (int i = notifications.size()-1 ; i >= 0 ; i--) {
                 if (this.notifications.size() == 0 ||

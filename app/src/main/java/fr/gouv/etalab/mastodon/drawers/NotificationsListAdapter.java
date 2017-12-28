@@ -889,9 +889,9 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             notificationsListAdapter.notifyDataSetChanged();
             Toast.makeText(context,R.string.delete_notification,Toast.LENGTH_LONG).show();
         }else{
+            int size = notifications.size();
             notifications.clear();
-            notifications = new ArrayList<>();
-            notificationsListAdapter.notifyDataSetChanged();
+            notificationsListAdapter.notifyItemRangeRemoved(0, size);
             Toast.makeText(context,R.string.delete_notification_all,Toast.LENGTH_LONG).show();
         }
 
