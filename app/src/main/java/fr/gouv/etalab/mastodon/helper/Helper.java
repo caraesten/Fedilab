@@ -168,6 +168,7 @@ public class Helper {
     public static final String OAUTH_SCOPES = "read write follow";
     public static final String PREF_KEY_OAUTH_TOKEN = "oauth_token";
     public static final String PREF_KEY_ID = "userID";
+    public static final String PREF_INSTANCE = "instance";
     public static final String REDIRECT_CONTENT = "urn:ietf:wg:oauth:2.0:oob";
     public static final String REDIRECT_CONTENT_WEB = "mastalab://backtomastalab";
     public static final int EXTERNAL_STORAGE_REQUEST_CODE = 84;
@@ -424,6 +425,7 @@ public class Helper {
         editor.putString(Helper.CLIENT_ID, null);
         editor.putString(Helper.CLIENT_SECRET, null);
         editor.putString(Helper.PREF_KEY_ID, null);
+        editor.putString(Helper.PREF_INSTANCE, null);
         editor.putString(Helper.ID, null);
         editor.apply();
     }
@@ -1045,6 +1047,7 @@ public class Helper {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, account.getToken());
         editor.putString(Helper.PREF_KEY_ID, account.getId());
+        editor.putString(Helper.PREF_INSTANCE, account.getInstance().trim());
         editor.apply();
         activity.recreate();
         if( checkItem ) {

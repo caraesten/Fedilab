@@ -21,7 +21,9 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
+import java.net.URLDecoder;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
@@ -50,6 +52,10 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         Account account = new API(this.contextReference.get(), instance, null).verifyCredentials();
+        try {
+            //At the state the instance can be encoded
+            instance = URLDecoder.decode(instance, "utf-8");
+        } catch (UnsupportedEncodingException ignored) {}
         SharedPreferences sharedpreferences = this.contextReference.get().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( token == null) {
             token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
@@ -61,6 +67,7 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
         boolean userExists = new AccountDAO(this.contextReference.get(), db).userExist(account);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Helper.PREF_KEY_ID, account.getId());
+        editor.putString(Helper.PREF_INSTANCE, instance);
         editor.apply();
         if( userExists)
             new AccountDAO(this.contextReference.get(), db).updateAccount(account);
