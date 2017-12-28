@@ -411,7 +411,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
             if( getUserVisibleHint() ){
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED+userId, true);
+                editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + userId + instance, true);
                 editor.apply();
                 streamingFederatedIntent = new Intent(context, StreamingFederatedTimelineService.class);
                 context.startService(streamingFederatedIntent);
@@ -422,7 +422,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
             if( getUserVisibleHint() ){
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL+userId, true);
+                editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL + userId + instance, true);
                 editor.apply();
                 streamingLocalIntent = new Intent(context, StreamingLocalTimelineService.class);
                 context.startService(streamingLocalIntent);
@@ -455,7 +455,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         } else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC ){
             if (visible) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED+userId, true);
+                editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + userId + instance, true);
                 editor.apply();
                 streamingFederatedIntent = new Intent(context, StreamingFederatedTimelineService.class);
                 context.startService(streamingFederatedIntent);
@@ -464,7 +464,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }else {
                 if( streamingFederatedIntent != null ){
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED+userId, false);
+                    editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + userId + instance, false);
                     editor.apply();
                     context.stopService(streamingFederatedIntent);
                 }
@@ -472,7 +472,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }else if (type == RetrieveFeedsAsyncTask.Type.LOCAL){
             if (visible) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL+userId, true);
+                editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL + userId + instance, true);
                 editor.apply();
                 streamingLocalIntent = new Intent(context, StreamingLocalTimelineService.class);
                 context.startService(streamingLocalIntent);
@@ -481,7 +481,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }else {
                 if( streamingLocalIntent != null ){
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL+userId, false);
+                    editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL + userId + instance, false);
                     editor.apply();
                     context.stopService(streamingLocalIntent);
                 }
@@ -494,12 +494,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         super.onStop();
         if( type == RetrieveFeedsAsyncTask.Type.PUBLIC && streamingFederatedIntent != null){
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED+userId, false);
+            editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + userId + instance, false);
             editor.apply();
             context.stopService(streamingFederatedIntent);
         }else if(type == RetrieveFeedsAsyncTask.Type.LOCAL && streamingLocalIntent != null){
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL+userId, false);
+            editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL + userId + instance, false);
             editor.apply();
             context.stopService(streamingLocalIntent);
         }

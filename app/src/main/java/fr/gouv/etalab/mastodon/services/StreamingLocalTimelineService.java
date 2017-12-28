@@ -80,7 +80,8 @@ public class StreamingLocalTimelineService extends IntentService {
         }
         SharedPreferences.Editor editor = sharedpreferences.edit();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL+userId, true);
+        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
+        editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL + userId + instance, true);
         editor.apply();
     }
 
@@ -116,7 +117,7 @@ public class StreamingLocalTimelineService extends IntentService {
                 reader = new BufferedReader(new InputStreamReader(inputStream));
                 String event;
                 while((event = reader.readLine()) != null) {
-                    if (!sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL + accountStream.getId(), true)) {
+                    if (!sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL + accountStream.getId() + accountStream.getInstance(), true)) {
                         httpsURLConnection.disconnect();
                         stopSelf();
                         return;
@@ -139,7 +140,7 @@ public class StreamingLocalTimelineService extends IntentService {
                         reader.close();
                     }catch (IOException ignored){}
                 }
-                if( sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL + accountStream.getId(), true)) {
+                if( sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL + accountStream.getId() + accountStream.getInstance(), true)) {
                     SystemClock.sleep(1000);
                     sendBroadcast(new Intent("RestartStreamingLocalService"));
                 }

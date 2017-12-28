@@ -78,7 +78,8 @@ public class StreamingService extends IntentService {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING+userId, true);
+        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
+        editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING + userId + instance, true);
         editor.apply();
     }
 
@@ -115,7 +116,7 @@ public class StreamingService extends IntentService {
                 String event;
                 Helper.EventStreaming eventStreaming;
                 while((event = reader.readLine()) != null) {
-                    if( !sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING + accountStream.getId(), true) )
+                    if( !sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING + accountStream.getId() + accountStream.getInstance(), true) )
                         stopSelf();
                     if ((lastEvent == Helper.EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
                         switch (event.trim()) {

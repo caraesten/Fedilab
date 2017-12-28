@@ -1232,7 +1232,7 @@ public abstract class BaseMainActivity extends BaseActivity
         if( streamingIntent != null) {
             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED+userId, false);
+            editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + userId + instance, false);
             stopService(streamingIntent);
             editor.apply();
         }

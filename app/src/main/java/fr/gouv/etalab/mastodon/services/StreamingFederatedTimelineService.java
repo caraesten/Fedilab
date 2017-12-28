@@ -81,7 +81,8 @@ public class StreamingFederatedTimelineService extends IntentService {
         }
         SharedPreferences.Editor editor = sharedpreferences.edit();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED+userId, true);
+        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
+        editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + userId + instance, true);
         editor.apply();
     }
 
@@ -117,7 +118,7 @@ public class StreamingFederatedTimelineService extends IntentService {
                 reader = new BufferedReader(new InputStreamReader(inputStream));
                 String event;
                 while((event = reader.readLine()) != null) {
-                    if (!sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + accountStream.getId(), true)) {
+                    if (!sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + accountStream.getId() + accountStream.getInstance(), true)) {
                         httpsURLConnection.disconnect();
                         stopSelf();
                         return;
@@ -140,7 +141,7 @@ public class StreamingFederatedTimelineService extends IntentService {
                         reader.close();
                     }catch (IOException ignored){}
                 }
-                if( sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + accountStream.getId(), true)) {
+                if( sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + accountStream.getId() + accountStream.getInstance(), true)) {
                     SystemClock.sleep(1000);
                     sendBroadcast(new Intent("RestartStreamingFederatedService"));
                 }
