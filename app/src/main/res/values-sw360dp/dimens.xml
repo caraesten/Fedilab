@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="layout_height_header">180dp</dimen>
+    <dimen name="fab_margin_floating">16dp</dimen>
 </resources>
