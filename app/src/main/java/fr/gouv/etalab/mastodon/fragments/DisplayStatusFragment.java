@@ -407,14 +407,17 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     @Override
     public void onResume(){
         super.onResume();
+        boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
         if( type == RetrieveFeedsAsyncTask.Type.PUBLIC){
 
             if( getUserVisibleHint() ){
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + userId + instance, true);
                 editor.apply();
-                streamingFederatedIntent = new Intent(context, StreamingFederatedTimelineService.class);
-                context.startService(streamingFederatedIntent);
+                if(liveNotifications) {
+                    streamingFederatedIntent = new Intent(context, StreamingFederatedTimelineService.class);
+                    context.startService(streamingFederatedIntent);
+                }
                 if( statuses != null && statuses.size() > 0)
                     retrieveMissingToots(statuses.get(0).getId());
             }
@@ -424,8 +427,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL + userId + instance, true);
                 editor.apply();
-                streamingLocalIntent = new Intent(context, StreamingLocalTimelineService.class);
-                context.startService(streamingLocalIntent);
+                if( liveNotifications) {
+                    streamingLocalIntent = new Intent(context, StreamingLocalTimelineService.class);
+                    context.startService(streamingLocalIntent);
+                }
                 if( statuses != null && statuses.size() > 0)
                     retrieveMissingToots(statuses.get(0).getId());
             }
@@ -449,6 +454,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         super.setMenuVisibility(visible);
         if( context == null)
             return;
+        boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
         if (type == RetrieveFeedsAsyncTask.Type.HOME && visible && statuses != null && statuses.size() > 0) {
             updateStatusLastId(statuses.get(0).getId());
@@ -457,8 +463,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + userId + instance, true);
                 editor.apply();
-                streamingFederatedIntent = new Intent(context, StreamingFederatedTimelineService.class);
-                context.startService(streamingFederatedIntent);
+                if(liveNotifications) {
+                    streamingFederatedIntent = new Intent(context, StreamingFederatedTimelineService.class);
+                    context.startService(streamingFederatedIntent);
+                }
                 if( statuses != null && statuses.size() > 0)
                     retrieveMissingToots(statuses.get(0).getId());
             }else {
@@ -474,8 +482,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL + userId + instance, true);
                 editor.apply();
-                streamingLocalIntent = new Intent(context, StreamingLocalTimelineService.class);
-                context.startService(streamingLocalIntent);
+                if( liveNotifications ) {
+                    streamingLocalIntent = new Intent(context, StreamingLocalTimelineService.class);
+                    context.startService(streamingLocalIntent);
+                }
                 if( statuses != null && statuses.size() > 0)
                     retrieveMissingToots(statuses.get(0).getId());
             }else {

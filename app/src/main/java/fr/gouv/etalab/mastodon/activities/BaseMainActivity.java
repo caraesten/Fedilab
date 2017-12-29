@@ -94,7 +94,6 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMetaDataInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
 import fr.gouv.etalab.mastodon.services.LiveNotificationService;
-import fr.gouv.etalab.mastodon.services.StreamingService;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
@@ -1640,10 +1639,9 @@ public abstract class BaseMainActivity extends BaseActivity
         if( notify && liveNotifications) {
             streamingIntent = new Intent(this, LiveNotificationService.class);
             streamingIntent.putExtra("restart", restart);
-        }else {
-            streamingIntent = new Intent(this, StreamingService.class);
+            startService(streamingIntent);
         }
-        startService(streamingIntent);
+
     }
 
     public DisplayStatusFragment getHomeFragment(){

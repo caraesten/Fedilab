@@ -37,17 +37,9 @@
         android:theme="@style/AppThemeDark">
 
         <service
-            android:name=".services.StreamingService"
-            android:exported="false"/>
-        <service
             android:name=".services.LiveNotificationService"
             android:exported="false"/>
-        <receiver android:name=".services.RestartServiceReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="RestartStreamingService" />
-            </intent-filter>
-        </receiver>
+
         <receiver android:name=".services.RestartLiveNotificationReceiver"
             android:exported="false">
             <intent-filter>
