@@ -252,7 +252,7 @@
   <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
   <string name="toast_error_search">وقع خطأ أثناء عملية البحث !</string>
   <string name="toast_error_login">تعذَّر تسجيل الدخول إلى حسابك !</string>
-  <string name="toast_update_credential_ok">The profile data have been saved!</string>
+  <string name="toast_update_credential_ok">تم حفظ بيانات الملف الشخصي بنجاح !</string>
   <string name="nothing_to_do">لا يمكن اتخاذ أي إجراء</string>
   <string name="toast_saved">تم حفظ الصورة بنجاح !</string>
   <string name="toast_error_translate">وقع خطاء أثناء عملية الترجمة !</string>
@@ -299,7 +299,7 @@
   <string name="set_profile_description">السيرة الذاتية ...</string>
   <string name="set_save_changes">حفظ التغييرات</string>
   <string name="set_header_picture_overlay">إختيار الصورة الرأسية</string>
-  <string name="set_preview_reply">Display the number of replies in home timeline</string>
+  <string name="set_preview_reply">إظهار عدد الردود على الخيط الرئيسي</string>
   <string name="set_preview_reply_pp">هل تود عرض الصور الرمزية للحسابات ؟</string>
   <string name="set_multiaccount_actions">Allow interactions between accounts?</string>
   <string name="note_no_space">لقد بلغت حد الـ 160 حرف المسموح به !</string>
@@ -314,7 +314,7 @@
   <string name="embedded_browser">إستخدم المتصفح المُدمَج في التطبيق</string>
   <string name="use_javascript">تفعيل الجافاسكريبت</string>
   <string name="use_cookies">Allow third-party cookies</string>
-  <string name="settings_ui_layout">Layout for timelines: </string>
+  <string name="settings_ui_layout">نسق الخيوط : </string>
   <string-array name="settings_menu_tabs">
     <item>التبويب</item>
     <item>القائمة</item>
@@ -361,7 +361,7 @@
   <string name="cache_units">ميغابايت</string>
   <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
   <!-- PRIVACY -->
-  <string name="privacy_data_title">Recorded data</string>
+  <string name="privacy_data_title">البيانات المسجلة</string>
   <string name="privacy_data">
         Only basic information from accounts are stored on the device.
         These data are strictly confidential and can only be used by the application.
@@ -427,5 +427,5 @@
         - You can also use this link without using the 2FA\n\n
         - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
     </string>
-  <string name="media_ready">Media has been loaded. Click here to display it.</string>
+  <string name="media_ready">تم تحميل الوسائط. إظغط هنا للعرض.</string>
 </resources>
