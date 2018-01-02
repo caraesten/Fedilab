@@ -354,10 +354,10 @@
   <!-- PRIVACY -->
   <string name="privacy_data_title">Снимљени подаци</string>
   <string name="privacy_data">
-        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
+        Само основне информације о налозима су ускладиштене на уређају.
+        Ови подаци су строго поверљиви и може их користити само ова апликација.
+        Брисање апликација моментално брише ове податке.\n
+        &#9888; Пријаве и лозинке се никад не складиште. Користе се само за време безбедног (SSL) пријављивања са инстанцом.
     </string>
   <string name="privacy_authorizations_title">Дозволе:</string>
   <string name="privacy_authorizations">
