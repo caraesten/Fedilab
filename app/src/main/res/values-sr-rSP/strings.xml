@@ -348,9 +348,9 @@
   <string name="settings_popup_notification">За непрочитана обавештења?</string>
   <!-- CACHE -->
   <string name="cache_title">Обриши кеш</string>
-  <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+  <string name="cache_message">Тренутно има %1$s података у кешу.\n\nДа ли желите да их обришете?</string>
   <string name="cache_units">Mb</string>
-  <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+  <string name="toast_cache_clear">Кеш очишћен! %1$s ослобођено</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">Recorded data</string>
   <string name="privacy_data">
@@ -359,7 +359,7 @@
         Deleting the application immediately removes these data.\n
         &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
     </string>
-  <string name="privacy_authorizations_title">Permissions:</string>
+  <string name="privacy_authorizations_title">Дозволе:</string>
   <string name="privacy_authorizations">
         - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
         - <b>INTERNET</b>: Used for queries to an instance.\n
@@ -368,14 +368,14 @@
         - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
         - <b>WAKE_LOCK</b>: Used during the notification service.
     </string>
-  <string name="privacy_API_authorizations_title">API permissions:</string>
+  <string name="privacy_API_authorizations_title">API дозволе:</string>
   <string name="privacy_API_authorizations">
         - <b>Read</b>: Read data.\n
         - <b>Write</b>: Post statuses and upload media for statuses.\n
         - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
         <b>&#9888; These actions are carried out only when user requests them.</b>
     </string>
-  <string name="privacy_API_title">Tracking and Libraries</string>
+  <string name="privacy_API_title">Праћење и библиотеке</string>
   <string name="privacy_API">
         The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
         The use of libraries is minimized: \n
@@ -383,37 +383,37 @@
         - <b>Android-Job</b>: To manage services\n
         - <b>PhotoView</b>: To manage images\n
     </string>
-  <string name="privacy_API_yandex_title">Translation of toots</string>
+  <string name="privacy_API_yandex_title">Превод тутова</string>
   <string name="privacy_API_yandex_authorizations">
         The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
     </string>
   <string name="thanks_text">
-        Thank you to Stéphane for the logo.
+        Хвала Стефани за лого.
     </string>
   <string name="thanks_text_dev">
-        Thank you to:
+        Хвала Вам на:
     </string>
-  <string name="filter_regex">Filter out by regular expressions</string>
-  <string name="search">Search</string>
-  <string name="delete">Delete</string>
-  <string name="fetch_more_toots">Fetch more toots…</string>
+  <string name="filter_regex">Филтрирај по регуларним изразима</string>
+  <string name="search">Претрага</string>
+  <string name="delete">Обриши</string>
+  <string name="fetch_more_toots">Дохвати још тутова…</string>
   <!-- About lists -->
-  <string name="action_lists">Lists</string>
-  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
-  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-  <string name="action_lists_add_to">Add to list</string>
-  <string name="action_lists_remove_from">Remove from list</string>
-  <string name="action_lists_create">Add list</string>
-  <string name="action_lists_delete">Delete list</string>
-  <string name="action_lists_update">Edit list</string>
-  <string name="action_lists_title_placeholder">New list title</string>
-  <string name="action_lists_search_users">Search among people you follow</string>
-  <string name="action_lists_owner">Your lists</string>
+  <string name="action_lists">Листе</string>
+  <string name="action_lists_confirm_delete">Да ли сте сигурни да желите да трајно избришете ову листу?</string>
+  <string name="action_lists_empty_content">Тренутно нема ништа у овој листи. Када чланови ове листе пошаљу нове статусе, они ће се појавити овде.</string>
+  <string name="action_lists_add_to">Додај на листу</string>
+  <string name="action_lists_remove_from">Уклони са листе</string>
+  <string name="action_lists_create">Додај листу</string>
+  <string name="action_lists_delete">Обриши листу</string>
+  <string name="action_lists_update">Измени листу</string>
+  <string name="action_lists_title_placeholder">Ново име листе</string>
+  <string name="action_lists_search_users">Претражи међу људима које пратите</string>
+  <string name="action_lists_owner">Ваше листе</string>
   <!-- Migration -->
-  <string name="account_moved_to">%1$s has moved to %2$s</string>
+  <string name="account_moved_to">%1$s се померио на %2$s</string>
   <string name="show_boost_count">Show boosts/favourites count</string>
-  <string name="issue_login_title">Authentication does not work?</string>
+  <string name="issue_login_title">Пријављивање не ради?</string>
   <string name="issue_login_message">
         <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
@@ -422,5 +422,5 @@
         - You can also use this link without using the 2FA\n\n
         - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
     </string>
-  <string name="media_ready">Media has been loaded. Click here to display it.</string>
+  <string name="media_ready">Мултимедија је учитана. Кликните овде да је прикажете.</string>
 </resources>
