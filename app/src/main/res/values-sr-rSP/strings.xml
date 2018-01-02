@@ -307,47 +307,47 @@
   <string name="use_cookies">Дозволите независне колачиће</string>
   <string name="settings_ui_layout">Layout for timelines: </string>
   <string-array name="settings_menu_tabs">
-    <item>Tabs</item>
-    <item>Menu</item>
-    <item>Tabs and menu</item>
+    <item>Језичци</item>
+    <item>Мени</item>
+    <item>Језичци и мени</item>
   </string-array>
   <string-array name="settings_translation">
     <item>Yandex</item>
-    <item>No</item>
+    <item>Не</item>
   </string-array>
-  <string name="set_led_colour">Set LED colour:</string>
+  <string name="set_led_colour">Постави ЛЕД боју:</string>
   <string-array name="led_colours">
-    <item>Blue</item>
-    <item>Cyan</item>
-    <item>Magenta</item>
-    <item>Green</item>
-    <item>Red</item>
-    <item>Yellow</item>
-    <item>White</item>
+    <item>Плава</item>
+    <item>Море плава</item>
+    <item>Магента</item>
+    <item>Зелена</item>
+    <item>Црвена</item>
+    <item>Жута</item>
+    <item>Бела</item>
   </string-array>
-  <string name="set_title_news">News</string>
+  <string name="set_title_news">Вести</string>
   <string name="set_notification_news">Обавести за нове тутове на сопственој лајни</string>
-  <string name="set_show_error_messages">Display error messages</string>
-  <string name="action_follow">Follow</string>
-  <string name="action_unfollow">Unfollow</string>
-  <string name="action_block">Block</string>
-  <string name="action_unblock">Unblock</string>
+  <string name="set_show_error_messages">Прикажи поруке о грешкама</string>
+  <string name="action_follow">Запрати</string>
+  <string name="action_unfollow">Престани да пратиш</string>
+  <string name="action_block">Блокирај</string>
+  <string name="action_unblock">Одблокирај</string>
   <string name="action_mute">Ућуткај</string>
-  <string name="action_no_action">No action</string>
+  <string name="action_no_action">Без акције</string>
   <string name="action_unmute">Искључи ућуткавање</string>
-  <string name="request_sent">Request sent</string>
-  <string name="followed_by">Follows you</string>
-  <string name="action_search">Search</string>
+  <string name="request_sent">Захтев послат</string>
+  <string name="followed_by">Прати Вас</string>
+  <string name="action_search">Претрага</string>
   <!-- Quick settings for notifications -->
-  <string name="settings_popup_title">Push notifications</string>
+  <string name="settings_popup_title">Гурни обавештења</string>
   <string name="settings_popup_message">
         Please, confirm push notifications that you want to receive.
         You can enable or disable these notifications later in settings (Notifications tab).
     </string>
   <string name="settings_popup_timeline">За непрочитане тутове у сопственој лајни?</string>
-  <string name="settings_popup_notification">For unread notifications?</string>
+  <string name="settings_popup_notification">За непрочитана обавештења?</string>
   <!-- CACHE -->
-  <string name="cache_title">Clear cache</string>
+  <string name="cache_title">Обриши кеш</string>
   <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
   <string name="cache_units">Mb</string>
   <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
