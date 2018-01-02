@@ -88,13 +88,13 @@
   <string name="delete_account_message" formatted="false">Избриши налог %1$s из апликације?</string>
   <string name="send_email">Пошаљи е-пошту</string>
   <string name="choose_file">Изаберите фајл</string>
-  <string name="choose_file_error">Није пронађен ниједан прегледач фајлова!</string>
+  <string name="choose_file_error">Није пронађен ниједан менаџер фајлова!</string>
   <string name="click_to_change">Кликните на путању да је промените</string>
   <string name="failed">Неуспешно!</string>
   <string name="scheduled_toots">Заказани тутови</string>
   <string name="disclaimer_full">Информације испод не морају да тачно одсликавају кориснички профил.</string>
   <string name="insert_emoji">Убаци емотикон</string>
-  <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
+  <string name="no_emoji">Апликација није покупила произвољне емотиконе за моменат.</string>
   <string name="live_notif">Обавештења уживо</string>
   <!-- Status -->
   <string name="no_status">Нема тутова за приказ</string>
@@ -252,10 +252,10 @@
   <string name="toast_visibility_changed">Видљивост тутова је промењена за налог %1$s</string>
   <string name="toast_empty_search">Име инстанце и име за приказ не могу бити празни!</string>
   <!-- Settings -->
-  <string name="settings_title_optimisation">Оптимизација оптерећења</string>
-  <string name="set_toots_page">Number of toots per load</string>
-  <string name="set_accounts_page">Number of accounts per load</string>
-  <string name="set_notifications_page">Number of notifications per load</string>
+  <string name="settings_title_optimisation">Оптимизација учитавања</string>
+  <string name="set_toots_page">Број тутова по једном учитавању</string>
+  <string name="set_accounts_page">Број налога по једном учитавању</string>
+  <string name="set_notifications_page">Број обавештења по једном учитавању</string>
   <string name="set_attachment_always">Увек</string>
   <string name="set_attachment_wifi">Само на бежичној мрежи</string>
   <string name="set_attachment_ask">Питај</string>
@@ -305,7 +305,7 @@
   <string name="embedded_browser">Користите уграђени прегледач</string>
   <string name="use_javascript">Омогућите JavaScript</string>
   <string name="use_cookies">Дозволите независне колачиће</string>
-  <string name="settings_ui_layout">Layout for timelines: </string>
+  <string name="settings_ui_layout">Распоред лајни: </string>
   <string-array name="settings_menu_tabs">
     <item>Језичци</item>
     <item>Мени</item>
@@ -341,8 +341,8 @@
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Гурни обавештења</string>
   <string name="settings_popup_message">
-        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
+        Потврдите гурање којих обавештења желите да примате.
+        Можете укључити и искључити ова обавештења накнадно у подешавањима (језичак за Обавештења).
     </string>
   <string name="settings_popup_timeline">За непрочитане тутове у сопственој лајни?</string>
   <string name="settings_popup_notification">За непрочитана обавештења?</string>
@@ -352,7 +352,7 @@
   <string name="cache_units">Mb</string>
   <string name="toast_cache_clear">Кеш очишћен! %1$s ослобођено</string>
   <!-- PRIVACY -->
-  <string name="privacy_data_title">Recorded data</string>
+  <string name="privacy_data_title">Снимљени подаци</string>
   <string name="privacy_data">
         Only basic information from accounts are stored on the device.
         These data are strictly confidential and can only be used by the application.
@@ -370,10 +370,10 @@
     </string>
   <string name="privacy_API_authorizations_title">API дозволе:</string>
   <string name="privacy_API_authorizations">
-        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
+        - <b>Читај</b>: Чита податке.\n
+        - <b>Пиши</b>: Шаље статусе и отпрема мултимедију за статусе.\n
+        - <b>Прати</b>: Прати, уклаља праћења, блокира, одблокира.\n\n
+        <b>&#9888; Ове акције се изводе само када их корисник захтева.</b>
     </string>
   <string name="privacy_API_title">Праћење и библиотеке</string>
   <string name="privacy_API">
@@ -412,7 +412,7 @@
   <string name="action_lists_owner">Ваше листе</string>
   <!-- Migration -->
   <string name="account_moved_to">%1$s се померио на %2$s</string>
-  <string name="show_boost_count">Show boosts/favourites count</string>
+  <string name="show_boost_count">Прикажи број подржаних/омиљених</string>
   <string name="issue_login_title">Пријављивање не ради?</string>
   <string name="issue_login_message">
         <b>Here are some checks that might help:</b>\n\n
