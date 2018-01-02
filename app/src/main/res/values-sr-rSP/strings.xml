@@ -19,7 +19,7 @@
   <string name="download_over">Преузимање завршено</string>
   <string name="save_file">Сачувај %1$s</string>
   <string name="save_over">Мултимедија сачувана</string>
-  <string name="download_from" formatted="false">File: %1$s</string>
+  <string name="download_from" formatted="false">Фајл: %1$s</string>
   <string name="password">Лозинка</string>
   <string name="email">Е-пошта</string>
   <string name="accounts">Налози</string>
@@ -41,13 +41,13 @@
   <string name="clear">Очисти</string>
   <string name="microphone">Микрофон</string>
   <string name="speech_prompt">Реците нешто</string>
-  <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
+  <string name="speech_not_supported">Ваш уређај не подржава гласовни унос!</string>
   <string name="delete_all">Избриши све</string>
   <string name="translate_toot">Преведи тут.</string>
   <string name="schedule">Закажи</string>
-  <string name="text_size">Text and icon sizes</string>
-  <string name="text_size_change">Change the current text size:</string>
-  <string name="icon_size_change">Change the current icon size:</string>
+  <string name="text_size">Величине текста и иконица</string>
+  <string name="text_size_change">Промените тренутну величину текста:</string>
+  <string name="icon_size_change">Промените тренутну величину иконица:</string>
   <string name="next">Следећа</string>
   <string name="previous">Претходна</string>
   <string name="open_with">Отворите помоћу</string>
