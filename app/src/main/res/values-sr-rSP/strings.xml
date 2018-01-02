@@ -75,7 +75,7 @@
   <string name="neutral_menu_title">Подешавања</string>
   <string name="favorites_menu">Омиљени</string>
   <string name="communication_menu_title">Комуникација</string>
-  <string name="muted_menu">Мутирани корисници</string>
+  <string name="muted_menu">Ућуткани корисници</string>
   <string name="blocked_menu">Блокирани корисници</string>
   <string name="remote_follow_menu">Удаљена праћења</string>
   <string name="notifications">Обавештења</string>
@@ -110,39 +110,39 @@
   <string name="pin_add">Прикачи овај тут?</string>
   <string name="pin_remove">Откачи овај тут?</string>
   <string name="more_action_1">Ућуткај</string>
-  <string name="more_action_2">Block</string>
-  <string name="more_action_3">Report</string>
-  <string name="more_action_4">Remove</string>
-  <string name="more_action_5">Copy</string>
-  <string name="more_action_6">Share</string>
-  <string name="more_action_7">Mention</string>
+  <string name="more_action_2">Блокирај</string>
+  <string name="more_action_3">Пријави</string>
+  <string name="more_action_4">Уклони</string>
+  <string name="more_action_5">Копирај</string>
+  <string name="more_action_6">Подели</string>
+  <string name="more_action_7">Спомени</string>
   <string-array name="more_action_confirm">
-    <item>Mute this account?</item>
-    <item>Block this account?</item>
-    <item>Report this toot?</item>
+    <item>Ућуткај овај налог?</item>
+    <item>Блокирај овај налог?</item>
+    <item>Пријави овaj тут?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>Remove this toot?</item>
+    <item>Уклони овај тут?</item>
   </string-array>
   <plurals name="preview_replies">
-    <item quantity="one">%d reply</item>
-    <item quantity="few">%d replies</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="one">%d одговор</item>
+    <item quantity="few">%d одговора</item>
+    <item quantity="other">%d одговора</item>
   </plurals>
   <!-- Date -->
   <string name="date_seconds">%d s</string>
   <string name="date_minutes">%d m</string>
   <string name="date_hours">%d h</string>
-  <string name="date_day">%d d</string>
+  <string name="date_day">%d д</string>
   <!-- TOOT -->
-  <string name="toot_cw_placeholder">Warning</string>
-  <string name="toot_placeholder">What is on your mind?</string>
-  <string name="toot_it">TOOT!</string>
+  <string name="toot_cw_placeholder">Упозорење</string>
+  <string name="toot_placeholder">Шта Вам је на уму?</string>
+  <string name="toot_it">ТУУУТ!</string>
   <string name="cw">cw</string>
-  <string name="toot_title">Write a toot</string>
-  <string name="toot_title_reply">Reply to a toot</string>
-  <string name="toot_no_space">You have reached the 500 characters allowed!</string>
-  <string name="toot_select_image">Select a media</string>
+  <string name="toot_title">Напиши тут</string>
+  <string name="toot_title_reply">Одговори на тут</string>
+  <string name="toot_no_space">Достигли сте дозвољених 500 карактера!</string>
+  <string name="toot_select_image">Одаберите мултимедију</string>
   <string name="toot_select_image_error">An error occurred while selecting the media!</string>
   <string name="toot_delete_media">Delete this media?</string>
   <string name="toot_error_no_content">Your toot is empty!</string>
@@ -225,8 +225,8 @@
   <string name="no_internet">No Internet connection!</string>
   <string name="toast_block">The account was blocked!</string>
   <string name="toast_unblock">The account is no longer blocked!</string>
-  <string name="toast_mute">The account was muted!</string>
-  <string name="toast_unmute">The account is no longer muted!</string>
+  <string name="toast_mute">Налог је ућуткан!</string>
+  <string name="toast_unmute">Овај налог није више ућуткан!</string>
   <string name="toast_follow">The account was followed!</string>
   <string name="toast_unfollow">The account is no longer followed!</string>
   <string name="toast_reblog">The toot was boosted!</string>
@@ -332,9 +332,9 @@
   <string name="action_unfollow">Unfollow</string>
   <string name="action_block">Block</string>
   <string name="action_unblock">Unblock</string>
-  <string name="action_mute">Mute</string>
+  <string name="action_mute">Ућуткај</string>
   <string name="action_no_action">No action</string>
-  <string name="action_unmute">Unmute</string>
+  <string name="action_unmute">Искључи ућуткавање</string>
   <string name="request_sent">Request sent</string>
   <string name="followed_by">Follows you</string>
   <string name="action_search">Search</string>
