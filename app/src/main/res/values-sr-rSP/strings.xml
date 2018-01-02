@@ -88,7 +88,7 @@
   <string name="delete_account_message" formatted="false">Избриши налог %1$s из апликације?</string>
   <string name="send_email">Пошаљи е-пошту</string>
   <string name="choose_file">Изаберите фајл</string>
-  <string name="choose_file_error">No file explorer found!</string>
+  <string name="choose_file_error">Није пронађен ниједан прегледач фајлова!</string>
   <string name="click_to_change">Кликните на путању да је промените</string>
   <string name="failed">Неуспешно!</string>
   <string name="scheduled_toots">Заказани тутови</string>
