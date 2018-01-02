@@ -158,52 +158,52 @@
     <item>Пошаљи само поменутим корисницима</item>
   </string-array>
   <string name="no_draft">Нема нацрта!</string>
-  <string name="choose_toot">Choose a toot</string>
-  <string name="choose_accounts">Choose an account</string>
-  <string name="select_accounts">Select some accounts</string>
+  <string name="choose_toot">Одаберите тут</string>
+  <string name="choose_accounts">Одаберите налог</string>
+  <string name="select_accounts">Одаберите неки налог</string>
   <string name="remove_draft">Уклони нацрт?</string>
-  <string name="show_reply">Click on the button to display the original toot</string>
-  <string name="upload_form_description">Describe for the visually impaired</string>
+  <string name="show_reply">Кликните на дугме да прикажете оригинални тут</string>
+  <string name="upload_form_description">Опишите за слабовиде</string>
   <!-- Instance -->
-  <string name="instance_no_description">No description available!</string>
+  <string name="instance_no_description">Нема описа!</string>
   <!-- About -->
-  <string name="about_vesrion">Release %1$s</string>
-  <string name="about_developer">Developer:</string>
-  <string name="about_license">License: </string>
+  <string name="about_vesrion">Издање %1$s</string>
+  <string name="about_developer">Програмер:</string>
+  <string name="about_license">Лиценца: </string>
   <string name="about_license_action">GNU GPL V3</string>
-  <string name="about_code">Source code: </string>
-  <string name="about_yandex">Translation of toots:</string>
-  <string name="about_thekinrar">Search instances:</string>
+  <string name="about_code">Изворни код: </string>
+  <string name="about_yandex">Превод тутова:</string>
+  <string name="about_thekinrar">Претражи инстанце:</string>
   <string name="about_thekinrar_action">instances.social</string>
-  <string name="thanks_text_logo">Icon designer:</string>
+  <string name="thanks_text_logo">Дизајнер иконица:</string>
   <!-- Conversation -->
-  <string name="conversation">Conversation</string>
+  <string name="conversation">Разговор</string>
   <!-- Accounts -->
-  <string name="no_accounts">No account to display</string>
-  <string name="no_follow_request">No follow request</string>
-  <string name="status_cnt">Toots \n %1$s</string>
-  <string name="following_cnt">Following \n %1$s</string>
-  <string name="followers_cnt">Followers \n %1$s</string>
-  <string name="pins_cnt">Pinned \n %d</string>
-  <string name="authorize">Authorize</string>
-  <string name="reject">Reject</string>
+  <string name="no_accounts">Нема налога за приказ</string>
+  <string name="no_follow_request">Нема захтева за праћење</string>
+  <string name="status_cnt">Тутови \n %1$s</string>
+  <string name="following_cnt">Праћени \n %1$s</string>
+  <string name="followers_cnt">Пратиоци \n %1$s</string>
+  <string name="pins_cnt">Прикачени \n %d</string>
+  <string name="authorize">Одобри</string>
+  <string name="reject">Одбаци</string>
   <!-- Scheduled toots -->
-  <string name="no_scheduled_toots">No scheduled toot to display!</string>
-  <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-  <string name="remove_scheduled">Delete scheduled toot?</string>
-  <string name="media_count">Media: %d</string>
-  <string name="toot_scheduled">The toot has been scheduled!</string>
-  <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
-  <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+  <string name="no_scheduled_toots">Нема заказаних тутова за приказ!</string>
+  <string name="no_scheduled_toots_indications">Напишите тут и потом одаберите <b>Закажи</b> из горњег менија.</string>
+  <string name="remove_scheduled">Обриши заказани тут?</string>
+  <string name="media_count">Мултимедија: %d</string>
+  <string name="toot_scheduled">Тут је заказан!</string>
+  <string name="toot_scheduled_date">Датум заказивања мора бити већи од тренутног сата!</string>
+  <string name="warning_battery">Укључена је уштеда батерија! Ово можда и неће ради према очекивањима.</string>
   <!-- Notifications -->
-  <string name="no_notifications">No notification to display</string>
-  <string name="notif_mention">mentioned you</string>
-  <string name="notif_reblog">boosted your status</string>
-  <string name="notif_favourite">favourited your status</string>
-  <string name="notif_follow">followed you</string>
-  <string name="notif_pouet">New toot from %1$s</string>
+  <string name="no_notifications">Нема обавештења за приказ</string>
+  <string name="notif_mention">Вас је поменуо</string>
+  <string name="notif_reblog">је подржао Ваш статус</string>
+  <string name="notif_favourite">је ставио Ваш статус као омиљени</string>
+  <string name="notif_follow">Вас је запратио</string>
+  <string name="notif_pouet">Нови тут од корисника %1$s</string>
   <plurals name="other_notifications">
-    <item quantity="one">and another notification</item>
+    <item quantity="one">и још %d обавештење</item>
     <item quantity="few">and %d other notifications</item>
     <item quantity="other">and %d other notifications</item>
   </plurals>
