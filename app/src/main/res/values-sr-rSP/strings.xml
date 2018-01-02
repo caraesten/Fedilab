@@ -143,25 +143,25 @@
   <string name="toot_title_reply">Одговори на тут</string>
   <string name="toot_no_space">Достигли сте дозвољених 500 карактера!</string>
   <string name="toot_select_image">Одаберите мултимедију</string>
-  <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-  <string name="toot_delete_media">Delete this media?</string>
-  <string name="toot_error_no_content">Your toot is empty!</string>
-  <string name="toot_visibility_tilte">Visibility of the toot</string>
-  <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-  <string name="toot_sent">The toot has been sent!</string>
-  <string name="toot_reply_content_title">You are replying to this toot:</string>
-  <string name="toot_sensitive">Sensitive content?</string>
+  <string name="toot_select_image_error">Грешка приликом одабирања мултимедије!</string>
+  <string name="toot_delete_media">Уклони ову мултимедију?</string>
+  <string name="toot_error_no_content">Тут је празан!</string>
+  <string name="toot_visibility_tilte">Видљивост тута</string>
+  <string name="toots_visibility_tilte">Подразумевана видљивост тута: </string>
+  <string name="toot_sent">Тут је послат!</string>
+  <string name="toot_reply_content_title">Одговарате на овај тут:</string>
+  <string name="toot_sensitive">Осетљив садржај?</string>
   <string-array name="toot_visibility">
-    <item>Post to public timelines</item>
-    <item>Do not post to public timelines</item>
-    <item>Post to followers only</item>
-    <item>Post to mentioned users only</item>
+    <item>Пошаљи на јавне лајне</item>
+    <item>Не шаљи на јавне лајне</item>
+    <item>Пошаљи само пратиоцима</item>
+    <item>Пошаљи само поменутим корисницима</item>
   </string-array>
-  <string name="no_draft">No draft!</string>
+  <string name="no_draft">Нема нацрта!</string>
   <string name="choose_toot">Choose a toot</string>
   <string name="choose_accounts">Choose an account</string>
   <string name="select_accounts">Select some accounts</string>
-  <string name="remove_draft">Remove draft?</string>
+  <string name="remove_draft">Уклони нацрт?</string>
   <string name="show_reply">Click on the button to display the original toot</string>
   <string name="upload_form_description">Describe for the visually impaired</string>
   <!-- Instance -->
@@ -247,7 +247,7 @@
   <string name="nothing_to_do">No action can be taken</string>
   <string name="toast_saved">The media has been saved!</string>
   <string name="toast_error_translate">An error occurred while translating!</string>
-  <string name="toast_toot_saved">Draft saved!</string>
+  <string name="toast_toot_saved">Нацрт сачуван!</string>
   <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
   <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
   <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
@@ -269,7 +269,7 @@
   <string name="set_display_global">Display federated timeline</string>
   <string name="set_disable_gif">Disable GIF avatars</string>
   <string name="set_folder_title">Path: </string>
-  <string name="set_auto_store_toot">Save drafts automatically</string>
+  <string name="set_auto_store_toot">Сачувај нацрте аутоматски</string>
   <string name="set_bubble_counter">Display counters</string>
   <string name="set_auto_add_media_url">Add URL of media in toots</string>
   <string name="settings_title_notifications">Manage notifications</string>
