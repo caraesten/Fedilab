@@ -361,12 +361,12 @@
     </string>
   <string name="privacy_authorizations_title">Дозволе:</string>
   <string name="privacy_authorizations">
-        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
-        - <b>INTERNET</b>: Used for queries to an instance.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
-        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
-        - <b>WAKE_LOCK</b>: Used during the notification service.
+        - <b>ACCESS_NETWORK_STATE</b>: Користи се да види да ли је уређај накачен на бежичну мрежу.\n
+        - <b>INTERNET</b>: Користи се да прича са инстанцом.\n
+        - <b>WRITE_EXTERNAL_STORAGE</b>: Користи се да ускладишти мултимедију или да помери апликацију на SD картицу.\n
+        - <b>READ_EXTERNAL_STORAGE</b>: Користи се да дода мултимедију на тутове.\n
+        - <b>BOOT_COMPLETED</b>: Користи се да стартује сервис за обавештења.\n
+        - <b>WAKE_LOCK</b>: Користи се током рада сервиса за обавештења.
     </string>
   <string name="privacy_API_authorizations_title">API дозволе:</string>
   <string name="privacy_API_authorizations">
@@ -377,16 +377,16 @@
     </string>
   <string name="privacy_API_title">Праћење и библиотеке</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+         Апликација <b> не користи за праћење алатке </b>> (мерење публике, грешке за извештавање, итд.) и не садржи никакве рекламе.\n\n
+        Употреба библиотека је минимизована: \n
+        - <b>Glide</b>: за управљање мултимедијом\n
+        - <b>Android-Job</b>: за управљање  сервисима\n
+        - <b>PhotoView</b>: за управљање сликама\n
     </string>
   <string name="privacy_API_yandex_title">Превод тутова</string>
   <string name="privacy_API_yandex_authorizations">
-        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
+        Апликација нуди могућност да преводи тутове на језик уређаја користећи Yandex API.\n
+        Yandex има своју конкретну политику приватности која се може наћи овде: https://yandex.ru/legal/confidential/?lang=en
     </string>
   <string name="thanks_text">
         Хвала Стефани за лого.
