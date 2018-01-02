@@ -295,16 +295,16 @@
   <string name="set_multiaccount_actions">Дозволи интеракције између налога?</string>
   <string name="note_no_space">Достигли сте дозвољених 160 карактера!</string>
   <string name="username_no_space">Достигли сте дозвољених 30 карактера!</string>
-  <string name="settings_title_hour">Time slot for notifications:</string>
-  <string name="settings_time_from">Between</string>
-  <string name="settings_time_to">and</string>
-  <string name="settings_time_greater">The time must be greater than %1$s</string>
-  <string name="settings_time_lower">The time must be lower than %1$s</string>
-  <string name="settings_hour_init">Start time</string>
-  <string name="settings_hour_end">End time</string>
-  <string name="embedded_browser">Use the built-in browser</string>
-  <string name="use_javascript">Enable Javascript</string>
-  <string name="use_cookies">Allow third-party cookies</string>
+  <string name="settings_title_hour">Термин за обавештења:</string>
+  <string name="settings_time_from">Између</string>
+  <string name="settings_time_to">и</string>
+  <string name="settings_time_greater">Време мора бити веће од %1$s</string>
+  <string name="settings_time_lower">Време мора бити мање од %1$s</string>
+  <string name="settings_hour_init">Почетно време</string>
+  <string name="settings_hour_end">Крајње време</string>
+  <string name="embedded_browser">Користите уграђени прегледач</string>
+  <string name="use_javascript">Омогућите JavaScript</string>
+  <string name="use_cookies">Дозволите независне колачиће</string>
   <string name="settings_ui_layout">Layout for timelines: </string>
   <string-array name="settings_menu_tabs">
     <item>Tabs</item>
