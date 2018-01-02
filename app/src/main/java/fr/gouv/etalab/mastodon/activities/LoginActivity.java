@@ -278,7 +278,20 @@ public class LoginActivity extends BaseActivity {
                       }
                     });
 
-                } catch (Exception ignored) {ignored.printStackTrace();}
+                } catch (final Exception e) {
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            String message;
+                            if( e.getLocalizedMessage() != null && e.getLocalizedMessage().trim().length() > 0)
+                                message = e.getLocalizedMessage();
+                            else if (e.getMessage() != null && e.getMessage().trim().length() > 0)
+                                message = e.getMessage();
+                            else
+                                message = getString(R.string.client_error);
+                            Toast.makeText(getApplicationContext(), message,Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
             }
         }).start();
 
@@ -329,18 +342,22 @@ public class LoginActivity extends BaseActivity {
                                     } catch (JSONException ignored) {}
                                 }
                             });
-                        }catch (HttpsConnection.HttpsConnectionException e) {
+                        }catch (final Exception e) {
                             runOnUiThread(new Runnable() {
                                 public void run() {
                                     connectionButton.setEnabled(true);
-                                    Toast.makeText(getApplicationContext(),R.string.toast_error_login,Toast.LENGTH_LONG).show();
-                                }
-                            });
-                        } catch (Exception e) {
-                            runOnUiThread(new Runnable() {
-                                public void run() {
-                                    connectionButton.setEnabled(true);
-                                    Toast.makeText(getApplicationContext(),R.string.toast_error_login,Toast.LENGTH_LONG).show();
+                                    runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            String message;
+                                            if( e.getLocalizedMessage() != null && e.getLocalizedMessage().trim().length() > 0)
+                                                message = e.getLocalizedMessage();
+                                            else if (e.getMessage() != null && e.getMessage().trim().length() > 0)
+                                                message = e.getMessage();
+                                            else
+                                                message = getString(R.string.client_error);
+                                            Toast.makeText(getApplicationContext(), message,Toast.LENGTH_LONG).show();
+                                        }
+                                    });
                                 }
                             });
                         }
