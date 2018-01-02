@@ -211,15 +211,14 @@ public class LiveNotificationService extends BaseService {
                             try {
                                 JSONObject eventJson = new JSONObject(event);
                                 onRetrieveStreaming(eventStreaming, account, eventJson);
-                            } catch (JSONException ignored) {ignored.printStackTrace();}
+                            } catch (JSONException ignored) {}
                         }
                     }
                 }else {
                     httpsURLConnection.disconnect();
                 }
 
-            } catch (Exception ignored) { ignored.printStackTrace();
-            }finally {
+            } catch (Exception ignored) {}finally {
                 if (reader != null) {
                     try {
                         reader.close();
