@@ -62,8 +62,8 @@
   <string name="favourite">Favoritos</string>
   <string name="follow">Nuevos seguidores</string>
   <string name="mention">Menciones</string>
-  <string name="reblog">Mejoras</string>
-  <string name="show_boosts">Mostrar mejoras</string>
+  <string name="reblog">Retoots</string>
+  <string name="show_boosts">Mostrar retoots</string>
   <string name="show_replies">Mostrar respuestas</string>
   <string name="action_open_in_web">Abrir en navegador</string>
   <string name="translate">Traducir</string>
@@ -100,13 +100,13 @@
   <string name="no_status">Ningún toot para mostrar</string>
   <string name="fav_added">El toot fue agregado a favoritos</string>
   <string name="fav_removed">¡El toot fue removido de favoritos!</string>
-  <string name="reblog_added">¡El toot fue mejorado!</string>
-  <string name="reblog_removed">¡El toot ya no está mejorado!</string>
-  <string name="reblog_by">Mejorado un %1$s</string>
+  <string name="reblog_added">¡El toot fue retooteado!</string>
+  <string name="reblog_removed">¡El toot ya no está retooteado!</string>
+  <string name="reblog_by">Retooteado por %1$s</string>
   <string name="favourite_add">¿Agregar este toot a favoritos?</string>
   <string name="favourite_remove">¿Remover este toot de tus favoritos?</string>
-  <string name="reblog_add">¿Mejorar este toot?</string>
-  <string name="reblog_remove">¿Desmejorar este toot?</string>
+  <string name="reblog_add">¿Retootear este toot?</string>
+  <string name="reblog_remove">¿No retootear este toot?</string>
   <string name="pin_add">¿Fijar este toot?</string>
   <string name="pin_remove">¿Remover este toot?</string>
   <string name="more_action_1">Silenciar</string>
@@ -197,7 +197,7 @@
   <!-- Notifications -->
   <string name="no_notifications">Ninguna notificación para mostrar</string>
   <string name="notif_mention">te mencionó</string>
-  <string name="notif_reblog">mejoró tu estado</string>
+  <string name="notif_reblog">retooteó tu estado</string>
   <string name="notif_favourite">marcó como favorito tu estado</string>
   <string name="notif_follow">te siguió</string>
   <string name="notif_pouet">Nuevo toot de %1$s</string>
@@ -226,8 +226,8 @@
   <string name="toast_unmute">¡La cuenta ya no esta silenciada!</string>
   <string name="toast_follow">¡La cuenta fue seguida!</string>
   <string name="toast_unfollow">¡La cuenta ya no esta seguida!</string>
-  <string name="toast_reblog">¡El toot fue mejorado!</string>
-  <string name="toast_unreblog">¡El toot ya no está mejorado!</string>
+  <string name="toast_reblog">¡El toot fue retooteado!</string>
+  <string name="toast_unreblog">¡El toot ya no está retooteado!</string>
   <string name="toast_favourite">¡El toot fue agregado a tus favoritos!</string>
   <string name="toast_unfavourite">¡El toot fue removido de tus favoritos!</string>
   <string name="toast_report">¡El toot fue reportado!</string>
@@ -272,10 +272,10 @@
   <string name="settings_title_notifications">Gestión de notificaciones</string>
   <string name="set_notif_follow">Notificar cuando alguien te siga</string>
   <string name="set_notif_follow_ask">Notificar cuando alguien pide que te siga</string>
-  <string name="set_notif_follow_share">Notificar cuando alguien mejora tu estado</string>
+  <string name="set_notif_follow_share">Notificar cuando alguien retootee tu estado</string>
   <string name="set_notif_follow_add">Notificar cuando alguien agrega a favoritos tu estado</string>
   <string name="set_notif_follow_mention">Notificar cuando alguien te mencione</string>
-  <string name="set_share_validation">Mostrar diálogo de confirmación antes de mejorar</string>
+  <string name="set_share_validation">Mostrar diálogo de confirmación antes de retootear</string>
   <string name="set_share_validation_fav">Mostrar diálogo de confirmación antes de agregar a favoritos</string>
   <string name="settings_title_more_options">Configuración avanzada</string>
   <string name="set_wifi_only">Notificaciones en WI-FI solamente</string>
@@ -405,7 +405,7 @@ Gracias a:    </string>
   <string name="action_lists_owner">Tus listas</string>
   <!-- Migration -->
   <string name="account_moved_to">%1$s se ha movido a %2$s</string>
-  <string name="show_boost_count">Mostrar contador de mejoras/favoritos</string>
+  <string name="show_boost_count">Mostrar contador de retoots/favoritos</string>
   <string name="issue_login_title">¿No funciona la autenticación?</string>
   <string name="issue_login_message">
 <b>Aquí hay una lista de vistos que pueden ayudar </b>\n\n

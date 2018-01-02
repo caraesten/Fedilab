@@ -28,6 +28,7 @@ import android.graphics.LightingColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.net.Uri;
@@ -118,6 +119,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
+import fr.gouv.etalab.mastodon.client.Glide.GlideApp;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.drawers.CustomEmojiAdapter;
 import fr.gouv.etalab.mastodon.drawers.EmojisSearchAdapter;
@@ -1286,80 +1288,57 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         }
     }
 
-    private void showAddDescription(ImageView imageView, final Attachment attachment){
+    private void showAddDescription(final ImageView imageView, final Attachment attachment){
         AlertDialog.Builder builderInner = new AlertDialog.Builder(TootActivity.this);
         builderInner.setTitle(R.string.upload_form_description);
 
-
-        boolean makebackground = false;
-        LinearLayout linearLayout = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            linearLayout = new LinearLayout(TootActivity.this);
-            linearLayout.setOrientation(LinearLayout.VERTICAL);
-
-            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
-            linearLayout.setLayoutParams(layoutParams);
-            Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
-            Bitmap workingBitmap = Bitmap.createBitmap(bitmap);
-            Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
-            Canvas canvas = new Canvas(mutableBitmap);
-            Paint p = new Paint(Color.BLACK);
-            ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);
-            p.setColorFilter(filter);
-            canvas.drawBitmap(mutableBitmap, new Matrix(), p);
-            BitmapDrawable background = new BitmapDrawable(getResources(), mutableBitmap);
-            linearLayout.setBackground(background);
-            makebackground = true;
-        }
+        @SuppressLint("InflateParams") View popup_media_description = getLayoutInflater().inflate( R.layout.popup_media_description, null );
+        builderInner.setView(popup_media_description);
 
         //Text for report
-        EditText input;
-        input = new EditText(TootActivity.this);
+        final EditText input = popup_media_description.findViewById(R.id.media_description);
         input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(420)});
-        input.setSingleLine(false);
-        input.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-        input.setLines(50);
-        input.setVerticalScrollBarEnabled(true);
-        input.setMovementMethod(ScrollingMovementMethod.getInstance());
-        input.setScrollBarStyle(View.SCROLLBARS_INSIDE_INSET);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
-        input.setLayoutParams(lp);
-        if( !makebackground)
-            builderInner.setView(input);
-        else {
-            linearLayout.addView(input);
-            builderInner.setView(linearLayout);
-        }
+        final ImageView media_picture = popup_media_description.findViewById(R.id.media_picture);
+        GlideApp.with(getApplicationContext())
+                .asBitmap()
+                .load(attachment.getUrl())
+                .into(new SimpleTarget<Bitmap>() {
+                    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                    @Override
+                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+                        Bitmap workingBitmap = Bitmap.createBitmap(bitmap);
+                        Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
+                        Canvas canvas = new Canvas(mutableBitmap);
+                        Paint p = new Paint(Color.BLACK);
+                        ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);
+                        p.setColorFilter(filter);
+                        canvas.drawBitmap(mutableBitmap, new Matrix(), p);
+                        BitmapDrawable background = new BitmapDrawable(getResources(), mutableBitmap);
+                        media_picture.setImageDrawable(background);
+                    }
+                });
+
         builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
-        final EditText finalInput = input;
 
         if( attachment.getDescription() != null && !attachment.getDescription().equals("null")) {
-            finalInput.setText(attachment.getDescription());
-            finalInput.setSelection(finalInput.getText().length());
+            input.setText(attachment.getDescription());
+            input.setSelection(input.getText().length());
         }
         builderInner.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                new UpdateDescriptionAttachmentAsyncTask(getApplicationContext(), attachment.getId(), finalInput.getText().toString(), TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new UpdateDescriptionAttachmentAsyncTask(getApplicationContext(), attachment.getId(), input.getText().toString(), TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 dialog.dismiss();
             }
         });
         AlertDialog alertDialog = builderInner.create();
-        WindowManager.LayoutParams lpd = new WindowManager.LayoutParams();
-        //noinspection ConstantConditions
-        lpd.copyFrom(alertDialog.getWindow().getAttributes());
-        lpd.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lpd.height = WindowManager.LayoutParams.MATCH_PARENT;
         alertDialog.show();
-        alertDialog.getWindow().setAttributes(lpd);
     }
 
     /**

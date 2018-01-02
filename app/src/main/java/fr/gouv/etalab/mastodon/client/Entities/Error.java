@@ -22,12 +22,20 @@ package fr.gouv.etalab.mastodon.client.Entities;
 public class Error {
 
     private String error = null;
-
+    private int statusCode = -1;
     public String getError() {
         return error;
     }
 
     public void setError(String error) {
         this.error = error;
+    }
+
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
     }
 }

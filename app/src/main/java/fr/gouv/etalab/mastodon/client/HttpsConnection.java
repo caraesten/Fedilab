@@ -427,9 +427,7 @@ public class HttpsConnection {
                 return httpsURLConnection.getInputStream();
             }
             httpsURLConnection.disconnect();
-        } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException | NoSuchAlgorithmException | KeyManagementException ignored) {}
         if(httpsURLConnection != null)
             httpsURLConnection.disconnect();
         return null;

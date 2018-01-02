@@ -134,7 +134,7 @@ public abstract class BaseMainActivity extends BaseActivity
     private DisplayStatusFragment homeFragment, federatedFragment, localFragment;
     private DisplayNotificationsFragment notificationsFragment;
     private static final int ERROR_DIALOG_REQUEST_CODE = 97;
-    private BroadcastReceiver receive_data, receive_federated_data, receive_local_data;
+    private static BroadcastReceiver receive_data, receive_federated_data, receive_local_data;
     private boolean display_local, display_global;
     public static int countNewStatus = 0;
     public static int countNewNotifications = 0;
@@ -828,6 +828,8 @@ public abstract class BaseMainActivity extends BaseActivity
         }
         Helper.switchLayout(BaseMainActivity.this);
 
+        if( receive_data != null)
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
         receive_data = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -1192,6 +1194,8 @@ public abstract class BaseMainActivity extends BaseActivity
     @Override
     public void onStart(){
         super.onStart();
+        if( receive_federated_data != null)
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_federated_data);
         receive_federated_data = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -1206,6 +1210,8 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
             }
         };
+        if( receive_local_data != null)
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_local_data);
         receive_local_data = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {

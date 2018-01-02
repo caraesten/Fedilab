@@ -27,6 +27,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.*;
@@ -123,7 +124,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         return apiResponse;
     }
@@ -166,7 +167,7 @@ public class API {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
             e.printStackTrace();
-            setDefaultError();
+            setDefaultError(e);
         }
         return apiResponse;
     }
@@ -184,7 +185,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         return account;
     }
@@ -203,7 +204,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         return account;
     }
@@ -228,7 +229,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         return relationship;
     }
@@ -261,7 +262,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         apiResponse.setRelationships(relationships);
         return apiResponse;
@@ -350,7 +351,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         apiResponse.setStatuses(statuses);
         return apiResponse;
@@ -374,7 +375,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         apiResponse.setStatuses(statuses);
         return apiResponse;
@@ -395,7 +396,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         return statusContext;
     }
@@ -448,7 +449,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         apiResponse.setStatuses(statuses);
         return apiResponse;
@@ -507,7 +508,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         apiResponse.setStatuses(statuses);
         return apiResponse;
@@ -556,7 +557,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         apiResponse.setStatuses(statuses);
         return apiResponse;
@@ -630,7 +631,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         apiResponse.setAccounts(accounts);
         return apiResponse;
@@ -673,7 +674,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         apiResponse.setAccounts(accounts);
         return apiResponse;
@@ -716,7 +717,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         apiResponse.setStatuses(statuses);
         return apiResponse;
@@ -751,7 +752,7 @@ public class API {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
             e.printStackTrace();
         }
         return actionCode;
@@ -880,7 +881,7 @@ public class API {
             } catch (HttpsConnection.HttpsConnectionException e) {
                 setError(e.getStatusCode(), e);
             }catch (Exception e) {
-                setDefaultError();
+                setDefaultError(e);
             }
         }else{
             try {
@@ -890,7 +891,7 @@ public class API {
             } catch (HttpsConnection.HttpsConnectionException e) {
                 setError(e.getStatusCode(), e);
             }catch (Exception e) {
-                setDefaultError();
+                setDefaultError(e);
             }
         }
         return actionCode;
@@ -940,7 +941,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         apiResponse.setStatuses(statuses);
         return apiResponse;
@@ -967,7 +968,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         return apiResponse;
     }
@@ -1060,7 +1061,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         apiResponse.setNotifications(notifications);
         return apiResponse;
@@ -1090,7 +1091,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         return attachment;
     }
@@ -1113,7 +1114,7 @@ public class API {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
             e.printStackTrace();
         }
         return results;
@@ -1158,7 +1159,7 @@ public class API {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
             e.printStackTrace();
         }
         apiResponse.setAccounts(accounts);
@@ -1184,7 +1185,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         apiResponse.setEmojis(emojis);
         return apiResponse;
@@ -1205,7 +1206,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         apiResponse.setLists(lists);
         return apiResponse;
@@ -1226,7 +1227,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         apiResponse.setLists(lists);
         return apiResponse;
@@ -1261,7 +1262,7 @@ public class API {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
@@ -1294,7 +1295,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         apiResponse.setAccounts(accounts);
         return apiResponse;
@@ -1318,7 +1319,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         apiResponse.setLists(lists);
         return apiResponse;
@@ -1350,7 +1351,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         return apiResponse;
     }
@@ -1378,7 +1379,7 @@ public class API {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
             e.printStackTrace();
         }
         return actionCode;
@@ -1402,7 +1403,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         apiResponse.setLists(lists);
         return apiResponse;
@@ -1443,7 +1444,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         apiResponse.setLists(lists);
         return apiResponse;
@@ -1463,7 +1464,7 @@ public class API {
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         }catch (Exception e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         return actionCode;
     }
@@ -1481,7 +1482,7 @@ public class API {
             results.setStatuses(parseStatuses(resobj.getJSONArray("statuses")));
             results.setHashtags(parseTags(resobj.getJSONArray("hashtags")));
         } catch (JSONException e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         return results;
     }
@@ -1579,7 +1580,7 @@ public class API {
             }
 
         } catch (JSONException e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         return statuses;
     }
@@ -1711,7 +1712,7 @@ public class API {
             instance.setEmail(resobj.get("email").toString());
             instance.setVersion(resobj.get("version").toString());
         } catch (JSONException e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         return instance;
     }
@@ -1734,7 +1735,7 @@ public class API {
                 i++;
             }
         } catch (JSONException e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         return emojis;
     }
@@ -1772,7 +1773,7 @@ public class API {
                 i++;
             }
         } catch (JSONException e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         return lists;
     }
@@ -1842,7 +1843,7 @@ public class API {
                 i++;
             }
         } catch (JSONException e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         return accounts;
     }
@@ -1869,7 +1870,7 @@ public class API {
             }
             relationship.setRequested(Boolean.valueOf(resobj.get("requested").toString()));
         } catch (JSONException e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         return relationship;
     }
@@ -1892,7 +1893,7 @@ public class API {
                 i++;
             }
         } catch (JSONException e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         return relationships;
     }
@@ -1909,7 +1910,7 @@ public class API {
             context.setAncestors(parseStatuses(jsonObject.getJSONArray("ancestors")));
             context.setDescendants(parseStatuses(jsonObject.getJSONArray("descendants")));
         } catch (JSONException e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         return context;
     }
@@ -1984,7 +1985,7 @@ public class API {
                 i++;
             }
         } catch (JSONException e) {
-            setDefaultError();
+            setDefaultError(e);
         }
         return notifications;
     }
@@ -1998,13 +1999,19 @@ public class API {
      */
     private void setError(int statusCode, Throwable error){
         APIError = new Error();
+        APIError.setStatusCode(statusCode);
         APIError.setError(statusCode + " - " + error.getMessage());
         apiResponse.setError(APIError);
     }
 
-    private void setDefaultError(){
+    private void setDefaultError(Exception e){
         APIError = new Error();
-        APIError.setError(context.getString(R.string.toast_error));
+        if( e.getLocalizedMessage() != null && e.getLocalizedMessage().trim().length() > 0)
+            APIError.setError(e.getLocalizedMessage());
+        else if( e.getMessage() != null && e.getMessage().trim().length() > 0)
+            APIError.setError(e.getMessage());
+        else
+            APIError.setError(context.getString(R.string.toast_error));
         apiResponse.setError(APIError);
     }
 
