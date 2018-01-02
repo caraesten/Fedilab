@@ -62,8 +62,8 @@
   <string name="favourite">Favoritos</string>
   <string name="follow">Nuevos seguidores</string>
   <string name="mention">Menciones</string>
-  <string name="reblog">Mejoras</string>
-  <string name="show_boosts">Mostrar mejoras</string>
+  <string name="reblog">Retoots</string>
+  <string name="show_boosts">Mostrar retoots</string>
   <string name="show_replies">Mostrar respuestas</string>
   <string name="action_open_in_web">Abrir en navegador</string>
   <string name="translate">Traducir</string>
