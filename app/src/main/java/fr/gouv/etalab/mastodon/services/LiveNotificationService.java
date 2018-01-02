@@ -28,7 +28,6 @@ import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -108,15 +107,19 @@ public class LiveNotificationService extends BaseService {
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
         boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
         String userId;
+
+
         if( liveNotifications && notify){
             SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             if( intent == null || intent.getStringExtra("userId") == null) {
+
                 List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccount();
                 if (accountStreams != null){
                     for (final Account accountStream : accountStreams) {
-                        if (backGroundTaskHashMap.containsKey(accountStream.getAcct() + accountStream.getInstance()))
+                        if (backGroundTaskHashMap.containsKey(accountStream.getAcct() + accountStream.getInstance())) {
                             if (!backGroundTaskHashMap.get(accountStream.getAcct() + accountStream.getInstance()).isAlive())
                                 backGroundTaskHashMap.get(accountStream.getAcct() + accountStream.getInstance()).interrupt();
+                        }
                         Thread thread = new Thread() {
                             @Override
                             public void run() {
@@ -132,9 +135,10 @@ public class LiveNotificationService extends BaseService {
                 userId = intent.getStringExtra("userId");
                 final Account accountStream = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
                 if (accountStream != null) {
-                    if (backGroundTaskHashMap.containsKey(accountStream.getAcct() + accountStream.getInstance()))
+                    if (backGroundTaskHashMap.containsKey(accountStream.getAcct() + accountStream.getInstance())) {
                         if (!backGroundTaskHashMap.get(accountStream.getAcct() + accountStream.getInstance()).isAlive())
                             backGroundTaskHashMap.get(accountStream.getAcct() + accountStream.getInstance()).interrupt();
+                    }
                     Thread thread = new Thread() {
                         @Override
                         public void run() {
@@ -219,17 +223,16 @@ public class LiveNotificationService extends BaseService {
                 }
 
             } catch (Exception ignored) {}finally {
+
                 if (reader != null) {
                     try {
                         reader.close();
-                    } catch (IOException ignored) {
-                    }
+                    } catch (IOException ignored) {}
                 }
                 if (inputStream != null) {
                     try {
                         inputStream.close();
-                    } catch (IOException ignored) {
-                    }
+                    } catch (IOException ignored) {}
                 }
                 if (httpsURLConnection != null)
                     httpsURLConnection.disconnect();
