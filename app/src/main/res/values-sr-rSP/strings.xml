@@ -415,12 +415,12 @@
   <string name="show_boost_count">Прикажи број подржаних/омиљених</string>
   <string name="issue_login_title">Пријављивање не ради?</string>
   <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
+        <b>Ево неких провера које могу да помогну:</b>\n\n
+        - Проверите да нема грешака у куцању имена инстанце\n\n
+        - Проверите да ли је инстанца жива и ради\n\n
+        - Ако користите двофакторско пријављивање (2FA), користите линк на дну (када попуните име инстанце)\n\n
+        - Линк испод можете користити и без да користите 2FA\n\n
+        - Ако ништа ни даље не ради, пријавите нам проблем на Github-у, на https://github.com/stom79/mastalab/issues
     </string>
   <string name="media_ready">Мултимедија је учитана. Кликните овде да је прикажете.</string>
 </resources>
