@@ -207,6 +207,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
 
         if( notifications != null && notifications.size() > 0) {
             for(Notification tmpNotification: notifications){
+
                 if( lastReadNotifications != null && Long.parseLong(tmpNotification.getId()) > Long.parseLong(lastReadNotifications)) {
                     MainActivity.countNewNotifications++;
                 }

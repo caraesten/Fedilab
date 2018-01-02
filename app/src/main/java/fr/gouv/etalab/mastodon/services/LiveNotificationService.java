@@ -81,6 +81,8 @@ public class LiveNotificationService extends BaseService {
 
     protected Account account;
     private static HashMap<String, Thread> backGroundTaskHashMap = new HashMap<>();
+    private static HashMap<String, HttpsURLConnection> httpsURLConnectionHashMap = new HashMap<>();
+    private static HashMap<String, Integer> queuedIntentHashMap = new HashMap<>();
     @SuppressWarnings("unused")
     public LiveNotificationService(String name) {
         super(name);
@@ -92,7 +94,46 @@ public class LiveNotificationService extends BaseService {
 
     public void onCreate() {
         super.onCreate();
+        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccount();
+        if (accountStreams != null) {
+            for (final Account accountStream : accountStreams) {
+                queuedIntentHashMap.put(accountStream.getAcct() + accountStream.getInstance(), 0);
+            }
+        }
     }
+
+
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
+        boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
+        String userId;
+        if( liveNotifications && notify) {
+            SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            if (intent == null || intent.getStringExtra("userId") == null) {
+                List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccount();
+                if (accountStreams != null) {
+                    for (final Account accountStream : accountStreams) {
+                        int numberOfQueuedIntent = queuedIntentHashMap.get(accountStream.getAcct() + accountStream.getInstance()) + 1;
+                        queuedIntentHashMap.put(accountStream.getAcct() + accountStream.getInstance(), numberOfQueuedIntent);
+                    }
+                }
+            }else{
+                userId = intent.getStringExtra("userId");
+                final Account accountStream = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
+                if (accountStream != null) {
+                    int numberOfQueuedIntent = queuedIntentHashMap.get(accountStream.getAcct() + accountStream.getInstance()) + 1;
+                    queuedIntentHashMap.put(accountStream.getAcct() + accountStream.getInstance(), numberOfQueuedIntent);
+                }
+            }
+        }
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+
 
 
     @Nullable
@@ -116,6 +157,31 @@ public class LiveNotificationService extends BaseService {
                 List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccount();
                 if (accountStreams != null){
                     for (final Account accountStream : accountStreams) {
+                        int numberOfQueuedIntent = queuedIntentHashMap.get(accountStream.getAcct() + accountStream.getInstance()) - 1;
+                        queuedIntentHashMap.put(accountStream.getAcct() + accountStream.getInstance(), numberOfQueuedIntent);
+                        if( queuedIntentHashMap.get(accountStream.getAcct() + accountStream.getInstance()) == 0) {
+                            if (backGroundTaskHashMap.containsKey(accountStream.getAcct() + accountStream.getInstance())) {
+                                if (!backGroundTaskHashMap.get(accountStream.getAcct() + accountStream.getInstance()).isAlive())
+                                    backGroundTaskHashMap.get(accountStream.getAcct() + accountStream.getInstance()).interrupt();
+                            }
+                            Thread thread = new Thread() {
+                                @Override
+                                public void run() {
+                                    taks(accountStream);
+                                }
+                            };
+                            thread.start();
+                            backGroundTaskHashMap.put(accountStream.getAcct() + accountStream.getInstance(), thread);
+                        }
+                    }
+                }
+            }else {
+                userId = intent.getStringExtra("userId");
+                final Account accountStream = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
+                if (accountStream != null) {
+                    int numberOfQueuedIntent = queuedIntentHashMap.get(accountStream.getAcct() + accountStream.getInstance()) - 1;
+                    queuedIntentHashMap.put(accountStream.getAcct() + accountStream.getInstance(), numberOfQueuedIntent);
+                    if( queuedIntentHashMap.get(accountStream.getAcct() + accountStream.getInstance()) == 0) {
                         if (backGroundTaskHashMap.containsKey(accountStream.getAcct() + accountStream.getInstance())) {
                             if (!backGroundTaskHashMap.get(accountStream.getAcct() + accountStream.getInstance()).isAlive())
                                 backGroundTaskHashMap.get(accountStream.getAcct() + accountStream.getInstance()).interrupt();
@@ -129,24 +195,6 @@ public class LiveNotificationService extends BaseService {
                         thread.start();
                         backGroundTaskHashMap.put(accountStream.getAcct() + accountStream.getInstance(), thread);
                     }
-
-                }
-            }else {
-                userId = intent.getStringExtra("userId");
-                final Account accountStream = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
-                if (accountStream != null) {
-                    if (backGroundTaskHashMap.containsKey(accountStream.getAcct() + accountStream.getInstance())) {
-                        if (!backGroundTaskHashMap.get(accountStream.getAcct() + accountStream.getInstance()).isAlive())
-                            backGroundTaskHashMap.get(accountStream.getAcct() + accountStream.getInstance()).interrupt();
-                    }
-                    Thread thread = new Thread() {
-                        @Override
-                        public void run() {
-                            taks(accountStream);
-                        }
-                    };
-                    thread.start();
-                    backGroundTaskHashMap.put(accountStream.getAcct() + accountStream.getInstance(), thread);
                 }
             }
         }
@@ -154,12 +202,15 @@ public class LiveNotificationService extends BaseService {
 
     private void taks(Account account){
         InputStream inputStream = null;
-        HttpsURLConnection httpsURLConnection = null;
+
         BufferedReader reader = null;
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         Helper.EventStreaming lastEvent = null;
         if( account != null){
             try {
+                HttpsURLConnection httpsURLConnection = httpsURLConnectionHashMap.get(account.getAcct() + account.getInstance());
+                if( httpsURLConnection != null)
+                    httpsURLConnection.disconnect();
                 URL url = new URL("https://" + account.getInstance() + "/api/v1/streaming/user");
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
                 httpsURLConnection.setRequestProperty("Content-Type", "application/json");
@@ -171,7 +222,7 @@ public class LiveNotificationService extends BaseService {
                 httpsURLConnection.setRequestMethod("GET");
                 httpsURLConnection.setConnectTimeout(70000);
                 httpsURLConnection.setReadTimeout(70000);
-
+                httpsURLConnectionHashMap.put(account.getAcct() + account.getInstance(), httpsURLConnection);
                 if( httpsURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK){
                     inputStream = new BufferedInputStream(httpsURLConnection.getInputStream());
                     reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -181,6 +232,7 @@ public class LiveNotificationService extends BaseService {
                         if( !sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING, true) ) {
                             return;
                         }
+
                         if ((lastEvent == Helper.EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
                             switch (event.trim()) {
                                 case "event: update":
@@ -234,8 +286,8 @@ public class LiveNotificationService extends BaseService {
                         inputStream.close();
                     } catch (IOException ignored) {}
                 }
-                if (httpsURLConnection != null)
-                    httpsURLConnection.disconnect();
+                if (httpsURLConnectionHashMap.get(account.getAcct() + account.getInstance()) != null)
+                    httpsURLConnectionHashMap.get(account.getAcct() + account.getInstance()).disconnect();
                 SystemClock.sleep(5000);
                 Intent streamingIntent = new Intent(this, LiveNotificationService.class);
                 streamingIntent.putExtra("userId", account.getId());
