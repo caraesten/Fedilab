@@ -63,10 +63,10 @@
   <string name="follow">Novos seguidores</string>
   <string name="mention">Menções</string>
   <string name="reblog">Compartilhamentos</string>
-  <string name="show_boosts">Show boosts</string>
+  <string name="show_boosts">Mostrar compartilhamentos</string>
   <string name="show_replies">Mostrar respostas</string>
   <string name="action_open_in_web">Abrir no navegador</string>
-  <string name="translate">Translate</string>
+  <string name="translate">Traduza</string>
   <string name="please_wait">Espere alguns segundos antes de realizar esta ação.</string>
   <!--- Menu -->
   <string name="home_menu">Página inicial</string>
@@ -413,12 +413,12 @@
   <string name="show_boost_count">Mostrar quantidade de compartilhamentos/curtidas</string>
   <string name="issue_login_title">Falha ao autenticar?</string>
   <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
+        <b>Aqui estão algumas dicas:</b>\n\n
+        - Verifique se não há nenhum erro ortográfico no nome da instância\n\n
+        - Verifique se a sua instância não está offline\n\n
+        - Caso use autenticação em duas etapas (2FA), use o link abaixo assim que o nome da instância estiver preenchido\n\n
+        - Você também pode usar este link sem a autenticação em duas etapas\n\n
+        - Se nenhuma das dicas funcionar, relate o problema em: https://github.com/stom79/mastalab/issues
     </string>
   <string name="media_ready">A mídia foi carregada. Clique aqui para exibi-la.</string>
 </resources>
