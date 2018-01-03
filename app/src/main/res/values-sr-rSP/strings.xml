@@ -88,13 +88,13 @@
   <string name="delete_account_message" formatted="false">Избриши налог %1$s из апликације?</string>
   <string name="send_email">Пошаљи е-пошту</string>
   <string name="choose_file">Изаберите фајл</string>
-  <string name="choose_file_error">No file explorer found!</string>
+  <string name="choose_file_error">Није пронађен ниједан менаџер фајлова!</string>
   <string name="click_to_change">Кликните на путању да је промените</string>
   <string name="failed">Неуспешно!</string>
   <string name="scheduled_toots">Заказани тутови</string>
   <string name="disclaimer_full">Информације испод не морају да тачно одсликавају кориснички профил.</string>
   <string name="insert_emoji">Убаци емотикон</string>
-  <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
+  <string name="no_emoji">Апликација није покупила произвољне емотиконе за моменат.</string>
   <string name="live_notif">Обавештења уживо</string>
   <!-- Status -->
   <string name="no_status">Нема тутова за приказ</string>
@@ -137,7 +137,7 @@
   <!-- TOOT -->
   <string name="toot_cw_placeholder">Упозорење</string>
   <string name="toot_placeholder">Шта Вам је на уму?</string>
-  <string name="toot_it">ТУУУТ!</string>
+  <string name="toot_it">Тутни!</string>
   <string name="cw">cw</string>
   <string name="toot_title">Напиши тут</string>
   <string name="toot_title_reply">Одговори на тут</string>
@@ -252,10 +252,10 @@
   <string name="toast_visibility_changed">Видљивост тутова је промењена за налог %1$s</string>
   <string name="toast_empty_search">Име инстанце и име за приказ не могу бити празни!</string>
   <!-- Settings -->
-  <string name="settings_title_optimisation">Оптимизација оптерећења</string>
-  <string name="set_toots_page">Number of toots per load</string>
-  <string name="set_accounts_page">Number of accounts per load</string>
-  <string name="set_notifications_page">Number of notifications per load</string>
+  <string name="settings_title_optimisation">Оптимизација учитавања</string>
+  <string name="set_toots_page">Број тутова по једном учитавању</string>
+  <string name="set_accounts_page">Број налога по једном учитавању</string>
+  <string name="set_notifications_page">Број обавештења по једном учитавању</string>
   <string name="set_attachment_always">Увек</string>
   <string name="set_attachment_wifi">Само на бежичној мрежи</string>
   <string name="set_attachment_ask">Питај</string>
@@ -282,145 +282,145 @@
   <string name="set_share_validation_fav">Прикажи дијалог за потврду пре додавања у омиљене</string>
   <string name="settings_title_more_options">Напредне поставке</string>
   <string name="set_wifi_only">Обавести само на бежичној мрежи</string>
-  <string name="set_notify">Обавести?</string>
+  <string name="set_notify">Обавештења?</string>
   <string name="set_notif_silent">Тиха обавештења</string>
   <string name="set_night_mode">Ноћни режим</string>
-  <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
+  <string name="set_nsfw_timeout">NSFW временско ограничење приказа (у секундама, 0 значи искључено)</string>
   <string name="settings_title_profile">Измени профил</string>
   <string name="set_profile_description">Биографија…</string>
   <string name="set_save_changes">Сачувај промене</string>
-  <string name="set_header_picture_overlay">Choose a header picture</string>
-  <string name="set_preview_reply">Display the number of replies in home timeline</string>
-  <string name="set_preview_reply_pp">Display profile pictures?</string>
-  <string name="set_multiaccount_actions">Allow interactions between accounts?</string>
-  <string name="note_no_space">You have reached the 160 characters allowed!</string>
-  <string name="username_no_space">You have reached the 30 characters allowed!</string>
-  <string name="settings_title_hour">Time slot for notifications:</string>
-  <string name="settings_time_from">Between</string>
-  <string name="settings_time_to">and</string>
-  <string name="settings_time_greater">The time must be greater than %1$s</string>
-  <string name="settings_time_lower">The time must be lower than %1$s</string>
-  <string name="settings_hour_init">Start time</string>
-  <string name="settings_hour_end">End time</string>
-  <string name="embedded_browser">Use the built-in browser</string>
-  <string name="use_javascript">Enable Javascript</string>
-  <string name="use_cookies">Allow third-party cookies</string>
-  <string name="settings_ui_layout">Layout for timelines: </string>
+  <string name="set_header_picture_overlay">Одаберите слику заглавља</string>
+  <string name="set_preview_reply">Прикажи број одговора у сопственој лајни</string>
+  <string name="set_preview_reply_pp">Прикажи профилну слику?</string>
+  <string name="set_multiaccount_actions">Дозволи интеракције између налога?</string>
+  <string name="note_no_space">Достигли сте дозвољених 160 карактера!</string>
+  <string name="username_no_space">Достигли сте дозвољених 30 карактера!</string>
+  <string name="settings_title_hour">Термин за обавештења:</string>
+  <string name="settings_time_from">Између</string>
+  <string name="settings_time_to">и</string>
+  <string name="settings_time_greater">Време мора бити веће од %1$s</string>
+  <string name="settings_time_lower">Време мора бити мање од %1$s</string>
+  <string name="settings_hour_init">Почетно време</string>
+  <string name="settings_hour_end">Крајње време</string>
+  <string name="embedded_browser">Користите уграђени прегледач</string>
+  <string name="use_javascript">Омогућите JavaScript</string>
+  <string name="use_cookies">Дозволите независне колачиће</string>
+  <string name="settings_ui_layout">Распоред лајни: </string>
   <string-array name="settings_menu_tabs">
-    <item>Tabs</item>
-    <item>Menu</item>
-    <item>Tabs and menu</item>
+    <item>Језичци</item>
+    <item>Мени</item>
+    <item>Језичци и мени</item>
   </string-array>
   <string-array name="settings_translation">
     <item>Yandex</item>
-    <item>No</item>
+    <item>Не</item>
   </string-array>
-  <string name="set_led_colour">Set LED colour:</string>
+  <string name="set_led_colour">Постави ЛЕД боју:</string>
   <string-array name="led_colours">
-    <item>Blue</item>
-    <item>Cyan</item>
-    <item>Magenta</item>
-    <item>Green</item>
-    <item>Red</item>
-    <item>Yellow</item>
-    <item>White</item>
+    <item>Плава</item>
+    <item>Море плава</item>
+    <item>Магента</item>
+    <item>Зелена</item>
+    <item>Црвена</item>
+    <item>Жута</item>
+    <item>Бела</item>
   </string-array>
-  <string name="set_title_news">News</string>
-  <string name="set_notification_news">Notify for new toots on the home timeline</string>
-  <string name="set_show_error_messages">Display error messages</string>
-  <string name="action_follow">Follow</string>
-  <string name="action_unfollow">Unfollow</string>
-  <string name="action_block">Block</string>
-  <string name="action_unblock">Unblock</string>
+  <string name="set_title_news">Вести</string>
+  <string name="set_notification_news">Обавести за нове тутове на сопственој лајни</string>
+  <string name="set_show_error_messages">Прикажи поруке о грешкама</string>
+  <string name="action_follow">Запрати</string>
+  <string name="action_unfollow">Престани да пратиш</string>
+  <string name="action_block">Блокирај</string>
+  <string name="action_unblock">Одблокирај</string>
   <string name="action_mute">Ућуткај</string>
-  <string name="action_no_action">No action</string>
+  <string name="action_no_action">Без акције</string>
   <string name="action_unmute">Искључи ућуткавање</string>
-  <string name="request_sent">Request sent</string>
-  <string name="followed_by">Follows you</string>
-  <string name="action_search">Search</string>
+  <string name="request_sent">Захтев послат</string>
+  <string name="followed_by">Прати Вас</string>
+  <string name="action_search">Претрага</string>
   <!-- Quick settings for notifications -->
-  <string name="settings_popup_title">Push notifications</string>
+  <string name="settings_popup_title">Гурни обавештења</string>
   <string name="settings_popup_message">
-        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
+        Потврдите гурање којих обавештења желите да примате.
+        Можете укључити и искључити ова обавештења накнадно у подешавањима (језичак за Обавештења).
     </string>
-  <string name="settings_popup_timeline">For unread toots in home time-line?</string>
-  <string name="settings_popup_notification">For unread notifications?</string>
+  <string name="settings_popup_timeline">За непрочитане тутове у сопственој лајни?</string>
+  <string name="settings_popup_notification">За непрочитана обавештења?</string>
   <!-- CACHE -->
-  <string name="cache_title">Clear cache</string>
-  <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+  <string name="cache_title">Обриши кеш</string>
+  <string name="cache_message">Тренутно има %1$s података у кешу.\n\nДа ли желите да их обришете?</string>
   <string name="cache_units">Mb</string>
-  <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+  <string name="toast_cache_clear">Кеш очишћен! %1$s ослобођено</string>
   <!-- PRIVACY -->
-  <string name="privacy_data_title">Recorded data</string>
+  <string name="privacy_data_title">Снимљени подаци</string>
   <string name="privacy_data">
-        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
+        Само основне информације о налозима су ускладиштене на уређају.
+        Ови подаци су строго поверљиви и може их користити само ова апликација.
+        Брисање апликација моментално брише ове податке.\n
+        &#9888; Пријаве и лозинке се никад не складиште. Користе се само за време безбедног (SSL) пријављивања са инстанцом.
     </string>
-  <string name="privacy_authorizations_title">Permissions:</string>
+  <string name="privacy_authorizations_title">Дозволе:</string>
   <string name="privacy_authorizations">
-        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
-        - <b>INTERNET</b>: Used for queries to an instance.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
-        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
-        - <b>WAKE_LOCK</b>: Used during the notification service.
+        - <b>ACCESS_NETWORK_STATE</b>: Користи се да види да ли је уређај накачен на бежичну мрежу.\n
+        - <b>INTERNET</b>: Користи се да прича са инстанцом.\n
+        - <b>WRITE_EXTERNAL_STORAGE</b>: Користи се да ускладишти мултимедију или да помери апликацију на SD картицу.\n
+        - <b>READ_EXTERNAL_STORAGE</b>: Користи се да дода мултимедију на тутове.\n
+        - <b>BOOT_COMPLETED</b>: Користи се да стартује сервис за обавештења.\n
+        - <b>WAKE_LOCK</b>: Користи се током рада сервиса за обавештења.
     </string>
-  <string name="privacy_API_authorizations_title">API permissions:</string>
+  <string name="privacy_API_authorizations_title">API дозволе:</string>
   <string name="privacy_API_authorizations">
-        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
+        - <b>Читај</b>: Чита податке.\n
+        - <b>Пиши</b>: Шаље статусе и отпрема мултимедију за статусе.\n
+        - <b>Прати</b>: Прати, уклаља праћења, блокира, одблокира.\n\n
+        <b>&#9888; Ове акције се изводе само када их корисник захтева.</b>
     </string>
-  <string name="privacy_API_title">Tracking and Libraries</string>
+  <string name="privacy_API_title">Праћење и библиотеке</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+         Апликација <b> не користи за праћење алатке </b>> (мерење публике, грешке за извештавање, итд.) и не садржи никакве рекламе.\n\n
+        Употреба библиотека је минимизована: \n
+        - <b>Glide</b>: за управљање мултимедијом\n
+        - <b>Android-Job</b>: за управљање  сервисима\n
+        - <b>PhotoView</b>: за управљање сликама\n
     </string>
-  <string name="privacy_API_yandex_title">Translation of toots</string>
+  <string name="privacy_API_yandex_title">Превод тутова</string>
   <string name="privacy_API_yandex_authorizations">
-        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
+        Апликација нуди могућност да преводи тутове на језик уређаја користећи Yandex API.\n
+        Yandex има своју конкретну политику приватности која се може наћи овде: https://yandex.ru/legal/confidential/?lang=en
     </string>
   <string name="thanks_text">
-        Thank you to Stéphane for the logo.
+        Хвала Стефани за лого.
     </string>
   <string name="thanks_text_dev">
-        Thank you to:
+        Хвала Вам на:
     </string>
-  <string name="filter_regex">Filter out by regular expressions</string>
-  <string name="search">Search</string>
-  <string name="delete">Delete</string>
-  <string name="fetch_more_toots">Fetch more toots…</string>
+  <string name="filter_regex">Филтрирај по регуларним изразима</string>
+  <string name="search">Претрага</string>
+  <string name="delete">Обриши</string>
+  <string name="fetch_more_toots">Дохвати још тутова…</string>
   <!-- About lists -->
-  <string name="action_lists">Lists</string>
-  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
-  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-  <string name="action_lists_add_to">Add to list</string>
-  <string name="action_lists_remove_from">Remove from list</string>
-  <string name="action_lists_create">Add list</string>
-  <string name="action_lists_delete">Delete list</string>
-  <string name="action_lists_update">Edit list</string>
-  <string name="action_lists_title_placeholder">New list title</string>
-  <string name="action_lists_search_users">Search among people you follow</string>
-  <string name="action_lists_owner">Your lists</string>
+  <string name="action_lists">Листе</string>
+  <string name="action_lists_confirm_delete">Да ли сте сигурни да желите да трајно избришете ову листу?</string>
+  <string name="action_lists_empty_content">Тренутно нема ништа у овој листи. Када чланови ове листе пошаљу нове статусе, они ће се појавити овде.</string>
+  <string name="action_lists_add_to">Додај на листу</string>
+  <string name="action_lists_remove_from">Уклони са листе</string>
+  <string name="action_lists_create">Додај листу</string>
+  <string name="action_lists_delete">Обриши листу</string>
+  <string name="action_lists_update">Измени листу</string>
+  <string name="action_lists_title_placeholder">Ново име листе</string>
+  <string name="action_lists_search_users">Претражи међу људима које пратите</string>
+  <string name="action_lists_owner">Ваше листе</string>
   <!-- Migration -->
-  <string name="account_moved_to">%1$s has moved to %2$s</string>
-  <string name="show_boost_count">Show boosts/favourites count</string>
-  <string name="issue_login_title">Authentication does not work?</string>
+  <string name="account_moved_to">%1$s се померио на %2$s</string>
+  <string name="show_boost_count">Прикажи број подржаних/омиљених</string>
+  <string name="issue_login_title">Пријављивање не ради?</string>
   <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
+        <b>Ево неких провера које могу да помогну:</b>\n\n
+        - Проверите да нема грешака у куцању имена инстанце\n\n
+        - Проверите да ли је инстанца жива и ради\n\n
+        - Ако користите двофакторско пријављивање (2FA), користите линк на дну (када попуните име инстанце)\n\n
+        - Линк испод можете користити и без да користите 2FA\n\n
+        - Ако ништа ни даље не ради, пријавите нам проблем на Github-у, на https://github.com/stom79/mastalab/issues
     </string>
-  <string name="media_ready">Media has been loaded. Click here to display it.</string>
+  <string name="media_ready">Мултимедија је учитана. Кликните овде да је прикажете.</string>
 </resources>
