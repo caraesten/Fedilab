@@ -3,7 +3,7 @@
 <resources>
   <string name="navigation_drawer_open">Отвори мени</string>
   <string name="navigation_drawer_close">Затвори мени</string>
-  <string name="action_about">О</string>
+  <string name="action_about">О програму</string>
   <string name="action_about_instance">О инстанци</string>
   <string name="action_privacy">Приватност</string>
   <string name="action_cache">Кеш</string>
@@ -208,9 +208,9 @@
     <item quantity="other">и још %d обавештења</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="one">и још један тут за открити</item>
-    <item quantity="few">и још %d тута за открити</item>
-    <item quantity="other">и још %d тутова за открити</item>
+    <item quantity="one">и још један нов интересантан тут</item>
+    <item quantity="few">и још %d нова интересантна тута</item>
+    <item quantity="other">и још %d нових интересантних тутова</item>
   </plurals>
   <string name="delete_notification_ask">Обриши обавештење?</string>
   <string name="delete_notification_ask_all">Обрисати сва обавештења?</string>
@@ -269,7 +269,7 @@
   <string name="set_display_global">Прикажи федерисану лајну</string>
   <string name="set_disable_gif">Онемогући GIF аватаре</string>
   <string name="set_folder_title">Путања: </string>
-  <string name="set_auto_store_toot">Сачувај нацрте аутоматски</string>
+  <string name="set_auto_store_toot">Аутоматски чувај нацрте</string>
   <string name="set_bubble_counter">Прикажи бројаче</string>
   <string name="set_auto_add_media_url">Додај адресу мултимедије у тутове</string>
   <string name="settings_title_notifications">Управљање обавештењима</string>
@@ -278,10 +278,10 @@
   <string name="set_notif_follow_share">Обавести када неко подржи Ваш статус</string>
   <string name="set_notif_follow_add">Обавести када неко стави да му је Ваш статус омиљен</string>
   <string name="set_notif_follow_mention">Обавести када Вас неко помене</string>
-  <string name="set_share_validation">Прикажи дијалог за потврду пре подршке</string>
+  <string name="set_share_validation">Прикажи потврду пре давања подршке некоме</string>
   <string name="set_share_validation_fav">Прикажи дијалог за потврду пре додавања у омиљене</string>
   <string name="settings_title_more_options">Напредне поставке</string>
-  <string name="set_wifi_only">Обавести само на бежичној мрежи</string>
+  <string name="set_wifi_only">Обавештавај само на бежичној мрежи</string>
   <string name="set_notify">Обавештења?</string>
   <string name="set_notif_silent">Тиха обавештења</string>
   <string name="set_night_mode">Ноћни режим</string>
@@ -377,7 +377,7 @@
     </string>
   <string name="privacy_API_title">Праћење и библиотеке</string>
   <string name="privacy_API">
-         Апликација <b> не користи за праћење алатке </b>> (мерење публике, грешке за извештавање, итд.) и не садржи никакве рекламе.\n\n
+         Апликација <b> не користи за праћење алатке </b>&gt; (мерење публике, грешке за извештавање, итд.) и не садржи никакве рекламе.\n\n
         Употреба библиотека је минимизована: \n
         - <b>Glide</b>: за управљање мултимедијом\n
         - <b>Android-Job</b>: за управљање  сервисима\n
