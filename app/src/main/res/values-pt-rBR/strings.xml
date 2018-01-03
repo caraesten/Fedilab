@@ -24,7 +24,7 @@
   <string name="email">E-mail</string>
   <string name="accounts">Contas</string>
   <string name="toots">Toots</string>
-  <string name="tags">Tags</string>
+  <string name="tags">Marcadores</string>
   <string name="token">Token</string>
   <string name="save">Salvar</string>
   <string name="restore">Restaurar</string>
@@ -64,10 +64,10 @@
   <string name="mention">Menções</string>
   <string name="reblog">Compartilhamentos</string>
   <string name="show_boosts">Show boosts</string>
-  <string name="show_replies">Show replies</string>
-  <string name="action_open_in_web">Open in browser</string>
+  <string name="show_replies">Mostrar respostas</string>
+  <string name="action_open_in_web">Abrir no navegador</string>
   <string name="translate">Translate</string>
-  <string name="please_wait">Please, wait few seconds before making this action.</string>
+  <string name="please_wait">Espere alguns segundos antes de realizar esta ação.</string>
   <!--- Menu -->
   <string name="home_menu">Página inicial</string>
   <string name="local_menu">Timeline local</string>
@@ -95,7 +95,7 @@
   <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
   <string name="insert_emoji">Inserir Emoji</string>
   <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-  <string name="live_notif">Live notifications</string>
+  <string name="live_notif">Notificações em tempo real</string>
   <!-- Status -->
   <string name="no_status">Sem toots para exibir</string>
   <string name="fav_added">Toot adicionado aos favoritos</string>
