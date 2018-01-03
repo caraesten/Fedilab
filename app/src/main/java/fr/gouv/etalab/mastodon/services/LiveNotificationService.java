@@ -49,7 +49,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -82,7 +81,6 @@ public class LiveNotificationService extends Service {
 
 
     protected Account account;
-    private static HashMap<String, HttpsURLConnection> httpsURLConnectionHashMap = new HashMap<>();
     private boolean stop = false;
 
     public void onCreate() {
@@ -156,15 +154,12 @@ public class LiveNotificationService extends Service {
 
     private void taks(Account account){
         InputStream inputStream = null;
-
+        HttpsURLConnection httpsURLConnection = null;
         BufferedReader reader = null;
         Helper.EventStreaming lastEvent = null;
 
         if( account != null){
             try {
-                HttpsURLConnection httpsURLConnection = httpsURLConnectionHashMap.get(account.getAcct() + account.getInstance());
-                if( httpsURLConnection != null)
-                    httpsURLConnection.disconnect();
                 URL url = new URL("https://" + account.getInstance() + "/api/v1/streaming/user");
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
                 httpsURLConnection.setRequestProperty("Content-Type", "application/json");
@@ -174,14 +169,13 @@ public class LiveNotificationService extends Service {
                 httpsURLConnection.setRequestProperty("Connection", "close");
                 httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
                 httpsURLConnection.setRequestMethod("GET");
-                httpsURLConnectionHashMap.put(account.getAcct() + account.getInstance(), httpsURLConnection);
                 if( httpsURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK){
                     inputStream = new BufferedInputStream(httpsURLConnection.getInputStream());
                     reader = new BufferedReader(new InputStreamReader(inputStream));
                     String event;
                     Helper.EventStreaming eventStreaming;
                     while((event = reader.readLine()) != null) {
-                        Log.v(Helper.TAG,account.getAcct()+"@" + account.getInstance() + " -> " + event);
+                        Log.v(Helper.TAG,account.getAcct()+"@" + account.getInstance() + " -> " + event + " -- " + reader);
                         if ((lastEvent == Helper.EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
                             switch (event.trim()) {
                                 case "event: update":
@@ -219,12 +213,9 @@ public class LiveNotificationService extends Service {
                             } catch (JSONException ignored) {}
                         }
                     }
-                }else {
-                    httpsURLConnection.disconnect();
                 }
 
-            } catch (Exception ignored) {Log.v(Helper.TAG,account.getAcct()+"@" + account.getInstance() + " -> " + ignored.getMessage());}finally {
-
+            } catch (Exception ignored) {ignored.printStackTrace();Log.v(Helper.TAG,account.getAcct()+"@" + account.getInstance() + " -> " + ignored.getMessage());}finally {
                 if (reader != null) {
                     try {
                         reader.close();
@@ -235,8 +226,9 @@ public class LiveNotificationService extends Service {
                         inputStream.close();
                     } catch (IOException ignored) {}
                 }
-                if (httpsURLConnectionHashMap.get(account.getAcct() + account.getInstance()) != null)
-                    httpsURLConnectionHashMap.get(account.getAcct() + account.getInstance()).disconnect();
+                if (inputStream != null) {
+                    httpsURLConnection.disconnect();
+                }
                 SystemClock.sleep(5000);
                 Intent streamingIntent = new Intent(this, LiveNotificationService.class);
                 streamingIntent.putExtra("userId", account.getId());
