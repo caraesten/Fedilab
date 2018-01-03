@@ -142,7 +142,10 @@ public class StreamingLocalTimelineService extends IntentService {
                 }
                 if( sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL + accountStream.getId() + accountStream.getInstance(), true)) {
                     SystemClock.sleep(1000);
-                    sendBroadcast(new Intent("RestartStreamingLocalService"));
+                    Intent streamingLocalTimelineService = new Intent(this, StreamingLocalTimelineService.class);
+                    try {
+                        startService(streamingLocalTimelineService);
+                    }catch (Exception ignored){}
                 }
             }
         }

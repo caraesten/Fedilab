@@ -15,6 +15,7 @@
 package fr.gouv.etalab.mastodon.activities;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -139,7 +140,6 @@ public abstract class BaseMainActivity extends BaseActivity
     public static int countNewStatus = 0;
     public static int countNewNotifications = 0;
     private String userIdService;
-    private Intent streamingIntent;
     public static String lastHomeId = null, lastNotificationId = null;
     boolean notif_follow, notif_add, notif_mention, notif_share, show_boosts, show_replies;
     String show_filtered;
@@ -225,7 +225,7 @@ public abstract class BaseMainActivity extends BaseActivity
         changeDrawableColor(getApplicationContext(), R.drawable.ic_notifications,R.color.dark_text);
         changeDrawableColor(getApplicationContext(), R.drawable.ic_people,R.color.dark_text);
         changeDrawableColor(getApplicationContext(), R.drawable.ic_public,R.color.dark_text);
-        startSreaming(false);
+        startSreaming();
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
@@ -1234,13 +1234,6 @@ public abstract class BaseMainActivity extends BaseActivity
     @Override
     public void onStop(){
         super.onStop();
-        if( streamingIntent != null) {
-            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + userId + instance, false);
-            stopService(streamingIntent);
-            editor.apply();
-        }
         if( receive_federated_data != null)
             LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_federated_data);
         if( receive_local_data != null)
@@ -1638,13 +1631,19 @@ public abstract class BaseMainActivity extends BaseActivity
     }
 
 
-    public void startSreaming(boolean restart){
+    public void startSreaming(){
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
         boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
         if( notify && liveNotifications) {
-            streamingIntent = new Intent(this, LiveNotificationService.class);
-            streamingIntent.putExtra("restart", restart);
+            ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+            assert manager != null;
+            for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+                if (LiveNotificationService.class.getName().equals(service.service.getClassName())) {
+                    return;
+                }
+            }
+            Intent streamingIntent = new Intent(this, LiveNotificationService.class);
             startService(streamingIntent);
         }
 

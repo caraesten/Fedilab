@@ -143,7 +143,10 @@ public class StreamingFederatedTimelineService extends IntentService {
                 }
                 if( sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + accountStream.getId() + accountStream.getInstance(), true)) {
                     SystemClock.sleep(1000);
-                    sendBroadcast(new Intent("RestartStreamingFederatedService"));
+                    Intent streamingFederatedTimelineService = new Intent(this, StreamingFederatedTimelineService.class);
+                    try {
+                        startService(streamingFederatedTimelineService);
+                    }catch (Exception ignored){}
                 }
             }
         }
