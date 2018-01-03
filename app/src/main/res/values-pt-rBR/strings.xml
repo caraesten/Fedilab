@@ -24,7 +24,7 @@
   <string name="email">E-mail</string>
   <string name="accounts">Contas</string>
   <string name="toots">Toots</string>
-  <string name="tags">Tags</string>
+  <string name="tags">Marcadores</string>
   <string name="token">Token</string>
   <string name="save">Salvar</string>
   <string name="restore">Restaurar</string>
@@ -63,11 +63,11 @@
   <string name="follow">Novos seguidores</string>
   <string name="mention">Menções</string>
   <string name="reblog">Compartilhamentos</string>
-  <string name="show_boosts">Show boosts</string>
-  <string name="show_replies">Show replies</string>
-  <string name="action_open_in_web">Open in browser</string>
-  <string name="translate">Translate</string>
-  <string name="please_wait">Please, wait few seconds before making this action.</string>
+  <string name="show_boosts">Mostrar compartilhamentos</string>
+  <string name="show_replies">Mostrar respostas</string>
+  <string name="action_open_in_web">Abrir no navegador</string>
+  <string name="translate">Traduza</string>
+  <string name="please_wait">Espere alguns segundos antes de realizar esta ação.</string>
   <!--- Menu -->
   <string name="home_menu">Página inicial</string>
   <string name="local_menu">Timeline local</string>
@@ -95,7 +95,7 @@
   <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
   <string name="insert_emoji">Inserir Emoji</string>
   <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-  <string name="live_notif">Live notifications</string>
+  <string name="live_notif">Notificações em tempo real</string>
   <!-- Status -->
   <string name="no_status">Sem toots para exibir</string>
   <string name="fav_added">Toot adicionado aos favoritos</string>
@@ -136,8 +136,8 @@
   <!-- TOOT -->
   <string name="toot_cw_placeholder">Alerta de conteúdo</string>
   <string name="toot_placeholder">No que você está pensando?</string>
-  <string name="toot_it">TOOT!</string>
-  <string name="cw">cw</string>
+  <string name="toot_it">PUBLICAR!</string>
+  <string name="cw">aviso de conteúdo</string>
   <string name="toot_title">Escrever um toot</string>
   <string name="toot_title_reply">Responder a um toot</string>
   <string name="toot_no_space">Você já gastou os 500 caracteres permitidos!</string>
@@ -159,10 +159,10 @@
   <string name="no_draft">Sem rascunhos!</string>
   <string name="choose_toot">Escolha um toot</string>
   <string name="choose_accounts">Escolha uma conta</string>
-  <string name="select_accounts">Select some accounts</string>
+  <string name="select_accounts">Selecionar contas</string>
   <string name="remove_draft">Excluir rascunho?</string>
   <string name="show_reply">Clique no botão para exibir toot original</string>
-  <string name="upload_form_description">Describe for the visually impaired</string>
+  <string name="upload_form_description">Descreva para os deficientes visuais</string>
   <!-- Instance -->
   <string name="instance_no_description">Sem descrição!</string>
   <!-- About -->
@@ -259,12 +259,12 @@
   <string name="set_attachment_action">Carregar mídia</string>
   <string name="load_attachment">Carregar imagens</string>
   <string name="load_attachment_spoiler">Mostrar mais…</string>
-  <string name="load_attachment_spoiler_less">Show less…</string>
+  <string name="load_attachment_spoiler_less">Exibir menos…</string>
   <string name="load_sensitive_attachment">Conteúdo sensível</string>
   <string name="set_display_reply">Exibir mensagem anterior nas respostas</string>
   <string name="set_display_local">Exibir timeline local</string>
   <string name="set_display_global">Exibir timeline federada</string>
-  <string name="set_disable_gif">Disable GIF avatars</string>
+  <string name="set_disable_gif">Desativar avatares GIF</string>
   <string name="set_folder_title">Caminho: </string>
   <string name="set_auto_store_toot">Salvar rascunhos automaticamente</string>
   <string name="set_bubble_counter">Exibir contadores</string>
@@ -346,7 +346,7 @@
   <!-- CACHE -->
   <string name="cache_title">Limpar cache</string>
   <string name="cache_message">Há %1$s em dados em cache.\n\nGostaria de exclui-los?</string>
-  <string name="cache_units">Mb</string>
+  <string name="cache_units">MB</string>
   <string name="toast_cache_clear">Cache limpo! %1$s foram liberados</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">Dados salvos</string>
@@ -374,11 +374,12 @@
     </string>
   <string name="privacy_API_title">Rastreamento e bibliotecas</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+        O aplicativo <b>não usa ferramentas de rastreamento</b> (análises de audiência, relatório de erros, etc.) e não contém propagandas.\n\n
+        O uso de bibliotecas é mínimo: \n
+        - <b>Glide</b>: gerenciamento de mídia\n
+        - <b>Android-Job</b>: gerenciamento de serviços\n
+        - <b>PhotoView</b>: gerenciamento de imagens\n
+    
     </string>
   <string name="privacy_API_yandex_title">Tradução de toots</string>
   <string name="privacy_API_yandex_authorizations">
@@ -394,30 +395,30 @@
   <string name="filter_regex">Filtrar com uma expressão regular</string>
   <string name="search">Pesquisar</string>
   <string name="delete">Eliminar</string>
-  <string name="fetch_more_toots">Fetch more toots…</string>
+  <string name="fetch_more_toots">Carregar mais toots…</string>
   <!-- About lists -->
-  <string name="action_lists">Lists</string>
-  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
-  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-  <string name="action_lists_add_to">Add to list</string>
-  <string name="action_lists_remove_from">Remove from list</string>
-  <string name="action_lists_create">Add list</string>
-  <string name="action_lists_delete">Delete list</string>
-  <string name="action_lists_update">Edit list</string>
-  <string name="action_lists_title_placeholder">New list title</string>
-  <string name="action_lists_search_users">Search among people you follow</string>
-  <string name="action_lists_owner">Your lists</string>
+  <string name="action_lists">Listas</string>
+  <string name="action_lists_confirm_delete">Você tem certeza de que deseja excluir permanentemente esta lista?</string>
+  <string name="action_lists_empty_content">Não há nada nesta lista ainda. Quando membros desta lista publicarem novos toots, eles aparecerão aqui.</string>
+  <string name="action_lists_add_to">Adicionar à lista</string>
+  <string name="action_lists_remove_from">Remover da lista</string>
+  <string name="action_lists_create">Adicionar lista</string>
+  <string name="action_lists_delete">Excluir lista</string>
+  <string name="action_lists_update">Editar lista</string>
+  <string name="action_lists_title_placeholder">Nome da nova lista</string>
+  <string name="action_lists_search_users">Pesquisar nos seus seguidores</string>
+  <string name="action_lists_owner">Suas listas</string>
   <!-- Migration -->
-  <string name="account_moved_to">%1$s has moved to %2$s</string>
-  <string name="show_boost_count">Show boosts/favourites count</string>
-  <string name="issue_login_title">Authentication does not work?</string>
+  <string name="account_moved_to">%1$s foi movido para %2$s</string>
+  <string name="show_boost_count">Mostrar quantidade de compartilhamentos/curtidas</string>
+  <string name="issue_login_title">Falha ao autenticar?</string>
   <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
+        <b>Aqui estão algumas dicas:</b>\n\n
+        - Verifique se não há nenhum erro ortográfico no nome da instância\n\n
+        - Verifique se a sua instância não está offline\n\n
+        - Caso use autenticação em duas etapas (2FA), use o link abaixo assim que o nome da instância estiver preenchido\n\n
+        - Você também pode usar este link sem a autenticação em duas etapas\n\n
+        - Se nenhuma das dicas funcionar, relate o problema em: https://github.com/stom79/mastalab/issues
     </string>
-  <string name="media_ready">Media has been loaded. Click here to display it.</string>
+  <string name="media_ready">A mídia foi carregada. Clique aqui para exibi-la.</string>
 </resources>
