@@ -35,7 +35,6 @@
             android:layout_marginTop="20dp"
             android:animateLayoutChanges="true"
             android:visibility="gone"
-            android:maxLines="1"
             android:hint="@string/toot_cw_placeholder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
