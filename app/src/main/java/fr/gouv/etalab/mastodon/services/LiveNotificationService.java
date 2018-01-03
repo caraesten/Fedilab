@@ -49,6 +49,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -82,7 +83,7 @@ public class LiveNotificationService extends Service {
 
     protected Account account;
     private boolean stop = false;
-
+    private static HashMap<String, Boolean> isRunning = new HashMap<>();
     public void onCreate() {
         super.onCreate();
         Log.v(Helper.TAG,"onCreate= ");
@@ -159,82 +160,96 @@ public class LiveNotificationService extends Service {
         Helper.EventStreaming lastEvent = null;
 
         if( account != null){
-            try {
-                URL url = new URL("https://" + account.getInstance() + "/api/v1/streaming/user");
-                httpsURLConnection = (HttpsURLConnection) url.openConnection();
-                httpsURLConnection.setRequestProperty("Content-Type", "application/json");
-                httpsURLConnection.setRequestProperty("Authorization", "Bearer " + account.getToken());
-                httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
-                httpsURLConnection.setRequestProperty("Keep-Alive", "header");
-                httpsURLConnection.setRequestProperty("Connection", "close");
-                httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
-                httpsURLConnection.setRequestMethod("GET");
-                if( httpsURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK){
-                    inputStream = new BufferedInputStream(httpsURLConnection.getInputStream());
-                    reader = new BufferedReader(new InputStreamReader(inputStream));
-                    String event;
-                    Helper.EventStreaming eventStreaming;
-                    while((event = reader.readLine()) != null) {
-                        Log.v(Helper.TAG,account.getAcct()+"@" + account.getInstance() + " -> " + event + " -- " + reader);
-                        if ((lastEvent == Helper.EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
-                            switch (event.trim()) {
-                                case "event: update":
-                                    lastEvent = Helper.EventStreaming.UPDATE;
-                                    break;
-                                case "event: notification":
-                                    lastEvent = Helper.EventStreaming.NOTIFICATION;
-                                    break;
-                                case "event: delete":
-                                    lastEvent = Helper.EventStreaming.DELETE;
-                                    break;
-                                default:
-                                    lastEvent = Helper.EventStreaming.NONE;
-                            }
-                        } else {
-                            if (!event.startsWith("data: ")) {
-                                lastEvent = Helper.EventStreaming.NONE;
-                                continue;
-                            }
-                            event = event.substring(6);
-                            if (lastEvent == Helper.EventStreaming.UPDATE) {
-                                eventStreaming = Helper.EventStreaming.UPDATE;
-                            } else if (lastEvent == Helper.EventStreaming.NOTIFICATION) {
-                                eventStreaming = Helper.EventStreaming.NOTIFICATION;
-                            } else if (lastEvent == Helper.EventStreaming.DELETE) {
-                                eventStreaming = Helper.EventStreaming.DELETE;
-                                event = "{id:" + event + "}";
+            isRunning.get(account.getAcct()+account.getInstance());
+            Log.v(Helper.TAG, account.getAcct() + "@" + account.getInstance() + " RUN -> " + isRunning.get(account.getAcct()+account.getInstance()));
+            if(!isRunning.containsKey(account.getAcct()+account.getInstance()) || ! isRunning.get(account.getAcct()+account.getInstance())) {
+                try {
+                    URL url = new URL("https://" + account.getInstance() + "/api/v1/streaming/user");
+                    httpsURLConnection = (HttpsURLConnection) url.openConnection();
+                    httpsURLConnection.setRequestProperty("Content-Type", "application/json");
+                    httpsURLConnection.setRequestProperty("Authorization", "Bearer " + account.getToken());
+                    httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
+                    httpsURLConnection.setRequestProperty("Keep-Alive", "header");
+                    httpsURLConnection.setRequestProperty("Connection", "close");
+                    httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+                    httpsURLConnection.setRequestMethod("GET");
+                    if (httpsURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                        inputStream = new BufferedInputStream(httpsURLConnection.getInputStream());
+                        reader = new BufferedReader(new InputStreamReader(inputStream));
+                        String event;
+                        Helper.EventStreaming eventStreaming;
+                        while ((event = reader.readLine()) != null) {
+                            isRunning.put(account.getAcct()+account.getInstance(), true);
+                            Log.v(Helper.TAG, account.getAcct() + "@" + account.getInstance() + " -> " + event + " -- " + reader);
+                            if ((lastEvent == Helper.EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
+                                switch (event.trim()) {
+                                    case "event: update":
+                                        lastEvent = Helper.EventStreaming.UPDATE;
+                                        break;
+                                    case "event: notification":
+                                        lastEvent = Helper.EventStreaming.NOTIFICATION;
+                                        break;
+                                    case "event: delete":
+                                        lastEvent = Helper.EventStreaming.DELETE;
+                                        break;
+                                    default:
+                                        lastEvent = Helper.EventStreaming.NONE;
+                                }
                             } else {
-                                eventStreaming = Helper.EventStreaming.UPDATE;
+                                if (!event.startsWith("data: ")) {
+                                    lastEvent = Helper.EventStreaming.NONE;
+                                    continue;
+                                }
+                                event = event.substring(6);
+                                if (lastEvent == Helper.EventStreaming.UPDATE) {
+                                    eventStreaming = Helper.EventStreaming.UPDATE;
+                                } else if (lastEvent == Helper.EventStreaming.NOTIFICATION) {
+                                    eventStreaming = Helper.EventStreaming.NOTIFICATION;
+                                } else if (lastEvent == Helper.EventStreaming.DELETE) {
+                                    eventStreaming = Helper.EventStreaming.DELETE;
+                                    event = "{id:" + event + "}";
+                                } else {
+                                    eventStreaming = Helper.EventStreaming.UPDATE;
+                                }
+                                lastEvent = Helper.EventStreaming.NONE;
+                                try {
+                                    JSONObject eventJson = new JSONObject(event);
+                                    onRetrieveStreaming(eventStreaming, account, eventJson);
+                                } catch (JSONException ignored) {
+                                }
                             }
-                            lastEvent = Helper.EventStreaming.NONE;
-                            try {
-                                JSONObject eventJson = new JSONObject(event);
-                                onRetrieveStreaming(eventStreaming, account, eventJson);
-                            } catch (JSONException ignored) {}
+                        }
+                        isRunning.put(account.getAcct() + account.getInstance(), false);
+                    }
+
+                } catch (Exception ignored) {
+                    isRunning.put(account.getAcct() + account.getInstance(), false);
+                    ignored.printStackTrace();
+                    Log.v(Helper.TAG, account.getAcct() + "@" + account.getInstance() + " -> " + ignored.getMessage());
+                } finally {
+                    if (reader != null) {
+                        try {
+                            reader.close();
+                        } catch (IOException ignored) {
                         }
                     }
-                }
-
-            } catch (Exception ignored) {ignored.printStackTrace();Log.v(Helper.TAG,account.getAcct()+"@" + account.getInstance() + " -> " + ignored.getMessage());}finally {
-                if (reader != null) {
+                    if (inputStream != null) {
+                        try {
+                            inputStream.close();
+                        } catch (IOException ignored) {
+                        }
+                    }
+                    if (inputStream != null) {
+                        httpsURLConnection.disconnect();
+                    }
+                    SystemClock.sleep(5000);
+                    Intent streamingIntent = new Intent(this, LiveNotificationService.class);
+                    streamingIntent.putExtra("userId", account.getId());
                     try {
-                        reader.close();
-                    } catch (IOException ignored) {}
+                        startService(streamingIntent);
+                    } catch (Exception ignored) {
+                    }
                 }
-                if (inputStream != null) {
-                    try {
-                        inputStream.close();
-                    } catch (IOException ignored) {}
-                }
-                if (inputStream != null) {
-                    httpsURLConnection.disconnect();
-                }
-                SystemClock.sleep(5000);
-                Intent streamingIntent = new Intent(this, LiveNotificationService.class);
-                streamingIntent.putExtra("userId", account.getId());
-                try {
-                    startService(streamingIntent);
-                }catch (Exception ignored){}
             }
         }
     }
