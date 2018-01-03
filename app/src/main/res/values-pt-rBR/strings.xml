@@ -137,7 +137,7 @@
   <string name="toot_cw_placeholder">Alerta de conteúdo</string>
   <string name="toot_placeholder">No que você está pensando?</string>
   <string name="toot_it">PUBLICAR!</string>
-  <string name="cw">cw</string>
+  <string name="cw">aviso de conteúdo</string>
   <string name="toot_title">Escrever um toot</string>
   <string name="toot_title_reply">Responder a um toot</string>
   <string name="toot_no_space">Você já gastou os 500 caracteres permitidos!</string>
@@ -159,10 +159,10 @@
   <string name="no_draft">Sem rascunhos!</string>
   <string name="choose_toot">Escolha um toot</string>
   <string name="choose_accounts">Escolha uma conta</string>
-  <string name="select_accounts">Select some accounts</string>
+  <string name="select_accounts">Selecionar contas</string>
   <string name="remove_draft">Excluir rascunho?</string>
   <string name="show_reply">Clique no botão para exibir toot original</string>
-  <string name="upload_form_description">Describe for the visually impaired</string>
+  <string name="upload_form_description">Descreva para os deficientes visuais</string>
   <!-- Instance -->
   <string name="instance_no_description">Sem descrição!</string>
   <!-- About -->
@@ -406,11 +406,11 @@
   <string name="action_lists_delete">Excluir lista</string>
   <string name="action_lists_update">Editar lista</string>
   <string name="action_lists_title_placeholder">Nome da nova lista</string>
-  <string name="action_lists_search_users">Search among people you follow</string>
+  <string name="action_lists_search_users">Pesquisar nos seus seguidores</string>
   <string name="action_lists_owner">Suas listas</string>
   <!-- Migration -->
-  <string name="account_moved_to">%1$s has moved to %2$s</string>
-  <string name="show_boost_count">Show boosts/favourites count</string>
+  <string name="account_moved_to">%1$s foi movido para %2$s</string>
+  <string name="show_boost_count">Mostrar quantidade de compartilhamentos/curtidas</string>
   <string name="issue_login_title">Falha ao autenticar?</string>
   <string name="issue_login_message">
         <b>Here are some checks that might help:</b>\n\n
