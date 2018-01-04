@@ -6,6 +6,10 @@
         android:title="@string/more_action_1"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_timed_mute"
+        android:title="@string/more_action_8"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_block"
         android:title="@string/more_action_2"
         app:showAsAction="never" />

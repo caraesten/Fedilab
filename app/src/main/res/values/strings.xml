@@ -122,6 +122,7 @@
     <string name="more_action_5">Copy</string>
     <string name="more_action_6">Share</string>
     <string name="more_action_7">Mention</string>
+    <string name="more_action_8">Timed mute</string>
     <string-array name="more_action_confirm">
         <item>Mute this account?</item>
         <item>Block this account?</item>
