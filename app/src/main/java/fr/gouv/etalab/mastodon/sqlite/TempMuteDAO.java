@@ -55,8 +55,6 @@ public class TempMuteDAO {
      * @param date Date
      */
     public void insert(String targeted_id, Date date) {
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_TARGETED_USER_ID, targeted_id);
         values.put(Sqlite.COL_USER_ID, userId);
@@ -72,73 +70,103 @@ public class TempMuteDAO {
     //------- REMOVE  -------
 
     /***
+     * Remove mute by its id for the authenticated user
+     * @return int
+     */
+    public int removeStrict(String targeted_id){
+        return db.delete(Sqlite.TABLE_TEMP_MUTE,  Sqlite.COL_TARGETED_USER_ID + " = \"" + targeted_id + "\" AND " + Sqlite.COL_USER_ID + " = \"" + userId+ "\"", null);
+    }
+
+    //------- REMOVE  -------
+
+    /***
      * Remove mute by its id
      * @return int
      */
     public int remove(String targeted_id){
-        return db.delete(Sqlite.TABLE_TEMP_MUTE,  Sqlite.COL_TARGETED_USER_ID + " = \"" + targeted_id + "\" AND " + Sqlite.COL_USER_ID + " = \"" + userId+ "\"", null);
+        return db.delete(Sqlite.TABLE_TEMP_MUTE,  Sqlite.COL_TARGETED_USER_ID + " = \"" + targeted_id + "\"", null);
+    }
+
+    /***
+     * Remove mute by its id
+     * @return int
+     */
+    public int removeOld(){
+        return db.delete(Sqlite.TABLE_TEMP_MUTE,  Sqlite.COL_DATE_END + " < date('now')", null);
     }
 
     //------- GETTERS  -------
 
     /**
-     * Returns all search in db for a user
-     * @return search List<String>
+     * Returns all id of timed mute in db
+     * @return time muted List<String>
      */
-    public List<String> getAllSearch(){
+    public List<String> getAllTimeMutedStrict(){
         try {
-            Cursor c = db.query(Sqlite.TABLE_SEARCH, null, Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_KEYWORDS + " ASC", null);
-            return cursorToListSearch(c);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-
-
-    /**
-     * Returns search by its keyword in db
-     * @return keywords List<String>
-     */
-    public List<String> getSearchStartingBy(String keyword){
-        try {
-            Cursor c = db.query(Sqlite.TABLE_SEARCH, null, Sqlite.COL_KEYWORDS + " LIKE \"%" + keyword + "%\" AND " + Sqlite.COL_USER_ID + " = \"" + userId+ "\"", null, null, null, null, null);
-            return cursorToListSearch(c);
+            Cursor c = db.query(Sqlite.TABLE_TEMP_MUTE, null, Sqlite.COL_DATE_END + " >= date('now') AND " + Sqlite.COL_USER_ID + " = \"" + userId+ "\"", null, null, null, null, null);
+            return cursorToTimeMute(c);
         } catch (Exception e) {
             return null;
         }
     }
 
     /**
+     * Returns all id of timed mute in db
+     * @return time muted List<String>
+     */
+    public List<String> getAllTimeMuted(){
+        try {
+            Cursor c = db.query(Sqlite.TABLE_TEMP_MUTE, null, Sqlite.COL_DATE_END + " >= date('now')", null, null, null, null, null);
+            return cursorToTimeMute(c);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
      * Returns search by its keyword in db
      * @return keywords List<String>
      */
-    public List<String> getSearchByKeyword(String keyword){
+    public boolean isTempMutedStrict(String targeted_id){
         try {
-            Cursor c = db.query(Sqlite.TABLE_SEARCH, null, Sqlite.COL_KEYWORDS + " = \"" + keyword + "\" AND " + Sqlite.COL_USER_ID + " = \"" + userId+ "\"", null, null, null, null, null);
-            return cursorToListSearch(c);
+            Cursor c = db.query(Sqlite.TABLE_TEMP_MUTE, null, Sqlite.COL_TARGETED_USER_ID + " = \"" + targeted_id + "\" AND " + Sqlite.COL_USER_ID + " = \"" + userId+ "\"", null, null, null, null, null);
+            return cursorToTimeMute(c) != null;
         } catch (Exception e) {
-            return null;
+            return false;
+        }
+    }
+
+
+    /**
+     * Returns search by its keyword in db
+     * @return keywords List<String>
+     */
+    public boolean isTempMuted(String targeted_id){
+        try {
+            Cursor c = db.query(Sqlite.TABLE_TEMP_MUTE, null, Sqlite.COL_TARGETED_USER_ID + " = \"" + targeted_id + "\"", null, null, null, null, null);
+            return cursorToTimeMute(c) != null;
+        } catch (Exception e) {
+            return false;
         }
     }
 
 
     /***
-     * Method to hydrate stored search from database
+     * Method to hydrate time mute id  from database
      * @param c Cursor
      * @return List<String>
      */
-    private List<String> cursorToListSearch(Cursor c){
+    private List<String> cursorToTimeMute(Cursor c){
         //No element found
         if (c.getCount() == 0)
             return null;
-        List<String> searches = new ArrayList<>();
+        List<String> timeMutes = new ArrayList<>();
         while (c.moveToNext() ) {
-            searches.add(c.getString(c.getColumnIndex(Sqlite.COL_KEYWORDS)));
+            timeMutes.add(c.getString(c.getColumnIndex(Sqlite.COL_TARGETED_USER_ID)));
         }
         //Close the cursor
         c.close();
-        //Search list is returned
-        return searches;
+        //Time mute id list is returned
+        return timeMutes;
     }
 }
