@@ -110,7 +110,7 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String COL_DATE_END = "DATE_END";
     private final String CREATE_TABLE_TEMP_MUTE = "CREATE TABLE " + TABLE_TEMP_MUTE + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COL_USER_ID + " TEXT NOT NULL, " + COL_TARGETED_USER_ID + " TEXT NOT NULL, " + COL_DATE_CREATION + " TEXT NOT NULL, " + COL_DATE_END + " TEXT NOT NULL)";
+            + COL_ACCT + " TEXT NOT NULL, " + COL_INSTANCE + " TEXT NOT NULL, " + COL_TARGETED_USER_ID + " TEXT NOT NULL, " + COL_DATE_CREATION + " TEXT NOT NULL, " + COL_DATE_END + " TEXT NOT NULL)";
 
 
     public Sqlite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {

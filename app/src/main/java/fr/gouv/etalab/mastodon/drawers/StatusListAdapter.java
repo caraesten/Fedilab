@@ -94,6 +94,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRepliesAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
@@ -105,7 +106,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
-import fr.gouv.etalab.mastodon.jobs.ScheduledTootsSyncJob;
+import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
 
@@ -334,8 +335,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 return HIDDEN_STATUS;
             }else {
                 SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                List<String> mutedAccount = new TempMuteDAO(context, db).getAllTimeMuted();
-                if( mutedAccount.contains(status.getAccount().getId()))
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                Account account = new AccountDAO(context, db).getAccountByID(userId);
+                List<String> mutedAccount = new TempMuteDAO(context, db).getAllTimeMuted(account);
+                if( mutedAccount != null && mutedAccount.contains(status.getAccount().getId()))
                     return HIDDEN_STATUS;
                 else
                     return DISPLAYED_STATUS;
@@ -1212,7 +1215,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                 String targeted_id = status.getAccount().getId();
                                                 Date date_mute = new Date(time);
                                                 SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                                                new TempMuteDAO(context, db).insert(targeted_id, new Date(time));
+                                                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                                                Account account = new AccountDAO(context, db).getAccountByID(userId);
+                                                new TempMuteDAO(context, db).insert(account, targeted_id, new Date(time));
                                                 Toast.makeText(context,context.getString(R.string.timed_mute_date,status.getAccount().getAcct(),Helper.dateToString(context, date_mute)), Toast.LENGTH_LONG).show();
                                                 alertDialog.dismiss();
                                             }
