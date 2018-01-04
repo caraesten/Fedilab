@@ -124,7 +124,7 @@ public class TempMuteDAO {
     }
 
     /**
-     * Returns search by its keyword in db
+     * Returns true if user is temp muted by the authenticated user
      * @return keywords List<String>
      */
     public boolean isTempMutedStrict(String targeted_id){
@@ -138,7 +138,7 @@ public class TempMuteDAO {
 
 
     /**
-     * Returns search by its keyword in db
+     * Returns true if user is temp muted globally
      * @return keywords List<String>
      */
     public boolean isTempMuted(String targeted_id){

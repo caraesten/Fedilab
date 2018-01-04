@@ -15,6 +15,8 @@ package fr.gouv.etalab.mastodon.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Handler;
@@ -50,13 +52,16 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -70,6 +75,9 @@ import com.github.stom79.mytransl.translate.Translate;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -97,6 +105,9 @@ import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
+import fr.gouv.etalab.mastodon.jobs.ScheduledTootsSyncJob;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
 
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
@@ -1128,6 +1139,81 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     builderInner.setTitle(stringArrayConf[0]);
                                     doAction = API.StatusAction.MUTE;
                                     break;
+                                case R.id.action_timed_mute:
+                                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+                                    LayoutInflater inflater = ((Activity)context).getLayoutInflater();
+                                    @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.datetime_picker, null);
+                                    dialogBuilder.setView(dialogView);
+                                    final AlertDialog alertDialog = dialogBuilder.create();
+                                    final DatePicker datePicker = dialogView.findViewById(R.id.date_picker);
+                                    final TimePicker timePicker = dialogView.findViewById(R.id.time_picker);
+                                    timePicker.setIs24HourView(true);
+                                    Button date_time_cancel = dialogView.findViewById(R.id.date_time_cancel);
+                                    final ImageButton date_time_previous = dialogView.findViewById(R.id.date_time_previous);
+                                    final ImageButton date_time_next = dialogView.findViewById(R.id.date_time_next);
+                                    final ImageButton date_time_set = dialogView.findViewById(R.id.date_time_set);
+
+                                    //Buttons management
+                                    date_time_cancel.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            alertDialog.dismiss();
+                                        }
+                                    });
+                                    date_time_next.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            datePicker.setVisibility(View.GONE);
+                                            timePicker.setVisibility(View.VISIBLE);
+                                            date_time_previous.setVisibility(View.VISIBLE);
+                                            date_time_next.setVisibility(View.GONE);
+                                            date_time_set.setVisibility(View.VISIBLE);
+                                        }
+                                    });
+                                    date_time_previous.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            datePicker.setVisibility(View.VISIBLE);
+                                            timePicker.setVisibility(View.GONE);
+                                            date_time_previous.setVisibility(View.GONE);
+                                            date_time_next.setVisibility(View.VISIBLE);
+                                            date_time_set.setVisibility(View.GONE);
+                                        }
+                                    });
+                                    date_time_set.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            int hour, minute;
+                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                                hour = timePicker.getHour();
+                                                minute = timePicker.getMinute();
+                                            }else {
+                                                //noinspection deprecation
+                                                hour = timePicker.getCurrentHour();
+                                                //noinspection deprecation
+                                                minute = timePicker.getCurrentMinute();
+                                            }
+                                            Calendar calendar = new GregorianCalendar(datePicker.getYear(),
+                                                    datePicker.getMonth(),
+                                                    datePicker.getDayOfMonth(),
+                                                    hour,
+                                                    minute);
+                                            long time = calendar.getTimeInMillis();
+                                            if( (time - new Date().getTime()) < 60000 ){
+                                                Toast.makeText(context, R.string.timed_mute_date_error, Toast.LENGTH_LONG).show();
+                                            }else {
+                                                //Store the toot as draft first
+                                                String targeted_id = status.getAccount().getId();
+                                                Date date_mute = new Date(time);
+                                                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                                                new TempMuteDAO(context, db).insert(targeted_id, new Date(time));
+                                                Toast.makeText(context,context.getString(R.string.timed_mute_date,status.getAccount().getAcct(),Helper.dateToString(context, date_mute)), Toast.LENGTH_LONG).show();
+                                                alertDialog.dismiss();
+                                            }
+                                        }
+                                    });
+                                    alertDialog.show();
+                                    return true;
                                 case R.id.action_block:
                                     builderInner = new AlertDialog.Builder(context);
                                     builderInner.setTitle(stringArrayConf[1]);
