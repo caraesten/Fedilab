@@ -116,6 +116,7 @@
   <string name="more_action_5">Copy</string>
   <string name="more_action_6">Share</string>
   <string name="more_action_7">Mention</string>
+  <string name="more_action_8">Timed mute</string>
   <string-array name="more_action_confirm">
     <item>Mute this account?</item>
     <item>Block this account?</item>
@@ -195,6 +196,10 @@
   <string name="toot_scheduled">The toot has been scheduled!</string>
   <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
   <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+  <!-- timed mute -->
+  <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
+  <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his\her profile page.</string>
+  <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
   <!-- Notifications -->
   <string name="no_notifications">No notification to display</string>
   <string name="notif_mention">mentioned you</string>
