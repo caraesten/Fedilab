@@ -28,7 +28,6 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -86,7 +85,6 @@ public class LiveNotificationService extends Service {
     private static HashMap<String, Boolean> isRunning = new HashMap<>();
     public void onCreate() {
         super.onCreate();
-        Log.v(Helper.TAG,"onCreate= ");
     }
 
 
@@ -94,7 +92,6 @@ public class LiveNotificationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Log.v(Helper.TAG,"onStartCommand= " + intent);
         if( intent == null || intent.getBooleanExtra("stop", false) ) {
             stop = true;
             stopSelf();
@@ -161,7 +158,6 @@ public class LiveNotificationService extends Service {
 
         if( account != null){
             isRunning.get(account.getAcct()+account.getInstance());
-            Log.v(Helper.TAG, account.getAcct() + "@" + account.getInstance() + " RUN -> " + isRunning.get(account.getAcct()+account.getInstance()));
             if(!isRunning.containsKey(account.getAcct()+account.getInstance()) || ! isRunning.get(account.getAcct()+account.getInstance())) {
                 try {
                     URL url = new URL("https://" + account.getInstance() + "/api/v1/streaming/user");
@@ -180,7 +176,6 @@ public class LiveNotificationService extends Service {
                         Helper.EventStreaming eventStreaming;
                         while ((event = reader.readLine()) != null) {
                             isRunning.put(account.getAcct()+account.getInstance(), true);
-                            Log.v(Helper.TAG, account.getAcct() + "@" + account.getInstance() + " -> " + event + " -- " + reader);
                             if ((lastEvent == Helper.EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
                                 switch (event.trim()) {
                                     case "event: update":
@@ -215,7 +210,7 @@ public class LiveNotificationService extends Service {
                                 try {
                                     JSONObject eventJson = new JSONObject(event);
                                     onRetrieveStreaming(eventStreaming, account, eventJson);
-                                } catch (JSONException ignored) {
+                                } catch (JSONException ignored) { ignored.printStackTrace();
                                 }
                             }
                         }
@@ -225,7 +220,6 @@ public class LiveNotificationService extends Service {
                 } catch (Exception ignored) {
                     isRunning.put(account.getAcct() + account.getInstance(), false);
                     ignored.printStackTrace();
-                    Log.v(Helper.TAG, account.getAcct() + "@" + account.getInstance() + " -> " + ignored.getMessage());
                 } finally {
                     if (reader != null) {
                         try {

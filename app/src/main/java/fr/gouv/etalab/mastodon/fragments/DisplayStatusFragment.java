@@ -368,7 +368,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             if (type == RetrieveFeedsAsyncTask.Type.HOME) {
 
                 //Makes sure the status is not already displayed
-                if( lastReadStatus == null ||  Long.parseLong(status.getId()) > Long.parseLong(lastReadStatus)) {
+                if( !statuses.contains(status)){
                     //Update the id of the last toot retrieved
                     MainActivity.lastHomeId = status.getId();
                     status.setReplies(new ArrayList<Status>());
@@ -379,6 +379,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     if (textviewNoAction.getVisibility() == View.VISIBLE)
                         textviewNoAction.setVisibility(View.GONE);
                 }
+
 
             } else if (type == RetrieveFeedsAsyncTask.Type.PUBLIC || type == RetrieveFeedsAsyncTask.Type.LOCAL) {
 
