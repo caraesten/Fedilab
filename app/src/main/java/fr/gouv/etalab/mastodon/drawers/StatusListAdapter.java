@@ -332,8 +332,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 return HIDDEN_STATUS;
             else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true)) {
                 return HIDDEN_STATUS;
-            }else
-                return DISPLAYED_STATUS;
+            }else {
+                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                List<String> mutedAccount = new TempMuteDAO(context, db).getAllTimeMuted();
+                if( mutedAccount.contains(status.getAccount().getId()))
+                    return HIDDEN_STATUS;
+                else
+                    return DISPLAYED_STATUS;
+            }
         }else {
             if( context instanceof ShowAccountActivity){
                 if (status.getReblog() != null && !((ShowAccountActivity)context).showBoosts())
