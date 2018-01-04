@@ -257,8 +257,10 @@ public class SettingsFragment extends Fragment {
                 editor.apply();
                 if( set_live_notif.isChecked() ){
                     try {
-                        ((MainActivity) context).startSreaming(true);
+                        ((MainActivity) context).startSreaming();
                     }catch (Exception ignored){ignored.printStackTrace();}
+                }else{
+                    context.sendBroadcast(new Intent("StopLiveNotificationService"));
                 }
             }
         });
