@@ -23,10 +23,10 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by Thomas on 23/04/2017.
  * Manage the  DataBase
  */
-@SuppressWarnings("WeakerAccess")
+
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 7;
+    public static final int DB_VERSION = 8;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -43,23 +43,26 @@ public class Sqlite extends SQLiteOpenHelper {
     //Table for search
     static final String TABLE_SEARCH = "SEARCH";
 
-    public static final String COL_USER_ID = "USER_ID";
-    public static final String COL_USERNAME = "USERNAME";
-    public static final String COL_ACCT = "ACCT";
-    public static final String COL_DISPLAYED_NAME = "DISPLAYED_NAME";
-    public static final String COL_LOCKED = "LOCKED";
-    public static final String COL_CREATED_AT = "CREATED_AT";
-    public static final String COL_FOLLOWERS_COUNT = "FOLLOWERS_COUNT";
-    public static final String COL_FOLLOWING_COUNT = "FOLLOWING_COUNT";
-    public static final String COL_STATUSES_COUNT = "STATUSES_COUNT";
-    public static final String COL_NOTE = "NOTE";
-    public static final String COL_URL = "URL";
-    public static final String COL_AVATAR = "AVATAR";
-    public static final String COL_AVATAR_STATIC = "AVATAR_STATIC";
-    public static final String COL_HEADER = "HEADER";
-    public static final String COL_HEADER_STATIC = "HEADER_STATIC";
-    public static final String COL_INSTANCE = "INSTANCE";
-    public static final String COL_OAUTHTOKEN = "OAUTH_TOKEN";
+    //Table for temp muting
+    static final String TABLE_TEMP_MUTE = "TEMP_MUTE";
+
+    static final String COL_USER_ID = "USER_ID";
+    static final String COL_USERNAME = "USERNAME";
+    static final String COL_ACCT = "ACCT";
+    static final String COL_DISPLAYED_NAME = "DISPLAYED_NAME";
+    static final String COL_LOCKED = "LOCKED";
+    static final String COL_CREATED_AT = "CREATED_AT";
+    static final String COL_FOLLOWERS_COUNT = "FOLLOWERS_COUNT";
+    static final String COL_FOLLOWING_COUNT = "FOLLOWING_COUNT";
+    static final String COL_STATUSES_COUNT = "STATUSES_COUNT";
+    static final String COL_NOTE = "NOTE";
+    static final String COL_URL = "URL";
+    static final String COL_AVATAR = "AVATAR";
+    static final String COL_AVATAR_STATIC = "AVATAR_STATIC";
+    static final String COL_HEADER = "HEADER";
+    static final String COL_HEADER_STATIC = "HEADER_STATIC";
+    static final String COL_INSTANCE = "INSTANCE";
+    static final String COL_OAUTHTOKEN = "OAUTH_TOKEN";
 
 
 
@@ -73,14 +76,14 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_INSTANCE + " TEXT NOT NULL, " + COL_OAUTHTOKEN + " TEXT NOT NULL, " + COL_CREATED_AT + " TEXT NOT NULL)";
 
 
-    public static final String COL_ID = "ID";
-    public static final String COL_STATUS_SERIALIZED = "STATUS_SERIALIZED";
-    public static final String COL_STATUS_REPLY_SERIALIZED = "STATUS_REPLY_SERIALIZED";
-    public static final String COL_DATE_CREATION = "DATE_CREATION";
-    public static final String COL_IS_SCHEDULED = "IS_SCHEDULED";
-    public static final String COL_DATE_SCHEDULED = "DATE_SCHEDULED";
-    public static final String COL_SENT = "SENT";
-    public static final String COL_DATE_SENT = "DATE_SENT";
+    static final String COL_ID = "ID";
+    static final String COL_STATUS_SERIALIZED = "STATUS_SERIALIZED";
+    static final String COL_STATUS_REPLY_SERIALIZED = "STATUS_REPLY_SERIALIZED";
+    static final String COL_DATE_CREATION = "DATE_CREATION";
+    static final String COL_IS_SCHEDULED = "IS_SCHEDULED";
+    static final String COL_DATE_SCHEDULED = "DATE_SCHEDULED";
+    static final String COL_SENT = "SENT";
+    static final String COL_DATE_SENT = "DATE_SENT";
 
     private static final String CREATE_TABLE_STATUSES_STORED = "CREATE TABLE " + TABLE_STATUSES_STORED + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -90,18 +93,25 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_SENT + " INTEGER NOT NULL, " + COL_DATE_SENT + " TEXT)";
 
 
-    public static final String COL_SHORTCODE = "SHORTCODE";
-    public static final String COL_URL_STATIC = "URL_STATIC";
+    static final String COL_SHORTCODE = "SHORTCODE";
+    static final String COL_URL_STATIC = "URL_STATIC";
     private final String CREATE_TABLE_CUSTOM_EMOJI = "CREATE TABLE " + TABLE_CUSTOM_EMOJI + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_SHORTCODE + " TEXT NOT NULL, " + COL_INSTANCE + " TEXT NOT NULL, "
             + COL_URL + " TEXT NOT NULL, " + COL_URL_STATIC + " TEXT NOT NULL, "  + COL_DATE_CREATION + " TEXT NOT NULL)";
 
 
-    public static final String COL_KEYWORDS = "KEYWORDS";
+    static final String COL_KEYWORDS = "KEYWORDS";
     private final String CREATE_TABLE_SEARCH = "CREATE TABLE " + TABLE_SEARCH + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_KEYWORDS + " TEXT NOT NULL, " + COL_USER_ID + " TEXT NOT NULL, " + COL_DATE_CREATION + " TEXT NOT NULL)";
+
+    static final String COL_TARGETED_USER_ID = "TARGETED_USER_ID";
+    static final String COL_DATE_END = "DATE_END";
+    private final String CREATE_TABLE_TEMP_MUTE = "CREATE TABLE " + TABLE_TEMP_MUTE + " ("
+            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COL_USER_ID + " TEXT NOT NULL, " + COL_TARGETED_USER_ID + " TEXT NOT NULL, " + COL_DATE_CREATION + " TEXT NOT NULL, " + COL_DATE_END + " TEXT NOT NULL)";
+
 
     public Sqlite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -122,6 +132,7 @@ public class Sqlite extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_STATUSES_STORED);
         db.execSQL(CREATE_TABLE_CUSTOM_EMOJI);
         db.execSQL(CREATE_TABLE_SEARCH);
+        db.execSQL(CREATE_TABLE_TEMP_MUTE);
     }
 
     @Override
@@ -143,6 +154,8 @@ public class Sqlite extends SQLiteOpenHelper {
                 db.execSQL("delete from "+ TABLE_CUSTOM_EMOJI); //Reset table due to bugs
             case 6:
                 db.execSQL(CREATE_TABLE_SEARCH);
+            case 7:
+                db.execSQL(CREATE_TABLE_TEMP_MUTE);
             default:
                 break;
         }
