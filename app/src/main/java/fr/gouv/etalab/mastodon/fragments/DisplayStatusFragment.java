@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -46,6 +47,8 @@ import fr.gouv.etalab.mastodon.services.StreamingLocalTimelineService;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
 
 
 /**
@@ -435,6 +438,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 if( statuses != null && statuses.size() > 0)
                     retrieveMissingToots(statuses.get(0).getId());
             }
+        }else if (type == RetrieveFeedsAsyncTask.Type.HOME){
+            //Cleans old timed mute accounts
+            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            new TempMuteDAO(context, db).removeOld();
         }
     }
 
