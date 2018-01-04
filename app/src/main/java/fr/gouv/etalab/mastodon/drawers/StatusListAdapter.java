@@ -1220,6 +1220,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                 new TempMuteDAO(context, db).insert(account, targeted_id, new Date(time));
                                                 Toast.makeText(context,context.getString(R.string.timed_mute_date,status.getAccount().getAcct(),Helper.dateToString(context, date_mute)), Toast.LENGTH_LONG).show();
                                                 alertDialog.dismiss();
+                                                notifyDataSetChanged();
                                             }
                                         }
                                     });
