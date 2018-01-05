@@ -39,6 +39,7 @@ import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMissingFeedsInterface;
@@ -47,6 +48,7 @@ import fr.gouv.etalab.mastodon.services.StreamingLocalTimelineService;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
+import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
 
@@ -116,11 +118,22 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         textviewNoAction =  rootView.findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
-        statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
+
+        userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        if( type == RetrieveFeedsAsyncTask.Type.HOME) {
+            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            Account account = new AccountDAO(context, db).getAccountByID(userId);
+            List<String> mutedAccount = new TempMuteDAO(context, db).getAllTimeMuted(account);
+            statusListAdapter = new StatusListAdapter(context,mutedAccount, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
+        }else{
+            statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
+        }
+
+
         lv_status.setAdapter(statusListAdapter);
         mLayoutManager = new LinearLayoutManager(context);
         lv_status.setLayoutManager(mLayoutManager);
-        userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+
         lastReadStatus = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, null);
         instance = sharedpreferences.getString(Helper.PREF_INSTANCE, context!=null?Helper.getLiveInstance(context):null);
 
@@ -442,6 +455,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             //Cleans old timed mute accounts
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             new TempMuteDAO(context, db).removeOld();
+            Account account = new AccountDAO(context, db).getAccountByID(userId);
+            List<String> mutedAccount = new TempMuteDAO(context, db).getAllTimeMuted(account);
+            statusListAdapter.updateMuted(mutedAccount);
         }
     }
 

@@ -133,6 +133,25 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private final int DISPLAYED_STATUS = 1;
     private List<Status> pins;
     private int conversationPosition;
+    private List<String> timedMute;
+
+
+
+
+    public StatusListAdapter(Context context, List<String> timedMute, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
+        super();
+        this.context = context;
+        this.statuses = statuses;
+        this.isOnWifi = isOnWifi;
+        this.behaviorWithAttachments = behaviorWithAttachments;
+        layoutInflater = LayoutInflater.from(this.context);
+        statusListAdapter = this;
+        this.type = type;
+        this.targetedId = targetedId;
+        this.translator = translator;
+        pins = new ArrayList<>();
+        this.timedMute = timedMute;
+    }
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
         super();
@@ -160,6 +179,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.targetedId = targetedId;
         this.translator = translator;
         pins = new ArrayList<>();
+    }
+
+    public void updateMuted(List<String> timedMute){
+        this.timedMute = timedMute;
     }
 
     @Override
@@ -334,14 +357,15 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true)) {
                 return HIDDEN_STATUS;
             }else {
-                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                Account account = new AccountDAO(context, db).getAccountByID(userId);
-                List<String> mutedAccount = new TempMuteDAO(context, db).getAllTimeMuted(account);
-                if( mutedAccount != null && mutedAccount.contains(status.getAccount().getId()))
-                    return HIDDEN_STATUS;
-                else
+                if( timedMute != null && timedMute.size() > 0) {
+
+                    if (timedMute.contains(status.getAccount().getId()))
+                        return HIDDEN_STATUS;
+                    else
+                        return DISPLAYED_STATUS;
+                }else {
                     return DISPLAYED_STATUS;
+                }
             }
         }else {
             if( context instanceof ShowAccountActivity){
@@ -367,7 +391,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, @SuppressLint("RecyclerView") final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int position) {
 
         if( viewHolder.getItemViewType() == DISPLAYED_STATUS){
             final ViewHolder holder = (ViewHolder) viewHolder;
@@ -1123,10 +1147,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         popup.getMenu().findItem(R.id.action_block).setVisible(false);
                         popup.getMenu().findItem(R.id.action_mute).setVisible(false);
                         popup.getMenu().findItem(R.id.action_report).setVisible(false);
+                        popup.getMenu().findItem(R.id.action_timed_mute).setVisible(false);
                         stringArrayConf =  context.getResources().getStringArray(R.array.more_action_owner_confirm);
                     }else {
                         popup.getMenu().findItem(R.id.action_remove).setVisible(false);
                         stringArrayConf =  context.getResources().getStringArray(R.array.more_action_confirm);
+                        if( type != RetrieveFeedsAsyncTask.Type.HOME){
+                            popup.getMenu().findItem(R.id.action_timed_mute).setVisible(false);
+                        }
                     }
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         public boolean onMenuItemClick(MenuItem item) {
@@ -1218,6 +1246,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                                                 Account account = new AccountDAO(context, db).getAccountByID(userId);
                                                 new TempMuteDAO(context, db).insert(account, targeted_id, new Date(time));
+                                                if( timedMute != null && !timedMute.contains(account.getId()))
+                                                    timedMute.add(targeted_id);
+                                                else if (timedMute == null){
+                                                    timedMute = new ArrayList<>();
+                                                    timedMute.add(targeted_id);
+                                                }
                                                 Toast.makeText(context,context.getString(R.string.timed_mute_date,status.getAccount().getAcct(),Helper.dateToString(context, date_mute)), Toast.LENGTH_LONG).show();
                                                 alertDialog.dismiss();
                                                 notifyDataSetChanged();
@@ -1591,6 +1625,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     private void notifyStatusChanged(Status status){
         for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
+            //noinspection ConstantConditions
             if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
                 try {
                     statusListAdapter.notifyItemChanged(i);
@@ -1606,7 +1641,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         if( !fromTranslation) {
             if (!status.isEmojiFound()) {
                 for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
+                    //noinspection ConstantConditions
                     if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
+                        //noinspection ConstantConditions
                         statusListAdapter.getItemAt(i).setEmojiFound(true);
                         try {
                             statusListAdapter.notifyItemChanged(i);
@@ -1617,7 +1654,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         }else {
             if (!status.isEmojiTranslateFound()) {
                 for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
+                    //noinspection ConstantConditions
                     if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
+                        //noinspection ConstantConditions
                         statusListAdapter.getItemAt(i).setEmojiTranslateFound(true);
                         try {
                             statusListAdapter.notifyItemChanged(i);

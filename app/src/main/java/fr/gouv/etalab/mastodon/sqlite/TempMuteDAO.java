@@ -77,7 +77,7 @@ public class TempMuteDAO {
      * Remove mute by its id
      */
     public void removeOld(){
-        db.delete(Sqlite.TABLE_TEMP_MUTE, Sqlite.COL_DATE_END + " < date('now')", null);
+        db.delete(Sqlite.TABLE_TEMP_MUTE, Sqlite.COL_DATE_END + " < \"" + Helper.dateToString(context, new Date())+ "\"", null);
     }
 
     //------- GETTERS  -------
@@ -88,7 +88,7 @@ public class TempMuteDAO {
      */
     public List<String> getAllTimeMuted(Account account){
         try {
-            Cursor c = db.query(Sqlite.TABLE_TEMP_MUTE, null, Sqlite.COL_DATE_END + " >= date('now') AND " + Sqlite.COL_ACCT + " = \"" + account.getAcct()+ "\" AND " + Sqlite.COL_INSTANCE + " = \"" + account.getInstance()+ "\"", null, null, null, null, null);
+            Cursor c = db.query(Sqlite.TABLE_TEMP_MUTE, null, Sqlite.COL_DATE_END + " >= \"" + Helper.dateToString(context, new Date())+ "\" AND " + Sqlite.COL_ACCT + " = \"" + account.getAcct()+ "\" AND " + Sqlite.COL_INSTANCE + " = \"" + account.getInstance()+ "\"", null, null, null, null, null);
             return cursorToTimeMute(c);
         } catch (Exception e) {
             return null;
@@ -102,7 +102,7 @@ public class TempMuteDAO {
      */
     public boolean isTempMuted(Account account, String targeted_id){
         try {
-            Cursor c = db.query(Sqlite.TABLE_TEMP_MUTE, null, Sqlite.COL_TARGETED_USER_ID + " = \"" + targeted_id + "\" AND " + Sqlite.COL_ACCT + " = \"" + account.getAcct()+ "\" AND " + Sqlite.COL_INSTANCE + " = \"" + account.getInstance()+ "\"", null, null, null, null, null);
+            Cursor c = db.query(Sqlite.TABLE_TEMP_MUTE, null, Sqlite.COL_TARGETED_USER_ID + " = \"" + targeted_id + "\" AND " + Sqlite.COL_DATE_END + " >= \"" + Helper.dateToString(context, new Date())+ "\" AND "  + Sqlite.COL_ACCT + " = \"" + account.getAcct()+ "\" AND " + Sqlite.COL_INSTANCE + " = \"" + account.getInstance()+ "\"", null, null, null, null, null);
             return cursorToTimeMute(c) != null;
         } catch (Exception e) {
             return false;
@@ -116,7 +116,7 @@ public class TempMuteDAO {
      */
     public String getMuteDateByID(Account account, String targeted_id){
         try {
-            Cursor c = db.query(Sqlite.TABLE_TEMP_MUTE, null, Sqlite.COL_TARGETED_USER_ID + " = \"" + targeted_id + "\" AND " + Sqlite.COL_ACCT + " = \"" + account.getAcct()+ "\" AND " + Sqlite.COL_INSTANCE + " = \"" + account.getInstance()+ "\"", null, null, null, Sqlite.COL_DATE_END + " DESC", "1");
+            Cursor c = db.query(Sqlite.TABLE_TEMP_MUTE, null, Sqlite.COL_TARGETED_USER_ID + " = \"" + targeted_id + "\" AND " + Sqlite.COL_DATE_END + " >= \"" + Helper.dateToString(context, new Date())+ "\" AND " + Sqlite.COL_ACCT + " = \"" + account.getAcct()+ "\" AND " + Sqlite.COL_INSTANCE + " = \"" + account.getInstance()+ "\"", null, null, null, Sqlite.COL_DATE_END + " DESC", "1");
             return cursorToDate(c);
         } catch (Exception e) {
             e.printStackTrace();

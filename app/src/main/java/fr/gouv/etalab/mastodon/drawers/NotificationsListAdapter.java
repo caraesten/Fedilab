@@ -596,6 +596,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 final boolean isOwner = status.getAccount().getId().equals(userId);
                 popup.getMenuInflater()
                         .inflate(R.menu.option_toot, popup.getMenu());
+                popup.getMenu().findItem(R.id.action_timed_mute).setVisible(false);
                 if( status.getVisibility().equals("private") || status.getVisibility().equals("direct")){
                     popup.getMenu().findItem(R.id.action_mention).setVisible(false);
                 }
