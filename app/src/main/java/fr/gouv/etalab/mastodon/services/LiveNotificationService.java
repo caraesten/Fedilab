@@ -87,7 +87,9 @@ public class LiveNotificationService extends Service {
         super.onCreate();
     }
 
-
+    static {
+        Helper.installProvider();
+    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
