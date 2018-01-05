@@ -116,7 +116,7 @@
   <string name="more_action_5">Copier</string>
   <string name="more_action_6">Partager</string>
   <string name="more_action_7">Mentionner</string>
-  <string name="more_action_8">Timed mute</string>
+  <string name="more_action_8">Temporairement muet</string>
   <string-array name="more_action_confirm">
     <item>Masquer ce compte ?</item>
     <item>Bloquer ce compte ?</item>
@@ -196,8 +196,8 @@
   <string name="toot_scheduled_date">La date doit être supérieure à l\'heure actuelle !</string>
   <string name="warning_battery">L\'économiseur de batterie est activé ! Il se peut que cela ne fonctionne pas comme prévu.</string>
   <!-- timed mute -->
-  <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-  <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his\her profile page.</string>
+  <string name="timed_mute_date_error">Le délai pour rendre muet doit être supérieur à une minute.</string>
+  <string name="timed_mute_date">%1$s est mué jusqu\'au %2$s.\n Vous pouvez réactiver le compte en vous rendant sur son profil.</string>
   <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
   <!-- Notifications -->
   <string name="no_notifications">Aucune notification à afficher</string>
