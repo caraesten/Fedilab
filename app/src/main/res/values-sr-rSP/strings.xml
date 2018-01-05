@@ -224,7 +224,7 @@
   <!-- HEADER -->
   <string name="following">Праћени</string>
   <string name="followers">Пратиоци</string>
-  <string name="pinned_toots">Прикачени</string>
+  <string name="pinned_toots">Прикачени тутови</string>
   <!-- TOAST -->
   <string name="client_error">Није могуће добити id клијента!</string>
   <string name="no_internet">Не постоји веза са интернетом!</string>
@@ -240,8 +240,8 @@
   <string name="toast_unfavourite">Тут је склоњен из Ваших омиљених!</string>
   <string name="toast_report">Тут је пријављен!</string>
   <string name="toast_unstatus">Тут је обрисан!</string>
-  <string name="toast_pin">Тут је прикачен!</string>
-  <string name="toast_unpin">Тут више није прикачен!</string>
+  <string name="toast_pin">Тут прикачен!</string>
+  <string name="toast_unpin">Тут није више прикачен!</string>
   <string name="toast_error">Упс, дошло је до грешке!</string>
   <string name="toast_code_error">Дошло је до грешке! Инстанца није вратила код за ауторизацију!</string>
   <string name="toast_error_instance">Не делује да је домен инстанце исправан!</string>
