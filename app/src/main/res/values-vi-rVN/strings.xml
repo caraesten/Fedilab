@@ -116,6 +116,7 @@
   <string name="more_action_5">Sao chép</string>
   <string name="more_action_6">Chia sẻ</string>
   <string name="more_action_7">Ghi chép</string>
+  <string name="more_action_8">Timed mute</string>
   <string-array name="more_action_confirm">
     <item>Ẩn tài khoản này?</item>
     <item>Chặn tài khoản này?</item>
@@ -193,6 +194,10 @@
   <string name="toot_scheduled">Các thổi còi đã được lên kế hoạch!</string>
   <string name="toot_scheduled_date">Ngày dự kiến ​​phải lớn hơn giờ hiện tại!</string>
   <string name="warning_battery">Trình tiết kiệm pin đã được kích hoạt! Nó có thể không hoạt động như mong đợi.</string>
+  <!-- timed mute -->
+  <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
+  <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
+  <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
   <!-- Notifications -->
   <string name="no_notifications">Không có thông báo để hiển thị</string>
   <string name="notif_mention">đề cập đến bạn</string>

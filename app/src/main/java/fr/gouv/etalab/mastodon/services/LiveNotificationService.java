@@ -14,6 +14,7 @@ package fr.gouv.etalab.mastodon.services;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -75,65 +76,67 @@ import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
  * Manage service for streaming api and new notifications
  */
 
-public class LiveNotificationService extends BaseService {
+public class LiveNotificationService extends Service {
 
 
 
     protected Account account;
-    private static HashMap<String, Thread> backGroundTaskHashMap = new HashMap<>();
-    private static HashMap<String, HttpsURLConnection> httpsURLConnectionHashMap = new HashMap<>();
-    private static HashMap<String, Integer> queuedIntentHashMap = new HashMap<>();
-    @SuppressWarnings("unused")
-    public LiveNotificationService(String name) {
-        super(name);
-    }
-    @SuppressWarnings("unused")
-    public LiveNotificationService() {
-        super("LiveNotificationService");
-    }
-
+    private boolean stop = false;
+    private static HashMap<String, Boolean> isRunning = new HashMap<>();
     public void onCreate() {
         super.onCreate();
-        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccount();
-        if (accountStreams != null) {
-            for (final Account accountStream : accountStreams) {
-                queuedIntentHashMap.put(accountStream.getAcct() + accountStream.getInstance(), 0);
-            }
-        }
     }
 
-
+    static {
+        Helper.installProvider();
+    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
+        if( intent == null || intent.getBooleanExtra("stop", false) ) {
+            stop = true;
+            stopSelf();
+        }
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
         boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
         String userId;
-        if( liveNotifications && notify) {
-            SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            if (intent == null || intent.getStringExtra("userId") == null) {
+        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        if( liveNotifications && notify){
+
+            if( intent == null || intent.getStringExtra("userId") == null) {
+
                 List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccount();
-                if (accountStreams != null) {
+                if (accountStreams != null){
                     for (final Account accountStream : accountStreams) {
-                        int numberOfQueuedIntent = queuedIntentHashMap.get(accountStream.getAcct() + accountStream.getInstance()) + 1;
-                        queuedIntentHashMap.put(accountStream.getAcct() + accountStream.getInstance(), numberOfQueuedIntent);
+                            Thread thread = new Thread() {
+                                @Override
+                                public void run() {
+                                    taks(accountStream);
+                                }
+                            };
+                            thread.start();
+
                     }
                 }
-            }else{
+            }else {
                 userId = intent.getStringExtra("userId");
                 final Account accountStream = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
                 if (accountStream != null) {
-                    int numberOfQueuedIntent = queuedIntentHashMap.get(accountStream.getAcct() + accountStream.getInstance()) + 1;
-                    queuedIntentHashMap.put(accountStream.getAcct() + accountStream.getInstance(), numberOfQueuedIntent);
+                        Thread thread = new Thread() {
+                            @Override
+                            public void run() {
+                                taks(accountStream);
+                            }
+                        };
+                        thread.start();
+
                 }
             }
         }
-        return super.onStartCommand(intent, flags, startId);
+        return START_STICKY;
     }
-
-
 
 
     @Nullable
@@ -143,157 +146,106 @@ public class LiveNotificationService extends BaseService {
     }
 
     @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
-        boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
-        String userId;
-
-
-        if( liveNotifications && notify){
-            SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            if( intent == null || intent.getStringExtra("userId") == null) {
-
-                List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccount();
-                if (accountStreams != null){
-                    for (final Account accountStream : accountStreams) {
-                        int numberOfQueuedIntent = queuedIntentHashMap.get(accountStream.getAcct() + accountStream.getInstance()) - 1;
-                        queuedIntentHashMap.put(accountStream.getAcct() + accountStream.getInstance(), numberOfQueuedIntent);
-                        if( queuedIntentHashMap.get(accountStream.getAcct() + accountStream.getInstance()) == 0) {
-                            if (backGroundTaskHashMap.containsKey(accountStream.getAcct() + accountStream.getInstance())) {
-                                if (!backGroundTaskHashMap.get(accountStream.getAcct() + accountStream.getInstance()).isAlive())
-                                    backGroundTaskHashMap.get(accountStream.getAcct() + accountStream.getInstance()).interrupt();
-                            }
-                            Thread thread = new Thread() {
-                                @Override
-                                public void run() {
-                                    taks(accountStream);
-                                }
-                            };
-                            thread.start();
-                            backGroundTaskHashMap.put(accountStream.getAcct() + accountStream.getInstance(), thread);
-                        }
-                    }
-                }
-            }else {
-                userId = intent.getStringExtra("userId");
-                final Account accountStream = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
-                if (accountStream != null) {
-                    int numberOfQueuedIntent = queuedIntentHashMap.get(accountStream.getAcct() + accountStream.getInstance()) - 1;
-                    queuedIntentHashMap.put(accountStream.getAcct() + accountStream.getInstance(), numberOfQueuedIntent);
-                    if( queuedIntentHashMap.get(accountStream.getAcct() + accountStream.getInstance()) == 0) {
-                        if (backGroundTaskHashMap.containsKey(accountStream.getAcct() + accountStream.getInstance())) {
-                            if (!backGroundTaskHashMap.get(accountStream.getAcct() + accountStream.getInstance()).isAlive())
-                                backGroundTaskHashMap.get(accountStream.getAcct() + accountStream.getInstance()).interrupt();
-                        }
-                        Thread thread = new Thread() {
-                            @Override
-                            public void run() {
-                                taks(accountStream);
-                            }
-                        };
-                        thread.start();
-                        backGroundTaskHashMap.put(accountStream.getAcct() + accountStream.getInstance(), thread);
-                    }
-                }
-            }
-        }
+    public void onDestroy() {
+        super.onDestroy();
+        if( !stop)
+            sendBroadcast(new Intent("RestartLiveNotificationService"));
     }
 
     private void taks(Account account){
         InputStream inputStream = null;
-
+        HttpsURLConnection httpsURLConnection = null;
         BufferedReader reader = null;
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         Helper.EventStreaming lastEvent = null;
-        if( account != null){
-            try {
-                HttpsURLConnection httpsURLConnection = httpsURLConnectionHashMap.get(account.getAcct() + account.getInstance());
-                if( httpsURLConnection != null)
-                    httpsURLConnection.disconnect();
-                URL url = new URL("https://" + account.getInstance() + "/api/v1/streaming/user");
-                httpsURLConnection = (HttpsURLConnection) url.openConnection();
-                httpsURLConnection.setRequestProperty("Content-Type", "application/json");
-                httpsURLConnection.setRequestProperty("Authorization", "Bearer " + account.getToken());
-                httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
-                httpsURLConnection.setRequestProperty("Keep-Alive", "header");
-                httpsURLConnection.setRequestProperty("Connection", "close");
-                httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
-                httpsURLConnection.setRequestMethod("GET");
-                httpsURLConnection.setConnectTimeout(70000);
-                httpsURLConnection.setReadTimeout(70000);
-                httpsURLConnectionHashMap.put(account.getAcct() + account.getInstance(), httpsURLConnection);
-                if( httpsURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK){
-                    inputStream = new BufferedInputStream(httpsURLConnection.getInputStream());
-                    reader = new BufferedReader(new InputStreamReader(inputStream));
-                    String event;
-                    Helper.EventStreaming eventStreaming;
-                    while((event = reader.readLine()) != null) {
-                        if( !sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING, true) ) {
-                            return;
-                        }
 
-                        if ((lastEvent == Helper.EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
-                            switch (event.trim()) {
-                                case "event: update":
-                                    lastEvent = Helper.EventStreaming.UPDATE;
-                                    break;
-                                case "event: notification":
-                                    lastEvent = Helper.EventStreaming.NOTIFICATION;
-                                    break;
-                                case "event: delete":
-                                    lastEvent = Helper.EventStreaming.DELETE;
-                                    break;
-                                default:
-                                    lastEvent = Helper.EventStreaming.NONE;
-                            }
-                        } else {
-                            if (!event.startsWith("data: ")) {
-                                lastEvent = Helper.EventStreaming.NONE;
-                                continue;
-                            }
-                            event = event.substring(6);
-                            if (lastEvent == Helper.EventStreaming.UPDATE) {
-                                eventStreaming = Helper.EventStreaming.UPDATE;
-                            } else if (lastEvent == Helper.EventStreaming.NOTIFICATION) {
-                                eventStreaming = Helper.EventStreaming.NOTIFICATION;
-                            } else if (lastEvent == Helper.EventStreaming.DELETE) {
-                                eventStreaming = Helper.EventStreaming.DELETE;
-                                event = "{id:" + event + "}";
+        if( account != null){
+            isRunning.get(account.getAcct()+account.getInstance());
+            if(!isRunning.containsKey(account.getAcct()+account.getInstance()) || ! isRunning.get(account.getAcct()+account.getInstance())) {
+                try {
+                    URL url = new URL("https://" + account.getInstance() + "/api/v1/streaming/user");
+                    httpsURLConnection = (HttpsURLConnection) url.openConnection();
+                    httpsURLConnection.setRequestProperty("Content-Type", "application/json");
+                    httpsURLConnection.setRequestProperty("Authorization", "Bearer " + account.getToken());
+                    httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
+                    httpsURLConnection.setRequestProperty("Keep-Alive", "header");
+                    httpsURLConnection.setRequestProperty("Connection", "close");
+                    httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+                    httpsURLConnection.setRequestMethod("GET");
+                    if (httpsURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                        inputStream = new BufferedInputStream(httpsURLConnection.getInputStream());
+                        reader = new BufferedReader(new InputStreamReader(inputStream));
+                        String event;
+                        Helper.EventStreaming eventStreaming;
+                        while ((event = reader.readLine()) != null) {
+                            isRunning.put(account.getAcct()+account.getInstance(), true);
+                            if ((lastEvent == Helper.EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
+                                switch (event.trim()) {
+                                    case "event: update":
+                                        lastEvent = Helper.EventStreaming.UPDATE;
+                                        break;
+                                    case "event: notification":
+                                        lastEvent = Helper.EventStreaming.NOTIFICATION;
+                                        break;
+                                    case "event: delete":
+                                        lastEvent = Helper.EventStreaming.DELETE;
+                                        break;
+                                    default:
+                                        lastEvent = Helper.EventStreaming.NONE;
+                                }
                             } else {
-                                eventStreaming = Helper.EventStreaming.UPDATE;
+                                if (!event.startsWith("data: ")) {
+                                    lastEvent = Helper.EventStreaming.NONE;
+                                    continue;
+                                }
+                                event = event.substring(6);
+                                if (lastEvent == Helper.EventStreaming.UPDATE) {
+                                    eventStreaming = Helper.EventStreaming.UPDATE;
+                                } else if (lastEvent == Helper.EventStreaming.NOTIFICATION) {
+                                    eventStreaming = Helper.EventStreaming.NOTIFICATION;
+                                } else if (lastEvent == Helper.EventStreaming.DELETE) {
+                                    eventStreaming = Helper.EventStreaming.DELETE;
+                                    event = "{id:" + event + "}";
+                                } else {
+                                    eventStreaming = Helper.EventStreaming.UPDATE;
+                                }
+                                lastEvent = Helper.EventStreaming.NONE;
+                                try {
+                                    JSONObject eventJson = new JSONObject(event);
+                                    onRetrieveStreaming(eventStreaming, account, eventJson);
+                                } catch (JSONException ignored) { ignored.printStackTrace();
+                                }
                             }
-                            lastEvent = Helper.EventStreaming.NONE;
-                            try {
-                                JSONObject eventJson = new JSONObject(event);
-                                onRetrieveStreaming(eventStreaming, account, eventJson);
-                            } catch (JSONException ignored) {}
+                        }
+                        isRunning.put(account.getAcct() + account.getInstance(), false);
+                    }
+
+                } catch (Exception ignored) {
+                    isRunning.put(account.getAcct() + account.getInstance(), false);
+                    ignored.printStackTrace();
+                } finally {
+                    if (reader != null) {
+                        try {
+                            reader.close();
+                        } catch (IOException ignored) {
                         }
                     }
-                }else {
-                    httpsURLConnection.disconnect();
-                }
-
-            } catch (Exception ignored) {}finally {
-
-                if (reader != null) {
+                    if (inputStream != null) {
+                        try {
+                            inputStream.close();
+                        } catch (IOException ignored) {
+                        }
+                    }
+                    if (inputStream != null) {
+                        httpsURLConnection.disconnect();
+                    }
+                    SystemClock.sleep(5000);
+                    Intent streamingIntent = new Intent(this, LiveNotificationService.class);
+                    streamingIntent.putExtra("userId", account.getId());
                     try {
-                        reader.close();
-                    } catch (IOException ignored) {}
+                        startService(streamingIntent);
+                    } catch (Exception ignored) {
+                    }
                 }
-                if (inputStream != null) {
-                    try {
-                        inputStream.close();
-                    } catch (IOException ignored) {}
-                }
-                if (httpsURLConnectionHashMap.get(account.getAcct() + account.getInstance()) != null)
-                    httpsURLConnectionHashMap.get(account.getAcct() + account.getInstance()).disconnect();
-                SystemClock.sleep(5000);
-                Intent streamingIntent = new Intent(this, LiveNotificationService.class);
-                streamingIntent.putExtra("userId", account.getId());
-                try {
-                    startService(streamingIntent);
-                }catch (Exception ignored){}
             }
         }
     }

@@ -116,6 +116,7 @@
   <string name="more_action_5">Kopiëren</string>
   <string name="more_action_6">Delen</string>
   <string name="more_action_7">Vermelden</string>
+  <string name="more_action_8">Timed mute</string>
   <string-array name="more_action_confirm">
     <item>Account negeren?</item>
     <item>Account blokkeren?</item>
@@ -194,6 +195,10 @@
   <string name="toot_scheduled">De toot is ingepland!</string>
   <string name="toot_scheduled_date">De toot moet wel in de toekomst ingepland worden!</string>
   <string name="warning_battery">Energiebesparing is ingeschakeld! Het inplannen werkt mogelijk niet zoals verwacht.</string>
+  <!-- timed mute -->
+  <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
+  <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
+  <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
   <!-- Notifications -->
   <string name="no_notifications">Je hebt nog geen meldingen</string>
   <string name="notif_mention">vermeldde jou</string>

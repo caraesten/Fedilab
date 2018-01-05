@@ -116,6 +116,7 @@
   <string name="more_action_5">Kopiuj</string>
   <string name="more_action_6">Udostępnij</string>
   <string name="more_action_7">Wspomnij</string>
+  <string name="more_action_8">Timed mute</string>
   <string-array name="more_action_confirm">
     <item>Wyciszyć tę ilość?</item>
     <item>Zablokuj tę ilość?</item>
@@ -195,6 +196,10 @@
   <string name="toot_scheduled">Toot został zaplanowany!</string>
   <string name="toot_scheduled_date">Zaplanowana data musi być większa niż bieżąca godzina!</string>
   <string name="warning_battery">Włączony jest tryb oszczędzania baterii! To może nie działać zgodnie z oczekiwaniami.</string>
+  <!-- timed mute -->
+  <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
+  <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
+  <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
   <!-- Notifications -->
   <string name="no_notifications">Brak powiadomień do wyświetlenia</string>
   <string name="notif_mention">wspomniał o tobie</string>

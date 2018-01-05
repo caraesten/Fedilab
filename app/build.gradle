@@ -7,14 +7,17 @@ android {
         applicationId "fr.gouv.etalab.mastodon"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 100
-        versionName "1.7.0"
+        versionCode 101
+        versionName "1.7.1"
     }
     flavorDimensions "default"
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            pseudoLocalesEnabled true
         }
     }
 

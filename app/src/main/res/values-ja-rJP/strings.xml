@@ -116,6 +116,7 @@
   <string name="more_action_5">コピー</string>
   <string name="more_action_6">共有</string>
   <string name="more_action_7">メンション</string>
+  <string name="more_action_8">Timed mute</string>
   <string-array name="more_action_confirm">
     <item>このアカウントをミュートしますか？</item>
     <item>このアカウントをブロックしますか？</item>
@@ -193,6 +194,10 @@
   <string name="toot_scheduled">トゥイットが予定されている！</string>
   <string name="toot_scheduled_date">スケジュールされた日付は現在の時間より後でなければなりません！</string>
   <string name="warning_battery">バッテリーセーバーが有効になっています！ 期待どおりに動作しない可能性があります。</string>
+  <!-- timed mute -->
+  <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
+  <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
+  <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
   <!-- Notifications -->
   <string name="no_notifications">通知はありません</string>
   <string name="notif_mention">あなたにメンションしました</string>

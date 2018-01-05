@@ -37,7 +37,7 @@
             android:fitsSystemWindows="true"
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleMarginEnd="64dp"
-            app:layout_scrollFlags="scroll|snap">
+            app:layout_scrollFlags="scroll">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -113,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="8dp"
                     android:gravity="center"
-                    app:layout_scrollFlags="scroll|enterAlways|snap"
+                    app:layout_scrollFlags="scroll|enterAlways"
                     android:orientation="vertical">
                     <LinearLayout
                         android:id="@+id/header_container"
@@ -155,7 +155,13 @@
                                     android:layout_height="wrap_content"
                                     />
                             </LinearLayout>
-
+                            <TextView
+                                android:id="@+id/temp_mute"
+                                android:visibility="gone"
+                                android:gravity="center"
+                                android:textColor="@color/red"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"

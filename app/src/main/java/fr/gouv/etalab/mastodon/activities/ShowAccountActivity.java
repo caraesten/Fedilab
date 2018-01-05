@@ -18,6 +18,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -47,6 +48,7 @@ import android.support.v7.widget.PopupMenu;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -88,6 +90,9 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRelationshipInterface;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
+import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
@@ -481,7 +486,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         maxScrollSize = appBar.getTotalScrollRange();
 
         final TextView warning_message = findViewById(R.id.warning_message);
-        SpannableString content = new SpannableString(getString(R.string.disclaimer_full));
+        final SpannableString content = new SpannableString(getString(R.string.disclaimer_full));
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
         warning_message.setText(content);
         warning_message.setOnClickListener(new View.OnClickListener() {
@@ -496,6 +501,29 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 startActivity(intent);
             }
         });
+        //Timed muted account
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        final SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        final Account authenticatedAccount = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
+        boolean isTimedMute = new TempMuteDAO(getApplicationContext(), db).isTempMuted(authenticatedAccount, account.getId());
+        if( isTimedMute){
+            String date_mute = new TempMuteDAO(getApplicationContext(), db).getMuteDateByID(authenticatedAccount, account.getId());
+            if( date_mute != null) {
+                final TextView temp_mute = findViewById(R.id.temp_mute);
+                temp_mute.setVisibility(View.VISIBLE);
+                SpannableString content_temp_mute = new SpannableString(getString(R.string.timed_mute_profile, account.getAcct(), date_mute));
+                content_temp_mute.setSpan(new UnderlineSpan(), 0, content_temp_mute.length(), 0);
+                temp_mute.setText(content_temp_mute);
+                temp_mute.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new TempMuteDAO(getApplicationContext(), db).remove(authenticatedAccount, account.getId());
+                        Toast.makeText(getApplicationContext(), R.string.toast_unmute, Toast.LENGTH_LONG).show();
+                        temp_mute.setVisibility(View.GONE);
+                    }
+                });
+            }
+        }
         //This account was moved to another one
         if( account.getMoved_to_account() != null){
             TextView account_moved = findViewById(R.id.account_moved);

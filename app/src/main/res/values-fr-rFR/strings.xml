@@ -116,6 +116,7 @@
   <string name="more_action_5">Copier</string>
   <string name="more_action_6">Partager</string>
   <string name="more_action_7">Mentionner</string>
+  <string name="more_action_8">Temporairement muet</string>
   <string-array name="more_action_confirm">
     <item>Masquer ce compte ?</item>
     <item>Bloquer ce compte ?</item>
@@ -194,6 +195,10 @@
   <string name="toot_scheduled">Le pouet a été programmé !</string>
   <string name="toot_scheduled_date">La date doit être supérieure à l\'heure actuelle !</string>
   <string name="warning_battery">L\'économiseur de batterie est activé ! Il se peut que cela ne fonctionne pas comme prévu.</string>
+  <!-- timed mute -->
+  <string name="timed_mute_date_error">Le délai pour rendre muet doit être supérieur à une minute.</string>
+  <string name="timed_mute_date">%1$s est mué jusqu\'au %2$s.\n Vous pouvez annuler cette action en vous rendant sur son profil.</string>
+  <string name="timed_mute_profile">%1$s est mué jusqu\'au %2$s.\n Cliquez ici pour annuler.</string>
   <!-- Notifications -->
   <string name="no_notifications">Aucune notification à afficher</string>
   <string name="notif_mention">vous a mentionné</string>
