@@ -197,8 +197,8 @@
   <string name="warning_battery">L\'économiseur de batterie est activé ! Il se peut que cela ne fonctionne pas comme prévu.</string>
   <!-- timed mute -->
   <string name="timed_mute_date_error">Le délai pour rendre muet doit être supérieur à une minute.</string>
-  <string name="timed_mute_date">%1$s est mué jusqu\'au %2$s.\n Vous pouvez annuler cette action en vous rendant sur son profil.</string>
-  <string name="timed_mute_profile">%1$s est mué jusqu\'au %2$s.\n Cliquez ici pour annuler.</string>
+  <string name="timed_mute_date">%1$s est muet jusqu\'au %2$s.\n Vous pouvez annuler cette action en vous rendant sur son profil.</string>
+  <string name="timed_mute_profile">%1$s est muet jusqu\'au %2$s.\n Cliquez ici pour annuler.</string>
   <!-- Notifications -->
   <string name="no_notifications">Aucune notification à afficher</string>
   <string name="notif_mention">vous a mentionné</string>
@@ -340,6 +340,7 @@
   <string name="request_sent">Demande envoyée</string>
   <string name="followed_by">Vous suit</string>
   <string name="action_search">Recherche</string>
+  <string name="set_capitalize">Première lettre en majuscule pour les réponses</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Notifications push</string>
   <string name="settings_popup_message">
@@ -423,4 +424,10 @@
 - Vous pouvez également utiliser ce lien sans utiliser la 2FA\n\n 
 - Si cela ne fonctionne toujours pas, vous pouvez reporter ce problème sur Github : https://github.com/stom79/mastalab/issues    </string>
   <string name="media_ready">L\'image a été chargée. Cliquez ici pour l\'afficher.</string>
+  <string name="data_export_start">Cela peut être assez long. Vous serez notifié(e) une fois l\'exportation finie.</string>
+  <string name="data_export_running">Exportation en cours, veuillez patienter…</string>
+  <string name="data_export">Exporter vos pouets</string>
+  <string name="data_export_toots">Pouets exportés pour %1$s</string>
+  <string name="data_export_success">%1$s pouets sur %2$s ont été exportés.</string>
+  <string name="data_export_error">Une erreur est survenue lors de l\'exportation des pouets pour %1$s</string>
 </resources>

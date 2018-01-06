@@ -337,6 +337,7 @@
   <string name="request_sent">リクエスト送信</string>
   <string name="followed_by">あなたをフォロー</string>
   <string name="action_search">検索</string>
+  <string name="set_capitalize">First letter in capital for replies</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">プッシュ通知</string>
   <string name="settings_popup_message">
@@ -414,4 +415,10 @@
         - もしまだ解決しない場合、Github（https://github.com/stom79/mastalab/issues）にissueを投稿してください
     </string>
   <string name="media_ready">メディアが読み込まれました。表示するにはここをクリックします。</string>
+  <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
+  <string name="data_export_running">Still running, please wait…</string>
+  <string name="data_export">Export statuses</string>
+  <string name="data_export_toots">Export statuses for %1$s</string>
+  <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
+  <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
 </resources>

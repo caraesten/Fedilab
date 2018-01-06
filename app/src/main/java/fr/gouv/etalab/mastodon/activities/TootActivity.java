@@ -52,15 +52,12 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -1843,7 +1840,11 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             }
             if( tootReply.getMentions() != null ){
                 //Put other accounts mentioned at the bottom
-                toot_content.setText(String.format("%s", (toot_content.getText().toString() + "\n\n")));
+                boolean capitalize = sharedpreferences.getBoolean(Helper.SET_CAPITALIZE, true);
+                if( capitalize)
+                    toot_content.setText(String.format("%s", (toot_content.getText().toString() + "\n\n")));
+                else
+                    toot_content.setText(String.format("%s", (toot_content.getText().toString() + " \n")));
                 for(Mention mention : tootReply.getMentions()){
                     if(  mention.getAcct() != null && !mention.getId().equals(userIdReply) && !mentionedAccountsAdded.contains(mention.getAcct())) {
                         mentionedAccountsAdded.add(mention.getAcct());
@@ -1853,8 +1854,11 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 }
 
                 toot_content.setText(toot_content.getText().toString().trim());
-                if (toot_content.getText().toString().startsWith("@")) {
-                    toot_content.append("\n");
+                if (toot_content.getText().toString().startsWith("@") ) {
+                    if( capitalize )
+                        toot_content.append("\n");
+                    else
+                        toot_content.append(" ");
                 }
                 toot_space_left.setText(String.valueOf(toot_content.length()));
                 toot_content.requestFocus();

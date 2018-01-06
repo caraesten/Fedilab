@@ -112,6 +112,12 @@
             android:text="@string/set_display_global"
             android:layout_height="wrap_content" />
 
+        <!-- CARRIAGE RETURN AFTER MENTION IN REPLIES -->
+        <CheckBox
+            android:id="@+id/set_capitalize"
+            android:layout_width="wrap_content"
+            android:text="@string/set_capitalize"
+            android:layout_height="wrap_content" />
 
         <!-- LIVE NOTIFICATIONS SETTINGS -->
         <CheckBox

@@ -350,8 +350,10 @@ public class API {
             apiResponse.setMax_id(httpsConnection.getMax_id());
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
+            e.printStackTrace();
         }catch (Exception e) {
             setDefaultError(e);
+            e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
         return apiResponse;

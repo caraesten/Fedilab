@@ -346,6 +346,7 @@
   <string name="request_sent">Request sent</string>
   <string name="followed_by">Follows you</string>
   <string name="action_search">Search</string>
+  <string name="set_capitalize">First letter in capital for replies</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Push notifications</string>
   <string name="settings_popup_message">
@@ -431,4 +432,10 @@
         - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
     </string>
   <string name="media_ready">Media has been loaded. Click here to display it.</string>
+  <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
+  <string name="data_export_running">Still running, please wait…</string>
+  <string name="data_export">Export statuses</string>
+  <string name="data_export_toots">Export statuses for %1$s</string>
+  <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
+  <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
 </resources>

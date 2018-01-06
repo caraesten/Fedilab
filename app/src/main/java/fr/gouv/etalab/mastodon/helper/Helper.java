@@ -223,6 +223,7 @@ public class Helper {
     public static final String INSTANCE_VERSION = "instance_version";
     public static final String SET_LIVE_NOTIFICATIONS = "set_live_notifications";
     public static final String SET_DISABLE_GIF = "set_disable_gif";
+    public static final String SET_CAPITALIZE = "set_capitalize";
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;
@@ -277,7 +278,7 @@ public class Helper {
     public static final int SECONDES_BETWEEN_TRANSLATE = 30;
     //Intent
     public static final String INTENT_ACTION = "intent_action";
-
+    public static final String INTENT_TARGETED_ACCOUNT = "intent_targeted_account";
     //Receiver
     public static final String RECEIVE_DATA = "receive_data";
     public static final String RECEIVE_FEDERATED_DATA = "receive_federated_data";
@@ -461,6 +462,24 @@ public class Helper {
     }
 
     /**
+     * Convert a date in String -> format yyyy-MM-dd HH:mm:ss
+     * @param context Context
+     * @param date Date
+     * @return String
+     */
+    public static String dateFileToString(Context context, Date date) {
+        Locale userLocale;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            userLocale = context.getResources().getConfiguration().getLocales().get(0);
+        } else {
+            //noinspection deprecation
+            userLocale = context.getResources().getConfiguration().locale;
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss",userLocale);
+        return dateFormat.format(date);
+    }
+
+    /**
      * Convert String date from db to Date Object
      * @param stringDate date to convert
      * @return Date
@@ -492,7 +511,7 @@ public class Helper {
      * @return String
      */
 
-    private static String shortDateTime(Context context, Date date) {
+    public static String shortDateTime(Context context, Date date) {
         Locale userLocale;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
