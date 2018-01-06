@@ -344,6 +344,7 @@
   <string name="request_sent">Anfrage gesendet</string>
   <string name="followed_by">folgt dir</string>
   <string name="action_search">Suche</string>
+  <string name="set_capitalize">First letter in capital for replies</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Push Benachrichtigungen</string>
   <string name="settings_popup_message">Bitte bestätige welche Push Benachrichtigungen du erhalten möchtest.         Diese können später im Benachrichtungsreiter aktiviert oder deaktiviert werden.</string>
