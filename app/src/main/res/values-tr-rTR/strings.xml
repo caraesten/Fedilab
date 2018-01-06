@@ -340,6 +340,7 @@
   <string name="request_sent">İstek gönderildi</string>
   <string name="followed_by">Sizi takip ediyor</string>
   <string name="action_search">Ara</string>
+  <string name="set_capitalize">First letter in capital for replies</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Anlık Bildirimler</string>
   <string name="settings_popup_message">
