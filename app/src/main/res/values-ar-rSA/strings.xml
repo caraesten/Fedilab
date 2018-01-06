@@ -352,6 +352,7 @@
   <string name="request_sent">تم إرسال الطلب</string>
   <string name="followed_by">يتابعك</string>
   <string name="action_search">البحث</string>
+  <string name="set_capitalize">First letter in capital for replies</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">الإخطارات المدفوعة</string>
   <string name="settings_popup_message">
