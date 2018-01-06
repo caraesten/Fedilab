@@ -1854,8 +1854,11 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 }
 
                 toot_content.setText(toot_content.getText().toString().trim());
-                if (toot_content.getText().toString().startsWith("@")) {
-                    toot_content.append("\n");
+                if (toot_content.getText().toString().startsWith("@") ) {
+                    if( capitalize )
+                        toot_content.append("\n");
+                    else
+                        toot_content.append(" ");
                 }
                 toot_space_left.setText(String.valueOf(toot_content.length()));
                 toot_content.requestFocus();
