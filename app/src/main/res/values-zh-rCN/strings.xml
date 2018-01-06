@@ -337,6 +337,7 @@
   <string name="request_sent">请求已发送</string>
   <string name="followed_by">关注你</string>
   <string name="action_search">搜索</string>
+  <string name="set_capitalize">First letter in capital for replies</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">推送通知</string>
   <string name="settings_popup_message">

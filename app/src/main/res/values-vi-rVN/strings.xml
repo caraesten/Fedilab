@@ -339,6 +339,7 @@ và %d toots khác để khám phá</item>
   <string name="request_sent">Đã gửi yêu cầu</string>
   <string name="followed_by">Sau bạn</string>
   <string name="action_search">Tìm kiếm</string>
+  <string name="set_capitalize">First letter in capital for replies</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Push thông báo</string>
   <string name="settings_popup_message">

@@ -340,6 +340,7 @@
   <string name="request_sent">Solicitação enviada</string>
   <string name="followed_by">Segue você</string>
   <string name="action_search">Busca</string>
+  <string name="set_capitalize">First letter in capital for replies</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Notificações</string>
   <string name="settings_popup_message">
