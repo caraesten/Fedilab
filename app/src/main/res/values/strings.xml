@@ -467,4 +467,8 @@
     </string>
 
     <string name="media_ready">Media has been loaded. Click here to display it.</string>
+
+    <string name="data_export">Data export</string>
+    <string name="data_export_success">Data have been exported for %1$s</string>
+    <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
 </resources>

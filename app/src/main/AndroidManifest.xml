@@ -39,7 +39,8 @@
         <service
             android:name=".services.LiveNotificationService"
             android:exported="false"/>
-
+        <service android:name=".services.BackupStatusService"
+            android:exported="false"/>
         <receiver android:name=".services.RestartLiveNotificationReceiver"
             android:exported="false">
             <intent-filter>

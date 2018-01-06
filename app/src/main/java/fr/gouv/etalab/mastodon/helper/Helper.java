@@ -493,7 +493,7 @@ public class Helper {
      * @return String
      */
 
-    private static String shortDateTime(Context context, Date date) {
+    public static String shortDateTime(Context context, Date date) {
         Locale userLocale;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
