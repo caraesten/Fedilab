@@ -340,6 +340,7 @@
   <string name="request_sent">Demande envoyée</string>
   <string name="followed_by">Vous suit</string>
   <string name="action_search">Recherche</string>
+  <string name="set_capitalize">First letter in capital for replies</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Notifications push</string>
   <string name="settings_popup_message">
