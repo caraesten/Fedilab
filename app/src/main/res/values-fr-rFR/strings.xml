@@ -424,4 +424,10 @@
 - Vous pouvez également utiliser ce lien sans utiliser la 2FA\n\n 
 - Si cela ne fonctionne toujours pas, vous pouvez reporter ce problème sur Github : https://github.com/stom79/mastalab/issues    </string>
   <string name="media_ready">L\'image a été chargée. Cliquez ici pour l\'afficher.</string>
+  <string name="data_export_start">Cela peut être assez long. Vous serez notifié(e) une fois l\'exportation finie.</string>
+  <string name="data_export_running">Exportation en cours, veuillez patienter…</string>
+  <string name="data_export">Exporter vos pouets</string>
+  <string name="data_export_toots">Pouets exportés pour %1$s</string>
+  <string name="data_export_success">%1$s pouets sur %2$s ont été exportés.</string>
+  <string name="data_export_error">Une erreur est survenue lors de l\'exportation des pouets pour %1$s</string>
 </resources>
