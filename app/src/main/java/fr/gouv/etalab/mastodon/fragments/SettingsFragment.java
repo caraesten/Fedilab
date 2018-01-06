@@ -285,6 +285,21 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+
+        boolean capitalize = sharedpreferences.getBoolean(Helper.SET_CAPITALIZE, true);
+        final CheckBox set_capitalize = rootView.findViewById(R.id.set_capitalize);
+        set_capitalize.setChecked(capitalize);
+
+        set_capitalize.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_CAPITALIZE, set_capitalize.isChecked());
+                editor.apply();
+            }
+        });
+
+
         final CheckBox set_embedded_browser = rootView.findViewById(R.id.set_embedded_browser);
         final LinearLayout set_javascript_container = rootView.findViewById(R.id.set_javascript_container);
         final SwitchCompat set_javascript = rootView.findViewById(R.id.set_javascript);

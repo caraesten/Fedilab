@@ -223,6 +223,7 @@ public class Helper {
     public static final String INSTANCE_VERSION = "instance_version";
     public static final String SET_LIVE_NOTIFICATIONS = "set_live_notifications";
     public static final String SET_DISABLE_GIF = "set_disable_gif";
+    public static final String SET_CAPITALIZE = "set_capitalize";
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;

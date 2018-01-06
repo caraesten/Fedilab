@@ -1843,7 +1843,11 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             }
             if( tootReply.getMentions() != null ){
                 //Put other accounts mentioned at the bottom
-                toot_content.setText(String.format("%s", (toot_content.getText().toString() + "\n\n")));
+                boolean capitalize = sharedpreferences.getBoolean(Helper.SET_CAPITALIZE, true);
+                if( capitalize)
+                    toot_content.setText(String.format("%s", (toot_content.getText().toString() + "\n\n")));
+                else
+                    toot_content.setText(String.format("%s", (toot_content.getText().toString() + " \n")));
                 for(Mention mention : tootReply.getMentions()){
                     if(  mention.getAcct() != null && !mention.getId().equals(userIdReply) && !mentionedAccountsAdded.contains(mention.getAcct())) {
                         mentionedAccountsAdded.add(mention.getAcct());
