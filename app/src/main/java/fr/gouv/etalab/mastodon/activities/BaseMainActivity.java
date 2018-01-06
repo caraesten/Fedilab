@@ -107,6 +107,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_THEME_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_USER_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
+import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_TARGETED_ACCOUNT;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
@@ -1030,6 +1031,13 @@ public abstract class BaseMainActivity extends BaseActivity
                 if( tabLayout.getTabAt(1) != null)
                     //noinspection ConstantConditions
                     tabLayout.getTabAt(1).select();
+                if( extras.getString(INTENT_TARGETED_ACCOUNT) != null ){
+                    Intent intentShow = new Intent(BaseMainActivity.this, ShowAccountActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("accountId", extras.getString(INTENT_TARGETED_ACCOUNT));
+                    intentShow.putExtras(b);
+                    startActivity(intentShow);
+                }
             }else if( extras.getInt(INTENT_ACTION) == HOME_TIMELINE_INTENT){
                 changeUser(BaseMainActivity.this, userIdIntent, true); //Connects the account which is related to the notification
             }else if( extras.getInt(INTENT_ACTION) == CHANGE_THEME_INTENT){

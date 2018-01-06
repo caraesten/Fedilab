@@ -51,6 +51,7 @@ import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
+import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_TARGETED_ACCOUNT;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_INSTANCE;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
@@ -161,6 +162,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
         String notificationUrl = null;
         String title = null;
         final String message;
+        String targeted_account = null;
         for(Notification notification: notifications){
             switch (notification.getType()){
                 case "mention":
@@ -209,6 +211,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                                 title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getContext().getString(R.string.notif_follow));
                             else
                                 title = String.format("@%s %s", notification.getAccount().getAcct(),getContext().getString(R.string.notif_follow));
+                            targeted_account = notification.getAccount().getId();
                         }
                     }
                     break;
@@ -228,6 +231,8 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
             intent.putExtra(INTENT_ACTION, NOTIFICATION_INTENT);
             intent.putExtra(PREF_KEY_ID, account.getId());
+            if( targeted_account != null )
+                intent.putExtra(INTENT_TARGETED_ACCOUNT, targeted_account);
             intent.putExtra(PREF_INSTANCE, account.getInstance());
             long notif_id = Long.parseLong(account.getId());
             final int notificationId = ((notif_id + 1) > 2147483647) ? (int) (2147483647 - notif_id - 1) : (int) (notif_id + 1);

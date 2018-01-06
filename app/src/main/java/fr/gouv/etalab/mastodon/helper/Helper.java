@@ -278,7 +278,7 @@ public class Helper {
     public static final int SECONDES_BETWEEN_TRANSLATE = 30;
     //Intent
     public static final String INTENT_ACTION = "intent_action";
-
+    public static final String INTENT_TARGETED_ACCOUNT = "intent_targeted_account";
     //Receiver
     public static final String RECEIVE_DATA = "receive_data";
     public static final String RECEIVE_FEDERATED_DATA = "receive_federated_data";
