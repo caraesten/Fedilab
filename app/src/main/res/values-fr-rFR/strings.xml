@@ -424,4 +424,10 @@
 - Vous pouvez également utiliser ce lien sans utiliser la 2FA\n\n 
 - Si cela ne fonctionne toujours pas, vous pouvez reporter ce problème sur Github : https://github.com/stom79/mastalab/issues    </string>
   <string name="media_ready">L\'image a été chargée. Cliquez ici pour l\'afficher.</string>
+  <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
+  <string name="data_export_running">Still running, please wait…</string>
+  <string name="data_export">Export statuses</string>
+  <string name="data_export_toots">Export statuses for %1$s</string>
+  <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
+  <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
 </resources>
