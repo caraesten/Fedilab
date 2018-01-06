@@ -340,6 +340,7 @@
   <string name="request_sent">Verzoek verzonden</string>
   <string name="followed_by">Volgt jou</string>
   <string name="action_search">Zoeken</string>
+  <string name="set_capitalize">First letter in capital for replies</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Pushmeldingen</string>
   <string name="settings_popup_message">

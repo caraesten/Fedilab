@@ -340,6 +340,7 @@
   <string name="request_sent">Forespørsel sendt</string>
   <string name="followed_by">Følger deg</string>
   <string name="action_search">Søke</string>
+  <string name="set_capitalize">First letter in capital for replies</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Trykk på varsler</string>
   <string name="settings_popup_message">

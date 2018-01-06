@@ -343,6 +343,7 @@
   <string name="request_sent">Захтев послат</string>
   <string name="followed_by">Прати Вас</string>
   <string name="action_search">Претрага</string>
+  <string name="set_capitalize">First letter in capital for replies</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Гурни обавештења</string>
   <string name="settings_popup_message">
