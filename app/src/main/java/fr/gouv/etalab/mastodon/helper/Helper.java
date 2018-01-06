@@ -462,6 +462,24 @@ public class Helper {
     }
 
     /**
+     * Convert a date in String -> format yyyy-MM-dd HH:mm:ss
+     * @param context Context
+     * @param date Date
+     * @return String
+     */
+    public static String dateFileToString(Context context, Date date) {
+        Locale userLocale;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            userLocale = context.getResources().getConfiguration().getLocales().get(0);
+        } else {
+            //noinspection deprecation
+            userLocale = context.getResources().getConfiguration().locale;
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss",userLocale);
+        return dateFormat.format(date);
+    }
+
+    /**
      * Convert String date from db to Date Object
      * @param stringDate date to convert
      * @return Date

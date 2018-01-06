@@ -22,15 +22,17 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
-import android.support.v4.content.LocalBroadcastManager;
 import android.text.Html;
-import org.json.JSONObject;
+import android.widget.Toast;
+
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -56,6 +58,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
 public class BackupStatusService extends IntentService {
 
 
+    private static int instanceRunning = 0;
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
@@ -79,115 +82,124 @@ public class BackupStatusService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
+        if( instanceRunning == 0 ){
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), R.string.data_export_start, Toast.LENGTH_LONG).show();
+                }
+            });
+        }else {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), R.string.data_export_running, Toast.LENGTH_LONG).show();
+                }
+            });
+            return;
+        }
+        instanceRunning++;
+        String message;
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        if( userId == null)
-            return;
         SQLiteDatabase db = Sqlite.getInstance(BackupStatusService.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
-        API api = new API(getApplicationContext(), account.getId(), account.getToken());
-
-        String max_id = "0";
-        int statusToBackUp = account.getStatuses_count();
-        List<Status> backupStatus = new ArrayList<>();
-        while (max_id != null){
-            APIResponse apiResponse = api.getStatus(userId, null);
-            max_id = apiResponse.getMax_id();
-            List<Status> statuses = apiResponse.getStatuses();
-            if (statuses.size() > 0)
-                backupStatus.addAll(statuses);
-        }
-        String message;
-        String fileName = account.getAcct()+"@"+account.getInstance()+ Helper.dateToString(getApplicationContext(), new Date())+".csv";
-        String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
-        String fullPath = filePath+"/"+fileName;
+        API api = new API(getApplicationContext(), account.getInstance(), account.getToken());
         try {
-            FileWriter fw = new FileWriter(fullPath);
-            fw.append("id");
-            fw.append(',');
-            fw.append("uri");
-            fw.append(',');
-            fw.append("url");
-            fw.append(',');
-            fw.append("account");
-            fw.append(',');
-            fw.append("in_reply_to_id");
-            fw.append(',');
-            fw.append("in_reply_to_account_id");
-            fw.append(',');
-            fw.append("content");
-            fw.append(',');
-            fw.append("created_at");
-            fw.append(',');
-            fw.append("reblogs_count");
-            fw.append(',');
-            fw.append("favourites_count");
-            fw.append(',');
-            fw.append("sensitive");
-            fw.append(',');
-            fw.append("spoiler_text");
-            fw.append(',');
-            fw.append("visibility");
-            fw.append(',');
-            fw.append("media_attachments");
-            fw.append('\n');
+            String fullPath;
+            Intent intentOpen;
+            String max_id = null;
+            int statusToBackUp = account.getStatuses_count();
+            List<Status> backupStatus = new ArrayList<>();
+            do {
+                APIResponse apiResponse = api.getStatus(userId, max_id);
+                max_id = apiResponse.getMax_id();
+                List<Status> statuses = apiResponse.getStatuses();
+                if (statuses.size() > 0)
+                    backupStatus.addAll(statuses);
+            }while (max_id != null);
+
+            String fileName = account.getAcct()+"@"+account.getInstance()+ Helper.dateFileToString(getApplicationContext(), new Date())+".csv";
+            String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+            fullPath = filePath+"/"+fileName;
+            PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File(fullPath)), "UTF-8"));
+            StringBuilder builder = new StringBuilder();
+            builder.append("id").append(',');
+            builder.append("uri").append(',');
+            builder.append("url").append(',');
+            builder.append("account").append(',');
+            builder.append("in_reply_to_id").append(',');
+            builder.append("in_reply_to_account_id").append(',');
+            builder.append("content").append(',');
+            builder.append("created_at").append(',');
+            builder.append("reblogs_count").append(',');
+            builder.append("favourites_count").append(',');
+            builder.append("sensitive").append(',');
+            builder.append("spoiler_text").append(',');
+            builder.append("visibility").append(',');
+            builder.append("media_attachments");
+            builder.append('\n');
             for( Status status: backupStatus){
-                fw.append(status.getId());
-                fw.append(',');
-                fw.append(status.getUri());
-                fw.append(',');
-                fw.append(status.getUrl());
-                fw.append(',');
-                fw.append(status.getAccount().getAcct());
-                fw.append(',');
-                fw.append(status.getIn_reply_to_id());
-                fw.append(',');
-                fw.append(status.getIn_reply_to_account_id());
-                fw.append(',');
+                //excludes reblog
+                if( status.getReblog() != null){
+                    statusToBackUp = statusToBackUp - 1;
+                    continue;
+                }
+                builder.append("\"").append(status.getId()).append("\"").append(',');
+                builder.append("\"").append(status.getUri()).append("\"").append(',');
+                builder.append("\"").append(status.getUrl()).append("\"").append(',');
+                builder.append("\"").append(status.getAccount().getAcct()).append("\"").append(',');
+                builder.append("\"").append(status.getIn_reply_to_id()).append("\"").append(',');
+                builder.append("\"").append(status.getIn_reply_to_account_id()).append("\"").append(',');
                 String content;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                    content = Html.fromHtml(status.getContentTranslated(), Html.FROM_HTML_MODE_LEGACY).toString();
+                    content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
                 else
                     //noinspection deprecation
-                    content = Html.fromHtml(status.getContentTranslated()).toString();
-                fw.append(content);
-                fw.append(',');
-                fw.append(Helper.shortDateTime(getApplicationContext(), status.getCreated_at()));
-                fw.append(',');
-                fw.append(String.valueOf(status.getReblogs_count()));
-                fw.append(',');
-                fw.append(String.valueOf(status.getFavourites_count()));
-                fw.append(',');
-                fw.append(String.valueOf(status.isSensitive()));
-                fw.append(',');
-                fw.append(status.getSpoiler_text() !=null?status.getSpoiler_text():"");
-                fw.append(',');
-                fw.append(status.getVisibility());
-                fw.append(',');
+                    content = Html.fromHtml(status.getContent()).toString();
+                builder.append("\"").append(content.replace("\"", "'").replace("\n"," ")).append("\"").append(',');
+                builder.append("\"").append(Helper.shortDateTime(getApplicationContext(), status.getCreated_at())).append("\"").append(',');
+                builder.append("\"").append(String.valueOf(status.getReblogs_count())).append("\"").append(',');
+                builder.append("\"").append(String.valueOf(status.getFavourites_count())).append("\"").append(',');
+                builder.append("\"").append(String.valueOf(status.isSensitive())).append("\"").append(',');
+                builder.append("\"").append(status.getSpoiler_text() !=null?status.getSpoiler_text():"").append("\"").append(',');
+                builder.append("\"").append(status.getVisibility()).append("\"").append(',');
                 if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0){
+                    builder.append("\"");
                     for(Attachment attachment: status.getMedia_attachments()){
-                        fw.append(attachment.getRemote_url()).append("\n");
+                        builder.append(attachment.getUrl()).append(" ");
                     }
+                    builder.append("\"");
                 }else {
-                    fw.append("");
+                    builder.append("\"\"");
                 }
-                fw.append('\n');
+                builder.append('\n');
             }
-            fw.flush();
-            fw.close();
-            message = getString(R.string.data_export_success, account.getAcct());
-        } catch (IOException e) {
+            pw.write(builder.toString());
+            pw.close();
+            message = getString(R.string.data_export_success, String.valueOf(statusToBackUp), String.valueOf(backupStatus.size()));
+            intentOpen = new Intent();
+            intentOpen.setAction(android.content.Intent.ACTION_VIEW);
+            Uri uri = Uri.parse("file://" + fullPath);
+            intentOpen.setDataAndType(uri, "text/csv");
+            long notif_id = Long.parseLong(account.getId());
+            int notificationId = ((notif_id + 3) > 2147483647) ? (int) (2147483647 - notif_id - 3) : (int) (notif_id + 3);
+            String title = getString(R.string.data_export_toots, account.getAcct());
+            notify_user(getApplicationContext(), intentOpen, notificationId, BitmapFactory.decodeResource(getResources(),
+                    R.drawable.mastodonlogo), title, message);
+        } catch (Exception e) {
             e.printStackTrace();
             message = getString(R.string.data_export_error, account.getAcct());
+            final String finalMessage = message;
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), finalMessage, Toast.LENGTH_LONG).show();
+                }
+            });
         }
-        long notif_id = Long.parseLong(account.getId());
-        int notificationId = ((notif_id + 3) > 2147483647) ? (int) (2147483647 - notif_id - 3) : (int) (notif_id + 3);
-        Intent intentOpen = new Intent();
-        intentOpen.setAction(android.content.Intent.ACTION_VIEW);
-        Uri uri = Uri.parse("file://" + fullPath);
-        intentOpen.setDataAndType(uri, "text/csv");
-        notify_user(getApplicationContext(), intentOpen, notificationId, BitmapFactory.decodeResource(getResources(),
-                R.drawable.mastodonlogo), getString(R.string.data_export), message);
+        instanceRunning--;
+
     }
 
 
