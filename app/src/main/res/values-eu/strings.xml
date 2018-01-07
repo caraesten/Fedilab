@@ -52,45 +52,45 @@
   <string name="previous">Aurrekoa</string>
   <string name="open_with">Honekin ireki</string>
   <string name="validate">Balioztatu</string>
-  <string name="media">Media</string>
-  <string name="share_with">Share with</string>
-  <string name="shared_via">Shared via Mastalab</string>
-  <string name="replies">Replies</string>
-  <string name="username">User name</string>
-  <string name="drafts">Drafts</string>
-  <string name="new_data">New data are available! Do you want to display them?</string>
-  <string name="favourite">Favourites</string>
-  <string name="follow">New followers</string>
-  <string name="mention">Mentions</string>
+  <string name="media">Multimedia</string>
+  <string name="share_with">Partekatu honekin</string>
+  <string name="shared_via">Mastalab bidez partekatua</string>
+  <string name="replies">Erantzunak</string>
+  <string name="username">Erabiltzaile-izena</string>
+  <string name="drafts">Zirriborroak</string>
+  <string name="new_data">Datu berriak daude eskuragarri! Bistaratu nahi dituzu?</string>
+  <string name="favourite">Gogokoak</string>
+  <string name="follow">Jarraitzaile berriak</string>
+  <string name="mention">Aipamenak</string>
   <string name="reblog">Boosts</string>
   <string name="show_boosts">Show boosts</string>
-  <string name="show_replies">Show replies</string>
-  <string name="action_open_in_web">Open in browser</string>
-  <string name="translate">Translate</string>
-  <string name="please_wait">Please, wait few seconds before making this action.</string>
+  <string name="show_replies">Erakutsi erantzunak</string>
+  <string name="action_open_in_web">Ireki nabigatzailean</string>
+  <string name="translate">Itzuli</string>
+  <string name="please_wait">Itxaron segundo batzuk ekintza hau abiatu aurretik.</string>
   <!--- Menu -->
-  <string name="home_menu">Home</string>
-  <string name="local_menu">Local timeline</string>
-  <string name="global_menu">Federated timeline</string>
-  <string name="neutral_menu_title">Options</string>
-  <string name="favorites_menu">Favourites</string>
-  <string name="communication_menu_title">Communication</string>
-  <string name="muted_menu">Muted users</string>
-  <string name="blocked_menu">Blocked users</string>
+  <string name="home_menu">Hasiera</string>
+  <string name="local_menu">Tokiko denbora-lerroa</string>
+  <string name="global_menu">Federatutako denbora-lerroa</string>
+  <string name="neutral_menu_title">Aukerak</string>
+  <string name="favorites_menu">Gogokoak</string>
+  <string name="communication_menu_title">Komunikazioa</string>
+  <string name="muted_menu">Mutututako erabiltzaileak</string>
+  <string name="blocked_menu">Blokeatutako erabiltzaileak</string>
   <string name="remote_follow_menu">Remote follow</string>
-  <string name="notifications">Notifications</string>
-  <string name="follow_request">Follow requests</string>
-  <string name="optimization">Optimization</string>
-  <string name="settings">Settings</string>
-  <string name="profile">Profile</string>
-  <string name="make_a_choice">What do you want to do?</string>
-  <string name="delete_account_title">Delete an account</string>
-  <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
-  <string name="send_email">Send an email</string>
-  <string name="choose_file">Please select a file</string>
-  <string name="choose_file_error">No file explorer found!</string>
-  <string name="click_to_change">Click on the path to change it</string>
-  <string name="failed">Failed!</string>
+  <string name="notifications">Jakinarazpenak</string>
+  <string name="follow_request">Jarraitzeko eskaerak</string>
+  <string name="optimization">Optimizazioa</string>
+  <string name="settings">Ezarpenak</string>
+  <string name="profile">Profila</string>
+  <string name="make_a_choice">Zer egin nahi duzu?</string>
+  <string name="delete_account_title">Ezabatu kontu bat</string>
+  <string name="delete_account_message" formatted="false">Ezabatu %1$s kontua aplikaziotik?</string>
+  <string name="send_email">Bidali e-mail bat</string>
+  <string name="choose_file">Hautatu fitxategi bat</string>
+  <string name="choose_file_error">Ez da fitxategi arakatzailerik aurkitu!</string>
+  <string name="click_to_change">Egin klik bide-izenean berau aldatzeko</string>
+  <string name="failed">Huts egin du!</string>
   <string name="scheduled_toots">Scheduled toots</string>
   <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
   <string name="insert_emoji">Insert emoji</string>
@@ -135,21 +135,21 @@
   <string name="date_hours">%d h</string>
   <string name="date_day">%d d</string>
   <!-- TOOT -->
-  <string name="toot_cw_placeholder">Warning</string>
-  <string name="toot_placeholder">What is on your mind?</string>
+  <string name="toot_cw_placeholder">Abisua</string>
+  <string name="toot_placeholder">Zer duzu buruan?</string>
   <string name="toot_it">TOOT!</string>
   <string name="cw">cw</string>
-  <string name="toot_title">Write a toot</string>
-  <string name="toot_title_reply">Reply to a toot</string>
-  <string name="toot_no_space">You have reached the 500 characters allowed!</string>
-  <string name="toot_select_image">Select a media</string>
-  <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-  <string name="toot_delete_media">Delete this media?</string>
-  <string name="toot_error_no_content">Your toot is empty!</string>
-  <string name="toot_visibility_tilte">Visibility of the toot</string>
-  <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-  <string name="toot_sent">The toot has been sent!</string>
-  <string name="toot_reply_content_title">You are replying to this toot:</string>
+  <string name="toot_title">Idatzi toot bat</string>
+  <string name="toot_title_reply">Erantzun toot bati</string>
+  <string name="toot_no_space">Gehienez onartzen diren 500 karaktereetara iritsi zara!</string>
+  <string name="toot_select_image">Hautatu multimedia bat</string>
+  <string name="toot_select_image_error">Errorea gertatu da multimedia aukeratzean!</string>
+  <string name="toot_delete_media">Ezabatu multimedia hau?</string>
+  <string name="toot_error_no_content">Zure toot-a hutsik dago!</string>
+  <string name="toot_visibility_tilte">Toot-aren ikusgaitasuna</string>
+  <string name="toots_visibility_tilte">Toot-en lehenetsitako ikusgaitasuna: </string>
+  <string name="toot_sent">Toot-a bidali da!</string>
+  <string name="toot_reply_content_title">Toot honi erantzuten ari zara:</string>
   <string name="toot_sensitive">Sensitive content?</string>
   <string-array name="toot_visibility">
     <item>Post to public timelines</item>
@@ -177,7 +177,7 @@
   <string name="about_thekinrar_action">instances.social</string>
   <string name="thanks_text_logo">Icon designer:</string>
   <!-- Conversation -->
-  <string name="conversation">Conversation</string>
+  <string name="conversation">Elkarrizketa</string>
   <!-- Accounts -->
   <string name="no_accounts">No account to display</string>
   <string name="no_follow_request">No follow request</string>
@@ -186,7 +186,7 @@
   <string name="followers_cnt">Followers \n %1$s</string>
   <string name="pins_cnt">Pinned \n %d</string>
   <string name="authorize">Authorize</string>
-  <string name="reject">Reject</string>
+  <string name="reject">Ukatu</string>
   <!-- Scheduled toots -->
   <string name="no_scheduled_toots">No scheduled toot to display!</string>
   <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
@@ -220,8 +220,8 @@
   <string name="delete_notification_all">All notifications have been deleted!</string>
   <!-- HEADER -->
   <string name="following">Following</string>
-  <string name="followers">Followers</string>
-  <string name="pinned_toots">Pinned</string>
+  <string name="followers">Jarraitzaileak</string>
+  <string name="pinned_toots">Finkatuta</string>
   <!-- TOAST -->
   <string name="client_error">Unable to get client id!</string>
   <string name="no_internet">No Internet connection!</string>
@@ -260,11 +260,11 @@
   <string name="set_notifications_page">Number of notifications per load</string>
   <string name="set_attachment_always">Always</string>
   <string name="set_attachment_wifi">WIFI</string>
-  <string name="set_attachment_ask">Ask</string>
+  <string name="set_attachment_ask">Galdetu</string>
   <string name="set_attachment_action">Load the media</string>
   <string name="load_attachment">Load the pictures</string>
-  <string name="load_attachment_spoiler">Show more…</string>
-  <string name="load_attachment_spoiler_less">Show less…</string>
+  <string name="load_attachment_spoiler">Erakutsi gehiago…</string>
+  <string name="load_attachment_spoiler_less">Erakutsi gutxiago…</string>
   <string name="load_sensitive_attachment">Sensitive content</string>
   <string name="set_display_reply">Display previous message in responses</string>
   <string name="set_display_local">Display local timeline</string>
@@ -284,14 +284,14 @@
   <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
   <string name="settings_title_more_options">Advanced settings</string>
   <string name="set_wifi_only">Notify in WIFI only</string>
-  <string name="set_notify">Notify?</string>
-  <string name="set_notif_silent">Silent Notifications</string>
+  <string name="set_notify">Jakinarazi?</string>
+  <string name="set_notif_silent">Jakinarazpen isilak</string>
   <string name="set_night_mode">Night mode</string>
   <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
   <string name="settings_title_profile">Edit profile</string>
   <string name="set_profile_description">Bio…</string>
-  <string name="set_save_changes">Save changes</string>
-  <string name="set_header_picture_overlay">Choose a header picture</string>
+  <string name="set_save_changes">Gorde aldaketak</string>
+  <string name="set_header_picture_overlay">Hautatu goibururako irudi bat</string>
   <string name="set_preview_reply">Display the number of replies in home timeline</string>
   <string name="set_preview_reply_pp">Display profile pictures?</string>
   <string name="set_multiaccount_actions">Allow interactions between accounts?</string>
@@ -309,25 +309,25 @@
   <string name="use_cookies">Allow third-party cookies</string>
   <string name="settings_ui_layout">Layout for timelines: </string>
   <string-array name="settings_menu_tabs">
-    <item>Tabs</item>
-    <item>Menu</item>
-    <item>Tabs and menu</item>
+    <item>Fitxak</item>
+    <item>Menua</item>
+    <item>Fitxak eta menuak</item>
   </string-array>
   <string-array name="settings_translation">
     <item>Yandex</item>
-    <item>No</item>
+    <item>Ez</item>
   </string-array>
-  <string name="set_led_colour">Set LED colour:</string>
+  <string name="set_led_colour">Ezarri LEDaren kolorea:</string>
   <string-array name="led_colours">
-    <item>Blue</item>
-    <item>Cyan</item>
+    <item>Urdina</item>
+    <item>Ziana</item>
     <item>Magenta</item>
-    <item>Green</item>
-    <item>Red</item>
-    <item>Yellow</item>
-    <item>White</item>
+    <item>Berdea</item>
+    <item>Gorria</item>
+    <item>Horia</item>
+    <item>Zuria</item>
   </string-array>
-  <string name="set_title_news">News</string>
+  <string name="set_title_news">Berriak</string>
   <string name="set_notification_news">Notify for new toots on the home timeline</string>
   <string name="set_show_error_messages">Display error messages</string>
   <string name="action_follow">Follow</string>
@@ -339,7 +339,7 @@
   <string name="action_unmute">Unmute</string>
   <string name="request_sent">Request sent</string>
   <string name="followed_by">Follows you</string>
-  <string name="action_search">Search</string>
+  <string name="action_search">Bilatu</string>
   <string name="set_capitalize">First letter in capital for replies</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Push notifications</string>
