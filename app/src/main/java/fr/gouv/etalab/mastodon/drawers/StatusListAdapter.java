@@ -540,7 +540,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
 
-            holder.status_content.setMovementMethod(null);
             holder.status_content.setMovementMethod(LinkMovementMethod.getInstance());
 
             //Manages translations
@@ -583,7 +582,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
                 }
             });
-            holder.status_content_translated.setMovementMethod(null);
             holder.status_content_translated.setMovementMethod(LinkMovementMethod.getInstance());
             //-------- END -> Manages translations
 
@@ -650,7 +648,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             });
 
             holder.status_mention_spoiler.setText(Helper.makeMentionsClick(context,status.getMentions()), TextView.BufferType.SPANNABLE);
-            holder.status_mention_spoiler.setMovementMethod(null);
             holder.status_mention_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
 
             boolean displayBoost = sharedpreferences.getBoolean(Helper.SET_DISPLAY_BOOST_COUNT, true);

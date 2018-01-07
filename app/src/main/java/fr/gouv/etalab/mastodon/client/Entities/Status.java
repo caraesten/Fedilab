@@ -31,6 +31,7 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
+import android.text.style.URLSpan;
 import android.util.Patterns;
 import android.view.View;
 
@@ -612,6 +613,9 @@ public class Status implements Parcelable{
 
     private SpannableString treatment(final Context context, final SpannableString spannableString){
 
+        URLSpan[] urls = spannableString.getSpans(0, spannableString.length(), URLSpan.class);
+        for(URLSpan span : urls)
+            spannableString.removeSpan(span);
         List<Mention> mentions = this.status.getReblog() != null ? this.status.getReblog().getMentions() : this.status.getMentions();
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);

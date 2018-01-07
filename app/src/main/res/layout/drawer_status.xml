@@ -139,7 +139,6 @@
                 <TextView
                     android:id="@+id/status_spoiler"
                     android:layout_marginTop="10dp"
-                    android:autoLink="web"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <Button
@@ -170,7 +169,6 @@
                     android:id="@+id/status_content"
                     android:textIsSelectable="true"
                     android:layout_marginTop="10dp"
-                    android:autoLink="web"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <LinearLayout
@@ -182,7 +180,6 @@
                     android:orientation="vertical">
                     <TextView
                         android:id="@+id/status_content_translated"
-                        android:autoLink="web"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                     <TextView
@@ -394,7 +391,6 @@
                 <TextView
                     android:id="@+id/status_mention_spoiler"
                     android:layout_marginTop="10dp"
-                    android:autoLink="web"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
