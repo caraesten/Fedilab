@@ -1480,7 +1480,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     url = attachment.getUrl();
                 else if( attachment.getType().equals("unknown"))
                     url = attachment.getRemote_url();
-                if( !url.trim().contains("missing.png"))
+                if( !url.trim().contains("missing.png") && !((Activity)context).isFinishing() )
                     Glide.with(imageView.getContext())
                             .load(url)
                             .thumbnail(0.1f)
