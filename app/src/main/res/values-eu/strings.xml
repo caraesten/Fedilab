@@ -95,7 +95,7 @@
   <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
   <string name="insert_emoji">Txertatu emojia</string>
   <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-  <string name="live_notif">Live notifications</string>
+  <string name="live_notif">Zuzeneko jakinarazpenak</string>
   <!-- Status -->
   <string name="no_status">No toot to display</string>
   <string name="fav_added">The toot was added to favourites</string>
@@ -233,13 +233,13 @@
   <string name="toast_unfollow">The account is no longer followed!</string>
   <string name="toast_reblog">Toot-a bultzatu da!</string>
   <string name="toast_unreblog">Toot-a ez dago jada bultzatua!</string>
-  <string name="toast_favourite">The toot was added to your favourites!</string>
-  <string name="toast_unfavourite">The toot was removed from your favourites!</string>
-  <string name="toast_report">The toot was reported!</string>
-  <string name="toast_unstatus">The toot was deleted!</string>
-  <string name="toast_pin">The toot was pinned!</string>
-  <string name="toast_unpin">The toot was unpinned!</string>
-  <string name="toast_error">Oops ! An error occurred!</string>
+  <string name="toast_favourite">Toot-a zure gogokoetara gehitu da!</string>
+  <string name="toast_unfavourite">Toot-a zure gogokoetatik kendu da!</string>
+  <string name="toast_report">Toot-a salatu da!</string>
+  <string name="toast_unstatus">Toot-a ezabatu da!</string>
+  <string name="toast_pin">Toot-a finkatu da!</string>
+  <string name="toast_unpin">Toot-a desfinkatu da!</string>
+  <string name="toast_error">Errore bat gertatu da!</string>
   <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
   <string name="toast_error_instance">The instance domain does not seem to be valide!</string>
   <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
@@ -272,7 +272,7 @@
   <string name="set_disable_gif">Disable GIF avatars</string>
   <string name="set_folder_title">Bidea: </string>
   <string name="set_auto_store_toot">Gorde zirriborroak automatikoki</string>
-  <string name="set_bubble_counter">Display counters</string>
+  <string name="set_bubble_counter">Erakutsi kontagailuak</string>
   <string name="set_auto_add_media_url">Add URL of media in toots</string>
   <string name="settings_title_notifications">Kudeatu jakinarazpenak</string>
   <string name="set_notif_follow">Notify when someone follows you</string>
@@ -350,12 +350,12 @@
   <string name="settings_popup_timeline">For unread toots in home time-line?</string>
   <string name="settings_popup_notification">For unread notifications?</string>
   <!-- CACHE -->
-  <string name="cache_title">Clear cache</string>
+  <string name="cache_title">Garbitu cache-a</string>
   <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
   <string name="cache_units">Mb</string>
   <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
   <!-- PRIVACY -->
-  <string name="privacy_data_title">Recorded data</string>
+  <string name="privacy_data_title">Grabatutako datuak</string>
   <string name="privacy_data">
         Only basic information from accounts are stored on the device.
         These data are strictly confidential and can only be used by the application.
@@ -427,7 +427,7 @@
     </string>
   <string name="media_ready">Media has been loaded. Click here to display it.</string>
   <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-  <string name="data_export_running">Still running, please wait…</string>
+  <string name="data_export_running">Oraindik abian, itxaron mesedez…</string>
   <string name="data_export">Export statuses</string>
   <string name="data_export_toots">Export statuses for %1$s</string>
   <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
