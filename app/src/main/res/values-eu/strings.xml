@@ -44,7 +44,7 @@
   <string name="speech_not_supported">Zure gailuak ez du onartzen ahots sarrera!</string>
   <string name="delete_all">Ezabatu guztiak</string>
   <string name="translate_toot">Itzuli toot hau.</string>
-  <string name="schedule">Schedule</string>
+  <string name="schedule">Programatu</string>
   <string name="text_size">Testuaren eta ikonoen tamainak</string>
   <string name="text_size_change">Aldatu testuaren tamaina:</string>
   <string name="icon_size_change">Aldatu ikonoaren tamaina:</string>
@@ -62,8 +62,8 @@
   <string name="favourite">Gogokoak</string>
   <string name="follow">Jarraitzaile berriak</string>
   <string name="mention">Aipamenak</string>
-  <string name="reblog">Boosts</string>
-  <string name="show_boosts">Show boosts</string>
+  <string name="reblog">Bultzadak</string>
+  <string name="show_boosts">Erakutsi bultzadak</string>
   <string name="show_replies">Erakutsi erantzunak</string>
   <string name="action_open_in_web">Ireki nabigatzailean</string>
   <string name="translate">Itzuli</string>
@@ -77,7 +77,7 @@
   <string name="communication_menu_title">Komunikazioa</string>
   <string name="muted_menu">Mutututako erabiltzaileak</string>
   <string name="blocked_menu">Blokeatutako erabiltzaileak</string>
-  <string name="remote_follow_menu">Remote follow</string>
+  <string name="remote_follow_menu">Urruneko jarraitzea</string>
   <string name="notifications">Jakinarazpenak</string>
   <string name="follow_request">Jarraitzeko eskaerak</string>
   <string name="optimization">Optimizazioa</string>
@@ -91,9 +91,9 @@
   <string name="choose_file_error">Ez da fitxategi arakatzailerik aurkitu!</string>
   <string name="click_to_change">Egin klik bide-izenean berau aldatzeko</string>
   <string name="failed">Huts egin du!</string>
-  <string name="scheduled_toots">Scheduled toots</string>
+  <string name="scheduled_toots">Programatutako toot-ak</string>
   <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
-  <string name="insert_emoji">Insert emoji</string>
+  <string name="insert_emoji">Txertatu emojia</string>
   <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
   <string name="live_notif">Live notifications</string>
   <!-- Status -->
@@ -107,8 +107,8 @@
   <string name="favourite_remove">Kendu toot hau zure gogokoetatik?</string>
   <string name="reblog_add">Boost this toot?</string>
   <string name="reblog_remove">Unboost this toot?</string>
-  <string name="pin_add">Pin this toot?</string>
-  <string name="pin_remove">Unpin this toot?</string>
+  <string name="pin_add">Finkatu toot hau?</string>
+  <string name="pin_remove">Desfinkatu toot hau?</string>
   <string name="more_action_1">Mututu</string>
   <string name="more_action_2">Blokeatu</string>
   <string name="more_action_3">Eman berri</string>
@@ -116,24 +116,24 @@
   <string name="more_action_5">Kopiatu</string>
   <string name="more_action_6">Partekatu</string>
   <string name="more_action_7">Aipatu</string>
-  <string name="more_action_8">Timed mute</string>
+  <string name="more_action_8">Denbora baterako mutututa</string>
   <string-array name="more_action_confirm">
-    <item>Mute this account?</item>
-    <item>Block this account?</item>
-    <item>Report this toot?</item>
+    <item>Mututu kontu hau?</item>
+    <item>Blokeatu kontu hau?</item>
+    <item>Salatu toot hau?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>Remove this toot?</item>
+    <item>Kendu toot hau?</item>
   </string-array>
   <plurals name="preview_replies">
-    <item quantity="one">%d reply</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="one">erantzun %d</item>
+    <item quantity="other">%d erantzun</item>
   </plurals>
   <!-- Date -->
   <string name="date_seconds">%d s</string>
   <string name="date_minutes">%d m</string>
   <string name="date_hours">%d h</string>
-  <string name="date_day">%d d</string>
+  <string name="date_day">%d e</string>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">Abisua</string>
   <string name="toot_placeholder">Zer duzu buruan?</string>
@@ -154,12 +154,12 @@
   <string-array name="toot_visibility">
     <item>Post to public timelines</item>
     <item>Do not post to public timelines</item>
-    <item>Post to followers only</item>
+    <item>Bidali jarraitzaileei besterik ez</item>
     <item>Post to mentioned users only</item>
   </string-array>
-  <string name="no_draft">No draft!</string>
-  <string name="choose_toot">Choose a toot</string>
-  <string name="choose_accounts">Choose an account</string>
+  <string name="no_draft">Zirriborrorik ez!</string>
+  <string name="choose_toot">Hautatu toot bat</string>
+  <string name="choose_accounts">Aukeratu kontu bat</string>
   <string name="select_accounts">Select some accounts</string>
   <string name="remove_draft">Remove draft?</string>
   <string name="show_reply">Click on the button to display the original toot</string>
@@ -169,11 +169,11 @@
   <!-- About -->
   <string name="about_vesrion">Release %1$s</string>
   <string name="about_developer">Developer:</string>
-  <string name="about_license">License: </string>
+  <string name="about_license">Lizentzia: </string>
   <string name="about_license_action">GNU GPL V3</string>
   <string name="about_code">Source code: </string>
   <string name="about_yandex">Translation of toots:</string>
-  <string name="about_thekinrar">Search instances:</string>
+  <string name="about_thekinrar">Bilatu instantziak:</string>
   <string name="about_thekinrar_action">instances.social</string>
   <string name="thanks_text_logo">Icon designer:</string>
   <!-- Conversation -->
@@ -185,13 +185,13 @@
   <string name="following_cnt">Following \n %1$s</string>
   <string name="followers_cnt">Followers \n %1$s</string>
   <string name="pins_cnt">Pinned \n %d</string>
-  <string name="authorize">Authorize</string>
+  <string name="authorize">Baimendu</string>
   <string name="reject">Ukatu</string>
   <!-- Scheduled toots -->
   <string name="no_scheduled_toots">No scheduled toot to display!</string>
   <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
   <string name="remove_scheduled">Delete scheduled toot?</string>
-  <string name="media_count">Media: %d</string>
+  <string name="media_count">Multimedia: %d</string>
   <string name="toot_scheduled">The toot has been scheduled!</string>
   <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
   <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
@@ -219,7 +219,7 @@
   <string name="delete_notification">The notification has been deleted!</string>
   <string name="delete_notification_all">All notifications have been deleted!</string>
   <!-- HEADER -->
-  <string name="following">Following</string>
+  <string name="following">Jarraitzen</string>
   <string name="followers">Jarraitzaileak</string>
   <string name="pinned_toots">Finkatuta</string>
   <!-- TOAST -->
@@ -244,12 +244,12 @@
   <string name="toast_error_instance">The instance domain does not seem to be valide!</string>
   <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
   <string name="toast_error_search">An error occurred while searching!</string>
-  <string name="toast_error_login">Can not log in!</string>
+  <string name="toast_error_login">Ezin da saioa hasi!</string>
   <string name="toast_update_credential_ok">The profile data have been saved!</string>
   <string name="nothing_to_do">No action can be taken</string>
   <string name="toast_saved">The media has been saved!</string>
   <string name="toast_error_translate">An error occurred while translating!</string>
-  <string name="toast_toot_saved">Draft saved!</string>
+  <string name="toast_toot_saved">Zirriborroa gordeta!</string>
   <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
   <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
   <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
@@ -258,7 +258,7 @@
   <string name="set_toots_page">Number of toots per load</string>
   <string name="set_accounts_page">Number of accounts per load</string>
   <string name="set_notifications_page">Number of notifications per load</string>
-  <string name="set_attachment_always">Always</string>
+  <string name="set_attachment_always">Beti</string>
   <string name="set_attachment_wifi">WIFI</string>
   <string name="set_attachment_ask">Galdetu</string>
   <string name="set_attachment_action">Load the media</string>
@@ -270,11 +270,11 @@
   <string name="set_display_local">Display local timeline</string>
   <string name="set_display_global">Display federated timeline</string>
   <string name="set_disable_gif">Disable GIF avatars</string>
-  <string name="set_folder_title">Path: </string>
-  <string name="set_auto_store_toot">Save drafts automatically</string>
+  <string name="set_folder_title">Bidea: </string>
+  <string name="set_auto_store_toot">Gorde zirriborroak automatikoki</string>
   <string name="set_bubble_counter">Display counters</string>
   <string name="set_auto_add_media_url">Add URL of media in toots</string>
-  <string name="settings_title_notifications">Manage notifications</string>
+  <string name="settings_title_notifications">Kudeatu jakinarazpenak</string>
   <string name="set_notif_follow">Notify when someone follows you</string>
   <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
   <string name="set_notif_follow_share">Notify when someone boosts your status</string>
@@ -283,12 +283,12 @@
   <string name="set_share_validation">Show confirmation dialog before boosting</string>
   <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
   <string name="settings_title_more_options">Advanced settings</string>
-  <string name="set_wifi_only">Notify in WIFI only</string>
+  <string name="set_wifi_only">Jakinarazi WIFI bidez besterik ez</string>
   <string name="set_notify">Jakinarazi?</string>
   <string name="set_notif_silent">Jakinarazpen isilak</string>
-  <string name="set_night_mode">Night mode</string>
+  <string name="set_night_mode">Gau modua</string>
   <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
-  <string name="settings_title_profile">Edit profile</string>
+  <string name="settings_title_profile">Editatu profila</string>
   <string name="set_profile_description">Bio…</string>
   <string name="set_save_changes">Gorde aldaketak</string>
   <string name="set_header_picture_overlay">Hautatu goibururako irudi bat</string>
@@ -302,12 +302,12 @@
   <string name="settings_time_to">and</string>
   <string name="settings_time_greater">The time must be greater than %1$s</string>
   <string name="settings_time_lower">The time must be lower than %1$s</string>
-  <string name="settings_hour_init">Start time</string>
-  <string name="settings_hour_end">End time</string>
-  <string name="embedded_browser">Use the built-in browser</string>
-  <string name="use_javascript">Enable Javascript</string>
-  <string name="use_cookies">Allow third-party cookies</string>
-  <string name="settings_ui_layout">Layout for timelines: </string>
+  <string name="settings_hour_init">Hasiera ordua</string>
+  <string name="settings_hour_end">Amaiera ordua</string>
+  <string name="embedded_browser">Erabili aplikazio barneko nabigatzailea</string>
+  <string name="use_javascript">Gaitu JavaScript</string>
+  <string name="use_cookies">Baimendu hirugarrengoen cookie-ak</string>
+  <string name="settings_ui_layout">Denbora lerroen diseinua: </string>
   <string-array name="settings_menu_tabs">
     <item>Fitxak</item>
     <item>Menua</item>
@@ -330,15 +330,15 @@
   <string name="set_title_news">Berriak</string>
   <string name="set_notification_news">Notify for new toots on the home timeline</string>
   <string name="set_show_error_messages">Display error messages</string>
-  <string name="action_follow">Follow</string>
-  <string name="action_unfollow">Unfollow</string>
-  <string name="action_block">Block</string>
-  <string name="action_unblock">Unblock</string>
-  <string name="action_mute">Mute</string>
-  <string name="action_no_action">No action</string>
-  <string name="action_unmute">Unmute</string>
-  <string name="request_sent">Request sent</string>
-  <string name="followed_by">Follows you</string>
+  <string name="action_follow">Jarraitu</string>
+  <string name="action_unfollow">Utzi jarraitzeari</string>
+  <string name="action_block">Blokeatu</string>
+  <string name="action_unblock">Desblokeatu</string>
+  <string name="action_mute">Mututu</string>
+  <string name="action_no_action">Ekintzarik ez</string>
+  <string name="action_unmute">Desmututu</string>
+  <string name="request_sent">Eskaera bidalita</string>
+  <string name="followed_by">Zu jarraitzen</string>
   <string name="action_search">Bilatu</string>
   <string name="set_capitalize">First letter in capital for replies</string>
   <!-- Quick settings for notifications -->
@@ -362,7 +362,7 @@
         Deleting the application immediately removes these data.\n
         &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
     </string>
-  <string name="privacy_authorizations_title">Permissions:</string>
+  <string name="privacy_authorizations_title">Baimenak:</string>
   <string name="privacy_authorizations">
         - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
         - <b>INTERNET</b>: Used for queries to an instance.\n
@@ -398,21 +398,21 @@
         Thank you to:
     </string>
   <string name="filter_regex">Filter out by regular expressions</string>
-  <string name="search">Search</string>
-  <string name="delete">Delete</string>
+  <string name="search">Bilatu</string>
+  <string name="delete">Ezabatu</string>
   <string name="fetch_more_toots">Fetch more toots…</string>
   <!-- About lists -->
-  <string name="action_lists">Lists</string>
-  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
+  <string name="action_lists">Zerrendak</string>
+  <string name="action_lists_confirm_delete">Ziur betiko ezabatu nahi duzula zerrenda hau?</string>
   <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-  <string name="action_lists_add_to">Add to list</string>
-  <string name="action_lists_remove_from">Remove from list</string>
-  <string name="action_lists_create">Add list</string>
-  <string name="action_lists_delete">Delete list</string>
-  <string name="action_lists_update">Edit list</string>
-  <string name="action_lists_title_placeholder">New list title</string>
+  <string name="action_lists_add_to">Gehitu zerrendara</string>
+  <string name="action_lists_remove_from">Kendu zerrendatik</string>
+  <string name="action_lists_create">Gehitu zerrenda</string>
+  <string name="action_lists_delete">Ezabatu zerrenda</string>
+  <string name="action_lists_update">Editatu zerrenda</string>
+  <string name="action_lists_title_placeholder">Zerrenda berriaren izena</string>
   <string name="action_lists_search_users">Search among people you follow</string>
-  <string name="action_lists_owner">Your lists</string>
+  <string name="action_lists_owner">Zure zerrendak</string>
   <!-- Migration -->
   <string name="account_moved_to">%1$s has moved to %2$s</string>
   <string name="show_boost_count">Show boosts/favourites count</string>
