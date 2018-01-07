@@ -100,13 +100,13 @@
   <string name="no_status">No toot to display</string>
   <string name="fav_added">The toot was added to favourites</string>
   <string name="fav_removed">The toot was removed from favourites!</string>
-  <string name="reblog_added">The toot was boosted!</string>
-  <string name="reblog_removed">The toot is no longer boosted!</string>
-  <string name="reblog_by">Boosted by %1$s</string>
+  <string name="reblog_added">Toot-a bultzatu da!</string>
+  <string name="reblog_removed">Toot-a ez dago jada bultzatua!</string>
+  <string name="reblog_by">%1$s erabiltzaileak bultzatua</string>
   <string name="favourite_add">Gehitu toot hau zure gogokoetara?</string>
   <string name="favourite_remove">Kendu toot hau zure gogokoetatik?</string>
-  <string name="reblog_add">Boost this toot?</string>
-  <string name="reblog_remove">Unboost this toot?</string>
+  <string name="reblog_add">Bultzatu toot hau?</string>
+  <string name="reblog_remove">Desbultzatu toot hau?</string>
   <string name="pin_add">Finkatu toot hau?</string>
   <string name="pin_remove">Desfinkatu toot hau?</string>
   <string name="more_action_1">Mututu</string>
@@ -152,39 +152,39 @@
   <string name="toot_reply_content_title">Toot honi erantzuten ari zara:</string>
   <string name="toot_sensitive">Sensitive content?</string>
   <string-array name="toot_visibility">
-    <item>Post to public timelines</item>
-    <item>Do not post to public timelines</item>
+    <item>Argitaratu denbora-lerro publikoetan</item>
+    <item>Ez argitaratu denbora-lerro publikoetan</item>
     <item>Bidali jarraitzaileei besterik ez</item>
     <item>Post to mentioned users only</item>
   </string-array>
   <string name="no_draft">Zirriborrorik ez!</string>
   <string name="choose_toot">Hautatu toot bat</string>
-  <string name="choose_accounts">Aukeratu kontu bat</string>
-  <string name="select_accounts">Select some accounts</string>
-  <string name="remove_draft">Remove draft?</string>
+  <string name="choose_accounts">Hautatu kontu bat</string>
+  <string name="select_accounts">Hautatu kontu batzuk</string>
+  <string name="remove_draft">Kendu zirriborroa?</string>
   <string name="show_reply">Click on the button to display the original toot</string>
   <string name="upload_form_description">Describe for the visually impaired</string>
   <!-- Instance -->
   <string name="instance_no_description">No description available!</string>
   <!-- About -->
   <string name="about_vesrion">Release %1$s</string>
-  <string name="about_developer">Developer:</string>
+  <string name="about_developer">Garatzailea:</string>
   <string name="about_license">Lizentzia: </string>
   <string name="about_license_action">GNU GPL V3</string>
-  <string name="about_code">Source code: </string>
-  <string name="about_yandex">Translation of toots:</string>
+  <string name="about_code">Iturburu kodea: </string>
+  <string name="about_yandex">Toot-en itzulpena:</string>
   <string name="about_thekinrar">Bilatu instantziak:</string>
   <string name="about_thekinrar_action">instances.social</string>
-  <string name="thanks_text_logo">Icon designer:</string>
+  <string name="thanks_text_logo">Ikonoaren diseinatzailea:</string>
   <!-- Conversation -->
   <string name="conversation">Elkarrizketa</string>
   <!-- Accounts -->
   <string name="no_accounts">No account to display</string>
   <string name="no_follow_request">No follow request</string>
-  <string name="status_cnt">Toots \n %1$s</string>
-  <string name="following_cnt">Following \n %1$s</string>
-  <string name="followers_cnt">Followers \n %1$s</string>
-  <string name="pins_cnt">Pinned \n %d</string>
+  <string name="status_cnt">Toot-ak \n %1$s</string>
+  <string name="following_cnt">Jarraitzen \n %1$s</string>
+  <string name="followers_cnt">Jarraitzaileak \n %1$s</string>
+  <string name="pins_cnt">Finkatua \n %d</string>
   <string name="authorize">Baimendu</string>
   <string name="reject">Ukatu</string>
   <!-- Scheduled toots -->
@@ -204,7 +204,7 @@
   <string name="notif_mention">mentioned you</string>
   <string name="notif_reblog">boosted your status</string>
   <string name="notif_favourite">favourited your status</string>
-  <string name="notif_follow">followed you</string>
+  <string name="notif_follow">zu jarraitzen hasi da</string>
   <string name="notif_pouet">New toot from %1$s</string>
   <plurals name="other_notifications">
     <item quantity="one">and another notification</item>
@@ -214,25 +214,25 @@
     <item quantity="one">and another toot to discover</item>
     <item quantity="other">and %d other toots to discover</item>
   </plurals>
-  <string name="delete_notification_ask">Delete a notification?</string>
-  <string name="delete_notification_ask_all">Delete all notifications?</string>
-  <string name="delete_notification">The notification has been deleted!</string>
-  <string name="delete_notification_all">All notifications have been deleted!</string>
+  <string name="delete_notification_ask">Ezabatu jakinarazpen bat?</string>
+  <string name="delete_notification_ask_all">Ezabatu jakinarazpen guztiak?</string>
+  <string name="delete_notification">Jakinarazpena ezabatu da!</string>
+  <string name="delete_notification_all">Jakinarazpen guztiak ezabatu dira!</string>
   <!-- HEADER -->
   <string name="following">Jarraitzen</string>
   <string name="followers">Jarraitzaileak</string>
   <string name="pinned_toots">Finkatuta</string>
   <!-- TOAST -->
-  <string name="client_error">Unable to get client id!</string>
-  <string name="no_internet">No Internet connection!</string>
-  <string name="toast_block">The account was blocked!</string>
-  <string name="toast_unblock">The account is no longer blocked!</string>
-  <string name="toast_mute">The account was muted!</string>
-  <string name="toast_unmute">The account is no longer muted!</string>
+  <string name="client_error">Ezin izan da bezero id-a eskuratu!</string>
+  <string name="no_internet">Ez dago Internet konexiorik!</string>
+  <string name="toast_block">Kontua blokeatua izan da!</string>
+  <string name="toast_unblock">Kontua ez dago jada blokeatuta!</string>
+  <string name="toast_mute">Kontua mututua izan da!</string>
+  <string name="toast_unmute">Kontua ez dago jada mututua!</string>
   <string name="toast_follow">The account was followed!</string>
   <string name="toast_unfollow">The account is no longer followed!</string>
-  <string name="toast_reblog">The toot was boosted!</string>
-  <string name="toast_unreblog">The toot is no longer boosted!</string>
+  <string name="toast_reblog">Toot-a bultzatu da!</string>
+  <string name="toast_unreblog">Toot-a ez dago jada bultzatua!</string>
   <string name="toast_favourite">The toot was added to your favourites!</string>
   <string name="toast_unfavourite">The toot was removed from your favourites!</string>
   <string name="toast_report">The toot was reported!</string>
@@ -248,27 +248,27 @@
   <string name="toast_update_credential_ok">The profile data have been saved!</string>
   <string name="nothing_to_do">No action can be taken</string>
   <string name="toast_saved">The media has been saved!</string>
-  <string name="toast_error_translate">An error occurred while translating!</string>
+  <string name="toast_error_translate">Errore bat gertatu da itzuli bitartean!</string>
   <string name="toast_toot_saved">Zirriborroa gordeta!</string>
   <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
   <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
   <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
   <!-- Settings -->
-  <string name="settings_title_optimisation">Optimisation of loading</string>
-  <string name="set_toots_page">Number of toots per load</string>
-  <string name="set_accounts_page">Number of accounts per load</string>
-  <string name="set_notifications_page">Number of notifications per load</string>
+  <string name="settings_title_optimisation">Kargaren optimizazioa</string>
+  <string name="set_toots_page">Toot kopurua kargako</string>
+  <string name="set_accounts_page">Kontu kopurua kargako</string>
+  <string name="set_notifications_page">Jakinarazpen kopurua kargako</string>
   <string name="set_attachment_always">Beti</string>
   <string name="set_attachment_wifi">WIFI</string>
   <string name="set_attachment_ask">Galdetu</string>
-  <string name="set_attachment_action">Load the media</string>
-  <string name="load_attachment">Load the pictures</string>
+  <string name="set_attachment_action">Kargatu multimedia</string>
+  <string name="load_attachment">Kargatu irudiak</string>
   <string name="load_attachment_spoiler">Erakutsi gehiago…</string>
   <string name="load_attachment_spoiler_less">Erakutsi gutxiago…</string>
   <string name="load_sensitive_attachment">Sensitive content</string>
   <string name="set_display_reply">Display previous message in responses</string>
-  <string name="set_display_local">Display local timeline</string>
-  <string name="set_display_global">Display federated timeline</string>
+  <string name="set_display_local">Bistaratu denbora-lerro lokala</string>
+  <string name="set_display_global">Bistaratu denbora-lerro federatua</string>
   <string name="set_disable_gif">Disable GIF avatars</string>
   <string name="set_folder_title">Bidea: </string>
   <string name="set_auto_store_toot">Gorde zirriborroak automatikoki</string>
@@ -280,9 +280,9 @@
   <string name="set_notif_follow_share">Notify when someone boosts your status</string>
   <string name="set_notif_follow_add">Notify when someone favourites your status</string>
   <string name="set_notif_follow_mention">Notify when someone mentions you</string>
-  <string name="set_share_validation">Show confirmation dialog before boosting</string>
+  <string name="set_share_validation">Erakutsi berrespen elkarrizketa-koadroa bultzatu aurretik</string>
   <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
-  <string name="settings_title_more_options">Advanced settings</string>
+  <string name="settings_title_more_options">Ezarpen aurreratuak</string>
   <string name="set_wifi_only">Jakinarazi WIFI bidez besterik ez</string>
   <string name="set_notify">Jakinarazi?</string>
   <string name="set_notif_silent">Jakinarazpen isilak</string>
@@ -415,7 +415,7 @@
   <string name="action_lists_owner">Zure zerrendak</string>
   <!-- Migration -->
   <string name="account_moved_to">%1$s has moved to %2$s</string>
-  <string name="show_boost_count">Show boosts/favourites count</string>
+  <string name="show_boost_count">Erakutsi bultzatutako/gogokoen kopurua</string>
   <string name="issue_login_title">Authentication does not work?</string>
   <string name="issue_login_message">
         <b>Here are some checks that might help:</b>\n\n
