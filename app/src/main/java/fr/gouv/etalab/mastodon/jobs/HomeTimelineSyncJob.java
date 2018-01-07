@@ -130,7 +130,9 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
                         editor.apply();
                     }
                 }
-                new RetrieveHomeTimelineServiceAsyncTask(getContext(), account, max_id, HomeTimelineSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                //noinspection ConstantConditions
+                if( getContext() != null)
+                    new RetrieveHomeTimelineServiceAsyncTask(getContext(), account, max_id, HomeTimelineSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
             }
         }
