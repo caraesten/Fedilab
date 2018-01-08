@@ -587,7 +587,10 @@ public class Helper {
         if( years > 0 ) {
             return format;
         } else if( months > 0 || days > 7) {
-            return format.substring(0,5);
+            //Removes the year depending of the locale from DateFormat.SHORT format
+            SimpleDateFormat df = (SimpleDateFormat) DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault());
+            df.applyPattern(df.toPattern().replaceAll("[^\\p{Alpha}]*y+[^\\p{Alpha}]*", ""));
+            return df.format(dateToot);
         }else if( days > 0 )
             return context.getString(R.string.date_day, days);
         else if(hours > 0)
