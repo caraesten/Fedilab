@@ -25,7 +25,7 @@
   <string name="accounts">Konten</string>
   <string name="toots">Toots</string>
   <string name="tags">Schlagwörter (tags)</string>
-  <string name="token">Token</string>
+  <string name="token">Zeichen</string>
   <string name="save">Speichern</string>
   <string name="restore">Widerherstellen</string>
   <string name="two_factor_authentification">2Faktor Authentifizierung?</string>
@@ -298,7 +298,7 @@
   <string name="set_header_picture_overlay">Wähle ein Profilbild</string>
   <string name="set_preview_reply">Zeige die Anzahl der Antworten in der home Zeitlinie an</string>
   <string name="set_preview_reply_pp">Profilbilder anzeigen?</string>
-  <string name="set_multiaccount_actions">Erlauben Interaktionen zwischen den accounts?</string>
+  <string name="set_multiaccount_actions">Interaktionen zwischen deinen Konten erlauben?</string>
   <string name="note_no_space">Du hast die Grenze von 160 Zeichen erreicht!</string>
   <string name="username_no_space">Du hast die Grenze von 30 Zeichen erreicht!</string>
   <string name="settings_title_hour">Zeitfenster für Benachrichtigungen:</string>
@@ -395,18 +395,18 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="action_lists">Listen</string>
   <string name="action_lists_confirm_delete">Möchtest du diese Liste wirklich dauerhaft löschen?</string>
   <string name="action_lists_empty_content">Noch keine Einträge vorhanden. Wenn Mitglieder dieser Liste etwas veröffentlichen, dann wird es hier erscheinen.</string>
-  <string name="action_lists_add_to">Add to list</string>
-  <string name="action_lists_remove_from">Remove from list</string>
-  <string name="action_lists_create">Add list</string>
-  <string name="action_lists_delete">Delete list</string>
-  <string name="action_lists_update">Edit list</string>
-  <string name="action_lists_title_placeholder">New list title</string>
-  <string name="action_lists_search_users">Search among people you follow</string>
+  <string name="action_lists_add_to">Zur Liste hinzufügen</string>
+  <string name="action_lists_remove_from">Von der Liste entfernen</string>
+  <string name="action_lists_create">Liste hinzufügen</string>
+  <string name="action_lists_delete">Liste löschen</string>
+  <string name="action_lists_update">Liste bearbeiten</string>
+  <string name="action_lists_title_placeholder">Neuer Listentitel</string>
+  <string name="action_lists_search_users">Suche innerhalb von Leuten denen du folgst</string>
   <string name="action_lists_owner">Deine Listen</string>
   <!-- Migration -->
-  <string name="account_moved_to">%1$s has moved to %2$s</string>
-  <string name="show_boost_count">Show boosts/favourites count</string>
-  <string name="issue_login_title">Authentication does not work?</string>
+  <string name="account_moved_to">%1$s wurde verschoben nach %2$s</string>
+  <string name="show_boost_count">Zeige Anzahl für geteilt/favorisiert</string>
+  <string name="issue_login_title">Authentifizierung funktioniert nicht?</string>
   <string name="issue_login_message">
         <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
@@ -415,11 +415,11 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
         - You can also use this link without using the 2FA\n\n
         - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
     </string>
-  <string name="media_ready">Media has been loaded. Click here to display it.</string>
-  <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-  <string name="data_export_running">Still running, please wait…</string>
-  <string name="data_export">Export statuses</string>
-  <string name="data_export_toots">Export statuses for %1$s</string>
+  <string name="media_ready">Media wurde geladen. Hier klicken zum anzeigen.</string>
+  <string name="data_export_start">Diese Aktion kann sehr lange dauern. Du wirst benachrichtigt wenn sie abgeschlossen wurde.</string>
+  <string name="data_export_running">Läuft noch, bitte warten…</string>
+  <string name="data_export">Status exportieren</string>
+  <string name="data_export_toots">Status exportieren für %1$s</string>
   <string name="data_export_success">%1$s toots von %2$s wurden exportiert.</string>
   <string name="data_export_error">Etwas ist schief gelaufen beim exportieren von%1$s</string>
 </resources>
