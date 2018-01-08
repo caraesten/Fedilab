@@ -337,7 +337,7 @@
   <string name="request_sent">Kirim permintaan</string>
   <string name="followed_by">Mengikutimu</string>
   <string name="action_search">Pencarian</string>
-  <string name="set_capitalize">First letter in capital for replies</string>
+  <string name="set_capitalize">Huruf pertama kapital untuk membalas</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Tolak pemberitahuan</string>
   <string name="settings_popup_message">
@@ -412,9 +412,9 @@ https://yandex.ru/legal/confidential/?lang=en
   <string name="action_lists_search_users">Pencarian di antara orang yang Anda ikuti</string>
   <string name="action_lists_owner">Daftar Anda</string>
   <!-- Migration -->
-  <string name="account_moved_to">%1$s has moved to %2$s</string>
-  <string name="show_boost_count">Show boosts/favourites count</string>
-  <string name="issue_login_title">Authentication does not work?</string>
+  <string name="account_moved_to">%1$s telah dipindahkan ke%2$s</string>
+  <string name="show_boost_count">Tampilkan dorongan/jumlah favorit</string>
+  <string name="issue_login_title">Otentikasi tidak bekerja?</string>
   <string name="issue_login_message">
         <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
