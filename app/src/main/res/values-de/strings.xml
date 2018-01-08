@@ -8,7 +8,7 @@
   <string name="action_privacy">Datenschutz</string>
   <string name="action_cache">Speicher</string>
   <string name="action_logout">Abmelden</string>
-  <string name="login">Login</string>
+  <string name="login">Anmeldung</string>
   <!-- common -->
   <string name="close">Schließen</string>
   <string name="yes">Ja</string>
@@ -25,7 +25,7 @@
   <string name="accounts">Konten</string>
   <string name="toots">Toots</string>
   <string name="tags">Schlagwörter (tags)</string>
-  <string name="token">Token</string>
+  <string name="token">Zeichen</string>
   <string name="save">Speichern</string>
   <string name="restore">Widerherstellen</string>
   <string name="two_factor_authentification">2Faktor Authentifizierung?</string>
@@ -116,7 +116,7 @@
   <string name="more_action_5">Kopieren</string>
   <string name="more_action_6">Teilen</string>
   <string name="more_action_7">Erwähnen</string>
-  <string name="more_action_8">Timed mute</string>
+  <string name="more_action_8">Zeitlich begrenzt stummschalten</string>
   <string-array name="more_action_confirm">
     <item>Nutzer stummschalten?</item>
     <item>Diesen Nutzer blockieren?</item>
@@ -200,9 +200,9 @@
   <string name="toot_scheduled_date">Der Zeitpunkt muss nach der aktuellen Stunde liegen!</string>
   <string name="warning_battery">Akkuoptimierung ist aktiviert! Manches funktioniert eventuell nicht wie erwartet.</string>
   <!-- timed mute -->
-  <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-  <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
-  <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+  <string name="timed_mute_date_error">Die Zeit zum stummschalten sollte größer sein als eine Minute.</string>
+  <string name="timed_mute_date">%1$s wurde bis %2$s stumm geschaltet.\n Du kannst dieses Konto wieder freigeben, indem du sein/ihr Profil besuchst.</string>
+  <string name="timed_mute_profile">%1$s ist stumm geschaltet bis %2$s.\n Hier drücken um Stumm schalten zu entfernen.</string>
   <!-- Notifications -->
   <string name="no_notifications">Keine Benachrichtigungen</string>
   <string name="notif_mention">hat deinen Status erwähnt</string>
@@ -268,12 +268,12 @@
   <string name="set_attachment_action">Lade Anhang</string>
   <string name="load_attachment">Lade Bilder</string>
   <string name="load_attachment_spoiler">Mehr anzeigen…</string>
-  <string name="load_attachment_spoiler_less">Show less…</string>
+  <string name="load_attachment_spoiler_less">Zeige weniger…</string>
   <string name="load_sensitive_attachment">Sensibler Inhalt</string>
   <string name="set_display_reply">Zeige vorherige Nachricht beim Antworten</string>
   <string name="set_display_local">Lokale Zeitleiste anzeigen</string>
   <string name="set_display_global">Öffentliche Zeitleiste anzeigen</string>
-  <string name="set_disable_gif">Disable GIF avatars</string>
+  <string name="set_disable_gif">GIF Avatare deaktvieren</string>
   <string name="set_folder_title">Pfad:</string>
   <string name="set_auto_store_toot">Speichere Entwürfe automatisch</string>
   <string name="set_bubble_counter">Anzahl neuer Beiträge anzeigen</string>
@@ -298,7 +298,7 @@
   <string name="set_header_picture_overlay">Wähle ein Profilbild</string>
   <string name="set_preview_reply">Zeige die Anzahl der Antworten in der home Zeitlinie an</string>
   <string name="set_preview_reply_pp">Profilbilder anzeigen?</string>
-  <string name="set_multiaccount_actions">Erlauben Interaktionen zwischen den accounts?</string>
+  <string name="set_multiaccount_actions">Interaktionen zwischen deinen Konten erlauben?</string>
   <string name="note_no_space">Du hast die Grenze von 160 Zeichen erreicht!</string>
   <string name="username_no_space">Du hast die Grenze von 30 Zeichen erreicht!</string>
   <string name="settings_title_hour">Zeitfenster für Benachrichtigungen:</string>
@@ -344,7 +344,7 @@
   <string name="request_sent">Anfrage gesendet</string>
   <string name="followed_by">folgt dir</string>
   <string name="action_search">Suche</string>
-  <string name="set_capitalize">First letter in capital for replies</string>
+  <string name="set_capitalize">Ersten Buchstaben bei Antworten groß schreiben</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Push Benachrichtigungen</string>
   <string name="settings_popup_message">Bitte bestätige welche Push Benachrichtigungen du erhalten möchtest.         Diese können später im Benachrichtungsreiter aktiviert oder deaktiviert werden.</string>
@@ -376,11 +376,11 @@
              <b>⚠ Diese Aktionen werden nur auf Verlangen des Benutzers durchgeführt.</b></string>
   <string name="privacy_API_title">Tracking und Bibliotheken</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehlerberichte, etc.) und enthält keinerlei Werbung.\n\n
+        Die Nutzung von Bibliotheken ist minimiert:\n
+        -<b>Glide</b>: Medien verwalten\n
+        -<b>Android-Job</b>: Dienste verwalten\n
+        -<b>PhotoView</b>: Bilder verwalten\n
     </string>
   <string name="privacy_API_yandex_title">Übersetzung von Toots</string>
   <string name="privacy_API_yandex_authorizations">Die Anwendung bietet die Möglichkeit, toots mithilfe der lokalen sowie Yandex API zu übersetzen.\n
@@ -390,36 +390,35 @@
   <string name="filter_regex">Mit regulären Ausdrücken filtern</string>
   <string name="search">Suche</string>
   <string name="delete">Löschen</string>
-  <string name="fetch_more_toots">Fetch more toots…</string>
+  <string name="fetch_more_toots">Mehr Toots abrufen…</string>
   <!-- About lists -->
-  <string name="action_lists">Lists</string>
-  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
-  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-  <string name="action_lists_add_to">Add to list</string>
-  <string name="action_lists_remove_from">Remove from list</string>
-  <string name="action_lists_create">Add list</string>
-  <string name="action_lists_delete">Delete list</string>
-  <string name="action_lists_update">Edit list</string>
-  <string name="action_lists_title_placeholder">New list title</string>
-  <string name="action_lists_search_users">Search among people you follow</string>
-  <string name="action_lists_owner">Your lists</string>
+  <string name="action_lists">Listen</string>
+  <string name="action_lists_confirm_delete">Möchtest du diese Liste wirklich dauerhaft löschen?</string>
+  <string name="action_lists_empty_content">Noch keine Einträge vorhanden. Wenn Mitglieder dieser Liste etwas veröffentlichen, dann wird es hier erscheinen.</string>
+  <string name="action_lists_add_to">Zur Liste hinzufügen</string>
+  <string name="action_lists_remove_from">Von der Liste entfernen</string>
+  <string name="action_lists_create">Liste hinzufügen</string>
+  <string name="action_lists_delete">Liste löschen</string>
+  <string name="action_lists_update">Liste bearbeiten</string>
+  <string name="action_lists_title_placeholder">Neuer Listentitel</string>
+  <string name="action_lists_search_users">Suche innerhalb von Leuten denen du folgst</string>
+  <string name="action_lists_owner">Deine Listen</string>
   <!-- Migration -->
-  <string name="account_moved_to">%1$s has moved to %2$s</string>
-  <string name="show_boost_count">Show boosts/favourites count</string>
-  <string name="issue_login_title">Authentication does not work?</string>
+  <string name="account_moved_to">%1$s wurde verschoben nach %2$s</string>
+  <string name="show_boost_count">Zeige Anzahl für geteilt/favorisiert</string>
+  <string name="issue_login_title">Authentifizierung funktioniert nicht?</string>
   <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
-    </string>
-  <string name="media_ready">Media has been loaded. Click here to display it.</string>
-  <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-  <string name="data_export_running">Still running, please wait…</string>
-  <string name="data_export">Export statuses</string>
-  <string name="data_export_toots">Export statuses for %1$s</string>
-  <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-  <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+<b>Hier sind einige Vorschläge die helfen könnten:</b>\n\n
+- Prüfe ob der Instanzname richtig geschrieben ist\n\n
+- Prüfe ob die Instanz online ist\n\n
+- Benutze den Link unten falls du Zweifaktor-Authentifizierung (2FA) nutzt (nachdem der Instanzname eingetragen wurde)\n\n
+- Du kannst diesen Link auch ohne 2FA benutzen\n\n
+- Erstelle ein issue bei Github falls es dennoch nicht funktioniert: https://github.com/stom79/mastalab/issues    </string>
+  <string name="media_ready">Media wurde geladen. Hier klicken zum anzeigen.</string>
+  <string name="data_export_start">Diese Aktion kann sehr lange dauern. Du wirst benachrichtigt wenn sie abgeschlossen wurde.</string>
+  <string name="data_export_running">Läuft noch, bitte warten…</string>
+  <string name="data_export">Status exportieren</string>
+  <string name="data_export_toots">Status exportieren für %1$s</string>
+  <string name="data_export_success">%1$s toots von %2$s wurden exportiert.</string>
+  <string name="data_export_error">Etwas ist schief gelaufen beim exportieren von%1$s</string>
 </resources>
