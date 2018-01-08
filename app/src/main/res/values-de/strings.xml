@@ -116,7 +116,7 @@
   <string name="more_action_5">Kopieren</string>
   <string name="more_action_6">Teilen</string>
   <string name="more_action_7">Erwähnen</string>
-  <string name="more_action_8">Timed mute</string>
+  <string name="more_action_8">Zeitlich begrenzt stummschalten</string>
   <string-array name="more_action_confirm">
     <item>Nutzer stummschalten?</item>
     <item>Diesen Nutzer blockieren?</item>
@@ -200,9 +200,9 @@
   <string name="toot_scheduled_date">Der Zeitpunkt muss nach der aktuellen Stunde liegen!</string>
   <string name="warning_battery">Akkuoptimierung ist aktiviert! Manches funktioniert eventuell nicht wie erwartet.</string>
   <!-- timed mute -->
-  <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-  <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
-  <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+  <string name="timed_mute_date_error">Die Zeit zum stummschalten sollte größer sein als eine Minute.</string>
+  <string name="timed_mute_date">%1$s wurde bis %2$s stumm geschaltet.\n Du kannst dieses Konto wieder freigeben, indem du sein/ihr Profil besuchst.</string>
+  <string name="timed_mute_profile">%1$s ist stumm geschaltet bis %2$s.\n Hier drücken um Stumm schalten zu entfernen.</string>
   <!-- Notifications -->
   <string name="no_notifications">Keine Benachrichtigungen</string>
   <string name="notif_mention">hat deinen Status erwähnt</string>
@@ -268,12 +268,12 @@
   <string name="set_attachment_action">Lade Anhang</string>
   <string name="load_attachment">Lade Bilder</string>
   <string name="load_attachment_spoiler">Mehr anzeigen…</string>
-  <string name="load_attachment_spoiler_less">Show less…</string>
+  <string name="load_attachment_spoiler_less">Zeige weniger…</string>
   <string name="load_sensitive_attachment">Sensibler Inhalt</string>
   <string name="set_display_reply">Zeige vorherige Nachricht beim Antworten</string>
   <string name="set_display_local">Lokale Zeitleiste anzeigen</string>
   <string name="set_display_global">Öffentliche Zeitleiste anzeigen</string>
-  <string name="set_disable_gif">Disable GIF avatars</string>
+  <string name="set_disable_gif">GIF Avatare deaktvieren</string>
   <string name="set_folder_title">Pfad:</string>
   <string name="set_auto_store_toot">Speichere Entwürfe automatisch</string>
   <string name="set_bubble_counter">Anzahl neuer Beiträge anzeigen</string>
@@ -344,7 +344,7 @@
   <string name="request_sent">Anfrage gesendet</string>
   <string name="followed_by">folgt dir</string>
   <string name="action_search">Suche</string>
-  <string name="set_capitalize">First letter in capital for replies</string>
+  <string name="set_capitalize">Ersten Buchstaben bei Antworten groß schreiben</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Push Benachrichtigungen</string>
   <string name="settings_popup_message">Bitte bestätige welche Push Benachrichtigungen du erhalten möchtest.         Diese können später im Benachrichtungsreiter aktiviert oder deaktiviert werden.</string>
@@ -376,11 +376,11 @@
              <b>⚠ Diese Aktionen werden nur auf Verlangen des Benutzers durchgeführt.</b></string>
   <string name="privacy_API_title">Tracking und Bibliotheken</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehlerberichte, etc.) und enthält keinerlei Werbung.\n\n
+        Die Nutzung von Bibliotheken ist minimiert:\n
+        -<b>Glide</b>: Medien verwalten\n
+        -<b>Android-Job</b>: Dienste verwalten\n
+        -<b>PhotoView</b>: Bilder verwalten\n
     </string>
   <string name="privacy_API_yandex_title">Übersetzung von Toots</string>
   <string name="privacy_API_yandex_authorizations">Die Anwendung bietet die Möglichkeit, toots mithilfe der lokalen sowie Yandex API zu übersetzen.\n
@@ -390,11 +390,11 @@
   <string name="filter_regex">Mit regulären Ausdrücken filtern</string>
   <string name="search">Suche</string>
   <string name="delete">Löschen</string>
-  <string name="fetch_more_toots">Fetch more toots…</string>
+  <string name="fetch_more_toots">Mehr Toots abrufen…</string>
   <!-- About lists -->
-  <string name="action_lists">Lists</string>
-  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
-  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
+  <string name="action_lists">Listen</string>
+  <string name="action_lists_confirm_delete">Möchtest du diese Liste wirklich dauerhaft löschen?</string>
+  <string name="action_lists_empty_content">Noch keine Einträge vorhanden. Wenn Mitglieder dieser Liste etwas veröffentlichen, dann wird es hier erscheinen.</string>
   <string name="action_lists_add_to">Add to list</string>
   <string name="action_lists_remove_from">Remove from list</string>
   <string name="action_lists_create">Add list</string>
