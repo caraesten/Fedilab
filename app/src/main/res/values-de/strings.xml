@@ -408,13 +408,12 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="show_boost_count">Zeige Anzahl für geteilt/favorisiert</string>
   <string name="issue_login_title">Authentifizierung funktioniert nicht?</string>
   <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
-    </string>
+<b>Hier sind einige Vorschläge die helfen könnten:</b>\n\n
+- Prüfe ob der Instanzname richtig geschrieben ist\n\n
+- Prüfe ob die Instanz online ist\n\n
+- Benutze den Link unten falls du Zweifaktor-Authentifizierung (2FA) nutzt (nachdem der Instanzname eingetragen wurde)\n\n
+- Du kannst diesen Link auch ohne 2FA benutzen\n\n
+- Erstelle ein issue bei Github falls es dennoch nicht funktioniert: https://github.com/stom79/mastalab/issues    </string>
   <string name="media_ready">Media wurde geladen. Hier klicken zum anzeigen.</string>
   <string name="data_export_start">Diese Aktion kann sehr lange dauern. Du wirst benachrichtigt wenn sie abgeschlossen wurde.</string>
   <string name="data_export_running">Läuft noch, bitte warten…</string>
