@@ -255,7 +255,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             holder.notification_status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
 
-            holder.notification_status_content.setMovementMethod(null);
             holder.notification_status_content.setMovementMethod(LinkMovementMethod.getInstance());
             boolean displayBoost = sharedpreferences.getBoolean(Helper.SET_DISPLAY_BOOST_COUNT, true);
             if( displayBoost) {
@@ -267,7 +266,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             Helper.absoluteDateTimeReveal(context, holder.status_date, status.getCreated_at());
 
             holder.status_mention_spoiler.setText(Helper.makeMentionsClick(context,status.getMentions()), TextView.BufferType.SPANNABLE);
-            holder.status_mention_spoiler.setMovementMethod(null);
             holder.status_mention_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
 
             //Adds attachment -> disabled, to enable them uncomment the line below

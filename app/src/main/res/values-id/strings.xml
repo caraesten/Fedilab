@@ -116,7 +116,7 @@
   <string name="more_action_5">Salin</string>
   <string name="more_action_6">Bagikan</string>
   <string name="more_action_7">Menyebut</string>
-  <string name="more_action_8">Timed mute</string>
+  <string name="more_action_8">Mematikan waktu</string>
   <string-array name="more_action_confirm">
     <item>Bisukan akun ini?</item>
     <item>Blok akun ini?</item>
@@ -195,9 +195,9 @@
   <string name="toot_scheduled_date">Tanggal yang dijadwalkan harus lebih besar dari jam saat ini!</string>
   <string name="warning_battery">Penghemat baterai diaktifkan! Ini mungkin tidak bekerja seperti yang diharapkan.</string>
   <!-- timed mute -->
-  <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-  <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
-  <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+  <string name="timed_mute_date_error">Untuk mematikan waktu harus lebih besar dari satu menit.</string>
+  <string name="timed_mute_date">%1$s telah dibisukan sampai %2$s.\n Kamu dapat menyalakan akun ini dari halaman profil mereka.</string>
+  <string name="timed_mute_profile">%1$s dibisukan sampai %2$s.\n Klik disini untuk menyalakan akun.</string>
   <!-- Notifications -->
   <string name="no_notifications">Tidak ada pemberitahuan untuk ditampilkan</string>
   <string name="notif_mention">menyebutmu</string>
@@ -261,7 +261,7 @@
   <string name="set_attachment_action">Memuat media</string>
   <string name="load_attachment">Memuat gambar</string>
   <string name="load_attachment_spoiler">Tampilkan lebih banyak…</string>
-  <string name="load_attachment_spoiler_less">Show less…</string>
+  <string name="load_attachment_spoiler_less">Tampilkan sedikit…</string>
   <string name="load_sensitive_attachment">Konten sensitif</string>
   <string name="set_display_reply">Tampilan pesan sebelumnya di tanggapan</string>
   <string name="set_display_local">Tampilkan kronologi lokal</string>
@@ -337,7 +337,7 @@
   <string name="request_sent">Kirim permintaan</string>
   <string name="followed_by">Mengikutimu</string>
   <string name="action_search">Pencarian</string>
-  <string name="set_capitalize">First letter in capital for replies</string>
+  <string name="set_capitalize">Huruf pertama kapital untuk membalas</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Tolak pemberitahuan</string>
   <string name="settings_popup_message">
@@ -412,22 +412,23 @@ https://yandex.ru/legal/confidential/?lang=en
   <string name="action_lists_search_users">Pencarian di antara orang yang Anda ikuti</string>
   <string name="action_lists_owner">Daftar Anda</string>
   <!-- Migration -->
-  <string name="account_moved_to">%1$s has moved to %2$s</string>
-  <string name="show_boost_count">Show boosts/favourites count</string>
-  <string name="issue_login_title">Authentication does not work?</string>
+  <string name="account_moved_to">%1$s telah dipindahkan ke%2$s</string>
+  <string name="show_boost_count">Tampilkan dorongan/jumlah favorit</string>
+  <string name="issue_login_title">Otentikasi tidak bekerja?</string>
   <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
+<b>Disini ada beberapa pemeriksaan untuk membantu:
+</b>\n\n
+        - Periksa bahwa tidak ada kealahan dalam pengejaan contoh nama\n\n
+        - Periksa bahwa contoh tidak down\n\n
+        - Jika anda menggunakan two-factor authentication (2FA), gunakan link dibawah ini (begitu nama contoh terisi)\n\n
+        - Anda juga dapat menggunakan link tersebut tanpa menggunakan 2FA\n\n
+        - Jika hal tersebut tidak bekerja, anda dapat melaporkan masalah tersebut pada Github di https://github.com/stom79/mastalab/issues
     </string>
-  <string name="media_ready">Media has been loaded. Click here to display it.</string>
-  <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-  <string name="data_export_running">Still running, please wait…</string>
-  <string name="data_export">Export statuses</string>
-  <string name="data_export_toots">Export statuses for %1$s</string>
-  <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-  <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+  <string name="media_ready">Media telah berhasil dimuat. Klik disini untuk menampilkannya.</string>
+  <string name="data_export_start">Tindakan cukup lama, Anda akan mendapatkan notifikasi ketika tindakan ini telah selesai.</string>
+  <string name="data_export_running">Masih berjalan, tunggu sebentar…</string>
+  <string name="data_export">Status ekspor</string>
+  <string name="data_export_toots">Status ekspor untuk %1$s</string>
+  <string name="data_export_success">%1$s panjang dari %2$s telah diekspor.</string>
+  <string name="data_export_error">Terdapat kesalahan saat mengekspor data untuk %1$s</string>
 </resources>

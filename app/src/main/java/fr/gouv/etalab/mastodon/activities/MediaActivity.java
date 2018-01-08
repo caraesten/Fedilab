@@ -32,6 +32,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -54,12 +55,17 @@ import com.bumptech.glide.request.transition.Transition;
 import com.github.chrisbanes.photoview.OnMatrixChangedListener;
 import com.github.chrisbanes.photoview.PhotoView;
 import java.io.File;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
+import fr.gouv.etalab.mastodon.client.TLSSocketFactory;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnDownloadInterface;
 
@@ -102,10 +108,16 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         LEFT_TO_RIGHT,
         POP
     }
+    private static final int SWIPE_MIN_DISTANCE = 120;
+    private static final int SWIPE_MAX_OFF_PATH = 250;
+    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+    private GestureDetector gestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        gestureDetector = new GestureDetector(new SwipeDetector());
+
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -220,6 +232,32 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     }
 
 
+    //It's a part of the code from Hitesh Sahu on stackoverflow. See: https://stackoverflow.com/a/38442055
+    private class SwipeDetector extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+
+            // Check movement along the Y-axis. If it exceeds SWIPE_MAX_OFF_PATH,
+            // then dismiss the swipe.
+            if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
+                return false;
+
+            // Swipe from left to right.
+            // The swipe needs to exceed a certain distance (SWIPE_MIN_DISTANCE)
+            // and a certain velocity (SWIPE_THRESHOLD_VELOCITY).
+            if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                finish();
+                return true;
+            }
+
+            return false;
+        }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return gestureDetector.onTouchEvent(event);
+    }
     /**
      * Manage touch event
      * Allows to swipe from timelines
@@ -228,7 +266,12 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
      */
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-
+        if (gestureDetector != null && imageView.getScale() == 1 && mediaPosition == 1) {
+            if (gestureDetector.onTouchEvent(event))
+                // If the gestureDetector handles the event, a swipe has been
+                // executed and no more needs to be done.
+                return true;
+        }
         if( event.getAction() == MotionEvent.ACTION_DOWN){
             if( getSupportActionBar() != null  && canSwipe) {
                 appBar.setExpanded(true);
@@ -257,7 +300,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                             next.setVisibility(View.GONE);
                             isHiding = false;
                         }
-                    }, 1000);
+                    }, 2000);
                 }
                 return super.dispatchTouchEvent(event);
             }
@@ -417,6 +460,13 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 if(file.exists()) {
                     Uri uri = Uri.parse(file.getAbsolutePath());
                     videoView.setVisibility(View.VISIBLE);
+                    try {
+                        HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory());
+                    } catch (KeyManagementException e) {
+                        e.printStackTrace();
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    }
                     videoView.setVideoURI(uri);
                     videoView.start();
                     MediaController mc = new MediaController(MediaActivity.this);
