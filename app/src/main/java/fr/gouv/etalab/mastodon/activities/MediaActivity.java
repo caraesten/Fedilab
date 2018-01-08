@@ -55,12 +55,17 @@ import com.bumptech.glide.request.transition.Transition;
 import com.github.chrisbanes.photoview.OnMatrixChangedListener;
 import com.github.chrisbanes.photoview.PhotoView;
 import java.io.File;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
+import fr.gouv.etalab.mastodon.client.TLSSocketFactory;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnDownloadInterface;
 
@@ -455,6 +460,13 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 if(file.exists()) {
                     Uri uri = Uri.parse(file.getAbsolutePath());
                     videoView.setVisibility(View.VISIBLE);
+                    try {
+                        HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory());
+                    } catch (KeyManagementException e) {
+                        e.printStackTrace();
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    }
                     videoView.setVideoURI(uri);
                     videoView.start();
                     MediaController mc = new MediaController(MediaActivity.this);
