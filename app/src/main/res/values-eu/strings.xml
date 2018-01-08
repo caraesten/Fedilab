@@ -92,14 +92,14 @@
   <string name="click_to_change">Egin klik bide-izenean berau aldatzeko</string>
   <string name="failed">Huts egin du!</string>
   <string name="scheduled_toots">Programatutako toot-ak</string>
-  <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
+  <string name="disclaimer_full">Beheko informazioak ez du erabiltzailearen profila bere osotasunean adierazten.</string>
   <string name="insert_emoji">Txertatu emojia</string>
-  <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
+  <string name="no_emoji">Aplikazioak ez ditu emoji pertsonalizatuak jaso oraingoz.</string>
   <string name="live_notif">Zuzeneko jakinarazpenak</string>
   <!-- Status -->
-  <string name="no_status">No toot to display</string>
-  <string name="fav_added">The toot was added to favourites</string>
-  <string name="fav_removed">The toot was removed from favourites!</string>
+  <string name="no_status">Ez dago toot-ik bistaratzeko</string>
+  <string name="fav_added">Toot-a gogokoetara gehitu da</string>
+  <string name="fav_removed">Toot-a gogokoetatik kendu da!</string>
   <string name="reblog_added">Toot-a bultzatu da!</string>
   <string name="reblog_removed">Toot-a ez dago jada bultzatua!</string>
   <string name="reblog_by">%1$s erabiltzaileak bultzatua</string>
@@ -165,9 +165,9 @@
   <string name="show_reply">Click on the button to display the original toot</string>
   <string name="upload_form_description">Describe for the visually impaired</string>
   <!-- Instance -->
-  <string name="instance_no_description">No description available!</string>
+  <string name="instance_no_description">Ez dago deskripziorik eskuragarri!</string>
   <!-- About -->
-  <string name="about_vesrion">Release %1$s</string>
+  <string name="about_vesrion">Bertsioa: %1$s</string>
   <string name="about_developer">Garatzailea:</string>
   <string name="about_license">Lizentzia: </string>
   <string name="about_license_action">GNU GPL V3</string>
@@ -179,8 +179,8 @@
   <!-- Conversation -->
   <string name="conversation">Elkarrizketa</string>
   <!-- Accounts -->
-  <string name="no_accounts">No account to display</string>
-  <string name="no_follow_request">No follow request</string>
+  <string name="no_accounts">Bistaratzeko konturik ez</string>
+  <string name="no_follow_request">Jarraipen eskaririk ez</string>
   <string name="status_cnt">Toot-ak \n %1$s</string>
   <string name="following_cnt">Jarraitzen \n %1$s</string>
   <string name="followers_cnt">Jarraitzaileak \n %1$s</string>
@@ -188,31 +188,31 @@
   <string name="authorize">Baimendu</string>
   <string name="reject">Ukatu</string>
   <!-- Scheduled toots -->
-  <string name="no_scheduled_toots">No scheduled toot to display!</string>
-  <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-  <string name="remove_scheduled">Delete scheduled toot?</string>
+  <string name="no_scheduled_toots">Ez dago programatutako toot-ik bistaratzeko!</string>
+  <string name="no_scheduled_toots_indications">Idatzi toot bat eta hautatu <b>Programatu</b> goiko menuan.</string>
+  <string name="remove_scheduled">Ezabatu programatutako toot-a?</string>
   <string name="media_count">Multimedia: %d</string>
-  <string name="toot_scheduled">The toot has been scheduled!</string>
-  <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
-  <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+  <string name="toot_scheduled">Toot-a programatu da!</string>
+  <string name="toot_scheduled_date">Programatutako data orain baino beranduago izan behar du!</string>
+  <string name="warning_battery">Bateria aurreztea gaituta dago! Agian ez dabil behar bezala.</string>
   <!-- timed mute -->
   <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
   <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
   <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
   <!-- Notifications -->
   <string name="no_notifications">No notification to display</string>
-  <string name="notif_mention">mentioned you</string>
-  <string name="notif_reblog">boosted your status</string>
-  <string name="notif_favourite">favourited your status</string>
+  <string name="notif_mention">erabiltzaileak aipatu zaitu</string>
+  <string name="notif_reblog">erabiltzaileak zure mezua builtzatu du</string>
+  <string name="notif_favourite">erabiltzaileak zure mezua gogoko du</string>
   <string name="notif_follow">zu jarraitzen hasi da</string>
-  <string name="notif_pouet">New toot from %1$s</string>
+  <string name="notif_pouet">%1$s erabiltzailearen toot berria</string>
   <plurals name="other_notifications">
-    <item quantity="one">and another notification</item>
-    <item quantity="other">and %d other notifications</item>
+    <item quantity="one">eta beste jakinarazpen bat</item>
+    <item quantity="other">eta beste %d jakinarazpen</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="one">and another toot to discover</item>
-    <item quantity="other">and %d other toots to discover</item>
+    <item quantity="one">eta beste toot bat ikusteke</item>
+    <item quantity="other">eta beste %d toot ikusteke</item>
   </plurals>
   <string name="delete_notification_ask">Ezabatu jakinarazpen bat?</string>
   <string name="delete_notification_ask_all">Ezabatu jakinarazpen guztiak?</string>
@@ -229,8 +229,8 @@
   <string name="toast_unblock">Kontua ez dago jada blokeatuta!</string>
   <string name="toast_mute">Kontua mututua izan da!</string>
   <string name="toast_unmute">Kontua ez dago jada mututua!</string>
-  <string name="toast_follow">The account was followed!</string>
-  <string name="toast_unfollow">The account is no longer followed!</string>
+  <string name="toast_follow">Kontua jarraitua izan da!</string>
+  <string name="toast_unfollow">Kontua ez dago jada jarraitua!</string>
   <string name="toast_reblog">Toot-a bultzatu da!</string>
   <string name="toast_unreblog">Toot-a ez dago jada bultzatua!</string>
   <string name="toast_favourite">Toot-a zure gogokoetara gehitu da!</string>
@@ -297,9 +297,9 @@
   <string name="set_multiaccount_actions">Allow interactions between accounts?</string>
   <string name="note_no_space">You have reached the 160 characters allowed!</string>
   <string name="username_no_space">You have reached the 30 characters allowed!</string>
-  <string name="settings_title_hour">Time slot for notifications:</string>
-  <string name="settings_time_from">Between</string>
-  <string name="settings_time_to">and</string>
+  <string name="settings_title_hour">Jakinarazpenen denbora-tartea:</string>
+  <string name="settings_time_from">Hasiera:</string>
+  <string name="settings_time_to">eta</string>
   <string name="settings_time_greater">The time must be greater than %1$s</string>
   <string name="settings_time_lower">The time must be lower than %1$s</string>
   <string name="settings_hour_init">Hasiera ordua</string>
