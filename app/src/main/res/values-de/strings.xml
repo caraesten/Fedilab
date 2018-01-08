@@ -8,7 +8,7 @@
   <string name="action_privacy">Datenschutz</string>
   <string name="action_cache">Speicher</string>
   <string name="action_logout">Abmelden</string>
-  <string name="login">Login</string>
+  <string name="login">Anmeldung</string>
   <!-- common -->
   <string name="close">Schließen</string>
   <string name="yes">Ja</string>
@@ -402,7 +402,7 @@
   <string name="action_lists_update">Edit list</string>
   <string name="action_lists_title_placeholder">New list title</string>
   <string name="action_lists_search_users">Search among people you follow</string>
-  <string name="action_lists_owner">Your lists</string>
+  <string name="action_lists_owner">Deine Listen</string>
   <!-- Migration -->
   <string name="account_moved_to">%1$s has moved to %2$s</string>
   <string name="show_boost_count">Show boosts/favourites count</string>
@@ -420,6 +420,6 @@
   <string name="data_export_running">Still running, please wait…</string>
   <string name="data_export">Export statuses</string>
   <string name="data_export_toots">Export statuses for %1$s</string>
-  <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-  <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+  <string name="data_export_success">%1$s toots von %2$s wurden exportiert.</string>
+  <string name="data_export_error">Etwas ist schief gelaufen beim exportieren von%1$s</string>
 </resources>
