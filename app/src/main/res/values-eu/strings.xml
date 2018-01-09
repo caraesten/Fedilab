@@ -380,11 +380,11 @@
     </string>
   <string name="privacy_API_title">Jarraipena eta liburutegiak</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+        Aplikazioak <b>ez du jarraipen tresnarik erabiltzen</b> (audientziaren neurria, erroreen jakinarazpena, eta abar.) eta ez du publizitaterik.\n\n
+        Liburutegien erabilera minimizatu da: \n
+        - <b>Glide</b>: Multimedia kudeatzeko\n
+        - <b>Android-Job</b>: Zerbitzuak kudeatzeko\n
+        - <b>PhotoView</b>: Irudiak kudeatzeko\n
     </string>
   <string name="privacy_API_yandex_title">Toot-en itzulpena</string>
   <string name="privacy_API_yandex_authorizations">
