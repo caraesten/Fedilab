@@ -162,7 +162,7 @@
   <string name="choose_accounts">Hautatu kontu bat</string>
   <string name="select_accounts">Hautatu kontu batzuk</string>
   <string name="remove_draft">Kendu zirriborroa?</string>
-  <string name="show_reply">Click on the button to display the original toot</string>
+  <string name="show_reply">Sakatu botoia jatorrizko toot-a erakusteko</string>
   <string name="upload_form_description">Describe for the visually impaired</string>
   <!-- Instance -->
   <string name="instance_no_description">Ez dago deskripziorik eskuragarri!</string>
@@ -269,7 +269,7 @@
   <string name="set_display_reply">Display previous message in responses</string>
   <string name="set_display_local">Bistaratu denbora-lerro lokala</string>
   <string name="set_display_global">Bistaratu denbora-lerro federatua</string>
-  <string name="set_disable_gif">Disable GIF avatars</string>
+  <string name="set_disable_gif">Desgaitu GIF abatarrak</string>
   <string name="set_folder_title">Bidea: </string>
   <string name="set_auto_store_toot">Gorde zirriborroak automatikoki</string>
   <string name="set_bubble_counter">Erakutsi kontagailuak</string>
@@ -430,5 +430,5 @@ Eskerrik asko Stéphane logoagatik.    </string>
   <string name="data_export">Esportatu mezuak</string>
   <string name="data_export_toots">Esportatu %1$s(e)ren mezuak</string>
   <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-  <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+  <string name="data_export_error">Zerbait ez da behar bezala joan %1$s(e)ko datuak esportatzean</string>
 </resources>
