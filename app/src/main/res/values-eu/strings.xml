@@ -287,7 +287,7 @@
   <string name="set_notify">Jakinarazi?</string>
   <string name="set_notif_silent">Jakinarazpen isilak</string>
   <string name="set_night_mode">Gau modua</string>
-  <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
+  <string name="set_nsfw_timeout">NSFW ikusteko denbora-muga (segundoak, 0 itzalita)</string>
   <string name="settings_title_profile">Editatu profila</string>
   <string name="set_profile_description">Bio…</string>
   <string name="set_save_changes">Gorde aldaketak</string>
@@ -300,8 +300,8 @@
   <string name="settings_title_hour">Jakinarazpenen denbora-tartea:</string>
   <string name="settings_time_from">Nondik</string>
   <string name="settings_time_to">nora</string>
-  <string name="settings_time_greater">The time must be greater than %1$s</string>
-  <string name="settings_time_lower">The time must be lower than %1$s</string>
+  <string name="settings_time_greater">Denbora %1$s baino gehiago izan behar da</string>
+  <string name="settings_time_lower">Denbora %1$s baino gutxiago izan behar da</string>
   <string name="settings_hour_init">Hasiera ordua</string>
   <string name="settings_hour_end">Amaiera ordua</string>
   <string name="embedded_browser">Erabili aplikazio barneko nabigatzailea</string>
@@ -351,16 +351,16 @@
   <string name="settings_popup_notification">Irakurri gabeko jakinarazpenentzat?</string>
   <!-- CACHE -->
   <string name="cache_title">Garbitu cache-a</string>
-  <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+  <string name="cache_message">%1$s datu daude cachean.\n\nEzabatu nahi dituzu?</string>
   <string name="cache_units">Mb</string>
-  <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+  <string name="toast_cache_clear">Cache-a garbitu da! %1$s askatu dira</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">Grabatutako datuak</string>
   <string name="privacy_data">
-        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
+        Kontuen oinarrizko informazioa besterik ez da gordetzen gailuetan
+        Datu hauek guztiz konfidentzialak dira eta bakarrik aplikazioak erabili ditzake.
+        Aplikazioa ezabatzean datu hauek ere ezabatzen dira.\n
+        &#9888; Saioa eta pasahitzak ez dira inoiz gordetzen. Instantzia batekin autentifikazio segurua (SSL) ezartzean besterik ez dira erabiltzen.
     </string>
   <string name="privacy_authorizations_title">Baimenak:</string>
   <string name="privacy_authorizations">
