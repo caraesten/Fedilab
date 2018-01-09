@@ -364,12 +364,12 @@
     </string>
   <string name="privacy_authorizations_title">Baimenak:</string>
   <string name="privacy_authorizations">
-        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
-        - <b>INTERNET</b>: Used for queries to an instance.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
-        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
-        - <b>WAKE_LOCK</b>: Used during the notification service.
+        - <b>ACCESS_NETWORK_STATE</b>: Gailua WIFI sare batera konektatuta dagoen egiaztatzeko erabiltzen da.\n
+        - <b>INTERNET</b>: Instantzia bati itaunketak egiteko erabiltzen da.\n
+        - <b>WRITE_EXTERNAL_STORAGE</b>: Multimedia gordetzeko edo aplikazioa SD txartelera eramateko erabiltzen da.\n
+        - <b>READ_EXTERNAL_STORAGE</b>: Toot-etara multimedia gehitzeko erabilytzen da.\n
+        - <b>BOOT_COMPLETED</b>: Jakinarazpen zerbitzua abiatzeko erabiltzen da.\n
+        - <b>WAKE_LOCK</b>: Jakinarazpen zerbitzuan zehar erabiltzen da.
     </string>
   <string name="privacy_API_authorizations_title">APIaren baimenak:</string>
   <string name="privacy_API_authorizations">
@@ -388,8 +388,8 @@
     </string>
   <string name="privacy_API_yandex_title">Toot-en itzulpena</string>
   <string name="privacy_API_yandex_authorizations">
-        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
+        Aplikazioak ttot-ak itzultzeko aukera ematen du gailuaren locale eta Yandex API-a erabiliz.\n
+        Yandex-ek bere pribatutasun politika du eta hemen aurkitu daiteke: https://yandex.ru/legal/confidential/?lang=en
     </string>
   <string name="thanks_text">
 Eskerrik asko Stéphane logoagatik.    </string>
@@ -417,12 +417,12 @@ Eskerrik asko Stéphane logoagatik.    </string>
   <string name="show_boost_count">Erakutsi bultzatutako/gogokoen kopurua</string>
   <string name="issue_login_title">Autentifikazioa ez dabil?</string>
   <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
+        <b>Hona lagundu dezaketen egiaztaketa batzuk:</b>\n\n
+        - Egiaztatu ez dagoela akatsik instantziaren izenean\n\n
+        - Egiaztatu instantzia ez dagoela erorita\n\n
+        - Bi faktoreetako autentifikazioa erabiltzen baduzu (2FA), erabili beheko esteka (behin instantziaren izena bete eta gero)\n\n
+        - Esteka hori erabili dezakezu 2FA erabiltzen ez baduzu ere\n\n
+        - Oraindik ez badabil, ireki arazo bat Github kontu honetan https://github.com/stom79/mastalab/issues
     </string>
   <string name="media_ready">Multimedia kargatu da. Egin klik hemen berau bistaratzeko.</string>
   <string name="data_export_start">Ekintza honek luze hartu dezake. Bukatzean jakinaraziko zaizu.</string>
