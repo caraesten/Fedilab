@@ -105,4 +105,9 @@ public class Notification implements Parcelable {
         dest.writeParcelable(account, flags);
         dest.writeParcelable(status, flags);
     }
+
+    @Override
+    public boolean equals(Object otherNotifications) {
+        return otherNotifications != null && (otherNotifications == this || otherNotifications instanceof Notification && this.getId().equals(((Notification) otherNotifications).getId()));
+    }
 }

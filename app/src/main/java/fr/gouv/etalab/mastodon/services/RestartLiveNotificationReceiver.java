@@ -28,13 +28,13 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 
 public class RestartLiveNotificationReceiver extends BroadcastReceiver {
 
+
     @SuppressLint("UnsafeProtectedBroadcastReceiver")
     @Override
     public void onReceive(Context context, Intent intent) {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
-        boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
-        if( notify && liveNotifications) {
+        if( liveNotifications) {
             Intent streamingServiceIntent = new Intent(context.getApplicationContext(), LiveNotificationService.class);
             try {
                 context.startService(streamingServiceIntent);
