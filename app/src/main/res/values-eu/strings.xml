@@ -163,7 +163,7 @@
   <string name="select_accounts">Hautatu kontu batzuk</string>
   <string name="remove_draft">Kendu zirriborroa?</string>
   <string name="show_reply">Sakatu botoia jatorrizko toot-a erakusteko</string>
-  <string name="upload_form_description">Describe for the visually impaired</string>
+  <string name="upload_form_description">Deskribatu ikusmen arazoak dituztenentzat</string>
   <!-- Instance -->
   <string name="instance_no_description">Ez dago deskripziorik eskuragarri!</string>
   <!-- About -->
@@ -196,9 +196,9 @@
   <string name="toot_scheduled_date">Programatutako data orain baino beranduago izan behar du!</string>
   <string name="warning_battery">Bateria aurreztea gaituta dago! Agian ez dabil behar bezala.</string>
   <!-- timed mute -->
-  <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-  <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
-  <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+  <string name="timed_mute_date_error">Mututzeko denbora minutu bat baino gehiago izan behar da.</string>
+  <string name="timed_mute_date">%1$s mututu da %2$s arte.\n Kontu hau desmututu dezakezu bere profiletik.</string>
+  <string name="timed_mute_profile">%1$s mututu da %2$s arte.\n Egin klik hemen kontu hau desmututu nahi baduzu.</string>
   <!-- Notifications -->
   <string name="no_notifications">Jakinarazpenik ez bistaratzeko</string>
   <string name="notif_mention">erabiltzaileak aipatu zaitu</string>
@@ -240,8 +240,8 @@
   <string name="toast_pin">Toot-a finkatu da!</string>
   <string name="toast_unpin">Toot-a desfinkatu da!</string>
   <string name="toast_error">Errore bat gertatu da!</string>
-  <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
-  <string name="toast_error_instance">The instance domain does not seem to be valide!</string>
+  <string name="toast_code_error">Errore bat gertatu da! Instantziak ez du baimen koderik itzuli!</string>
+  <string name="toast_error_instance">Instantziaren domeinua ez dirudi baliozkoa!</string>
   <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
   <string name="toast_error_search">Errore bat gertatu da bilatu bitartean!</string>
   <string name="toast_error_login">Ezin da saioa hasi!</string>
@@ -273,15 +273,15 @@
   <string name="set_folder_title">Bidea: </string>
   <string name="set_auto_store_toot">Gorde zirriborroak automatikoki</string>
   <string name="set_bubble_counter">Erakutsi kontagailuak</string>
-  <string name="set_auto_add_media_url">Add URL of media in toots</string>
+  <string name="set_auto_add_media_url">Gehitu multimediaren URLa toot-etan</string>
   <string name="settings_title_notifications">Kudeatu jakinarazpenak</string>
-  <string name="set_notif_follow">Notify when someone follows you</string>
-  <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
+  <string name="set_notif_follow">Jakinarazi norbaitek jarraitzen zaituenean</string>
+  <string name="set_notif_follow_ask">Jakinarazi norbait zu jarraitzeko eskaera egiten duenean</string>
   <string name="set_notif_follow_share">Jakinarazi norbaitek zure mezua bultzatzen duenean</string>
   <string name="set_notif_follow_add">Jakinarazi norbaitek zure mezua gogoko duenean</string>
-  <string name="set_notif_follow_mention">Notify when someone mentions you</string>
+  <string name="set_notif_follow_mention">Jakinarazi norbaitek aipatzen zaituenean</string>
   <string name="set_share_validation">Erakutsi berrespen elkarrizketa-koadroa bultzatu aurretik</string>
-  <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
+  <string name="set_share_validation_fav">Erakutsi baieztapen elkarrizketa-koadroa gogokoetara erantsi aurretik</string>
   <string name="settings_title_more_options">Ezarpen aurreratuak</string>
   <string name="set_wifi_only">Jakinarazi WIFI bidez besterik ez</string>
   <string name="set_notify">Jakinarazi?</string>
