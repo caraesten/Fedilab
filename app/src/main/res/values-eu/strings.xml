@@ -138,7 +138,7 @@
   <string name="toot_cw_placeholder">Abisua</string>
   <string name="toot_placeholder">Zer duzu buruan?</string>
   <string name="toot_it">TOOT!</string>
-  <string name="cw">cw</string>
+  <string name="cw">X!</string>
   <string name="toot_title">Idatzi toot bat</string>
   <string name="toot_title_reply">Erantzun toot bati</string>
   <string name="toot_no_space">Gehienez onartzen diren 500 karaktereetara iritsi zara!</string>
@@ -298,8 +298,8 @@
   <string name="note_no_space">Baimendutako 160 karaktereetara heldu zara!</string>
   <string name="username_no_space">Baimendutako 30 karaktereetara heldu zara!</string>
   <string name="settings_title_hour">Jakinarazpenen denbora-tartea:</string>
-  <string name="settings_time_from">Hasiera:</string>
-  <string name="settings_time_to">eta</string>
+  <string name="settings_time_from">Nondik</string>
+  <string name="settings_time_to">nora</string>
   <string name="settings_time_greater">The time must be greater than %1$s</string>
   <string name="settings_time_lower">The time must be lower than %1$s</string>
   <string name="settings_hour_init">Hasiera ordua</string>
@@ -424,7 +424,7 @@ Eskerrik asko Stéphane logoagatik.    </string>
         - You can also use this link without using the 2FA\n\n
         - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
     </string>
-  <string name="media_ready">Media has been loaded. Click here to display it.</string>
+  <string name="media_ready">Multimedia kargatu da. Egin klik hemen berau bistaratzeko.</string>
   <string name="data_export_start">Ekintza honek luze hartu dezake. Bukatzean jakinaraziko zaizu.</string>
   <string name="data_export_running">Oraindik abian, itxaron mesedez…</string>
   <string name="data_export">Esportatu mezuak</string>
