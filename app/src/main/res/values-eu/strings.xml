@@ -138,7 +138,7 @@
   <string name="toot_cw_placeholder">Abisua</string>
   <string name="toot_placeholder">Zer duzu buruan?</string>
   <string name="toot_it">TOOT!</string>
-  <string name="cw">cw</string>
+  <string name="cw">X!</string>
   <string name="toot_title">Idatzi toot bat</string>
   <string name="toot_title_reply">Erantzun toot bati</string>
   <string name="toot_no_space">Gehienez onartzen diren 500 karaktereetara iritsi zara!</string>
@@ -162,8 +162,8 @@
   <string name="choose_accounts">Hautatu kontu bat</string>
   <string name="select_accounts">Hautatu kontu batzuk</string>
   <string name="remove_draft">Kendu zirriborroa?</string>
-  <string name="show_reply">Click on the button to display the original toot</string>
-  <string name="upload_form_description">Describe for the visually impaired</string>
+  <string name="show_reply">Sakatu botoia jatorrizko toot-a erakusteko</string>
+  <string name="upload_form_description">Deskribatu ikusmen arazoak dituztenentzat</string>
   <!-- Instance -->
   <string name="instance_no_description">Ez dago deskripziorik eskuragarri!</string>
   <!-- About -->
@@ -196,9 +196,9 @@
   <string name="toot_scheduled_date">Programatutako data orain baino beranduago izan behar du!</string>
   <string name="warning_battery">Bateria aurreztea gaituta dago! Agian ez dabil behar bezala.</string>
   <!-- timed mute -->
-  <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-  <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
-  <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+  <string name="timed_mute_date_error">Mututzeko denbora minutu bat baino gehiago izan behar da.</string>
+  <string name="timed_mute_date">%1$s mututu da %2$s arte.\n Kontu hau desmututu dezakezu bere profiletik.</string>
+  <string name="timed_mute_profile">%1$s mututu da %2$s arte.\n Egin klik hemen kontu hau desmututu nahi baduzu.</string>
   <!-- Notifications -->
   <string name="no_notifications">Jakinarazpenik ez bistaratzeko</string>
   <string name="notif_mention">erabiltzaileak aipatu zaitu</string>
@@ -240,9 +240,9 @@
   <string name="toast_pin">Toot-a finkatu da!</string>
   <string name="toast_unpin">Toot-a desfinkatu da!</string>
   <string name="toast_error">Errore bat gertatu da!</string>
-  <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
-  <string name="toast_error_instance">The instance domain does not seem to be valide!</string>
-  <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
+  <string name="toast_code_error">Errore bat gertatu da! Instantziak ez du baimen koderik itzuli!</string>
+  <string name="toast_error_instance">Instantziaren domeinua ez dirudi baliozkoa!</string>
+  <string name="toast_error_loading_account">Errore bat gertatu da kontuen artean aldatzean!</string>
   <string name="toast_error_search">Errore bat gertatu da bilatu bitartean!</string>
   <string name="toast_error_login">Ezin da saioa hasi!</string>
   <string name="toast_update_credential_ok">Profileko datuak gorde dira!</string>
@@ -250,9 +250,9 @@
   <string name="toast_saved">Multimedia gorde da!</string>
   <string name="toast_error_translate">Errore bat gertatu da itzuli bitartean!</string>
   <string name="toast_toot_saved">Zirriborroa gordeta!</string>
-  <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
-  <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
-  <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
+  <string name="toast_error_char_limit">Ziur instantzia honek hainbeste karaktere onartzen dituela? Orokorrean, balio hau 500 inguru izaten da.</string>
+  <string name="toast_visibility_changed">%1$s kontuaren toot-en ikusgaitasuna aldatu da</string>
+  <string name="toast_empty_search">Instantziaren izena eta pantaila izena ezin dira hutsik egon!</string>
   <!-- Settings -->
   <string name="settings_title_optimisation">Kargaren optimizazioa</string>
   <string name="set_toots_page">Toot kopurua kargako</string>
@@ -266,42 +266,42 @@
   <string name="load_attachment_spoiler">Erakutsi gehiago…</string>
   <string name="load_attachment_spoiler_less">Erakutsi gutxiago…</string>
   <string name="load_sensitive_attachment">Eduki mingarria</string>
-  <string name="set_display_reply">Display previous message in responses</string>
+  <string name="set_display_reply">Erakutsi aurreko mezua erantzunetan</string>
   <string name="set_display_local">Bistaratu denbora-lerro lokala</string>
   <string name="set_display_global">Bistaratu denbora-lerro federatua</string>
-  <string name="set_disable_gif">Disable GIF avatars</string>
+  <string name="set_disable_gif">Desgaitu GIF abatarrak</string>
   <string name="set_folder_title">Bidea: </string>
   <string name="set_auto_store_toot">Gorde zirriborroak automatikoki</string>
   <string name="set_bubble_counter">Erakutsi kontagailuak</string>
-  <string name="set_auto_add_media_url">Add URL of media in toots</string>
+  <string name="set_auto_add_media_url">Gehitu multimediaren URLa toot-etan</string>
   <string name="settings_title_notifications">Kudeatu jakinarazpenak</string>
-  <string name="set_notif_follow">Notify when someone follows you</string>
-  <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
+  <string name="set_notif_follow">Jakinarazi norbaitek jarraitzen zaituenean</string>
+  <string name="set_notif_follow_ask">Jakinarazi norbait zu jarraitzeko eskaera egiten duenean</string>
   <string name="set_notif_follow_share">Jakinarazi norbaitek zure mezua bultzatzen duenean</string>
   <string name="set_notif_follow_add">Jakinarazi norbaitek zure mezua gogoko duenean</string>
-  <string name="set_notif_follow_mention">Notify when someone mentions you</string>
+  <string name="set_notif_follow_mention">Jakinarazi norbaitek aipatzen zaituenean</string>
   <string name="set_share_validation">Erakutsi berrespen elkarrizketa-koadroa bultzatu aurretik</string>
-  <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
+  <string name="set_share_validation_fav">Erakutsi baieztapen elkarrizketa-koadroa gogokoetara erantsi aurretik</string>
   <string name="settings_title_more_options">Ezarpen aurreratuak</string>
   <string name="set_wifi_only">Jakinarazi WIFI bidez besterik ez</string>
   <string name="set_notify">Jakinarazi?</string>
   <string name="set_notif_silent">Jakinarazpen isilak</string>
   <string name="set_night_mode">Gau modua</string>
-  <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
+  <string name="set_nsfw_timeout">NSFW ikusteko denbora-muga (segundoak, 0 itzalita)</string>
   <string name="settings_title_profile">Editatu profila</string>
   <string name="set_profile_description">Bio…</string>
   <string name="set_save_changes">Gorde aldaketak</string>
   <string name="set_header_picture_overlay">Hautatu goibururako irudi bat</string>
-  <string name="set_preview_reply">Display the number of replies in home timeline</string>
-  <string name="set_preview_reply_pp">Display profile pictures?</string>
-  <string name="set_multiaccount_actions">Allow interactions between accounts?</string>
-  <string name="note_no_space">You have reached the 160 characters allowed!</string>
-  <string name="username_no_space">You have reached the 30 characters allowed!</string>
+  <string name="set_preview_reply">Erakutsi erantzun kopurua hasierako denbora-lerroan</string>
+  <string name="set_preview_reply_pp">Bistaratu profileko argazkiak?</string>
+  <string name="set_multiaccount_actions">Baimendu kontuen arteko interakzioa?</string>
+  <string name="note_no_space">Baimendutako 160 karaktereetara heldu zara!</string>
+  <string name="username_no_space">Baimendutako 30 karaktereetara heldu zara!</string>
   <string name="settings_title_hour">Jakinarazpenen denbora-tartea:</string>
-  <string name="settings_time_from">Hasiera:</string>
-  <string name="settings_time_to">eta</string>
-  <string name="settings_time_greater">The time must be greater than %1$s</string>
-  <string name="settings_time_lower">The time must be lower than %1$s</string>
+  <string name="settings_time_from">Nondik</string>
+  <string name="settings_time_to">nora</string>
+  <string name="settings_time_greater">Denbora %1$s baino gehiago izan behar da</string>
+  <string name="settings_time_lower">Denbora %1$s baino gutxiago izan behar da</string>
   <string name="settings_hour_init">Hasiera ordua</string>
   <string name="settings_hour_end">Amaiera ordua</string>
   <string name="embedded_browser">Erabili aplikazio barneko nabigatzailea</string>
@@ -328,8 +328,8 @@
     <item>Zuria</item>
   </string-array>
   <string name="set_title_news">Berriak</string>
-  <string name="set_notification_news">Notify for new toots on the home timeline</string>
-  <string name="set_show_error_messages">Display error messages</string>
+  <string name="set_notification_news">Jakinarazi hasierako denbora-lerroan toot berriak daudenean</string>
+  <string name="set_show_error_messages">Erakutsi errore mezuak</string>
   <string name="action_follow">Jarraitu</string>
   <string name="action_unfollow">Utzi jarraitzeari</string>
   <string name="action_block">Blokeatu</string>
@@ -340,36 +340,36 @@
   <string name="request_sent">Eskaera bidalita</string>
   <string name="followed_by">Zu jarraitzen</string>
   <string name="action_search">Bilatu</string>
-  <string name="set_capitalize">First letter in capital for replies</string>
+  <string name="set_capitalize">Lehen letra maiuskulaz erantzunetan</string>
   <!-- Quick settings for notifications -->
-  <string name="settings_popup_title">Push notifications</string>
+  <string name="settings_popup_title">Push jakinarazpenak</string>
   <string name="settings_popup_message">
-        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
+        Berretsi jaso nahi dituzun push jakinarazpenak.
+        Jakinarazpen hauek gero ezarpenetan aktibatu edo desaktibatu ditzakezu (Jakinarazpenak fitxa).
     </string>
-  <string name="settings_popup_timeline">For unread toots in home time-line?</string>
+  <string name="settings_popup_timeline">Irakurri gabeko toot-ak hasiera denbora-lerroan?</string>
   <string name="settings_popup_notification">Irakurri gabeko jakinarazpenentzat?</string>
   <!-- CACHE -->
   <string name="cache_title">Garbitu cache-a</string>
-  <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+  <string name="cache_message">%1$s datu daude cachean.\n\nEzabatu nahi dituzu?</string>
   <string name="cache_units">Mb</string>
-  <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+  <string name="toast_cache_clear">Cache-a garbitu da! %1$s askatu dira</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">Grabatutako datuak</string>
   <string name="privacy_data">
-        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
+        Kontuen oinarrizko informazioa besterik ez da gordetzen gailuetan
+        Datu hauek guztiz konfidentzialak dira eta bakarrik aplikazioak erabili ditzake.
+        Aplikazioa ezabatzean datu hauek ere ezabatzen dira.\n
+        &#9888; Saioa eta pasahitzak ez dira inoiz gordetzen. Instantzia batekin autentifikazio segurua (SSL) ezartzean besterik ez dira erabiltzen.
     </string>
   <string name="privacy_authorizations_title">Baimenak:</string>
   <string name="privacy_authorizations">
-        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
-        - <b>INTERNET</b>: Used for queries to an instance.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
-        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
-        - <b>WAKE_LOCK</b>: Used during the notification service.
+        - <b>ACCESS_NETWORK_STATE</b>: Gailua WIFI sare batera konektatuta dagoen egiaztatzeko erabiltzen da.\n
+        - <b>INTERNET</b>: Instantzia bati itaunketak egiteko erabiltzen da.\n
+        - <b>WRITE_EXTERNAL_STORAGE</b>: Multimedia gordetzeko edo aplikazioa SD txartelera eramateko erabiltzen da.\n
+        - <b>READ_EXTERNAL_STORAGE</b>: Toot-etara multimedia gehitzeko erabilytzen da.\n
+        - <b>BOOT_COMPLETED</b>: Jakinarazpen zerbitzua abiatzeko erabiltzen da.\n
+        - <b>WAKE_LOCK</b>: Jakinarazpen zerbitzuan zehar erabiltzen da.
     </string>
   <string name="privacy_API_authorizations_title">APIaren baimenak:</string>
   <string name="privacy_API_authorizations">
@@ -380,23 +380,23 @@
     </string>
   <string name="privacy_API_title">Jarraipena eta liburutegiak</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+        Aplikazioak <b>ez du jarraipen tresnarik erabiltzen</b> (audientziaren neurria, erroreen jakinarazpena, eta abar.) eta ez du publizitaterik.\n\n
+        Liburutegien erabilera minimizatu da: \n
+        - <b>Glide</b>: Multimedia kudeatzeko\n
+        - <b>Android-Job</b>: Zerbitzuak kudeatzeko\n
+        - <b>PhotoView</b>: Irudiak kudeatzeko\n
     </string>
-  <string name="privacy_API_yandex_title">Translation of toots</string>
+  <string name="privacy_API_yandex_title">Toot-en itzulpena</string>
   <string name="privacy_API_yandex_authorizations">
-        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
+        Aplikazioak ttot-ak itzultzeko aukera ematen du gailuaren locale eta Yandex API-a erabiliz.\n
+        Yandex-ek bere pribatutasun politika du eta hemen aurkitu daiteke: https://yandex.ru/legal/confidential/?lang=en
     </string>
   <string name="thanks_text">
 Eskerrik asko Stéphane logoagatik.    </string>
   <string name="thanks_text_dev">
         Eskerrik asko:
     </string>
-  <string name="filter_regex">Filter out by regular expressions</string>
+  <string name="filter_regex">Iragazi adierazpen erregularrak erabiliz</string>
   <string name="search">Bilatu</string>
   <string name="delete">Ezabatu</string>
   <string name="fetch_more_toots">Jaso toot gehiago…</string>
@@ -417,18 +417,18 @@ Eskerrik asko Stéphane logoagatik.    </string>
   <string name="show_boost_count">Erakutsi bultzatutako/gogokoen kopurua</string>
   <string name="issue_login_title">Autentifikazioa ez dabil?</string>
   <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
+        <b>Hona lagundu dezaketen egiaztaketa batzuk:</b>\n\n
+        - Egiaztatu ez dagoela akatsik instantziaren izenean\n\n
+        - Egiaztatu instantzia ez dagoela erorita\n\n
+        - Bi faktoreetako autentifikazioa erabiltzen baduzu (2FA), erabili beheko esteka (behin instantziaren izena bete eta gero)\n\n
+        - Esteka hori erabili dezakezu 2FA erabiltzen ez baduzu ere\n\n
+        - Oraindik ez badabil, ireki arazo bat Github kontu honetan https://github.com/stom79/mastalab/issues
     </string>
-  <string name="media_ready">Media has been loaded. Click here to display it.</string>
-  <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
+  <string name="media_ready">Multimedia kargatu da. Egin klik hemen berau bistaratzeko.</string>
+  <string name="data_export_start">Ekintza honek luze hartu dezake. Bukatzean jakinaraziko zaizu.</string>
   <string name="data_export_running">Oraindik abian, itxaron mesedez…</string>
   <string name="data_export">Esportatu mezuak</string>
   <string name="data_export_toots">Esportatu %1$s(e)ren mezuak</string>
-  <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-  <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+  <string name="data_export_success">%1$s toot esportatu dira %2$stik.</string>
+  <string name="data_export_error">Zerbait ez da behar bezala joan %1$s(e)ko datuak esportatzean</string>
 </resources>
