@@ -238,7 +238,7 @@
   <string name="toast_unpin">The toot was unpinned!</string>
   <string name="toast_error">Oops ! An error occurred!</string>
   <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
-  <string name="toast_error_instance">The instance domain does not seem to be valide!</string>
+  <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
   <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
   <string name="toast_error_search">An error occurred while searching!</string>
   <string name="toast_error_login">Can not log in!</string>
