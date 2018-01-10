@@ -16,12 +16,11 @@ package fr.gouv.etalab.mastodon.interfaces;
 
 
 import fr.gouv.etalab.mastodon.client.APIResponse;
-import fr.gouv.etalab.mastodon.client.Entities.Notification;
 
 /**
  * Created by Thomas on 29/07/2017.
  * Interface when deleting a notification
  */
 public interface OnPostNotificationsActionInterface {
-    void onPostNotificationsAction(APIResponse apiResponse, Notification notification);
+    void onPostNotificationsAction(APIResponse apiResponse, String targetedId);
 }

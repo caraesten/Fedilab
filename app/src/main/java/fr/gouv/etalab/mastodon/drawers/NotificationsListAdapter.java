@@ -665,14 +665,14 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                 return true;
                             case R.id.action_mention:
                                 status.setTakingScreenShot(true);
-                                notificationsListAdapter.notifyDataSetChanged();
+                                notifyNotificationChanged(notification);
                                 Handler handler = new Handler();
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
                                         Bitmap bitmap = Helper.convertTootIntoBitmap(context, holder.getView());
                                         status.setTakingScreenShot(false);
-                                        notificationsListAdapter.notifyDataSetChanged();
+                                        notifyNotificationChanged(notification);
                                         Intent intent = new Intent(context, TootActivity.class);
                                         Bundle b = new Bundle();
                                         String fname = "tootmention_" + status.getId() +".jpg";
@@ -806,7 +806,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                         if (seletedItems.size() > 0)
                             new PostNotificationsAsyncTask(context, null, NotificationsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         else
-                            new PostNotificationsAsyncTask(context, notification, NotificationsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new PostNotificationsAsyncTask(context, notification.getId(), NotificationsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         dialog.dismiss();
                     }
                 }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -840,52 +840,67 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         }
         if( targetedId != null ) {
             if (statusAction == API.StatusAction.REBLOG) {
+                int position = 0;
                 for (Notification notification : notifications) {
                     if (notification.getStatus() != null && notification.getStatus().getId().equals(targetedId)) {
                         notification.getStatus().setReblogs_count(notification.getStatus().getReblogs_count() + 1);
+                        notificationsListAdapter.notifyItemChanged(position);
                         break;
                     }
+
                 }
-                notificationsListAdapter.notifyDataSetChanged();
             } else if (statusAction == API.StatusAction.UNREBLOG) {
+                int position = 0;
                 for (Notification notification : notifications) {
                     if (notification.getStatus() != null && notification.getStatus().getId().equals(targetedId)) {
                         if (notification.getStatus().getReblogs_count() - 1 >= 0)
                             notification.getStatus().setReblogs_count(notification.getStatus().getReblogs_count() - 1);
+                        notificationsListAdapter.notifyItemChanged(position);
                         break;
                     }
+                    position++;
                 }
-                notificationsListAdapter.notifyDataSetChanged();
             } else if (statusAction == API.StatusAction.FAVOURITE) {
+                int position = 0;
                 for (Notification notification : notifications) {
                     if (notification.getStatus() != null && notification.getStatus().getId().equals(targetedId)) {
                         notification.getStatus().setFavourites_count(notification.getStatus().getFavourites_count() + 1);
+                        notificationsListAdapter.notifyItemChanged(position);
                         break;
                     }
+                    position++;
                 }
-                notificationsListAdapter.notifyDataSetChanged();
             } else if (statusAction == API.StatusAction.UNFAVOURITE) {
+                int position = 0;
                 for (Notification notification : notifications) {
                     if (notification.getStatus() != null && notification.getStatus().getId().equals(targetedId)) {
                         if (notification.getStatus().getFavourites_count() - 1 >= 0)
                             notification.getStatus().setFavourites_count(notification.getStatus().getFavourites_count() - 1);
+                        notificationsListAdapter.notifyItemChanged(position);
                         break;
                     }
+                    position++;
                 }
-                notificationsListAdapter.notifyDataSetChanged();
             }
         }
     }
 
     @Override
-    public void onPostNotificationsAction(APIResponse apiResponse, Notification notification) {
+    public void onPostNotificationsAction(APIResponse apiResponse, String targetedId) {
         if(apiResponse.getError() != null){
             Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();
             return;
         }
-        if( notification != null){
-            notifications.remove(notification);
-            notificationsListAdapter.notifyDataSetChanged();
+        if( targetedId != null){
+            int position = 0;
+            for (Notification notif : notifications) {
+                if (notif.getId().equals(targetedId)) {
+                    notifications.remove(notif);
+                    notificationsListAdapter.notifyItemRemoved(position);
+                    break;
+                }
+                position++;
+            }
             Toast.makeText(context,R.string.delete_notification,Toast.LENGTH_LONG).show();
         }else{
             int size = notifications.size();

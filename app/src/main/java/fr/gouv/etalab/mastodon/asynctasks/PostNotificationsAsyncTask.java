@@ -21,7 +21,6 @@ import java.lang.ref.WeakReference;
 
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
-import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.interfaces.OnPostNotificationsActionInterface;
 
 
@@ -34,19 +33,19 @@ public class PostNotificationsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     private OnPostNotificationsActionInterface listener;
     private APIResponse apiResponse;
-    private Notification notification;
+    private String targetedId;
     private WeakReference<Context> contextReference;
 
-    public PostNotificationsAsyncTask(Context context, Notification notification, OnPostNotificationsActionInterface onPostNotificationsActionInterface){
+    public PostNotificationsAsyncTask(Context context, String targetedId, OnPostNotificationsActionInterface onPostNotificationsActionInterface){
         this.contextReference = new WeakReference<>(context);
         this.listener = onPostNotificationsActionInterface;
-        this.notification = notification;
+        this.targetedId = targetedId;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        if( notification  != null)
-            apiResponse = new API(this.contextReference.get()).postNoticationAction(notification.getId());
+        if( targetedId  != null)
+            apiResponse = new API(this.contextReference.get()).postNoticationAction(targetedId);
         else //Delete all notifications
             apiResponse = new API(this.contextReference.get()).postNoticationAction(null);
         return null;
@@ -54,7 +53,7 @@ public class PostNotificationsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onPostNotificationsAction(apiResponse, notification);
+        listener.onPostNotificationsAction(apiResponse, targetedId);
     }
 
 }
