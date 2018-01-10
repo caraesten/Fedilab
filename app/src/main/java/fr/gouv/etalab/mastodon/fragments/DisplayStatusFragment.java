@@ -78,7 +78,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private Intent streamingFederatedIntent, streamingLocalIntent;
     LinearLayoutManager mLayoutManager;
     boolean firstTootsLoaded;
-    private String lastReadStatus;
     private String userId, instance;
     private SharedPreferences sharedpreferences;
 
@@ -134,7 +133,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         mLayoutManager = new LinearLayoutManager(context);
         lv_status.setLayoutManager(mLayoutManager);
 
-        lastReadStatus = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, null);
+
         instance = sharedpreferences.getString(Helper.PREF_INSTANCE, context!=null?Helper.getLiveInstance(context):null);
 
         lv_status.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -160,7 +159,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         nextElementLoader.setVisibility(View.GONE);
                     }
                 }
-                if(statuses != null && statuses.size() > firstVisibleItem )
+                if(type == RetrieveFeedsAsyncTask.Type.HOME && statuses != null && statuses.size() > firstVisibleItem )
                     if( context instanceof BaseMainActivity){
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         Long bookmarkL = Long.parseLong(statuses.get(firstVisibleItem).getId()) + 1;
@@ -588,7 +587,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
         String lastNotif = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId + instance, null);
         if( lastNotif == null || Long.parseLong(statusId) > Long.parseLong(lastNotif)){
-            this.lastReadStatus = statusId;
             MainActivity.countNewStatus = 0;
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId + instance, statusId);

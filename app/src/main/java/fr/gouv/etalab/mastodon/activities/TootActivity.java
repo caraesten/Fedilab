@@ -1628,6 +1628,8 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if( position >= tags.size() )
+                        return;
                     String tag = tags.get(position);
                     String deltaSearch = "";
                     if( currentCursorPosition-searchLength > 0 && currentCursorPosition < oldContent.length() )
