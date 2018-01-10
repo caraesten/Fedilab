@@ -21,12 +21,6 @@ import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.LightingColorFilter;
-import android.graphics.Matrix;
-import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
@@ -660,19 +654,15 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
 
 
     // Handles uploading shared images
-    public void uploadSharedImage(ArrayList<Uri> uri)
-    {
+    public void uploadSharedImage(ArrayList<Uri> uri) {
         if (!uri.isEmpty()) {
             int count = 0;
             for(Uri fileUri: uri) {
                 if (fileUri != null) {
-                    if (count == 4)
-                    {
+                    if (count == 4) {
                         break;
                     }
-
                     picture_scrollview.setVisibility(View.VISIBLE);
-
                     try {
                         InputStream inputStream = getContentResolver().openInputStream(fileUri);
                         toot_picture_container.setVisibility(View.VISIBLE);
@@ -680,8 +670,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                         toot_picture.setEnabled(false);
                         new HttpsConnection(TootActivity.this).upload(inputStream, TootActivity.this);
                         count++;
-
-                    } catch (FileNotFoundException e) {
+                    } catch (Exception e) {
                         Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
                         toot_picture.setEnabled(true);
                     }
@@ -1240,7 +1229,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                     imageView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            showAddDescription(imageView, attachment);
+                            showAddDescription(attachment);
                         }
                     });
                 }
@@ -1285,7 +1274,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         }
     }
 
-    private void showAddDescription(final ImageView imageView, final Attachment attachment){
+    private void showAddDescription(final Attachment attachment){
         AlertDialog.Builder builderInner = new AlertDialog.Builder(TootActivity.this);
         builderInner.setTitle(R.string.upload_form_description);
 
@@ -1717,7 +1706,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                                 imageView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        showAddDescription(imageView, attachment);
+                                        showAddDescription(attachment);
                                     }
                                 });
                             }
