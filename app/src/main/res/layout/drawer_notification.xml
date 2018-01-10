@@ -94,7 +94,6 @@
                     <TextView
                         android:id="@+id/status_spoiler"
                         android:layout_marginTop="10dp"
-                        android:autoLink="web"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                     <Button
@@ -126,7 +125,6 @@
                         android:id="@+id/notification_status_content"
                         android:layout_marginTop="10dp"
                         android:textIsSelectable="true"
-                        android:autoLink="web"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                     <LinearLayout
@@ -264,7 +262,6 @@
                     <TextView
                         android:id="@+id/status_mention_spoiler"
                         android:layout_marginTop="10dp"
-                        android:autoLink="web"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </LinearLayout>

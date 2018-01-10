@@ -101,10 +101,10 @@ public class LiveNotificationService extends Service {
         }
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
-        boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
+
         String userId;
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        if( liveNotifications && notify){
+        if( liveNotifications ){
 
             if( intent == null || intent.getStringExtra("userId") == null) {
 

@@ -65,7 +65,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean swiped;
     private RecyclerView lv_notifications;
-    private String lastReadNotifications;
     private String userId, instance;
     private SharedPreferences sharedpreferences;
     LinearLayoutManager mLayoutManager;
@@ -98,7 +97,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         instance = sharedpreferences.getString(Helper.PREF_INSTANCE, context!=null?Helper.getLiveInstance(context):null);
-        lastReadNotifications = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, null);
         notificationsListAdapter = new NotificationsListAdapter(context,isOnWifi, behaviorWithAttachments,this.notifications);
         lv_notifications.setAdapter(notificationsListAdapter);
         mLayoutManager = new LinearLayoutManager(context);
@@ -177,6 +175,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     public void onRetrieveNotifications(APIResponse apiResponse, Account account, boolean refreshData) {
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
+        String lastReadNotifications = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, null);
         if( apiResponse.getError() != null){
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
@@ -277,7 +276,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             return;
         if( notification != null){
             //Makes sure the notifications is not already displayed
-            if( lastReadNotifications == null ||  Long.parseLong(notification.getId()) > Long.parseLong(lastReadNotifications)) {
+            if( !this.notifications.contains(notification)) {
                 //Update the id of the last notification retrieved
                 MainActivity.lastNotificationId = notification.getId();
                 notifications.add(0, notification);
@@ -323,7 +322,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
 
         String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, null);
         if( lastNotif == null || Long.parseLong(notificationId) > Long.parseLong(lastNotif)){
-            this.lastReadNotifications = notificationId;
             MainActivity.countNewNotifications = 0;
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, notificationId);

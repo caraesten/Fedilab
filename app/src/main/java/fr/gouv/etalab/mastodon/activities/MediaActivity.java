@@ -26,12 +26,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -45,21 +45,22 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.github.chrisbanes.photoview.OnMatrixChangedListener;
 import com.github.chrisbanes.photoview.PhotoView;
 import java.io.File;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
+import fr.gouv.etalab.mastodon.client.TLSSocketFactory;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnDownloadInterface;
 
@@ -102,10 +103,16 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         LEFT_TO_RIGHT,
         POP
     }
+    private static final int SWIPE_MIN_DISTANCE = 120;
+    private static final int SWIPE_MAX_OFF_PATH = 250;
+    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+    private GestureDetector gestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        gestureDetector = new GestureDetector(new SwipeDetector());
+
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -220,6 +227,32 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     }
 
 
+    //It's a part of the code from Hitesh Sahu on stackoverflow. See: https://stackoverflow.com/a/38442055
+    private class SwipeDetector extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+
+            // Check movement along the Y-axis. If it exceeds SWIPE_MAX_OFF_PATH,
+            // then dismiss the swipe.
+            if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
+                return false;
+
+            // Swipe from left to right.
+            // The swipe needs to exceed a certain distance (SWIPE_MIN_DISTANCE)
+            // and a certain velocity (SWIPE_THRESHOLD_VELOCITY).
+            if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                finish();
+                return true;
+            }
+
+            return false;
+        }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return gestureDetector.onTouchEvent(event);
+    }
     /**
      * Manage touch event
      * Allows to swipe from timelines
@@ -228,7 +261,12 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
      */
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-
+        if (gestureDetector != null && imageView.getScale() == 1 && mediaPosition == 1) {
+            if (gestureDetector.onTouchEvent(event))
+                // If the gestureDetector handles the event, a swipe has been
+                // executed and no more needs to be done.
+                return true;
+        }
         if( event.getAction() == MotionEvent.ACTION_DOWN){
             if( getSupportActionBar() != null  && canSwipe) {
                 appBar.setExpanded(true);
@@ -257,7 +295,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                             next.setVisibility(View.GONE);
                             isHiding = false;
                         }
-                    }, 1000);
+                    }, 2000);
                 }
                 return super.dispatchTouchEvent(event);
             }
@@ -318,29 +356,18 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 fileVideo = null;
                 pbar_inf.setIndeterminate(true);
                 loader.setVisibility(View.VISIBLE);
+                fileVideo = null;
                 Glide.with(getApplicationContext())
-                        .asBitmap()
-                        .load(preview_url).listener(new RequestListener<Bitmap>() {
-
-                    @Override
-                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                        Glide.with(getApplicationContext())
+                    .asBitmap()
+                    .load(preview_url).into(
+                    new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(final Bitmap resource, Transition<? super Bitmap> transition) {
+                            imageView.setImageBitmap(resource);
+                            Glide.with(getApplicationContext())
                                 .asBitmap()
-                                .load(finalUrl)
-                                .listener(new RequestListener<Bitmap>() {
-
-                                    @Override
-                                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                                        return false;
-                                    }
-
-                                    @Override
-                                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                        loader.setVisibility(View.GONE);
-                                        return false;
-                                    }
-                                })
-                                .into(new SimpleTarget<Bitmap>() {
+                                .load(finalUrl).into(
+                                new SimpleTarget<Bitmap>() {
                                     @Override
                                     public void onResourceReady(final Bitmap resource, Transition<? super Bitmap> transition) {
                                         loader.setVisibility(View.GONE);
@@ -358,56 +385,12 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                                                 message_ready.setVisibility(View.GONE);
                                             }
                                         });
-                                        fileVideo = null;
                                     }
-                                });
-                        return false;
+                                }
+                            );
+                        }
                     }
-
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                        Glide.with(getApplicationContext())
-                                .asBitmap()
-                                .load(finalUrl)
-                                .listener(new RequestListener<Bitmap>() {
-
-                                    @Override
-                                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                                        return false;
-                                    }
-
-                                    @Override
-                                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                        loader.setVisibility(View.GONE);
-                                        return false;
-                                    }
-                                })
-                                .into(new SimpleTarget<Bitmap>() {
-                                    @Override
-                                    public void onResourceReady(final Bitmap resource, Transition<? super Bitmap> transition) {
-                                        loader.setVisibility(View.GONE);
-                                        if( imageView.getScale() < 1.1) {
-                                            downloadedImage = resource;
-                                            imageView.setImageBitmap(resource);
-                                        }else{
-                                            message_ready.setVisibility(View.VISIBLE);
-                                        }
-                                        message_ready.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-                                                downloadedImage = resource;
-                                                imageView.setImageBitmap(resource);
-                                                message_ready.setVisibility(View.GONE);
-                                            }
-                                        });
-                                        fileVideo = null;
-
-                                    }
-                                });
-                        return false;
-                    }
-                }).into(imageView);
-
+                );
                 break;
             case "video":
             case "gifv":
@@ -417,6 +400,13 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 if(file.exists()) {
                     Uri uri = Uri.parse(file.getAbsolutePath());
                     videoView.setVisibility(View.VISIBLE);
+                    try {
+                        HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory());
+                    } catch (KeyManagementException e) {
+                        e.printStackTrace();
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    }
                     videoView.setVideoURI(uri);
                     videoView.start();
                     MediaController mc = new MediaController(MediaActivity.this);
@@ -479,8 +469,10 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             from.renameTo(to);
         fileVideo = to;
         downloadedImage = null;
-        progress.setVisibility(View.GONE);
-        loader.setVisibility(View.GONE);
+        if( progress != null)
+            progress.setVisibility(View.GONE);
+        if( loader != null)
+            loader.setVisibility(View.GONE);
     }
 
 

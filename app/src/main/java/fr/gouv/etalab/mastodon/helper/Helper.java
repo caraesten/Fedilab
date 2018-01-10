@@ -587,7 +587,10 @@ public class Helper {
         if( years > 0 ) {
             return format;
         } else if( months > 0 || days > 7) {
-            return format.substring(0,5);
+            //Removes the year depending of the locale from DateFormat.SHORT format
+            SimpleDateFormat df = (SimpleDateFormat) DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault());
+            df.applyPattern(df.toPattern().replaceAll("[^\\p{Alpha}]*y+[^\\p{Alpha}]*", ""));
+            return df.format(dateToot);
         }else if( days > 0 )
             return context.getString(R.string.date_day, days);
         else if(hours > 0)
@@ -1169,29 +1172,30 @@ public class Helper {
                 urlHeader = "https://" + Helper.getLiveInstance(activity) + account.getHeader();
             }
             if (!urlHeader.contains("missing.png")) {
-
                 Glide.with(activity.getApplicationContext())
                         .asBitmap()
                         .load(urlHeader)
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
                             public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                                LinearLayout main_header_container = headerLayout.findViewById(R.id.main_header_container);
-                                Bitmap workingBitmap = Bitmap.createBitmap(resource);
-                                Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
-                                Canvas canvas = new Canvas(mutableBitmap);
-                                Paint p = new Paint(Color.BLACK);
-                                ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);
-                                p.setColorFilter(filter);
-                                canvas.drawBitmap(mutableBitmap, new Matrix(), p);
-                                BitmapDrawable background = new BitmapDrawable(activity.getResources(), mutableBitmap);
+                                ImageView backgroundImage = headerLayout.findViewById(R.id.back_ground_image);
+                                backgroundImage.setImageBitmap(resource);
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                    main_header_container.setBackground(background);
+                                    backgroundImage.setImageAlpha(60);
                                 }else {
-                                    main_header_container.setBackgroundDrawable(background);
+                                    backgroundImage.setAlpha(60);
                                 }
                             }
                         });
+            }else {
+                LinearLayout main_header_container = headerLayout.findViewById(R.id.main_header_container);
+                final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                if( theme == Helper.THEME_DARK){
+                    main_header_container.setBackgroundDrawable( activity.getResources().getDrawable(R.drawable.side_nav_bar_dark));
+                }else {
+                    main_header_container.setBackgroundDrawable( activity.getResources().getDrawable(R.drawable.side_nav_bar));
+                }
             }
         }
         profilePicture.setOnClickListener(null);

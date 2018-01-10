@@ -540,7 +540,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
 
-            holder.status_content.setMovementMethod(null);
             holder.status_content.setMovementMethod(LinkMovementMethod.getInstance());
 
             //Manages translations
@@ -583,7 +582,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
                 }
             });
-            holder.status_content_translated.setMovementMethod(null);
             holder.status_content_translated.setMovementMethod(LinkMovementMethod.getInstance());
             //-------- END -> Manages translations
 
@@ -650,7 +648,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             });
 
             holder.status_mention_spoiler.setText(Helper.makeMentionsClick(context,status.getMentions()), TextView.BufferType.SPANNABLE);
-            holder.status_mention_spoiler.setMovementMethod(null);
             holder.status_mention_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
 
             boolean displayBoost = sharedpreferences.getBoolean(Helper.SET_DISPLAY_BOOST_COUNT, true);
@@ -1311,7 +1308,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     return true;
                                 case R.id.action_mention:
                                     status.setTakingScreenShot(true);
-                                    statusListAdapter.notifyDataSetChanged();
+                                    notifyStatusChanged(status);
                                     // Get a handler that can be used to post to the main thread
                                     final Handler handler = new Handler();
                                     handler.postDelayed(new Runnable() {
@@ -1319,7 +1316,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         public void run() {
                                             Bitmap bitmap = Helper.convertTootIntoBitmap(context, holder.getView());
                                             status.setTakingScreenShot(false);
-                                            statusListAdapter.notifyDataSetChanged();
+                                            notifyStatusChanged(status);
                                             Intent intent = new Intent(context, TootActivity.class);
                                             Bundle b = new Bundle();
                                             String fname = "tootmention_" + status.getId() +".jpg";
@@ -1480,7 +1477,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     url = attachment.getUrl();
                 else if( attachment.getType().equals("unknown"))
                     url = attachment.getRemote_url();
-                if( !url.trim().contains("missing.png"))
+                if( !url.trim().contains("missing.png") && !((Activity)context).isFinishing() )
                     Glide.with(imageView.getContext())
                             .load(url)
                             .thumbnail(0.1f)
@@ -1560,66 +1557,74 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             statuses.removeAll(statusesToRemove);
             statusListAdapter.notifyDataSetChanged();
         }else  if( statusAction == API.StatusAction.UNSTATUS ){
+            int position = 0;
             for(Status status: statuses){
-                if( status.getId().equals(targetedId))
-                    statusesToRemove.add(status);
-            }
-            statuses.removeAll(statusesToRemove);
-            statusListAdapter.notifyDataSetChanged();
-        }
-        else if ( statusAction == API.StatusAction.PIN || statusAction == API.StatusAction.UNPIN ) {
-            Status toCheck = null;
-            for (Status checkPin: statuses) {
-                if (checkPin.getId().equals(targetedId)) {
-                    toCheck = checkPin;
+                if( status.getId().equals(targetedId)) {
+                    statuses.remove(status);
+                    statusListAdapter.notifyItemRemoved(position);
                     break;
                 }
+                position++;
             }
-            if (statusAction == API.StatusAction.PIN) {
-                if (toCheck != null)
-                    toCheck.setPinned(true);
+        }
+        else if ( statusAction == API.StatusAction.PIN || statusAction == API.StatusAction.UNPIN ) {
+            int position = 0;
+            for (Status status: statuses) {
+                if (status.getId().equals(targetedId)) {
+                    if (statusAction == API.StatusAction.PIN)
+                        status.setPinned(true);
+                    else
+                        status.setPinned(false);
+                    statusListAdapter.notifyItemChanged(position);
+                    break;
+                }
+                position++;
             }
-            else {
-                if (toCheck != null)
-                    toCheck.setPinned(false);
-            }
-            statusListAdapter.notifyDataSetChanged();
         }
 
         if( statusAction == API.StatusAction.REBLOG){
+            int position = 0;
             for(Status status: statuses){
                 if( status.getId().equals(targetedId)) {
                     status.setReblogs_count(status.getReblogs_count() + 1);
+                    statusListAdapter.notifyItemChanged(position);
                     break;
                 }
+                position++;
             }
-            statusListAdapter.notifyDataSetChanged();
         }else if( statusAction == API.StatusAction.UNREBLOG){
+            int position = 0;
             for(Status status: statuses){
                 if( status.getId().equals(targetedId)) {
                     if( status.getReblogs_count() - 1 >= 0)
                         status.setReblogs_count(status.getReblogs_count() - 1);
+                    statusListAdapter.notifyItemChanged(position);
                     break;
                 }
+                position++;
             }
-            statusListAdapter.notifyDataSetChanged();
         }else if( statusAction == API.StatusAction.FAVOURITE){
+            int position = 0;
             for(Status status: statuses){
                 if( status.getId().equals(targetedId)) {
                     status.setFavourites_count(status.getFavourites_count() + 1);
+                    statusListAdapter.notifyItemChanged(position);
                     break;
                 }
+                position++;
             }
             statusListAdapter.notifyDataSetChanged();
         }else if( statusAction == API.StatusAction.UNFAVOURITE){
+            int position = 0;
             for(Status status: statuses){
                 if( status.getId().equals(targetedId)) {
                     if( status.getFavourites_count() - 1 >= 0)
                         status.setFavourites_count(status.getFavourites_count() - 1);
+                    statusListAdapter.notifyItemChanged(position);
                     break;
                 }
+                position++;
             }
-            statusListAdapter.notifyDataSetChanged();
         }
     }
 

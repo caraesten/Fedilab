@@ -126,7 +126,9 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                 return;
             //Retrieve users in db that owner has.
             for (Account account: accounts) {
-                new RetrieveNotificationsAsyncTask(getContext(), false, account, null, NotificationsSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                //noinspection ConstantConditions
+                if( getContext() != null)
+                    new RetrieveNotificationsAsyncTask(getContext(), false, account, null, NotificationsSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
     }
@@ -136,7 +138,7 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
     @Override
     public void onRetrieveNotifications(APIResponse apiResponse, final Account account, boolean refreshData) {
         List<Notification> notificationsReceived = apiResponse.getNotifications();
-        if( apiResponse.getError() != null || notificationsReceived == null || notificationsReceived.size() == 0)
+        if( apiResponse.getError() != null || notificationsReceived == null || notificationsReceived.size() == 0 || account == null)
             return;
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);

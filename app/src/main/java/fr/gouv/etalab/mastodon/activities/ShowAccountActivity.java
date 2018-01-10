@@ -20,12 +20,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.LightingColorFilter;
-import android.graphics.Matrix;
-import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -48,7 +42,6 @@ import android.support.v7.widget.PopupMenu;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -434,15 +427,12 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                         @Override
                         public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
                             ImageView banner_pp = findViewById(R.id.banner_pp);
-                            Bitmap workingBitmap = Bitmap.createBitmap(resource);
-                            Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
-                            Canvas canvas = new Canvas(mutableBitmap);
-                            Paint p = new Paint(Color.BLACK);
-                            ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);
-                            p.setColorFilter(filter);
-                            canvas.drawBitmap(mutableBitmap, new Matrix(), p);
-                            BitmapDrawable background = new BitmapDrawable(getResources(), mutableBitmap);
-                            banner_pp.setImageDrawable(background);
+                            banner_pp.setImageBitmap(resource);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                banner_pp.setImageAlpha(60);
+                            }else {
+                                banner_pp.setAlpha(60);
+                            }
                         }
                     });
 

@@ -130,7 +130,9 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
                         editor.apply();
                     }
                 }
-                new RetrieveHomeTimelineServiceAsyncTask(getContext(), account, max_id, HomeTimelineSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                //noinspection ConstantConditions
+                if( getContext() != null)
+                    new RetrieveHomeTimelineServiceAsyncTask(getContext(), account, max_id, HomeTimelineSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
             }
         }
@@ -140,7 +142,7 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
     @Override
     public void onRetrieveHomeTimelineService(APIResponse apiResponse, final Account account) {
         final List<Status> statuses = apiResponse.getStatuses();
-        if( apiResponse.getError() != null || statuses == null || statuses.size() == 0)
+        if( apiResponse.getError() != null || statuses == null || statuses.size() == 0 || account == null)
             return;
 
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
