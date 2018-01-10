@@ -469,8 +469,10 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             from.renameTo(to);
         fileVideo = to;
         downloadedImage = null;
-        progress.setVisibility(View.GONE);
-        loader.setVisibility(View.GONE);
+        if( progress != null)
+            progress.setVisibility(View.GONE);
+        if( loader != null)
+            loader.setVisibility(View.GONE);
     }
 
 

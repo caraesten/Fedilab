@@ -159,7 +159,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         nextElementLoader.setVisibility(View.GONE);
                     }
                 }
-                if(type == RetrieveFeedsAsyncTask.Type.HOME && statuses != null && statuses.size() > firstVisibleItem )
+                if(type == RetrieveFeedsAsyncTask.Type.HOME && statuses != null && statuses.size() > firstVisibleItem && firstVisibleItem >= 0)
                     if( context instanceof BaseMainActivity){
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         Long bookmarkL = Long.parseLong(statuses.get(firstVisibleItem).getId()) + 1;
