@@ -423,7 +423,7 @@
   <string name="action_lists_owner">قوائمك</string>
   <!-- Migration -->
   <string name="account_moved_to">%1$s إنتقلَ إلى %2$s</string>
-  <string name="show_boost_count">Show boosts/favourites count</string>
+  <string name="show_boost_count">عرض عدد الترقيات و المفضلة</string>
   <string name="issue_login_title">هل المصادقة لا تعمل ؟</string>
   <string name="issue_login_message">
         <b>Here are some checks that might help:</b>\n\n
@@ -435,9 +435,9 @@
     </string>
   <string name="media_ready">تم تحميل الوسائط. إظغط هنا للعرض.</string>
   <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-  <string name="data_export_running">Still running, please wait…</string>
+  <string name="data_export_running">جارٍ التشغيل، الرجاء الإنتظار …</string>
   <string name="data_export">تصدير المنشورات</string>
-  <string name="data_export_toots">Export statuses for %1$s</string>
-  <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
+  <string name="data_export_toots">تصدير بيانات %1$s</string>
+  <string name="data_export_success">تم تصدير %1 تبويقات من أصل %2.$s$s</string>
   <string name="data_export_error">طرأ هناك خطأ أثناء تصدير بيانات %1$s</string>
 </resources>
