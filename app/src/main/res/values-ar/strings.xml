@@ -438,6 +438,6 @@
   <string name="data_export_running">جارٍ التشغيل، الرجاء الإنتظار …</string>
   <string name="data_export">تصدير المنشورات</string>
   <string name="data_export_toots">تصدير بيانات %1$s</string>
-  <string name="data_export_success">تم تصدير %1 تبويقات من أصل %2.$s$s</string>
+  <string name="data_export_success">تم تصدير %1$s تبويقات من أصل %2$s.</string>
   <string name="data_export_error">طرأ هناك خطأ أثناء تصدير بيانات %1$s</string>
 </resources>
