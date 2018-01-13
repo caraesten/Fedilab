@@ -19,6 +19,8 @@ import android.os.Build;
 import android.text.Html;
 import android.text.SpannableString;
 
+import com.google.common.io.ByteStreams;
+
 import org.json.JSONObject;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -30,7 +32,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.KeyManagementException;
@@ -103,23 +104,18 @@ public class HttpsConnection {
         if( token != null)
             httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
         httpsURLConnection.setRequestMethod("GET");
+        String response;
         if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
-            Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream(), "UTF-8"));
-            StringBuilder sb = new StringBuilder();
-            for (int c; (c = in.read()) >= 0; )
-                sb.append((char) c);
-            getSinceMaxId();
-            httpsURLConnection.disconnect();
-            in.close();
-            return sb.toString();
+            response = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
         }else {
-            Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getErrorStream(), "UTF-8"));
-            StringBuilder sb = new StringBuilder();
-            for (int c; (c = in.read()) >= 0; )
-                sb.append((char) c);
-            httpsURLConnection.disconnect();
-            throw new HttpsConnectionException(httpsURLConnection.getResponseCode(), sb.toString());
+            String error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+            int responseCode = httpsURLConnection.getResponseCode();
+            httpsURLConnection.getInputStream().close();
+            throw new HttpsConnectionException(responseCode, error);
         }
+        getSinceMaxId();
+        httpsURLConnection.getInputStream().close();
+        return response;
     }
 
 
@@ -127,7 +123,6 @@ public class HttpsConnection {
     public String get(String urlConnection) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
         HttpsURLConnection httpsURLConnection;
         HttpURLConnection httpURLConnection;
-        StringBuilder sb = new StringBuilder();
         if( urlConnection.startsWith("https://")) {
             URL url = new URL(urlConnection);
             httpsURLConnection = (HttpsURLConnection) url.openConnection();
@@ -136,20 +131,19 @@ public class HttpsConnection {
             httpsURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
             httpsURLConnection.setRequestMethod("GET");
+            String response;
             if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
-                Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream(), "UTF-8"));
-                for (int c; (c = in.read()) >= 0; )
-                    sb.append((char) c);
-                httpsURLConnection.disconnect();
-                in.close();
-                return sb.toString();
-            } else {
-                Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getErrorStream(), "UTF-8"));
-                for (int c; (c = in.read()) >= 0; )
-                    sb.append((char) c);
-                httpsURLConnection.disconnect();
-                throw new HttpsConnectionException(httpsURLConnection.getResponseCode(), sb.toString());
+                getSinceMaxId();
+                response = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
+            }else {
+                String error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                int responseCode = httpsURLConnection.getResponseCode();
+                httpsURLConnection.getInputStream().close();
+                throw new HttpsConnectionException(responseCode, error);
             }
+            getSinceMaxId();
+            httpsURLConnection.getInputStream().close();
+            return response;
         }else{
             URL url = new URL(urlConnection);
             httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -157,20 +151,19 @@ public class HttpsConnection {
             httpURLConnection.setRequestProperty("http.keepAlive", "false");
             httpURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");
             httpURLConnection.setRequestMethod("GET");
+            String response;
             if (httpURLConnection.getResponseCode() >= 200 && httpURLConnection.getResponseCode() < 400) {
-                Reader in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(), "UTF-8"));
-                for (int c; (c = in.read()) >= 0; )
-                    sb.append((char) c);
-                httpURLConnection.disconnect();
-                in.close();
-                return sb.toString();
-            } else {
-                Reader in = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream(), "UTF-8"));
-                for (int c; (c = in.read()) >= 0; )
-                    sb.append((char) c);
-                httpURLConnection.disconnect();
-                throw new HttpsConnectionException(httpURLConnection.getResponseCode(), sb.toString());
+                getSinceMaxId();
+                response = new String(ByteStreams.toByteArray(httpURLConnection.getInputStream()));
+            }else {
+                String error = new String(ByteStreams.toByteArray(httpURLConnection.getErrorStream()));
+                int responseCode = httpURLConnection.getResponseCode();
+                httpURLConnection.getInputStream().close();
+                throw new HttpsConnectionException(responseCode, error);
             }
+            getSinceMaxId();
+            httpURLConnection.getInputStream().close();
+            return response;
         }
     }
 
@@ -208,15 +201,19 @@ public class HttpsConnection {
 
 
         httpsURLConnection.getOutputStream().write(postDataBytes);
-        Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream(), "UTF-8"));
-        StringBuilder sb = new StringBuilder();
-        for (int c; (c = in.read()) >= 0;)
-            sb.append((char)c);
+        String response;
+        if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
+            getSinceMaxId();
+            response = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
+        }else {
+            String error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+            int responseCode = httpsURLConnection.getResponseCode();
+            httpsURLConnection.getInputStream().close();
+            throw new HttpsConnectionException(responseCode, error);
+        }
         getSinceMaxId();
-        httpsURLConnection.disconnect();
-        in.close();
-
-        return sb.toString();
+        httpsURLConnection.getInputStream().close();
+        return response;
 
     }
 
@@ -422,7 +419,6 @@ public class HttpsConnection {
             int responseCode = httpsURLConnection.getResponseCode();
             // always check HTTP response code first
             if (responseCode == HttpURLConnection.HTTP_OK) {
-                String disposition = httpsURLConnection.getHeaderField("Content-Disposition");
                 // opens input stream from the HTTP connection
                 return httpsURLConnection.getInputStream();
             }
@@ -526,36 +522,30 @@ public class HttpsConnection {
                     request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
                     request.flush();
                     request.close();
+
+
                     if (200 != httpsURLConnection.getResponseCode()) {
-                        Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getErrorStream(), "UTF-8"));
-                        StringBuilder sb = new StringBuilder();
-                        for (int c; (c = in.read()) >= 0; )
-                            sb.append((char) c);
-                        httpsURLConnection.disconnect();
-                        throw new HttpsConnectionException(httpsURLConnection.getResponseCode(), context.getString(R.string.toast_error));
+                        String error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                        int responseCode = httpsURLConnection.getResponseCode();
+                        httpsURLConnection.getInputStream().close();
+                        throw new HttpsConnectionException(responseCode, error);
                     }
 
                     InputStream responseStream = new BufferedInputStream(httpsURLConnection.getInputStream());
 
                     BufferedReader responseStreamReader = new BufferedReader(new InputStreamReader(responseStream));
 
-                    String line;
-                    StringBuilder stringBuilder = new StringBuilder();
-
-                    while ((line = responseStreamReader.readLine()) != null) {
-                        stringBuilder.append(line).append("\n");
-                    }
+                    String response = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                     ((TootActivity)context).runOnUiThread(new Runnable() {
                         public void run() {
                             listener.onUpdateProgress(101);
                         }});
 
 
-                    String response = stringBuilder.toString();
                     final Attachment attachment = API.parseAttachmentResponse(new JSONObject(response));
                     responseStreamReader.close();
                     responseStream.close();
-                    httpsURLConnection.disconnect();
+                    httpsURLConnection.getInputStream().close();
 
                     ((TootActivity)context).runOnUiThread(new Runnable() {
                         public void run() {
@@ -569,7 +559,11 @@ public class HttpsConnection {
                     final Error error = new Error();
                     error.setError(e.getMessage());
                     if(httpsURLConnection != null)
-                        httpsURLConnection.disconnect();
+                        try {
+                            httpsURLConnection.getInputStream().close();
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
                     ((TootActivity)context).runOnUiThread(new Runnable() {
                         public void run() {
                             listener.onRetrieveAttachment(null, error);
@@ -615,15 +609,19 @@ public class HttpsConnection {
         httpsURLConnection.setDoOutput(true);
 
         httpsURLConnection.getOutputStream().write(postDataBytes);
-        Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream(), "UTF-8"));
-        StringBuilder sb = new StringBuilder();
-        for (int c; (c = in.read()) >= 0;)
-            sb.append((char)c);
+        String response;
+        if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
+            getSinceMaxId();
+            response = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
+        }else {
+            String error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+            int responseCode = httpsURLConnection.getResponseCode();
+            httpsURLConnection.getInputStream().close();
+            throw new HttpsConnectionException(responseCode, error);
+        }
         getSinceMaxId();
-        httpsURLConnection.disconnect();
-        in.close();
-
-        return sb.toString();
+        httpsURLConnection.getInputStream().close();
+        return response;
 
     }
 
@@ -661,15 +659,19 @@ public class HttpsConnection {
         httpsURLConnection.setDoOutput(true);
 
         httpsURLConnection.getOutputStream().write(postDataBytes);
-        Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream(), "UTF-8"));
-        StringBuilder sb = new StringBuilder();
-        for (int c; (c = in.read()) >= 0;)
-            sb.append((char)c);
+        String response;
+        if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
+            getSinceMaxId();
+            response = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
+        }else {
+            String error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+            int responseCode = httpsURLConnection.getResponseCode();
+            httpsURLConnection.getInputStream().close();
+            throw new HttpsConnectionException(responseCode, error);
+        }
         getSinceMaxId();
-        httpsURLConnection.disconnect();
-        in.close();
-
-        return sb.toString();
+        httpsURLConnection.getInputStream().close();
+        return response;
 
     }
 
@@ -709,15 +711,13 @@ public class HttpsConnection {
 
         if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
             getSinceMaxId();
-            httpsURLConnection.disconnect();
+            httpsURLConnection.getInputStream().close();
             return httpsURLConnection.getResponseCode();
         }else {
-            Reader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getErrorStream(), "UTF-8"));
-            StringBuilder sb = new StringBuilder();
-            for (int c; (c = in.read()) >= 0; )
-                sb.append((char) c);
-            httpsURLConnection.disconnect();
-            throw new HttpsConnectionException(httpsURLConnection.getResponseCode(), sb.toString());
+            String error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+            int responseCode = httpsURLConnection.getResponseCode();
+            httpsURLConnection.getInputStream().close();
+            throw new HttpsConnectionException(responseCode, error);
         }
     }
 
