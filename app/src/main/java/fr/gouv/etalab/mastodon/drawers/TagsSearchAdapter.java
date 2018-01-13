@@ -100,9 +100,7 @@ public class TagsSearchAdapter extends ArrayAdapter<String> implements Filterabl
         protected FilterResults performFiltering(CharSequence constraint) {
             if (constraint != null) {
                 suggestions.clear();
-                for (String tag : tempTags) {
-                    suggestions.add(tag);
-                }
+                suggestions.addAll(tempTags);
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = suggestions;
                 filterResults.count = suggestions.size();
@@ -117,10 +115,8 @@ public class TagsSearchAdapter extends ArrayAdapter<String> implements Filterabl
             ArrayList<String> c = (ArrayList<String>) results.values;
             if (results.count > 0) {
                 clear();
-                for (String cust : c) {
-                    add(cust);
-                    notifyDataSetChanged();
-                }
+                addAll(c);
+                notifyDataSetChanged();
             } else{
                 clear();
                 notifyDataSetChanged();

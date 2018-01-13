@@ -113,9 +113,7 @@ public class EmojisSearchAdapter extends ArrayAdapter<Emojis> implements Filtera
         protected FilterResults performFiltering(CharSequence constraint) {
             if (constraint != null) {
                 suggestions.clear();
-                for (Emojis emoji : tempEmojis) {
-                    suggestions.add(emoji);
-                }
+                suggestions.addAll(tempEmojis);
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = suggestions;
                 filterResults.count = suggestions.size();
@@ -130,10 +128,8 @@ public class EmojisSearchAdapter extends ArrayAdapter<Emojis> implements Filtera
             ArrayList<Emojis> c = (ArrayList<Emojis>) results.values;
             if (results.count > 0) {
                 clear();
-                for (Emojis cust : c) {
-                    add(cust);
-                    notifyDataSetChanged();
-                }
+                addAll(c);
+                notifyDataSetChanged();
             } else{
                 clear();
                 notifyDataSetChanged();

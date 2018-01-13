@@ -94,6 +94,11 @@ public class API {
 
     public API(Context context, String instance, String token) {
         this.context = context;
+        if( context == null) {
+            apiResponse = new APIResponse();
+            APIError = new Error();
+            return;
+        }
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
         accountPerPage = sharedpreferences.getInt(Helper.SET_ACCOUNTS_PER_PAGE, 40);
@@ -1135,8 +1140,9 @@ public class API {
 
     /**
      * Retrieves Accounts when searching (ie: via @...) *synchronously*
-     *
      * @param query  String search
+     * @param count  int limit
+     * @param following  boolean following only
      * @return APIResponse
      */
     public APIResponse searchAccounts(String query, int count, boolean following) {

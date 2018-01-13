@@ -18,7 +18,7 @@ package fr.gouv.etalab.mastodon.drawers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.annotation.NonNull;;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -147,9 +147,7 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
         protected FilterResults performFiltering(CharSequence constraint) {
             if (constraint != null) {
                 suggestions.clear();
-                for (Account account : tempAccounts) {
-                    suggestions.add(account);
-                }
+                suggestions.addAll(tempAccounts);
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = suggestions;
                 filterResults.count = suggestions.size();
@@ -164,10 +162,8 @@ public class AccountsSearchAdapter extends ArrayAdapter<Account> implements Filt
             ArrayList<Account> c = (ArrayList<Account>) results.values;
             if (results.count > 0) {
                 clear();
-                for (Account cust : c) {
-                    add(cust);
-                    notifyDataSetChanged();
-                }
+                addAll(c);
+                notifyDataSetChanged();
             } else{
                 clear();
                 notifyDataSetChanged();
