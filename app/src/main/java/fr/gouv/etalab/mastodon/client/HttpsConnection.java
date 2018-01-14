@@ -731,6 +731,8 @@ public class HttpsConnection {
 
 
     private void getSinceMaxId(){
+        if( httpsURLConnection == null)
+            return;
         Map<String, List<String>> map = httpsURLConnection.getHeaderFields();
         for (Map.Entry<String, List<String>> entry : map.entrySet()) {
             if( entry.toString().startsWith("Link")){
