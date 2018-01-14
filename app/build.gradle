@@ -7,8 +7,8 @@ android {
         applicationId "fr.gouv.etalab.mastodon"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 103
-        versionName "1.7.3"
+        versionCode 104
+        versionName "1.7.4"
     }
     flavorDimensions "default"
     buildTypes {
@@ -48,4 +48,5 @@ dependencies {
     playstoreImplementation 'io.github.kobakei:ratethisapp:1.2.0'
     implementation 'org.conscrypt:conscrypt-android:1.0.0.RC13'
     implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.google.guava:guava:23.6-android'
 }

@@ -1250,13 +1250,15 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     public void onDownloaded(String pathToFile, String url, Error error) {
         picture_scrollview.setVisibility(View.VISIBLE);
         Bitmap pictureMention = BitmapFactory.decodeFile(pathToFile);
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        pictureMention.compress(Bitmap.CompressFormat.PNG, 0, bos);
-        byte[] bitmapdata = bos.toByteArray();
-        ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
-        toot_picture_container.setVisibility(View.VISIBLE);
-        toot_picture.setEnabled(false);
-        new HttpsConnection(TootActivity.this).upload(bs, TootActivity.this);
+        if( pictureMention != null) {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            pictureMention.compress(Bitmap.CompressFormat.PNG, 0, bos);
+            byte[] bitmapdata = bos.toByteArray();
+            ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
+            toot_picture_container.setVisibility(View.VISIBLE);
+            toot_picture.setEnabled(false);
+            new HttpsConnection(TootActivity.this).upload(bs, TootActivity.this);
+        }
     }
 
     @Override

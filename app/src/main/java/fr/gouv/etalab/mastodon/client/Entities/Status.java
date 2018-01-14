@@ -15,9 +15,9 @@
 package fr.gouv.etalab.mastodon.client.Entities;
 
 
+import android.app.Activity;
 import android.content.*;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -43,11 +43,9 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.regex.Matcher;
 
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
@@ -55,7 +53,6 @@ import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
-import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 /**
  * Created by Thomas on 23/04/2017.
@@ -447,6 +444,8 @@ public class Status implements Parcelable{
 
     public void makeClickable(Context context){
 
+        if( ((Activity)context).isFinishing() )
+            return;
         SpannableString spannableStringContent, spannableStringCW;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             spannableStringContent = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent(), Html.FROM_HTML_MODE_LEGACY));
@@ -467,6 +466,8 @@ public class Status implements Parcelable{
 
     public void makeClickableTranslation(Context context){
 
+        if( ((Activity)context).isFinishing() )
+            return;
         SpannableString spannableStringTranslated;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated(), Html.FROM_HTML_MODE_LEGACY));
@@ -481,7 +482,8 @@ public class Status implements Parcelable{
 
     public void makeEmojis(final Context context, final OnRetrieveEmojiInterface listener){
 
-
+        if( ((Activity)context).isFinishing() )
+            return;
         final List<Emojis> emojis = status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis();
         if( emojis != null && emojis.size() > 0 ) {
             final int[] i = {0};
@@ -544,8 +546,9 @@ public class Status implements Parcelable{
 
     public void makeEmojisTranslation(final Context context, final OnRetrieveEmojiInterface listener){
 
+        if( ((Activity)context).isFinishing() )
+            return;
         SpannableString spannableStringTranslated = null;
-
 
         if( status.getContentTranslated() != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)

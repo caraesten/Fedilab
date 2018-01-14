@@ -147,7 +147,7 @@
   <string name="toot_title_reply">الرد على تبويق</string>
   <string name="toot_no_space">لقد بلغت حد الـ 500 حرف المسموح به !</string>
   <string name="toot_select_image">تحديد وسائط</string>
-  <string name="toot_select_image_error">An error occurred while selecting the media!</string>
+  <string name="toot_select_image_error">طرأ هناك خطأ أثناء اختيار الوسائط !</string>
   <string name="toot_delete_media">هل تود حذف هذه الصورة ؟</string>
   <string name="toot_error_no_content">إن تبويقك فارغ !</string>
   <string name="toot_visibility_tilte">طريقة نشر التبويق</string>
@@ -284,7 +284,7 @@
   <string name="set_disable_gif">تعطيل الصور الرمزية المتحركة</string>
   <string name="set_folder_title">المسار :</string>
   <string name="set_auto_store_toot">حفظ تلقائي للمسودات</string>
-  <string name="set_bubble_counter">Display counters</string>
+  <string name="set_bubble_counter">عرض العدادات</string>
   <string name="set_auto_add_media_url">إضافة روابط الوسائط في التبويقات</string>
   <string name="settings_title_notifications">إدارة الإخطارات</string>
   <string name="set_notif_follow">تنبيهي عندما يتبعني أحدهم</string>
@@ -390,7 +390,7 @@
         - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
         <b>&#9888; These actions are carried out only when user requests them.</b>
     </string>
-  <string name="privacy_API_title">Tracking and Libraries</string>
+  <string name="privacy_API_title">التعقب و المكتبات</string>
   <string name="privacy_API">
         The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
         The use of libraries is minimized: \n
@@ -423,7 +423,7 @@
   <string name="action_lists_owner">قوائمك</string>
   <!-- Migration -->
   <string name="account_moved_to">%1$s إنتقلَ إلى %2$s</string>
-  <string name="show_boost_count">Show boosts/favourites count</string>
+  <string name="show_boost_count">عرض عدد الترقيات و المفضلة</string>
   <string name="issue_login_title">هل المصادقة لا تعمل ؟</string>
   <string name="issue_login_message">
         <b>Here are some checks that might help:</b>\n\n
@@ -435,9 +435,9 @@
     </string>
   <string name="media_ready">تم تحميل الوسائط. إظغط هنا للعرض.</string>
   <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-  <string name="data_export_running">Still running, please wait…</string>
-  <string name="data_export">Export statuses</string>
-  <string name="data_export_toots">Export statuses for %1$s</string>
-  <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-  <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+  <string name="data_export_running">جارٍ التشغيل، الرجاء الإنتظار …</string>
+  <string name="data_export">تصدير المنشورات</string>
+  <string name="data_export_toots">تصدير بيانات %1$s</string>
+  <string name="data_export_success">تم تصدير %1$s تبويقات من أصل %2$s.</string>
+  <string name="data_export_error">طرأ هناك خطأ أثناء تصدير بيانات %1$s</string>
 </resources>
