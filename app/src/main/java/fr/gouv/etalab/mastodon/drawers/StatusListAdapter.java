@@ -131,7 +131,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private RetrieveFeedsAsyncTask.Type type;
     private String targetedId;
     private final int DISPLAYED_STATUS = 1;
-    private List<Status> pins;
     private int conversationPosition;
     private List<String> timedMute;
 
@@ -149,7 +148,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.type = type;
         this.targetedId = targetedId;
         this.translator = translator;
-        pins = new ArrayList<>();
         this.timedMute = timedMute;
     }
 
@@ -164,7 +162,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.type = type;
         this.targetedId = targetedId;
         this.translator = translator;
-        pins = new ArrayList<>();
     }
 
     public StatusListAdapter(Context context, int position, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
@@ -178,7 +175,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.conversationPosition = position;
         this.targetedId = targetedId;
         this.translator = translator;
-        pins = new ArrayList<>();
     }
 
     public void updateMuted(List<String> timedMute){
@@ -926,31 +922,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_content.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(context, ShowConversationActivity.class);
-                        Bundle b = new Bundle();
-                        if( status.getReblog() == null)
-                            b.putString("statusId", status.getId());
-                        else
-                            b.putString("statusId", status.getReblog().getId());
-                        intent.putExtras(b);
-                        context.startActivity(intent);
-                        ((ShowConversationActivity)context).finish();
+                        new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.ONESTATUS, status.getId(),null, false,false, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                 });
                 holder.main_container.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(context, ShowConversationActivity.class);
-                        Bundle b = new Bundle();
-                        if( status.getReblog() == null)
-                            b.putString("statusId", status.getId());
-                        else
-                            b.putString("statusId", status.getReblog().getId());
-                        intent.putExtras(b);
-                        context.startActivity(intent);
-                        ((ShowConversationActivity)context).finish();
+                        new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.ONESTATUS, status.getId(),null, false,false, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                 });
+
                 if( position == conversationPosition){
                     if( theme == Helper.THEME_LIGHT)
                         holder.main_container.setBackgroundResource(R.color.mastodonC3_);
@@ -1520,18 +1501,20 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             return;
         }
 
-        pins = apiResponse.getStatuses();
-
-        for (Status haystack : statuses)
-        {
-            for (Status pin : pins) {
-
-                if (haystack.getId().equals(pin.getId()))
-                {
-                    haystack.setPinned(true);
+        if( type == RetrieveFeedsAsyncTask.Type.CONTEXT && apiResponse.getStatuses().size() == 1){
+            int oldPosition = conversationPosition;
+            int newPosition = 0;
+            for(Status status: statuses){
+                if(status.getId().equals(apiResponse.getStatuses().get(0).getId())){
+                    conversationPosition = newPosition;
                     break;
                 }
+                newPosition++;
             }
+            if( oldPosition < statuses.size())
+                statusListAdapter.notifyItemChanged(oldPosition);
+            if( conversationPosition < statuses.size())
+                statusListAdapter.notifyItemChanged(conversationPosition);
         }
     }
 
