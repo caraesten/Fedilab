@@ -35,7 +35,7 @@
   <string name="instance_example">Instanz: mastodon.social</string>
   <string name="toast_account_changed" formatted="false">Benutze jetzt Konto %1$s</string>
   <string name="add_account">Konto hinzufügen</string>
-  <string name="clipboard">Der Inhalt des toots wurde in die Zwischenablage kopiert</string>
+  <string name="clipboard">Der Inhalt des Toots wurde in die Zwischenablage kopiert</string>
   <string name="change">Ändern</string>
   <string name="choose_picture">Wähle ein Bild…</string>
   <string name="clear">Säubern</string>
@@ -277,7 +277,7 @@
   <string name="set_folder_title">Pfad:</string>
   <string name="set_auto_store_toot">Speichere Entwürfe automatisch</string>
   <string name="set_bubble_counter">Anzahl neuer Beiträge anzeigen</string>
-  <string name="set_auto_add_media_url">Füge die URL bei Anhängen in toots hinzu</string>
+  <string name="set_auto_add_media_url">Füge die URL bei Anhängen in Toots hinzu</string>
   <string name="settings_title_notifications">Benachrichtigen wenn ...</string>
   <string name="set_notif_follow">mir jemand folgt</string>
   <string name="set_notif_follow_ask">ich eine Folgen Anfrage erhalte</string>
@@ -285,7 +285,7 @@
   <string name="set_notif_follow_add">jemand meinen Status favorisiert</string>
   <string name="set_notif_follow_mention">ich erwähnt werde</string>
   <string name="set_share_validation">Zeige Bestätigungsdialog vor dem Teilen</string>
-  <string name="set_share_validation_fav">Bestätigungsdialog vor dem favorisieren</string>
+  <string name="set_share_validation_fav">Bestätigungsdialog vor dem Favorisieren</string>
   <string name="settings_title_more_options">Erweiterte Einstellungen</string>
   <string name="set_wifi_only">Nur bei WLAN benachrichtigen</string>
   <string name="set_notify">Benachrichtigen?</string>
@@ -308,7 +308,7 @@
   <string name="settings_time_lower">Uhrzeit muss kleiner sein als %1$s</string>
   <string name="settings_hour_init">Anfangszeit</string>
   <string name="settings_hour_end">Ende</string>
-  <string name="embedded_browser">Benutze internen browser</string>
+  <string name="embedded_browser">Benutze internen Browser</string>
   <string name="use_javascript">Javascript aktivieren</string>
   <string name="use_cookies">Erlaube Cookies von Drittanbietern</string>
   <string name="settings_ui_layout">Zeitlininen wie anzeigen:</string>
@@ -382,7 +382,7 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
         -<b>Android-Job</b>: Dienste verwalten\n
         -<b>PhotoView</b>: Bilder verwalten\n
     </string>
-  <string name="privacy_API_yandex_title">Übersetzung von Toots</string>
+  <string name="privacy_API_yandex_title">Übersetzen von Toots</string>
   <string name="privacy_API_yandex_authorizations">Die Anwendung bietet die Möglichkeit, toots mithilfe der lokalen sowie Yandex API zu übersetzen.\n
              Yandex hat seine eigene Datenschutzerklärung. Diese kann hier eingehesen werden: https://yandex.ru/legal/confidential/?lang=en</string>
   <string name="thanks_text">Danke an Stéphane für das Logo.</string>
@@ -419,6 +419,6 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="data_export_running">Läuft noch, bitte warten…</string>
   <string name="data_export">Status exportieren</string>
   <string name="data_export_toots">Status exportieren für %1$s</string>
-  <string name="data_export_success">%1$s toots von %2$s wurden exportiert.</string>
+  <string name="data_export_success">%1$s Toots von %2$s wurden exportiert.</string>
   <string name="data_export_error">Etwas ist schief gelaufen beim exportieren von%1$s</string>
 </resources>
