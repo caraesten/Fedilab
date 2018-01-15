@@ -47,6 +47,7 @@ import android.text.style.ForegroundColorSpan;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -884,6 +885,15 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             }
 
+            holder.status_content.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN && !view.hasFocus()) {
+                        view.requestFocus();
+                    }
+                    return false;
+                }
+            });
             //Click on a conversation
             if( type != RetrieveFeedsAsyncTask.Type.CONTEXT ){
                 holder.status_content.setOnClickListener(new View.OnClickListener() {
