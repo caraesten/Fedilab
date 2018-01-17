@@ -889,7 +889,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
                     if (motionEvent.getAction() == MotionEvent.ACTION_DOWN && !view.hasFocus()) {
-                        view.requestFocus();
+                        try{view.requestFocus();}catch (Exception ignored){}
                     }
                     return false;
                 }
