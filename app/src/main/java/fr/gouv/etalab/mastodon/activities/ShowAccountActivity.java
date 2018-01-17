@@ -333,13 +333,9 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                         return true;
                     case R.id.action_open_browser:
                         if( accountUrl != null) {
-                            Intent intent = new Intent(getApplicationContext(), WebviewActivity.class);
-                            Bundle b = new Bundle();
                             if( !accountUrl.startsWith("http://") && ! accountUrl.startsWith("https://"))
                                 accountUrl = "http://" + accountUrl;
-                            b.putString("url", accountUrl);
-                            intent.putExtras(b);
-                            startActivity(intent);
+                            Helper.openBrowser(ShowAccountActivity.this, accountUrl);
                         }
                         return true;
                     case R.id.action_mention:
@@ -482,13 +478,9 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         warning_message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), WebviewActivity.class);
-                Bundle b = new Bundle();
                 if( !accountUrl.startsWith("http://") && ! accountUrl.startsWith("https://"))
                     accountUrl = "http://" + accountUrl;
-                b.putString("url", accountUrl);
-                intent.putExtras(b);
-                startActivity(intent);
+                Helper.openBrowser(ShowAccountActivity.this, accountUrl);
             }
         });
         //Timed muted account

@@ -965,11 +965,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             holder.status_cardview.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Intent intent = new Intent(context, WebviewActivity.class);
-                                    Bundle b = new Bundle();
-                                    b.putString("url", status.getCard().getUrl());
-                                    intent.putExtras(b);
-                                    context.startActivity(intent);
+                                    Helper.openBrowser(context, status.getCard().getUrl());
                                 }
                             });
                         }else {
@@ -991,11 +987,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 }
                                 @Override
                                 public boolean shouldOverrideUrlLoading (WebView view, String url){
-                                    Intent intent = new Intent(context, WebviewActivity.class);
-                                    Bundle b = new Bundle();
-                                    b.putString("url", url);
-                                    intent.putExtras(b);
-                                    context.startActivity(intent);
+                                    Helper.openBrowser(context, url);
                                     holder.status_cardview_webview.loadUrl(finalSrc);
                                     return true;
                                 }

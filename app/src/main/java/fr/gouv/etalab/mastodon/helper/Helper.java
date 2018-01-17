@@ -1286,11 +1286,7 @@ public class Helper {
                 spannableString.setSpan(new ClickableSpan() {
                     @Override
                     public void onClick(View textView) {
-                        Intent intent = new Intent(context, WebviewActivity.class);
-                        Bundle b = new Bundle();
-                        b.putString("url", url);
-                        intent.putExtras(b);
-                        context.startActivity(intent);
+                        Helper.openBrowser(context, url);
                     }
                     @Override
                     public void updateDrawState(TextPaint ds) {
@@ -1785,6 +1781,31 @@ public class Helper {
                         }
                     });
     }
+
+    /**
+     * Manage URLs to open (built-in or external app)
+     * @param context Context
+     * @param url String url to open
+     */
+    public static void openBrowser(Context context, String url){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
+        if( embedded_browser) {
+            Intent intent = new Intent(context, WebviewActivity.class);
+            Bundle b = new Bundle();
+            String finalUrl = url;
+            if (!url.startsWith("http://") && !url.startsWith("https://"))
+                finalUrl = "http://" + url;
+            b.putString("url", finalUrl);
+            intent.putExtras(b);
+            context.startActivity(intent);
+        }else {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            context.startActivity(intent);
+        }
+    }
+
 
     public static void installProvider(){
         Security.insertProviderAt(Conscrypt.newProvider(),1);

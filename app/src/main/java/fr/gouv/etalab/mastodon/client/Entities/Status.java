@@ -621,39 +621,34 @@ public class Status implements Parcelable{
             spannableString.removeSpan(span);
         List<Mention> mentions = this.status.getReblog() != null ? this.status.getReblog().getMentions() : this.status.getMentions();
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
-        if( embedded_browser){
-            Matcher matcher;
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
-                matcher = Patterns.WEB_URL.matcher(spannableString);
-            else
-                matcher = Helper.urlPattern.matcher(spannableString);
-            while (matcher.find()){
-                int matchStart = matcher.start(1);
-                int matchEnd = matcher.end();
-                final String url = spannableString.toString().substring(matchStart, matchEnd);
-                spannableString.setSpan(new ClickableSpan() {
-                    @Override
-                    public void onClick(View textView) {
-                        Intent intent = new Intent(context, WebviewActivity.class);
-                        Bundle b = new Bundle();
-                        String finalUrl = url;
-                        if( !url.startsWith("http://") && ! url.startsWith("https://"))
-                            finalUrl = "http://" + url;
-                        b.putString("url", finalUrl);
-                        intent.putExtras(b);
-                        context.startActivity(intent);
-                    }
-                    @Override
-                    public void updateDrawState(TextPaint ds) {
-                        super.updateDrawState(ds);
-                    }
-                },
-                matchStart, matchEnd,
-                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
-            }
+
+        Matcher matcher;
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
+            matcher = Patterns.WEB_URL.matcher(spannableString);
+        else
+            matcher = Helper.urlPattern.matcher(spannableString);
+        while (matcher.find()){
+            int matchStart = matcher.start(1);
+            int matchEnd = matcher.end();
+            final String url = spannableString.toString().substring(matchStart, matchEnd);
+            spannableString.setSpan(new ClickableSpan() {
+                @Override
+                public void onClick(View textView) {
+                    String finalUrl = url;
+                    if( !url.startsWith("http://") && ! url.startsWith("https://"))
+                        finalUrl = "http://" + url;
+                    Helper.openBrowser(context, finalUrl);
+                }
+                @Override
+                public void updateDrawState(TextPaint ds) {
+                    super.updateDrawState(ds);
+                }
+            },
+            matchStart, matchEnd,
+            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
+
         //Deals with mention to make them clickable
         if( mentions != null && mentions.size() > 0 ) {
             //Looping through accounts which are mentioned
@@ -685,7 +680,7 @@ public class Status implements Parcelable{
 
             }
         }
-        Matcher matcher = Helper.hashtagPattern.matcher(spannableString);
+        matcher = Helper.hashtagPattern.matcher(spannableString);
         while (matcher.find()){
             int matchStart = matcher.start(1);
             int matchEnd = matcher.end();
