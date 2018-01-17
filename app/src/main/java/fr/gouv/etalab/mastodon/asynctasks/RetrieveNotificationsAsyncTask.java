@@ -22,6 +22,7 @@ import java.lang.ref.WeakReference;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveNotificationsInterface;
 
 
@@ -59,6 +60,10 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
             api = new API(this.contextReference.get());
             apiResponse = api.getNotifications(max_id, display);
         }else {
+            if( this.contextReference.get() == null) {
+                apiResponse.setError(new Error());
+                return null;
+            }
             api = new API(this.contextReference.get(), account.getInstance(), account.getToken());
             apiResponse = api.getNotificationsSince(max_id, display);
         }

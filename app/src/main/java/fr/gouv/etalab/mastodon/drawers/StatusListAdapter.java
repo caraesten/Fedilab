@@ -47,6 +47,7 @@ import android.text.style.ForegroundColorSpan;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -884,6 +885,15 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             }
 
+            holder.status_content.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN && !view.hasFocus()) {
+                        try{view.requestFocus();}catch (Exception ignored){}
+                    }
+                    return false;
+                }
+            });
             //Click on a conversation
             if( type != RetrieveFeedsAsyncTask.Type.CONTEXT ){
                 holder.status_content.setOnClickListener(new View.OnClickListener() {
@@ -955,11 +965,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             holder.status_cardview.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Intent intent = new Intent(context, WebviewActivity.class);
-                                    Bundle b = new Bundle();
-                                    b.putString("url", status.getCard().getUrl());
-                                    intent.putExtras(b);
-                                    context.startActivity(intent);
+                                    Helper.openBrowser(context, status.getCard().getUrl());
                                 }
                             });
                         }else {
@@ -981,11 +987,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 }
                                 @Override
                                 public boolean shouldOverrideUrlLoading (WebView view, String url){
-                                    Intent intent = new Intent(context, WebviewActivity.class);
-                                    Bundle b = new Bundle();
-                                    b.putString("url", url);
-                                    intent.putExtras(b);
-                                    context.startActivity(intent);
+                                    Helper.openBrowser(context, url);
                                     holder.status_cardview_webview.loadUrl(finalSrc);
                                     return true;
                                 }
