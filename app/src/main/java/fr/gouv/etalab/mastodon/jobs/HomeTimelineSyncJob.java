@@ -65,6 +65,9 @@ import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
 public class HomeTimelineSyncJob extends Job {
 
     static final String HOME_TIMELINE = "home_timeline";
+    static {
+        Helper.installProvider();
+    }
 
     @NonNull
     @Override
@@ -72,16 +75,13 @@ public class HomeTimelineSyncJob extends Job {
         callAsynchronousTask();
         return Result.SUCCESS;
     }
-
-    static {
-        Helper.installProvider();
-    }
     public static int schedule(boolean updateCurrent){
 
         Set<JobRequest> jobRequests = JobManager.instance().getAllJobRequestsForTag(HOME_TIMELINE);
         if (!jobRequests.isEmpty() && !updateCurrent) {
             return jobRequests.iterator().next().getJobId();
         }
+
         return new JobRequest.Builder(HomeTimelineSyncJob.HOME_TIMELINE)
                 .setPeriodic(TimeUnit.MINUTES.toMillis(Helper.MINUTES_BETWEEN_HOME_TIMELINE), TimeUnit.MINUTES.toMillis(5))
                 .setUpdateCurrent(updateCurrent)
@@ -135,7 +135,7 @@ public class HomeTimelineSyncJob extends Job {
         }
     }
 
-    public void onRetrieveHomeTimelineService(APIResponse apiResponse, final Account account) {
+    private void onRetrieveHomeTimelineService(APIResponse apiResponse, final Account account) {
         final List<Status> statuses = apiResponse.getStatuses();
         if( apiResponse.getError() != null || statuses == null || statuses.size() == 0 || account == null)
             return;
@@ -143,7 +143,6 @@ public class HomeTimelineSyncJob extends Job {
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         final String max_id = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
-
         //No previous notifications in cache, so no notification will be sent
         String message;
 
@@ -165,7 +164,6 @@ public class HomeTimelineSyncJob extends Job {
             intent.putExtra(PREF_INSTANCE, account.getInstance());
             long notif_id = Long.parseLong(account.getId());
             final int notificationId = ((notif_id + 2) > 2147483647) ? (int) (2147483647 - notif_id - 2) : (int) (notif_id + 2);
-
             if( notificationUrl != null){
 
                 final String finalMessage = message;
@@ -197,7 +195,7 @@ public class HomeTimelineSyncJob extends Job {
                         })
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
-                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                                 notify_user(getContext(), intent, notificationId, resource, finalTitle, finalMessage);
                                 SharedPreferences.Editor editor = sharedpreferences.edit();
                                 editor.putString(Helper.LAST_HOMETIMELINE_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), statuses.get(0).getId());

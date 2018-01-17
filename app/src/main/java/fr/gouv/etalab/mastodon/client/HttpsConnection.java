@@ -18,7 +18,6 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.text.Html;
 import android.text.SpannableString;
-
 import com.google.common.io.ByteStreams;
 
 import org.json.JSONObject;
@@ -422,10 +421,14 @@ public class HttpsConnection {
                 // opens input stream from the HTTP connection
                 return httpsURLConnection.getInputStream();
             }
-            httpsURLConnection.disconnect();
+            httpsURLConnection.getInputStream().close();
         } catch (IOException | NoSuchAlgorithmException | KeyManagementException ignored) {}
         if(httpsURLConnection != null)
-            httpsURLConnection.disconnect();
+            try {
+                httpsURLConnection.getInputStream().close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         return null;
     }
 
