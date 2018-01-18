@@ -229,8 +229,8 @@
   <string name="toast_unblock">Kontua ez dago jada blokeatuta!</string>
   <string name="toast_mute">Kontua mututua izan da!</string>
   <string name="toast_unmute">Kontua ez dago jada mututua!</string>
-  <string name="toast_follow">Kontua jarraitua izan da!</string>
-  <string name="toast_unfollow">Kontua ez dago jada jarraitua!</string>
+  <string name="toast_follow">Kontua jarraitzen hasi zara!</string>
+  <string name="toast_unfollow">Ez duzu jada kontu hau jarraitzen!</string>
   <string name="toast_reblog">Toot-a bultzatu da!</string>
   <string name="toast_unreblog">Toot-a ez dago jada bultzatua!</string>
   <string name="toast_favourite">Toot-a zure gogokoetara gehitu da!</string>
