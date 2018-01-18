@@ -20,6 +20,8 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -151,7 +153,7 @@ public class HomeTimelineSyncJob extends Job {
             //Also, if the toot comes from the owner, we will avoid to warn him/her...
             if( max_id != null && (status.getId().equals(max_id)) || (account.getAcct() != null && status.getAccount().getAcct().trim().equals(account.getAcct().trim()) ))
                 continue;
-            String notificationUrl = status.getAccount().getAvatar();
+            final String notificationUrl = status.getAccount().getAvatar();
 
             if(statuses.size() > 0 )
                 message = getContext().getResources().getQuantityString(R.plurals.other_notif_hometimeline, statuses.size(), statuses.size());
@@ -173,35 +175,43 @@ public class HomeTimelineSyncJob extends Job {
                 else
                     title = getContext().getResources().getString(R.string.notif_pouet, status.getAccount().getUsername());
                 final String finalTitle = title;
-                Glide.with(getContext())
-                        .asBitmap()
-                        .load(notificationUrl)
-                        .listener(new RequestListener<Bitmap>(){
 
-                            @Override
-                            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                                return false;
-                            }
+                Handler mainHandler = new Handler(Looper.getMainLooper());
 
-                            @Override
-                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                notify_user(getContext(), intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
-                                        R.drawable.mastodonlogo), finalTitle, finalMessage);
-                                SharedPreferences.Editor editor = sharedpreferences.edit();
-                                editor.putString(Helper.LAST_HOMETIMELINE_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), statuses.get(0).getId());
-                                editor.apply();
-                                return false;
-                            }
-                        })
-                        .into(new SimpleTarget<Bitmap>() {
-                            @Override
-                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                notify_user(getContext(), intent, notificationId, resource, finalTitle, finalMessage);
-                                SharedPreferences.Editor editor = sharedpreferences.edit();
-                                editor.putString(Helper.LAST_HOMETIMELINE_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), statuses.get(0).getId());
-                                editor.apply();
-                            }
-                        });
+                Runnable myRunnable = new Runnable() {
+                    @Override
+                    public void run() {Glide.with(getContext())
+                            .asBitmap()
+                            .load(notificationUrl)
+                            .listener(new RequestListener<Bitmap>(){
+
+                                @Override
+                                public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                    notify_user(getContext(), intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
+                                            R.drawable.mastodonlogo), finalTitle, finalMessage);
+                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                    editor.putString(Helper.LAST_HOMETIMELINE_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), statuses.get(0).getId());
+                                    editor.apply();
+                                    return false;
+                                }
+                            })
+                            .into(new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                    notify_user(getContext(), intent, notificationId, resource, finalTitle, finalMessage);
+                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                    editor.putString(Helper.LAST_HOMETIMELINE_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), statuses.get(0).getId());
+                                    editor.apply();
+                                }
+                            });
+                    }
+                };
+                mainHandler.post(myRunnable);
 
             }
         }

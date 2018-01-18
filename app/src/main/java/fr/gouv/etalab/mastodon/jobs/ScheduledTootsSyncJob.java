@@ -21,10 +21,6 @@ import android.support.annotation.NonNull;
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobRequest;
 
-import org.conscrypt.Conscrypt;
-
-import java.security.Provider;
-import java.security.Security;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
