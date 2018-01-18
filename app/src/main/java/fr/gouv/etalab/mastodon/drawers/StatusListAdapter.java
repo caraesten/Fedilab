@@ -987,7 +987,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 }
                                 @Override
                                 public boolean shouldOverrideUrlLoading (WebView view, String url){
-                                    Helper.openBrowser(context, url);
                                     holder.status_cardview_webview.loadUrl(finalSrc);
                                     return true;
                                 }
