@@ -985,11 +985,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                                     holder.status_cardview_video.setVisibility(View.GONE);
                                 }
-                                @Override
-                                public boolean shouldOverrideUrlLoading (WebView view, String url){
-                                    holder.status_cardview_webview.loadUrl(finalSrc);
-                                    return true;
-                                }
                             });
                             holder.status_cardview_webview.loadUrl(finalSrc);
                         }
