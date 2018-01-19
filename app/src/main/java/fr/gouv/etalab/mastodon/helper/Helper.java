@@ -270,6 +270,7 @@ public class Helper {
 
 
     //Proxy
+    public static final String SET_PROXY_ENABLED = "set_proxy_enabled";
     public static final String SET_PROXY_HOST = "set_proxy_host";
     public static final String SET_PROXY_PORT = "set_proxy_port";
     public static final String SET_PROXY_LOGIN = "set_proxy_login";

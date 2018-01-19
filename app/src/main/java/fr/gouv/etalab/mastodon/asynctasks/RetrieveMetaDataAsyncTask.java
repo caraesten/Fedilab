@@ -14,16 +14,17 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.asynctasks;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Patterns;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMetaDataInterface;
@@ -40,10 +41,12 @@ public class RetrieveMetaDataAsyncTask extends AsyncTask<Void, Void, Void> {
     private String url;
     private boolean error = false;
     private String image, title, description;
+    private WeakReference<Context> contextWeakReference;
 
-    public RetrieveMetaDataAsyncTask(String url, OnRetrieveMetaDataInterface onRetrieveRemoteAccountInterface){
+    public RetrieveMetaDataAsyncTask(Context context, String url, OnRetrieveMetaDataInterface onRetrieveRemoteAccountInterface){
         this.url = url;
         this.listener = onRetrieveRemoteAccountInterface;
+        this.contextWeakReference = new WeakReference<>(context);
     }
 
     @Override
@@ -70,7 +73,7 @@ public class RetrieveMetaDataAsyncTask extends AsyncTask<Void, Void, Void> {
                 Pattern descriptionPattern = Pattern.compile("meta\\s+property=[\"']og:description[\"']\\s+content=[\"'](.*)[\"']");
                 Pattern imagePattern = Pattern.compile("meta\\s+property=[\"']og:image[\"']\\s+content=[\"'](.*)[\"']");
                 try {
-                    String response = new HttpsConnection().get(potentialUrl);
+                    String response = new HttpsConnection(this.contextWeakReference.get()).get(potentialUrl);
                     Matcher matcherTitle = titlePattern.matcher(response);
                     Matcher matcherDescription = descriptionPattern.matcher(response);
                     Matcher matcherImage = imagePattern.matcher(response);

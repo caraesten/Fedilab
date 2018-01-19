@@ -1096,7 +1096,7 @@ public abstract class BaseMainActivity extends BaseActivity
                         if(matchStart < matchEnd && sharedText.length() >= matchEnd)
                             sharedText = sharedText.substring(matchStart, matchEnd);
                     }
-                    new RetrieveMetaDataAsyncTask(sharedText, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new RetrieveMetaDataAsyncTask(BaseMainActivity.this, sharedText, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     Intent intentToot = new Intent(getApplicationContext(), TootActivity.class);
                     Bundle b = new Bundle();
                     b.putString("sharedSubject", sharedSubject);
