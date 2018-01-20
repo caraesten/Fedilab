@@ -44,7 +44,7 @@ dependencies {
     implementation 'com.evernote:android-job:1.2.2'
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
     implementation 'com.github.stom79:country-picker-android:1.2.0'
-    implementation 'com.github.stom79:mytransl:1.2'
+    implementation 'com.github.stom79:mytransl:1.4'
     playstoreImplementation 'io.github.kobakei:ratethisapp:1.2.0'
     implementation 'org.conscrypt:conscrypt-android:1.0.0.RC13'
     implementation 'com.google.code.gson:gson:2.8.2'
