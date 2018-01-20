@@ -140,7 +140,7 @@ public class InstanceHealthActivity extends BaseActivity {
                 try {
                     HashMap<String, String> parameters = new HashMap<>();
                     parameters.put("name", instance.trim());
-                    final String response = new HttpsConnection().get("https://instances.social/api/1.0/instances/show", 30, parameters, Helper.THEKINRAR_SECRET_TOKEN );
+                    final String response = new HttpsConnection(InstanceHealthActivity.this).get("https://instances.social/api/1.0/instances/show", 30, parameters, Helper.THEKINRAR_SECRET_TOKEN );
                     if( response != null)
                         instanceSocial = API.parseInstanceSocialResponse(getApplicationContext(), new JSONObject(response));
                     runOnUiThread(new Runnable() {

@@ -31,7 +31,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.Authenticator;
 import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.PasswordAuthentication;
+import java.net.Proxy;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -66,11 +70,36 @@ public class HttpsConnection {
     private String since_id, max_id;
     private Context context;
     private int CHUNK_SIZE = 4096;
+    private SharedPreferences sharedpreferences;
+    private Proxy proxy;
 
-    public HttpsConnection(){}
 
     public HttpsConnection(Context context){
         this.context = context;
+        sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean proxyEnabled = sharedpreferences.getBoolean(Helper.SET_PROXY_ENABLED, false);
+        int type = sharedpreferences.getInt(Helper.SET_PROXY_TYPE, 0);
+        proxy = null;
+        if( proxyEnabled ){
+            String host = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
+            int port = sharedpreferences.getInt(Helper.SET_PROXY_PORT, 8118);
+            if( type == 0 )
+                proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(host, port));
+            else
+                proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(host, port));
+            final String login = sharedpreferences.getString(Helper.SET_PROXY_LOGIN, null);
+            final String pwd = sharedpreferences.getString(Helper.SET_PROXY_PASSWORD, null);
+            if( login != null) {
+                Authenticator authenticator = new Authenticator() {
+                    public PasswordAuthentication getPasswordAuthentication() {
+                        assert pwd != null;
+                        return (new PasswordAuthentication(login,
+                                pwd.toCharArray()));
+                    }
+                };
+                Authenticator.setDefault(authenticator);
+            }
+        }
     }
 
 
@@ -95,7 +124,10 @@ public class HttpsConnection {
             postData.append(String.valueOf(param.getValue()));
         }
         URL url = new URL(urlConnection + "?" + postData);
-        httpsURLConnection = (HttpsURLConnection)url.openConnection();
+        if( proxy !=null )
+            httpsURLConnection = (HttpsURLConnection)url.openConnection(proxy);
+        else
+            httpsURLConnection = (HttpsURLConnection)url.openConnection();
         httpsURLConnection.setConnectTimeout(timeout * 1000);
         httpsURLConnection.setRequestProperty("http.keepAlive", "false");
         httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
@@ -124,7 +156,10 @@ public class HttpsConnection {
         HttpURLConnection httpURLConnection;
         if( urlConnection.startsWith("https://")) {
             URL url = new URL(urlConnection);
-            httpsURLConnection = (HttpsURLConnection) url.openConnection();
+            if( proxy !=null )
+                httpsURLConnection = (HttpsURLConnection)url.openConnection(proxy);
+            else
+                httpsURLConnection = (HttpsURLConnection)url.openConnection();
             httpsURLConnection.setConnectTimeout(30 * 1000);
             httpsURLConnection.setRequestProperty("http.keepAlive", "false");
             httpsURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");
@@ -145,7 +180,10 @@ public class HttpsConnection {
             return response;
         }else{
             URL url = new URL(urlConnection);
-            httpURLConnection = (HttpURLConnection) url.openConnection();
+            if( proxy !=null )
+                httpURLConnection = (HttpURLConnection)url.openConnection(proxy);
+            else
+                httpURLConnection = (HttpURLConnection)url.openConnection();
             httpURLConnection.setConnectTimeout(30 * 1000);
             httpURLConnection.setRequestProperty("http.keepAlive", "false");
             httpURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");
@@ -188,7 +226,10 @@ public class HttpsConnection {
         }
         byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 
-        httpsURLConnection = (HttpsURLConnection)url.openConnection();
+        if( proxy !=null )
+            httpsURLConnection = (HttpsURLConnection)url.openConnection(proxy);
+        else
+            httpsURLConnection = (HttpsURLConnection)url.openConnection();
         httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
         httpsURLConnection.setConnectTimeout(timeout * 1000);
         httpsURLConnection.setDoOutput(true);
@@ -231,7 +272,10 @@ public class HttpsConnection {
                 if (downloadUrl.startsWith("https://")) {
                     try {
                         url = new URL(downloadUrl);
-                        httpsURLConnection = (HttpsURLConnection) url.openConnection();
+                        if( proxy !=null )
+                            httpsURLConnection = (HttpsURLConnection)url.openConnection(proxy);
+                        else
+                            httpsURLConnection = (HttpsURLConnection)url.openConnection();
                         httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
                         int responseCode = httpsURLConnection.getResponseCode();
 
@@ -318,7 +362,10 @@ public class HttpsConnection {
                 } else {
                     try {
                         url = new URL(downloadUrl);
-                        httpURLConnection = (HttpURLConnection) url.openConnection();
+                        if( proxy !=null )
+                            httpURLConnection = (HttpURLConnection)url.openConnection(proxy);
+                        else
+                            httpURLConnection = (HttpURLConnection)url.openConnection();
                         httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
                         int responseCode = httpURLConnection.getResponseCode();
 
@@ -412,7 +459,10 @@ public class HttpsConnection {
     public InputStream getPicture(final String downloadUrl) {
         try {
             URL url = new URL(downloadUrl);
-            httpsURLConnection = (HttpsURLConnection) url.openConnection();
+            if( proxy !=null )
+                httpsURLConnection = (HttpsURLConnection)url.openConnection(proxy);
+            else
+                httpsURLConnection = (HttpsURLConnection)url.openConnection();
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
             httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
             int responseCode = httpsURLConnection.getResponseCode();
@@ -449,7 +499,6 @@ public class HttpsConnection {
                     String boundary = "*****" + Long.toString(System.currentTimeMillis()) + "*****";
                     String lineEnd = "\r\n";
 
-                    SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                     String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
                     final URL url = new URL("https://"+Helper.getLiveInstance(context)+"/api/v1/media");
                     ByteArrayOutputStream ous = null;
@@ -475,7 +524,10 @@ public class HttpsConnection {
                     lengthSent += ("Content-Disposition: form-data; name=\"file\";filename=\"picture.png\"" + lineEnd).getBytes().length;
                     lengthSent += 2 * (lineEnd).getBytes().length;
 
-                    httpsURLConnection = (HttpsURLConnection) url.openConnection();
+                    if( proxy !=null )
+                        httpsURLConnection = (HttpsURLConnection)url.openConnection(proxy);
+                    else
+                        httpsURLConnection = (HttpsURLConnection)url.openConnection();
                     httpsURLConnection.setFixedLengthStreamingMode(lengthSent);
 
                     httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
@@ -599,7 +651,10 @@ public class HttpsConnection {
         }
         byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 
-        httpsURLConnection = (HttpsURLConnection)url.openConnection();
+        if( proxy !=null )
+            httpsURLConnection = (HttpsURLConnection)url.openConnection(proxy);
+        else
+            httpsURLConnection = (HttpsURLConnection)url.openConnection();
         httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
         httpsURLConnection.setConnectTimeout(timeout * 1000);
         httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
@@ -650,7 +705,10 @@ public class HttpsConnection {
         }
         byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 
-        httpsURLConnection = (HttpsURLConnection)url.openConnection();
+        if( proxy !=null )
+            httpsURLConnection = (HttpsURLConnection)url.openConnection(proxy);
+        else
+            httpsURLConnection = (HttpsURLConnection)url.openConnection();
         httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
         httpsURLConnection.setConnectTimeout(timeout * 1000);
         httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
@@ -699,7 +757,10 @@ public class HttpsConnection {
         }
         byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 
-        httpsURLConnection = (HttpsURLConnection)url.openConnection();
+        if( proxy !=null )
+            httpsURLConnection = (HttpsURLConnection)url.openConnection(proxy);
+        else
+            httpsURLConnection = (HttpsURLConnection)url.openConnection();
         httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
         httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
         if( token != null)

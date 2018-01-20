@@ -269,6 +269,13 @@ public class Helper {
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 
 
+    //Proxy
+    public static final String SET_PROXY_ENABLED = "set_proxy_enabled";
+    public static final String SET_PROXY_TYPE = "set_proxy_type";
+    public static final String SET_PROXY_HOST = "set_proxy_host";
+    public static final String SET_PROXY_PORT = "set_proxy_port";
+    public static final String SET_PROXY_LOGIN = "set_proxy_login";
+    public static final String SET_PROXY_PASSWORD = "set_proxy_password";
     //Refresh job
     public static final int MINUTES_BETWEEN_NOTIFICATIONS_REFRESH = 15;
     public static final int MINUTES_BETWEEN_HOME_TIMELINE = 30;

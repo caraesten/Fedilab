@@ -40,6 +40,7 @@
   <string name="choose_picture">Seleccionar una imagen…</string>
   <string name="clear">Borrar</string>
   <string name="microphone">Micrófono</string>
+  <string name="camera">Camera</string>
   <string name="speech_prompt">Por favor, di algo</string>
   <string name="speech_not_supported">¡Lo sentimos! ¡Tu dispositivo no es compatible con la entrada de voz!</string>
   <string name="delete_all">Eliminar todo</string>
@@ -427,4 +428,12 @@ Gracias a:    </string>
   <string name="data_export_toots">Export statuses for %1$s</string>
   <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
   <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+  <!-- Proxy -->
+  <string name="proxy_set">Proxy</string>
+  <string name="proxy_type">Type</string>
+  <string name="proxy_enable">Enable proxy?</string>
+  <string name="poxy_host">Host</string>
+  <string name="poxy_port">Port</string>
+  <string name="poxy_login">Login</string>
+  <string name="poxy_password">Password</string>
 </resources>

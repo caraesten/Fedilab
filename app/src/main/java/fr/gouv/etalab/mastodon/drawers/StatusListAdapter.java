@@ -89,7 +89,6 @@ import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
-import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRepliesAsyncTask;
@@ -554,7 +553,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             //noinspection deprecation
                             statusToTranslate = Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent()).toString();
                         //TODO: removes the replaceAll once fixed with the lib
-                        myTransL.translate(statusToTranslate.replaceAll("%","%25"), myTransL.getLocale(), new Results() {
+                        myTransL.translate(statusToTranslate, myTransL.getLocale(), new Results() {
                             @Override
                             public void onSuccess(Translate translate) {
                                 if( translate.getTranslatedContent() != null) {
@@ -984,12 +983,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 @Override
                                 public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                                     holder.status_cardview_video.setVisibility(View.GONE);
-                                }
-                                @Override
-                                public boolean shouldOverrideUrlLoading (WebView view, String url){
-                                    Helper.openBrowser(context, url);
-                                    holder.status_cardview_webview.loadUrl(finalSrc);
-                                    return true;
                                 }
                             });
                             holder.status_cardview_webview.loadUrl(finalSrc);

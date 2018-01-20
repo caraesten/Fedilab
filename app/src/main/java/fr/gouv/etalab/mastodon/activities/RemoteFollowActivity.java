@@ -184,7 +184,7 @@ public class RemoteFollowActivity extends BaseActivity implements OnRetrieveRemo
                         @Override
                         public void run() {
                             try {
-                                final String response = new HttpsConnection().get("https://instances.social/api/1.0" + action, 30, parameters, Helper.THEKINRAR_SECRET_TOKEN );
+                                final String response = new HttpsConnection(RemoteFollowActivity.this).get("https://instances.social/api/1.0" + action, 30, parameters, Helper.THEKINRAR_SECRET_TOKEN );
                                 runOnUiThread(new Runnable() {
                                     public void run() {
                                         isLoadingInstance = false;

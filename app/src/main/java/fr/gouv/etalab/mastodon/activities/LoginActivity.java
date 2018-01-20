@@ -125,7 +125,7 @@ public class LoginActivity extends BaseActivity {
                         @Override
                         public void run() {
                             try {
-                                final String response = new HttpsConnection().get("https://instances.social/api/1.0" + action, 30, parameters, Helper.THEKINRAR_SECRET_TOKEN );
+                                final String response = new HttpsConnection(LoginActivity.this).get("https://instances.social/api/1.0" + action, 30, parameters, Helper.THEKINRAR_SECRET_TOKEN );
                                 runOnUiThread(new Runnable() {
                                     public void run() {
                                         isLoadingInstance = false;
@@ -252,7 +252,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void run() {
                 try {
-                    final String response = new HttpsConnection().post("https://" + instance + action, 30, parameters, null );
+                    final String response = new HttpsConnection(LoginActivity.this).post("https://" + instance + action, 30, parameters, null );
                     runOnUiThread(new Runnable() {
                       public void run() {
                           JSONObject resobj;
@@ -326,7 +326,7 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void run() {
                         try {
-                            final String response = new HttpsConnection().post("https://" + instance + "/oauth/token", 30, parameters, null );
+                            final String response = new HttpsConnection(LoginActivity.this).post("https://" + instance + "/oauth/token", 30, parameters, null );
                             runOnUiThread(new Runnable() {
                                 public void run() {
                                     JSONObject resobj;
@@ -389,6 +389,9 @@ public class LoginActivity extends BaseActivity {
             startActivity(intent);
         }else if(id == R.id.action_privacy){
             Intent intent = new Intent(getApplicationContext(), PrivacyActivity.class);
+            startActivity(intent);
+        }else if(id == R.id.action_proxy){
+            Intent intent = new Intent(getApplicationContext(), ProxyActivity.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

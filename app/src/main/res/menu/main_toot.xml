@@ -12,6 +12,11 @@
         android:icon="@drawable/ic_insert_emoticon"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/action_photo_camera"
+        android:title="@string/camera"
+        android:icon="@drawable/ic_photo_camera"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/action_microphone"
         android:title="@string/microphone"
         android:icon="@drawable/ic_mic"

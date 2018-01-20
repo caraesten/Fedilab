@@ -21,11 +21,14 @@ import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.net.Uri;
+import android.support.v4.content.FileProvider;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -84,8 +87,12 @@ import com.github.stom79.mytransl.translate.Translate;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -148,6 +155,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
 
     private String visibility;
     private final int PICK_IMAGE = 56556;
+    private final int TAKE_PHOTO = 56532;
     private ImageButton toot_picture;
     private LinearLayout toot_picture_container;
     private ArrayList<Attachment> attachments;
@@ -346,7 +354,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 .load(url)
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
-                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                    public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                         BitmapDrawable ppDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(25, getApplicationContext()), (int) Helper.convertDpToPixel(25, getApplicationContext()), true));
                         if( pp_actionBar != null){
                             pp_actionBar.setImageDrawable(ppDrawable);
@@ -681,6 +689,46 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         }
     }
 
+    String mCurrentPhotoPath;
+    File photoFile = null;
+
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ignored) {Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();}
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "fr.gouv.etalab.mastodon.fileProvider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, TAKE_PHOTO);
+            }
+        }
+    }
+
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -707,6 +755,55 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 toot_content.setText(result.get(0));
                 toot_content.setSelection(toot_content.getText().length());
             }
+        }else if (requestCode == TAKE_PHOTO && resultCode == RESULT_OK) {
+
+            new asyncPicture(TootActivity.this, photoFile).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        }
+    }
+
+    private static class asyncPicture extends AsyncTask<Void, Void, Void> {
+
+        ByteArrayInputStream bs;
+        WeakReference<Activity> activityWeakReference;
+        WeakReference<File> fileWeakReference;
+
+        asyncPicture(Activity activity, File photoFile){
+            this.activityWeakReference = new WeakReference<>(activity);
+            this.fileWeakReference = new WeakReference<>(photoFile);
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            Bitmap takenImage = BitmapFactory.decodeFile(String.valueOf(this.fileWeakReference.get()));
+            int size = takenImage.getByteCount();
+            //Resize image to 2 meg
+            double resize = ((double)size)/((double)16777216);
+            Bitmap newBitmap;
+            if( resize > 1 ){
+                newBitmap = Bitmap.createScaledBitmap(takenImage, (int)(takenImage.getWidth()/resize),
+                        (int)(takenImage.getHeight()/resize), false);
+            }else {
+                newBitmap = takenImage;
+            }
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            newBitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+            byte[] bitmapdata = bos.toByteArray();
+            bs = new ByteArrayInputStream(bitmapdata);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            ImageButton toot_picture;
+            LinearLayout toot_picture_container;
+            toot_picture = this.activityWeakReference.get().findViewById(R.id.toot_picture);
+            toot_picture_container = this.activityWeakReference.get().findViewById(R.id.toot_picture_container);
+
+            toot_picture_container.setVisibility(View.VISIBLE);
+            toot_picture.setEnabled(false);
+            new HttpsConnection(this.activityWeakReference.get()).upload(bs, (TootActivity)this.activityWeakReference.get());
         }
     }
 
@@ -930,6 +1027,9 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 alertDialogEmoji = builder.show();
 
 
+                return true;
+            case R.id.action_photo_camera:
+                dispatchTakePictureIntent();
                 return true;
             case R.id.action_microphone:
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -1194,7 +1294,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                     .load(url)
                     .into(new SimpleTarget<Bitmap>() {
                         @Override
-                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                             imageView.setImageBitmap(resource);
                         }
                     });
@@ -1293,7 +1393,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 .into(new SimpleTarget<Bitmap>() {
                     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                     @Override
-                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                    public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                         media_picture.setImageBitmap(resource);
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                             media_picture.setImageAlpha(60);
@@ -1692,7 +1792,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                         .load(url)
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
-                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                                 imageView.setImageBitmap(resource);
                             }
                         });

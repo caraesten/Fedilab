@@ -740,6 +740,10 @@ public abstract class BaseMainActivity extends BaseActivity
                                         .setIcon(android.R.drawable.ic_dialog_alert)
                                         .show();
                                 return true;
+                            case R.id.action_proxy:
+                                intent = new Intent(getApplicationContext(), ProxyActivity.class);
+                                startActivity(intent);
+                                return true;
                             case R.id.action_export:
                                 if(Build.VERSION.SDK_INT >= 23 ){
                                     if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
@@ -821,7 +825,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
             final SwitchCompat set_push_hometimeline = dialogView.findViewById(R.id.set_push_hometimeline);
             final SwitchCompat set_push_notification = dialogView.findViewById(R.id.set_push_notification);
-            boolean notif_hometimeline = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, true);
+            boolean notif_hometimeline = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, false);
             boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
             boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
             boolean notif_ask = sharedpreferences.getBoolean(Helper.SET_NOTIF_ASK, true);
@@ -1096,7 +1100,7 @@ public abstract class BaseMainActivity extends BaseActivity
                         if(matchStart < matchEnd && sharedText.length() >= matchEnd)
                             sharedText = sharedText.substring(matchStart, matchEnd);
                     }
-                    new RetrieveMetaDataAsyncTask(sharedText, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new RetrieveMetaDataAsyncTask(BaseMainActivity.this, sharedText, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     Intent intentToot = new Intent(getApplicationContext(), TootActivity.class);
                     Bundle b = new Bundle();
                     b.putString("sharedSubject", sharedSubject);

@@ -40,6 +40,7 @@
   <string name="choose_picture">Одаберите слику…</string>
   <string name="clear">Очисти</string>
   <string name="microphone">Микрофон</string>
+  <string name="camera">Camera</string>
   <string name="speech_prompt">Реците нешто</string>
   <string name="speech_not_supported">Ваш уређај не подржава гласовни унос!</string>
   <string name="delete_all">Избриши све</string>
@@ -343,7 +344,7 @@
   <string name="request_sent">Захтев послат</string>
   <string name="followed_by">Прати Вас</string>
   <string name="action_search">Претрага</string>
-  <string name="set_capitalize">First letter in capital for replies</string>
+  <string name="set_capitalize">Прво слово велико у одговорима</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Гурни обавештења</string>
   <string name="settings_popup_message">
@@ -429,10 +430,18 @@
         - Ако ништа ни даље не ради, пријавите нам проблем на Github-у, на https://github.com/stom79/mastalab/issues
     </string>
   <string name="media_ready">Мултимедија је учитана. Кликните овде да је прикажете.</string>
-  <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-  <string name="data_export_running">Still running, please wait…</string>
-  <string name="data_export">Export statuses</string>
-  <string name="data_export_toots">Export statuses for %1$s</string>
-  <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-  <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+  <string name="data_export_start">Ова акција може да потраје. Бићете обавештени када се заврши.</string>
+  <string name="data_export_running">Још увек се извршава, сачекајте…</string>
+  <string name="data_export">Статуси извоза</string>
+  <string name="data_export_toots">Статуси извоза за %1$s</string>
+  <string name="data_export_success">Извежено %1$s од укупно %2$s тутова.</string>
+  <string name="data_export_error">Дошло је до грешке приликом извоза података за %1$s</string>
+  <!-- Proxy -->
+  <string name="proxy_set">Proxy</string>
+  <string name="proxy_type">Type</string>
+  <string name="proxy_enable">Enable proxy?</string>
+  <string name="poxy_host">Host</string>
+  <string name="poxy_port">Port</string>
+  <string name="poxy_login">Login</string>
+  <string name="poxy_password">Password</string>
 </resources>

@@ -20,6 +20,8 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -238,41 +240,51 @@ public class NotificationsSyncJob extends Job {
 
 
                 final String finalTitle = title;
-                Glide.with(getContext())
-                        .asBitmap()
-                        .load(notificationUrl)
-                        .listener(new RequestListener<Bitmap>() {
+                Handler mainHandler = new Handler(Looper.getMainLooper());
 
-                            @Override
-                            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                                return false;
-                            }
+                final String finalNotificationUrl = notificationUrl;
+                Runnable myRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        Glide.with(getContext())
+                                .asBitmap()
+                                .load(finalNotificationUrl)
+                                .listener(new RequestListener<Bitmap>() {
 
-                            @Override
-                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                notify_user(getContext(), intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
-                                        R.drawable.mastodonlogo), finalTitle, message);
-                                String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
-                                if( lastNotif == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
-                                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                                    editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notifications.get(0).getId());
-                                    editor.apply();
-                                }
-                                return false;
-                            }
-                        })
-                        .into(new SimpleTarget<Bitmap>() {
-                            @Override
-                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                notify_user(getContext(), intent, notificationId, resource, finalTitle, message);
-                                String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
-                                if( lastNotif == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
-                                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                                    editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notifications.get(0).getId());
-                                    editor.apply();
-                                }
-                            }
-                        });
+                                    @Override
+                                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                        notify_user(getContext(), intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
+                                                R.drawable.mastodonlogo), finalTitle, message);
+                                        String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
+                                        if( lastNotif == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
+                                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                                            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notifications.get(0).getId());
+                                            editor.apply();
+                                        }
+                                        return false;
+                                    }
+                                })
+                                .into(new SimpleTarget<Bitmap>() {
+                                    @Override
+                                    public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                        notify_user(getContext(), intent, notificationId, resource, finalTitle, message);
+                                        String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
+                                        if( lastNotif == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
+                                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                                            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notifications.get(0).getId());
+                                            editor.apply();
+                                        }
+                                    }
+                                });
+                    }
+                };
+                mainHandler.post(myRunnable);
+
             }
 
         }

@@ -40,6 +40,7 @@
   <string name="choose_picture">Hautatu irudi bat…</string>
   <string name="clear">Garbitu</string>
   <string name="microphone">Mikrofonoa</string>
+  <string name="camera">Camera</string>
   <string name="speech_prompt">Esan zerbait</string>
   <string name="speech_not_supported">Zure gailuak ez du onartzen ahots sarrera!</string>
   <string name="delete_all">Ezabatu guztiak</string>
@@ -229,8 +230,8 @@
   <string name="toast_unblock">Kontua ez dago jada blokeatuta!</string>
   <string name="toast_mute">Kontua mututua izan da!</string>
   <string name="toast_unmute">Kontua ez dago jada mututua!</string>
-  <string name="toast_follow">Kontua jarraitua izan da!</string>
-  <string name="toast_unfollow">Kontua ez dago jada jarraitua!</string>
+  <string name="toast_follow">Kontua jarraitzen hasi zara!</string>
+  <string name="toast_unfollow">Ez duzu jada kontu hau jarraitzen!</string>
   <string name="toast_reblog">Toot-a bultzatu da!</string>
   <string name="toast_unreblog">Toot-a ez dago jada bultzatua!</string>
   <string name="toast_favourite">Toot-a zure gogokoetara gehitu da!</string>
@@ -431,4 +432,12 @@ Eskerrik asko Stéphane logoagatik.    </string>
   <string name="data_export_toots">Esportatu %1$s(e)ren mezuak</string>
   <string name="data_export_success">%1$s toot esportatu dira %2$stik.</string>
   <string name="data_export_error">Zerbait ez da behar bezala joan %1$s(e)ko datuak esportatzean</string>
+  <!-- Proxy -->
+  <string name="proxy_set">Proxy</string>
+  <string name="proxy_type">Type</string>
+  <string name="proxy_enable">Enable proxy?</string>
+  <string name="poxy_host">Host</string>
+  <string name="poxy_port">Port</string>
+  <string name="poxy_login">Login</string>
+  <string name="poxy_password">Password</string>
 </resources>

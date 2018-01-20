@@ -9,4 +9,8 @@
         android:id="@+id/action_privacy"
         android:title="@string/action_privacy"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_proxy"
+        android:title="@string/proxy_set"
+        app:showAsAction="never" />
 </menu>
