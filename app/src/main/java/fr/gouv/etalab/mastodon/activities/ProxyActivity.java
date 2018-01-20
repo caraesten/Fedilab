@@ -82,11 +82,26 @@ public class ProxyActivity extends BaseActivity {
         final EditText proxy_login = findViewById(R.id.proxy_login);
         final EditText proxy_password = findViewById(R.id.proxy_password);
 
+        String hostVal = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
+        int portVal = sharedpreferences.getInt(Helper.SET_PROXY_PORT, 8118);
+        final String login = sharedpreferences.getString(Helper.SET_PROXY_LOGIN, null);
+        final String pwd = sharedpreferences.getString(Helper.SET_PROXY_PASSWORD, null);
+        if( hostVal.length() > 0)
+            host.setText(hostVal);
+        port.setText(String.valueOf(portVal));
+        if( login != null && login.length() > 0)
+            proxy_login.setText(login);
+        if( pwd != null && proxy_password.length() > 0)
+            proxy_password.setText(pwd);
         count2 = 0;
         final Spinner proxy_type = findViewById(R.id.type);
         ArrayAdapter<CharSequence> adapterTrans = ArrayAdapter.createFromResource(ProxyActivity.this,
                 R.array.proxy_type, android.R.layout.simple_spinner_item);
         proxy_type.setAdapter(adapterTrans);
+
+
+
+
 
         proxy_type.setSelection(sharedpreferences.getInt(Helper.SET_PROXY_TYPE, 0));
         proxy_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
