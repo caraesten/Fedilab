@@ -825,7 +825,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
             final SwitchCompat set_push_hometimeline = dialogView.findViewById(R.id.set_push_hometimeline);
             final SwitchCompat set_push_notification = dialogView.findViewById(R.id.set_push_notification);
-            boolean notif_hometimeline = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, true);
+            boolean notif_hometimeline = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, false);
             boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
             boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
             boolean notif_ask = sharedpreferences.getBoolean(Helper.SET_NOTIF_ASK, true);
