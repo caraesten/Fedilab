@@ -40,6 +40,7 @@
   <string name="choose_picture">Selectează o imagine…</string>
   <string name="clear">Elimină</string>
   <string name="microphone">Microfon</string>
+  <string name="camera">Camera</string>
   <string name="speech_prompt">Te rog, spune ceva</string>
   <string name="speech_not_supported">Ne pare rău! Dispozitivul nu permite înregistrare vocală!</string>
   <string name="delete_all">Șterge tot</string>
@@ -432,4 +433,12 @@ Vă mulțumesc:
   <string name="data_export_toots">Export statuses for %1$s</string>
   <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
   <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+  <!-- Proxy -->
+  <string name="proxy_set">Proxy</string>
+  <string name="proxy_type">Type</string>
+  <string name="proxy_enable">Enable proxy?</string>
+  <string name="poxy_host">Host</string>
+  <string name="poxy_port">Port</string>
+  <string name="poxy_login">Login</string>
+  <string name="poxy_password">Password</string>
 </resources>
