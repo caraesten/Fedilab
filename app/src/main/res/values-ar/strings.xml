@@ -40,6 +40,7 @@
   <string name="choose_picture">حدد صورة ...</string>
   <string name="clear">نظيف</string>
   <string name="microphone">الميكروفون</string>
+  <string name="camera">Camera</string>
   <string name="speech_prompt">قل شيئا من فضلك</string>
   <string name="speech_not_supported">معذرة ! إنّ جهازك لا يدعَم الإدخال الصوتي !</string>
   <string name="delete_all">حذف الكل</string>
@@ -440,4 +441,12 @@
   <string name="data_export_toots">تصدير بيانات %1$s</string>
   <string name="data_export_success">تم تصدير %1$s تبويقات من أصل %2$s.</string>
   <string name="data_export_error">طرأ هناك خطأ أثناء تصدير بيانات %1$s</string>
+  <!-- Proxy -->
+  <string name="proxy_set">Proxy</string>
+  <string name="proxy_type">Type</string>
+  <string name="proxy_enable">Enable proxy?</string>
+  <string name="poxy_host">Host</string>
+  <string name="poxy_port">Port</string>
+  <string name="poxy_login">Login</string>
+  <string name="poxy_password">Password</string>
 </resources>
