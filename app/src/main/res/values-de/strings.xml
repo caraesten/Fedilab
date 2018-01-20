@@ -40,6 +40,7 @@
   <string name="choose_picture">Wähle ein Bild…</string>
   <string name="clear">Säubern</string>
   <string name="microphone">Mikrofon</string>
+  <string name="camera">Camera</string>
   <string name="speech_prompt">Bitte sag etwas</string>
   <string name="speech_not_supported">Sorry! Dein Gerät unterstützt keine Spracheingabe!</string>
   <string name="delete_all">Alles löschen</string>
@@ -421,4 +422,12 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="data_export_toots">Status exportieren für %1$s</string>
   <string name="data_export_success">%1$s Toots von %2$s wurden exportiert.</string>
   <string name="data_export_error">Etwas ist schief gelaufen beim exportieren von%1$s</string>
+  <!-- Proxy -->
+  <string name="proxy_set">Proxy</string>
+  <string name="proxy_type">Type</string>
+  <string name="proxy_enable">Enable proxy?</string>
+  <string name="poxy_host">Host</string>
+  <string name="poxy_port">Port</string>
+  <string name="poxy_login">Login</string>
+  <string name="poxy_password">Password</string>
 </resources>
