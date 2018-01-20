@@ -553,7 +553,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             //noinspection deprecation
                             statusToTranslate = Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent()).toString();
                         //TODO: removes the replaceAll once fixed with the lib
-                        myTransL.translate(statusToTranslate.replaceAll("%","%25"), myTransL.getLocale(), new Results() {
+                        myTransL.translate(statusToTranslate, myTransL.getLocale(), new Results() {
                             @Override
                             public void onSuccess(Translate translate) {
                                 if( translate.getTranslatedContent() != null) {

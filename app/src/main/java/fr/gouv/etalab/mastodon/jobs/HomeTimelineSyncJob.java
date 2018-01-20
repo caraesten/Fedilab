@@ -103,7 +103,7 @@ public class HomeTimelineSyncJob extends Job {
         if( !canNotify(getContext()))
             return;
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean notif_hometimeline = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, true);
+        boolean notif_hometimeline = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, false);
         //User disagree with home timeline refresh
         if( !notif_hometimeline)
             return; //Nothing is done
