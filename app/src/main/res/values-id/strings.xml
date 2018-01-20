@@ -40,6 +40,7 @@
   <string name="choose_picture">Memilih gambar…</string>
   <string name="clear">Bersih</string>
   <string name="microphone">Mikropon</string>
+  <string name="camera">Camera</string>
   <string name="speech_prompt">Tolong katakan sesuatu</string>
   <string name="speech_not_supported">Maaf! Perangkat Anda tidak mendukung input suara!</string>
   <string name="delete_all">Hapus semua</string>
@@ -431,4 +432,12 @@ https://yandex.ru/legal/confidential/?lang=en
   <string name="data_export_toots">Status ekspor untuk %1$s</string>
   <string name="data_export_success">%1$s panjang dari %2$s telah diekspor.</string>
   <string name="data_export_error">Terdapat kesalahan saat mengekspor data untuk %1$s</string>
+  <!-- Proxy -->
+  <string name="proxy_set">Proxy</string>
+  <string name="proxy_type">Type</string>
+  <string name="proxy_enable">Enable proxy?</string>
+  <string name="poxy_host">Host</string>
+  <string name="poxy_port">Port</string>
+  <string name="poxy_login">Login</string>
+  <string name="poxy_password">Password</string>
 </resources>
