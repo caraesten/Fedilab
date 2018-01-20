@@ -740,6 +740,10 @@ public abstract class BaseMainActivity extends BaseActivity
                                         .setIcon(android.R.drawable.ic_dialog_alert)
                                         .show();
                                 return true;
+                            case R.id.action_proxy:
+                                intent = new Intent(getApplicationContext(), ProxyActivity.class);
+                                startActivity(intent);
+                                return true;
                             case R.id.action_export:
                                 if(Build.VERSION.SDK_INT >= 23 ){
                                     if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {

@@ -178,6 +178,9 @@
         <activity android:name=".activities.InstanceHealthActivity"
             android:theme="@style/Base.V7.Theme.AppCompat.Dialog"
             android:excludeFromRecents="true"/>
+        <activity android:name=".activities.ProxyActivity"
+            android:theme="@style/Base.V7.Theme.AppCompat.Dialog"
+            android:excludeFromRecents="true"/>
         <activity android:name=".activities.ManageAccountsInListActivity"
             android:windowSoftInputMode="adjustPan"
             android:theme="@style/Base.V7.Theme.AppCompat.Dialog"

@@ -26,6 +26,10 @@
         android:title="@string/data_export"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_proxy"
+        android:title="@string/proxy_set"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_logout"
         android:title="@string/action_logout"
         app:showAsAction="never" />

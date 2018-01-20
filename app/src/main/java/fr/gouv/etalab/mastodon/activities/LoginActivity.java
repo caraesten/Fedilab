@@ -390,6 +390,9 @@ public class LoginActivity extends BaseActivity {
         }else if(id == R.id.action_privacy){
             Intent intent = new Intent(getApplicationContext(), PrivacyActivity.class);
             startActivity(intent);
+        }else if(id == R.id.action_proxy){
+            Intent intent = new Intent(getApplicationContext(), ProxyActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
