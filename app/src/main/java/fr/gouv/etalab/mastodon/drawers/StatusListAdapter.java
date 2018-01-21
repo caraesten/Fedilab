@@ -390,7 +390,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int position) {
 
         if( viewHolder.getItemViewType() == DISPLAYED_STATUS){
             final ViewHolder holder = (ViewHolder) viewHolder;
@@ -935,7 +935,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     @Override
                     public void onClick(View v) {
                         oldPosition = conversationPosition;
-                        conversationPosition = position;
+                        conversationPosition = holder.getAdapterPosition();;
                         new RetrieveCardAsyncTask(context, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                 });
@@ -943,7 +943,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     @Override
                     public void onClick(View v) {
                         oldPosition = conversationPosition;
-                        conversationPosition = position;
+                        conversationPosition = holder.getAdapterPosition();;
                         new RetrieveCardAsyncTask(context, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                 });
@@ -1502,10 +1502,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     @Override
     public void onRetrieveAccount(Card card) {
-        if( card == null){
-            return;
-        }
-        if( conversationPosition < this.statuses.size())
+        if( conversationPosition < this.statuses.size() && card != null)
             this.statuses.get(conversationPosition).setCard(card);
         if( oldPosition < this.statuses.size())
             statusListAdapter.notifyItemChanged(oldPosition);
