@@ -40,7 +40,7 @@
   <string name="choose_picture">Changer l\'image…</string>
   <string name="clear">Nettoyer</string>
   <string name="microphone">Microphone</string>
-  <string name="camera">Camera</string>
+  <string name="camera">Appareil photo</string>
   <string name="speech_prompt">Veuillez dire quelque chose</string>
   <string name="speech_not_supported">Désolé ! Votre appareil ne supporte pas la commande vocale !</string>
   <string name="delete_all">Tout effacer</string>
@@ -434,9 +434,9 @@
   <!-- Proxy -->
   <string name="proxy_set">Proxy</string>
   <string name="proxy_type">Type</string>
-  <string name="proxy_enable">Enable proxy?</string>
-  <string name="poxy_host">Host</string>
+  <string name="proxy_enable">Activer le proxy ?</string>
+  <string name="poxy_host">Serveur</string>
   <string name="poxy_port">Port</string>
-  <string name="poxy_login">Login</string>
-  <string name="poxy_password">Password</string>
+  <string name="poxy_login">Identifiant</string>
+  <string name="poxy_password">Mot de passe</string>
 </resources>
