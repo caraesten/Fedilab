@@ -40,7 +40,7 @@
   <string name="choose_picture">画像を選択…</string>
   <string name="clear">削除</string>
   <string name="microphone">マイク</string>
-  <string name="camera">Camera</string>
+  <string name="camera">カメラ</string>
   <string name="speech_prompt">何か話してみてください</string>
   <string name="speech_not_supported">お使いのデバイスは音声入力をサポートしておりません！</string>
   <string name="delete_all">すべて削除</string>
@@ -417,17 +417,17 @@
     </string>
   <string name="media_ready">メディアが読み込まれました。表示するにはここをクリックします。</string>
   <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-  <string name="data_export_running">Still running, please wait…</string>
-  <string name="data_export">Export statuses</string>
+  <string name="data_export_running">実行中です。お待ちください...</string>
+  <string name="data_export">エクスポート ステータス</string>
   <string name="data_export_toots">Export statuses for %1$s</string>
   <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-  <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+  <string name="data_export_error">%1$s のデータをエクスポート中に問題が発生しました</string>
   <!-- Proxy -->
-  <string name="proxy_set">Proxy</string>
-  <string name="proxy_type">Type</string>
-  <string name="proxy_enable">Enable proxy?</string>
-  <string name="poxy_host">Host</string>
-  <string name="poxy_port">Port</string>
-  <string name="poxy_login">Login</string>
-  <string name="poxy_password">Password</string>
+  <string name="proxy_set">プロキシ</string>
+  <string name="proxy_type">タイプ</string>
+  <string name="proxy_enable">プロキシの有効化</string>
+  <string name="poxy_host">ホスト</string>
+  <string name="poxy_port">ポート</string>
+  <string name="poxy_login">ログイン</string>
+  <string name="poxy_password">パスワード</string>
 </resources>
