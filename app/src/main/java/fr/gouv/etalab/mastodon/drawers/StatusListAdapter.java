@@ -90,12 +90,14 @@ import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveCardAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRepliesAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
+import fr.gouv.etalab.mastodon.client.Entities.Card;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
@@ -103,6 +105,7 @@ import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveCardInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
@@ -119,7 +122,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface {
+public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface, OnRetrieveCardInterface {
 
     private Context context;
     private List<Status> statuses;
@@ -133,7 +136,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private final int DISPLAYED_STATUS = 1;
     private int conversationPosition;
     private List<String> timedMute;
-
+    private int oldPosition;
 
 
 
@@ -387,7 +390,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, final int position) {
 
         if( viewHolder.getItemViewType() == DISPLAYED_STATUS){
             final ViewHolder holder = (ViewHolder) viewHolder;
@@ -931,13 +934,17 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_content.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.ONESTATUS, status.getId(),null, false,false, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        oldPosition = conversationPosition;
+                        conversationPosition = position;
+                        new RetrieveCardAsyncTask(context, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                 });
                 holder.main_container.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.ONESTATUS, status.getId(),null, false,false, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        oldPosition = conversationPosition;
+                        conversationPosition = position;
+                        new RetrieveCardAsyncTask(context, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                 });
                 if( position == conversationPosition){
@@ -1489,30 +1496,23 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     @Override
     public void onRetrieveFeeds(APIResponse apiResponse) {
-        if( apiResponse.getError() != null){
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+
+    }
+
+
+    @Override
+    public void onRetrieveAccount(Card card) {
+        if( card == null){
             return;
         }
-
-        if( type == RetrieveFeedsAsyncTask.Type.CONTEXT && apiResponse.getStatuses().size() == 1){
-            int oldPosition = conversationPosition;
-            int newPosition = 0;
-            for(Status status: statuses){
-                if(status.getId().equals(apiResponse.getStatuses().get(0).getId())){
-                    conversationPosition = newPosition;
-                    break;
-                }
-                newPosition++;
-            }
-            if( oldPosition < statuses.size())
-                statusListAdapter.notifyItemChanged(oldPosition);
-            if( conversationPosition < statuses.size())
-                statusListAdapter.notifyItemChanged(conversationPosition);
-        }
+        if( conversationPosition < this.statuses.size())
+            this.statuses.get(conversationPosition).setCard(card);
+        if( oldPosition < this.statuses.size())
+            statusListAdapter.notifyItemChanged(oldPosition);
+        if( conversationPosition < this.statuses.size())
+            statusListAdapter.notifyItemChanged(conversationPosition);
     }
+
 
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
