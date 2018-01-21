@@ -935,7 +935,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     @Override
                     public void onClick(View v) {
                         oldPosition = conversationPosition;
-                        conversationPosition = holder.getAdapterPosition();;
+                        conversationPosition = holder.getAdapterPosition();
                         new RetrieveCardAsyncTask(context, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                 });
@@ -943,7 +943,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     @Override
                     public void onClick(View v) {
                         oldPosition = conversationPosition;
-                        conversationPosition = holder.getAdapterPosition();;
+                        conversationPosition = holder.getAdapterPosition();
                         new RetrieveCardAsyncTask(context, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                 });
