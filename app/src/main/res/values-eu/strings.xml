@@ -40,7 +40,7 @@
   <string name="choose_picture">Hautatu irudi bat…</string>
   <string name="clear">Garbitu</string>
   <string name="microphone">Mikrofonoa</string>
-  <string name="camera">Camera</string>
+  <string name="camera">Kamera</string>
   <string name="speech_prompt">Esan zerbait</string>
   <string name="speech_not_supported">Zure gailuak ez du onartzen ahots sarrera!</string>
   <string name="delete_all">Ezabatu guztiak</string>
@@ -433,11 +433,11 @@ Eskerrik asko Stéphane logoagatik.    </string>
   <string name="data_export_success">%1$s toot esportatu dira %2$stik.</string>
   <string name="data_export_error">Zerbait ez da behar bezala joan %1$s(e)ko datuak esportatzean</string>
   <!-- Proxy -->
-  <string name="proxy_set">Proxy</string>
-  <string name="proxy_type">Type</string>
-  <string name="proxy_enable">Enable proxy?</string>
-  <string name="poxy_host">Host</string>
-  <string name="poxy_port">Port</string>
-  <string name="poxy_login">Login</string>
-  <string name="poxy_password">Password</string>
+  <string name="proxy_set">Proxya</string>
+  <string name="proxy_type">Mota</string>
+  <string name="proxy_enable">Gaitu proxya?</string>
+  <string name="poxy_host">Ostalaria</string>
+  <string name="poxy_port">Ataka</string>
+  <string name="poxy_login">Saioa</string>
+  <string name="poxy_password">Pasahitza</string>
 </resources>
