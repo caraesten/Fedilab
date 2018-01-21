@@ -940,7 +940,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.ONESTATUS, status.getId(),null, false,false, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                 });
-
                 if( position == conversationPosition){
                     if( theme == Helper.THEME_LIGHT)
                         holder.main_container.setBackgroundResource(R.color.mastodonC3_);
@@ -993,6 +992,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
 
                 }else {
+                    holder.status_cardview.setVisibility(View.GONE);
+                    holder.status_cardview_video.setVisibility(View.GONE);
                     if( theme == Helper.THEME_LIGHT)
                         holder.main_container.setBackgroundResource(R.color.mastodonC3__);
                     else
