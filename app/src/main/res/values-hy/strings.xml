@@ -151,7 +151,7 @@
   <string name="toots_visibility_tilte">Թութերի սկզբնադիր տեսանելիությունը՝ </string>
   <string name="toot_sent">Թութն ուղարկված է</string>
   <string name="toot_reply_content_title">Արձագանքում ես տվյալ թութին․</string>
-  <string name="toot_sensitive">Sensitive content?</string>
+  <string name="toot_sensitive">Զգայուն բովանդակությու՞ն</string>
   <string-array name="toot_visibility">
     <item>Post to public timelines</item>
     <item>Do not post to public timelines</item>
