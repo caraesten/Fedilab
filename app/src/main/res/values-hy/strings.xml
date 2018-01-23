@@ -51,7 +51,7 @@
   <string name="icon_size_change">Փոխել պատկերակի ներկայիս չափսը․</string>
   <string name="next">Հաջորդը</string>
   <string name="previous">Նախորդը</string>
-  <string name="open_with">Open with</string>
+  <string name="open_with">Բացել այլ հավելվածով</string>
   <string name="validate">Validate</string>
   <string name="media">Media</string>
   <string name="share_with">Share with</string>
@@ -103,53 +103,53 @@
   <string name="fav_removed">The toot was removed from favourites!</string>
   <string name="reblog_added">The toot was boosted!</string>
   <string name="reblog_removed">The toot is no longer boosted!</string>
-  <string name="reblog_by">Boosted by %1$s</string>
-  <string name="favourite_add">Add this toot to your favourites?</string>
-  <string name="favourite_remove">Remove this toot from your favourites?</string>
-  <string name="reblog_add">Boost this toot?</string>
-  <string name="reblog_remove">Unboost this toot?</string>
-  <string name="pin_add">Pin this toot?</string>
-  <string name="pin_remove">Unpin this toot?</string>
-  <string name="more_action_1">Mute</string>
-  <string name="more_action_2">Block</string>
-  <string name="more_action_3">Report</string>
-  <string name="more_action_4">Remove</string>
-  <string name="more_action_5">Copy</string>
-  <string name="more_action_6">Share</string>
-  <string name="more_action_7">Mention</string>
-  <string name="more_action_8">Timed mute</string>
+  <string name="reblog_by">Խրախուսվել է %1$s-ի կողմից</string>
+  <string name="favourite_add">Ավելացնե՞լ այս թութը քո ընտրայլներում</string>
+  <string name="favourite_remove">Հեռացնե՞լ այս թութը քո ընտրյալներից։</string>
+  <string name="reblog_add">Խրախուսե՞լ այս թութը։</string>
+  <string name="reblog_remove">Ապախրախուսե՞լ այս թութը։</string>
+  <string name="pin_add">Մեխե՞լ այս թութը։</string>
+  <string name="pin_remove">Արձակե՞լ այս թութը։</string>
+  <string name="more_action_1">Խլացնել</string>
+  <string name="more_action_2">Արգելափակել</string>
+  <string name="more_action_3">Ահազանգել</string>
+  <string name="more_action_4">Հեռացնել</string>
+  <string name="more_action_5">Պատճենել</string>
+  <string name="more_action_6">Տարածել</string>
+  <string name="more_action_7">Հիշատակել</string>
+  <string name="more_action_8">Ժամանակավոր խլացում</string>
   <string-array name="more_action_confirm">
-    <item>Mute this account?</item>
-    <item>Block this account?</item>
-    <item>Report this toot?</item>
+    <item>Խլացնե՞լ այս հաշիվը</item>
+    <item>Արգելափակե՞լ այս հաշիվը</item>
+    <item>Ահազանգե՞լ այս հաշվի մասին</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>Remove this toot?</item>
+    <item>Հեռացնե՞լ այս թութը</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="one">%d reply</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="other">%d արձագանք</item>
   </plurals>
   <!-- Date -->
-  <string name="date_seconds">%d s</string>
-  <string name="date_minutes">%d m</string>
-  <string name="date_hours">%d h</string>
-  <string name="date_day">%d d</string>
+  <string name="date_seconds">%d վրկ</string>
+  <string name="date_minutes">%d ր</string>
+  <string name="date_hours">%d ժ</string>
+  <string name="date_day">%d օր</string>
   <!-- TOOT -->
-  <string name="toot_cw_placeholder">Warning</string>
-  <string name="toot_placeholder">What is on your mind?</string>
-  <string name="toot_it">TOOT!</string>
+  <string name="toot_cw_placeholder">Զգուշացում</string>
+  <string name="toot_placeholder">Մտքիդ ի՞նչ կա</string>
+  <string name="toot_it">ԹՈՒԹԵԼ!</string>
   <string name="cw">cw</string>
-  <string name="toot_title">Write a toot</string>
-  <string name="toot_title_reply">Reply to a toot</string>
-  <string name="toot_no_space">You have reached the 500 characters allowed!</string>
-  <string name="toot_select_image">Select a media</string>
-  <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-  <string name="toot_delete_media">Delete this media?</string>
-  <string name="toot_error_no_content">Your toot is empty!</string>
-  <string name="toot_visibility_tilte">Visibility of the toot</string>
-  <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-  <string name="toot_sent">The toot has been sent!</string>
+  <string name="toot_title">Թութ գրել</string>
+  <string name="toot_title_reply">Արձագանքել թութին</string>
+  <string name="toot_no_space">Մոտեցել ես 500 նիշ սահմանափակմանը</string>
+  <string name="toot_select_image">Ընտրել մեդիա</string>
+  <string name="toot_select_image_error">Մեդիան ընտրելու ընթացքում սխալ է հայտնվել</string>
+  <string name="toot_delete_media">Ջնջե՞լ այս մեդիան</string>
+  <string name="toot_error_no_content">Քո թութը դատարկ է</string>
+  <string name="toot_visibility_tilte">Թութի տեսանելիությունը</string>
+  <string name="toots_visibility_tilte">Թութերի սկզբնադիր տեսանելիությունը՝ </string>
+  <string name="toot_sent">Թութն ուղարկված է</string>
   <string name="toot_reply_content_title">You are replying to this toot:</string>
   <string name="toot_sensitive">Sensitive content?</string>
   <string-array name="toot_visibility">
