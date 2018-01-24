@@ -183,8 +183,8 @@
   <string name="no_accounts">Ցուցադրելու հաշիվ չկա</string>
   <string name="no_follow_request">Հետևելու հայտեր չկան</string>
   <string name="status_cnt">Թութեր \n %1$s</string>
-  <string name="following_cnt">Ում ես հետևում \n %1$s</string>
-  <string name="followers_cnt">Հետևորդներ \n %1$s</string>
+  <string name="following_cnt">Հետևում եմ \n %1$s</string>
+  <string name="followers_cnt">Հետևում են \n %1$s</string>
   <string name="pins_cnt">Մեխեր \n %d</string>
   <string name="authorize">Թույլատրել</string>
   <string name="reject">Մերժել</string>
@@ -215,17 +215,17 @@
     <item quantity="one">and another toot to discover</item>
     <item quantity="other">and %d other toots to discover</item>
   </plurals>
-  <string name="delete_notification_ask">Delete a notification?</string>
-  <string name="delete_notification_ask_all">Delete all notifications?</string>
-  <string name="delete_notification">The notification has been deleted!</string>
-  <string name="delete_notification_all">All notifications have been deleted!</string>
+  <string name="delete_notification_ask">Ջնջե՞լ ծանուցումը</string>
+  <string name="delete_notification_ask_all">Ջնջե՞լ բոլոր ծանուցումները</string>
+  <string name="delete_notification">Ծանուցումը ջնջված է</string>
+  <string name="delete_notification_all">Բոլոր ծանուցումները ջնջված են</string>
   <!-- HEADER -->
-  <string name="following">Following</string>
-  <string name="followers">Followers</string>
-  <string name="pinned_toots">Pinned</string>
+  <string name="following">Հետևում եմ</string>
+  <string name="followers">Հետևորդներ</string>
+  <string name="pinned_toots">Մեխած</string>
   <!-- TOAST -->
-  <string name="client_error">Unable to get client id!</string>
-  <string name="no_internet">No Internet connection!</string>
+  <string name="client_error">Հաճախորդի id-ն հնարավոր չէ ստանալ</string>
+  <string name="no_internet">Կապ չկա</string>
   <string name="toast_block">The account was blocked!</string>
   <string name="toast_unblock">The account is no longer blocked!</string>
   <string name="toast_mute">The account was muted!</string>
