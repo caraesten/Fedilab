@@ -70,7 +70,7 @@ public class SettingsFragment extends Fragment {
     private Context context;
     private static final int ACTIVITY_CHOOSE_FILE = 411;
     private TextView set_folder;
-    int count2 = 0;
+    int count1, count2 = 0;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -520,6 +520,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        //Translators
         final Spinner translation_layout_spinner = rootView.findViewById(R.id.translation_layout_spinner);
         ArrayAdapter<CharSequence> adapterTrans = ArrayAdapter.createFromResource(getContext(),
                 R.array.settings_translation, android.R.layout.simple_spinner_item);
@@ -569,8 +570,28 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-
-
+        //Resize
+        final Spinner resize_layout_spinner = rootView.findViewById(R.id.set_resize_picture);
+        ArrayAdapter<CharSequence> adapterResize = ArrayAdapter.createFromResource(getContext(),
+                R.array.settings_resize_picture, android.R.layout.simple_spinner_item);
+        resize_layout_spinner.setAdapter(adapterResize);
+        int positionSpinnerResize = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_1MO);
+        resize_layout_spinner.setSelection(positionSpinnerResize);
+        resize_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if( count1 > 0){
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putInt(Helper.SET_PICTURE_RESIZE, position);
+                    editor.apply();
+                }else {
+                    count1++;
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
         return rootView;
     }
 

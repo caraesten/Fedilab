@@ -224,6 +224,11 @@ public class Helper {
     public static final String SET_LIVE_NOTIFICATIONS = "set_live_notifications";
     public static final String SET_DISABLE_GIF = "set_disable_gif";
     public static final String SET_CAPITALIZE = "set_capitalize";
+    public static final String SET_PICTURE_RESIZE = "set_picture_resize";
+    public static final int S_NONE = 0;
+    public static final int S_512KO = 1;
+    public static final int S_1MO = 2;
+    public static final int S_2MO = 3;
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;
