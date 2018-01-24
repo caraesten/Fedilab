@@ -204,12 +204,12 @@
   <string name="no_notifications">Ծանուցում չկա</string>
   <string name="notif_mention">Քեզ հիշատակել է</string>
   <string name="notif_reblog">խրախուսել է քո թութը</string>
-  <string name="notif_favourite">favourited your status</string>
-  <string name="notif_follow">followed you</string>
-  <string name="notif_pouet">New toot from %1$s</string>
+  <string name="notif_favourite">գրառումդ ավելացրել է նախընտրումներին</string>
+  <string name="notif_follow">հետևում է քեզ</string>
+  <string name="notif_pouet">Նոր թութ %1$s-ից</string>
   <plurals name="other_notifications">
-    <item quantity="one">and another notification</item>
-    <item quantity="other">and %d other notifications</item>
+    <item quantity="one">և մեկ այլ ծանուցում</item>
+    <item quantity="other">և %d այլ ծանուցումներ</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
     <item quantity="one">and another toot to discover</item>
