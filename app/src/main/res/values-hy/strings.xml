@@ -83,16 +83,16 @@
   <string name="follow_request">Հետևելու հայտեր</string>
   <string name="optimization">Լավարկում</string>
   <string name="settings">Կարգավորումներ</string>
-  <string name="profile">Profile</string>
-  <string name="make_a_choice">What do you want to do?</string>
-  <string name="delete_account_title">Delete an account</string>
-  <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
-  <string name="send_email">Send an email</string>
-  <string name="choose_file">Please select a file</string>
-  <string name="choose_file_error">No file explorer found!</string>
-  <string name="click_to_change">Click on the path to change it</string>
-  <string name="failed">Failed!</string>
-  <string name="scheduled_toots">Scheduled toots</string>
+  <string name="profile">Էջ</string>
+  <string name="make_a_choice">Ի՞նչ ես ուզում անել</string>
+  <string name="delete_account_title">Ջնջել հաշիվ</string>
+  <string name="delete_account_message" formatted="false">Ջնջե՞լ %1$s հաշիվը հավելվածից</string>
+  <string name="send_email">Ուղարկել էլփոստ</string>
+  <string name="choose_file">Ընտրիր նիշք</string>
+  <string name="choose_file_error">Ոչ մի նիշքախույզ չի հայտնաբերվել!</string>
+  <string name="click_to_change">Կտտացրու հետագծի վրա՝ այն փոխելու համար</string>
+  <string name="failed">Ձախողում</string>
+  <string name="scheduled_toots">Հերթագրված թութեր</string>
   <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
   <string name="insert_emoji">Insert emoji</string>
   <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
