@@ -96,13 +96,13 @@
   <string name="disclaimer_full">Սույն տեղեկատվությունը կարող է օգտատիրոջ էջն արտացոլել ոչ լիարժեք։</string>
   <string name="insert_emoji">Էմոջի ներմուծել</string>
   <string name="no_emoji">Ներկա պահին հավելվածը չունի հավաքագրած էմոջիներ։</string>
-  <string name="live_notif">Live notifications</string>
+  <string name="live_notif">Ուղիղ ծանուցումներ</string>
   <!-- Status -->
-  <string name="no_status">No toot to display</string>
-  <string name="fav_added">The toot was added to favourites</string>
-  <string name="fav_removed">The toot was removed from favourites!</string>
-  <string name="reblog_added">The toot was boosted!</string>
-  <string name="reblog_removed">The toot is no longer boosted!</string>
+  <string name="no_status">Թութ չկա</string>
+  <string name="fav_added">Թութն ավելացվել է նախընտրություններին</string>
+  <string name="fav_removed">Թութը հեռացվել է նախընտրություններից</string>
+  <string name="reblog_added">Թութը խրախուսվել է</string>
+  <string name="reblog_removed">Թութն այլևս խրախուսված չէ</string>
   <string name="reblog_by">Խրախուսվել է %1$s-ի կողմից</string>
   <string name="favourite_add">Ավելացնե՞լ այս թութը նախընտրություններին</string>
   <string name="favourite_remove">Հեռացնե՞լ այս թութը Նախընտրություններից</string>
@@ -155,14 +155,14 @@
   <string-array name="toot_visibility">
     <item>Post to public timelines</item>
     <item>Do not post to public timelines</item>
-    <item>Post to followers only</item>
-    <item>Post to mentioned users only</item>
+    <item>Գրառել միայն հետևորդների համար</item>
+    <item>Գրառել միայն հիշատակված օգտատերերի համար</item>
   </string-array>
-  <string name="no_draft">No draft!</string>
-  <string name="choose_toot">Choose a toot</string>
-  <string name="choose_accounts">Choose an account</string>
-  <string name="select_accounts">Select some accounts</string>
-  <string name="remove_draft">Remove draft?</string>
+  <string name="no_draft">Ոչ մի սևագիր</string>
+  <string name="choose_toot">Ընտրել թութ</string>
+  <string name="choose_accounts">Ընտրել հաշիվ</string>
+  <string name="select_accounts">Ընտրել մի քանի հաշիվ</string>
+  <string name="remove_draft">Հեռացնե՞լ սևագիրը</string>
   <string name="show_reply">Click on the button to display the original toot</string>
   <string name="upload_form_description">Describe for the visually impaired</string>
   <!-- Instance -->
