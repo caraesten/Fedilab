@@ -93,9 +93,9 @@
   <string name="click_to_change">Կտտացրու հետագծի վրա՝ այն փոխելու համար</string>
   <string name="failed">Ձախողում</string>
   <string name="scheduled_toots">Հերթագրված թութեր</string>
-  <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
-  <string name="insert_emoji">Insert emoji</string>
-  <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
+  <string name="disclaimer_full">Սույն տեղեկատվությունը կարող է օգտատիրոջ էջն արտացոլել ոչ լիարժեք։</string>
+  <string name="insert_emoji">Էմոջի ներմուծել</string>
+  <string name="no_emoji">Ներկա պահին հավելվածը չունի հավաքագրած էմոջիներ։</string>
   <string name="live_notif">Live notifications</string>
   <!-- Status -->
   <string name="no_status">No toot to display</string>
