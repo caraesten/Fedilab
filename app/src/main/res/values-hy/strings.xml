@@ -343,7 +343,7 @@
   <string name="action_search">Փնտրել</string>
   <string name="set_capitalize">Առաջին տառը մեծատառով՝ երբ արձագանքում եմ</string>
   <!-- Quick settings for notifications -->
-  <string name="settings_popup_title">Push notifications</string>
+  <string name="settings_popup_title">Փուշ ծանուցումներ</string>
   <string name="settings_popup_message">
         Please, confirm push notifications that you want to receive.
         You can enable or disable these notifications later in settings (Notifications tab).
