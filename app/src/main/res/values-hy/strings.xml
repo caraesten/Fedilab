@@ -163,20 +163,20 @@
   <string name="choose_accounts">Ընտրել հաշիվ</string>
   <string name="select_accounts">Ընտրել մի քանի հաշիվ</string>
   <string name="remove_draft">Հեռացնե՞լ սևագիրը</string>
-  <string name="show_reply">Click on the button to display the original toot</string>
-  <string name="upload_form_description">Describe for the visually impaired</string>
+  <string name="show_reply">Կտտացրեւ կոճակին՝ բնօրինակ թութը տեսնելու համար</string>
+  <string name="upload_form_description">Նկարագրիր՝ տեսողության խնդիրներ ունեցողների համար</string>
   <!-- Instance -->
-  <string name="instance_no_description">No description available!</string>
+  <string name="instance_no_description">Նկարագրություն չկա</string>
   <!-- About -->
-  <string name="about_vesrion">Release %1$s</string>
-  <string name="about_developer">Developer:</string>
-  <string name="about_license">License: </string>
+  <string name="about_vesrion">Թողարկում %1$s</string>
+  <string name="about_developer">Մշակող․</string>
+  <string name="about_license">Արտոնագիր․</string>
   <string name="about_license_action">GNU GPL V3</string>
-  <string name="about_code">Source code: </string>
-  <string name="about_yandex">Translation of toots:</string>
-  <string name="about_thekinrar">Search instances:</string>
+  <string name="about_code">Սկզբնական կոդ․</string>
+  <string name="about_yandex">Թութերի թարգմանությունը․</string>
+  <string name="about_thekinrar">Փնտրել հանգույցներ․</string>
   <string name="about_thekinrar_action">instances.social</string>
-  <string name="thanks_text_logo">Icon designer:</string>
+  <string name="thanks_text_logo">Պատկերակի հեղինակ․</string>
   <!-- Conversation -->
   <string name="conversation">Conversation</string>
   <!-- Accounts -->
