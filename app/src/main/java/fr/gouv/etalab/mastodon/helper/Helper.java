@@ -895,6 +895,18 @@ public class Helper {
         return null;
     }
 
+    public static String getLiveInstanceWithProtocol(Context context) {
+        return instanceWithProtocol(getLiveInstance(context));
+    }
+
+    public static String instanceWithProtocol(String instance){
+        if( instance == null)
+            return null;
+        if( instance.endsWith(".onion"))
+            return "http://" + instance;
+        else
+            return "https://" + instance;
+    }
 
 
 
@@ -958,7 +970,7 @@ public class Helper {
                     item.setIcon(R.drawable.ic_person);
                     String url = account.getAvatar();
                     if( url.startsWith("/") ){
-                        url = "https://" + Helper.getLiveInstance(activity) + account.getAvatar();
+                        url = Helper.getLiveInstanceWithProtocol(activity) + account.getAvatar();
                     }
                     Glide.with(activity.getApplicationContext())
                             .asBitmap()
@@ -1093,7 +1105,7 @@ public class Helper {
      */
     public static void loadPictureIcon(final Activity activity, String url, final ImageView imageView){
         if( url.startsWith("/") ){
-            url = "https://" + Helper.getLiveInstance(activity) + url;
+            url = Helper.getLiveInstanceWithProtocol(activity) + url;
         }
 
         Glide.with(activity.getApplicationContext())
@@ -1169,14 +1181,14 @@ public class Helper {
             displayedName.setText(account.getDisplay_name());
             String url = account.getAvatar();
             if( url.startsWith("/") ){
-                url = "https://" + Helper.getLiveInstance(activity) + account.getAvatar();
+                url = Helper.getLiveInstanceWithProtocol(activity) + account.getAvatar();
             }
             Glide.with(activity.getApplicationContext())
                     .load(url)
                     .into(profilePicture);
             String urlHeader = account.getHeader();
             if( urlHeader.startsWith("/") ){
-                urlHeader = "https://" + Helper.getLiveInstance(activity) + account.getHeader();
+                urlHeader = Helper.getLiveInstanceWithProtocol(activity) + account.getHeader();
             }
             if (!urlHeader.contains("missing.png")) {
                 Glide.with(activity.getApplicationContext())

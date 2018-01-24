@@ -2030,7 +2030,7 @@ public class API {
 
 
     private String getAbsoluteUrl(String action) {
-        return "https://" + this.instance + "/api/v1" + action;
+        return Helper.instanceWithProtocol(this.instance) + "/api/v1" + action;
     }
 
 

@@ -138,7 +138,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
         Account account = new AccountDAO(getApplicationContext(),db).getAccountByID(userId);
         String url = account.getAvatar();
         if( url.startsWith("/") ){
-            url = "https://" + Helper.getLiveInstance(getApplicationContext()) + account.getAvatar();
+            url = Helper.getLiveInstanceWithProtocol(getApplicationContext()) + account.getAvatar();
         }
 
 
