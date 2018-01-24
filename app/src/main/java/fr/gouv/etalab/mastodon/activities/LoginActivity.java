@@ -340,10 +340,11 @@ public class LoginActivity extends BaseActivity {
                                         editor.apply();
                                         //Update the account with the token;
                                         new UpdateAccountInfoAsyncTask(LoginActivity.this, token, instance).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                    } catch (JSONException ignored) {}
+                                    } catch (JSONException ignored) {ignored.printStackTrace();}
                                 }
                             });
                         }catch (final Exception e) {
+                            e.printStackTrace();
                             runOnUiThread(new Runnable() {
                                 public void run() {
                                     connectionButton.setEnabled(true);

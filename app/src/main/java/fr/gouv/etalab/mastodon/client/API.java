@@ -189,8 +189,10 @@ public class API {
             account = parseAccountResponse(context, new JSONObject(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
+            e.printStackTrace();
         }catch (Exception e) {
             setDefaultError(e);
+            e.printStackTrace();
         }
         return account;
     }

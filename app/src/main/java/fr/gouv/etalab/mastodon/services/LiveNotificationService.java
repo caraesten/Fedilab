@@ -45,7 +45,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.Authenticator;
 import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.PasswordAuthentication;
+import java.net.Proxy;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -84,6 +88,8 @@ public class LiveNotificationService extends Service {
     protected Account account;
     private boolean stop = false;
     private static HashMap<String, Boolean> isRunning = new HashMap<>();
+    private Proxy proxy;
+
     public void onCreate() {
         super.onCreate();
     }
@@ -95,11 +101,34 @@ public class LiveNotificationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean proxyEnabled = sharedpreferences.getBoolean(Helper.SET_PROXY_ENABLED, false);
+        int type = sharedpreferences.getInt(Helper.SET_PROXY_TYPE, 0);
+        proxy = null;
+        if( proxyEnabled ){
+            String host = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
+            int port = sharedpreferences.getInt(Helper.SET_PROXY_PORT, 8118);
+            if( type == 0 )
+                proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(host, port));
+            else
+                proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(host, port));
+            final String login = sharedpreferences.getString(Helper.SET_PROXY_LOGIN, null);
+            final String pwd = sharedpreferences.getString(Helper.SET_PROXY_PASSWORD, null);
+            if( login != null) {
+                Authenticator authenticator = new Authenticator() {
+                    public PasswordAuthentication getPasswordAuthentication() {
+                        assert pwd != null;
+                        return (new PasswordAuthentication(login,
+                                pwd.toCharArray()));
+                    }
+                };
+                Authenticator.setDefault(authenticator);
+            }
+        }
         if( intent == null || intent.getBooleanExtra("stop", false) ) {
             stop = true;
             stopSelf();
         }
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
 
         String userId;
@@ -166,7 +195,10 @@ public class LiveNotificationService extends Service {
                 if (Helper.instanceWithProtocol(account.getInstance()).startsWith("https")) {
                     try {
                         URL url = new URL("https://" + account.getInstance() + "/api/v1/streaming/user");
-                        httpsURLConnection = (HttpsURLConnection) url.openConnection();
+                        if( proxy != null)
+                            httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
+                        else
+                            httpsURLConnection = (HttpsURLConnection) url.openConnection();
                         httpsURLConnection.setRequestProperty("Content-Type", "application/json");
                         httpsURLConnection.setRequestProperty("Authorization", "Bearer " + account.getToken());
                         httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
@@ -252,8 +284,11 @@ public class LiveNotificationService extends Service {
                     }
                 }else {
                     try {
-                        URL url = new URL("https://" + account.getInstance() + "/api/v1/streaming/user");
-                        httpURLConnection = (HttpURLConnection) url.openConnection();
+                        URL url = new URL("http://" + account.getInstance() + "/api/v1/streaming/user");
+                        if( proxy != null)
+                            httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
+                        else
+                            httpURLConnection = (HttpURLConnection) url.openConnection();
                         httpURLConnection.setRequestProperty("Content-Type", "application/json");
                         httpURLConnection.setRequestProperty("Authorization", "Bearer " + account.getToken());
                         httpURLConnection.setRequestProperty("Connection", "Keep-Alive");

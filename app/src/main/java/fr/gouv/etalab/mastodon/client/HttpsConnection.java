@@ -107,47 +107,88 @@ public class HttpsConnection {
     @SuppressWarnings("ConstantConditions")
     public String get(String urlConnection, int timeout, HashMap<String, String> paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
 
-
-        Map<String,Object> params = new LinkedHashMap<>();
-        if( paramaters != null) {
-            Iterator it = paramaters.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry) it.next();
-                params.put(pair.getKey().toString(), pair.getValue());
-                it.remove();
+        if( urlConnection.startsWith("https://")) {
+            Map<String, Object> params = new LinkedHashMap<>();
+            if (paramaters != null) {
+                Iterator it = paramaters.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry) it.next();
+                    params.put(pair.getKey().toString(), pair.getValue());
+                    it.remove();
+                }
             }
-        }
-        StringBuilder postData = new StringBuilder();
-        for (Map.Entry<String,Object> param : params.entrySet()) {
-            if (postData.length() != 0) postData.append('&');
-            postData.append(param.getKey());
-            postData.append('=');
-            postData.append(String.valueOf(param.getValue()));
-        }
-        URL url = new URL(urlConnection + "?" + postData);
-        if( proxy !=null )
-            httpsURLConnection = (HttpsURLConnection)url.openConnection(proxy);
-        else
-            httpsURLConnection = (HttpsURLConnection)url.openConnection();
-        httpsURLConnection.setConnectTimeout(timeout * 1000);
-        httpsURLConnection.setRequestProperty("http.keepAlive", "false");
-        httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
-        httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
-        if( token != null)
-            httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
-        httpsURLConnection.setRequestMethod("GET");
-        String response;
-        if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
-            response = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
-        }else {
-            String error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
-            int responseCode = httpsURLConnection.getResponseCode();
+            StringBuilder postData = new StringBuilder();
+            for (Map.Entry<String, Object> param : params.entrySet()) {
+                if (postData.length() != 0) postData.append('&');
+                postData.append(param.getKey());
+                postData.append('=');
+                postData.append(String.valueOf(param.getValue()));
+            }
+            URL url = new URL(urlConnection + "?" + postData);
+            if (proxy != null)
+                httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
+            else
+                httpsURLConnection = (HttpsURLConnection) url.openConnection();
+            httpsURLConnection.setConnectTimeout(timeout * 1000);
+            httpsURLConnection.setRequestProperty("http.keepAlive", "false");
+            httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+            if (token != null)
+                httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+            httpsURLConnection.setRequestMethod("GET");
+            String response;
+            if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
+                response = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
+            } else {
+                String error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                int responseCode = httpsURLConnection.getResponseCode();
+                httpsURLConnection.getInputStream().close();
+                throw new HttpsConnectionException(responseCode, error);
+            }
+            getSinceMaxId();
             httpsURLConnection.getInputStream().close();
-            throw new HttpsConnectionException(responseCode, error);
+            return response;
+        }else {
+            Map<String,Object> params = new LinkedHashMap<>();
+            if( paramaters != null) {
+                Iterator it = paramaters.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry) it.next();
+                    params.put(pair.getKey().toString(), pair.getValue());
+                    it.remove();
+                }
+            }
+            StringBuilder postData = new StringBuilder();
+            for (Map.Entry<String,Object> param : params.entrySet()) {
+                if (postData.length() != 0) postData.append('&');
+                postData.append(param.getKey());
+                postData.append('=');
+                postData.append(String.valueOf(param.getValue()));
+            }
+            URL url = new URL(urlConnection + "?" + postData);
+            if( proxy !=null )
+                httpURLConnection = (HttpURLConnection)url.openConnection(proxy);
+            else
+                httpURLConnection = (HttpURLConnection)url.openConnection();
+            httpURLConnection.setConnectTimeout(timeout * 1000);
+            httpURLConnection.setRequestProperty("http.keepAlive", "false");
+            httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            if( token != null)
+                httpURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+            httpURLConnection.setRequestMethod("GET");
+            String response;
+            if (httpURLConnection.getResponseCode() >= 200 && httpURLConnection.getResponseCode() < 400) {
+                response = new String(ByteStreams.toByteArray(httpURLConnection.getInputStream()));
+            }else {
+                String error = new String(ByteStreams.toByteArray(httpURLConnection.getErrorStream()));
+                int responseCode = httpURLConnection.getResponseCode();
+                httpURLConnection.getInputStream().close();
+                throw new HttpsConnectionException(responseCode, error);
+            }
+            getSinceMaxId();
+            httpURLConnection.getInputStream().close();
+            return response;
         }
-        getSinceMaxId();
-        httpsURLConnection.getInputStream().close();
-        return response;
     }
 
 
