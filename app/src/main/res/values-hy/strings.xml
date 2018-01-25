@@ -153,8 +153,8 @@
   <string name="toot_reply_content_title">Արձագանքում ես տվյալ թութին․</string>
   <string name="toot_sensitive">Զգայուն բովանդակությու՞ն</string>
   <string-array name="toot_visibility">
-    <item>Post to public timelines</item>
-    <item>Do not post to public timelines</item>
+    <item>Տեղադրել հանրային հոսքերին</item>
+    <item>Չտեղադրել հանրային հոսքերին</item>
     <item>Գրառել միայն հետևորդների համար</item>
     <item>Գրառել միայն հիշատակված օգտատերերի համար</item>
   </string-array>
@@ -270,28 +270,28 @@
   <string name="set_display_reply">Display previous message in responses</string>
   <string name="set_display_local">Ցուցադրել տեղական հոսքը</string>
   <string name="set_display_global">Ցուցադրել դաշնային հոսքը</string>
-  <string name="set_disable_gif">Disable GIF avatars</string>
+  <string name="set_disable_gif">Անջատել գիֆ նկարները</string>
   <string name="set_folder_title">Հետագիծ․ </string>
   <string name="set_auto_store_toot">Ինքնաշխատ պահել սևագրերը</string>
   <string name="set_bubble_counter">Ցուցադրել հաշվիչները</string>
-  <string name="set_auto_add_media_url">Add URL of media in toots</string>
+  <string name="set_auto_add_media_url">Թութում ներառել մեդիայի հղումը</string>
   <string name="settings_title_notifications">Կարգավորել ծանուցումները</string>
   <string name="set_notif_follow">Տեղեկացնել, երբ որևէ մեկը սկսում է հետևել քեզ</string>
   <string name="set_notif_follow_ask">Տեղեկացնել, երբ երևէ մեկը հայց է ուղարկում՝ հետևելու քեզ</string>
   <string name="set_notif_follow_share">Տեղեկացնել, երբ որևէ մեկը տարածում է թութդ</string>
   <string name="set_notif_follow_add">Տեղեկացնել, երբ որևէ մեկը հավանում է թութդ</string>
   <string name="set_notif_follow_mention">Տեղեկացնել, երբ որևէ մեկը նշում է քեզ</string>
-  <string name="set_share_validation">Show confirmation dialog before boosting</string>
-  <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
-  <string name="settings_title_more_options">Advanced settings</string>
-  <string name="set_wifi_only">Notify in WIFI only</string>
-  <string name="set_notify">Notify?</string>
-  <string name="set_notif_silent">Silent Notifications</string>
-  <string name="set_night_mode">Night mode</string>
-  <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
-  <string name="settings_title_profile">Edit profile</string>
-  <string name="set_profile_description">Bio…</string>
-  <string name="set_save_changes">Save changes</string>
+  <string name="set_share_validation">Ցուցադրել հաստատման պատուհանը տարածելուց առաջ</string>
+  <string name="set_share_validation_fav">Ցուցադրել հաստատման պատուհանը հավանածներին ավելացնելուց առաջ</string>
+  <string name="settings_title_more_options">Հավելյալ կարգավորումներ</string>
+  <string name="set_wifi_only">Ծանուցել միայն WIFI-ին կպած</string>
+  <string name="set_notify">Ծանուցե՞լ</string>
+  <string name="set_notif_silent">Լուռ ծանուցումներ</string>
+  <string name="set_night_mode">Գիշերային ոճ</string>
+  <string name="set_nsfw_timeout">NSFW ցուցադրման տևողությունը(վրկյ-ով, 0-ն անջատելն է)</string>
+  <string name="settings_title_profile">Խմբագրել Էջը</string>
+  <string name="set_profile_description">Կենսագրություն…</string>
+  <string name="set_save_changes">Պահել փոփոխությունները</string>
   <string name="set_header_picture_overlay">Choose a header picture</string>
   <string name="set_preview_reply">Display the number of replies in home timeline</string>
   <string name="set_preview_reply_pp">Display profile pictures?</string>
@@ -413,10 +413,10 @@
   <string name="action_lists_update">Փոփոխել ցանկը</string>
   <string name="action_lists_title_placeholder">Նոր ցանկի վերնագիր</string>
   <string name="action_lists_search_users">Փնտրել քո հետևած մարդկանց մեջ</string>
-  <string name="action_lists_owner">Your lists</string>
+  <string name="action_lists_owner">Քո ցանկերը</string>
   <!-- Migration -->
   <string name="account_moved_to">%1$s has moved to %2$s</string>
-  <string name="show_boost_count">Show boosts/favourites count</string>
+  <string name="show_boost_count">Ցուցադրել տարածումների/հավանումների հաշվիչ</string>
   <string name="issue_login_title">Authentication does not work?</string>
   <string name="issue_login_message">
         <b>Here are some checks that might help:</b>\n\n
