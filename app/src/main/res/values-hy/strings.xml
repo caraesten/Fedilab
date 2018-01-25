@@ -183,8 +183,8 @@
   <string name="no_accounts">Ցուցադրելու հաշիվ չկա</string>
   <string name="no_follow_request">Հետևելու հայտեր չկան</string>
   <string name="status_cnt">Թութեր \n %1$s</string>
-  <string name="following_cnt">Ում ես հետևում \n %1$s</string>
-  <string name="followers_cnt">Հետևորդներ \n %1$s</string>
+  <string name="following_cnt">Հետևում եմ \n %1$s</string>
+  <string name="followers_cnt">Հետևում են \n %1$s</string>
   <string name="pins_cnt">Մեխեր \n %d</string>
   <string name="authorize">Թույլատրել</string>
   <string name="reject">Մերժել</string>
@@ -215,58 +215,58 @@
     <item quantity="one">and another toot to discover</item>
     <item quantity="other">and %d other toots to discover</item>
   </plurals>
-  <string name="delete_notification_ask">Delete a notification?</string>
-  <string name="delete_notification_ask_all">Delete all notifications?</string>
-  <string name="delete_notification">The notification has been deleted!</string>
-  <string name="delete_notification_all">All notifications have been deleted!</string>
+  <string name="delete_notification_ask">Ջնջե՞լ ծանուցումը</string>
+  <string name="delete_notification_ask_all">Ջնջե՞լ բոլոր ծանուցումները</string>
+  <string name="delete_notification">Ծանուցումը ջնջված է</string>
+  <string name="delete_notification_all">Բոլոր ծանուցումները ջնջված են</string>
   <!-- HEADER -->
-  <string name="following">Following</string>
-  <string name="followers">Followers</string>
-  <string name="pinned_toots">Pinned</string>
+  <string name="following">Հետևում եմ</string>
+  <string name="followers">Հետևորդներ</string>
+  <string name="pinned_toots">Մեխած</string>
   <!-- TOAST -->
-  <string name="client_error">Unable to get client id!</string>
-  <string name="no_internet">No Internet connection!</string>
-  <string name="toast_block">The account was blocked!</string>
-  <string name="toast_unblock">The account is no longer blocked!</string>
-  <string name="toast_mute">The account was muted!</string>
-  <string name="toast_unmute">The account is no longer muted!</string>
-  <string name="toast_follow">The account was followed!</string>
-  <string name="toast_unfollow">The account is no longer followed!</string>
-  <string name="toast_reblog">The toot was boosted!</string>
-  <string name="toast_unreblog">The toot is no longer boosted!</string>
-  <string name="toast_favourite">The toot was added to your favourites!</string>
-  <string name="toast_unfavourite">The toot was removed from your favourites!</string>
-  <string name="toast_report">The toot was reported!</string>
-  <string name="toast_unstatus">The toot was deleted!</string>
-  <string name="toast_pin">The toot was pinned!</string>
-  <string name="toast_unpin">The toot was unpinned!</string>
-  <string name="toast_error">Oops ! An error occurred!</string>
-  <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
-  <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
-  <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
-  <string name="toast_error_search">An error occurred while searching!</string>
-  <string name="toast_error_login">Can not log in!</string>
-  <string name="toast_update_credential_ok">The profile data have been saved!</string>
-  <string name="nothing_to_do">No action can be taken</string>
-  <string name="toast_saved">The media has been saved!</string>
-  <string name="toast_error_translate">An error occurred while translating!</string>
-  <string name="toast_toot_saved">Draft saved!</string>
-  <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
-  <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
-  <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
+  <string name="client_error">Հաճախորդի id-ն հնարավոր չէ ստանալ</string>
+  <string name="no_internet">Կապ չկա</string>
+  <string name="toast_block">Հաշիվն արգելափակված է</string>
+  <string name="toast_unblock">Հաշիվն այլևս արգելափակված չէ</string>
+  <string name="toast_mute">Հաշիվը խլացված է</string>
+  <string name="toast_unmute">Հաշիվն այլևս խլացված չէ</string>
+  <string name="toast_follow">Հետևում ես հաշվին</string>
+  <string name="toast_unfollow">Այլևս չես հետևում հաշվին</string>
+  <string name="toast_reblog">Թութը խրախուսվել է</string>
+  <string name="toast_unreblog">Թութն այլևս չի խրախուսվում</string>
+  <string name="toast_favourite">Թութն ավելացվել է քո նախընտրություններին</string>
+  <string name="toast_unfavourite">Թութը հեռացվել է նախընտրություններից</string>
+  <string name="toast_report">Թութի վերաբերյալ ահազանգ կա</string>
+  <string name="toast_unstatus">Թութը ջնջվել է</string>
+  <string name="toast_pin">Թութը մեխվել է</string>
+  <string name="toast_unpin">Թութն ապամեխվել է</string>
+  <string name="toast_error">Ուպս! Ինչ-որ բան այն չէ</string>
+  <string name="toast_code_error">Ինչ որ բան այն չէ! Հանգույցը չվերադարձրեց հաստատման կոդը</string>
+  <string name="toast_error_instance">Հանգույցի դոմեյնը կարծես անվավեր է</string>
+  <string name="toast_error_loading_account">Ինչ-որ սխալ տեղի ունեցավ հաշիվը փոխելու ընթացքում</string>
+  <string name="toast_error_search">Փնտրելիս սխալ տեղի ունեցավ</string>
+  <string name="toast_error_login">Չես կարող մուտք գործել</string>
+  <string name="toast_update_credential_ok">Էջի բովանդակությունը պահպանված է</string>
+  <string name="nothing_to_do">Անհնար է ինչ-րո բան անել</string>
+  <string name="toast_saved">Մեդիան պահպանված է</string>
+  <string name="toast_error_translate">Թարգմանության ընթացքում սխալ տեղի ունեցավ</string>
+  <string name="toast_toot_saved">Սևագիրը պահված է</string>
+  <string name="toast_error_char_limit">Վստա՞հ ես որ սույն հանգույցը թույլատրում է նիշերի նման քանակ։ Սովորաբար առավելագույնը 500 նիշն է։</string>
+  <string name="toast_visibility_changed">Թութերի տեսանելությունը փոխվել է %1$s հաշվի համար</string>
+  <string name="toast_empty_search">Հանգույցի ու օգտատիրոջ անունները չեն կարող դատարկ լինել</string>
   <!-- Settings -->
-  <string name="settings_title_optimisation">Optimisation of loading</string>
-  <string name="set_toots_page">Number of toots per load</string>
-  <string name="set_accounts_page">Number of accounts per load</string>
-  <string name="set_notifications_page">Number of notifications per load</string>
-  <string name="set_attachment_always">Always</string>
+  <string name="settings_title_optimisation">Բեռնման լավարկում</string>
+  <string name="set_toots_page">Թութերի քանակը մեկ բեռնման համար</string>
+  <string name="set_accounts_page">Հաշիվների քանակը՝ մեկ բեռնման համար</string>
+  <string name="set_notifications_page">Ծանուցումների քանակը՝ մեկ բեռնման համար</string>
+  <string name="set_attachment_always">Միշտ</string>
   <string name="set_attachment_wifi">WIFI</string>
-  <string name="set_attachment_ask">Ask</string>
-  <string name="set_attachment_action">Load the media</string>
-  <string name="load_attachment">Load the pictures</string>
-  <string name="load_attachment_spoiler">Show more…</string>
-  <string name="load_attachment_spoiler_less">Show less…</string>
-  <string name="load_sensitive_attachment">Sensitive content</string>
+  <string name="set_attachment_ask">Հարցնել</string>
+  <string name="set_attachment_action">Բեռնել մեդիան</string>
+  <string name="load_attachment">Բեռնել նկարները</string>
+  <string name="load_attachment_spoiler">Ցույց տալ…</string>
+  <string name="load_attachment_spoiler_less">Ցույց չտալ…</string>
+  <string name="load_sensitive_attachment">Զգայուն բովանդակություն</string>
   <string name="set_display_reply">Display previous message in responses</string>
   <string name="set_display_local">Display local timeline</string>
   <string name="set_display_global">Display federated timeline</string>
@@ -312,51 +312,51 @@
   <string-array name="settings_menu_tabs">
     <item>Tabs</item>
     <item>Menu</item>
-    <item>Tabs and menu</item>
+    <item>Ներդիրներ և մենյու</item>
   </string-array>
   <string-array name="settings_translation">
-    <item>Yandex</item>
-    <item>No</item>
+    <item>Յանդեքս</item>
+    <item>Ոչ</item>
   </string-array>
-  <string name="set_led_colour">Set LED colour:</string>
+  <string name="set_led_colour">Կարգել LED-ի գույնը․</string>
   <string-array name="led_colours">
-    <item>Blue</item>
-    <item>Cyan</item>
-    <item>Magenta</item>
-    <item>Green</item>
-    <item>Red</item>
-    <item>Yellow</item>
-    <item>White</item>
+    <item>Կապույտ</item>
+    <item>Երկնագույն</item>
+    <item>Մանուշակագույն</item>
+    <item>Կանաչ</item>
+    <item>Կարմիր</item>
+    <item>Դեղին</item>
+    <item>Սպիտակ</item>
   </string-array>
-  <string name="set_title_news">News</string>
+  <string name="set_title_news">Նորություններ</string>
   <string name="set_notification_news">Notify for new toots on the home timeline</string>
-  <string name="set_show_error_messages">Display error messages</string>
-  <string name="action_follow">Follow</string>
-  <string name="action_unfollow">Unfollow</string>
-  <string name="action_block">Block</string>
-  <string name="action_unblock">Unblock</string>
-  <string name="action_mute">Mute</string>
-  <string name="action_no_action">No action</string>
-  <string name="action_unmute">Unmute</string>
-  <string name="request_sent">Request sent</string>
-  <string name="followed_by">Follows you</string>
-  <string name="action_search">Search</string>
-  <string name="set_capitalize">First letter in capital for replies</string>
+  <string name="set_show_error_messages">Ցուցադրել սխալների հաղորդումները</string>
+  <string name="action_follow">Հետևել</string>
+  <string name="action_unfollow">Չհետևել</string>
+  <string name="action_block">Արգելափակել</string>
+  <string name="action_unblock">Ապաարգելափակել</string>
+  <string name="action_mute">Խլացնել</string>
+  <string name="action_no_action">Գործողություն չկա</string>
+  <string name="action_unmute">Ապախլացնել</string>
+  <string name="request_sent">Հայտն ուղարկված է</string>
+  <string name="followed_by">Հետևում է քեզ</string>
+  <string name="action_search">Փնտրել</string>
+  <string name="set_capitalize">Առաջին տառը մեծատառով՝ երբ արձագանքում եմ</string>
   <!-- Quick settings for notifications -->
-  <string name="settings_popup_title">Push notifications</string>
+  <string name="settings_popup_title">Փուշ ծանուցումներ</string>
   <string name="settings_popup_message">
-        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
+        Հաստատիր այն փուշ ծանուցումները, որոնք ցանկանում ես ստանալ։
+        Հետագայում կարող ես անջատել կամ միացնել այս ծանուցումները կարգավորումներից։
     </string>
   <string name="settings_popup_timeline">For unread toots in home time-line?</string>
-  <string name="settings_popup_notification">For unread notifications?</string>
+  <string name="settings_popup_notification">Չկարդացած ծանուցումների համա՞ր</string>
   <!-- CACHE -->
-  <string name="cache_title">Clear cache</string>
-  <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
-  <string name="cache_units">Mb</string>
-  <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+  <string name="cache_title">Մաքրել քեշը</string>
+  <string name="cache_message">Քեշում %1$s բովանդակություն կա։\n\nՑանկանում ես ջնջե՞լ</string>
+  <string name="cache_units">Մբ</string>
+  <string name="toast_cache_clear">Քեշը մաքուր է! %1$s տարածք ազատվեց</string>
   <!-- PRIVACY -->
-  <string name="privacy_data_title">Recorded data</string>
+  <string name="privacy_data_title">Հավաքած բովանդակություն</string>
   <string name="privacy_data">
         Only basic information from accounts are stored on the device.
         These data are strictly confidential and can only be used by the application.
