@@ -24,12 +24,14 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.URLSpan;
 import android.util.Patterns;
@@ -48,6 +50,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.WebviewActivity;
@@ -621,7 +624,7 @@ public class Status implements Parcelable{
             spannableString.removeSpan(span);
         List<Mention> mentions = this.status.getReblog() != null ? this.status.getReblog().getMentions() : this.status.getMentions();
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
         Matcher matcher;
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
@@ -643,10 +646,13 @@ public class Status implements Parcelable{
                 @Override
                 public void updateDrawState(TextPaint ds) {
                     super.updateDrawState(ds);
+                    ds.setUnderlineText(false);
                 }
             },
             matchStart, matchEnd,
             Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, theme==Helper.THEME_DARK?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
 
         //Deals with mention to make them clickable
@@ -671,9 +677,12 @@ public class Status implements Parcelable{
                                     @Override
                                     public void updateDrawState(TextPaint ds) {
                                         super.updateDrawState(ds);
+                                        ds.setUnderlineText(false);
                                     }
                                 },
                                 startPosition, endPosition,
+                                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                        spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, theme==Helper.THEME_DARK?R.color.mastodonC2:R.color.mastodonC4)), startPosition, endPosition,
                                 Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }
                 }
@@ -697,8 +706,11 @@ public class Status implements Parcelable{
                 @Override
                 public void updateDrawState(TextPaint ds) {
                     super.updateDrawState(ds);
+                    ds.setUnderlineText(false);
                 }
             }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, theme==Helper.THEME_DARK?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         return spannableString;
     }
