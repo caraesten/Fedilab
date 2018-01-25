@@ -293,20 +293,20 @@
   <string name="set_profile_description">Կենսագրություն…</string>
   <string name="set_save_changes">Պահել փոփոխությունները</string>
   <string name="set_header_picture_overlay">Choose a header picture</string>
-  <string name="set_preview_reply">Display the number of replies in home timeline</string>
+  <string name="set_preview_reply">Ցուցադրել արձագանքների քանակը հարազատ հոսքում</string>
   <string name="set_preview_reply_pp">Display profile pictures?</string>
-  <string name="set_multiaccount_actions">Allow interactions between accounts?</string>
-  <string name="note_no_space">You have reached the 160 characters allowed!</string>
-  <string name="username_no_space">You have reached the 30 characters allowed!</string>
-  <string name="settings_title_hour">Time slot for notifications:</string>
-  <string name="settings_time_from">Between</string>
-  <string name="settings_time_to">and</string>
-  <string name="settings_time_greater">The time must be greater than %1$s</string>
-  <string name="settings_time_lower">The time must be lower than %1$s</string>
-  <string name="settings_hour_init">Start time</string>
-  <string name="settings_hour_end">End time</string>
-  <string name="embedded_browser">Use the built-in browser</string>
-  <string name="use_javascript">Enable Javascript</string>
+  <string name="set_multiaccount_actions">Թույլատրե՞լ հաշիվների միջև փոխհարաբերությունները</string>
+  <string name="note_no_space">Դու հատե՛լ ես թույլատրված 160 նիշերի սահմանը</string>
+  <string name="username_no_space">Դու հատե՛լ ես թույլատրված 30 նիշերի սահմանը</string>
+  <string name="settings_title_hour">Ծանուցվելու ժամանակահատվածը՝</string>
+  <string name="settings_time_from">Սկսած՝</string>
+  <string name="settings_time_to">մինչև</string>
+  <string name="settings_time_greater">Ժամը պետք է ավելի ուշ լինի, քան %1$s֊ը</string>
+  <string name="settings_time_lower">Ժամը պետք է ավելի վաղ լինի, քան %1$s֊ը</string>
+  <string name="settings_hour_init">Սկսելու ժամը</string>
+  <string name="settings_hour_end">Ավարտի ժամը</string>
+  <string name="embedded_browser">Օգտագործել ներկառուցված զննիչը</string>
+  <string name="use_javascript">Թույլատրել Ջավասկրիպտ</string>
   <string name="use_cookies">Allow third-party cookies</string>
   <string name="settings_ui_layout">Layout for timelines: </string>
   <string-array name="settings_menu_tabs">
@@ -400,7 +400,7 @@
     </string>
   <string name="filter_regex">Filter out by regular expressions</string>
   <string name="search">Search</string>
-  <string name="delete">Delete</string>
+  <string name="delete">Ջնջել</string>
   <string name="fetch_more_toots">Fetch more toots…</string>
   <!-- About lists -->
   <string name="action_lists">Ցանկեր</string>
