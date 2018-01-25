@@ -381,13 +381,13 @@
     </string>
   <string name="privacy_API_title">Tracking and Libraries</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+        Հավելվածը <b>չի՛ օգտագործում հետևող գործիքներ</b> (լսարանի չափում, սխալանքների զեկուցում և այլն) և չի՛ պարունակում որևէ գովազդ։\n\n
+        Գրադարանների օգտագործումը հասցված է նվազագույնի՝\n
+        ֊<b>Glide</b>՝ մեդիան կառավարելու համար\n
+        ֊<b>Android-Job</b>՝ ծառայությունները կառավարելու համար\n
+        ֊<b>PhotoView</b>՝ նկրները կառավարելու համար\n
     </string>
-  <string name="privacy_API_yandex_title">Translation of toots</string>
+  <string name="privacy_API_yandex_title">Թթերի թարգմանություն</string>
   <string name="privacy_API_yandex_authorizations">
         The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
@@ -403,16 +403,16 @@
   <string name="delete">Delete</string>
   <string name="fetch_more_toots">Fetch more toots…</string>
   <!-- About lists -->
-  <string name="action_lists">Lists</string>
+  <string name="action_lists">Ցանկեր</string>
   <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
   <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-  <string name="action_lists_add_to">Add to list</string>
-  <string name="action_lists_remove_from">Remove from list</string>
-  <string name="action_lists_create">Add list</string>
-  <string name="action_lists_delete">Delete list</string>
-  <string name="action_lists_update">Edit list</string>
-  <string name="action_lists_title_placeholder">New list title</string>
-  <string name="action_lists_search_users">Search among people you follow</string>
+  <string name="action_lists_add_to">Ավելացնել ցանկին</string>
+  <string name="action_lists_remove_from">Հանել ցանկից</string>
+  <string name="action_lists_create">Ցանկ ավելացնել</string>
+  <string name="action_lists_delete">Ջնջել ցանկը</string>
+  <string name="action_lists_update">Փոփոխել ցանկը</string>
+  <string name="action_lists_title_placeholder">Նոր ցանկի վերնագիր</string>
+  <string name="action_lists_search_users">Փնտրել քո հետևած մարդկանց մեջ</string>
   <string name="action_lists_owner">Your lists</string>
   <!-- Migration -->
   <string name="account_moved_to">%1$s has moved to %2$s</string>
