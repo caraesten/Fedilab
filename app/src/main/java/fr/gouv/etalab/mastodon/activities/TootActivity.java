@@ -89,8 +89,10 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -672,11 +674,22 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                     }
                     picture_scrollview.setVisibility(View.VISIBLE);
                     try {
+                        File photoFiletmp = createImageFile(false);
                         InputStream inputStream = getContentResolver().openInputStream(fileUri);
-                        toot_picture_container.setVisibility(View.VISIBLE);
-                        picture_scrollview.setVisibility(View.VISIBLE);
-                        toot_picture.setEnabled(false);
-                        new HttpsConnection(TootActivity.this).upload(inputStream, TootActivity.this);
+                        OutputStream output = new FileOutputStream(photoFile);
+                        try {
+                            byte[] buffer = new byte[4 * 1024]; // or other buffer size
+                            int read;
+
+                            assert inputStream != null;
+                            while ((read = inputStream.read(buffer)) != -1) {
+                                output.write(buffer, 0, read);
+                            }
+                            output.flush();
+                        } finally {
+                            output.close();
+                        }
+                        new asyncPicture(TootActivity.this, photoFiletmp).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         count++;
                     } catch (Exception e) {
                         Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
@@ -699,7 +712,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             // Create the File where the photo should go
             try {
-                photoFile = createImageFile();
+                photoFile = createImageFile(true);
             } catch (IOException ignored) {Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();}
             // Continue only if the File was successfully created
             if (photoFile != null) {
@@ -713,11 +726,11 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     }
 
 
-    private File createImageFile() throws IOException {
+    private File createImageFile(boolean external) throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDir = external?getExternalFilesDir(Environment.DIRECTORY_PICTURES):getCacheDir();
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
@@ -741,9 +754,26 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             try {
                 //noinspection ConstantConditions
                 InputStream inputStream = getContentResolver().openInputStream(data.getData());
-                toot_picture_container.setVisibility(View.VISIBLE);
-                toot_picture.setEnabled(false);
-                new HttpsConnection(TootActivity.this).upload(inputStream, TootActivity.this);
+                File photoFiletmp;
+                try {
+                    photoFiletmp = createImageFile(false);
+                    OutputStream output = new FileOutputStream(photoFiletmp);
+                    try {
+                        byte[] buffer = new byte[4 * 1024]; // or other buffer size
+                        int read;
+
+                        assert inputStream != null;
+                        while ((read = inputStream.read(buffer)) != -1) {
+                            output.write(buffer, 0, read);
+                        }
+                        output.flush();
+                        new asyncPicture(TootActivity.this, photoFiletmp).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    } finally {
+                        output.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } catch (FileNotFoundException e) {
                 Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
                 toot_picture.setEnabled(true);
@@ -756,9 +786,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 toot_content.setSelection(toot_content.getText().length());
             }
         }else if (requestCode == TAKE_PHOTO && resultCode == RESULT_OK) {
-
             new asyncPicture(TootActivity.this, photoFile).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
         }
     }
 
@@ -778,8 +806,17 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
 
             Bitmap takenImage = BitmapFactory.decodeFile(String.valueOf(this.fileWeakReference.get()));
             int size = takenImage.getByteCount();
-            //Resize image to 2 meg
-            double resize = ((double)size)/((double)16777216);
+            SharedPreferences sharedpreferences = this.activityWeakReference.get().getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+            int resizeSet = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_1MO);
+            double resizeby = 1;
+            if( resizeSet == Helper.S_512KO){
+                resizeby = 4194304;
+            }else if(resizeSet == Helper.S_1MO){
+                resizeby = 8388608;
+            }else if(resizeSet == Helper.S_2MO){
+                resizeby = 16777216;
+            }
+            double resize = ((double)size)/resizeby;
             Bitmap newBitmap;
             if( resize > 1 ){
                 newBitmap = Bitmap.createScaledBitmap(takenImage, (int)(takenImage.getWidth()/resize),

@@ -444,7 +444,7 @@ public class Status implements Parcelable{
 
     public void makeClickable(Context context){
 
-        if( ((Activity)context).isFinishing() )
+        if( ((Activity)context).isFinishing() || status == null)
             return;
         SpannableString spannableStringContent, spannableStringCW;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -466,7 +466,7 @@ public class Status implements Parcelable{
 
     public void makeClickableTranslation(Context context){
 
-        if( ((Activity)context).isFinishing() )
+        if( ((Activity)context).isFinishing() || status == null)
             return;
         SpannableString spannableStringTranslated;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
