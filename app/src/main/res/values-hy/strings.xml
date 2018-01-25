@@ -71,8 +71,8 @@
   <string name="please_wait">Սպասիր մի քանի վայրկյան մինչև այս գործողութ-նը կատարելը։</string>
   <!--- Menu -->
   <string name="home_menu">Տուն</string>
-  <string name="local_menu">Local timeline</string>
-  <string name="global_menu">Federated timeline</string>
+  <string name="local_menu">Տեղական հոսք</string>
+  <string name="global_menu">Դաշնային հոսք</string>
   <string name="neutral_menu_title">Ընտրանքներ</string>
   <string name="favorites_menu">Նախընտրություններ</string>
   <string name="communication_menu_title">Հաղորդակցում</string>
@@ -268,14 +268,14 @@
   <string name="load_attachment_spoiler_less">Ցույց չտալ…</string>
   <string name="load_sensitive_attachment">Զգայուն բովանդակություն</string>
   <string name="set_display_reply">Display previous message in responses</string>
-  <string name="set_display_local">Display local timeline</string>
-  <string name="set_display_global">Display federated timeline</string>
+  <string name="set_display_local">Ցուցադրել տեղական հոսքը</string>
+  <string name="set_display_global">Ցուցադրել դաշնային հոսքը</string>
   <string name="set_disable_gif">Disable GIF avatars</string>
   <string name="set_folder_title">Հետագիծ․ </string>
   <string name="set_auto_store_toot">Ինքնաշխատ պահել սևագրերը</string>
   <string name="set_bubble_counter">Ցուցադրել հաշվիչները</string>
   <string name="set_auto_add_media_url">Add URL of media in toots</string>
-  <string name="settings_title_notifications">Manage notifications</string>
+  <string name="settings_title_notifications">Կարգավորել ծանուցումները</string>
   <string name="set_notif_follow">Notify when someone follows you</string>
   <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
   <string name="set_notif_follow_share">Notify when someone boosts your status</string>
