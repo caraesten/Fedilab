@@ -245,8 +245,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             else
                 holder.status_document_container.setVisibility(View.VISIBLE);
 
-            Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/DroidSans-Regular.ttf");
-            holder.notification_status_content.setTypeface(tf);
             holder.status_reply.setText("");
             if( !status.isClickable())
                 status.makeClickable(context);

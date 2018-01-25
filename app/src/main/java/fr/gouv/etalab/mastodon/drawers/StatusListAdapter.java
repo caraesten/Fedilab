@@ -776,9 +776,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
                 }
 
-                Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/DroidSans-Regular.ttf");
-                holder.status_content.setTypeface(tf);
-                holder.status_content_translated.setTypeface(tf);
+
                 //Toot was translated and user asked to see it
 
                 if( status.isTranslationShown() && status.getContentSpanTranslated() != null){
