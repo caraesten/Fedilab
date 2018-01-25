@@ -212,8 +212,8 @@
     <item quantity="other">և %d այլ ծանուցումներ</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="one">and another toot to discover</item>
-    <item quantity="other">and %d other toots to discover</item>
+    <item quantity="one">և մեկ այլ թութ</item>
+    <item quantity="other">և %d այլ թութ</item>
   </plurals>
   <string name="delete_notification_ask">Ջնջե՞լ ծանուցումը</string>
   <string name="delete_notification_ask_all">Ջնջե՞լ բոլոր ծանուցումները</string>
@@ -271,8 +271,8 @@
   <string name="set_display_local">Display local timeline</string>
   <string name="set_display_global">Display federated timeline</string>
   <string name="set_disable_gif">Disable GIF avatars</string>
-  <string name="set_folder_title">Path: </string>
-  <string name="set_auto_store_toot">Save drafts automatically</string>
+  <string name="set_folder_title">Հետագիծ․ </string>
+  <string name="set_auto_store_toot">Ինքնաշխատ պահել սևագրերը</string>
   <string name="set_bubble_counter">Display counters</string>
   <string name="set_auto_add_media_url">Add URL of media in toots</string>
   <string name="settings_title_notifications">Manage notifications</string>
