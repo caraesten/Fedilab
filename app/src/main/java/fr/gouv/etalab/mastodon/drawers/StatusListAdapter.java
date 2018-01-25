@@ -215,6 +215,19 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         }
     }
 
+    @Override
+    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        final ViewHolder viewHolder = (ViewHolder) holder;
+        // Bug workaround for losing text selection ability, see:
+        // https://code.google.com/p/android/issues/detail?id=208169
+        viewHolder.status_content.setEnabled(false);
+        viewHolder.status_content.setEnabled(true);
+        viewHolder.status_spoiler.setEnabled(false);
+        viewHolder.status_spoiler.setEnabled(true);
+    }
+
+
     class ViewHolder extends RecyclerView.ViewHolder{
         LinearLayout status_content_container;
         LinearLayout status_spoiler_container;
@@ -537,9 +550,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
-
             holder.status_content.setMovementMethod(LinkMovementMethod.getInstance());
-
+            holder.status_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
             //Manages translations
             final MyTransL myTransL = MyTransL.getInstance(MyTransL.translatorEngine.YANDEX);
             myTransL.setObfuscation(true);
@@ -1495,6 +1507,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     public void onRetrieveFeeds(APIResponse apiResponse) {
 
     }
+
 
 
     @Override

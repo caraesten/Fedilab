@@ -251,7 +251,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 status.makeEmojis(context, NotificationsListAdapter.this);
             holder.notification_status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
-
+            holder.status_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
             holder.notification_status_content.setMovementMethod(LinkMovementMethod.getInstance());
             boolean displayBoost = sharedpreferences.getBoolean(Helper.SET_DISPLAY_BOOST_COUNT, true);
             if( displayBoost) {
@@ -1015,6 +1015,17 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
     }
 
+    @Override
+    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        final NotificationsListAdapter.ViewHolder viewHolder = (NotificationsListAdapter.ViewHolder) holder;
+        // Bug workaround for losing text selection ability, see:
+        // https://code.google.com/p/android/issues/detail?id=208169
+        viewHolder.notification_status_content.setEnabled(false);
+        viewHolder.notification_status_content.setEnabled(true);
+        viewHolder.status_spoiler.setEnabled(false);
+        viewHolder.status_spoiler.setEnabled(true);
+    }
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
