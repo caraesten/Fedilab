@@ -276,11 +276,11 @@
   <string name="set_bubble_counter">Ցուցադրել հաշվիչները</string>
   <string name="set_auto_add_media_url">Add URL of media in toots</string>
   <string name="settings_title_notifications">Կարգավորել ծանուցումները</string>
-  <string name="set_notif_follow">Տեղեկացնել, երբ մեկը սկսում է հետևել քեզ</string>
-  <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
-  <string name="set_notif_follow_share">Notify when someone boosts your status</string>
-  <string name="set_notif_follow_add">Notify when someone favourites your status</string>
-  <string name="set_notif_follow_mention">Notify when someone mentions you</string>
+  <string name="set_notif_follow">Տեղեկացնել, երբ որևէ մեկը սկսում է հետևել քեզ</string>
+  <string name="set_notif_follow_ask">Տեղեկացնել, երբ երևէ մեկը հայց է ուղարկում՝ հետևելու քեզ</string>
+  <string name="set_notif_follow_share">Տեղեկացնել, երբ որևէ մեկը տարածում է թութդ</string>
+  <string name="set_notif_follow_add">Տեղեկացնել, երբ որևէ մեկը հավանում է թութդ</string>
+  <string name="set_notif_follow_mention">Տեղեկացնել, երբ որևէ մեկը նշում է քեզ</string>
   <string name="set_share_validation">Show confirmation dialog before boosting</string>
   <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
   <string name="settings_title_more_options">Advanced settings</string>
