@@ -17,7 +17,6 @@ package fr.gouv.etalab.mastodon.drawers;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.graphics.Bitmap;
-import android.graphics.Typeface;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
