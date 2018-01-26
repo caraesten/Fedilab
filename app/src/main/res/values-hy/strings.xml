@@ -292,9 +292,9 @@
   <string name="settings_title_profile">Խմբագրել Էջը</string>
   <string name="set_profile_description">Կենսագրություն…</string>
   <string name="set_save_changes">Պահել փոփոխությունները</string>
-  <string name="set_header_picture_overlay">Choose a header picture</string>
+  <string name="set_header_picture_overlay">Ընտրել գլխավոր նկար</string>
   <string name="set_preview_reply">Ցուցադրել արձագանքների քանակը հարազատ հոսքում</string>
-  <string name="set_preview_reply_pp">Display profile pictures?</string>
+  <string name="set_preview_reply_pp">Ցուցադրե՞լ անձնանկարները</string>
   <string name="set_multiaccount_actions">Թույլատրե՞լ հաշիվների միջև փոխհարաբերությունները</string>
   <string name="note_no_space">Դու հատե՛լ ես թույլատրված 160 նիշերի սահմանը</string>
   <string name="username_no_space">Դու հատե՛լ ես թույլատրված 30 նիշերի սահմանը</string>
@@ -348,7 +348,7 @@
         Հաստատիր այն փուշ ծանուցումները, որոնք ցանկանում ես ստանալ։
         Հետագայում կարող ես անջատել կամ միացնել այս ծանուցումները կարգավորումներից։
     </string>
-  <string name="settings_popup_timeline">For unread toots in home time-line?</string>
+  <string name="settings_popup_timeline">Հարազատ հոսքում չկարդացած թթերի համա՞ր</string>
   <string name="settings_popup_notification">Չկարդացած ծանուցումների համա՞ր</string>
   <!-- CACHE -->
   <string name="cache_title">Մաքրել քեշը</string>
@@ -374,10 +374,10 @@
     </string>
   <string name="privacy_API_authorizations_title">API-ի թույլտվություններ․</string>
   <string name="privacy_API_authorizations">
-        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
+        -<b>Կարդալ</b>․ Կարդալ տվյալները։\n
+        -<b>Գրել</b>․ Գրառումներ անել և վերբեռնել մեդիա դրանց համար։\n
+        -<b>Հետևել</b>․ Հետևել, չհետևել, արգելափակել, ապաարգելափակել։\n\n
+        <b>&#9888; Այս գործողություններն իրականացվում են միայն օգտատիրոջ հայցով։</b>
     </string>
   <string name="privacy_API_title">Tracking and Libraries</string>
   <string name="privacy_API">
@@ -400,7 +400,7 @@
   <string name="filter_regex">Filter out by regular expressions</string>
   <string name="search">Փնտրել</string>
   <string name="delete">Ջնջել</string>
-  <string name="fetch_more_toots">Fetch more toots…</string>
+  <string name="fetch_more_toots">Նոր թթեր բերել…</string>
   <!-- About lists -->
   <string name="action_lists">Ցանկեր</string>
   <string name="action_lists_confirm_delete">Վստա՞հ ես, որ ուզում ես ընդմիշտ ջնջել այս ցանկը</string>
