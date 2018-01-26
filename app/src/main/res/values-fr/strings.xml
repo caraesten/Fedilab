@@ -319,7 +319,7 @@
     <item>Non</item>
   </string-array>
   <string-array name="settings_resize_picture">
-    <item>No</item>
+    <item>Non</item>
     <item>512 Ko</item>
     <item>1 Mo</item>
     <item>2 Mo</item>
@@ -348,7 +348,7 @@
   <string name="followed_by">Vous suit</string>
   <string name="action_search">Recherche</string>
   <string name="set_capitalize">Première lettre en majuscule pour les réponses</string>
-  <string name="set_resize_picture">Resize pictures</string>
+  <string name="set_resize_picture">Redimensionner les images</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Notifications push</string>
   <string name="settings_popup_message">
