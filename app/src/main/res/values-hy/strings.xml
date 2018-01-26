@@ -306,7 +306,7 @@
   <string name="settings_hour_init">Սկսելու ժամը</string>
   <string name="settings_hour_end">Ավարտի ժամը</string>
   <string name="embedded_browser">Օգտագործել ներկառուցված զննիչը</string>
-  <string name="use_javascript">Թույլատրել Ջավասկրիպտ</string>
+  <string name="use_javascript">Թույլատրել JavaScript</string>
   <string name="use_cookies">Թույլատրել երրորդ կողմի քուքիներ</string>
   <string name="settings_ui_layout">Հոսքերի չափսը. </string>
   <string-array name="settings_menu_tabs">
@@ -358,12 +358,12 @@
   <!-- PRIVACY -->
   <string name="privacy_data_title">Հավաքած բովանդակություն</string>
   <string name="privacy_data">
-        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
+        Հաշիվներից սարքում պահվում են զուտ հիմնական տեղեկությունները։
+        Այս տեղեկությունները հույժ գաղտնի են և կարող են օգտագործվել միայն հավելվածի կողմից։
+        Հավելվածը ջնջելու դեպքում այդ տեղեկություններն իսկույն կհեռացվեն սարքից։\n
+        &#9888; Ծածկանուններն ու գաղտնաբառերը երբեք չեն պահվում։ Դրանք օգտագործվում են միայն հանգույցի հետ ապահով իսկորոշման(SSL) ընթացքում։
     </string>
-  <string name="privacy_authorizations_title">Permissions:</string>
+  <string name="privacy_authorizations_title">Թույլտվություններ.</string>
   <string name="privacy_authorizations">
         - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
         - <b>INTERNET</b>: Used for queries to an instance.\n
@@ -372,7 +372,7 @@
         - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
         - <b>WAKE_LOCK</b>: Used during the notification service.
     </string>
-  <string name="privacy_API_authorizations_title">API permissions:</string>
+  <string name="privacy_API_authorizations_title">API-ի թույլտվություններ․</string>
   <string name="privacy_API_authorizations">
         - <b>Read</b>: Read data.\n
         - <b>Write</b>: Post statuses and upload media for statuses.\n
