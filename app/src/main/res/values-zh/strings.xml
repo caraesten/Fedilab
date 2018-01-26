@@ -315,6 +315,12 @@
     <item>Yandex</item>
     <item>否　</item>
   </string-array>
+  <string-array name="settings_resize_picture">
+    <item>No</item>
+    <item>512 Ko</item>
+    <item>1 Mo</item>
+    <item>2 Mo</item>
+  </string-array>
   <string name="set_led_colour">设置 LED 颜色:</string>
   <string-array name="led_colours">
     <item>蓝色</item>
@@ -339,6 +345,7 @@
   <string name="followed_by">关注你</string>
   <string name="action_search">搜索</string>
   <string name="set_capitalize">First letter in capital for replies</string>
+  <string name="set_resize_picture">Resize pictures</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">推送通知</string>
   <string name="settings_popup_message">
