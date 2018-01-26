@@ -307,11 +307,11 @@
   <string name="settings_hour_end">Ավարտի ժամը</string>
   <string name="embedded_browser">Օգտագործել ներկառուցված զննիչը</string>
   <string name="use_javascript">Թույլատրել Ջավասկրիպտ</string>
-  <string name="use_cookies">Allow third-party cookies</string>
-  <string name="settings_ui_layout">Layout for timelines: </string>
+  <string name="use_cookies">Թույլատրել երրորդ կողմի քուքիներ</string>
+  <string name="settings_ui_layout">Հոսքերի չափսը. </string>
   <string-array name="settings_menu_tabs">
-    <item>Tabs</item>
-    <item>Menu</item>
+    <item>Ներդիրներ</item>
+    <item>Մենյու</item>
     <item>Ներդիրներ և մենյու</item>
   </string-array>
   <string-array name="settings_translation">
@@ -329,7 +329,7 @@
     <item>Սպիտակ</item>
   </string-array>
   <string name="set_title_news">Նորություններ</string>
-  <string name="set_notification_news">Notify for new toots on the home timeline</string>
+  <string name="set_notification_news">Ծանուցել հարազատ հոսքում նոր թթերի դեպքում</string>
   <string name="set_show_error_messages">Ցուցադրել սխալների հաղորդումները</string>
   <string name="action_follow">Հետևել</string>
   <string name="action_unfollow">Չհետևել</string>
