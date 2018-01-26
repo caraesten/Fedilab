@@ -1201,7 +1201,7 @@ public class Helper {
                         .load(urlHeader)
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
-                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                                 ImageView backgroundImage = headerLayout.findViewById(R.id.back_ground_image);
                                 backgroundImage.setImageBitmap(resource);
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {

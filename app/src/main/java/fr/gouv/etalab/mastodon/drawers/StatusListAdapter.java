@@ -1080,7 +1080,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 @Override
                 public void onClick(View v) {
                     loadAttachments(status, holder);
-                    holder.status_show_more.setVisibility(View.GONE);
                     status.setAttachmentShown(true);
                     notifyStatusChanged(status);
                 /*
@@ -1101,7 +1100,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
                             public void onFinish() {
                                 status.setAttachmentShown(false);
-                                holder.status_show_more.setVisibility(View.VISIBLE);
                                 notifyStatusChanged(status);
                             }
                         }.start();
