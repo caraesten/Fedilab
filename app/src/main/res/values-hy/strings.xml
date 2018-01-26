@@ -54,7 +54,7 @@
   <string name="open_with">Բացել այլ հավելվածով</string>
   <string name="validate">Վավերացնել</string>
   <string name="media">Մեդիա</string>
-  <string name="share_with">Share with</string>
+  <string name="share_with">Կիսվել</string>
   <string name="shared_via">Տարածել Մաստալաբով</string>
   <string name="replies">Արձագանքներ</string>
   <string name="username">Օգտանուն</string>
@@ -127,7 +127,7 @@
     <item>Հեռացնե՞լ այս թութը</item>
   </string-array>
   <plurals name="preview_replies">
-    <item quantity="one">%d reply</item>
+    <item quantity="one">%d արձագանք</item>
     <item quantity="other">%d արձագանք</item>
   </plurals>
   <!-- Date -->
@@ -267,7 +267,7 @@
   <string name="load_attachment_spoiler">Ցույց տալ…</string>
   <string name="load_attachment_spoiler_less">Ցույց չտալ…</string>
   <string name="load_sensitive_attachment">Զգայուն բովանդակություն</string>
-  <string name="set_display_reply">Display previous message in responses</string>
+  <string name="set_display_reply">Ցուցադրել արձագանքին նախորդող հաղորդագրությունը</string>
   <string name="set_display_local">Ցուցադրել տեղական հոսքը</string>
   <string name="set_display_global">Ցուցադրել դաշնային հոսքը</string>
   <string name="set_disable_gif">Անջատել գիֆ նկարները</string>
@@ -431,13 +431,13 @@
   <string name="data_export">Արտահանել գրառումները</string>
   <string name="data_export_toots">Արտահանել գրառումները %1$s-ի համար</string>
   <string name="data_export_success">%2$s-ից %1$s թութ արտահանվել է։</string>
-  <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+  <string name="data_export_error">Ինչ-որ բան սխալ է գնացել %1$s-ի բովանդակությունն արտահանելու ընթացքում</string>
   <!-- Proxy -->
-  <string name="proxy_set">Proxy</string>
-  <string name="proxy_type">Type</string>
-  <string name="proxy_enable">Enable proxy?</string>
-  <string name="poxy_host">Host</string>
-  <string name="poxy_port">Port</string>
-  <string name="poxy_login">Login</string>
-  <string name="poxy_password">Password</string>
+  <string name="proxy_set">Պրոքսի</string>
+  <string name="proxy_type">Ձև</string>
+  <string name="proxy_enable">Միացնե՞լ պրոքսին</string>
+  <string name="poxy_host">Հոսթ</string>
+  <string name="poxy_port">Պորտ</string>
+  <string name="poxy_login">Մուտք</string>
+  <string name="poxy_password">Գաղտնաբառ</string>
 </resources>
