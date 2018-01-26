@@ -22,13 +22,7 @@
     android:id="@+id/container"
     android:layout_height="@dimen/nav_header_height"
     >
-    <ImageView
-        android:id="@+id/back_ground_image"
-        android:layout_alignParentTop="true"
-        android:scaleType="centerCrop"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="ContentDescription" />
+
     <LinearLayout
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
@@ -103,5 +97,11 @@
             android:layout_height="20dp"
             tools:ignore="ContentDescription" />
     </LinearLayout>
-
+    <ImageView
+        android:id="@+id/back_ground_image"
+        android:layout_alignParentTop="true"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="ContentDescription" />
 </RelativeLayout>

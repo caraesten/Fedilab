@@ -151,7 +151,7 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         Account account = new AccountDAO(getApplicationContext(),db).getAccountByID(userId);
         String url = account.getAvatar();
         if( url.startsWith("/") ){
-            url = "https://" + Helper.getLiveInstance(getApplicationContext()) + account.getAvatar();
+            url = Helper.getLiveInstanceWithProtocol(getApplicationContext()) + account.getAvatar();
         }
         Glide.with(getApplicationContext())
                 .asBitmap()

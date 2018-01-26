@@ -119,7 +119,7 @@ public class WebviewConnectActivity extends BaseActivity {
                         @Override
                         public void run() {
                             try {
-                                final String response = new HttpsConnection(WebviewConnectActivity.this).post("https://" + instance + action, 30, parameters, null);
+                                final String response = new HttpsConnection(WebviewConnectActivity.this).post(Helper.instanceWithProtocol(instance) + action, 30, parameters, null);
                                 JSONObject resobj;
                                 try {
                                     resobj = new JSONObject(response);
@@ -160,7 +160,7 @@ public class WebviewConnectActivity extends BaseActivity {
         queryString += "&" + Helper.REDIRECT_URI + "="+ Uri.encode(Helper.REDIRECT_CONTENT_WEB);
         queryString += "&" + Helper.RESPONSE_TYPE +"=code";
         queryString += "&" + Helper.SCOPE +"=" + Helper.OAUTH_SCOPES;
-        return "https://" + instance  + Helper.EP_AUTHORIZE + "?" + queryString;
+        return Helper.instanceWithProtocol(instance) + Helper.EP_AUTHORIZE + "?" + queryString;
     }
 
 

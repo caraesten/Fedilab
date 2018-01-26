@@ -94,6 +94,7 @@
                     <TextView
                         android:id="@+id/status_spoiler"
                         android:layout_marginTop="10dp"
+                        android:textIsSelectable="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                     <Button

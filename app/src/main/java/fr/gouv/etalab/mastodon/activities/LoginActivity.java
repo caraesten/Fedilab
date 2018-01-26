@@ -252,7 +252,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void run() {
                 try {
-                    final String response = new HttpsConnection(LoginActivity.this).post("https://" + instance + action, 30, parameters, null );
+                    final String response = new HttpsConnection(LoginActivity.this).post(Helper.instanceWithProtocol(instance) + action, 30, parameters, null );
                     runOnUiThread(new Runnable() {
                       public void run() {
                           JSONObject resobj;
@@ -274,11 +274,12 @@ public class LoginActivity extends BaseActivity {
                                   i.putExtra("instance", instance);
                                   startActivity(i);
                               }
-                          } catch (JSONException ignored) {}
+                          } catch (JSONException ignored) {ignored.printStackTrace();}
                       }
                     });
 
                 } catch (final Exception e) {
+                    e.printStackTrace();
                     runOnUiThread(new Runnable() {
                         public void run() {
                             String message;
@@ -326,7 +327,7 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void run() {
                         try {
-                            final String response = new HttpsConnection(LoginActivity.this).post("https://" + instance + "/oauth/token", 30, parameters, null );
+                            final String response = new HttpsConnection(LoginActivity.this).post(Helper.instanceWithProtocol(instance) + "/oauth/token", 30, parameters, null );
                             runOnUiThread(new Runnable() {
                                 public void run() {
                                     JSONObject resobj;
@@ -339,10 +340,11 @@ public class LoginActivity extends BaseActivity {
                                         editor.apply();
                                         //Update the account with the token;
                                         new UpdateAccountInfoAsyncTask(LoginActivity.this, token, instance).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                    } catch (JSONException ignored) {}
+                                    } catch (JSONException ignored) {ignored.printStackTrace();}
                                 }
                             });
                         }catch (final Exception e) {
+                            e.printStackTrace();
                             runOnUiThread(new Runnable() {
                                 public void run() {
                                     connectionButton.setEnabled(true);

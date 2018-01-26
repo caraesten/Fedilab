@@ -189,8 +189,10 @@ public class API {
             account = parseAccountResponse(context, new JSONObject(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
+            e.printStackTrace();
         }catch (Exception e) {
             setDefaultError(e);
+            e.printStackTrace();
         }
         return account;
     }
@@ -2030,7 +2032,7 @@ public class API {
 
 
     private String getAbsoluteUrl(String action) {
-        return "https://" + this.instance + "/api/v1" + action;
+        return Helper.instanceWithProtocol(this.instance) + "/api/v1" + action;
     }
 
 

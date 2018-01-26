@@ -1666,8 +1666,7 @@ public abstract class BaseMainActivity extends BaseActivity
     public void startSreaming(){
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
-        boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
-        if( notify && liveNotifications) {
+        if( liveNotifications) {
             ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
             assert manager != null;
             for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {

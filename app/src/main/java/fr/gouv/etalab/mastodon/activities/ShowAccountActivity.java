@@ -412,7 +412,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         }
         String urlHeader = account.getHeader();
         if (urlHeader.startsWith("/")) {
-            urlHeader = "https://" + Helper.getLiveInstance(ShowAccountActivity.this) + account.getHeader();
+            urlHeader = Helper.getLiveInstanceWithProtocol(ShowAccountActivity.this) + account.getHeader();
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && !urlHeader.contains("missing.png")) {
 
@@ -451,7 +451,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         pp_actionBar = findViewById(R.id.pp_actionBar);
         String url = account.getAvatar();
         if( url.startsWith("/") ){
-            url = "https://" + Helper.getLiveInstance(getApplicationContext()) + account.getAvatar();
+            url = Helper.getLiveInstanceWithProtocol(getApplicationContext()) + account.getAvatar();
         }
         Glide.with(getApplicationContext())
                 .asBitmap()

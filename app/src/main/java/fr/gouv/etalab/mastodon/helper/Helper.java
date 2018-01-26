@@ -224,6 +224,11 @@ public class Helper {
     public static final String SET_LIVE_NOTIFICATIONS = "set_live_notifications";
     public static final String SET_DISABLE_GIF = "set_disable_gif";
     public static final String SET_CAPITALIZE = "set_capitalize";
+    public static final String SET_PICTURE_RESIZE = "set_picture_resize";
+    public static final int S_NONE = 0;
+    public static final int S_512KO = 1;
+    public static final int S_1MO = 2;
+    public static final int S_2MO = 3;
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;
@@ -895,6 +900,18 @@ public class Helper {
         return null;
     }
 
+    public static String getLiveInstanceWithProtocol(Context context) {
+        return instanceWithProtocol(getLiveInstance(context));
+    }
+
+    public static String instanceWithProtocol(String instance){
+        if( instance == null)
+            return null;
+        if( instance.endsWith(".onion"))
+            return "http://" + instance;
+        else
+            return "https://" + instance;
+    }
 
 
 
@@ -958,7 +975,7 @@ public class Helper {
                     item.setIcon(R.drawable.ic_person);
                     String url = account.getAvatar();
                     if( url.startsWith("/") ){
-                        url = "https://" + Helper.getLiveInstance(activity) + account.getAvatar();
+                        url = Helper.getLiveInstanceWithProtocol(activity) + account.getAvatar();
                     }
                     Glide.with(activity.getApplicationContext())
                             .asBitmap()
@@ -1093,7 +1110,7 @@ public class Helper {
      */
     public static void loadPictureIcon(final Activity activity, String url, final ImageView imageView){
         if( url.startsWith("/") ){
-            url = "https://" + Helper.getLiveInstance(activity) + url;
+            url = Helper.getLiveInstanceWithProtocol(activity) + url;
         }
 
         Glide.with(activity.getApplicationContext())
@@ -1169,14 +1186,20 @@ public class Helper {
             displayedName.setText(account.getDisplay_name());
             String url = account.getAvatar();
             if( url.startsWith("/") ){
-                url = "https://" + Helper.getLiveInstance(activity) + account.getAvatar();
+                url = Helper.getLiveInstanceWithProtocol(activity) + account.getAvatar();
             }
             Glide.with(activity.getApplicationContext())
                     .load(url)
                     .into(profilePicture);
             String urlHeader = account.getHeader();
             if( urlHeader.startsWith("/") ){
-                urlHeader = "https://" + Helper.getLiveInstance(activity) + account.getHeader();
+                urlHeader = Helper.getLiveInstanceWithProtocol(activity) + account.getHeader();
+            }
+            LinearLayout main_header_container = headerLayout.findViewById(R.id.main_header_container);
+            final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+            if( theme == Helper.THEME_LIGHT){
+                main_header_container.setBackgroundDrawable( activity.getResources().getDrawable(R.drawable.side_nav_bar_dark));
             }
             if (!urlHeader.contains("missing.png")) {
                 Glide.with(activity.getApplicationContext())
@@ -1184,7 +1207,7 @@ public class Helper {
                         .load(urlHeader)
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
-                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                                 ImageView backgroundImage = headerLayout.findViewById(R.id.back_ground_image);
                                 backgroundImage.setImageBitmap(resource);
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -1194,15 +1217,6 @@ public class Helper {
                                 }
                             }
                         });
-            }else {
-                LinearLayout main_header_container = headerLayout.findViewById(R.id.main_header_container);
-                final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-                if( theme == Helper.THEME_DARK){
-                    main_header_container.setBackgroundDrawable( activity.getResources().getDrawable(R.drawable.side_nav_bar_dark));
-                }else {
-                    main_header_container.setBackgroundDrawable( activity.getResources().getDrawable(R.drawable.side_nav_bar));
-                }
             }
         }
         profilePicture.setOnClickListener(null);
@@ -1668,28 +1682,24 @@ public class Helper {
      * @param view The view to convert
      * @return Bitmap
      */
-    public static Bitmap convertTootIntoBitmap(Context context, View view) {
+    public static Bitmap convertTootIntoBitmap(Context context, String name, View view) {
 
-        int new_element_v = View.VISIBLE, notification_delete_v = View.VISIBLE;
-        //Removes some elements
-        ImageView new_element = view.findViewById(R.id.new_element);
-        if( new_element != null) {
-            new_element_v = new_element.getVisibility();
-            new_element.setVisibility(View.GONE);
-        }
-
-        ImageView notification_delete = view.findViewById(R.id.notification_delete);
-        if( notification_delete != null) {
-            notification_delete_v = notification_delete.getVisibility();
-            notification_delete.setVisibility(View.GONE);
-        }
-        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth()+10, view.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(returnedBitmap);
+        canvas.drawBitmap(returnedBitmap, 10, 0, null); 
         Drawable bgDrawable =view.getBackground();
         if (bgDrawable!=null)
             bgDrawable.draw(canvas);
-        else
-            canvas.drawColor(Color.WHITE);
+        else {
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+            if (theme == Helper.THEME_DARK) {
+                canvas.drawColor(ContextCompat.getColor(context, R.color.mastodonC1));
+            }else {
+                canvas.drawColor(Color.WHITE);
+            }
+        }
+
         view.draw(canvas);
         Paint paint = new Paint();
         int mastodonC4 = ContextCompat.getColor(context, R.color.mastodonC4);
@@ -1697,12 +1707,8 @@ public class Helper {
         paint.setStrokeWidth(12);
         paint.setTextSize(30);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-        canvas.drawText("Via #Mastalab", view.getWidth()-230, view.getHeight() -50, paint);
+        canvas.drawText(name +" - #Mastalab", 10, view.getHeight() -50, paint);
 
-        if( new_element != null)
-            new_element.setVisibility(new_element_v);
-        if( notification_delete != null)
-            notification_delete.setVisibility(notification_delete_v);
         return returnedBitmap;
     }
 

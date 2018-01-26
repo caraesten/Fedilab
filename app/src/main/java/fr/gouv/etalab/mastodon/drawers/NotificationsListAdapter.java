@@ -17,7 +17,6 @@ package fr.gouv.etalab.mastodon.drawers;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.graphics.Bitmap;
-import android.graphics.Typeface;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -79,6 +78,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
+import static fr.gouv.etalab.mastodon.helper.Helper.getLiveInstance;
 
 
 /**
@@ -245,8 +245,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             else
                 holder.status_document_container.setVisibility(View.VISIBLE);
 
-            Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/DroidSans-Regular.ttf");
-            holder.notification_status_content.setTypeface(tf);
             holder.status_reply.setText("");
             if( !status.isClickable())
                 status.makeClickable(context);
@@ -254,7 +252,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 status.makeEmojis(context, NotificationsListAdapter.this);
             holder.notification_status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
-
+            holder.status_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
             holder.notification_status_content.setMovementMethod(LinkMovementMethod.getInstance());
             boolean displayBoost = sharedpreferences.getBoolean(Helper.SET_DISPLAY_BOOST_COUNT, true);
             if( displayBoost) {
@@ -291,189 +289,181 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     context.startActivity(intent);
                 }
             });
-            if( status.isTakingScreenShot()){
-                holder.status_document_container.setVisibility(View.GONE);
-                holder.notification_status_content.setVisibility(View.VISIBLE);
-                holder.status_show_more.setVisibility(View.GONE);
-                holder.status_action_container.setVisibility(View.INVISIBLE);
-                holder.status_spoiler_button.setVisibility(View.GONE);
-                holder.status_spoiler_mention_container.setVisibility(View.GONE);
+            holder.status_action_container.setVisibility(View.VISIBLE);
+
+
+            Drawable imgFav, imgReblog, imgReply;
+            if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
+                changeDrawableColor(context, R.drawable.ic_star,R.color.marked_icon);
+                imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star);
             }else {
-                holder.status_action_container.setVisibility(View.VISIBLE);
-
-
-                Drawable imgFav, imgReblog, imgReply;
-                if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
-                    changeDrawableColor(context, R.drawable.ic_star,R.color.marked_icon);
-                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star);
-                }else {
-                    if( theme == THEME_DARK)
-                        changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
-                    else
-                        changeDrawableColor(context, R.drawable.ic_star_border,R.color.black);
-                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star_border);
-                }
-
-                if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged())) {
-                    changeDrawableColor(context, R.drawable.ic_repeat_boost,R.color.boost_icon);
-                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat_boost);
-                }else {
-                    if( theme == THEME_DARK)
-                        changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
-                    else
-                        changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
-                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
-                }
                 if( theme == THEME_DARK)
-                    changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
+                    changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
                 else
-                    changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
-                imgReply = ContextCompat.getDrawable(context, R.drawable.ic_reply);
+                    changeDrawableColor(context, R.drawable.ic_star_border,R.color.black);
+                imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star_border);
+            }
 
-                if( status.getReblog() == null) {
-                    if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 ) {
-                        holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                        if( !status.isSpoilerShown()) {
-                            holder.notification_status_container.setVisibility(View.GONE);
-                            holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
-                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
-                        }else {
-                            holder.notification_status_container.setVisibility(View.VISIBLE);
-                            holder.status_spoiler_mention_container.setVisibility(View.GONE);
-                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
-                        }
-                    } else {
-                        holder.status_spoiler_container.setVisibility(View.GONE);
-                        holder.status_spoiler_mention_container.setVisibility(View.GONE);
+            if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged())) {
+                changeDrawableColor(context, R.drawable.ic_repeat_boost,R.color.boost_icon);
+                imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat_boost);
+            }else {
+                if( theme == THEME_DARK)
+                    changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
+                else
+                    changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
+                imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
+            }
+            if( theme == THEME_DARK)
+                changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
+            else
+                changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
+            imgReply = ContextCompat.getDrawable(context, R.drawable.ic_reply);
+
+            if( status.getReblog() == null) {
+                if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 ) {
+                    holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                    if( !status.isSpoilerShown()) {
+                        holder.notification_status_container.setVisibility(View.GONE);
+                        holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
+                    }else {
                         holder.notification_status_container.setVisibility(View.VISIBLE);
-                    }
-
-                }else {
-                    if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0) {
-                        holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                        if( !status.isSpoilerShown()) {
-                            holder.notification_status_container.setVisibility(View.GONE);
-                            holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
-                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
-                        }else {
-                            holder.notification_status_container.setVisibility(View.VISIBLE);
-                            holder.status_spoiler_mention_container.setVisibility(View.GONE);
-                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
-                        }
-                    } else {
-                        holder.status_spoiler_container.setVisibility(View.GONE);
                         holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                        holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
+                    }
+                } else {
+                    holder.status_spoiler_container.setVisibility(View.GONE);
+                    holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                    holder.notification_status_container.setVisibility(View.VISIBLE);
+                }
+
+            }else {
+                if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0) {
+                    holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                    if( !status.isSpoilerShown()) {
+                        holder.notification_status_container.setVisibility(View.GONE);
+                        holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
+                    }else {
                         holder.notification_status_container.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                        holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
                     }
-                }
-
-                assert imgFav != null;
-                imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-                assert imgReblog != null;
-                imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-                assert imgReply != null;
-                imgReply.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-
-                holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
-                holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
-                holder.status_reply.setCompoundDrawables(imgReply, null, null, null);
-
-                if( theme == THEME_DARK){
-                    holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
-                    holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
-                    holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
-                }else {
-                    holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.black));
-                    holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.black));
-                    holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.black));
-                }
-                if( type.equals("favourite") || type.equals("reblog")){
-                    holder.status_document_container.setVisibility(View.GONE);
-                }else {
-                    if (status.getReblog() == null) {
-                        if (status.getMedia_attachments().size() < 1) {
-                            holder.status_document_container.setVisibility(View.GONE);
-                            holder.status_show_more.setVisibility(View.GONE);
-                        } else {
-                            //If medias are loaded without any conditions or if device is on wifi
-                            if (!status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
-                                loadAttachments(status, holder);
-                                holder.status_show_more.setVisibility(View.GONE);
-                                status.setAttachmentShown(true);
-                            } else {
-                                //Text depending if toots is sensitive or not
-                                String textShowMore = (status.isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
-                                holder.status_show_more.setText(textShowMore);
-                                if (!status.isAttachmentShown()) {
-                                    holder.status_show_more.setVisibility(View.VISIBLE);
-                                    holder.status_document_container.setVisibility(View.GONE);
-                                } else {
-                                    loadAttachments(status, holder);
-                                }
-                            }
-                        }
-                    } else { //Attachments for reblogs
-                        if (status.getReblog().getMedia_attachments().size() < 1) {
-                            holder.status_document_container.setVisibility(View.GONE);
-                            holder.status_show_more.setVisibility(View.GONE);
-                        } else {
-                            //If medias are loaded without any conditions or if device is on wifi
-                            if (!status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
-                                loadAttachments(status.getReblog(), holder);
-                                holder.status_show_more.setVisibility(View.GONE);
-                                status.getReblog().setAttachmentShown(true);
-                            } else {
-                                //Text depending if toots is sensitive or not
-                                String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
-                                holder.status_show_more.setText(textShowMore);
-                                if (!status.isAttachmentShown()) {
-                                    holder.status_show_more.setVisibility(View.VISIBLE);
-                                    holder.status_document_container.setVisibility(View.GONE);
-                                } else {
-                                    loadAttachments(status.getReblog(), holder);
-                                }
-                            }
-                        }
-                    }
-                }
-
-                //Spoiler opens
-                holder.status_spoiler_button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        notification.getStatus().setSpoilerShown(!status.isSpoilerShown());
-                        notifyNotificationChanged(notification);
-                    }
-                });
-
-
-                switch (status.getVisibility()){
-                    case "public":
-                        holder.status_privacy.setImageResource(R.drawable.ic_public);
-                        break;
-                    case "unlisted":
-                        holder.status_privacy.setImageResource(R.drawable.ic_lock_open);
-                        break;
-                    case "private":
-                        holder.status_privacy.setImageResource(R.drawable.ic_lock_outline);
-                        break;
-                    case "direct":
-                        holder.status_privacy.setImageResource(R.drawable.ic_mail_outline);
-                        break;
-                }
-                switch (status.getVisibility()){
-                    case "direct":
-                    case "private":
-                        holder.status_reblog_count.setVisibility(View.GONE);
-                        break;
-                    case "public":
-                    case "unlisted":
-                        holder.status_reblog_count.setVisibility(View.VISIBLE);
-                        break;
-                    default:
-                        holder.status_reblog_count.setVisibility(View.VISIBLE);
+                } else {
+                    holder.status_spoiler_container.setVisibility(View.GONE);
+                    holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                    holder.notification_status_container.setVisibility(View.VISIBLE);
                 }
             }
+
+            assert imgFav != null;
+            imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+            assert imgReblog != null;
+            imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+            assert imgReply != null;
+            imgReply.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+
+            holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
+            holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
+            holder.status_reply.setCompoundDrawables(imgReply, null, null, null);
+
+            if( theme == THEME_DARK){
+                holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+            }else {
+                holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.black));
+                holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.black));
+                holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.black));
+            }
+            if( type.equals("favourite") || type.equals("reblog")){
+                holder.status_document_container.setVisibility(View.GONE);
+            }else {
+                if (status.getReblog() == null) {
+                    if (status.getMedia_attachments().size() < 1) {
+                        holder.status_document_container.setVisibility(View.GONE);
+                        holder.status_show_more.setVisibility(View.GONE);
+                    } else {
+                        //If medias are loaded without any conditions or if device is on wifi
+                        if (!status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
+                            loadAttachments(status, holder);
+                            holder.status_show_more.setVisibility(View.GONE);
+                            status.setAttachmentShown(true);
+                        } else {
+                            //Text depending if toots is sensitive or not
+                            String textShowMore = (status.isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
+                            holder.status_show_more.setText(textShowMore);
+                            if (!status.isAttachmentShown()) {
+                                holder.status_show_more.setVisibility(View.VISIBLE);
+                                holder.status_document_container.setVisibility(View.GONE);
+                            } else {
+                                loadAttachments(status, holder);
+                            }
+                        }
+                    }
+                } else { //Attachments for reblogs
+                    if (status.getReblog().getMedia_attachments().size() < 1) {
+                        holder.status_document_container.setVisibility(View.GONE);
+                        holder.status_show_more.setVisibility(View.GONE);
+                    } else {
+                        //If medias are loaded without any conditions or if device is on wifi
+                        if (!status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
+                            loadAttachments(status.getReblog(), holder);
+                            holder.status_show_more.setVisibility(View.GONE);
+                            status.getReblog().setAttachmentShown(true);
+                        } else {
+                            //Text depending if toots is sensitive or not
+                            String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
+                            holder.status_show_more.setText(textShowMore);
+                            if (!status.isAttachmentShown()) {
+                                holder.status_show_more.setVisibility(View.VISIBLE);
+                                holder.status_document_container.setVisibility(View.GONE);
+                            } else {
+                                loadAttachments(status.getReblog(), holder);
+                            }
+                        }
+                    }
+                }
+            }
+
+            //Spoiler opens
+            holder.status_spoiler_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    notification.getStatus().setSpoilerShown(!status.isSpoilerShown());
+                    notifyNotificationChanged(notification);
+                }
+            });
+
+
+            switch (status.getVisibility()){
+                case "public":
+                    holder.status_privacy.setImageResource(R.drawable.ic_public);
+                    break;
+                case "unlisted":
+                    holder.status_privacy.setImageResource(R.drawable.ic_lock_open);
+                    break;
+                case "private":
+                    holder.status_privacy.setImageResource(R.drawable.ic_lock_outline);
+                    break;
+                case "direct":
+                    holder.status_privacy.setImageResource(R.drawable.ic_mail_outline);
+                    break;
+            }
+            switch (status.getVisibility()){
+                case "direct":
+                case "private":
+                    holder.status_reblog_count.setVisibility(View.GONE);
+                    break;
+                case "public":
+                case "unlisted":
+                    holder.status_reblog_count.setVisibility(View.VISIBLE);
+                    break;
+                default:
+                    holder.status_reblog_count.setVisibility(View.VISIBLE);
+            }
+
 
 
             holder.status_show_more.setOnClickListener(new View.OnClickListener() {
@@ -664,15 +654,14 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                 context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
                                 return true;
                             case R.id.action_mention:
-                                status.setTakingScreenShot(true);
-                                notifyNotificationChanged(notification);
                                 Handler handler = new Handler();
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Bitmap bitmap = Helper.convertTootIntoBitmap(context, holder.getView());
-                                        status.setTakingScreenShot(false);
-                                        notifyNotificationChanged(notification);
+                                        String name = "@"+(status.getReblog()!=null?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
+                                        if( name.split("@", -1).length - 1 == 1)
+                                            name = name + "@" + getLiveInstance(context);
+                                        Bitmap bitmap = Helper.convertTootIntoBitmap(context, name, holder.notification_status_content);
                                         Intent intent = new Intent(context, TootActivity.class);
                                         Bundle b = new Bundle();
                                         String fname = "tootmention_" + status.getId() +".jpg";
@@ -1018,6 +1007,17 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
     }
 
+    @Override
+    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        final NotificationsListAdapter.ViewHolder viewHolder = (NotificationsListAdapter.ViewHolder) holder;
+        // Bug workaround for losing text selection ability, see:
+        // https://code.google.com/p/android/issues/detail?id=208169
+        viewHolder.notification_status_content.setEnabled(false);
+        viewHolder.notification_status_content.setEnabled(true);
+        viewHolder.status_spoiler.setEnabled(false);
+        viewHolder.status_spoiler.setEnabled(true);
+    }
 
     class ViewHolder extends RecyclerView.ViewHolder {
 

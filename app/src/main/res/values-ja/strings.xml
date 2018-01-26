@@ -40,7 +40,7 @@
   <string name="choose_picture">画像を選択…</string>
   <string name="clear">削除</string>
   <string name="microphone">マイク</string>
-  <string name="camera">Camera</string>
+  <string name="camera">カメラ</string>
   <string name="speech_prompt">何か話してみてください</string>
   <string name="speech_not_supported">お使いのデバイスは音声入力をサポートしておりません！</string>
   <string name="delete_all">すべて削除</string>
@@ -117,7 +117,7 @@
   <string name="more_action_5">コピー</string>
   <string name="more_action_6">共有</string>
   <string name="more_action_7">メンション</string>
-  <string name="more_action_8">Timed mute</string>
+  <string name="more_action_8">時限ミュート</string>
   <string-array name="more_action_confirm">
     <item>このアカウントをミュートしますか？</item>
     <item>このアカウントをブロックしますか？</item>
@@ -196,9 +196,9 @@
   <string name="toot_scheduled_date">スケジュールされた日付は現在の時間より後でなければなりません！</string>
   <string name="warning_battery">バッテリーセーバーが有効になっています！ 期待どおりに動作しない可能性があります。</string>
   <!-- timed mute -->
-  <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-  <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
-  <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+  <string name="timed_mute_date_error">ミュートする時間（1分超）です。</string>
+  <string name="timed_mute_date">%1$s は %2$s までミュートされています。\n このアカウントのプロフィールページでミュートを解除することができます。</string>
+  <string name="timed_mute_profile">%1$s は %2$s までミュートされます。\n ミュートを解除するにはここをクリックします。</string>
   <!-- Notifications -->
   <string name="no_notifications">通知はありません</string>
   <string name="notif_mention">あなたにメンションしました</string>
@@ -315,6 +315,12 @@
     <item>Yandex</item>
     <item>いいえ</item>
   </string-array>
+  <string-array name="settings_resize_picture">
+    <item>No</item>
+    <item>512 Ko</item>
+    <item>1 Mo</item>
+    <item>2 Mo</item>
+  </string-array>
   <string name="set_led_colour">LEDの色：</string>
   <string-array name="led_colours">
     <item>青</item>
@@ -339,6 +345,7 @@
   <string name="followed_by">あなたをフォロー</string>
   <string name="action_search">検索</string>
   <string name="set_capitalize">First letter in capital for replies</string>
+  <string name="set_resize_picture">Resize pictures</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">プッシュ通知</string>
   <string name="settings_popup_message">
@@ -416,18 +423,18 @@
         - もしまだ解決しない場合、Github（https://github.com/stom79/mastalab/issues）にissueを投稿してください
     </string>
   <string name="media_ready">メディアが読み込まれました。表示するにはここをクリックします。</string>
-  <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-  <string name="data_export_running">Still running, please wait…</string>
-  <string name="data_export">Export statuses</string>
+  <string name="data_export_start">この操作には時間がかかることがあります。完了すると通知されます。</string>
+  <string name="data_export_running">実行中です。お待ちください...</string>
+  <string name="data_export">トゥートをエクスポート</string>
   <string name="data_export_toots">Export statuses for %1$s</string>
   <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-  <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+  <string name="data_export_error">%1$s のデータをエクスポート中に問題が発生しました</string>
   <!-- Proxy -->
-  <string name="proxy_set">Proxy</string>
-  <string name="proxy_type">Type</string>
-  <string name="proxy_enable">Enable proxy?</string>
-  <string name="poxy_host">Host</string>
-  <string name="poxy_port">Port</string>
-  <string name="poxy_login">Login</string>
-  <string name="poxy_password">Password</string>
+  <string name="proxy_set">プロキシ</string>
+  <string name="proxy_type">タイプ</string>
+  <string name="proxy_enable">プロキシの有効化</string>
+  <string name="poxy_host">ホスト</string>
+  <string name="poxy_port">ポート</string>
+  <string name="poxy_login">ログイン</string>
+  <string name="poxy_password">パスワード</string>
 </resources>
