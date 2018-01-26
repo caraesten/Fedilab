@@ -1195,6 +1195,12 @@ public class Helper {
             if( urlHeader.startsWith("/") ){
                 urlHeader = Helper.getLiveInstanceWithProtocol(activity) + account.getHeader();
             }
+            LinearLayout main_header_container = headerLayout.findViewById(R.id.main_header_container);
+            final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+            if( theme == Helper.THEME_LIGHT){
+                main_header_container.setBackgroundDrawable( activity.getResources().getDrawable(R.drawable.side_nav_bar_dark));
+            }
             if (!urlHeader.contains("missing.png")) {
                 Glide.with(activity.getApplicationContext())
                         .asBitmap()
@@ -1211,15 +1217,6 @@ public class Helper {
                                 }
                             }
                         });
-            }else {
-                LinearLayout main_header_container = headerLayout.findViewById(R.id.main_header_container);
-                final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-                if( theme == Helper.THEME_DARK){
-                    main_header_container.setBackgroundDrawable( activity.getResources().getDrawable(R.drawable.side_nav_bar_dark));
-                }else {
-                    main_header_container.setBackgroundDrawable( activity.getResources().getDrawable(R.drawable.side_nav_bar));
-                }
             }
         }
         profilePicture.setOnClickListener(null);
