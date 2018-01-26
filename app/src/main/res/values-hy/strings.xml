@@ -418,19 +418,19 @@
   <string name="show_boost_count">Ցուցադրել տարածումների/հավանումների հաշվիչ</string>
   <string name="issue_login_title">Իսկորոշումը չի՞ աշխատում</string>
   <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
+        <b>Ահա մի քանի բան, որոնք կարող են օգնել․</b>\n\n
+        Համոզվիր, որ ոչ մի սխալ թույլ չես տվել՝ հանգույցի անվան մեջ\n\n
+        Ստուգիր արդյոք քո հանգույցն անխափան աշխատում է, թե ոչ\n\n
+        Եթե օգտվում ես երկքայլ իսկորոշումից(2FA)՝ օգտագործիր ներքևի հղումը(հանգույցի անվանումը լրացնելուց հետո)\n\n
+        Կարող ես օգտագործել վերոհիշյալ հղումը նաև առանց երկքայլ իսկորոշումն օգտագործելու\n\n
+        Եթե այս ամենից հետո դեռ չի աշխատում, քեզ այլ բան չի մնում քան խնդրի մասին բարձրաձայնելը Github-ում՝ հետևյալ հղումով․ https://github.com/stom79/mastalab/issues
     </string>
-  <string name="media_ready">Media has been loaded. Click here to display it.</string>
-  <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-  <string name="data_export_running">Still running, please wait…</string>
-  <string name="data_export">Export statuses</string>
-  <string name="data_export_toots">Export statuses for %1$s</string>
-  <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
+  <string name="media_ready">Մեդիան բեռնվել է։ Կտտացրու այստեղ՝ այն ցուցադրելու համար։</string>
+  <string name="data_export_start">Այս գործողությունը բավական երկար կարող է տևել։ Դու կծանուցվես դրա ավարտի մասին։</string>
+  <string name="data_export_running">Դեռ բեռնվում է, սպասի՛ր…</string>
+  <string name="data_export">Արտահանել գրառումները</string>
+  <string name="data_export_toots">Արտահանել գրառումները %1$s-ի համար</string>
+  <string name="data_export_success">%2$s-ից %1$s թութ արտահանվել է։</string>
   <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
   <!-- Proxy -->
   <string name="proxy_set">Proxy</string>
