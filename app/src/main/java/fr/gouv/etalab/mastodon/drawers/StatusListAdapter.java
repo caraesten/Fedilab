@@ -1294,7 +1294,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     handler.postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
-                                            Bitmap bitmap = Helper.convertTootIntoBitmap(context, holder.status_content);
+                                            String name = "@"+(status.getReblog()!=null?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
+                                            Bitmap bitmap = Helper.convertTootIntoBitmap(context, name, holder.status_content);
                                             Intent intent = new Intent(context, TootActivity.class);
                                             Bundle b = new Bundle();
                                             String fname = "tootmention_" + status.getId() +".jpg";

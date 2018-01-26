@@ -1685,7 +1685,7 @@ public class Helper {
      * @param view The view to convert
      * @return Bitmap
      */
-    public static Bitmap convertTootIntoBitmap(Context context, View view) {
+    public static Bitmap convertTootIntoBitmap(Context context, String name, View view) {
 
         Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth()+10, view.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(returnedBitmap);
@@ -1710,7 +1710,7 @@ public class Helper {
         paint.setStrokeWidth(12);
         paint.setTextSize(30);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-        canvas.drawText("Via #Mastalab", view.getWidth()-230, view.getHeight() -50, paint);
+        canvas.drawText(name +" - #Mastalab", 10, view.getHeight() -50, paint);
 
         return returnedBitmap;
     }

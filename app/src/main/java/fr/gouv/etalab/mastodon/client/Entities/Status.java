@@ -95,7 +95,6 @@ public class Status implements Parcelable{
     private boolean isClickable = false;
     private boolean isTranslationShown = false;
     private boolean isNew = false;
-    private boolean isTakingScreenShot = false;
     private boolean isVisible = true;
     private boolean fetchMore = false;
     private Status status;
@@ -409,14 +408,6 @@ public class Status implements Parcelable{
 
     public void setNew(boolean aNew) {
         isNew = aNew;
-    }
-
-    public boolean isTakingScreenShot() {
-        return isTakingScreenShot;
-    }
-
-    public void setTakingScreenShot(boolean takingScreenShot) {
-        isTakingScreenShot = takingScreenShot;
     }
 
     public boolean isVisible() {
