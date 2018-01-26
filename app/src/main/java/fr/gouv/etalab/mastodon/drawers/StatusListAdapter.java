@@ -115,6 +115,7 @@ import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
+import static fr.gouv.etalab.mastodon.helper.Helper.getLiveInstance;
 
 
 /**
@@ -1256,7 +1257,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     break;
                                 case R.id.action_copy:
                                     ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-                                    String content;
+                                    final String content;
                                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                                         content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
                                     else
@@ -1295,6 +1296,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         @Override
                                         public void run() {
                                             String name = "@"+(status.getReblog()!=null?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
+                                            if( name.split("@", -1).length - 1 == 1)
+                                                name = name + "@" + getLiveInstance(context);
                                             Bitmap bitmap = Helper.convertTootIntoBitmap(context, name, holder.status_content);
                                             Intent intent = new Intent(context, TootActivity.class);
                                             Bundle b = new Bundle();

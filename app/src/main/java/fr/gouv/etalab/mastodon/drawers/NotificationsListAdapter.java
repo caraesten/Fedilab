@@ -78,6 +78,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
+import static fr.gouv.etalab.mastodon.helper.Helper.getLiveInstance;
 
 
 /**
@@ -658,6 +659,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                     @Override
                                     public void run() {
                                         String name = "@"+(status.getReblog()!=null?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
+                                        if( name.split("@", -1).length - 1 == 1)
+                                            name = name + "@" + getLiveInstance(context);
                                         Bitmap bitmap = Helper.convertTootIntoBitmap(context, name, holder.notification_status_content);
                                         Intent intent = new Intent(context, TootActivity.class);
                                         Bundle b = new Bundle();
