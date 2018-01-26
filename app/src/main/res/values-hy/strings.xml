@@ -6,7 +6,7 @@
   <string name="action_about">Տեղեկություններ</string>
   <string name="action_about_instance">Հանգույցի մասին</string>
   <string name="action_privacy">Գաղտնիություն</string>
-  <string name="action_cache">Քեշ</string>
+  <string name="action_cache">Հիշապահեստ</string>
   <string name="action_logout">Ելք</string>
   <string name="login">Մուտք</string>
   <!-- common -->
@@ -379,9 +379,9 @@
         -<b>Հետևել</b>․ Հետևել, չհետևել, արգելափակել, ապաարգելափակել։\n\n
         <b>&#9888; Այս գործողություններն իրականացվում են միայն օգտատիրոջ հայցով։</b>
     </string>
-  <string name="privacy_API_title">Tracking and Libraries</string>
+  <string name="privacy_API_title">Հսկում ու գրադարաններ</string>
   <string name="privacy_API">
-        Հավելվածը <b>չի՛ օգտագործում հետևող գործիքներ</b> (լսարանի չափում, սխալանքների զեկուցում և այլն) և չի՛ պարունակում որևէ գովազդ։\n\n
+        Հավելվածը <b>չի՛ օգտագործում հսկող գործիքներ</b> (լսարանի չափում, սխալանքների զեկուցում և այլն) և չի՛ պարունակում որևէ գովազդ։\n\n
         Գրադարանների օգտագործումը հասցված է նվազագույնի՝\n
         ֊<b>Glide</b>՝ մեդիան կառավարելու համար\n
         ֊<b>Android-Job</b>՝ ծառայությունները կառավարելու համար\n
