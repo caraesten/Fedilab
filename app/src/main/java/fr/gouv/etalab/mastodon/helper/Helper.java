@@ -1687,26 +1687,22 @@ public class Helper {
      */
     public static Bitmap convertTootIntoBitmap(Context context, View view) {
 
-        int new_element_v = View.VISIBLE, notification_delete_v = View.VISIBLE;
-        //Removes some elements
-        ImageView new_element = view.findViewById(R.id.new_element);
-        if( new_element != null) {
-            new_element_v = new_element.getVisibility();
-            new_element.setVisibility(View.GONE);
-        }
-
-        ImageView notification_delete = view.findViewById(R.id.notification_delete);
-        if( notification_delete != null) {
-            notification_delete_v = notification_delete.getVisibility();
-            notification_delete.setVisibility(View.GONE);
-        }
-        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth()+10, view.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(returnedBitmap);
+        canvas.drawBitmap(returnedBitmap, 10, 0, null); 
         Drawable bgDrawable =view.getBackground();
         if (bgDrawable!=null)
             bgDrawable.draw(canvas);
-        else
-            canvas.drawColor(Color.WHITE);
+        else {
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+            if (theme == Helper.THEME_DARK) {
+                canvas.drawColor(ContextCompat.getColor(context, R.color.mastodonC1));
+            }else {
+                canvas.drawColor(Color.WHITE);
+            }
+        }
+
         view.draw(canvas);
         Paint paint = new Paint();
         int mastodonC4 = ContextCompat.getColor(context, R.color.mastodonC4);
@@ -1716,10 +1712,6 @@ public class Helper {
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
         canvas.drawText("Via #Mastalab", view.getWidth()-230, view.getHeight() -50, paint);
 
-        if( new_element != null)
-            new_element.setVisibility(new_element_v);
-        if( notification_delete != null)
-            notification_delete.setVisibility(notification_delete_v);
         return returnedBitmap;
     }
 

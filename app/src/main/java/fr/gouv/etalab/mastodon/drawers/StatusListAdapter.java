@@ -687,214 +687,203 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_account_profile_boost_by.setVisibility(View.GONE);
                 holder.status_account_profile.setVisibility(View.VISIBLE);
             }
-            if( status.isTakingScreenShot()){
-                holder.status_document_container.setVisibility(View.GONE);
-                holder.status_content.setVisibility(View.VISIBLE);
-                holder.status_content_translated_container.setVisibility(View.GONE);
-                holder.status_spoiler_button.setVisibility(View.GONE);
-                holder.status_spoiler_mention_container.setVisibility(View.GONE);
-                holder.status_content_container.setVisibility(View.VISIBLE);
-                holder.status_translate.setVisibility(View.GONE);
-                holder.status_show_more.setVisibility(View.GONE);
-                holder.status_action_container.setVisibility(View.INVISIBLE);
+            holder.status_action_container.setVisibility(View.VISIBLE);
+            if( trans_forced || (translator != Helper.TRANS_NONE && currentLocale != null && status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale))){
+                holder.status_translate.setVisibility(View.VISIBLE);
             }else {
-                holder.status_action_container.setVisibility(View.VISIBLE);
-                if( trans_forced || (translator != Helper.TRANS_NONE && currentLocale != null && status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale))){
-                    holder.status_translate.setVisibility(View.VISIBLE);
-                }else {
-                    holder.status_translate.setVisibility(View.GONE);
-                }
-                if( status.getReblog() == null) {
-                    if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 ) {
-                        holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                        if( !status.isSpoilerShown()) {
-                            holder.status_content_container.setVisibility(View.GONE);
-                            holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
-                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
-                        }else {
-                            holder.status_content_container.setVisibility(View.VISIBLE);
-                            holder.status_spoiler_mention_container.setVisibility(View.GONE);
-                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
-                        }
-                    } else {
-                        holder.status_spoiler_container.setVisibility(View.GONE);
-                        holder.status_spoiler_mention_container.setVisibility(View.GONE);
-                        holder.status_content_container.setVisibility(View.VISIBLE);
-                    }
-                }else {
-                    if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0) {
-                        holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                        if( !status.isSpoilerShown()) {
-                            holder.status_content_container.setVisibility(View.GONE);
-                            holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
-                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
-                        }else {
-                            holder.status_content_container.setVisibility(View.VISIBLE);
-                            holder.status_spoiler_mention_container.setVisibility(View.GONE);
-                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
-                        }
-                    } else {
-                        holder.status_spoiler_container.setVisibility(View.GONE);
-                        holder.status_spoiler_mention_container.setVisibility(View.GONE);
-                        holder.status_content_container.setVisibility(View.VISIBLE);
-                    }
-                }
-
-                if( status.getReblog() == null) {
-                    if (status.getMedia_attachments().size() < 1) {
-                        holder.status_document_container.setVisibility(View.GONE);
-                        holder.status_show_more.setVisibility(View.GONE);
-                    } else {
-                        //If medias are loaded without any conditions or if device is on wifi
-                        if (!status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
-                            loadAttachments(status, holder);
-                            holder.status_show_more.setVisibility(View.GONE);
-                            status.setAttachmentShown(true);
-                        } else {
-                            //Text depending if toots is sensitive or not
-                            String textShowMore = (status.isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
-                            holder.status_show_more.setText(textShowMore);
-                            if (!status.isAttachmentShown()) {
-                                holder.status_show_more.setVisibility(View.VISIBLE);
-                                holder.status_document_container.setVisibility(View.GONE);
-                            } else {
-                                loadAttachments(status, holder);
-                            }
-                        }
-                    }
-                }else { //Attachments for reblogs
-
-                    if (status.getReblog().getMedia_attachments().size() < 1) {
-                        holder.status_document_container.setVisibility(View.GONE);
-                        holder.status_show_more.setVisibility(View.GONE);
-                    } else {
-                        //If medias are loaded without any conditions or if device is on wifi
-                        if (!status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
-                            loadAttachments(status.getReblog(), holder);
-                            holder.status_show_more.setVisibility(View.GONE);
-                            status.getReblog().setAttachmentShown(true);
-                        } else {
-                            //Text depending if toots is sensitive or not
-                            String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
-                            holder.status_show_more.setText(textShowMore);
-                            if (!status.isAttachmentShown()) {
-                                holder.status_show_more.setVisibility(View.VISIBLE);
-                                holder.status_document_container.setVisibility(View.GONE);
-                            } else {
-                                loadAttachments(status.getReblog(), holder);
-                            }
-                        }
-                    }
-                }
-
-
-                //Toot was translated and user asked to see it
-
-                if( status.isTranslationShown() && status.getContentSpanTranslated() != null){
-                    holder.status_content_translated.setText(status.getContentSpanTranslated(), TextView.BufferType.SPANNABLE);
-                    holder.status_content.setVisibility(View.GONE);
-                    holder.status_content_translated_container.setVisibility(View.VISIBLE);
-                }else { //Toot is not translated
-                    holder.status_content.setVisibility(View.VISIBLE);
-                    holder.status_content_translated_container.setVisibility(View.GONE);
-                }
-
-                switch (status.getVisibility()){
-                    case "direct":
-                    case "private":
-                        holder.status_reblog_count.setVisibility(View.GONE);
-                        break;
-                    case "public":
-                    case "unlisted":
-                        holder.status_reblog_count.setVisibility(View.VISIBLE);
-                        break;
-                    default:
-                        holder.status_reblog_count.setVisibility(View.VISIBLE);
-                }
-
-                switch (status.getVisibility()){
-                    case "public":
-                        holder.status_privacy.setImageResource(R.drawable.ic_public);
-                        break;
-                    case "unlisted":
-                        holder.status_privacy.setImageResource(R.drawable.ic_lock_open);
-                        break;
-                    case "private":
-                        holder.status_privacy.setImageResource(R.drawable.ic_lock_outline);
-                        break;
-                    case "direct":
-                        holder.status_privacy.setImageResource(R.drawable.ic_mail_outline);
-                        break;
-                }
-
-                Drawable imgFav, imgReblog, imgReply;
-                if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
-                    changeDrawableColor(context, R.drawable.ic_star,R.color.marked_icon);
-                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star);
-                }else {
-                    if( theme == THEME_DARK)
-                        changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
-                    else
-                        changeDrawableColor(context, R.drawable.ic_star_border,R.color.black);
-                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star_border);
-                }
-
-                if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged())) {
-                    changeDrawableColor(context, R.drawable.ic_repeat_boost,R.color.boost_icon);
-                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat_boost);
-                }else {
-                    if( theme == THEME_DARK)
-                        changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
-                    else
-                        changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
-                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
-                }
-
-
-                if( theme == THEME_DARK)
-                    changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
-                else
-                    changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
-                imgReply = ContextCompat.getDrawable(context, R.drawable.ic_reply);
-
-
-                assert imgFav != null;
-                imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-                assert imgReblog != null;
-                imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-                assert imgReply != null;
-                imgReply.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-
-                holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
-                holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
-                holder.status_reply.setCompoundDrawables(imgReply, null, null, null);
-
-
-                boolean isOwner = status.getAccount().getId().equals(userId);
-
-                // Pinning toots is only available on Mastodon 1._6_.0 instances.
-                if (isOwner && Helper.canPin && (status.getVisibility().equals("public") || status.getVisibility().equals("unlisted")) && status.getReblog() == null) {
-                    Drawable imgPin;
-                    if( status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned())) {
-                        changeDrawableColor(context, R.drawable.ic_pin_drop_p,R.color.marked_icon);
-                        imgPin = ContextCompat.getDrawable(context, R.drawable.ic_pin_drop_p);
+                holder.status_translate.setVisibility(View.GONE);
+            }
+            if( status.getReblog() == null) {
+                if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 ) {
+                    holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                    if( !status.isSpoilerShown()) {
+                        holder.status_content_container.setVisibility(View.GONE);
+                        holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
                     }else {
-                        if( theme == THEME_DARK)
-                            changeDrawableColor(context, R.drawable.ic_pin_drop,R.color.dark_icon);
-                        else
-                            changeDrawableColor(context, R.drawable.ic_pin_drop,R.color.black);
-                        imgPin = ContextCompat.getDrawable(context, R.drawable.ic_pin_drop);
+                        holder.status_content_container.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                        holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
                     }
-                    assert imgPin != null;
-                    imgPin.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-                    holder.status_pin.setImageDrawable(imgPin);
-
-                    holder.status_pin.setVisibility(View.VISIBLE);
+                } else {
+                    holder.status_spoiler_container.setVisibility(View.GONE);
+                    holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                    holder.status_content_container.setVisibility(View.VISIBLE);
                 }
-                else {
-                    holder.status_pin.setVisibility(View.GONE);
+            }else {
+                if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0) {
+                    holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                    if( !status.isSpoilerShown()) {
+                        holder.status_content_container.setVisibility(View.GONE);
+                        holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
+                    }else {
+                        holder.status_content_container.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                        holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
+                    }
+                } else {
+                    holder.status_spoiler_container.setVisibility(View.GONE);
+                    holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                    holder.status_content_container.setVisibility(View.VISIBLE);
                 }
             }
+
+            if( status.getReblog() == null) {
+                if (status.getMedia_attachments().size() < 1) {
+                    holder.status_document_container.setVisibility(View.GONE);
+                    holder.status_show_more.setVisibility(View.GONE);
+                } else {
+                    //If medias are loaded without any conditions or if device is on wifi
+                    if (!status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
+                        loadAttachments(status, holder);
+                        holder.status_show_more.setVisibility(View.GONE);
+                        status.setAttachmentShown(true);
+                    } else {
+                        //Text depending if toots is sensitive or not
+                        String textShowMore = (status.isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
+                        holder.status_show_more.setText(textShowMore);
+                        if (!status.isAttachmentShown()) {
+                            holder.status_show_more.setVisibility(View.VISIBLE);
+                            holder.status_document_container.setVisibility(View.GONE);
+                        } else {
+                            loadAttachments(status, holder);
+                        }
+                    }
+                }
+            }else { //Attachments for reblogs
+
+                if (status.getReblog().getMedia_attachments().size() < 1) {
+                    holder.status_document_container.setVisibility(View.GONE);
+                    holder.status_show_more.setVisibility(View.GONE);
+                } else {
+                    //If medias are loaded without any conditions or if device is on wifi
+                    if (!status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
+                        loadAttachments(status.getReblog(), holder);
+                        holder.status_show_more.setVisibility(View.GONE);
+                        status.getReblog().setAttachmentShown(true);
+                    } else {
+                        //Text depending if toots is sensitive or not
+                        String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
+                        holder.status_show_more.setText(textShowMore);
+                        if (!status.isAttachmentShown()) {
+                            holder.status_show_more.setVisibility(View.VISIBLE);
+                            holder.status_document_container.setVisibility(View.GONE);
+                        } else {
+                            loadAttachments(status.getReblog(), holder);
+                        }
+                    }
+                }
+            }
+
+
+            //Toot was translated and user asked to see it
+
+            if( status.isTranslationShown() && status.getContentSpanTranslated() != null){
+                holder.status_content_translated.setText(status.getContentSpanTranslated(), TextView.BufferType.SPANNABLE);
+                holder.status_content.setVisibility(View.GONE);
+                holder.status_content_translated_container.setVisibility(View.VISIBLE);
+            }else { //Toot is not translated
+                holder.status_content.setVisibility(View.VISIBLE);
+                holder.status_content_translated_container.setVisibility(View.GONE);
+            }
+
+            switch (status.getVisibility()){
+                case "direct":
+                case "private":
+                    holder.status_reblog_count.setVisibility(View.GONE);
+                    break;
+                case "public":
+                case "unlisted":
+                    holder.status_reblog_count.setVisibility(View.VISIBLE);
+                    break;
+                default:
+                    holder.status_reblog_count.setVisibility(View.VISIBLE);
+            }
+
+            switch (status.getVisibility()){
+                case "public":
+                    holder.status_privacy.setImageResource(R.drawable.ic_public);
+                    break;
+                case "unlisted":
+                    holder.status_privacy.setImageResource(R.drawable.ic_lock_open);
+                    break;
+                case "private":
+                    holder.status_privacy.setImageResource(R.drawable.ic_lock_outline);
+                    break;
+                case "direct":
+                    holder.status_privacy.setImageResource(R.drawable.ic_mail_outline);
+                    break;
+            }
+
+            Drawable imgFav, imgReblog, imgReply;
+            if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
+                changeDrawableColor(context, R.drawable.ic_star,R.color.marked_icon);
+                imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star);
+            }else {
+                if( theme == THEME_DARK)
+                    changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
+                else
+                    changeDrawableColor(context, R.drawable.ic_star_border,R.color.black);
+                imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star_border);
+            }
+
+            if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged())) {
+                changeDrawableColor(context, R.drawable.ic_repeat_boost,R.color.boost_icon);
+                imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat_boost);
+            }else {
+                if( theme == THEME_DARK)
+                    changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
+                else
+                    changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
+                imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
+            }
+
+
+            if( theme == THEME_DARK)
+                changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
+            else
+                changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
+            imgReply = ContextCompat.getDrawable(context, R.drawable.ic_reply);
+
+
+            assert imgFav != null;
+            imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+            assert imgReblog != null;
+            imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+            assert imgReply != null;
+            imgReply.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+
+            holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
+            holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
+            holder.status_reply.setCompoundDrawables(imgReply, null, null, null);
+
+
+            boolean isOwner = status.getAccount().getId().equals(userId);
+
+            // Pinning toots is only available on Mastodon 1._6_.0 instances.
+            if (isOwner && Helper.canPin && (status.getVisibility().equals("public") || status.getVisibility().equals("unlisted")) && status.getReblog() == null) {
+                Drawable imgPin;
+                if( status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned())) {
+                    changeDrawableColor(context, R.drawable.ic_pin_drop_p,R.color.marked_icon);
+                    imgPin = ContextCompat.getDrawable(context, R.drawable.ic_pin_drop_p);
+                }else {
+                    if( theme == THEME_DARK)
+                        changeDrawableColor(context, R.drawable.ic_pin_drop,R.color.dark_icon);
+                    else
+                        changeDrawableColor(context, R.drawable.ic_pin_drop,R.color.black);
+                    imgPin = ContextCompat.getDrawable(context, R.drawable.ic_pin_drop);
+                }
+                assert imgPin != null;
+                imgPin.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+                holder.status_pin.setImageDrawable(imgPin);
+
+                holder.status_pin.setVisibility(View.VISIBLE);
+            }
+            else {
+                holder.status_pin.setVisibility(View.GONE);
+            }
+
 
             holder.status_content.setOnTouchListener(new View.OnTouchListener() {
                 @Override
@@ -1300,16 +1289,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
                                     return true;
                                 case R.id.action_mention:
-                                    status.setTakingScreenShot(true);
-                                    notifyStatusChanged(status);
                                     // Get a handler that can be used to post to the main thread
                                     final Handler handler = new Handler();
                                     handler.postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
-                                            Bitmap bitmap = Helper.convertTootIntoBitmap(context, holder.getView());
-                                            status.setTakingScreenShot(false);
-                                            notifyStatusChanged(status);
+                                            Bitmap bitmap = Helper.convertTootIntoBitmap(context, holder.status_content);
                                             Intent intent = new Intent(context, TootActivity.class);
                                             Bundle b = new Bundle();
                                             String fname = "tootmention_" + status.getId() +".jpg";
