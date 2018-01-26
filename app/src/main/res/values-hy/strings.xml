@@ -28,7 +28,7 @@
   <string name="token">Կտրոն</string>
   <string name="save">Պահել</string>
   <string name="restore">Վերականգնել</string>
-  <string name="two_factor_authentification">Երկքայլ վավերացու՞մ</string>
+  <string name="two_factor_authentification">Երկքայլ իսկորոշու՞մ</string>
   <string name="other_instance">mastodon.etalab.gouv.fr-ից տարբեր հանգու՞յց</string>
   <string name="no_result">Ոչ մի արդյունք!</string>
   <string name="instance">Հանգույց</string>
@@ -389,23 +389,22 @@
     </string>
   <string name="privacy_API_yandex_title">Թթերի թարգմանություն</string>
   <string name="privacy_API_yandex_authorizations">
-        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
-    </string>
+        Հավելվածը հնարավորություն է ընձեռում թարգմանել թթերը՝ օգտագործելով սարքի տեղույթը և Յանդեքսի API-ը։\n
+        Յանդեքսն ունի սեփական գաղնիության քաղաքականությունը, որը կարող ես գտնել այստեղ․ https://yandex.ru/legal/confidential/?lang=en    </string>
   <string name="thanks_text">
-        Thank you to Stéphane for the logo.
+        Շնորհակալություն Ստեֆանին՝ լոգոյի համար։
     </string>
   <string name="thanks_text_dev">
-        Thank you to:
+        Շնորհակալություն ներքոհիշյալներին․
     </string>
   <string name="filter_regex">Filter out by regular expressions</string>
-  <string name="search">Search</string>
+  <string name="search">Փնտրել</string>
   <string name="delete">Ջնջել</string>
   <string name="fetch_more_toots">Fetch more toots…</string>
   <!-- About lists -->
   <string name="action_lists">Ցանկեր</string>
-  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
-  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
+  <string name="action_lists_confirm_delete">Վստա՞հ ես, որ ուզում ես ընդմիշտ ջնջել այս ցանկը</string>
+  <string name="action_lists_empty_content">Այս Ցանկում դեռ ոչինչ չկա։ Երբ ցանկի անդամները նոր գրառումներ կատարեն, դրանք կհայտնվեն այստեղ։</string>
   <string name="action_lists_add_to">Ավելացնել ցանկին</string>
   <string name="action_lists_remove_from">Հանել ցանկից</string>
   <string name="action_lists_create">Ցանկ ավելացնել</string>
@@ -415,9 +414,9 @@
   <string name="action_lists_search_users">Փնտրել քո հետևած մարդկանց մեջ</string>
   <string name="action_lists_owner">Քո ցանկերը</string>
   <!-- Migration -->
-  <string name="account_moved_to">%1$s has moved to %2$s</string>
+  <string name="account_moved_to">%1$s-ը տեղափոխվել է %2$s</string>
   <string name="show_boost_count">Ցուցադրել տարածումների/հավանումների հաշվիչ</string>
-  <string name="issue_login_title">Authentication does not work?</string>
+  <string name="issue_login_title">Իսկորոշումը չի՞ աշխատում</string>
   <string name="issue_login_message">
         <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
