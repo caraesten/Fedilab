@@ -64,17 +64,17 @@
   <string name="follow">Նոր հետևողներ</string>
   <string name="mention">Հիշատակումներ</string>
   <string name="reblog">Տարածածներ</string>
-  <string name="show_boosts">Ցուցադրել խրախ-ները</string>
+  <string name="show_boosts">Ցուցադրել տարածածները</string>
   <string name="show_replies">Ցուցադրել արձագանքները</string>
   <string name="action_open_in_web">Բացել զննիչում</string>
   <string name="translate">Թարգմանել</string>
-  <string name="please_wait">Սպասիր մի քանի վայրկյան մինչև այս գործողութ-նը կատարելը։</string>
+  <string name="please_wait">Սպասիր մի քանի վայրկյան մինչև այս գործողությունը կատարելը։</string>
   <!--- Menu -->
-  <string name="home_menu">Տուն</string>
+  <string name="home_menu">Հիմնական</string>
   <string name="local_menu">Տեղական հոսք</string>
   <string name="global_menu">Դաշնային հոսք</string>
   <string name="neutral_menu_title">Ընտրանքներ</string>
-  <string name="favorites_menu">Նախընտրություններ</string>
+  <string name="favorites_menu">Հավանածներ</string>
   <string name="communication_menu_title">Հաղորդակցում</string>
   <string name="muted_menu">Խլացված օգտատերեր</string>
   <string name="blocked_menu">Արգելափակված օգտատերեր</string>
