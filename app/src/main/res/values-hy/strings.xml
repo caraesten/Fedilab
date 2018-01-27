@@ -42,7 +42,7 @@
   <string name="microphone">Խոսափող</string>
   <string name="camera">Խցիկ</string>
   <string name="speech_prompt">Ինչ-որ բան ասա</string>
-  <string name="speech_not_supported">Ներիր։ Քո սարքը չի աջակցում ձայնային մուտքագրում։</string>
+  <string name="speech_not_supported">Ներիր, քո սարքը չի աջակցում ձայնային մուտքագրում։</string>
   <string name="delete_all">Ջնջել ամենը</string>
   <string name="translate_toot">Թարգմանել այս թութը։</string>
   <string name="schedule">Հերթ</string>
