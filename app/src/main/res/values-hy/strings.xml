@@ -42,7 +42,7 @@
   <string name="microphone">Խոսափող</string>
   <string name="camera">Խցիկ</string>
   <string name="speech_prompt">Ինչ-որ բան ասա</string>
-  <string name="speech_not_supported">Ներիր։ Քո սարքը չի աջակցում ձայնային մուտքագրում։</string>
+  <string name="speech_not_supported">Ներիր, քո սարքը չի աջակցում ձայնային մուտքագրում։</string>
   <string name="delete_all">Ջնջել ամենը</string>
   <string name="translate_toot">Թարգմանել այս թութը։</string>
   <string name="schedule">Հերթ</string>
@@ -55,26 +55,26 @@
   <string name="validate">Վավերացնել</string>
   <string name="media">Մեդիա</string>
   <string name="share_with">Կիսվել</string>
-  <string name="shared_via">Տարածել Մաստալաբով</string>
+  <string name="shared_via">Տարածվել է Մաստալաբի միջոցով</string>
   <string name="replies">Արձագանքներ</string>
   <string name="username">Օգտանուն</string>
   <string name="drafts">Սևագրեր</string>
   <string name="new_data">Թարմ տվյալներն հասանելի են։ Ուզու՞մ ես դրանք տեսնել</string>
-  <string name="favourite">Նախընտրություններ</string>
-  <string name="follow">Նոր հետևորդներ</string>
+  <string name="favourite">Հավանածներ</string>
+  <string name="follow">Նոր հետևողներ</string>
   <string name="mention">Հիշատակումներ</string>
-  <string name="reblog">Խրախուսումներ</string>
-  <string name="show_boosts">Ցուցադրել խրախ-ները</string>
+  <string name="reblog">Տարածածներ</string>
+  <string name="show_boosts">Ցուցադրել տարածածները</string>
   <string name="show_replies">Ցուցադրել արձագանքները</string>
   <string name="action_open_in_web">Բացել զննիչում</string>
   <string name="translate">Թարգմանել</string>
-  <string name="please_wait">Սպասիր մի քանի վայրկյան մինչև այս գործողութ-նը կատարելը։</string>
+  <string name="please_wait">Սպասիր մի քանի վայրկյան մինչև այս գործողությունը կատարելը։</string>
   <!--- Menu -->
-  <string name="home_menu">Տուն</string>
+  <string name="home_menu">Հիմնական</string>
   <string name="local_menu">Տեղական հոսք</string>
   <string name="global_menu">Դաշնային հոսք</string>
   <string name="neutral_menu_title">Ընտրանքներ</string>
-  <string name="favorites_menu">Նախընտրություններ</string>
+  <string name="favorites_menu">Հավանածներ</string>
   <string name="communication_menu_title">Հաղորդակցում</string>
   <string name="muted_menu">Խլացված օգտատերեր</string>
   <string name="blocked_menu">Արգելափակված օգտատերեր</string>
@@ -202,10 +202,10 @@
   <string name="timed_mute_profile">%1$s-ը խլացվել է մինչև %2$s։ \n Կտտացրու այստեղ՝ ապխլացնելու համար։</string>
   <!-- Notifications -->
   <string name="no_notifications">Ծանուցում չկա</string>
-  <string name="notif_mention">Քեզ հիշատակել է</string>
-  <string name="notif_reblog">խրախուսել է քո թութը</string>
-  <string name="notif_favourite">գրառումդ ավելացրել է նախընտրումներին</string>
-  <string name="notif_follow">հետևում է քեզ</string>
+  <string name="notif_mention">-ը հիշատակել է քեզ</string>
+  <string name="notif_reblog">-ը խրախուսել է քո թութը</string>
+  <string name="notif_favourite">-ը գրառումդ ավելացրել է նախընտրումներին</string>
+  <string name="notif_follow">-ը հետևում է քեզ</string>
   <string name="notif_pouet">Նոր թութ %1$s-ից</string>
   <plurals name="other_notifications">
     <item quantity="one">և մեկ այլ ծանուցում</item>
@@ -319,10 +319,10 @@
     <item>Ոչ</item>
   </string-array>
   <string-array name="settings_resize_picture">
-    <item>No</item>
-    <item>512 Ko</item>
-    <item>1 Mo</item>
-    <item>2 Mo</item>
+    <item>Ոչ</item>
+    <item>512 կբ</item>
+    <item>1 մբ</item>
+    <item>2 մբ</item>
   </string-array>
   <string name="set_led_colour">Կարգել LED-ի գույնը․</string>
   <string-array name="led_colours">
@@ -348,7 +348,7 @@
   <string name="followed_by">Հետևում է քեզ</string>
   <string name="action_search">Փնտրել</string>
   <string name="set_capitalize">Առաջին տառը մեծատառով՝ երբ արձագանքում եմ</string>
-  <string name="set_resize_picture">Resize pictures</string>
+  <string name="set_resize_picture">Չափափոխել նկարները</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Փուշ ծանուցումներ</string>
   <string name="settings_popup_message">
