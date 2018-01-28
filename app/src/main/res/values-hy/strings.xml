@@ -202,10 +202,10 @@
   <string name="timed_mute_profile">%1$s-ը խլացվել է մինչև %2$s։ \n Կտտացրու այստեղ՝ ապխլացնելու համար։</string>
   <!-- Notifications -->
   <string name="no_notifications">Ծանուցում չկա</string>
-  <string name="notif_mention">Քեզ հիշատակել է</string>
-  <string name="notif_reblog">խրախուսել է քո թութը</string>
-  <string name="notif_favourite">գրառումդ ավելացրել է նախընտրումներին</string>
-  <string name="notif_follow">հետևում է քեզ</string>
+  <string name="notif_mention">-ը հիշատակել է քեզ</string>
+  <string name="notif_reblog">-ը խրախուսել է քո թութը</string>
+  <string name="notif_favourite">-ը գրառումդ ավելացրել է նախընտրումներին</string>
+  <string name="notif_follow">-ը հետևում է քեզ</string>
   <string name="notif_pouet">Նոր թութ %1$s-ից</string>
   <plurals name="other_notifications">
     <item quantity="one">և մեկ այլ ծանուցում</item>
