@@ -219,13 +219,15 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @Override
     public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
-        final ViewHolder viewHolder = (ViewHolder) holder;
-        // Bug workaround for losing text selection ability, see:
-        // https://code.google.com/p/android/issues/detail?id=208169
-        viewHolder.status_content.setEnabled(false);
-        viewHolder.status_content.setEnabled(true);
-        viewHolder.status_spoiler.setEnabled(false);
-        viewHolder.status_spoiler.setEnabled(true);
+        if( holder.getItemViewType() == DISPLAYED_STATUS) {
+            final ViewHolder viewHolder = (ViewHolder) holder;
+            // Bug workaround for losing text selection ability, see:
+            // https://code.google.com/p/android/issues/detail?id=208169
+            viewHolder.status_content.setEnabled(false);
+            viewHolder.status_content.setEnabled(true);
+            viewHolder.status_spoiler.setEnabled(false);
+            viewHolder.status_spoiler.setEnabled(true);
+        }
     }
 
 
