@@ -18,6 +18,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
@@ -747,32 +748,42 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
             picture_scrollview.setVisibility(View.VISIBLE);
-            if (data == null) {
+            if (data == null || data.getData() == null) {
                 Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
                 return;
             }
             try {
-                //noinspection ConstantConditions
-                InputStream inputStream = getContentResolver().openInputStream(data.getData());
-                File photoFiletmp;
-                try {
-                    photoFiletmp = createImageFile(false);
-                    OutputStream output = new FileOutputStream(photoFiletmp);
-                    try {
-                        byte[] buffer = new byte[4 * 1024]; // or other buffer size
-                        int read;
 
-                        assert inputStream != null;
-                        while ((read = inputStream.read(buffer)) != -1) {
-                            output.write(buffer, 0, read);
+                ContentResolver cr = getContentResolver();
+                String mime = cr.getType(data.getData());
+                if(mime != null && mime.toLowerCase().contains("video")) {
+                    InputStream inputStream = getContentResolver().openInputStream(data.getData());
+                    new HttpsConnection(TootActivity.this).upload(inputStream, TootActivity.this);
+                } else if(mime != null && mime.toLowerCase().contains("image")) {
+                    //noinspection ConstantConditions
+                    InputStream inputStream = getContentResolver().openInputStream(data.getData());
+                    File photoFiletmp;
+                    try {
+                        photoFiletmp = createImageFile(false);
+                        OutputStream output = new FileOutputStream(photoFiletmp);
+                        try {
+                            byte[] buffer = new byte[4 * 1024]; // or other buffer size
+                            int read;
+
+                            assert inputStream != null;
+                            while ((read = inputStream.read(buffer)) != -1) {
+                                output.write(buffer, 0, read);
+                            }
+                            output.flush();
+                            new asyncPicture(TootActivity.this, photoFiletmp).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        } finally {
+                            output.close();
                         }
-                        output.flush();
-                        new asyncPicture(TootActivity.this, photoFiletmp).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    } finally {
-                        output.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                }else {
+                    Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
                 }
             } catch (FileNotFoundException e) {
                 Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
