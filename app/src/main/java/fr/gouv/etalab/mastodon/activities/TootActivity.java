@@ -756,7 +756,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
 
                 ContentResolver cr = getContentResolver();
                 String mime = cr.getType(data.getData());
-                if(mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("gif")) || mime.toLowerCase().contains("apng") ) {
+                if(mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("gif") || mime.toLowerCase().contains("apng")) ) {
                     InputStream inputStream = getContentResolver().openInputStream(data.getData());
                     new HttpsConnection(TootActivity.this).upload(inputStream, TootActivity.this);
                 } else if(mime != null && mime.toLowerCase().contains("image")) {

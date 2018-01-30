@@ -27,7 +27,6 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.*;
@@ -949,8 +948,10 @@ public class API {
             statuses.add(statusreturned);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
+            e.printStackTrace();
         }catch (Exception e) {
             setDefaultError(e);
+            e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
         return apiResponse;
