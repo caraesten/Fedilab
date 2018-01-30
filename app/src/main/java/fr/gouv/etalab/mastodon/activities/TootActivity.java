@@ -756,7 +756,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
 
                 ContentResolver cr = getContentResolver();
                 String mime = cr.getType(data.getData());
-                if(mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("gif") || mime.toLowerCase().contains("apng")) ) {
+                if(mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("gif")) ) {
                     InputStream inputStream = getContentResolver().openInputStream(data.getData());
                     new HttpsConnection(TootActivity.this).upload(inputStream, TootActivity.this);
                 } else if(mime != null && mime.toLowerCase().contains("image")) {
@@ -829,8 +829,12 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             }
             double resize = ((double)size)/resizeby;
             Bitmap newBitmap;
-            newBitmap = Bitmap.createScaledBitmap(takenImage, (int)(takenImage.getWidth()/resize),
-                    (int)(takenImage.getHeight()/resize), false);
+            if( resize > 1 ){
+                newBitmap = Bitmap.createScaledBitmap(takenImage, (int)(takenImage.getWidth()/resize),
+                        (int)(takenImage.getHeight()/resize), false);
+            }else {
+                newBitmap = takenImage;
+            }
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             newBitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
             byte[] bitmapdata = bos.toByteArray();
