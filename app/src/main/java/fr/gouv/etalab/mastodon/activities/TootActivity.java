@@ -756,7 +756,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
 
                 ContentResolver cr = getContentResolver();
                 String mime = cr.getType(data.getData());
-                if(mime != null && mime.toLowerCase().contains("video")) {
+                if(mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("gif")) || mime.toLowerCase().contains("apng") ) {
                     InputStream inputStream = getContentResolver().openInputStream(data.getData());
                     new HttpsConnection(TootActivity.this).upload(inputStream, TootActivity.this);
                 } else if(mime != null && mime.toLowerCase().contains("image")) {
@@ -779,7 +779,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                         } finally {
                             output.close();
                         }
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }else {
@@ -819,7 +819,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             int size = takenImage.getByteCount();
             SharedPreferences sharedpreferences = this.activityWeakReference.get().getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
             int resizeSet = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_1MO);
-            double resizeby = 1;
+            double resizeby = size;
             if( resizeSet == Helper.S_512KO){
                 resizeby = 4194304;
             }else if(resizeSet == Helper.S_1MO){
@@ -829,12 +829,8 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             }
             double resize = ((double)size)/resizeby;
             Bitmap newBitmap;
-            if( resize > 1 ){
-                newBitmap = Bitmap.createScaledBitmap(takenImage, (int)(takenImage.getWidth()/resize),
-                        (int)(takenImage.getHeight()/resize), false);
-            }else {
-                newBitmap = takenImage;
-            }
+            newBitmap = Bitmap.createScaledBitmap(takenImage, (int)(takenImage.getWidth()/resize),
+                    (int)(takenImage.getHeight()/resize), false);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             newBitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
             byte[] bitmapdata = bos.toByteArray();
