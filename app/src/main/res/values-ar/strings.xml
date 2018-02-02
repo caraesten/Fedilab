@@ -40,7 +40,7 @@
   <string name="choose_picture">حدد صورة ...</string>
   <string name="clear">نظيف</string>
   <string name="microphone">الميكروفون</string>
-  <string name="camera">Camera</string>
+  <string name="camera">آلة التصوير</string>
   <string name="speech_prompt">قل شيئا من فضلك</string>
   <string name="speech_not_supported">معذرة ! إنّ جهازك لا يدعَم الإدخال الصوتي !</string>
   <string name="delete_all">حذف الكل</string>
@@ -89,13 +89,13 @@
   <string name="delete_account_message" formatted="false">هل تود إزالة حساب %1$s من التطبيق ؟</string>
   <string name="send_email">إرسال بريد إلكتروني</string>
   <string name="choose_file">يرجى تحديد ملف</string>
-  <string name="choose_file_error">No file explorer found!</string>
+  <string name="choose_file_error">لم يتم العثور على أي تطبيق لإدارة الملفات !</string>
   <string name="click_to_change">إضغط على رابط المسار لتعديله</string>
   <string name="failed">فشل !</string>
   <string name="scheduled_toots">التبويقات المبرمجة</string>
-  <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
+  <string name="disclaimer_full">قد لا تعكِس المعلومات أدناه كامل الملف الشخصي للمستخدِم.</string>
   <string name="insert_emoji">إضافة إيموجو</string>
-  <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
+  <string name="no_emoji">ليس بإمكان التطبيق حاليًا حصاد الإيموجي الخاصة.</string>
   <string name="live_notif">الإخطارات الحية</string>
   <!-- Status -->
   <string name="no_status">لا توجد هناك أية تبويقات لعرضها</string>
@@ -168,7 +168,7 @@
   <string name="select_accounts">قم بإختيار بعض من الحسابات</string>
   <string name="remove_draft">هل تود حذف المسودة ؟</string>
   <string name="show_reply">إضغط على الزر لعرض التبويق الأصلي</string>
-  <string name="upload_form_description">Describe for the visually impaired</string>
+  <string name="upload_form_description">وصف للمعاقين بصريا</string>
   <!-- Instance -->
   <string name="instance_no_description">لا يوجد وصف !</string>
   <!-- About -->
@@ -178,7 +178,7 @@
   <string name="about_license_action">GNU GPL V3</string>
   <string name="about_code">الشفرة المصدرية :</string>
   <string name="about_yandex">ترجمة التبويقات :</string>
-  <string name="about_thekinrar">Search instances:</string>
+  <string name="about_thekinrar">البحث عن مثيلات الخوادم :</string>
   <string name="about_thekinrar_action">instances.social</string>
   <string name="thanks_text_logo">مصمم الأيقونات :</string>
   <!-- Conversation -->
@@ -236,7 +236,7 @@
   <string name="followers">المتابِعون</string>
   <string name="pinned_toots">التبويقات المُثبَّتة</string>
   <!-- TOAST -->
-  <string name="client_error">Unable to get client id!</string>
+  <string name="client_error">تعذرت عملية جلب معرف العميل !</string>
   <string name="no_internet">لا يوجد إتصال بشبكة الإنترنت !</string>
   <string name="toast_block">تم حجب الحساب !</string>
   <string name="toast_unblock">لقد تم إلغاء حظر هذا الحساب !</string>
@@ -254,7 +254,7 @@
   <string name="toast_unpin">تم إلغاء تثبيت التبويق بنجاح !</string>
   <string name="toast_error">عذراً ! حدث خطأ !</string>
   <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
-  <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
+  <string name="toast_error_instance">يبدو أنّ إسم نطاق مثيل الخادوم غير صالح !</string>
   <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
   <string name="toast_error_search">وقع خطأ أثناء عملية البحث !</string>
   <string name="toast_error_login">تعذَّر تسجيل الدخول إلى حسابك !</string>
@@ -279,7 +279,7 @@
   <string name="load_attachment_spoiler">عرض المزيد ...</string>
   <string name="load_attachment_spoiler_less">إعرض أقل …</string>
   <string name="load_sensitive_attachment">محتوى حساس</string>
-  <string name="set_display_reply">Display previous message in responses</string>
+  <string name="set_display_reply">إظهار نص الرسالة السابقة في الردود</string>
   <string name="set_display_local">إظهار الخيط المحلي</string>
   <string name="set_display_global">إظهار الخيط المُوحَّد</string>
   <string name="set_disable_gif">تعطيل الصور الرمزية المتحركة</string>
@@ -307,19 +307,19 @@
   <string name="set_header_picture_overlay">إختيار الصورة الرأسية</string>
   <string name="set_preview_reply">إظهار عدد الردود على الخيط الرئيسي</string>
   <string name="set_preview_reply_pp">هل تود عرض الصور الرمزية للحسابات ؟</string>
-  <string name="set_multiaccount_actions">Allow interactions between accounts?</string>
+  <string name="set_multiaccount_actions">السماح للتفاعلات بين الحسابات ؟</string>
   <string name="note_no_space">لقد بلغت حد الـ 160 حرف المسموح به !</string>
   <string name="username_no_space">لقد بلغت حد الـ 30 حرف المسموح به !</string>
   <string name="settings_title_hour">الفترة المتاحة للإخطارات :</string>
   <string name="settings_time_from">بين</string>
   <string name="settings_time_to">و</string>
-  <string name="settings_time_greater">The time must be greater than %1$s</string>
-  <string name="settings_time_lower">The time must be lower than %1$s</string>
+  <string name="settings_time_greater">يجب أن تكون المدة الزمنية أكبر مِن %1$s</string>
+  <string name="settings_time_lower">يجب أن تكون المدة الزمنية أقصر مِن %1$s</string>
   <string name="settings_hour_init">من</string>
   <string name="settings_hour_end">إلى</string>
   <string name="embedded_browser">إستخدم المتصفح المُدمَج في التطبيق</string>
   <string name="use_javascript">تفعيل الجافاسكريبت</string>
-  <string name="use_cookies">Allow third-party cookies</string>
+  <string name="use_cookies">تقبُّل كعكات الطرف الثالث</string>
   <string name="settings_ui_layout">نسق الخيوط : </string>
   <string-array name="settings_menu_tabs">
     <item>التبويب</item>
@@ -331,10 +331,10 @@
     <item>لا</item>
   </string-array>
   <string-array name="settings_resize_picture">
-    <item>No</item>
-    <item>512 Ko</item>
-    <item>1 Mo</item>
-    <item>2 Mo</item>
+    <item>لا</item>
+    <item>512 ك.ب</item>
+    <item>1 م.ب</item>
+    <item>2 م.ب</item>
   </string-array>
   <string name="set_led_colour">تحديد لون الإشعار الضوئي :</string>
   <string-array name="led_colours">
@@ -347,7 +347,7 @@
     <item>أبيض</item>
   </string-array>
   <string name="set_title_news">الجديد</string>
-  <string name="set_notification_news">Notify for new toots on the home timeline</string>
+  <string name="set_notification_news">الإخطار عن التبويقات الجديدة على الخط الرئيسي</string>
   <string name="set_show_error_messages">عرض رسائل الأخطاء</string>
   <string name="action_follow">إتبع</string>
   <string name="action_unfollow">إلغاء المتابعة</string>
@@ -359,8 +359,8 @@
   <string name="request_sent">تم إرسال الطلب</string>
   <string name="followed_by">يتابعك</string>
   <string name="action_search">البحث</string>
-  <string name="set_capitalize">First letter in capital for replies</string>
-  <string name="set_resize_picture">Resize pictures</string>
+  <string name="set_capitalize">حروف كبيرة عند الرد في أول الجملة</string>
+  <string name="set_resize_picture">تعديل حجم الصور</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">الإخطارات المدفوعة</string>
   <string name="settings_popup_message">
@@ -373,7 +373,7 @@
   <string name="cache_title">مسح ذاكرة التخزين المؤقت</string>
   <string name="cache_message">هناك %1$s من البيانات في ذاكرة التخزين المؤقتة.\n\nهل تودّ إزالتها ؟</string>
   <string name="cache_units">ميغابايت</string>
-  <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+  <string name="toast_cache_clear">تم تنضيف ذاكرة التخزين المؤقتة و تفريغ %1$s !</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">البيانات المسجلة</string>
   <string name="privacy_data">
@@ -413,7 +413,7 @@
     </string>
   <string name="thanks_text">شكرا لـ Stéphane على الشارة.</string>
   <string name="thanks_text_dev">الشكر لـ :</string>
-  <string name="filter_regex">Filter out by regular expressions</string>
+  <string name="filter_regex">التصفية بواسطة العبارات المنطقية</string>
   <string name="search">البحث</string>
   <string name="delete">حذف</string>
   <string name="fetch_more_toots">تحميل المزيد من التبويقات ...</string>
@@ -442,18 +442,18 @@
         - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
     </string>
   <string name="media_ready">تم تحميل الوسائط. إظغط هنا للعرض.</string>
-  <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
+  <string name="data_export_start">يمكن أن تستغرق هذه العملية وقتًا طويلًا. سوف نقوم بإشعارك عند تتمتها.</string>
   <string name="data_export_running">جارٍ التشغيل، الرجاء الإنتظار …</string>
   <string name="data_export">تصدير المنشورات</string>
   <string name="data_export_toots">تصدير بيانات %1$s</string>
   <string name="data_export_success">تم تصدير %1$s تبويقات من أصل %2$s.</string>
   <string name="data_export_error">طرأ هناك خطأ أثناء تصدير بيانات %1$s</string>
   <!-- Proxy -->
-  <string name="proxy_set">Proxy</string>
-  <string name="proxy_type">Type</string>
-  <string name="proxy_enable">Enable proxy?</string>
-  <string name="poxy_host">Host</string>
-  <string name="poxy_port">Port</string>
-  <string name="poxy_login">Login</string>
-  <string name="poxy_password">Password</string>
+  <string name="proxy_set">البروكسي</string>
+  <string name="proxy_type">النوع</string>
+  <string name="proxy_enable">تشغيل البروكسي ؟</string>
+  <string name="poxy_host">المضيف</string>
+  <string name="poxy_port">المنفذ</string>
+  <string name="poxy_login">إسم المستخدم</string>
+  <string name="poxy_password">كلمة السر</string>
 </resources>
