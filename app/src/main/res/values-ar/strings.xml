@@ -442,7 +442,7 @@
         - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
     </string>
   <string name="media_ready">تم تحميل الوسائط. إظغط هنا للعرض.</string>
-  <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
+  <string name="data_export_start">يمكن أن تستغرق هذه العملية وقتًا طويلًا. سوف نقوم بإشعارك عند تتمتها.</string>
   <string name="data_export_running">جارٍ التشغيل، الرجاء الإنتظار …</string>
   <string name="data_export">تصدير المنشورات</string>
   <string name="data_export_toots">تصدير بيانات %1$s</string>
