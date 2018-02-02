@@ -89,11 +89,11 @@
   <string name="delete_account_message" formatted="false">هل تود إزالة حساب %1$s من التطبيق ؟</string>
   <string name="send_email">إرسال بريد إلكتروني</string>
   <string name="choose_file">يرجى تحديد ملف</string>
-  <string name="choose_file_error">No file explorer found!</string>
+  <string name="choose_file_error">لم يتم العثور على أي تطبيق لإدارة الملفات !</string>
   <string name="click_to_change">إضغط على رابط المسار لتعديله</string>
   <string name="failed">فشل !</string>
   <string name="scheduled_toots">التبويقات المبرمجة</string>
-  <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
+  <string name="disclaimer_full">قد لا تعكِس المعلومات أدناه كامل الملف الشخصي للمستخدِم.</string>
   <string name="insert_emoji">إضافة إيموجو</string>
   <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
   <string name="live_notif">الإخطارات الحية</string>
@@ -347,7 +347,7 @@
     <item>أبيض</item>
   </string-array>
   <string name="set_title_news">الجديد</string>
-  <string name="set_notification_news">Notify for new toots on the home timeline</string>
+  <string name="set_notification_news">الإخطار عن التبويقات الجديدة على الخط الرئيسي</string>
   <string name="set_show_error_messages">عرض رسائل الأخطاء</string>
   <string name="action_follow">إتبع</string>
   <string name="action_unfollow">إلغاء المتابعة</string>
@@ -359,7 +359,7 @@
   <string name="request_sent">تم إرسال الطلب</string>
   <string name="followed_by">يتابعك</string>
   <string name="action_search">البحث</string>
-  <string name="set_capitalize">First letter in capital for replies</string>
+  <string name="set_capitalize">حروف كبيرة عند الرد في أول الجملة</string>
   <string name="set_resize_picture">تعديل حجم الصور</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">الإخطارات المدفوعة</string>
@@ -373,7 +373,7 @@
   <string name="cache_title">مسح ذاكرة التخزين المؤقت</string>
   <string name="cache_message">هناك %1$s من البيانات في ذاكرة التخزين المؤقتة.\n\nهل تودّ إزالتها ؟</string>
   <string name="cache_units">ميغابايت</string>
-  <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+  <string name="toast_cache_clear">تم تنضيف ذاكرة التخزين المؤقتة و تفريغ %1$s !</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">البيانات المسجلة</string>
   <string name="privacy_data">
@@ -413,7 +413,7 @@
     </string>
   <string name="thanks_text">شكرا لـ Stéphane على الشارة.</string>
   <string name="thanks_text_dev">الشكر لـ :</string>
-  <string name="filter_regex">Filter out by regular expressions</string>
+  <string name="filter_regex">التصفية بواسطة العبارات المنطقية</string>
   <string name="search">البحث</string>
   <string name="delete">حذف</string>
   <string name="fetch_more_toots">تحميل المزيد من التبويقات ...</string>
@@ -454,6 +454,6 @@
   <string name="proxy_enable">تشغيل البروكسي ؟</string>
   <string name="poxy_host">المضيف</string>
   <string name="poxy_port">المنفذ</string>
-  <string name="poxy_login">Login</string>
+  <string name="poxy_login">إسم المستخدم</string>
   <string name="poxy_password">كلمة السر</string>
 </resources>
