@@ -40,7 +40,7 @@
   <string name="choose_picture">حدد صورة ...</string>
   <string name="clear">نظيف</string>
   <string name="microphone">الميكروفون</string>
-  <string name="camera">Camera</string>
+  <string name="camera">آلة التصوير</string>
   <string name="speech_prompt">قل شيئا من فضلك</string>
   <string name="speech_not_supported">معذرة ! إنّ جهازك لا يدعَم الإدخال الصوتي !</string>
   <string name="delete_all">حذف الكل</string>
@@ -178,7 +178,7 @@
   <string name="about_license_action">GNU GPL V3</string>
   <string name="about_code">الشفرة المصدرية :</string>
   <string name="about_yandex">ترجمة التبويقات :</string>
-  <string name="about_thekinrar">Search instances:</string>
+  <string name="about_thekinrar">البحث عن مثيلات الخوادم :</string>
   <string name="about_thekinrar_action">instances.social</string>
   <string name="thanks_text_logo">مصمم الأيقونات :</string>
   <!-- Conversation -->
@@ -319,7 +319,7 @@
   <string name="settings_hour_end">إلى</string>
   <string name="embedded_browser">إستخدم المتصفح المُدمَج في التطبيق</string>
   <string name="use_javascript">تفعيل الجافاسكريبت</string>
-  <string name="use_cookies">Allow third-party cookies</string>
+  <string name="use_cookies">تقبُّل كعكات الطرف الثالث</string>
   <string name="settings_ui_layout">نسق الخيوط : </string>
   <string-array name="settings_menu_tabs">
     <item>التبويب</item>
@@ -331,10 +331,10 @@
     <item>لا</item>
   </string-array>
   <string-array name="settings_resize_picture">
-    <item>No</item>
-    <item>512 Ko</item>
-    <item>1 Mo</item>
-    <item>2 Mo</item>
+    <item>لا</item>
+    <item>512 ك.ب</item>
+    <item>1 م.ب</item>
+    <item>2 م.ب</item>
   </string-array>
   <string name="set_led_colour">تحديد لون الإشعار الضوئي :</string>
   <string-array name="led_colours">
@@ -360,7 +360,7 @@
   <string name="followed_by">يتابعك</string>
   <string name="action_search">البحث</string>
   <string name="set_capitalize">First letter in capital for replies</string>
-  <string name="set_resize_picture">Resize pictures</string>
+  <string name="set_resize_picture">تعديل حجم الصور</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">الإخطارات المدفوعة</string>
   <string name="settings_popup_message">
@@ -449,11 +449,11 @@
   <string name="data_export_success">تم تصدير %1$s تبويقات من أصل %2$s.</string>
   <string name="data_export_error">طرأ هناك خطأ أثناء تصدير بيانات %1$s</string>
   <!-- Proxy -->
-  <string name="proxy_set">Proxy</string>
-  <string name="proxy_type">Type</string>
-  <string name="proxy_enable">Enable proxy?</string>
-  <string name="poxy_host">Host</string>
-  <string name="poxy_port">Port</string>
+  <string name="proxy_set">البروكسي</string>
+  <string name="proxy_type">النوع</string>
+  <string name="proxy_enable">تشغيل البروكسي ؟</string>
+  <string name="poxy_host">المضيف</string>
+  <string name="poxy_port">المنفذ</string>
   <string name="poxy_login">Login</string>
-  <string name="poxy_password">Password</string>
+  <string name="poxy_password">كلمة السر</string>
 </resources>
