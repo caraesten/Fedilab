@@ -95,7 +95,7 @@
   <string name="scheduled_toots">التبويقات المبرمجة</string>
   <string name="disclaimer_full">قد لا تعكِس المعلومات أدناه كامل الملف الشخصي للمستخدِم.</string>
   <string name="insert_emoji">إضافة إيموجو</string>
-  <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
+  <string name="no_emoji">ليس بإمكان التطبيق حاليًا حصاد الإيموجي الخاصة.</string>
   <string name="live_notif">الإخطارات الحية</string>
   <!-- Status -->
   <string name="no_status">لا توجد هناك أية تبويقات لعرضها</string>
@@ -168,7 +168,7 @@
   <string name="select_accounts">قم بإختيار بعض من الحسابات</string>
   <string name="remove_draft">هل تود حذف المسودة ؟</string>
   <string name="show_reply">إضغط على الزر لعرض التبويق الأصلي</string>
-  <string name="upload_form_description">Describe for the visually impaired</string>
+  <string name="upload_form_description">وصف للمعاقين بصريا</string>
   <!-- Instance -->
   <string name="instance_no_description">لا يوجد وصف !</string>
   <!-- About -->
@@ -236,7 +236,7 @@
   <string name="followers">المتابِعون</string>
   <string name="pinned_toots">التبويقات المُثبَّتة</string>
   <!-- TOAST -->
-  <string name="client_error">Unable to get client id!</string>
+  <string name="client_error">تعذرت عملية جلب معرف العميل !</string>
   <string name="no_internet">لا يوجد إتصال بشبكة الإنترنت !</string>
   <string name="toast_block">تم حجب الحساب !</string>
   <string name="toast_unblock">لقد تم إلغاء حظر هذا الحساب !</string>
@@ -254,7 +254,7 @@
   <string name="toast_unpin">تم إلغاء تثبيت التبويق بنجاح !</string>
   <string name="toast_error">عذراً ! حدث خطأ !</string>
   <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
-  <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
+  <string name="toast_error_instance">يبدو أنّ إسم نطاق مثيل الخادوم غير صالح !</string>
   <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
   <string name="toast_error_search">وقع خطأ أثناء عملية البحث !</string>
   <string name="toast_error_login">تعذَّر تسجيل الدخول إلى حسابك !</string>
@@ -279,7 +279,7 @@
   <string name="load_attachment_spoiler">عرض المزيد ...</string>
   <string name="load_attachment_spoiler_less">إعرض أقل …</string>
   <string name="load_sensitive_attachment">محتوى حساس</string>
-  <string name="set_display_reply">Display previous message in responses</string>
+  <string name="set_display_reply">إظهار نص الرسالة السابقة في الردود</string>
   <string name="set_display_local">إظهار الخيط المحلي</string>
   <string name="set_display_global">إظهار الخيط المُوحَّد</string>
   <string name="set_disable_gif">تعطيل الصور الرمزية المتحركة</string>
@@ -307,14 +307,14 @@
   <string name="set_header_picture_overlay">إختيار الصورة الرأسية</string>
   <string name="set_preview_reply">إظهار عدد الردود على الخيط الرئيسي</string>
   <string name="set_preview_reply_pp">هل تود عرض الصور الرمزية للحسابات ؟</string>
-  <string name="set_multiaccount_actions">Allow interactions between accounts?</string>
+  <string name="set_multiaccount_actions">السماح للتفاعلات بين الحسابات ؟</string>
   <string name="note_no_space">لقد بلغت حد الـ 160 حرف المسموح به !</string>
   <string name="username_no_space">لقد بلغت حد الـ 30 حرف المسموح به !</string>
   <string name="settings_title_hour">الفترة المتاحة للإخطارات :</string>
   <string name="settings_time_from">بين</string>
   <string name="settings_time_to">و</string>
-  <string name="settings_time_greater">The time must be greater than %1$s</string>
-  <string name="settings_time_lower">The time must be lower than %1$s</string>
+  <string name="settings_time_greater">يجب أن تكون المدة الزمنية أكبر مِن %1$s</string>
+  <string name="settings_time_lower">يجب أن تكون المدة الزمنية أقصر مِن %1$s</string>
   <string name="settings_hour_init">من</string>
   <string name="settings_hour_end">إلى</string>
   <string name="embedded_browser">إستخدم المتصفح المُدمَج في التطبيق</string>
