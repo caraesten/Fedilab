@@ -199,7 +199,7 @@
   <string name="media_count">الوسائط : %d</string>
   <string name="toot_scheduled">تمت برمجة التبويق بنجاح !</string>
   <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
-  <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+  <string name="warning_battery">وضع توفير الطاقة على البطارية مشغَّل ! مِن المحتمل ألا يعمل كالمعتاد.</string>
   <!-- timed mute -->
   <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
   <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
