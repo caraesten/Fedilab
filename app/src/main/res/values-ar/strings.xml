@@ -255,7 +255,7 @@
   <string name="toast_error">عذراً ! حدث خطأ !</string>
   <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
   <string name="toast_error_instance">يبدو أنّ إسم نطاق مثيل الخادوم غير صالح !</string>
-  <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
+  <string name="toast_error_loading_account">طرأ هناك خطأ أثناء التحوّل مِن حساب إلى آخر !</string>
   <string name="toast_error_search">وقع خطأ أثناء عملية البحث !</string>
   <string name="toast_error_login">تعذَّر تسجيل الدخول إلى حسابك !</string>
   <string name="toast_update_credential_ok">تم حفظ بيانات الملف الشخصي بنجاح !</string>
@@ -263,7 +263,7 @@
   <string name="toast_saved">تم حفظ الصورة بنجاح !</string>
   <string name="toast_error_translate">وقع خطاء أثناء عملية الترجمة !</string>
   <string name="toast_toot_saved">تم حِفظ المُسوَدَّة !</string>
-  <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
+  <string name="toast_error_char_limit">هل أنت متأكد من أنّ مثيل الخادوم هذا يسمح بهذا الكمّ من الأحرف ؟ عادةً ما تكون القيمة تقرب من 500 حرف.</string>
   <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
   <string name="toast_empty_search">لا يمكن أن يكون اسم المثيل واسم الشاشة فارغين !</string>
   <!-- Settings -->
