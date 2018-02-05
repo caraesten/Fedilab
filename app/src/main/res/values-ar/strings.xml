@@ -117,7 +117,7 @@
   <string name="more_action_5">نسخ</string>
   <string name="more_action_6">شارك</string>
   <string name="more_action_7">أذكر</string>
-  <string name="more_action_8">Timed mute</string>
+  <string name="more_action_8">فترة الكتم</string>
   <string-array name="more_action_confirm">
     <item>هل تود كتم هذا الحساب ؟</item>
     <item>هل تود حجب هذا الحساب ؟</item>
@@ -264,7 +264,7 @@
   <string name="toast_error_translate">وقع خطاء أثناء عملية الترجمة !</string>
   <string name="toast_toot_saved">تم حِفظ المُسوَدَّة !</string>
   <string name="toast_error_char_limit">هل أنت متأكد من أنّ مثيل الخادوم هذا يسمح بهذا الكمّ من الأحرف ؟ عادةً ما تكون القيمة تقرب من 500 حرف.</string>
-  <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
+  <string name="toast_visibility_changed">لقد تم تغيير نمط عرض التبويقات على الحساب %1$s</string>
   <string name="toast_empty_search">لا يمكن أن يكون اسم المثيل واسم الشاشة فارغين !</string>
   <!-- Settings -->
   <string name="settings_title_optimisation">التحسينات عند التحميل</string>
@@ -300,7 +300,7 @@
   <string name="set_notify">هل تود الإخطار ؟</string>
   <string name="set_notif_silent">إخطارت صامتة</string>
   <string name="set_night_mode">الوضع اليلي</string>
-  <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
+  <string name="set_nsfw_timeout">مهلة عرض الـ NSFW (بالثواني، 0 يعني مُعطَّل)</string>
   <string name="settings_title_profile">تعديل الملف الشخصي</string>
   <string name="set_profile_description">السيرة الذاتية ...</string>
   <string name="set_save_changes">حفظ التغييرات</string>
