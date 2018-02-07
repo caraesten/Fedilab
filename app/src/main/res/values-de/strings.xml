@@ -158,7 +158,7 @@
     <item>Nur an Follower senden</item>
     <item>Nur an erwähnten Nutzer absenden</item>
   </string-array>
-  <string name="no_draft">Kein Entwurf!</string>
+  <string name="no_draft">Keine Entwürfe vorhanden!</string>
   <string name="choose_toot">Wähle einen Toot</string>
   <string name="choose_accounts">Wähle ein Konto</string>
   <string name="select_accounts">Wähle einige Konten</string>
