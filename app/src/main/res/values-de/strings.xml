@@ -40,7 +40,7 @@
   <string name="choose_picture">Wähle ein Bild…</string>
   <string name="clear">Säubern</string>
   <string name="microphone">Mikrofon</string>
-  <string name="camera">Camera</string>
+  <string name="camera">Kamera</string>
   <string name="speech_prompt">Bitte sag etwas</string>
   <string name="speech_not_supported">Sorry! Dein Gerät unterstützt keine Spracheingabe!</string>
   <string name="delete_all">Alles löschen</string>
@@ -323,7 +323,7 @@
     <item>Nein</item>
   </string-array>
   <string-array name="settings_resize_picture">
-    <item>No</item>
+    <item>Nein</item>
     <item>512 Ko</item>
     <item>1 Mo</item>
     <item>2 Mo</item>
@@ -352,7 +352,7 @@
   <string name="followed_by">folgt dir</string>
   <string name="action_search">Suche</string>
   <string name="set_capitalize">Ersten Buchstaben bei Antworten groß schreiben</string>
-  <string name="set_resize_picture">Resize pictures</string>
+  <string name="set_resize_picture">Größe der Bilder ändern</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Push Benachrichtigungen</string>
   <string name="settings_popup_message">Bitte bestätige welche Push Benachrichtigungen du erhalten möchtest.         Diese können später im Benachrichtungsreiter aktiviert oder deaktiviert werden.</string>
@@ -431,10 +431,10 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="data_export_error">Etwas ist schief gelaufen beim exportieren von%1$s</string>
   <!-- Proxy -->
   <string name="proxy_set">Proxy</string>
-  <string name="proxy_type">Type</string>
-  <string name="proxy_enable">Enable proxy?</string>
+  <string name="proxy_type">Typ</string>
+  <string name="proxy_enable">Proxy aktivieren?</string>
   <string name="poxy_host">Host</string>
   <string name="poxy_port">Port</string>
   <string name="poxy_login">Login</string>
-  <string name="poxy_password">Password</string>
+  <string name="poxy_password">Passwort</string>
 </resources>
