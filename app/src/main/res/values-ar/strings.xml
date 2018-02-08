@@ -117,7 +117,7 @@
   <string name="more_action_5">نسخ</string>
   <string name="more_action_6">شارك</string>
   <string name="more_action_7">أذكر</string>
-  <string name="more_action_8">Timed mute</string>
+  <string name="more_action_8">فترة الكتم</string>
   <string-array name="more_action_confirm">
     <item>هل تود كتم هذا الحساب ؟</item>
     <item>هل تود حجب هذا الحساب ؟</item>
@@ -199,7 +199,7 @@
   <string name="media_count">الوسائط : %d</string>
   <string name="toot_scheduled">تمت برمجة التبويق بنجاح !</string>
   <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
-  <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+  <string name="warning_battery">وضع توفير الطاقة على البطارية مشغَّل ! مِن المحتمل ألا يعمل كالمعتاد.</string>
   <!-- timed mute -->
   <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
   <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
@@ -255,7 +255,7 @@
   <string name="toast_error">عذراً ! حدث خطأ !</string>
   <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
   <string name="toast_error_instance">يبدو أنّ إسم نطاق مثيل الخادوم غير صالح !</string>
-  <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
+  <string name="toast_error_loading_account">طرأ هناك خطأ أثناء التحوّل مِن حساب إلى آخر !</string>
   <string name="toast_error_search">وقع خطأ أثناء عملية البحث !</string>
   <string name="toast_error_login">تعذَّر تسجيل الدخول إلى حسابك !</string>
   <string name="toast_update_credential_ok">تم حفظ بيانات الملف الشخصي بنجاح !</string>
@@ -263,8 +263,8 @@
   <string name="toast_saved">تم حفظ الصورة بنجاح !</string>
   <string name="toast_error_translate">وقع خطاء أثناء عملية الترجمة !</string>
   <string name="toast_toot_saved">تم حِفظ المُسوَدَّة !</string>
-  <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
-  <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
+  <string name="toast_error_char_limit">هل أنت متأكد من أنّ مثيل الخادوم هذا يسمح بهذا الكمّ من الأحرف ؟ عادةً ما تكون القيمة تقرب من 500 حرف.</string>
+  <string name="toast_visibility_changed">لقد تم تغيير نمط عرض التبويقات على الحساب %1$s</string>
   <string name="toast_empty_search">لا يمكن أن يكون اسم المثيل واسم الشاشة فارغين !</string>
   <!-- Settings -->
   <string name="settings_title_optimisation">التحسينات عند التحميل</string>
@@ -300,7 +300,7 @@
   <string name="set_notify">هل تود الإخطار ؟</string>
   <string name="set_notif_silent">إخطارت صامتة</string>
   <string name="set_night_mode">الوضع اليلي</string>
-  <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
+  <string name="set_nsfw_timeout">مهلة عرض الـ NSFW (بالثواني، 0 يعني مُعطَّل)</string>
   <string name="settings_title_profile">تعديل الملف الشخصي</string>
   <string name="set_profile_description">السيرة الذاتية ...</string>
   <string name="set_save_changes">حفظ التغييرات</string>
