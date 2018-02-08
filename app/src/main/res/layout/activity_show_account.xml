@@ -209,7 +209,6 @@
                         android:gravity="center"
                         android:textColor="?attr/color_in_account_header"
                         android:layout_width="match_parent"
-                        android:maxLines="6"
                         android:autoLink="web"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
