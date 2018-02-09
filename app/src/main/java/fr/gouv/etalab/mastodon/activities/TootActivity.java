@@ -1966,7 +1966,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 if( capitalize)
                     toot_content.setText(String.format("%s", (toot_content.getText().toString() + "\n\n")));
                 else
-                    toot_content.setText(String.format("%s", (toot_content.getText().toString() + " \n")));
+                    toot_content.setText(String.format("%s", (toot_content.getText().toString() + " ")));
                 for(Mention mention : tootReply.getMentions()){
                     if(  mention.getAcct() != null && !mention.getId().equals(userIdReply) && !mentionedAccountsAdded.contains(mention.getAcct())) {
                         mentionedAccountsAdded.add(mention.getAcct());
@@ -1984,13 +1984,18 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 }
                 toot_space_left.setText(String.valueOf(toot_content.length()));
                 toot_content.requestFocus();
-                if( mentionedAccountsAdded.size() == 1){
-                    toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
-                }else {
-                    if (cursorReply > 0 && cursorReply < toot_content.getText().length())
-                        toot_content.setSelection(cursorReply);
-                    else
+
+                if( capitalize) {
+                    if (mentionedAccountsAdded.size() == 1) {
                         toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
+                    } else {
+                        if (cursorReply > 0 && cursorReply < toot_content.getText().length())
+                            toot_content.setSelection(cursorReply);
+                        else
+                            toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
+                    }
+                }else {
+                    toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
                 }
             }
 
