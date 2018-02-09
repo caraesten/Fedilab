@@ -1557,6 +1557,8 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         boolean storeToot = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
         if( storeToot && accountReply == null)
             storeToot(true, false);
+        else
+            storeToot(false, false);
     }
 
 
