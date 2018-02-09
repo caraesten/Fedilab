@@ -306,6 +306,7 @@
   <string name="settings_hour_init">Hasiera ordua</string>
   <string name="settings_hour_end">Amaiera ordua</string>
   <string name="embedded_browser">Erabili aplikazio barneko nabigatzailea</string>
+  <string name="custom_tabs">Custom tabs</string>
   <string name="use_javascript">Gaitu JavaScript</string>
   <string name="use_cookies">Baimendu hirugarrengoen cookie-ak</string>
   <string name="settings_ui_layout">Denbora lerroen diseinua: </string>
