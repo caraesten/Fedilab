@@ -308,6 +308,7 @@
   <string name="embedded_browser">Bruk den innebygde nettleseren</string>
   <string name="custom_tabs">Custom tabs</string>
   <string name="use_javascript">Aktiver Javascript</string>
+  <string name="expand_cw">Automatically expand cw</string>
   <string name="use_cookies">Tillat cookies fra tredjeparter</string>
   <string name="settings_ui_layout">Oppsett for tidslinjer: </string>
   <string-array name="settings_menu_tabs">
