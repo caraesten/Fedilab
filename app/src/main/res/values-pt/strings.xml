@@ -308,6 +308,7 @@
   <string name="embedded_browser">Usar navegador interno</string>
   <string name="custom_tabs">Custom tabs</string>
   <string name="use_javascript">Habilitar Javascript</string>
+  <string name="expand_cw">Automatically expand cw</string>
   <string name="use_cookies">Habilitar cookies de terceiros</string>
   <string name="settings_ui_layout">Modelo das timelines: </string>
   <string-array name="settings_menu_tabs">
