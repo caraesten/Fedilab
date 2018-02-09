@@ -414,37 +414,22 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         if (!sharedUri.isEmpty()) {
             uploadSharedImage(sharedUri);
         }
-        String visibilityCheck = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), "public");
-        boolean isAccountPrivate = (account.isLocked() || visibilityCheck.equals("private"));
-        if(isAccountPrivate){
-            if( tootReply == null) {
-                visibility = "private";
-                toot_visibility.setImageResource(R.drawable.ic_lock_outline_toot);
-            }else {
-                if( visibility.equals("direct") ){
-                    toot_visibility.setImageResource(R.drawable.ic_mail_outline_toot);
-                }else{
-                    visibility = "private";
+        String defaultVisibility = account.isLocked()?"private":"public";
+        if( tootReply == null){
+            visibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), defaultVisibility);
+            switch (visibility) {
+                case "public":
+                    toot_visibility.setImageResource(R.drawable.ic_public_toot);
+                    break;
+                case "unlisted":
+                    toot_visibility.setImageResource(R.drawable.ic_lock_open_toot);
+                    break;
+                case "private":
                     toot_visibility.setImageResource(R.drawable.ic_lock_outline_toot);
-                }
-            }
-        }else {
-            if( tootReply == null){
-                visibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), "public");
-                switch (visibility) {
-                    case "public":
-                        toot_visibility.setImageResource(R.drawable.ic_public_toot);
-                        break;
-                    case "unlisted":
-                        toot_visibility.setImageResource(R.drawable.ic_lock_open_toot);
-                        break;
-                    case "private":
-                        toot_visibility.setImageResource(R.drawable.ic_lock_outline_toot);
-                        break;
-                    case "direct":
-                        toot_visibility.setImageResource(R.drawable.ic_mail_outline_toot);
-                        break;
-                }
+                    break;
+                case "direct":
+                    toot_visibility.setImageResource(R.drawable.ic_mail_outline_toot);
+                    break;
             }
         }
         toot_sensitive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -1572,6 +1557,8 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         boolean storeToot = sharedpreferences.getBoolean(Helper.SET_AUTO_STORE, true);
         if( storeToot && accountReply == null)
             storeToot(true, false);
+        else
+            storeToot(false, false);
     }
 
 
@@ -1981,7 +1968,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 if( capitalize)
                     toot_content.setText(String.format("%s", (toot_content.getText().toString() + "\n\n")));
                 else
-                    toot_content.setText(String.format("%s", (toot_content.getText().toString() + " \n")));
+                    toot_content.setText(String.format("%s", (toot_content.getText().toString() + " ")));
                 for(Mention mention : tootReply.getMentions()){
                     if(  mention.getAcct() != null && !mention.getId().equals(userIdReply) && !mentionedAccountsAdded.contains(mention.getAcct())) {
                         mentionedAccountsAdded.add(mention.getAcct());
@@ -1999,13 +1986,18 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 }
                 toot_space_left.setText(String.valueOf(toot_content.length()));
                 toot_content.requestFocus();
-                if( mentionedAccountsAdded.size() == 1){
-                    toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
-                }else {
-                    if (cursorReply > 0 && cursorReply < toot_content.getText().length())
-                        toot_content.setSelection(cursorReply);
-                    else
+
+                if( capitalize) {
+                    if (mentionedAccountsAdded.size() == 1) {
                         toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
+                    } else {
+                        if (cursorReply > 0 && cursorReply < toot_content.getText().length())
+                            toot_content.setSelection(cursorReply);
+                        else
+                            toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
+                    }
+                }else {
+                    toot_content.setSelection(toot_content.getText().length()); //Put cursor at the end
                 }
             }
 
