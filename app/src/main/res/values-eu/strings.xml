@@ -308,6 +308,7 @@
   <string name="embedded_browser">Erabili aplikazio barneko nabigatzailea</string>
   <string name="custom_tabs">Custom tabs</string>
   <string name="use_javascript">Gaitu JavaScript</string>
+  <string name="expand_cw">Automatically expand cw</string>
   <string name="use_cookies">Baimendu hirugarrengoen cookie-ak</string>
   <string name="settings_ui_layout">Denbora lerroen diseinua: </string>
   <string-array name="settings_menu_tabs">
