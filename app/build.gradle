@@ -49,4 +49,5 @@ dependencies {
     implementation 'org.conscrypt:conscrypt-android:1.0.0.RC13'
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.google.guava:guava:23.6-android'
+    implementation 'com.gongwen:swipeback:1.0.2'
 }

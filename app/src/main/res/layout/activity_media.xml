@@ -15,116 +15,125 @@
     You should have received a copy of the GNU General Public License along with Mastalab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<com.gw.swipeback.SwipeBackLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipeBackLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_container_media">
-
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/media_close"
-        app:fabSize="mini"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        app:layout_anchorGravity="top|left"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/ic_close"
-        />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/media_save"
-        app:fabSize="mini"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/ic_save_white"
-        />
-    <!-- Main Loader -->
+    app:directionMode="top"
+    app:isSwipeFromEdge="true"
+    app:maskAlpha="125"
+    app:swipeBackFactor="0.5">
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/loader"
-        android:layout_alignParentTop="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        >
-        <ProgressBar
-            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
-            android:indeterminate="false"
-            android:id="@+id/pbar_inf"
-            android:layout_width="match_parent"
-            android:max="100"
-            android:progress="0"
-            android:layout_height="wrap_content"
-            />
-        <TextView
-            android:id="@+id/loader_progress"
-            android:layout_width="match_parent"
-            android:textColor="@color/dark_text"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
-    <com.github.chrisbanes.photoview.PhotoView
-        android:visibility="gone"
-        android:layout_centerInParent="true"
-        android:id="@+id/media_picture"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:ignore="ContentDescription" />
-    <VideoView
-        android:layout_below="@+id/loader"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        android:id="@+id/media_video"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/main_container_media">
 
-    <ImageView
-        android:visibility="gone"
-        android:layout_margin="5dp"
-        android:src="@drawable/ic_first_page"
-        android:id="@+id/media_prev"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        tools:ignore="ContentDescription" />
-    <ImageView
-        android:visibility="gone"
-        android:layout_margin="5dp"
-        android:id="@+id/media_next"
-        android:src="@drawable/ic_last_page"
-        android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        tools:ignore="ContentDescription" />
 
-    <TextView
-        android:visibility="gone"
-        android:background="@drawable/media_message_border"
-        android:id="@+id/message_ready"
-        android:textColor="@color/dark_text"
-        android:text="@string/media_ready"
-        android:gravity="center"
-        android:textSize="14sp"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"/>
-</RelativeLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/media_close"
+            app:fabSize="mini"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            app:layout_anchorGravity="top|left"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_close"
+            />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/media_save"
+            app:fabSize="mini"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_save_white"
+            />
+        <!-- Main Loader -->
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/loader"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            >
+            <ProgressBar
+                style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                android:indeterminate="false"
+                android:id="@+id/pbar_inf"
+                android:layout_width="match_parent"
+                android:max="100"
+                android:progress="0"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:id="@+id/loader_progress"
+                android:layout_width="match_parent"
+                android:textColor="@color/dark_text"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <com.github.chrisbanes.photoview.PhotoView
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:id="@+id/media_picture"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="ContentDescription" />
+        <VideoView
+            android:layout_below="@+id/loader"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:id="@+id/media_video"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:visibility="gone"
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_first_page"
+            android:id="@+id/media_prev"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            tools:ignore="ContentDescription" />
+        <ImageView
+            android:visibility="gone"
+            android:layout_margin="5dp"
+            android:id="@+id/media_next"
+            android:src="@drawable/ic_last_page"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:visibility="gone"
+            android:background="@drawable/media_message_border"
+            android:id="@+id/message_ready"
+            android:textColor="@color/dark_text"
+            android:text="@string/media_ready"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
+    </RelativeLayout>
+</com.gw.swipeback.SwipeBackLayout>

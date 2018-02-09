@@ -47,7 +47,6 @@ import com.bumptech.glide.request.transition.Transition;
 import com.github.chrisbanes.photoview.OnMatrixChangedListener;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.gw.swipeback.SwipeBackLayout;
-import com.gw.swipeback.tools.WxSwipeBackActivityManager;
 
 import java.io.File;
 import java.security.KeyManagementException;
