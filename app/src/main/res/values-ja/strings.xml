@@ -305,6 +305,7 @@
   <string name="embedded_browser">ビルトインブラウザを使用する</string>
   <string name="custom_tabs">Custom tabs</string>
   <string name="use_javascript">Javascript を有効にする</string>
+  <string name="expand_cw">Automatically expand cw</string>
   <string name="use_cookies">サードパーティのCookieを許可する</string>
   <string name="settings_ui_layout">タイムラインのレイアウト: </string>
   <string-array name="settings_menu_tabs">
