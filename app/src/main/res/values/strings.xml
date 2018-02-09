@@ -325,6 +325,7 @@
     <string name="settings_hour_init">Start time</string>
     <string name="settings_hour_end">End time</string>
     <string name="embedded_browser">Use the built-in browser</string>
+    <string name="custom_tabs">Custom tabs</string>
     <string name="use_javascript">Enable Javascript</string>
     <string name="use_cookies">Allow third-party cookies</string>
     <string name="settings_ui_layout">Layout for timelines: </string>

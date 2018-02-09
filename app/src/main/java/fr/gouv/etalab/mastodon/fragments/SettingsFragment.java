@@ -302,13 +302,17 @@ public class SettingsFragment extends Fragment {
 
         final CheckBox set_embedded_browser = rootView.findViewById(R.id.set_embedded_browser);
         final LinearLayout set_javascript_container = rootView.findViewById(R.id.set_javascript_container);
+        final CheckBox set_custom_tabs  = rootView.findViewById(R.id.set_custom_tabs);
         final SwitchCompat set_javascript = rootView.findViewById(R.id.set_javascript);
         boolean javascript = sharedpreferences.getBoolean(Helper.SET_JAVASCRIPT, true);
         boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
+        boolean custom_tabs = sharedpreferences.getBoolean(Helper.SET_CUSTOM_TABS, true);
         if( !embedded_browser){
             set_javascript_container.setVisibility(View.GONE);
+            set_custom_tabs.setVisibility(View.VISIBLE);
         }else{
             set_javascript_container.setVisibility(View.VISIBLE);
+            set_custom_tabs.setVisibility(View.GONE);
         }
         set_embedded_browser.setChecked(embedded_browser);
         set_embedded_browser.setOnClickListener(new View.OnClickListener() {
@@ -319,8 +323,10 @@ public class SettingsFragment extends Fragment {
                 editor.apply();
                 if( !set_embedded_browser.isChecked()){
                     set_javascript_container.setVisibility(View.GONE);
+                    set_custom_tabs.setVisibility(View.VISIBLE);
                 }else{
                     set_javascript_container.setVisibility(View.VISIBLE);
+                    set_custom_tabs.setVisibility(View.GONE);
                 }
             }
         });
@@ -331,6 +337,16 @@ public class SettingsFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_JAVASCRIPT, isChecked);
+                editor.apply();
+            }
+        });
+
+        set_custom_tabs.setChecked(custom_tabs);
+        set_custom_tabs.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_CUSTOM_TABS, isChecked);
                 editor.apply();
             }
         });
