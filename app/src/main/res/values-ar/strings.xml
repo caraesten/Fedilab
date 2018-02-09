@@ -318,6 +318,7 @@
   <string name="settings_hour_init">من</string>
   <string name="settings_hour_end">إلى</string>
   <string name="embedded_browser">إستخدم المتصفح المُدمَج في التطبيق</string>
+  <string name="custom_tabs">Custom tabs</string>
   <string name="use_javascript">تفعيل الجافاسكريبت</string>
   <string name="use_cookies">تقبُّل كعكات الطرف الثالث</string>
   <string name="settings_ui_layout">نسق الخيوط : </string>
