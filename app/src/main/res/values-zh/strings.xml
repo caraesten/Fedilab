@@ -305,6 +305,7 @@
   <string name="embedded_browser">使用内置浏览器</string>
   <string name="custom_tabs">Custom tabs</string>
   <string name="use_javascript">启用 Javascript</string>
+  <string name="expand_cw">Automatically expand cw</string>
   <string name="use_cookies">允许使用第三方cookies</string>
   <string name="settings_ui_layout">时间线布局: </string>
   <string-array name="settings_menu_tabs">
