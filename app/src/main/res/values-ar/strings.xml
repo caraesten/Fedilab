@@ -128,11 +128,11 @@
   </string-array>
   <plurals name="preview_replies">
     <item quantity="zero">%d replies</item>
-    <item quantity="one">ردّ واحد</item>
+    <item quantity="one">ردّ واحد %d</item>
     <item quantity="two">%d replies</item>
     <item quantity="few">%d replies</item>
     <item quantity="many">%d replies</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="other">%d ردود</item>
   </plurals>
   <!-- Date -->
   <string name="date_seconds">%d ثا</string>
