@@ -53,6 +53,7 @@ public class UpdateAccountInfoByIDAsyncTask extends AsyncTask<Void, Void, Void> 
         SharedPreferences sharedpreferences = this.contextReference.get().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         Account account = new API(this.contextReference.get()).getAccount(userId);
+        account.setInstance(Helper.getLiveInstance(contextReference.get()));
         SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         boolean userExists = new AccountDAO(this.contextReference.get(), db).userExist(account);
         if( userExists) {
