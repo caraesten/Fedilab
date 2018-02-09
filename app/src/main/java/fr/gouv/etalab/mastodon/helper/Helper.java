@@ -28,6 +28,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AlertDialog;
@@ -262,6 +263,7 @@ public class Helper {
     public static final String SET_NOTIF_SILENT = "set_notif_silent";
     public static final String SET_SHOW_ERROR_MESSAGES = "set_show_error_messages";
     public static final String SET_EMBEDDED_BROWSER = "set_embedded_browser";
+    public static final String SET_CUSTOM_TABS = "set_custom_tabs";
     public static final String SET_JAVASCRIPT = "set_javascript";
     public static final String SET_COOKIES = "set_cookies";
     public static final String SET_FOLDER_RECORD = "set_folder_record";
@@ -1813,9 +1815,17 @@ public class Helper {
             intent.putExtras(b);
             context.startActivity(intent);
         }else {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(url));
-            context.startActivity(intent);
+            boolean custom_tabs = sharedpreferences.getBoolean(Helper.SET_CUSTOM_TABS, true);
+            if( custom_tabs){
+                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                CustomTabsIntent customTabsIntent = builder.build();
+                builder.setToolbarColor(ContextCompat.getColor(context, R.color.mastodonC1));
+                customTabsIntent.launchUrl(context, Uri.parse(url));
+            }else{
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                context.startActivity(intent);
+            }
         }
     }
 
