@@ -213,7 +213,7 @@
   <string name="notif_pouet">تبويق حديث مِن %1$s</string>
   <plurals name="other_notifications">
     <item quantity="zero">and %d other notifications</item>
-    <item quantity="one">and another notification</item>
+    <item quantity="one">و إشعار آخر</item>
     <item quantity="two">and %d other notifications</item>
     <item quantity="few">and %d other notifications</item>
     <item quantity="many">and %d other notifications</item>
@@ -253,7 +253,7 @@
   <string name="toast_pin">تم تثبيت التبويق بنجاح !</string>
   <string name="toast_unpin">تم إلغاء تثبيت التبويق بنجاح !</string>
   <string name="toast_error">عذراً ! حدث خطأ !</string>
-  <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
+  <string name="toast_code_error">طرأ هناك خطأ ! لم يقم مثيل الخادم بإعادة رمز المصادقة !</string>
   <string name="toast_error_instance">يبدو أنّ إسم نطاق مثيل الخادوم غير صالح !</string>
   <string name="toast_error_loading_account">طرأ هناك خطأ أثناء التحوّل مِن حساب إلى آخر !</string>
   <string name="toast_error_search">وقع خطأ أثناء عملية البحث !</string>
@@ -318,7 +318,9 @@
   <string name="settings_hour_init">من</string>
   <string name="settings_hour_end">إلى</string>
   <string name="embedded_browser">إستخدم المتصفح المُدمَج في التطبيق</string>
+  <string name="custom_tabs">الألسنة الخاصة</string>
   <string name="use_javascript">تفعيل الجافاسكريبت</string>
+  <string name="expand_cw">Automatically expand cw</string>
   <string name="use_cookies">تقبُّل كعكات الطرف الثالث</string>
   <string name="settings_ui_layout">نسق الخيوط : </string>
   <string-array name="settings_menu_tabs">

@@ -305,7 +305,9 @@ và %d toots khác để khám phá</item>
   <string name="settings_hour_init">Thời gian bắt đầu</string>
   <string name="settings_hour_end">Thời gian kết thúc</string>
   <string name="embedded_browser">Sử dụng trình duyệt tích hợp</string>
+  <string name="custom_tabs">Custom tabs</string>
   <string name="use_javascript">Bật Javascript</string>
+  <string name="expand_cw">Automatically expand cw</string>
   <string name="use_cookies">Cho phép cookie của bên thứ ba</string>
   <string name="settings_ui_layout">Giao diện cho các mốc thời gian: </string>
   <string-array name="settings_menu_tabs">

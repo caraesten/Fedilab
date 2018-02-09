@@ -306,7 +306,9 @@
   <string name="settings_hour_init">Başlama zamanı</string>
   <string name="settings_hour_end">Bitiş zamanı</string>
   <string name="embedded_browser">Gömülü tarayıcı yakınlaştırmasını kullanın</string>
+  <string name="custom_tabs">Custom tabs</string>
   <string name="use_javascript">JavaScript\'i etkinleştir</string>
+  <string name="expand_cw">Automatically expand cw</string>
   <string name="use_cookies">Üçünçü parti çerezlere izin ver</string>
   <string name="settings_ui_layout">Zaman çizelgeleri için Düzen: </string>
   <string-array name="settings_menu_tabs">

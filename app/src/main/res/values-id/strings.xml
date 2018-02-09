@@ -303,7 +303,9 @@
   <string name="settings_hour_init">Waktu mulai</string>
   <string name="settings_hour_end">Waktu akhir</string>
   <string name="embedded_browser">Gunakan browser built-in</string>
+  <string name="custom_tabs">Custom tabs</string>
   <string name="use_javascript">Aktifkan Javascript</string>
+  <string name="expand_cw">Automatically expand cw</string>
   <string name="use_cookies">Izinkan cookie pihak ketiga</string>
   <string name="settings_ui_layout">Tata letak untuk kronologi: </string>
   <string-array name="settings_menu_tabs">

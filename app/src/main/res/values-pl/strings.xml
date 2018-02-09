@@ -309,7 +309,9 @@
   <string name="settings_hour_init">Godzina rozpoczęcia</string>
   <string name="settings_hour_end">Czas zakończenia</string>
   <string name="embedded_browser">Korzystaj z wbudowanej przeglądarki</string>
+  <string name="custom_tabs">Custom tabs</string>
   <string name="use_javascript">Włącz Javascript</string>
+  <string name="expand_cw">Automatically expand cw</string>
   <string name="use_cookies">Zezwalaj na pliki cookie innych firm</string>
   <string name="settings_ui_layout">Układ osi czasu: </string>
   <string-array name="settings_menu_tabs">

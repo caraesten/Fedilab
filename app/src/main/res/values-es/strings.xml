@@ -306,7 +306,9 @@
   <string name="settings_hour_init">Iniciar tiempo</string>
   <string name="settings_hour_end">Fin</string>
   <string name="embedded_browser">Usar el navegador integrado</string>
+  <string name="custom_tabs">Custom tabs</string>
   <string name="use_javascript">Permitir Javascripts</string>
+  <string name="expand_cw">Automatically expand cw</string>
   <string name="use_cookies">Permitir cookies de terceros</string>
   <string name="settings_ui_layout">Diseño para líneas de tiempo: </string>
   <string-array name="settings_menu_tabs">

@@ -306,7 +306,9 @@
   <string name="settings_hour_init">Սկսելու ժամը</string>
   <string name="settings_hour_end">Ավարտի ժամը</string>
   <string name="embedded_browser">Օգտագործել ներկառուցված զննիչը</string>
+  <string name="custom_tabs">Custom tabs</string>
   <string name="use_javascript">Թույլատրել JavaScript</string>
+  <string name="expand_cw">Automatically expand cw</string>
   <string name="use_cookies">Թույլատրել երրորդ կողմի քուքիներ</string>
   <string name="settings_ui_layout">Հոսքերի չափսը. </string>
   <string-array name="settings_menu_tabs">

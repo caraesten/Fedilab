@@ -309,7 +309,9 @@
   <string name="settings_hour_init">Oră începerii</string>
   <string name="settings_hour_end">Ora terminării</string>
   <string name="embedded_browser">Folosește browser-ul încorporat</string>
+  <string name="custom_tabs">Custom tabs</string>
   <string name="use_javascript">Activează Javascript</string>
+  <string name="expand_cw">Automatically expand cw</string>
   <string name="use_cookies">Permite cookies terțiare</string>
   <string name="settings_ui_layout">Aspectul cronologiei: </string>
   <string-array name="settings_menu_tabs">
