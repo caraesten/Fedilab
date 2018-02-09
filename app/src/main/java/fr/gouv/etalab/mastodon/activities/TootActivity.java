@@ -414,37 +414,22 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         if (!sharedUri.isEmpty()) {
             uploadSharedImage(sharedUri);
         }
-        String visibilityCheck = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), "public");
-        boolean isAccountPrivate = (account.isLocked() || visibilityCheck.equals("private"));
-        if(isAccountPrivate){
-            if( tootReply == null) {
-                visibility = "private";
-                toot_visibility.setImageResource(R.drawable.ic_lock_outline_toot);
-            }else {
-                if( visibility.equals("direct") ){
-                    toot_visibility.setImageResource(R.drawable.ic_mail_outline_toot);
-                }else{
-                    visibility = "private";
+        String defaultVisibility = account.isLocked()?"private":"public";
+        if( tootReply == null){
+            visibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), defaultVisibility);
+            switch (visibility) {
+                case "public":
+                    toot_visibility.setImageResource(R.drawable.ic_public_toot);
+                    break;
+                case "unlisted":
+                    toot_visibility.setImageResource(R.drawable.ic_lock_open_toot);
+                    break;
+                case "private":
                     toot_visibility.setImageResource(R.drawable.ic_lock_outline_toot);
-                }
-            }
-        }else {
-            if( tootReply == null){
-                visibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), "public");
-                switch (visibility) {
-                    case "public":
-                        toot_visibility.setImageResource(R.drawable.ic_public_toot);
-                        break;
-                    case "unlisted":
-                        toot_visibility.setImageResource(R.drawable.ic_lock_open_toot);
-                        break;
-                    case "private":
-                        toot_visibility.setImageResource(R.drawable.ic_lock_outline_toot);
-                        break;
-                    case "direct":
-                        toot_visibility.setImageResource(R.drawable.ic_mail_outline_toot);
-                        break;
-                }
+                    break;
+                case "direct":
+                    toot_visibility.setImageResource(R.drawable.ic_mail_outline_toot);
+                    break;
             }
         }
         toot_sensitive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

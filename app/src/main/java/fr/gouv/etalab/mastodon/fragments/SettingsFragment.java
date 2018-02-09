@@ -434,8 +434,9 @@ public class SettingsFragment extends Fragment {
             changeDrawableColor(context, set_toot_visibility, R.color.white);
         }
         //Only displayed for non locked accounts
-        if (account != null && !account.isLocked()) {
-            String tootVisibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), "public");
+        if (account != null ) {
+            String defaultVisibility = account.isLocked()?"private":"public";
+            String tootVisibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), defaultVisibility);
             switch (tootVisibility) {
                 case "public":
                     set_toot_visibility.setImageResource(R.drawable.ic_public);
