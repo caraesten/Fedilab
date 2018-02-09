@@ -499,6 +499,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             //Manages theme for icon colors
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+            boolean expand_cw = sharedpreferences.getBoolean(Helper.SET_EXPAND_CW, false);
             if( theme == Helper.THEME_DARK){
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
                 changeDrawableColor(context, holder.status_more, R.color.dark_icon);
@@ -699,7 +700,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if( status.getReblog() == null) {
                 if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 ) {
                     holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                    if( !status.isSpoilerShown()) {
+                    if( !status.isSpoilerShown() && !expand_cw) {
                         holder.status_content_container.setVisibility(View.GONE);
                         holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
                         holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
@@ -716,7 +717,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }else {
                 if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0) {
                     holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                    if( !status.isSpoilerShown()) {
+                    if( !status.isSpoilerShown() && !expand_cw) {
                         holder.status_content_container.setVisibility(View.GONE);
                         holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
                         holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));

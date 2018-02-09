@@ -58,6 +58,17 @@
         <item name="color_in_account_header">@color/mastodonC3</item>
     </style>
 
+
+    <style name="Theme.Transparent" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="colorAccent">@color/mastodonC4</item>
+    </style>
+
     <style name="DropDownListViewStyle" parent="Base.Widget.AppCompat.ListView.DropDown">
         <item name="android:background">@color/mastodonC3__</item>
     </style>

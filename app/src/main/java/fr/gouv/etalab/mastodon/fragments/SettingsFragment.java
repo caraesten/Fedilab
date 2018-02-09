@@ -185,6 +185,20 @@ public class SettingsFragment extends Fragment {
         });
 
 
+        boolean expand_cw = sharedpreferences.getBoolean(Helper.SET_EXPAND_CW, false);
+        final CheckBox set_expand_cw = rootView.findViewById(R.id.set_expand_cw);
+        set_expand_cw.setChecked(expand_cw);
+
+        set_expand_cw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_EXPAND_CW, set_expand_cw.isChecked());
+                editor.apply();
+            }
+        });
+
+
         boolean multiaccount_actions = sharedpreferences.getBoolean(Helper.SET_ALLOW_CROSS_ACTIONS, true);
         final CheckBox set_multiaccount_actions = rootView.findViewById(R.id.set_multiaccount_actions);
         set_multiaccount_actions.setChecked(multiaccount_actions);

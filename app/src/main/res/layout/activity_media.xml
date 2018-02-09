@@ -32,34 +32,7 @@
         android:id="@+id/main_container_media">
 
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/media_close"
-            app:fabSize="mini"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            app:layout_anchorGravity="top|left"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_close"
-            />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/media_save"
-            app:fabSize="mini"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_save_white"
-            />
         <!-- Main Loader -->
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/loader"
@@ -135,5 +108,34 @@
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="40dp"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/media_close"
+            app:fabSize="mini"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            app:layout_anchorGravity="top|left"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_close"
+            />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/media_save"
+            app:fabSize="mini"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_save_white"
+            />
     </RelativeLayout>
 </com.gw.swipeback.SwipeBackLayout>

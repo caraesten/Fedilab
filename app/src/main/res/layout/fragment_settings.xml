@@ -141,6 +141,13 @@
             android:text="@string/show_boost_count"
             android:layout_height="wrap_content" />
 
+        <!-- EXPAND CW -->
+        <CheckBox
+            android:id="@+id/set_expand_cw"
+            android:layout_width="wrap_content"
+            android:text="@string/expand_cw"
+            android:layout_height="wrap_content" />
+
 
         <!-- Resize pictures -->
         <LinearLayout

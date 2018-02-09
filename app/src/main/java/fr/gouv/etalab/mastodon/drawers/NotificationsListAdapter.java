@@ -127,6 +127,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         String type = notification.getType();
         String typeString = "";
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        boolean expand_cw = sharedpreferences.getBoolean(Helper.SET_EXPAND_CW, false);
 
         if (theme == THEME_DARK){
             holder.main_container_trans.setAlpha(.3f);
@@ -323,7 +324,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             if( status.getReblog() == null) {
                 if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 ) {
                     holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                    if( !status.isSpoilerShown()) {
+                    if( !status.isSpoilerShown() && !expand_cw) {
                         holder.notification_status_container.setVisibility(View.GONE);
                         holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
                         holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
@@ -341,7 +342,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             }else {
                 if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0) {
                     holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                    if( !status.isSpoilerShown()) {
+                    if( !status.isSpoilerShown() && !expand_cw) {
                         holder.notification_status_container.setVisibility(View.GONE);
                         holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
                         holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
