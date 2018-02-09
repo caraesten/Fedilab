@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 
+import android.graphics.RectF;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -43,7 +44,11 @@ import android.widget.VideoView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.github.chrisbanes.photoview.OnMatrixChangedListener;
 import com.github.chrisbanes.photoview.PhotoView;
+import com.gw.swipeback.SwipeBackLayout;
+import com.gw.swipeback.tools.WxSwipeBackActivityManager;
+
 import java.io.File;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -112,7 +117,27 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         }else {
             setTheme(R.style.AppThemeDark_NoActionBar);
         }
+
         setContentView(R.layout.activity_media);
+        SwipeBackLayout mSwipeBackLayout = new SwipeBackLayout(this);
+        mSwipeBackLayout.setDirectionMode(SwipeBackLayout.FROM_BOTTOM);
+        mSwipeBackLayout.setMaskAlpha(125);
+        mSwipeBackLayout.setSwipeBackFactor(0.5f);
+        mSwipeBackLayout.setSwipeBackListener(new SwipeBackLayout.OnSwipeBackListener() {
+            @Override
+            public void onViewPositionChanged(View mView, float swipeBackFraction, float SWIPE_BACK_FACTOR) {
+                canSwipe = false;
+            }
+
+            @Override
+            public void onViewSwipeFinished(View mView, boolean isEnd) {
+                if(!isEnd)
+                    canSwipe = true;
+                else
+                    finish();
+            }
+        });
+        mSwipeBackLayout.attachToActivity(this);
         attachments = getIntent().getParcelableArrayListExtra("mediaArray");
         if( getIntent().getExtras() != null)
             mediaPosition = getIntent().getExtras().getInt("position", 1);
@@ -187,6 +212,12 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         });
 
         progress = findViewById(R.id.loader_progress);
+        imageView.setOnMatrixChangeListener(new OnMatrixChangedListener() {
+            @Override
+            public void onMatrixChanged(RectF rect) {
+                canSwipe = (imageView.getScale() == 1 );
+            }
+        });
         pbar_inf = findViewById(R.id.pbar_inf);
         setTitle("");
 
