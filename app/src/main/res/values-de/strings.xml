@@ -310,6 +310,7 @@
   <string name="settings_hour_init">Anfangszeit</string>
   <string name="settings_hour_end">Ende</string>
   <string name="embedded_browser">Benutze internen Browser</string>
+  <string name="custom_tabs">Custom tabs</string>
   <string name="use_javascript">Javascript aktivieren</string>
   <string name="use_cookies">Erlaube Cookies von Drittanbietern</string>
   <string name="settings_ui_layout">Zeitlininen wie anzeigen:</string>
