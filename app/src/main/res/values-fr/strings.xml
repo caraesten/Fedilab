@@ -306,9 +306,9 @@
   <string name="settings_hour_init">Heure de début</string>
   <string name="settings_hour_end">Heure de fin</string>
   <string name="embedded_browser">Utiliser le navigateur intégré</string>
-  <string name="custom_tabs">Custom tabs</string>
+  <string name="custom_tabs">Onglets personnalisés</string>
   <string name="use_javascript">Activer Javascript</string>
-  <string name="expand_cw">Automatically expand cw</string>
+  <string name="expand_cw">Afficher automatiquement le contenu masqué</string>
   <string name="use_cookies">Autoriser les cookies tiers</string>
   <string name="settings_ui_layout">Disposition des fils : </string>
   <string-array name="settings_menu_tabs">
