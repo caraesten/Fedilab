@@ -322,9 +322,9 @@
   </string-array>
   <string-array name="settings_resize_picture">
     <item>No</item>
-    <item>512 Ko</item>
-    <item>1 Mo</item>
-    <item>2 Mo</item>
+    <item>512 Kb</item>
+    <item>1 Mb</item>
+    <item>2 Mb</item>
   </string-array>
   <string name="set_led_colour">Angi LED-farge:</string>
   <string-array name="led_colours">
