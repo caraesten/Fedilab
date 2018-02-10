@@ -67,13 +67,11 @@
             android:layout_height="match_parent"
             tools:ignore="ContentDescription" />
         <VideoView
-            android:layout_below="@+id/loader"
             android:layout_centerInParent="true"
             android:visibility="gone"
             android:id="@+id/media_video"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
         <ImageView
             android:visibility="gone"
             android:layout_margin="5dp"
