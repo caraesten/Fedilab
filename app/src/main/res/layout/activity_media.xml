@@ -95,17 +95,7 @@
             android:layout_height="20dp"
             tools:ignore="ContentDescription" />
 
-        <TextView
-            android:visibility="gone"
-            android:background="@drawable/media_message_border"
-            android:id="@+id/message_ready"
-            android:textColor="@color/dark_text"
-            android:text="@string/media_ready"
-            android:gravity="center"
-            android:textSize="14sp"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"/>
+
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/media_close"
@@ -135,5 +125,18 @@
             android:layout_height="30dp"
             android:src="@drawable/ic_save_white"
             />
+
+        <TextView
+            android:visibility="gone"
+            android:background="@drawable/media_message_border"
+            android:id="@+id/message_ready"
+            android:textColor="@color/dark_text"
+            android:text="@string/media_ready"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:layout_alignBottom="@+id/media_picture"
+            android:layout_marginBottom="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
     </RelativeLayout>
 </com.gw.swipeback.SwipeBackLayout>
