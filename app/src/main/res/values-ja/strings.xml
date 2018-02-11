@@ -428,8 +428,8 @@
   <string name="data_export_start">この操作には時間がかかることがあります。完了すると通知されます。</string>
   <string name="data_export_running">実行中です。お待ちください...</string>
   <string name="data_export">トゥートをエクスポート</string>
-  <string name="data_export_toots">Export statuses for %1$s</string>
-  <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
+  <string name="data_export_toots">%1$s のトゥートをエクスポート</string>
+  <string name="data_export_success">%2$s 個中 %1$s トゥートがエクスポートされました。</string>
   <string name="data_export_error">%1$s のデータをエクスポート中に問題が発生しました</string>
   <!-- Proxy -->
   <string name="proxy_set">プロキシ</string>
