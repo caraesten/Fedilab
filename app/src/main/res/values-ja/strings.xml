@@ -303,9 +303,9 @@
   <string name="settings_hour_init">開始時刻</string>
   <string name="settings_hour_end">終了時刻</string>
   <string name="embedded_browser">ビルトインブラウザを使用する</string>
-  <string name="custom_tabs">Custom tabs</string>
+  <string name="custom_tabs">カスタム タブ</string>
   <string name="use_javascript">Javascript を有効にする</string>
-  <string name="expand_cw">Automatically expand cw</string>
+  <string name="expand_cw">CWを自動的に展開する</string>
   <string name="use_cookies">サードパーティのCookieを許可する</string>
   <string name="settings_ui_layout">タイムラインのレイアウト: </string>
   <string-array name="settings_menu_tabs">
@@ -428,8 +428,8 @@
   <string name="data_export_start">この操作には時間がかかることがあります。完了すると通知されます。</string>
   <string name="data_export_running">実行中です。お待ちください...</string>
   <string name="data_export">トゥートをエクスポート</string>
-  <string name="data_export_toots">Export statuses for %1$s</string>
-  <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
+  <string name="data_export_toots">%1$s のトゥートをエクスポート</string>
+  <string name="data_export_success">%2$s 個中 %1$s トゥートがエクスポートされました。</string>
   <string name="data_export_error">%1$s のデータをエクスポート中に問題が発生しました</string>
   <!-- Proxy -->
   <string name="proxy_set">プロキシ</string>
