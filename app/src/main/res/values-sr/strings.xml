@@ -309,9 +309,9 @@
   <string name="settings_hour_init">Почетно време</string>
   <string name="settings_hour_end">Крајње време</string>
   <string name="embedded_browser">Користите уграђени прегледач</string>
-  <string name="custom_tabs">Custom tabs</string>
+  <string name="custom_tabs">Произвољни језичци</string>
   <string name="use_javascript">Омогућите JavaScript</string>
-  <string name="expand_cw">Automatically expand cw</string>
+  <string name="expand_cw">Аутоматски приказуј осетљиве садржаје</string>
   <string name="use_cookies">Дозволите независне колачиће</string>
   <string name="settings_ui_layout">Распоред лајни: </string>
   <string-array name="settings_menu_tabs">
