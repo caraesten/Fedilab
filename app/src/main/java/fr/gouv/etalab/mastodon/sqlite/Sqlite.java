@@ -26,7 +26,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 8;
+    public static final int DB_VERSION = 9;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -45,6 +45,10 @@ public class Sqlite extends SQLiteOpenHelper {
 
     //Table for temp muting
     static final String TABLE_TEMP_MUTE = "TEMP_MUTE";
+
+    //Table for cached statuses
+    static final String TABLE_STATUSES_CACHE = "STATUSES_CACHE";
+
 
     static final String COL_USER_ID = "USER_ID";
     static final String COL_USERNAME = "USERNAME";
@@ -113,6 +117,43 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_ACCT + " TEXT NOT NULL, " + COL_INSTANCE + " TEXT NOT NULL, " + COL_TARGETED_USER_ID + " TEXT NOT NULL, " + COL_DATE_CREATION + " TEXT NOT NULL, " + COL_DATE_END + " TEXT NOT NULL)";
 
 
+    static final String COL_CACHED_ACTION = "CACHED_ACTION";
+    static final String COL_URI = "URI";
+    static final String COL_ACCOUNT = "ACCOUNT";
+    static final String COL_IN_REPLY_TO_ID = "IN_REPLY_TO_ID";
+    static final String COL_IN_REPLY_TO_ACCOUNT_ID = "IN_REPLY_TO_ACCOUNT_ID";
+    static final String COL_REBLOG = "REBLOG";
+    static final String COL_CONTENT = "CONTENT";
+    static final String COL_EMOJIS = "EMOJIS";
+    static final String COL_REBLOGS_COUNT = "REBLOGS_COUNT";
+    static final String COL_FAVOURITES_COUNT = "FAVOURITES_COUNT";
+    static final String COL_REBLOGGED = "REBLOGGED";
+    static final String COL_FAVOURITED = "FAVOURITED";
+    static final String COL_MUTED = "MUTED";
+    static final String COL_SENSITIVE = "SENSITIVE";
+    static final String COL_SPOILER_TEXT = "SPOILER_TEXT";
+    static final String COL_VISIBILITY = "VISIBILITY";
+    static final String COL_MEDIA_ATTACHMENTS = "MEDIA_ATTACHMENTS";
+    static final String COL_MENTIONS = "MENTIONS";
+    static final String COL_TAGS = "TAGS";
+    static final String COL_APPLICATION = "APPLICATION";
+    static final String COL_LANGUAGE = "LANGUAGE";
+    static final String COL_PINNED = "PINNED";
+
+
+
+    private final String CREATE_TABLE_STATUSES_CACHE = "CREATE TABLE " + TABLE_STATUSES_CACHE + " ("
+            + COL_ID + " TEXT NOT NULL, " + COL_URI + " TEXT NOT NULL PRIMARY KEY, " + COL_URL + " TEXT NOT NULL, "
+            + COL_ACCOUNT + " TEXT NOT NULL, " + COL_IN_REPLY_TO_ID + " TEXT, " + COL_IN_REPLY_TO_ACCOUNT_ID + " TEXT,"
+            + COL_REBLOG + " TEXT, " + COL_CONTENT + " TEXT NOT NULL, " + COL_CREATED_AT + " TEXT NOT NULL, "
+            + COL_EMOJIS + " TEXT, " + COL_REBLOGS_COUNT + " INTEGER NOT NULL, " + COL_FAVOURITES_COUNT + " INTEGER NOT NULL, "
+            + COL_REBLOGGED + " INTEGER, " + COL_FAVOURITED + " INTEGER, " + COL_MUTED + " INTEGER, " + COL_SENSITIVE + " INTEGER, "
+            + COL_SPOILER_TEXT + " TEXT, " + COL_VISIBILITY + " TEXT NOT NULL, " + COL_MEDIA_ATTACHMENTS + " TEXT,"
+            + COL_MENTIONS + " TEXT, " + COL_TAGS + " TEXT, " + COL_APPLICATION + " TEXT,"
+            + COL_LANGUAGE + " TEXT," + COL_PINNED + " INTEGER)";
+            ;
+
+
     public Sqlite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
@@ -133,6 +174,7 @@ public class Sqlite extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_CUSTOM_EMOJI);
         db.execSQL(CREATE_TABLE_SEARCH);
         db.execSQL(CREATE_TABLE_TEMP_MUTE);
+        db.execSQL(CREATE_TABLE_STATUSES_CACHE);
     }
 
     @Override
@@ -156,6 +198,8 @@ public class Sqlite extends SQLiteOpenHelper {
                 db.execSQL(CREATE_TABLE_SEARCH);
             case 7:
                 db.execSQL(CREATE_TABLE_TEMP_MUTE);
+            case 8:
+                db.execSQL(CREATE_TABLE_STATUSES_CACHE);
             default:
                 break;
         }
