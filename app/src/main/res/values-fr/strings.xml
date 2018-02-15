@@ -130,10 +130,10 @@
     <item quantity="one">%d réponse</item>
     <item quantity="other">%d réponses</item>
   </plurals>
-  <string name="bookmarks">Bookmarks</string>
-  <string name="bookmarks_empty">No bookmarks to display</string>
-  <string name="status_bookmarked">Status has been added to bookmarks!</string>
-  <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+  <string name="bookmarks">Signets</string>
+  <string name="bookmarks_empty">Aucun signet à afficher</string>
+  <string name="status_bookmarked">Le pouet a été ajouté aux signets !</string>
+  <string name="status_unbookmarked">Le pouet a été supprimé des signets !</string>
   <!-- Date -->
   <string name="date_seconds">%d s</string>
   <string name="date_minutes">%d min</string>
