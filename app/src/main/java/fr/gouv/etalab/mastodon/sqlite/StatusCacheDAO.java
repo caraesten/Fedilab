@@ -100,7 +100,7 @@ public class StatusCacheDAO {
      * @param status Status
      * @return boolean
      */
-    public int updateStatus(Status status ) {
+    public int updateStatus(int cacheType, Status status ) {
         ContentValues values = new ContentValues();
         String instance = Helper.getLiveInstance(context);
         values.put(Sqlite.COL_REBLOGS_COUNT, status.getReblogs_count());
@@ -110,8 +110,8 @@ public class StatusCacheDAO {
         values.put(Sqlite.COL_MUTED, status.isMuted());
         values.put(Sqlite.COL_PINNED, status.isPinned());
         return db.update(Sqlite.TABLE_STATUSES_CACHE,
-                values, Sqlite.COL_STATUS_ID + " =  ? AND " + Sqlite.COL_INSTANCE + " =  ? ",
-                new String[]{String.valueOf(status.getId()), instance});
+                values, Sqlite.COL_STATUS_ID + " =  ? AND " + Sqlite.COL_INSTANCE + " =  ? " + Sqlite.COL_CACHED_ACTION + " = ?",
+                new String[]{String.valueOf(status.getId()), instance, String.valueOf(cacheType)});
     }
 
 
@@ -121,9 +121,9 @@ public class StatusCacheDAO {
      * Remove stored status
      * @return int
      */
-    public int remove(Status status){
+    public int remove(int cacheType, Status status){
         String instance = Helper.getLiveInstance(context);
-        return db.delete(Sqlite.TABLE_STATUSES_CACHE,  Sqlite.COL_STATUS_ID + " = \"" + status.getId() + "\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance + "\"", null);
+        return db.delete(Sqlite.TABLE_STATUSES_CACHE,  Sqlite.COL_CACHED_ACTION + " = \""+ cacheType +"\" AND " + Sqlite.COL_STATUS_ID + " = \"" + status.getId() + "\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance + "\"", null);
     }
 
     public int removeAllStatus(int cacheType){
@@ -151,7 +151,7 @@ public class StatusCacheDAO {
      * Returns a cached status by id in db
      * @return stored status StoredStatus
      */
-    public Status getStatus(long id){
+    public Status getStatus(String id){
         String instance = Helper.getLiveInstance(context);
         try {
             Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_STATUS_ID + " = '" + id + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance, null, null, null, null, null);

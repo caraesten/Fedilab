@@ -79,6 +79,7 @@ public class Status implements Parcelable{
     private boolean muted;
     private boolean pinned;
     private boolean sensitive;
+    private boolean bookmarked;
     private String visibility;
     private boolean attachmentShown = false;
     private boolean spoilerShown = false;
@@ -774,5 +775,13 @@ public class Status implements Parcelable{
 
     public void setMuted(boolean muted) {
         this.muted = muted;
+    }
+
+    public boolean isBookmarked() {
+        return bookmarked;
+    }
+
+    public void setBookmarked(boolean bookmarked) {
+        this.bookmarked = bookmarked;
     }
 }

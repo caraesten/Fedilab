@@ -1683,11 +1683,13 @@ public class API {
 
             //Retrieve Application
             Application application = new Application();
-            JSONObject arrayApplication = resobj.getJSONObject("application");
-            if( arrayApplication != null){
-                application.setName(arrayApplication.get("name").toString());
-                application.setWebsite(arrayApplication.get("website").toString());
-            }
+            try {
+                JSONObject arrayApplication = resobj.getJSONObject("application");
+                if( arrayApplication != null){
+                    application.setName(arrayApplication.get("name").toString());
+                    application.setWebsite(arrayApplication.get("website").toString());
+                }
+            }catch (Exception ignored){}
             status.setApplication(application);
 
 
@@ -1703,7 +1705,7 @@ public class API {
             try {
                 status.setFavourited(Boolean.valueOf(resobj.get("favourited").toString()));
             }catch (Exception e){
-                status.setReblogged(false);
+                status.setFavourited(false);
             }
             try {
                 status.setMuted(Boolean.valueOf(resobj.get("muted").toString()));
@@ -1717,8 +1719,8 @@ public class API {
             }
             try{
                 status.setReblog(parseStatuses(context, resobj.getJSONObject("reblog")));
-            }catch (Exception ignored){}
-        } catch (JSONException ignored) {}
+            }catch (Exception ignored){ignored.printStackTrace();}
+        } catch (JSONException ignored) {ignored.printStackTrace();}
         return status;
     }
 

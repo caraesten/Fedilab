@@ -110,6 +110,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
 
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
@@ -262,7 +263,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         TextView status_reply;
         ImageView status_pin;
         ImageView status_privacy;
-        FloatingActionButton status_translate;
+        FloatingActionButton status_translate, status_bookmark;
         LinearLayout status_container2;
         LinearLayout status_container3;
         LinearLayout main_container;
@@ -316,6 +317,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_reply = itemView.findViewById(R.id.status_reply);
             status_privacy = itemView.findViewById(R.id.status_privacy);
             status_translate = itemView.findViewById(R.id.status_translate);
+            status_bookmark = itemView.findViewById(R.id.status_bookmark);
             status_content_translated_container = itemView.findViewById(R.id.status_content_translated_container);
             main_container = itemView.findViewById(R.id.main_container);
             status_spoiler_container = itemView.findViewById(R.id.status_spoiler_container);
@@ -468,6 +470,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.status_replies.setVisibility(View.GONE);
                 }
             }
+            if( status.isBookmarked())
+                holder.status_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark));
+            else
+                holder.status_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark_border));
             changeDrawableColor(context, R.drawable.ic_fiber_new,R.color.mastodonC4);
             if( status.isNew())
                 holder.new_element.setVisibility(View.VISIBLE);
@@ -594,6 +600,27 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         status.setTranslationShown(!status.isTranslationShown());
                         notifyStatusChanged(status);
                     }
+                }
+            });
+
+            holder.status_bookmark.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                    if( status.isBookmarked()){
+                        Status status1 = new StatusCacheDAO(context, db).getStatus(status.getId());
+                        if( status1 == null)
+                            new StatusCacheDAO(context, db).insertStatus(StatusCacheDAO.BOOKMARK_CACHE, status);
+                        else
+                            new StatusCacheDAO(context, db).updateStatus(StatusCacheDAO.BOOKMARK_CACHE, status);
+                        status.setBookmarked(true);
+                        Toast.makeText(context, R.string.status_bookmarked, Toast.LENGTH_LONG).show();
+                    }else {
+                        new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, status);
+                        status.setBookmarked(false);
+                        Toast.makeText(context, R.string.status_unbookmarked, Toast.LENGTH_LONG).show();
+                    }
+                    notifyStatusChanged(status);
                 }
             });
             holder.status_content_translated.setMovementMethod(LinkMovementMethod.getInstance());

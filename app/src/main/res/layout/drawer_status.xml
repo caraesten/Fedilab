@@ -90,6 +90,14 @@
                 app:fabSize="mini"
                 android:layout_marginTop="10dp"
                 android:src="@drawable/ic_translate" />
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/status_bookmark"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                app:fabSize="mini"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_bookmark_border" />
         </LinearLayout>
         <LinearLayout
             android:layout_marginStart="5dp"
