@@ -118,6 +118,7 @@ public class Sqlite extends SQLiteOpenHelper {
 
 
     static final String COL_CACHED_ACTION = "CACHED_ACTION";
+    static final String COL_STATUS_ID = "STATUS_ID";
     static final String COL_URI = "URI";
     static final String COL_ACCOUNT = "ACCOUNT";
     static final String COL_IN_REPLY_TO_ID = "IN_REPLY_TO_ID";
@@ -143,7 +144,9 @@ public class Sqlite extends SQLiteOpenHelper {
 
 
     private final String CREATE_TABLE_STATUSES_CACHE = "CREATE TABLE " + TABLE_STATUSES_CACHE + " ("
-            + COL_ID + " TEXT NOT NULL, " + COL_URI + " TEXT NOT NULL PRIMARY KEY, " + COL_URL + " TEXT NOT NULL, "
+            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COL_CACHED_ACTION + " INTEGER NOT NULL, "
+            + COL_STATUS_ID + " TEXT NOT NULL, " + COL_URI + " TEXT NOT NULL, " + COL_URL + " TEXT NOT NULL, "
             + COL_ACCOUNT + " TEXT NOT NULL, " + COL_IN_REPLY_TO_ID + " TEXT, " + COL_IN_REPLY_TO_ACCOUNT_ID + " TEXT,"
             + COL_REBLOG + " TEXT, " + COL_CONTENT + " TEXT NOT NULL, " + COL_CREATED_AT + " TEXT NOT NULL, "
             + COL_EMOJIS + " TEXT, " + COL_REBLOGS_COUNT + " INTEGER NOT NULL, " + COL_FAVOURITES_COUNT + " INTEGER NOT NULL, "
@@ -151,7 +154,6 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_SPOILER_TEXT + " TEXT, " + COL_VISIBILITY + " TEXT NOT NULL, " + COL_MEDIA_ATTACHMENTS + " TEXT,"
             + COL_MENTIONS + " TEXT, " + COL_TAGS + " TEXT, " + COL_APPLICATION + " TEXT,"
             + COL_LANGUAGE + " TEXT," + COL_PINNED + " INTEGER)";
-            ;
 
 
     public Sqlite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {

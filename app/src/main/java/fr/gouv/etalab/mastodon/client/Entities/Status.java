@@ -76,6 +76,7 @@ public class Status implements Parcelable{
     private int favourites_count;
     private boolean reblogged;
     private boolean favourited;
+    private boolean muted;
     private boolean pinned;
     private boolean sensitive;
     private String visibility;
@@ -121,6 +122,7 @@ public class Status implements Parcelable{
         favourites_count = in.readInt();
         reblogged = in.readByte() != 0;
         favourited = in.readByte() != 0;
+        muted = in.readByte() != 0;
         sensitive = in.readByte() != 0;
         contentCW = in.readString();
         visibility = in.readString();
@@ -342,6 +344,7 @@ public class Status implements Parcelable{
         dest.writeInt(favourites_count);
         dest.writeByte((byte) (reblogged ? 1 : 0));
         dest.writeByte((byte) (favourited ? 1 : 0));
+        dest.writeByte((byte) (muted ? 1 : 0));
         dest.writeByte((byte) (sensitive ? 1 : 0));
         dest.writeString(contentCW);
         dest.writeString(visibility);
@@ -763,5 +766,13 @@ public class Status implements Parcelable{
 
     public void setCard(Card card) {
         this.card = card;
+    }
+
+    public boolean isMuted() {
+        return muted;
+    }
+
+    public void setMuted(boolean muted) {
+        this.muted = muted;
     }
 }

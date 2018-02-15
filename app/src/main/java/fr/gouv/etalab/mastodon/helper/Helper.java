@@ -96,6 +96,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
 import org.conscrypt.Conscrypt;
@@ -109,6 +110,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.lang.reflect.Type;
 import java.net.InetAddress;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -116,6 +118,7 @@ import java.security.Security;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -137,9 +140,12 @@ import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Attachment;
+import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.client.Entities.Tag;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -1607,6 +1613,118 @@ public class Helper {
             return null;
         }
     }
+
+
+    /**
+     * Serialized a Account class
+     * @param account Account to serialize
+     * @return String serialized Account
+     */
+    public static String accountToStringStorage(Account account){
+        Gson gson = new Gson();
+        return gson.toJson(account);
+    }
+
+    /**
+     * Unserialized an Account
+     * @param serializedAccount String serialized account
+     * @return Account
+     */
+    public static Account restoreAccountFromString(String serializedAccount){
+        Gson gson = new Gson();
+        try {
+            return gson.fromJson(serializedAccount, Account.class);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+
+    /**
+     * Serialized a List of Emojis class
+     * @param emojis Emojis List to serialize
+     * @return String serialized List of Emojis
+     */
+    public static String emojisToStringStorage(List<Emojis> emojis){
+        Gson gson = new Gson();
+        return gson.toJson(emojis);
+    }
+
+    /**
+     * Unserialized a list of Emojis
+     * @param serializedEmojis String serialized emojis
+     * @return List<Emojis>
+     */
+    public static List<Emojis> restoreEmojisFromString(String serializedEmojis){
+        Type listType = new TypeToken<ArrayList<Emojis>>(){}.getType();
+        return new Gson().fromJson(serializedEmojis, listType);
+    }
+
+
+    /**
+     * Serialized a List of a Attachment class
+     * @param attachments Attachment List to serialize
+     * @return String serialized List of Attachment
+     */
+    public static String attachmentToStringStorage(List<Attachment> attachments){
+        Gson gson = new Gson();
+        return gson.toJson(attachments);
+    }
+
+    /**
+     * Unserialized a list of Attachment
+     * @param serializedAttachment String serialized attachment
+     * @return List<Attachment>
+     */
+    public static List<Attachment> restoreAttachmentFromString(String serializedAttachment){
+        Type listType = new TypeToken<ArrayList<Attachment>>(){}.getType();
+        return new Gson().fromJson(serializedAttachment, listType);
+    }
+
+
+
+    /**
+     * Serialized a List of a Mention class
+     * @param mentions Mention List to serialize
+     * @return String serialized List of Mention
+     */
+    public static String mentionToStringStorage(List<Mention> mentions){
+        Gson gson = new Gson();
+        return gson.toJson(mentions);
+    }
+
+    /**
+     * Unserialized a list of Mention
+     * @param serializedMention String serialized mention
+     * @return String serialized List of Mention
+     */
+    public static List<Mention> restoreMentionFromString(String serializedMention){
+        Type listType = new TypeToken<ArrayList<Mention>>(){}.getType();
+        return new Gson().fromJson(serializedMention, listType);
+    }
+
+
+    /**
+     * Serialized a List of a Tag class
+     * @param tags Tag List to serialize
+     * @return String serialized List of Tag
+     */
+    public static String tagToStringStorage(List<Tag> tags){
+        Gson gson = new Gson();
+        return gson.toJson(tags);
+    }
+
+    /**
+     * Unserialized a list of Tag
+     * @param serializedTag String serialized tag
+     * @return String serialized List of Tag
+     */
+    public static List<Mention> restoreTagFromString(String serializedTag){
+        Type listType = new TypeToken<ArrayList<Tag>>(){}.getType();
+        return new Gson().fromJson(serializedTag, listType);
+    }
+
+
 
     /**
      * Check if a job id is in array of ids

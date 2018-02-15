@@ -1697,6 +1697,11 @@ public class API {
                 status.setReblogged(false);
             }
             try {
+                status.setMuted(Boolean.valueOf(resobj.get("muted").toString()));
+            }catch (Exception e){
+                status.setMuted(false);
+            }
+            try {
                 status.setPinned(Boolean.valueOf(resobj.get("pinned").toString()));
             }catch (JSONException e){
                 status.setPinned(false);
