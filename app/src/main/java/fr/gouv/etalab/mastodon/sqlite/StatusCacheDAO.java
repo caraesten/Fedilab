@@ -16,16 +16,13 @@ package fr.gouv.etalab.mastodon.sqlite;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.client.Entities.Status;
-import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
 import fr.gouv.etalab.mastodon.helper.Helper;
 
 
@@ -59,10 +56,9 @@ public class StatusCacheDAO {
      */
     public long insertStatus(int cacheType, Status status) {
         ContentValues values = new ContentValues();
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = Helper.getLiveInstance(context);
         values.put(Sqlite.COL_CACHED_ACTION, cacheType);
+        values.put(Sqlite.COL_INSTANCE, instance);
         values.put(Sqlite.COL_STATUS_ID, status.getId());
         values.put(Sqlite.COL_URI, status.getUri());
         values.put(Sqlite.COL_ACCOUNT, Helper.accountToStringStorage(status.getAccount()));
@@ -76,20 +72,18 @@ public class StatusCacheDAO {
         values.put(Sqlite.COL_REBLOGGED, status.isReblogged());
         values.put(Sqlite.COL_FAVOURITED, status.isFavourited());
         values.put(Sqlite.COL_MUTED, status.isMuted());
-        values.put(Sqlite.COL_MUTED, status.isMuted());
+        values.put(Sqlite.COL_CREATED_AT, Helper.dateToString(context, status.getCreated_at()));
         values.put(Sqlite.COL_SENSITIVE, status.isSensitive());
         values.put(Sqlite.COL_SPOILER_TEXT, status.getSpoiler_text());
         values.put(Sqlite.COL_VISIBILITY, status.getVisibility());
         values.put(Sqlite.COL_MEDIA_ATTACHMENTS, status.getMedia_attachments()!=null?Helper.attachmentToStringStorage(status.getMedia_attachments()):null);
         values.put(Sqlite.COL_MENTIONS, status.getMentions()!=null?Helper.mentionToStringStorage(status.getMentions()):null);
         values.put(Sqlite.COL_TAGS, status.getTags()!=null?Helper.tagToStringStorage(status.getTags()):null);
-
-        values.put(Sqlite.COL_APPLICATION, status.getApplication());
+        values.put(Sqlite.COL_APPLICATION, status.getApplication()!=null?Helper.applicationToStringStorage(status.getApplication()):null);
         values.put(Sqlite.COL_LANGUAGE, status.getLanguage());
         values.put(Sqlite.COL_PINNED, status.isPinned());
 
-
-        //Inserts stored status
+        //Inserts cached status
         long last_id;
         try{
             last_id = db.insert(Sqlite.TABLE_STATUSES_CACHE, null, values);
@@ -102,112 +96,51 @@ public class StatusCacheDAO {
     //------- UPDATES  -------
 
     /**
-     * Update a Status in database
+     * Update a Status cached in database
      * @param status Status
      * @return boolean
      */
-    public int updateStatus(long id, Status status ) {
+    public int updateStatus(Status status ) {
         ContentValues values = new ContentValues();
-
-        String serializedStatus = Helper.statusToStringStorage(status);
-        values.put(Sqlite.COL_STATUS_SERIALIZED, serializedStatus);
-        values.put(Sqlite.COL_DATE_CREATION, Helper.dateToString(context, new Date()));
-        return db.update(Sqlite.TABLE_STATUSES_STORED,
-                values, Sqlite.COL_ID + " =  ? ",
-                new String[]{String.valueOf(id)});
+        String instance = Helper.getLiveInstance(context);
+        values.put(Sqlite.COL_REBLOGS_COUNT, status.getReblogs_count());
+        values.put(Sqlite.COL_FAVOURITES_COUNT, status.getFavourites_count());
+        values.put(Sqlite.COL_REBLOGGED, status.isReblogged());
+        values.put(Sqlite.COL_FAVOURITED, status.isFavourited());
+        values.put(Sqlite.COL_MUTED, status.isMuted());
+        values.put(Sqlite.COL_PINNED, status.isPinned());
+        return db.update(Sqlite.TABLE_STATUSES_CACHE,
+                values, Sqlite.COL_STATUS_ID + " =  ? AND " + Sqlite.COL_INSTANCE + " =  ? ",
+                new String[]{String.valueOf(status.getId()), instance});
     }
 
-    /**
-     * Update a Status in database
-     * @param id long
-     * @param jobId int
-     * @return int
-     */
-    public int updateJobId(long id, int jobId) {
-        ContentValues values = new ContentValues();
-        values.put(Sqlite.COL_IS_SCHEDULED, jobId);
-        return db.update(Sqlite.TABLE_STATUSES_STORED,
-                values, Sqlite.COL_ID + " =  ? ",
-                new String[]{String.valueOf(id)});
-    }
-
-    /**
-     * Schedule a status in db
-     * @param id long
-     *  @param jobId int
-     * @param date_scheduled Date
-     * @return boolean
-     */
-    public int scheduleStatus(long id, int jobId, Date date_scheduled ) {
-        ContentValues values = new ContentValues();
-        values.put(Sqlite.COL_IS_SCHEDULED, jobId);
-        values.put(Sqlite.COL_DATE_SCHEDULED, Helper.dateToString(context, date_scheduled));
-        return db.update(Sqlite.TABLE_STATUSES_STORED,
-                values, Sqlite.COL_ID + " =  ? ",
-                new String[]{String.valueOf(id)});
-    }
-
-    /**
-     * Update scheduled date for a Status in database
-     * @param scheduled_date Date
-     * @return boolean
-     */
-    public int updateScheduledDate(int jobid, Date scheduled_date) {
-        ContentValues values = new ContentValues();
-        values.put(Sqlite.COL_DATE_SCHEDULED, Helper.dateToString(context, scheduled_date));
-        return db.update(Sqlite.TABLE_STATUSES_STORED,
-                values, Sqlite.COL_IS_SCHEDULED + " =  ? ",
-                new String[]{String.valueOf(jobid)});
-    }
-
-    /**
-     * Update date when task is done for a scheduled Status in database
-     * @param jobid int
-     * @param date_sent Date
-     * @return boolean
-     */
-    public int updateScheduledDone(int jobid, Date date_sent) {
-        ContentValues values = new ContentValues();
-        values.put(Sqlite.COL_DATE_SENT, Helper.dateToString(context, date_sent));
-        values.put(Sqlite.COL_SENT, 1);
-        return db.update(Sqlite.TABLE_STATUSES_STORED,
-                values, Sqlite.COL_IS_SCHEDULED + " =  ? ",
-                new String[]{String.valueOf(jobid)});
-    }
 
     //------- REMOVE  -------
 
     /***
-     * Remove stored status by id
+     * Remove stored status
      * @return int
      */
-    public int remove(long id){
-        return db.delete(Sqlite.TABLE_STATUSES_STORED,  Sqlite.COL_ID + " = \"" + id + "\"", null);
-    }
-
-    public int removeAllDrafts(){
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+    public int remove(Status status){
         String instance = Helper.getLiveInstance(context);
-        return db.delete(Sqlite.TABLE_STATUSES_STORED,  Sqlite.COL_IS_SCHEDULED + " = \"0\" AND " + Sqlite.COL_USER_ID + " = '" + userId+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "'", null);
+        return db.delete(Sqlite.TABLE_STATUSES_CACHE,  Sqlite.COL_STATUS_ID + " = \"" + status.getId() + "\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance + "\"", null);
     }
 
-    public int removeAllSent(){
-        return db.delete(Sqlite.TABLE_STATUSES_STORED,  Sqlite.COL_IS_SCHEDULED + " != 0 AND "  + Sqlite.COL_SENT + " = 1", null);
+    public int removeAllStatus(int cacheType){
+        String instance = Helper.getLiveInstance(context);
+        return db.delete(Sqlite.TABLE_STATUSES_CACHE,  Sqlite.COL_CACHED_ACTION + " = \""+ cacheType +"\" AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "'", null);
     }
 
     //------- GETTERS  -------
 
     /**
-     * Returns all stored Statuses in db
+     * Returns all cached Statuses in db depending of their cache type
      * @return stored status List<StoredStatus>
      */
-    public List<StoredStatus> getAllStatus(){
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+    public List<Status> getAllStatus(int cacheType){
         String instance = Helper.getLiveInstance(context);
         try {
-            Cursor c = db.query(Sqlite.TABLE_STATUSES_STORED, null, Sqlite.COL_USER_ID + " = '" + userId+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "'", null, null, null, Sqlite.COL_DATE_CREATION + " DESC", null);
+            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "'", null, null, null, Sqlite.COL_CREATED_AT + " DESC", null);
             return cursorToListStatuses(c);
         } catch (Exception e) {
             return null;
@@ -215,166 +148,105 @@ public class StatusCacheDAO {
     }
 
     /**
-     * Returns all stored Statuses in db
-     * @return stored status List<StoredStatus>
-     */
-    public List<StoredStatus> getAllDrafts(){
-        try {
-            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            String instance = Helper.getLiveInstance(context);
-            Cursor c = db.query(Sqlite.TABLE_STATUSES_STORED, null, Sqlite.COL_USER_ID + " = '" + userId+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_IS_SCHEDULED + " = 0", null, null, null, Sqlite.COL_DATE_CREATION + " DESC", null);
-            return cursorToListStatuses(c);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-
-    /**
-     * Returns all scheduled Statuses in db
-     * @return stored status List<StoredStatus>
-     */
-    public List<StoredStatus> getAllScheduled(){
-        try {
-            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            String instance = Helper.getLiveInstance(context);
-            Cursor c = db.query(Sqlite.TABLE_STATUSES_STORED, null, Sqlite.COL_USER_ID + " = '" + userId+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_IS_SCHEDULED + " != 0 AND " + Sqlite.COL_SENT + " = 0", null, null, null, Sqlite.COL_DATE_SCHEDULED + " ASC", null);
-            return cursorToListStatuses(c);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-    /**
-     * Returns all not sent Statuses in db
-     * @return stored status List<StoredStatus>
-     */
-    public List<StoredStatus> getAllNotSent(){
-        try {
-            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            String instance = Helper.getLiveInstance(context);
-            Cursor c = db.query(Sqlite.TABLE_STATUSES_STORED, null, Sqlite.COL_USER_ID + " = '" + userId+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " +Sqlite.COL_IS_SCHEDULED + " != 0 AND " + Sqlite.COL_SENT + " = 0", null, null, null, Sqlite.COL_DATE_CREATION + " DESC", null);
-            return cursorToListStatuses(c);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    /**
-     * Returns all sent Statuses in db
-     * @return stored status List<StoredStatus>
-     */
-    public List<StoredStatus> getAllSent(){
-        try {
-            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            String instance = Helper.getLiveInstance(context);
-            Cursor c = db.query(Sqlite.TABLE_STATUSES_STORED, null, Sqlite.COL_USER_ID + " = '" + userId+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " +Sqlite.COL_IS_SCHEDULED + " != 0 AND " + Sqlite.COL_SENT + " = 1", null, null, null, Sqlite.COL_DATE_CREATION + " DESC", null);
-            return cursorToListStatuses(c);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    /**
-     * Returns a stored status by id in db
+     * Returns a cached status by id in db
      * @return stored status StoredStatus
      */
-    public StoredStatus getStatus(long id){
+    public Status getStatus(long id){
+        String instance = Helper.getLiveInstance(context);
         try {
-            Cursor c = db.query(Sqlite.TABLE_STATUSES_STORED, null, Sqlite.COL_ID + " = '" + id + "'", null, null, null, null, null);
+            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_STATUS_ID + " = '" + id + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance, null, null, null, null, null);
             return cursorToStoredStatus(c);
         } catch (Exception e) {
             return null;
         }
     }
 
-
-    /**
-     * Returns a stored status by id of job in db
-     * @return stored status StoredStatus
-     */
-    public StoredStatus getStatusScheduled(int jobid){
-        try {
-            Cursor c = db.query(Sqlite.TABLE_STATUSES_STORED, null, Sqlite.COL_IS_SCHEDULED + " = '" + jobid + "'", null, null, null, null, null);
-            return cursorToStoredStatus(c);
-        } catch (Exception e) {
-            return null;
-        }
-    }
 
     /***
-     * Method to hydrate Stored statuses from database
+     * Method to hydrate statuses from database
      * @param c Cursor
-     * @return StoredStatus
+     * @return Status
      */
-    private StoredStatus cursorToStoredStatus(Cursor c){
+    private Status cursorToStoredStatus(Cursor c){
         //No element found
         if (c.getCount() == 0)
             return null;
         //Take the first element
         c.moveToFirst();
-        //New user
-        StoredStatus storedStatus = new StoredStatus();
-        storedStatus.setId(c.getInt(c.getColumnIndex(Sqlite.COL_ID)));
-        Status status = Helper.restoreStatusFromString(c.getString(c.getColumnIndex(Sqlite.COL_STATUS_SERIALIZED)));
-        if( status == null){
-            remove(c.getInt(c.getColumnIndex(Sqlite.COL_ID)));
-            return null;
-        }
-        storedStatus.setStatus(status);
-        Status statusReply = Helper.restoreStatusFromString(c.getString(c.getColumnIndex(Sqlite.COL_STATUS_REPLY_SERIALIZED)));
-        storedStatus.setStatusReply(statusReply);
-        storedStatus.setSent(c.getInt(c.getColumnIndex(Sqlite.COL_SENT)) == 1);
-        storedStatus.setJobId(c.getInt(c.getColumnIndex(Sqlite.COL_IS_SCHEDULED)));
-        storedStatus.setCreation_date(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_DATE_CREATION))));
-        storedStatus.setScheduled_date(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_DATE_SCHEDULED))));
-        storedStatus.setSent_date(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_DATE_SENT))));
-        storedStatus.setUserId(c.getString(c.getColumnIndex(Sqlite.COL_USER_ID)));
-        storedStatus.setInstance(c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE)));
+        //New status
+        Status status = new Status();
+        status.setId(c.getString(c.getColumnIndex(Sqlite.COL_STATUS_ID)));
+        status.setUri(c.getString(c.getColumnIndex(Sqlite.COL_URI)));
+        status.setUrl(c.getString(c.getColumnIndex(Sqlite.COL_URL)));
+        status.setAccount(Helper.restoreAccountFromString(c.getString(c.getColumnIndex(Sqlite.COL_ACCOUNT))));
+        status.setIn_reply_to_id(c.getString(c.getColumnIndex(Sqlite.COL_IN_REPLY_TO_ID)));
+        status.setIn_reply_to_account_id(c.getString(c.getColumnIndex(Sqlite.COL_IN_REPLY_TO_ACCOUNT_ID)));
+        status.setReblog(Helper.restoreStatusFromString(c.getString(c.getColumnIndex(Sqlite.COL_REBLOG))));
+        status.setContent(c.getString(c.getColumnIndex(Sqlite.COL_CONTENT)));
+        status.setCreated_at(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_CREATED_AT))));
+        status.setEmojis(Helper.restoreEmojisFromString(c.getString(c.getColumnIndex(Sqlite.COL_EMOJIS))));
+        status.setReblogs_count(c.getInt(c.getColumnIndex(Sqlite.COL_REBLOGS_COUNT)));
+        status.setFavourites_count(c.getInt(c.getColumnIndex(Sqlite.COL_FAVOURITES_COUNT)));
+        status.setReblogged(c.getInt(c.getColumnIndex(Sqlite.COL_REBLOGGED))==1);
+        status.setFavourited(c.getInt(c.getColumnIndex(Sqlite.COL_FAVOURITED))==1);
+        status.setMuted(c.getInt(c.getColumnIndex(Sqlite.COL_MUTED))==1);
+        status.setSensitive(c.getInt(c.getColumnIndex(Sqlite.COL_SENSITIVE))==1);
+        status.setPinned(c.getInt(c.getColumnIndex(Sqlite.COL_PINNED))==1);
+        status.setSpoiler_text(c.getString(c.getColumnIndex(Sqlite.COL_SPOILER_TEXT)));
+        status.setVisibility(c.getString(c.getColumnIndex(Sqlite.COL_VISIBILITY)));
+        status.setMedia_attachments(Helper.restoreAttachmentFromString(c.getString(c.getColumnIndex(Sqlite.COL_MEDIA_ATTACHMENTS))));
+        status.setMentions(Helper.restoreMentionFromString(c.getString(c.getColumnIndex(Sqlite.COL_MENTIONS))));
+        status.setTags(Helper.restoreTagFromString(c.getString(c.getColumnIndex(Sqlite.COL_TAGS))));
+        status.setApplication(Helper.restoreApplicationFromString(c.getString(c.getColumnIndex(Sqlite.COL_APPLICATION))));
+        status.setLanguage(c.getString(c.getColumnIndex(Sqlite.COL_LANGUAGE)));
         //Close the cursor
         c.close();
-        //Stored status is returned
-        return storedStatus;
+        //Cached status is returned
+        return status;
     }
 
     /***
-     * Method to hydrate stored statuses from database
+     * Method to hydrate cached statuses from database
      * @param c Cursor
-     * @return List<StoredStatus>
+     * @return List<Status>
      */
-    private List<StoredStatus> cursorToListStatuses(Cursor c){
+    private List<Status> cursorToListStatuses(Cursor c){
         //No element found
         if (c.getCount() == 0)
             return null;
-        List<StoredStatus> storedStatuses = new ArrayList<>();
+        List<Status> statuses = new ArrayList<>();
         while (c.moveToNext() ) {
-            //Restore the status
-            StoredStatus storedStatus = new StoredStatus();
-            storedStatus.setId(c.getInt(c.getColumnIndex(Sqlite.COL_ID)));
-            Status status = Helper.restoreStatusFromString(c.getString(c.getColumnIndex(Sqlite.COL_STATUS_SERIALIZED)));
-            if( status == null){
-                remove(c.getInt(c.getColumnIndex(Sqlite.COL_ID)));
-                continue;
-            }
-            storedStatus.setStatus(status);
-            Status statusReply = Helper.restoreStatusFromString(c.getString(c.getColumnIndex(Sqlite.COL_STATUS_REPLY_SERIALIZED)));
-            storedStatus.setStatusReply(statusReply);
-            storedStatus.setSent(c.getInt(c.getColumnIndex(Sqlite.COL_SENT)) == 1);
-            storedStatus.setJobId(c.getInt(c.getColumnIndex(Sqlite.COL_IS_SCHEDULED)) );
-            storedStatus.setCreation_date(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_DATE_CREATION))));
-            storedStatus.setScheduled_date(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_DATE_SCHEDULED))));
-            storedStatus.setSent_date(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_DATE_SENT))));
-            storedStatus.setUserId(c.getString(c.getColumnIndex(Sqlite.COL_USER_ID)));
-            storedStatus.setInstance(c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE)));
-            storedStatuses.add(storedStatus);
+            //Restore cached status
+            Status status = new Status();
+            status.setId(c.getString(c.getColumnIndex(Sqlite.COL_STATUS_ID)));
+            status.setUri(c.getString(c.getColumnIndex(Sqlite.COL_URI)));
+            status.setUrl(c.getString(c.getColumnIndex(Sqlite.COL_URL)));
+            status.setAccount(Helper.restoreAccountFromString(c.getString(c.getColumnIndex(Sqlite.COL_ACCOUNT))));
+            status.setIn_reply_to_id(c.getString(c.getColumnIndex(Sqlite.COL_IN_REPLY_TO_ID)));
+            status.setIn_reply_to_account_id(c.getString(c.getColumnIndex(Sqlite.COL_IN_REPLY_TO_ACCOUNT_ID)));
+            status.setReblog(Helper.restoreStatusFromString(c.getString(c.getColumnIndex(Sqlite.COL_REBLOG))));
+            status.setContent(c.getString(c.getColumnIndex(Sqlite.COL_CONTENT)));
+            status.setCreated_at(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_CREATED_AT))));
+            status.setEmojis(Helper.restoreEmojisFromString(c.getString(c.getColumnIndex(Sqlite.COL_EMOJIS))));
+            status.setReblogs_count(c.getInt(c.getColumnIndex(Sqlite.COL_REBLOGS_COUNT)));
+            status.setFavourites_count(c.getInt(c.getColumnIndex(Sqlite.COL_FAVOURITES_COUNT)));
+            status.setReblogged(c.getInt(c.getColumnIndex(Sqlite.COL_REBLOGGED))==1);
+            status.setFavourited(c.getInt(c.getColumnIndex(Sqlite.COL_FAVOURITED))==1);
+            status.setMuted(c.getInt(c.getColumnIndex(Sqlite.COL_MUTED))==1);
+            status.setSensitive(c.getInt(c.getColumnIndex(Sqlite.COL_SENSITIVE))==1);
+            status.setPinned(c.getInt(c.getColumnIndex(Sqlite.COL_PINNED))==1);
+            status.setSpoiler_text(c.getString(c.getColumnIndex(Sqlite.COL_SPOILER_TEXT)));
+            status.setVisibility(c.getString(c.getColumnIndex(Sqlite.COL_VISIBILITY)));
+            status.setMedia_attachments(Helper.restoreAttachmentFromString(c.getString(c.getColumnIndex(Sqlite.COL_MEDIA_ATTACHMENTS))));
+            status.setMentions(Helper.restoreMentionFromString(c.getString(c.getColumnIndex(Sqlite.COL_MENTIONS))));
+            status.setTags(Helper.restoreTagFromString(c.getString(c.getColumnIndex(Sqlite.COL_TAGS))));
+            status.setApplication(Helper.restoreApplicationFromString(c.getString(c.getColumnIndex(Sqlite.COL_APPLICATION))));
+            status.setLanguage(c.getString(c.getColumnIndex(Sqlite.COL_LANGUAGE)));
+            statuses.add(status);
         }
         //Close the cursor
         c.close();
         //Statuses list is returned
-        return storedStatuses;
+        return statuses;
     }
 }

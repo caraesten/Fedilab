@@ -1681,6 +1681,15 @@ public class API {
                 status.setEmojis(new ArrayList<Emojis>());
             }
 
+            //Retrieve Application
+            Application application = new Application();
+            JSONObject arrayApplication = resobj.getJSONObject("application");
+            if( arrayApplication != null){
+                application.setName(arrayApplication.get("name").toString());
+                application.setWebsite(arrayApplication.get("website").toString());
+            }
+            status.setApplication(application);
+
 
             status.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
             status.setContent(resobj.get("content").toString());

@@ -140,6 +140,7 @@ import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Application;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
@@ -1616,6 +1617,31 @@ public class Helper {
 
 
     /**
+     * Serialized an Application class
+     * @param application Application to serialize
+     * @return String serialized Application
+     */
+    public static String applicationToStringStorage(Application application){
+        Gson gson = new Gson();
+        return gson.toJson(application);
+    }
+
+    /**
+     * Unserialized an Application
+     * @param serializedApplication String serialized application
+     * @return Application
+     */
+    public static Application restoreApplicationFromString(String serializedApplication){
+        Gson gson = new Gson();
+        try {
+            return gson.fromJson(serializedApplication, Application.class);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+
+    /**
      * Serialized a Account class
      * @param account Account to serialize
      * @return String serialized Account
@@ -1676,7 +1702,7 @@ public class Helper {
      * @param serializedAttachment String serialized attachment
      * @return List<Attachment>
      */
-    public static List<Attachment> restoreAttachmentFromString(String serializedAttachment){
+    public static ArrayList<Attachment> restoreAttachmentFromString(String serializedAttachment){
         Type listType = new TypeToken<ArrayList<Attachment>>(){}.getType();
         return new Gson().fromJson(serializedAttachment, listType);
     }
@@ -1719,7 +1745,7 @@ public class Helper {
      * @param serializedTag String serialized tag
      * @return String serialized List of Tag
      */
-    public static List<Mention> restoreTagFromString(String serializedTag){
+    public static List<Tag> restoreTagFromString(String serializedTag){
         Type listType = new TypeToken<ArrayList<Tag>>(){}.getType();
         return new Gson().fromJson(serializedTag, listType);
     }
