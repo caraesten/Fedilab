@@ -31,6 +31,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.URLUtil;
@@ -120,7 +121,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         mSwipeBackLayout.setSwipeBackListener(new SwipeBackLayout.OnSwipeBackListener() {
             @Override
             public void onViewPositionChanged(View mView, float swipeBackFraction, float SWIPE_BACK_FACTOR) {
-                canSwipe = false;
+                canSwipe = swipeBackFraction<0.2;
             }
 
             @Override
