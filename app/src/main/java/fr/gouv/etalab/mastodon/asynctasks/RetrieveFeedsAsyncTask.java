@@ -15,13 +15,18 @@
 package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 
 
 /**
@@ -111,6 +116,12 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 break;
             case TAG:
                 apiResponse = api.getPublicTimelineTag(tag, false, max_id);
+                break;
+            case CACHE_BOOKMARKS:
+                apiResponse = new APIResponse();
+                SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = new StatusCacheDAO(contextReference.get(), db).getAllStatus(StatusCacheDAO.BOOKMARK_CACHE);
+                apiResponse.setStatuses(statuses);
                 break;
             case HASHTAG:
                 break;

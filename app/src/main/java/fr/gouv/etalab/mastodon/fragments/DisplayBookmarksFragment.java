@@ -18,6 +18,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -36,9 +37,11 @@ import java.util.List;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 
@@ -47,14 +50,15 @@ import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
  * Created by Thomas on 15/02/2018.
  * Fragment to display bookmarks
  */
-public class DisplayBookmarksFragment extends Fragment {
+public class DisplayBookmarksFragment extends Fragment implements OnRetrieveFeedsInterface {
 
 
     private Context context;
     private List<Status> statuses;
     private StatusListAdapter statusListAdapter;
     private RelativeLayout textviewNoAction;
-    private LinearLayoutManager mLayoutManager;
+    private RelativeLayout mainLoader;
+    private RecyclerView lv_status;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,31 +66,53 @@ public class DisplayBookmarksFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_bookmarks, container, false);
         context = getContext();
 
-        final RecyclerView lv_status = rootView.findViewById(R.id.lv_status);
+         lv_status = rootView.findViewById(R.id.lv_status);
 
-        RelativeLayout mainLoader = rootView.findViewById(R.id.loader);
+        mainLoader = rootView.findViewById(R.id.loader);
         textviewNoAction = rootView.findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS, null, DisplayBookmarksFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        return rootView;
+    }
 
-        statuses = new StatusCacheDAO(context, db).getAllStatus(StatusCacheDAO.BOOKMARK_CACHE);
+
+    @Override
+    public void onCreate(Bundle saveInstance)
+    {
+        super.onCreate(saveInstance);
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
+
+
+    @Override
+    public void onRetrieveFeeds(APIResponse apiResponse) {
+
+        final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        mainLoader.setVisibility(View.GONE);
+        FloatingActionButton delete_all = null;
+        try {
+            delete_all = ((MainActivity) context).findViewById(R.id.delete_all);
+        }catch (Exception ignored){}
         final boolean isOnWifi = Helper.isOnWIFI(context);
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         final int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
         final int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
-        mLayoutManager = new LinearLayoutManager(context);
+        statuses = apiResponse.getStatuses();
         if( statuses != null && statuses.size() > 0) {
+            LinearLayoutManager mLayoutManager = new LinearLayoutManager(context);
             statusListAdapter = new StatusListAdapter(context, RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
             lv_status.setAdapter(statusListAdapter);
             lv_status.setLayoutManager(mLayoutManager);
         }else {
             textviewNoAction.setVisibility(View.VISIBLE);
         }
-        mainLoader.setVisibility(View.GONE);
-        FloatingActionButton delete_all = null;
-        try {
-            delete_all = ((MainActivity) context).findViewById(R.id.delete_all);
-        }catch (Exception ignored){}
+
         if( delete_all != null)
             delete_all.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -116,22 +142,5 @@ public class DisplayBookmarksFragment extends Fragment {
                             .show();
                 }
             });
-        return rootView;
     }
-
-
-    @Override
-    public void onCreate(Bundle saveInstance)
-    {
-        super.onCreate(saveInstance);
-    }
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.context = context;
-    }
-
-
 }
