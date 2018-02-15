@@ -130,10 +130,10 @@
     <item quantity="one">erantzun %d</item>
     <item quantity="other">%d erantzun</item>
   </plurals>
-  <string name="bookmarks">Bookmarks</string>
-  <string name="bookmarks_empty">No bookmarks to display</string>
-  <string name="status_bookmarked">Status has been added to bookmarks!</string>
-  <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+  <string name="bookmarks">Gogokoak</string>
+  <string name="bookmarks_empty">Ez dago gogokorik bistaratzeko</string>
+  <string name="status_bookmarked">Mezua gogokoetara gehitu da!</string>
+  <string name="status_unbookmarked">Mezua gogokoetatik kendu da!</string>
   <!-- Date -->
   <string name="date_seconds">%d s</string>
   <string name="date_minutes">%d m</string>
