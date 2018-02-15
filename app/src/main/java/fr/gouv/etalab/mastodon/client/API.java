@@ -1137,6 +1137,7 @@ public class API {
      * @param query  String search
      * @return APIResponse
      */
+    @SuppressWarnings("SameParameterValue")
     public APIResponse searchAccounts(String query, int count) {
         return searchAccounts(query, count, false);
     }
@@ -1227,6 +1228,7 @@ public class API {
      * Get lists for a user by its id
      * @return APIResponse
      */
+    @SuppressWarnings("unused")
     public APIResponse getLists(String userId){
 
         List<fr.gouv.etalab.mastodon.client.Entities.List> lists = new ArrayList<>();
@@ -1287,10 +1289,9 @@ public class API {
      * @param limit int, limit of results
      * @return APIResponse
      */
+    @SuppressWarnings("SameParameterValue")
     public APIResponse getAccountsInList(String listId, int limit){
 
-        List<fr.gouv.etalab.mastodon.client.Entities.List> lists = new ArrayList<>();
-        fr.gouv.etalab.mastodon.client.Entities.List list;
         HashMap<String, String> params = new HashMap<>();
         if( limit < 0)
             limit = 0;
@@ -1319,6 +1320,7 @@ public class API {
      * @param id String, id of the list
      * @return APIResponse
      */
+    @SuppressWarnings("unused")
     public APIResponse getList(String id){
 
         List<fr.gouv.etalab.mastodon.client.Entities.List> lists = new ArrayList<>();
@@ -1355,8 +1357,6 @@ public class API {
             parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(14));
             params.put("account_ids[]", parameters.toString());
         }
-        List<fr.gouv.etalab.mastodon.client.Entities.List> lists = new ArrayList<>();
-        fr.gouv.etalab.mastodon.client.Entities.List list;
         try {
             new HttpsConnection(context).post(getAbsoluteUrl(String.format("/lists/%s/accounts", id)), 60, params, prefKeyOauthTokenT);
         } catch (HttpsConnection.HttpsConnectionException e) {
