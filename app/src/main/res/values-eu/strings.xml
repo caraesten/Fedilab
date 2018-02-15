@@ -52,7 +52,7 @@
   <string name="next">Hurrengoa</string>
   <string name="previous">Aurrekoa</string>
   <string name="open_with">Honekin ireki</string>
-  <string name="validate">Balioztatu</string>
+  <string name="validate">Onartu</string>
   <string name="media">Multimedia</string>
   <string name="share_with">Partekatu honekin</string>
   <string name="shared_via">Mastalab bidez partekatua</string>
@@ -130,6 +130,10 @@
     <item quantity="one">erantzun %d</item>
     <item quantity="other">%d erantzun</item>
   </plurals>
+  <string name="bookmarks">Bookmarks</string>
+  <string name="bookmarks_empty">No bookmarks to display</string>
+  <string name="status_bookmarked">Status has been added to bookmarks!</string>
+  <string name="status_unbookmarked">Status was removed from bookmarks!</string>
   <!-- Date -->
   <string name="date_seconds">%d s</string>
   <string name="date_minutes">%d m</string>

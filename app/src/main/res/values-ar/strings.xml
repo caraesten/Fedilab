@@ -134,6 +134,10 @@
     <item quantity="many">%d replies</item>
     <item quantity="other">%d ردود</item>
   </plurals>
+  <string name="bookmarks">Bookmarks</string>
+  <string name="bookmarks_empty">No bookmarks to display</string>
+  <string name="status_bookmarked">Status has been added to bookmarks!</string>
+  <string name="status_unbookmarked">Status was removed from bookmarks!</string>
   <!-- Date -->
   <string name="date_seconds">%d ثا</string>
   <string name="date_minutes">%d د</string>
