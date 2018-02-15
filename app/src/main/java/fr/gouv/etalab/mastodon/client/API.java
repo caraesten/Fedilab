@@ -1719,8 +1719,8 @@ public class API {
             }
             try{
                 status.setReblog(parseStatuses(context, resobj.getJSONObject("reblog")));
-            }catch (Exception ignored){ignored.printStackTrace();}
-        } catch (JSONException ignored) {ignored.printStackTrace();}
+            }catch (Exception ignored){}
+        } catch (JSONException ignored) {}
         return status;
     }
 

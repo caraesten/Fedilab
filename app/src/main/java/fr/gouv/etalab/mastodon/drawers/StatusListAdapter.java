@@ -348,7 +348,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int HIDDEN_STATUS = 0;
         String filter;
-        if( type == RetrieveFeedsAsyncTask.Type.HOME)
+        if( type == RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS)
+            return DISPLAYED_STATUS;
+        else if( type == RetrieveFeedsAsyncTask.Type.HOME)
             filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_HOME, null);
         else if( type == RetrieveFeedsAsyncTask.Type.LOCAL)
             filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_LOCAL, null);
@@ -470,6 +472,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.status_replies.setVisibility(View.GONE);
                 }
             }
+            final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            Status statusBookmarked = new StatusCacheDAO(context, db).getStatus(status.getId());
+            if( statusBookmarked != null)
+                status.setBookmarked(true);
+            else
+                status.setBookmarked(false);
             if( status.isBookmarked())
                 holder.status_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark));
             else
@@ -606,21 +614,29 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_bookmark.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                    if( status.isBookmarked()){
-                        Status status1 = new StatusCacheDAO(context, db).getStatus(status.getId());
-                        if( status1 == null)
+                    if( type != RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS) {
+                        status.setBookmarked(!status.isBookmarked());
+                        if (status.isBookmarked()) {
                             new StatusCacheDAO(context, db).insertStatus(StatusCacheDAO.BOOKMARK_CACHE, status);
-                        else
-                            new StatusCacheDAO(context, db).updateStatus(StatusCacheDAO.BOOKMARK_CACHE, status);
-                        status.setBookmarked(true);
-                        Toast.makeText(context, R.string.status_bookmarked, Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, R.string.status_bookmarked, Toast.LENGTH_LONG).show();
+                        } else {
+                            new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, status);
+                            Toast.makeText(context, R.string.status_unbookmarked, Toast.LENGTH_LONG).show();
+                        }
+                        notifyStatusChanged(status);
                     }else {
-                        new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, status);
-                        status.setBookmarked(false);
-                        Toast.makeText(context, R.string.status_unbookmarked, Toast.LENGTH_LONG).show();
+                        int position = 0;
+                        for (Status statustmp : statuses) {
+                            if (statustmp.getId().equals(status.getId())) {
+                                statuses.remove(status);
+                                statusListAdapter.notifyItemRemoved(position);
+                                new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, statustmp);
+                                Toast.makeText(context, R.string.status_unbookmarked, Toast.LENGTH_LONG).show();
+                                break;
+                            }
+                            position++;
+                        }
                     }
-                    notifyStatusChanged(status);
                 }
             });
             holder.status_content_translated.setMovementMethod(LinkMovementMethod.getInstance());

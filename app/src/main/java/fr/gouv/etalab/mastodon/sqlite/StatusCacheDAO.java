@@ -61,6 +61,7 @@ public class StatusCacheDAO {
         values.put(Sqlite.COL_INSTANCE, instance);
         values.put(Sqlite.COL_STATUS_ID, status.getId());
         values.put(Sqlite.COL_URI, status.getUri());
+        values.put(Sqlite.COL_URL, status.getUrl());
         values.put(Sqlite.COL_ACCOUNT, Helper.accountToStringStorage(status.getAccount()));
         values.put(Sqlite.COL_IN_REPLY_TO_ID, status.getIn_reply_to_id());
         values.put(Sqlite.COL_IN_REPLY_TO_ACCOUNT_ID, status.getIn_reply_to_account_id());
@@ -154,7 +155,7 @@ public class StatusCacheDAO {
     public Status getStatus(String id){
         String instance = Helper.getLiveInstance(context);
         try {
-            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_STATUS_ID + " = '" + id + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance, null, null, null, null, null);
+            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_STATUS_ID + " = '" + id + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance +"'", null, null, null, null, null);
             return cursorToStoredStatus(c);
         } catch (Exception e) {
             return null;

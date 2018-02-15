@@ -86,6 +86,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
+import fr.gouv.etalab.mastodon.fragments.DisplayBookmarksFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayDraftsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayFollowRequestSentFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayListsFragment;
@@ -1315,7 +1316,7 @@ public abstract class BaseMainActivity extends BaseActivity
         toolbarTitle.setVisibility(View.VISIBLE);
 
         appBar.setExpanded(true);
-        if (id != R.id.nav_drafts) {
+        if (id != R.id.nav_drafts && id != R.id.nav_bookmarks ) {
             delete_all.setVisibility(View.GONE);
         }else{
             delete_all.setVisibility(View.VISIBLE);
@@ -1367,6 +1368,12 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "DRAFTS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayDraftsFragment, fragmentTag).commit();
+            toot.setVisibility(View.GONE);
+        }else if (id == R.id.nav_bookmarks) {
+            DisplayBookmarksFragment displayBookmarksFragment = new DisplayBookmarksFragment();
+            fragmentTag = "BOOKMARKS";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, displayBookmarksFragment, fragmentTag).commit();
             toot.setVisibility(View.GONE);
         }else if (id == R.id.nav_search) {
             DisplaySearchFragment displaySearchFragment = new DisplaySearchFragment();

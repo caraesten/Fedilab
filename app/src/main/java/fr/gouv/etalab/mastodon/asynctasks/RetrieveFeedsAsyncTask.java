@@ -52,7 +52,8 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         FAVOURITES,
         ONESTATUS,
         CONTEXT,
-        TAG
+        TAG,
+        CACHE_BOOKMARKS
     }
 
     public RetrieveFeedsAsyncTask(Context context, Type action, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
