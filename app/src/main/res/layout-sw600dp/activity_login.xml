@@ -43,12 +43,12 @@
             android:layout_height="wrap_content">
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/login_instance_layout"
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 app:errorEnabled="true">
                 <AutoCompleteTextView
                     android:id="@+id/login_instance"
-                    android:layout_width="300dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
                     android:maxLines="1"
