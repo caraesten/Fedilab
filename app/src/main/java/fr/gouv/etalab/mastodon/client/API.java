@@ -1962,6 +1962,9 @@ public class API {
                 attachment.setPreview_url(resobj.get("preview_url").toString());
             }catch (JSONException ignore){}
             try{
+                attachment.setMeta(resobj.get("meta").toString());
+            }catch (JSONException ignore){}
+            try{
                 attachment.setText_url(resobj.get("text_url").toString());
             }catch (JSONException ignore){}
 

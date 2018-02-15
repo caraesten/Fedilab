@@ -31,6 +31,7 @@ public class Attachment implements Parcelable{
     private String url;
     private String remote_url;
     private String preview_url;
+    private String meta;
     private String text_url;
     private String description;
 
@@ -130,5 +131,13 @@ public class Attachment implements Parcelable{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getMeta() {
+        return meta;
+    }
+
+    public void setMeta(String meta) {
+        this.meta = meta;
     }
 }
