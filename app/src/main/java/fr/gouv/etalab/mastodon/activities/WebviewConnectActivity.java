@@ -139,7 +139,7 @@ public class WebviewConnectActivity extends BaseActivity {
             }
 
         });
-        webView.loadUrl(redirectUserToAuthorizeAndLogin());
+        webView.loadUrl(LoginActivity.redirectUserToAuthorizeAndLogin(clientId, instance));
     }
 
 
@@ -153,15 +153,6 @@ public class WebviewConnectActivity extends BaseActivity {
     }
 
 
-
-    private String redirectUserToAuthorizeAndLogin() {
-
-        String queryString = Helper.CLIENT_ID + "="+ clientId;
-        queryString += "&" + Helper.REDIRECT_URI + "="+ Uri.encode(Helper.REDIRECT_CONTENT_WEB);
-        queryString += "&" + Helper.RESPONSE_TYPE +"=code";
-        queryString += "&" + Helper.SCOPE +"=" + Helper.OAUTH_SCOPES;
-        return Helper.instanceWithProtocol(instance) + Helper.EP_AUTHORIZE + "?" + queryString;
-    }
 
 
     @Override

@@ -13,4 +13,8 @@
         android:id="@+id/action_proxy"
         android:title="@string/proxy_set"
         app:showAsAction="never" />
+    <item android:id="@+id/action_custom_tabs"
+        android:title="@string/custom_tabs"
+        app:actionViewClass="android.widget.CheckBox"
+        android:checkable="true"/>
 </menu>

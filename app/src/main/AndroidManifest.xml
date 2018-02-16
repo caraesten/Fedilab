@@ -104,7 +104,14 @@
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
-            />
+           >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:host="backtomastalab" android:scheme="mastalab" />
+            </intent-filter>
+        </activity>
         <activity android:name=".activities.ShowAccountActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
