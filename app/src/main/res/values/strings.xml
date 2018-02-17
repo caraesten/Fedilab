@@ -409,6 +409,8 @@
     <string name="show_media">Show media</string>
     <string name="show_pinned">Show pinned</string>
     <string name="filter_no_result">No matching result found!</string>
+    <string name="data_backup_toots">Backup toots for %1$s</string>
+    <string name="data_backup_success">%1$s new toots have been imported</string>
     <string-array name="filter_select">
         <item>No</item>
         <item>Only</item>

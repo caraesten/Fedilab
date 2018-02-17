@@ -162,6 +162,7 @@
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
+            android:launchMode="singleTask"
             />
         <activity android:name=".activities.AboutActivity"
             android:windowSoftInputMode="stateAlwaysHidden"

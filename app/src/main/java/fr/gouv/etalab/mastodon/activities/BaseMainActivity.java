@@ -108,6 +108,7 @@ import fr.gouv.etalab.mastodon.fragments.TabLayoutSettingsFragment;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.ADD_USER_INTENT;
+import static fr.gouv.etalab.mastodon.helper.Helper.BACKUP_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_THEME_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_USER_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.EXTERNAL_STORAGE_REQUEST_CODE;
@@ -1080,6 +1081,9 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
             }else if (extras.getInt(INTENT_ACTION) == ADD_USER_INTENT){
                 this.recreate();
+            }else if( extras.getInt(INTENT_ACTION) == BACKUP_INTENT){
+                Intent myIntent = new Intent(BaseMainActivity.this, OwnerStatusActivity.class);
+                startActivity(myIntent);
             }
         }else if( Intent.ACTION_SEND.equals(action) && type != null ) {
             if ("text/plain".equals(type)) {

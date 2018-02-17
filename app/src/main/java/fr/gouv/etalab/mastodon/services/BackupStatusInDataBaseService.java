@@ -116,14 +116,14 @@ public class BackupStatusInDataBaseService extends IntentService {
             }while (max_id != null && canContinue);
 
 
-            message = getString(R.string.data_export_success, String.valueOf(statusToBackUp), String.valueOf(backupStatus.size()));
+            message = getString(R.string.data_backup_success, String.valueOf(backupStatus.size()));
             intentOpen = new Intent();
 
 
 
             long notif_id = Long.parseLong(account.getId());
             int notificationId = ((notif_id + 4) > 2147483647) ? (int) (2147483647 - notif_id - 4) : (int) (notif_id + 4);
-            String title = getString(R.string.data_export_toots, account.getAcct());
+            String title = getString(R.string.data_backup_toots, account.getAcct());
             notify_user(getApplicationContext(), intentOpen, notificationId, BitmapFactory.decodeResource(getResources(),
                     R.drawable.mastodonlogo), title, message);
         } catch (Exception e) {
