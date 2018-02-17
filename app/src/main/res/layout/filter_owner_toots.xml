@@ -137,7 +137,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/media"/>
+                android:text="@string/show_media"/>
             <Spinner
                 android:id="@+id/filter_media"
                 android:entries="@array/filter_select"
@@ -156,7 +156,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/pinned_toots"/>
+                android:text="@string/show_pinned"/>
             <Spinner
                 android:id="@+id/filter_pinned"
                 android:entries="@array/filter_select"

@@ -78,9 +78,6 @@ import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeedsInterface {
 
 
-    private TextView toolbarTitle;
-    private RecyclerView lv_status;
-    private boolean isRefreshed;
     private ImageView pp_actionBar;
     private StatusListAdapter statusListAdapter;
     private SharedPreferences sharedpreferences;
@@ -130,12 +127,12 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                     finish();
                 }
             });
-            toolbarTitle = actionBar.getCustomView().findViewById(R.id.toolbar_title);
+            TextView toolbarTitle = actionBar.getCustomView().findViewById(R.id.toolbar_title);
             pp_actionBar = actionBar.getCustomView().findViewById(R.id.pp_actionBar);
             toolbarTitle.setText(getString(R.string.owner_cached_toots));
         }
         statuses = new ArrayList<>();
-        lv_status = findViewById(R.id.lv_status);
+        RecyclerView lv_status = findViewById(R.id.lv_status);
         mainLoader =  findViewById(R.id.loader);
         nextElementLoader = findViewById(R.id.loading_next_status);
         textviewNoAction =  findViewById(R.id.no_action);
@@ -184,8 +181,6 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                         }
                     }
                 });
-
-        isRefreshed = false;
 
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
         new RetrieveFeedsAsyncTask(OwnerStatusActivity.this, filterToots, null, OwnerStatusActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -346,6 +341,9 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                         .setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                RelativeLayout no_result = findViewById(R.id.no_result);
+                                no_result.setVisibility(View.GONE);
+
                                 filterToots.setBoosts(FilterToots.typeFilter.values()[filter_boost.getSelectedItemPosition()]);
                                 filterToots.setReplies(FilterToots.typeFilter.values()[filter_replies.getSelectedItemPosition()]);
                                 filterToots.setMedia(FilterToots.typeFilter.values()[filter_media.getSelectedItemPosition()]);
@@ -422,6 +420,9 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         if( statuses != null && statuses.size() > 0) {
             this.statuses.addAll(statuses);
             statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
+        }else {
+            RelativeLayout no_result = findViewById(R.id.no_result);
+            no_result.setVisibility(View.VISIBLE);
         }
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;

@@ -406,6 +406,9 @@
     <string name="v_private">Private</string>
     <string name="v_direct">Direct</string>
     <string name="v_keywords">Some keywords…</string>
+    <string name="show_media">Show media</string>
+    <string name="show_pinned">Show pinned</string>
+    <string name="filter_no_result">No matching result found!</string>
     <string-array name="filter_select">
         <item>No</item>
         <item>Only</item>
