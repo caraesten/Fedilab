@@ -392,8 +392,8 @@
   <string name="show_media">إظهار الوسائط</string>
   <string name="show_pinned">إظهار المثبّة</string>
   <string name="filter_no_result">لا توجد أي نتيجة تتطابق طلب البحث !</string>
-  <string name="data_backup_toots">Backup toots for %1$s</string>
-  <string name="data_backup_success">%1$s new toots have been imported</string>
+  <string name="data_backup_toots">النسخ الإحتياطي لتبويقات حساب %1$s</string>
+  <string name="data_backup_success">تمت عملية استرجاع %1$s تبويقات جديدة</string>
   <string-array name="filter_select">
     <item>لا</item>
     <item>فقط</item>
@@ -417,7 +417,7 @@
         - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
         - <b>WAKE_LOCK</b>: Used during the notification service.
     </string>
-  <string name="privacy_API_authorizations_title">API permissions:</string>
+  <string name="privacy_API_authorizations_title">تصريحات خدمة برمجة التطبيقات API :</string>
   <string name="privacy_API_authorizations">
         - <b>Read</b>: Read data.\n
         - <b>Write</b>: Post statuses and upload media for statuses.\n
