@@ -485,6 +485,16 @@ public class Helper {
 
     /**
      * Convert a date in String -> format yyyy-MM-dd HH:mm:ss
+     * @param date Date
+     * @return String
+     */
+    public static String shortDateToString(Date date) {
+        SimpleDateFormat df = (SimpleDateFormat) DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault());
+        return df.format(date);
+    }
+
+    /**
+     * Convert a date in String -> format yyyy-MM-dd HH:mm:ss
      * @param context Context
      * @param date Date
      * @return String

@@ -16,6 +16,8 @@ package fr.gouv.etalab.mastodon.activities;
 
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -26,6 +28,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,6 +39,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -45,6 +50,8 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
@@ -55,9 +62,9 @@ import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.services.BackupStatusInDataBaseService;
-import fr.gouv.etalab.mastodon.services.BackupStatusService;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 
 
 /**
@@ -82,6 +89,8 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
     private boolean swiped;
     private boolean flag_loading;
     LinearLayoutManager mLayoutManager;
+    private int style;
+    private Button settings_time_from, settings_time_to;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +147,13 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         lv_status.setAdapter(statusListAdapter);
         mLayoutManager = new LinearLayoutManager(OwnerStatusActivity.this);
         lv_status.setLayoutManager(mLayoutManager);
+
+
+        if( theme == Helper.THEME_DARK){
+            style = R.style.DialogDark;
+        }else {
+            style = R.style.Dialog;
+        }
 
         SQLiteDatabase db = Sqlite.getInstance(OwnerStatusActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(OwnerStatusActivity.this,db).getAccountByID(userId);
@@ -206,6 +222,28 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         return true;
     }
 
+    private DatePickerDialog.OnDateSetListener iniDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+
+                public void onDateSet(DatePicker view, int year,
+                                      int monthOfYear, int dayOfMonth) {
+                    Calendar c = Calendar.getInstance();
+                    c.set(year, monthOfYear, dayOfMonth, 0, 0);
+                    settings_time_from.setText(Helper.shortDateToString(new Date(c.getTimeInMillis())));
+                }
+
+            };
+    private DatePickerDialog.OnDateSetListener endDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+
+                public void onDateSet(DatePicker view, int year,
+                                      int monthOfYear, int dayOfMonth) {
+                    Calendar c = Calendar.getInstance();
+                    c.set(year, monthOfYear, dayOfMonth, 23, 59);
+                    settings_time_to.setText(Helper.shortDateToString(new Date(c.getTimeInMillis())));
+                }
+
+            };
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -217,6 +255,68 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                 startService(backupIntent);
                 return true;
             case R.id.action_filter:
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(OwnerStatusActivity.this);
+                LayoutInflater inflater = this.getLayoutInflater();
+                @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.filter_owner_toots, null);
+                dialogBuilder.setView(dialogView);
+                dialogBuilder
+                        .setTitle(R.string.action_filter)
+                        .setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                final AlertDialog alertDialog = dialogBuilder.create();
+
+                SQLiteDatabase db = Sqlite.getInstance(OwnerStatusActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                Date dateInit = new StatusCacheDAO(OwnerStatusActivity.this, db).getSmallerDate(StatusCacheDAO.ARCHIVE_CACHE);
+                Date dateEnd = new StatusCacheDAO(OwnerStatusActivity.this, db).getGreaterDate(StatusCacheDAO.ARCHIVE_CACHE);
+                String dateInitString = Helper.shortDateToString(dateInit);
+                String dateEndString = Helper.shortDateToString(dateEnd);
+
+                settings_time_from = dialogView.findViewById(R.id.settings_time_from);
+                settings_time_to = dialogView.findViewById(R.id.settings_time_to);
+
+                settings_time_from.setText(dateInitString);
+                settings_time_to.setText(dateEndString);
+
+                Calendar c = Calendar.getInstance();
+                c.setTime(dateInit);
+                int yearIni = c.get(Calendar.YEAR);
+                int monthIni = c.get(Calendar.MONTH);
+                int dayIni = c.get(Calendar.DAY_OF_MONTH);
+
+                final DatePickerDialog dateIniPickerDialog = new DatePickerDialog(
+                        OwnerStatusActivity.this, style, iniDateSetListener, yearIni, monthIni, dayIni);
+                settings_time_from.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dateIniPickerDialog.show();
+                    }
+                });
+                Calendar ce = Calendar.getInstance();
+                c.setTime(dateEnd);
+                int yearEnd = ce.get(Calendar.YEAR);
+                int monthEnd = ce.get(Calendar.MONTH);
+                int dayEnd = ce.get(Calendar.DAY_OF_MONTH);
+                final DatePickerDialog dateEndPickerDialog = new DatePickerDialog(
+                        OwnerStatusActivity.this, style, endDateSetListener, yearEnd, monthEnd, dayEnd);
+                settings_time_to.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dateEndPickerDialog.show();
+                    }
+                });
+
+
+                alertDialog.show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

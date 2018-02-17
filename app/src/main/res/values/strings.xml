@@ -401,6 +401,11 @@
     <string name="action_sync">Synchronize</string>
     <string name="action_filter">Filter</string>
     <string name="owner_cached_toots">Your toots</string>
+    <string name="v_public">Public</string>
+    <string name="v_unlisted">Unlisted</string>
+    <string name="v_private">Private</string>
+    <string name="v_direct">Direct</string>
+
     <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Recorded data</string>
