@@ -160,6 +160,54 @@ public class StatusCacheDAO {
         }
     }
 
+
+    /**
+     * Returns the last date of backup for a user depending of the type of cache
+     * @return Date
+     */
+    public Date getLastDateCache(int cacheType){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
+        try {
+            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_DATE_BACKUP + " DESC", "1");
+            //No element found
+            if (c.getCount() == 0)
+                return null;
+            //Take the first element
+            c.moveToFirst();
+            String date = c.getString(c.getColumnIndex(Sqlite.COL_DATE_BACKUP));
+            c.close();
+            return Helper.stringToDate(context, date);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+
+    /**
+     * Returns the last id of backup for a user depending of the type of cache
+     * @return Date
+     */
+    public String getLastTootIDCache(int cacheType){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
+        try {
+            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_STATUS_ID + " DESC", "1");
+            //No element found
+            if (c.getCount() == 0)
+                return null;
+            //Take the first element
+            c.moveToFirst();
+            String last_id = c.getString(c.getColumnIndex(Sqlite.COL_STATUS_ID));
+            c.close();
+            return last_id;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     /**
      * Returns a cached status by id in db
      * @return stored status StoredStatus
