@@ -371,6 +371,26 @@
     Möchtest du diese löschen?</string>
   <string name="cache_units">MB</string>
   <string name="toast_cache_clear">Speicher wurde geleert! %1$s wurden freigeben</string>
+  <!-- ACTIVITY CACHE -->
+  <string name="action_sync">Synchronize</string>
+  <string name="action_filter">Filter</string>
+  <string name="owner_cached_toots">Your toots</string>
+  <string name="v_public">Public</string>
+  <string name="v_unlisted">Unlisted</string>
+  <string name="v_private">Private</string>
+  <string name="v_direct">Direct</string>
+  <string name="v_keywords">Some keywords…</string>
+  <string name="show_media">Show media</string>
+  <string name="show_pinned">Show pinned</string>
+  <string name="filter_no_result">No matching result found!</string>
+  <string name="data_backup_toots">Backup toots for %1$s</string>
+  <string name="data_backup_success">%1$s new toots have been imported</string>
+  <string-array name="filter_select">
+    <item>No</item>
+    <item>Only</item>
+    <item>Both</item>
+  </string-array>
+  <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">Aufgezeichnete Daten</string>
   <string name="privacy_data">Nur Grundinformationen der Konten werden auf dem Gerät gespeichert.         Die Daten sind streng vertraulich und können nur von der Anwendung genutzt werden.         Beim Löschen der Anwendung werden diese umgehend entfernt.\n
