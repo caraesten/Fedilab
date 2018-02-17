@@ -27,6 +27,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -35,6 +36,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
+
 import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
 
 
@@ -94,11 +96,9 @@ public class BackupStatusInDataBaseService extends IntentService {
         Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
         API api = new API(getApplicationContext(), account.getInstance(), account.getToken());
         try {
-            Intent intentOpen;
             //Starts from the last recorded ID
             String since_id = new StatusCacheDAO(BackupStatusInDataBaseService.this, db).getLastTootIDCache(StatusCacheDAO.ARCHIVE_CACHE);
             String max_id = null;
-            int statusToBackUp = account.getStatuses_count();
             List<Status> backupStatus = new ArrayList<>();
             boolean canContinue = true;
             do {
@@ -117,14 +117,12 @@ public class BackupStatusInDataBaseService extends IntentService {
 
 
             message = getString(R.string.data_backup_success, String.valueOf(backupStatus.size()));
-            intentOpen = new Intent();
-
-
-
+            Intent mainActivity = new Intent(BackupStatusInDataBaseService.this, MainActivity.class);
+            mainActivity.putExtra(Helper.INTENT_ACTION, Helper.BACKUP_INTENT);
             long notif_id = Long.parseLong(account.getId());
             int notificationId = ((notif_id + 4) > 2147483647) ? (int) (2147483647 - notif_id - 4) : (int) (notif_id + 4);
             String title = getString(R.string.data_backup_toots, account.getAcct());
-            notify_user(getApplicationContext(), intentOpen, notificationId, BitmapFactory.decodeResource(getResources(),
+            notify_user(getApplicationContext(), mainActivity, notificationId, BitmapFactory.decodeResource(getResources(),
                     R.drawable.mastodonlogo), title, message);
         } catch (Exception e) {
             e.printStackTrace();
