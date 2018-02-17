@@ -369,25 +369,25 @@
   <string name="cache_units">Mo</string>
   <string name="toast_cache_clear">Le cache a été nettoyé ! %1$s ont été libérés</string>
   <!-- ACTIVITY CACHE -->
-  <string name="action_sync">Synchronize</string>
-  <string name="action_filter">Filter</string>
-  <string name="owner_cached_toots">Your toots</string>
+  <string name="action_sync">Synchroniser</string>
+  <string name="action_filter">Filtrer</string>
+  <string name="owner_cached_toots">Vos pouets</string>
   <string name="v_public">Public</string>
-  <string name="v_unlisted">Unlisted</string>
-  <string name="v_private">Private</string>
+  <string name="v_unlisted">Non-listé</string>
+  <string name="v_private">Privé</string>
   <string name="v_direct">Direct</string>
-  <string name="v_keywords">Some keywords…</string>
-  <string name="show_media">Show media</string>
-  <string name="show_pinned">Show pinned</string>
-  <string name="filter_no_result">No matching result found!</string>
-  <string name="data_backup_toots">Backup toots for %1$s</string>
-  <string name="data_backup_success">%1$s new toots have been imported</string>
+  <string name="v_keywords">Quelques mots-clés…</string>
+  <string name="show_media">Pouets avec médias</string>
+  <string name="show_pinned">Pouets épinglés</string>
+  <string name="filter_no_result">Aucun résultat avec ce filtre !</string>
+  <string name="data_backup_toots">Sauvegarde des pouets pour %1$s</string>
+  <string name="data_backup_success">%1$s nouveaux pouets ont été importés</string>
   <string-array name="filter_select">
-    <item>No</item>
-    <item>Only</item>
-    <item>Both</item>
+    <item>Non</item>
+    <item>Seulement</item>
+    <item>Les deux</item>
   </string-array>
-  <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+  <string name="owner_cached_toots_empty">Aucun pouet trouvé en base de données. Veuillez utiliser le bouton synchroniser du menu pour les importer.</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">Données enregistrées</string>
   <string name="privacy_data">
