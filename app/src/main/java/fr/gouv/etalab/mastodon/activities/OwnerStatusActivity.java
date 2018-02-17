@@ -431,7 +431,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
             this.statuses.addAll(statuses);
             statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
         }else {
-            if( textviewNoAction.getVisibility() != View.VISIBLE) {
+            if( textviewNoAction.getVisibility() != View.VISIBLE && firstLoad) {
                 RelativeLayout no_result = findViewById(R.id.no_result);
                 no_result.setVisibility(View.VISIBLE);
             }

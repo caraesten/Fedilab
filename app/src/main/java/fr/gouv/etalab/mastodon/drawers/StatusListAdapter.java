@@ -473,7 +473,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             }
             final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            Status statusBookmarked = new StatusCacheDAO(context, db).getStatus(status.getId());
+            Status statusBookmarked = new StatusCacheDAO(context, db).getStatus(StatusCacheDAO.BOOKMARK_CACHE, status.getId());
             if( statusBookmarked != null)
                 status.setBookmarked(true);
             else

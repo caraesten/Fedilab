@@ -23,7 +23,6 @@ import java.util.List;
 
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
-import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.helper.FilterToots;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -141,8 +140,8 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 statuses = new StatusCacheDAO(contextReference.get(), db).getStatusFromID(StatusCacheDAO.ARCHIVE_CACHE, filterToots, max_id);
                 if( statuses != null && statuses.size() > 0) {
                     apiResponse.setStatuses(statuses);
-                    apiResponse.setMax_id(statuses.get(0).getId());
-                    apiResponse.setSince_id(statuses.get(statuses.size() - 1).getId());
+                    apiResponse.setSince_id(statuses.get(0).getId());
+                    apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
                 }else{
                     apiResponse.setStatuses(null);
                     apiResponse.setMax_id(null);
