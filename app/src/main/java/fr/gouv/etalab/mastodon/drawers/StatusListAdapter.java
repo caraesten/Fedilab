@@ -1581,6 +1581,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 if( status.getId().equals(targetedId)) {
                     statuses.remove(status);
                     statusListAdapter.notifyItemRemoved(position);
+                    SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                    //Remove the status from cache also
+                    try {
+                        new StatusCacheDAO(context, db).remove(StatusCacheDAO.ARCHIVE_CACHE,status);
+                    }catch (Exception ignored){}
                     break;
                 }
                 position++;
@@ -1618,6 +1623,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     if( status.getReblogs_count() - 1 >= 0)
                         status.setReblogs_count(status.getReblogs_count() - 1);
                     statusListAdapter.notifyItemChanged(position);
+                    SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                    //Remove the status from cache also
+                    try {
+                        new StatusCacheDAO(context, db).remove(StatusCacheDAO.ARCHIVE_CACHE,status);
+                    }catch (Exception ignored){}
                     break;
                 }
                 position++;
