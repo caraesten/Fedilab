@@ -26,7 +26,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 9;
+    public static final int DB_VERSION = 10;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -145,7 +145,7 @@ public class Sqlite extends SQLiteOpenHelper {
 
     private final String CREATE_TABLE_STATUSES_CACHE = "CREATE TABLE " + TABLE_STATUSES_CACHE + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COL_CACHED_ACTION + " INTEGER NOT NULL, "+ COL_INSTANCE + " TEXT NOT NULL, "
+            + COL_CACHED_ACTION + " INTEGER NOT NULL, "+ COL_INSTANCE + " TEXT NOT NULL, " + COL_ACCT + " TEXT, "
             + COL_STATUS_ID + " TEXT NOT NULL, " + COL_URI + " TEXT NOT NULL, " + COL_URL + " TEXT NOT NULL, "
             + COL_ACCOUNT + " TEXT NOT NULL, " + COL_IN_REPLY_TO_ID + " TEXT, " + COL_IN_REPLY_TO_ACCOUNT_ID + " TEXT,"
             + COL_REBLOG + " TEXT, " + COL_CONTENT + " TEXT NOT NULL, " + COL_CREATED_AT + " TEXT NOT NULL, "
@@ -202,6 +202,8 @@ public class Sqlite extends SQLiteOpenHelper {
                 db.execSQL(CREATE_TABLE_TEMP_MUTE);
             case 8:
                 db.execSQL(CREATE_TABLE_STATUSES_CACHE);
+            case 9:
+                db.execSQL("ALTER TABLE " + TABLE_STATUSES_CACHE + " ADD COLUMN " + COL_ACCT + " TEXT");
             default:
                 break;
         }
