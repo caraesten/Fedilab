@@ -23,11 +23,13 @@ import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
+import fr.gouv.etalab.mastodon.activities.OwnerStatusActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -115,7 +117,10 @@ public class BackupStatusInDataBaseService extends IntentService {
                 }
             }while (max_id != null && canContinue);
 
-
+            if(backupStatus.size() > 0){
+                Intent backupIntent = new Intent(Helper.INTENT_BACKUP_FINISH);
+                LocalBroadcastManager.getInstance(this).sendBroadcast(backupIntent);
+            }
             message = getString(R.string.data_backup_success, String.valueOf(backupStatus.size()));
             Intent mainActivity = new Intent(BackupStatusInDataBaseService.this, MainActivity.class);
             mainActivity.putExtra(Helper.INTENT_ACTION, Helper.BACKUP_INTENT);

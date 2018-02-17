@@ -17,8 +17,11 @@ package fr.gouv.etalab.mastodon.activities;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -26,6 +29,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -108,6 +112,10 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         setContentView(R.layout.activity_ower_status);
 
         filterToots = new FilterToots();
+
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(backupFinishedReceiver,
+                        new IntentFilter(Helper.INTENT_BACKUP_FINISH));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -274,6 +282,8 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                     dateIni = new StatusCacheDAO(OwnerStatusActivity.this, db).getSmallerDate(StatusCacheDAO.ARCHIVE_CACHE);
                 if( dateEnd == null)
                     dateEnd = new StatusCacheDAO(OwnerStatusActivity.this, db).getGreaterDate(StatusCacheDAO.ARCHIVE_CACHE);
+                if( dateIni == null || dateEnd == null)
+                    return true;
                 String dateInitString = Helper.shortDateToString(dateIni);
                 String dateEndString = Helper.shortDateToString(dateEnd);
 
@@ -421,13 +431,33 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
             this.statuses.addAll(statuses);
             statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
         }else {
-            RelativeLayout no_result = findViewById(R.id.no_result);
-            no_result.setVisibility(View.VISIBLE);
+            if( textviewNoAction.getVisibility() != View.VISIBLE) {
+                RelativeLayout no_result = findViewById(R.id.no_result);
+                no_result.setVisibility(View.VISIBLE);
+            }
         }
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
 
     }
 
+
+    private BroadcastReceiver backupFinishedReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            max_id = null;
+            firstLoad = true;
+            flag_loading = true;
+            swiped = true;
+            new RetrieveFeedsAsyncTask(OwnerStatusActivity.this, filterToots, null, OwnerStatusActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+    };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this)
+                .unregisterReceiver(backupFinishedReceiver);
+    }
 
 }

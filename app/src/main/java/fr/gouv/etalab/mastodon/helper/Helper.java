@@ -302,11 +302,13 @@ public class Helper {
     //Intent
     public static final String INTENT_ACTION = "intent_action";
     public static final String INTENT_TARGETED_ACCOUNT = "intent_targeted_account";
+    public static final String INTENT_BACKUP_FINISH = "intent_backup_finish";
     //Receiver
     public static final String RECEIVE_DATA = "receive_data";
     public static final String RECEIVE_FEDERATED_DATA = "receive_federated_data";
     public static final String RECEIVE_LOCAL_DATA = "receive_local_data";
     public static final String RECEIVE_PICTURE = "receive_picture";
+
     //User agent
     public static final String USER_AGENT = "Mastalab/"+ BuildConfig.VERSION_NAME + " Android/"+ Build.VERSION.RELEASE;
 
