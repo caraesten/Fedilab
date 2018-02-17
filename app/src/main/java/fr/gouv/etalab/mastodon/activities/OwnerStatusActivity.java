@@ -41,6 +41,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -274,8 +275,10 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
 
 
                 SQLiteDatabase db = Sqlite.getInstance(OwnerStatusActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                dateIni = new StatusCacheDAO(OwnerStatusActivity.this, db).getSmallerDate(StatusCacheDAO.ARCHIVE_CACHE);
-                dateEnd = new StatusCacheDAO(OwnerStatusActivity.this, db).getGreaterDate(StatusCacheDAO.ARCHIVE_CACHE);
+                if( dateIni == null)
+                    dateIni = new StatusCacheDAO(OwnerStatusActivity.this, db).getSmallerDate(StatusCacheDAO.ARCHIVE_CACHE);
+                if( dateEnd == null)
+                    dateEnd = new StatusCacheDAO(OwnerStatusActivity.this, db).getGreaterDate(StatusCacheDAO.ARCHIVE_CACHE);
                 String dateInitString = Helper.shortDateToString(dateIni);
                 String dateEndString = Helper.shortDateToString(dateEnd);
 
@@ -286,7 +289,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                 final CheckBox filter_visibility_public = dialogView.findViewById(R.id.filter_visibility_public);
                 final CheckBox filter_visibility_unlisted = dialogView.findViewById(R.id.filter_visibility_unlisted);
                 final CheckBox filter_visibility_private = dialogView.findViewById(R.id.filter_visibility_private);
-                CheckBox filter_visibility_direct = dialogView.findViewById(R.id.filter_visibility_direct);
+                final CheckBox filter_visibility_direct = dialogView.findViewById(R.id.filter_visibility_direct);
 
                 filter_visibility_public.setChecked(filterToots.isV_public());
                 filter_visibility_unlisted.setChecked(filterToots.isV_unlisted());
@@ -303,11 +306,13 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                 filter_media.setSelection(filterToots.getMedia().ordinal());
                 filter_pinned.setSelection(filterToots.getPinned().ordinal());
 
-                final TextView filter_keywords = dialogView.findViewById(R.id.filter_keywords);
+                final EditText filter_keywords = dialogView.findViewById(R.id.filter_keywords);
 
                 settings_time_from.setText(dateInitString);
                 settings_time_to.setText(dateEndString);
 
+                if( filterToots.getFilter() != null)
+                    filter_keywords.setText(filterToots.getFilter());
 
                 Calendar c = Calendar.getInstance();
                 c.setTime(dateIni);
@@ -349,12 +354,15 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                                 filterToots.setV_public(filter_visibility_public.isChecked());
                                 filterToots.setV_unlisted(filter_visibility_unlisted.isChecked());
                                 filterToots.setV_private(filter_visibility_private.isChecked());
-                                filterToots.setV_direct(filter_visibility_public.isChecked());
+                                filterToots.setV_direct(filter_visibility_direct.isChecked());
 
                                 filterToots.setDateIni(Helper.dateToString(OwnerStatusActivity.this,dateIni));
                                 filterToots.setDateEnd(Helper.dateToString(OwnerStatusActivity.this,dateEnd));
 
-                                filterToots.setFilter(filter_keywords.getText().toString());
+                                if( filter_keywords.getText() != null && filter_keywords.getText().toString().trim().length() > 0)
+                                    filterToots.setFilter(filter_keywords.getText().toString());
+                                else
+                                    filterToots.setFilter(null);
                                 swipeRefreshLayout.setRefreshing(true);
                                 max_id = null;
                                 firstLoad = true;

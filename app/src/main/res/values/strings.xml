@@ -404,7 +404,7 @@
     <string name="v_public">Public</string>
     <string name="v_unlisted">Unlisted</string>
     <string name="v_private">Private</string>
-    <string name="v_direct">Public</string>
+    <string name="v_direct">Direct</string>
     <string name="v_keywords">Some keywords…</string>
     <string-array name="filter_select">
         <item>No</item>

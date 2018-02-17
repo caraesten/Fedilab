@@ -170,32 +170,64 @@ public class StatusCacheDAO {
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = Helper.getLiveInstance(context);
         //That the basic selection for all toots
-        String selection = Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'";
+        StringBuilder selection = new StringBuilder(Sqlite.COL_CACHED_ACTION + " = '" + cacheType + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance + "' AND " + Sqlite.COL_USER_ID + " = '" + userId + "'");
         if( max_id != null)
-            selection += " AND " + Sqlite.COL_STATUS_ID + " < '" + max_id+ "'";
+            selection.append(" AND " + Sqlite.COL_STATUS_ID + " < '").append(max_id).append("'");
         //BOOST
         if(filterToots.getBoosts() == FilterToots.typeFilter.NONE)
-            selection += " AND (" + Sqlite.COL_REBLOG + " IS NULL OR "+ Sqlite.COL_REBLOG + " = 'null')";
+            selection.append(" AND (" + Sqlite.COL_REBLOG + " IS NULL OR " + Sqlite.COL_REBLOG + " = 'null')");
         else if(filterToots.getBoosts() == FilterToots.typeFilter.ONLY)
-            selection += " AND " + Sqlite.COL_REBLOG + " IS NOT NULL AND "+ Sqlite.COL_REBLOG + " <> 'null'";
+            selection.append(" AND " + Sqlite.COL_REBLOG + " IS NOT NULL AND " + Sqlite.COL_REBLOG + " <> 'null'");
         //REPLIES
         if(filterToots.getReplies() == FilterToots.typeFilter.NONE)
-            selection += " AND (" + Sqlite.COL_IN_REPLY_TO_ID + " IS NULL OR "+ Sqlite.COL_IN_REPLY_TO_ID + " = 'null')";
+            selection.append(" AND (" + Sqlite.COL_IN_REPLY_TO_ID + " IS NULL OR " + Sqlite.COL_IN_REPLY_TO_ID + " = 'null')");
         else if(filterToots.getReplies() == FilterToots.typeFilter.ONLY)
-            selection += " AND " + Sqlite.COL_IN_REPLY_TO_ID + " IS NOT NULL AND "+ Sqlite.COL_IN_REPLY_TO_ID + " <> 'null'";
+            selection.append(" AND " + Sqlite.COL_IN_REPLY_TO_ID + " IS NOT NULL AND " + Sqlite.COL_IN_REPLY_TO_ID + " <> 'null'");
         //PINNED
         if(filterToots.getPinned() == FilterToots.typeFilter.NONE)
-            selection += " AND " + Sqlite.COL_PINNED + " = 0";
+            selection.append(" AND " + Sqlite.COL_PINNED + " = 0");
         else if(filterToots.getPinned() == FilterToots.typeFilter.ONLY)
-            selection += " AND " + Sqlite.COL_PINNED + " = 1";
+            selection.append(" AND " + Sqlite.COL_PINNED + " = 1");
         //PINNED
         if(filterToots.getMedia() == FilterToots.typeFilter.NONE)
-            selection += " AND " + Sqlite.COL_MEDIA_ATTACHMENTS + " = '[]'";
+            selection.append(" AND " + Sqlite.COL_MEDIA_ATTACHMENTS + " = '[]'");
         else if(filterToots.getMedia() == FilterToots.typeFilter.ONLY)
-            selection += " AND " + Sqlite.COL_MEDIA_ATTACHMENTS + " <> '[]'";
+            selection.append(" AND " + Sqlite.COL_MEDIA_ATTACHMENTS + " <> '[]'");
+
+        if( !filterToots.isV_direct())
+            selection.append(" AND " + Sqlite.COL_VISIBILITY + " <> 'direct'");
+        if( !filterToots.isV_private())
+            selection.append(" AND " + Sqlite.COL_VISIBILITY + " <> 'private'");
+        if( !filterToots.isV_public())
+            selection.append(" AND " + Sqlite.COL_VISIBILITY + " <> 'public'");
+        if( !filterToots.isV_unlisted())
+            selection.append(" AND " + Sqlite.COL_VISIBILITY + " <> 'unlisted'");
+
+        if( filterToots.getDateIni() != null)
+            selection.append(" AND " + Sqlite.COL_CREATED_AT + " >= '").append(filterToots.getDateIni()).append("'");
+
+        if( filterToots.getDateEnd() != null)
+            selection.append(" AND " + Sqlite.COL_CREATED_AT + " <= '").append(filterToots.getDateEnd()).append("'");
+
+        if( filterToots.getFilter() != null ){
+            String[] keywords = filterToots.getFilter().split(" ");
+            selection.append(" AND (");
+            int i = 0;
+            for(String kw: keywords){
+
+                if( i == 0 && keywords.length == 1)
+                    selection.append(Sqlite.COL_CONTENT + " LIKE '%").append(kw).append("%'");
+                else if( i == 0 && keywords.length > 1)
+                    selection.append(Sqlite.COL_CONTENT + " LIKE '%").append(kw).append("%' OR ");
+                else if( i == keywords.length -1 )
+                    selection.append(Sqlite.COL_CONTENT + " LIKE '%").append(kw).append("%'");
+                i++;
+            }
+            selection.append(")");
+        }
 
         try {
-            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, selection, null, null, null, Sqlite.COL_CREATED_AT + " DESC", "80");
+            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, selection.toString(), null, null, null, Sqlite.COL_CREATED_AT + " DESC", "80");
             return cursorToListStatuses(c);
         } catch (Exception e) {
             e.printStackTrace();
