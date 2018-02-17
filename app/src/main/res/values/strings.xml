@@ -404,8 +404,13 @@
     <string name="v_public">Public</string>
     <string name="v_unlisted">Unlisted</string>
     <string name="v_private">Private</string>
-    <string name="v_direct">Direct</string>
-
+    <string name="v_direct">Public</string>
+    <string name="v_keywords">Some keywords…</string>
+    <string-array name="filter_select">
+        <item>No</item>
+        <item>Only</item>
+        <item>Both</item>
+    </string-array>
     <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Recorded data</string>

@@ -33,16 +33,17 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
@@ -59,6 +60,7 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
+import fr.gouv.etalab.mastodon.helper.FilterToots;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.services.BackupStatusInDataBaseService;
@@ -91,6 +93,8 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
     LinearLayoutManager mLayoutManager;
     private int style;
     private Button settings_time_from, settings_time_to;
+    private FilterToots filterToots;
+    private Date dateIni, dateEnd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +108,8 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
             setTheme(R.style.AppThemeDark_NoActionBar);
         }
         setContentView(R.layout.activity_ower_status);
+
+        filterToots = new FilterToots();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -181,15 +187,18 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         isRefreshed = false;
 
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
-        new RetrieveFeedsAsyncTask(OwnerStatusActivity.this, RetrieveFeedsAsyncTask.Type.CACHE_STATUS, null, OwnerStatusActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new RetrieveFeedsAsyncTask(OwnerStatusActivity.this, filterToots, null, OwnerStatusActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
                 R.color.mastodonC2,
                 R.color.mastodonC3);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                isRefreshed = true;
-                new RetrieveFeedsAsyncTask(OwnerStatusActivity.this, RetrieveFeedsAsyncTask.Type.CACHE_STATUS, null, OwnerStatusActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                max_id = null;
+                firstLoad = true;
+                flag_loading = true;
+                swiped = true;
+                new RetrieveFeedsAsyncTask(OwnerStatusActivity.this, filterToots, null, OwnerStatusActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
 
@@ -203,7 +212,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                     if(firstVisibleItem + visibleItemCount == totalItemCount ) {
                         if(!flag_loading ) {
                             flag_loading = true;
-                            new RetrieveFeedsAsyncTask(OwnerStatusActivity.this, RetrieveFeedsAsyncTask.Type.CACHE_STATUS, max_id, OwnerStatusActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new RetrieveFeedsAsyncTask(OwnerStatusActivity.this, filterToots, max_id, OwnerStatusActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             nextElementLoader.setVisibility(View.VISIBLE);
                         }
                     } else {
@@ -229,6 +238,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                                       int monthOfYear, int dayOfMonth) {
                     Calendar c = Calendar.getInstance();
                     c.set(year, monthOfYear, dayOfMonth, 0, 0);
+                    dateIni = new Date(c.getTimeInMillis());
                     settings_time_from.setText(Helper.shortDateToString(new Date(c.getTimeInMillis())));
                 }
 
@@ -240,6 +250,8 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                                       int monthOfYear, int dayOfMonth) {
                     Calendar c = Calendar.getInstance();
                     c.set(year, monthOfYear, dayOfMonth, 23, 59);
+
+                    dateEnd = new Date(c.getTimeInMillis());
                     settings_time_to.setText(Helper.shortDateToString(new Date(c.getTimeInMillis())));
                 }
 
@@ -259,36 +271,46 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                 LayoutInflater inflater = this.getLayoutInflater();
                 @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.filter_owner_toots, null);
                 dialogBuilder.setView(dialogView);
-                dialogBuilder
-                        .setTitle(R.string.action_filter)
-                        .setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                final AlertDialog alertDialog = dialogBuilder.create();
+
 
                 SQLiteDatabase db = Sqlite.getInstance(OwnerStatusActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                Date dateInit = new StatusCacheDAO(OwnerStatusActivity.this, db).getSmallerDate(StatusCacheDAO.ARCHIVE_CACHE);
-                Date dateEnd = new StatusCacheDAO(OwnerStatusActivity.this, db).getGreaterDate(StatusCacheDAO.ARCHIVE_CACHE);
-                String dateInitString = Helper.shortDateToString(dateInit);
+                dateIni = new StatusCacheDAO(OwnerStatusActivity.this, db).getSmallerDate(StatusCacheDAO.ARCHIVE_CACHE);
+                dateEnd = new StatusCacheDAO(OwnerStatusActivity.this, db).getGreaterDate(StatusCacheDAO.ARCHIVE_CACHE);
+                String dateInitString = Helper.shortDateToString(dateIni);
                 String dateEndString = Helper.shortDateToString(dateEnd);
 
+                //Initializes settings for filter
                 settings_time_from = dialogView.findViewById(R.id.settings_time_from);
                 settings_time_to = dialogView.findViewById(R.id.settings_time_to);
+
+                final CheckBox filter_visibility_public = dialogView.findViewById(R.id.filter_visibility_public);
+                final CheckBox filter_visibility_unlisted = dialogView.findViewById(R.id.filter_visibility_unlisted);
+                final CheckBox filter_visibility_private = dialogView.findViewById(R.id.filter_visibility_private);
+                CheckBox filter_visibility_direct = dialogView.findViewById(R.id.filter_visibility_direct);
+
+                filter_visibility_public.setChecked(filterToots.isV_public());
+                filter_visibility_unlisted.setChecked(filterToots.isV_unlisted());
+                filter_visibility_private.setChecked(filterToots.isV_private());
+                filter_visibility_direct.setChecked(filterToots.isV_direct());
+
+                final Spinner filter_boost = dialogView.findViewById(R.id.filter_boost);
+                final Spinner filter_replies = dialogView.findViewById(R.id.filter_replies);
+                final Spinner filter_media = dialogView.findViewById(R.id.filter_media);
+                final Spinner filter_pinned = dialogView.findViewById(R.id.filter_pinned);
+
+                filter_boost.setSelection(filterToots.getBoosts().ordinal());
+                filter_replies.setSelection(filterToots.getReplies().ordinal());
+                filter_media.setSelection(filterToots.getMedia().ordinal());
+                filter_pinned.setSelection(filterToots.getPinned().ordinal());
+
+                final TextView filter_keywords = dialogView.findViewById(R.id.filter_keywords);
 
                 settings_time_from.setText(dateInitString);
                 settings_time_to.setText(dateEndString);
 
+
                 Calendar c = Calendar.getInstance();
-                c.setTime(dateInit);
+                c.setTime(dateIni);
                 int yearIni = c.get(Calendar.YEAR);
                 int monthIni = c.get(Calendar.MONTH);
                 int dayIni = c.get(Calendar.DAY_OF_MONTH);
@@ -314,7 +336,41 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                         dateEndPickerDialog.show();
                     }
                 });
+                dialogBuilder
+                        .setTitle(R.string.action_filter)
+                        .setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                filterToots.setBoosts(FilterToots.typeFilter.values()[filter_boost.getSelectedItemPosition()]);
+                                filterToots.setReplies(FilterToots.typeFilter.values()[filter_replies.getSelectedItemPosition()]);
+                                filterToots.setMedia(FilterToots.typeFilter.values()[filter_media.getSelectedItemPosition()]);
+                                filterToots.setPinned(FilterToots.typeFilter.values()[filter_pinned.getSelectedItemPosition()]);
 
+                                filterToots.setV_public(filter_visibility_public.isChecked());
+                                filterToots.setV_unlisted(filter_visibility_unlisted.isChecked());
+                                filterToots.setV_private(filter_visibility_private.isChecked());
+                                filterToots.setV_direct(filter_visibility_public.isChecked());
+
+                                filterToots.setDateIni(Helper.dateToString(OwnerStatusActivity.this,dateIni));
+                                filterToots.setDateEnd(Helper.dateToString(OwnerStatusActivity.this,dateEnd));
+
+                                filterToots.setFilter(filter_keywords.getText().toString());
+                                swipeRefreshLayout.setRefreshing(true);
+                                max_id = null;
+                                firstLoad = true;
+                                flag_loading = true;
+                                swiped = true;
+                                new RetrieveFeedsAsyncTask(OwnerStatusActivity.this, filterToots, null, OwnerStatusActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                dialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                final AlertDialog alertDialog = dialogBuilder.create();
 
                 alertDialog.show();
                 return true;

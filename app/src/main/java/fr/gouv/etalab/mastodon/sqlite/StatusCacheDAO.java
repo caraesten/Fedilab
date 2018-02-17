@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.helper.FilterToots;
 import fr.gouv.etalab.mastodon.helper.Helper;
 
 
@@ -164,18 +165,40 @@ public class StatusCacheDAO {
      * Returns all cached Statuses in db depending of their cache type
      * @return stored status List<StoredStatus>
      */
-    public List<Status> getStatusFromID(int cacheType, String max_id){
+    public List<Status> getStatusFromID(int cacheType, FilterToots filterToots, String max_id){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = Helper.getLiveInstance(context);
+        //That the basic selection for all toots
+        String selection = Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'";
+        if( max_id != null)
+            selection += " AND " + Sqlite.COL_STATUS_ID + " < '" + max_id+ "'";
+        //BOOST
+        if(filterToots.getBoosts() == FilterToots.typeFilter.NONE)
+            selection += " AND (" + Sqlite.COL_REBLOG + " IS NULL OR "+ Sqlite.COL_REBLOG + " = 'null')";
+        else if(filterToots.getBoosts() == FilterToots.typeFilter.ONLY)
+            selection += " AND " + Sqlite.COL_REBLOG + " IS NOT NULL AND "+ Sqlite.COL_REBLOG + " <> 'null'";
+        //REPLIES
+        if(filterToots.getReplies() == FilterToots.typeFilter.NONE)
+            selection += " AND (" + Sqlite.COL_IN_REPLY_TO_ID + " IS NULL OR "+ Sqlite.COL_IN_REPLY_TO_ID + " = 'null')";
+        else if(filterToots.getReplies() == FilterToots.typeFilter.ONLY)
+            selection += " AND " + Sqlite.COL_IN_REPLY_TO_ID + " IS NOT NULL AND "+ Sqlite.COL_IN_REPLY_TO_ID + " <> 'null'";
+        //PINNED
+        if(filterToots.getPinned() == FilterToots.typeFilter.NONE)
+            selection += " AND " + Sqlite.COL_PINNED + " = 0";
+        else if(filterToots.getPinned() == FilterToots.typeFilter.ONLY)
+            selection += " AND " + Sqlite.COL_PINNED + " = 1";
+        //PINNED
+        if(filterToots.getMedia() == FilterToots.typeFilter.NONE)
+            selection += " AND " + Sqlite.COL_MEDIA_ATTACHMENTS + " = '[]'";
+        else if(filterToots.getMedia() == FilterToots.typeFilter.ONLY)
+            selection += " AND " + Sqlite.COL_MEDIA_ATTACHMENTS + " <> '[]'";
+
         try {
-            Cursor c;
-            if( max_id != null)
-                c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "' AND " + Sqlite.COL_STATUS_ID + " < '" + max_id+ "'", null, null, null, Sqlite.COL_CREATED_AT + " DESC", "80");
-            else
-                c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_CREATED_AT + " DESC", "80");
+            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, selection, null, null, null, Sqlite.COL_CREATED_AT + " DESC", "80");
             return cursorToListStatuses(c);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
