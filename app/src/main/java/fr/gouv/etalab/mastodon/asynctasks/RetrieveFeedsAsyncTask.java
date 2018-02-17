@@ -58,7 +58,8 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         ONESTATUS,
         CONTEXT,
         TAG,
-        CACHE_BOOKMARKS
+        CACHE_BOOKMARKS,
+        CACHE_STATUS
     }
 
     public RetrieveFeedsAsyncTask(Context context, Type action, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
@@ -122,6 +123,20 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = new StatusCacheDAO(contextReference.get(), db).getAllStatus(StatusCacheDAO.BOOKMARK_CACHE);
                 apiResponse.setStatuses(statuses);
+                break;
+            case CACHE_STATUS:
+                apiResponse = new APIResponse();
+                db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                statuses = new StatusCacheDAO(contextReference.get(), db).getStatusFromID(StatusCacheDAO.ARCHIVE_CACHE, max_id);
+                if( statuses != null && statuses.size() > 0) {
+                    apiResponse.setStatuses(statuses);
+                    apiResponse.setMax_id(statuses.get(0).getId());
+                    apiResponse.setSince_id(statuses.get(statuses.size() - 1).getId());
+                }else{
+                    apiResponse.setStatuses(null);
+                    apiResponse.setMax_id(null);
+                    apiResponse.setSince_id(null);
+                }
                 break;
             case HASHTAG:
                 break;

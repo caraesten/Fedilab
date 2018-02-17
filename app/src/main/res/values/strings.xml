@@ -396,6 +396,12 @@
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
 
+
+    <!-- ACTIVITY CACHE -->
+    <string name="action_sync">Synchronize</string>
+    <string name="action_filter">Filter</string>
+    <string name="owner_cached_toots">Your toots</string>
+    <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Recorded data</string>
     <string name="privacy_data">

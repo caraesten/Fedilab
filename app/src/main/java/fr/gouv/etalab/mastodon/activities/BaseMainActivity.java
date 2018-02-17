@@ -1296,6 +1296,11 @@ public abstract class BaseMainActivity extends BaseActivity
             startActivity(remoteFollow);
             return false;
         }
+        if( id == R.id.nav_archive) {
+            Intent myIntent = new Intent(BaseMainActivity.this, OwnerStatusActivity.class);
+            startActivity(myIntent);
+            return false;
+        }
         final NavigationView navigationView = findViewById(R.id.nav_view);
         unCheckAllMenuItems(navigationView);
         item.setChecked(true);

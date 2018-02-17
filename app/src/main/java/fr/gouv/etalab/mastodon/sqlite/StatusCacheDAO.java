@@ -160,6 +160,25 @@ public class StatusCacheDAO {
         }
     }
 
+    /**
+     * Returns all cached Statuses in db depending of their cache type
+     * @return stored status List<StoredStatus>
+     */
+    public List<Status> getStatusFromID(int cacheType, String max_id){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
+        try {
+            Cursor c;
+            if( max_id != null)
+                c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "' AND " + Sqlite.COL_STATUS_ID + " < '" + max_id+ "'", null, null, null, Sqlite.COL_CREATED_AT + " DESC", "80");
+            else
+                c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_CREATED_AT + " DESC", "80");
+            return cursorToListStatuses(c);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     /**
      * Returns the last date of backup for a user depending of the type of cache
