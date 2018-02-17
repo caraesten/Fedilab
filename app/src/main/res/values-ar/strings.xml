@@ -134,10 +134,10 @@
     <item quantity="many">%d replies</item>
     <item quantity="other">%d ردود</item>
   </plurals>
-  <string name="bookmarks">Bookmarks</string>
-  <string name="bookmarks_empty">No bookmarks to display</string>
-  <string name="status_bookmarked">Status has been added to bookmarks!</string>
-  <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+  <string name="bookmarks">الفواصل المرجعية</string>
+  <string name="bookmarks_empty">لا توجد أية فواصل مرجعية للعرض</string>
+  <string name="status_bookmarked">تم إضافة المنشور إلى الفواصل المرجعية !</string>
+  <string name="status_unbookmarked">تمت إزالة المنشور مِن الفواصل المرجعية !</string>
   <!-- Date -->
   <string name="date_seconds">%d ثا</string>
   <string name="date_minutes">%d د</string>
@@ -392,14 +392,14 @@
   <string name="show_media">إظهار الوسائط</string>
   <string name="show_pinned">إظهار المثبّة</string>
   <string name="filter_no_result">لا توجد أي نتيجة تتطابق طلب البحث !</string>
-  <string name="data_backup_toots">Backup toots for %1$s</string>
-  <string name="data_backup_success">%1$s new toots have been imported</string>
+  <string name="data_backup_toots">النسخ الإحتياطي لتبويقات حساب %1$s</string>
+  <string name="data_backup_success">تمت عملية استرجاع %1$s تبويقات جديدة</string>
   <string-array name="filter_select">
     <item>لا</item>
     <item>فقط</item>
     <item>كلاهما</item>
   </string-array>
-  <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+  <string name="owner_cached_toots_empty">لم يتم العثور على أي تبويق في قاعدة البيانات. يرجى استخدام زر المزامنة المتواجد في القائمة لجلبها.</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">البيانات المسجلة</string>
   <string name="privacy_data">
@@ -417,7 +417,7 @@
         - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
         - <b>WAKE_LOCK</b>: Used during the notification service.
     </string>
-  <string name="privacy_API_authorizations_title">API permissions:</string>
+  <string name="privacy_API_authorizations_title">تصريحات خدمة برمجة التطبيقات API :</string>
   <string name="privacy_API_authorizations">
         - <b>Read</b>: Read data.\n
         - <b>Write</b>: Post statuses and upload media for statuses.\n
