@@ -370,6 +370,26 @@ Vă rugăm să confirmați notificările instant pe care doriți să le primiți
   <string name="cache_message">Sunt %1$s din date în memoria cache. \n\nVreți să le ștergeți?</string>
   <string name="cache_units">Mb</string>
   <string name="toast_cache_clear">Memoria cache a fost golită! %1$s au fost eliberate</string>
+  <!-- ACTIVITY CACHE -->
+  <string name="action_sync">Synchronize</string>
+  <string name="action_filter">Filter</string>
+  <string name="owner_cached_toots">Your toots</string>
+  <string name="v_public">Public</string>
+  <string name="v_unlisted">Unlisted</string>
+  <string name="v_private">Private</string>
+  <string name="v_direct">Direct</string>
+  <string name="v_keywords">Some keywords…</string>
+  <string name="show_media">Show media</string>
+  <string name="show_pinned">Show pinned</string>
+  <string name="filter_no_result">No matching result found!</string>
+  <string name="data_backup_toots">Backup toots for %1$s</string>
+  <string name="data_backup_success">%1$s new toots have been imported</string>
+  <string-array name="filter_select">
+    <item>No</item>
+    <item>Only</item>
+    <item>Both</item>
+  </string-array>
+  <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">Date înregistrate</string>
   <string name="privacy_data">
