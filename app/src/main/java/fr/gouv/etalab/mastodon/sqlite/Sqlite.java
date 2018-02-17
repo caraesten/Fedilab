@@ -140,12 +140,12 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String COL_APPLICATION = "APPLICATION";
     static final String COL_LANGUAGE = "LANGUAGE";
     static final String COL_PINNED = "PINNED";
-
+    static final String COL_DATE_BACKUP = "DATE_BACKUP";
 
 
     private final String CREATE_TABLE_STATUSES_CACHE = "CREATE TABLE " + TABLE_STATUSES_CACHE + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COL_CACHED_ACTION + " INTEGER NOT NULL, "+ COL_INSTANCE + " TEXT NOT NULL, " + COL_ACCT + " TEXT, "
+            + COL_CACHED_ACTION + " INTEGER NOT NULL, "+ COL_INSTANCE + " TEXT NOT NULL, " + COL_ACCT + " NOT NULL, " + COL_DATE_BACKUP + " TEXT NOT NULL, "
             + COL_STATUS_ID + " TEXT NOT NULL, " + COL_URI + " TEXT NOT NULL, " + COL_URL + " TEXT NOT NULL, "
             + COL_ACCOUNT + " TEXT NOT NULL, " + COL_IN_REPLY_TO_ID + " TEXT, " + COL_IN_REPLY_TO_ACCOUNT_ID + " TEXT,"
             + COL_REBLOG + " TEXT, " + COL_CONTENT + " TEXT NOT NULL, " + COL_CREATED_AT + " TEXT NOT NULL, "
@@ -203,7 +203,8 @@ public class Sqlite extends SQLiteOpenHelper {
             case 8:
                 db.execSQL(CREATE_TABLE_STATUSES_CACHE);
             case 9:
-                db.execSQL("ALTER TABLE " + TABLE_STATUSES_CACHE + " ADD COLUMN " + COL_ACCT + " TEXT");
+                db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATUSES_CACHE);
+                db.execSQL(CREATE_TABLE_STATUSES_CACHE);
             default:
                 break;
         }
