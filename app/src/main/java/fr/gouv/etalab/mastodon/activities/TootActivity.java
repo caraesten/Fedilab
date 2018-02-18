@@ -193,6 +193,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     private String mentionAccount;
     private String idRedirect;
     private String userId, instance;
+    private Account account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -306,6 +307,17 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             toot_it.setVisibility(View.GONE);
             invalidateOptionsMenu();
         }
+        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        String userIdReply;
+        if( accountReply == null)
+            userIdReply = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        else
+            userIdReply = accountReply.getId();
+        if( accountReply == null)
+            account = new AccountDAO(getApplicationContext(),db).getAccountByID(userIdReply);
+        else
+            account = accountReply;
+
         if( tootReply != null) {
             tootReply();
         }else {
@@ -314,12 +326,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             else
                 setTitle(R.string.toot_title);
         }
-        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        String userIdReply;
-        if( accountReply == null)
-            userIdReply = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        else
-            userIdReply = accountReply.getId();
+
 
         if( mentionAccount != null){
             toot_content.setText(String.format("@%s\n", mentionAccount));
@@ -342,11 +349,8 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             toot_space_left.setText(String.valueOf(toot_content.length()));
         }
         initialContent = toot_content.getText().toString();
-        Account account;
-        if( accountReply == null)
-            account = new AccountDAO(getApplicationContext(),db).getAccountByID(userIdReply);
-        else
-            account = accountReply;
+
+
 
         String url = account.getAvatar();
         if( url.startsWith("/") ){
@@ -414,21 +418,25 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         if (!sharedUri.isEmpty()) {
             uploadSharedImage(sharedUri);
         }
-        String defaultVisibility = account.isLocked()?"private":"public";
-        visibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), defaultVisibility);
-        switch (visibility) {
-            case "public":
-                toot_visibility.setImageResource(R.drawable.ic_public_toot);
-                break;
-            case "unlisted":
-                toot_visibility.setImageResource(R.drawable.ic_lock_open_toot);
-                break;
-            case "private":
-                toot_visibility.setImageResource(R.drawable.ic_lock_outline_toot);
-                break;
-            case "direct":
-                toot_visibility.setImageResource(R.drawable.ic_mail_outline_toot);
-                break;
+
+
+        if( tootReply == null) {
+            String defaultVisibility = account.isLocked()?"private":"public";
+            visibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), defaultVisibility);
+            switch (visibility) {
+                case "public":
+                    toot_visibility.setImageResource(R.drawable.ic_public_toot);
+                    break;
+                case "unlisted":
+                    toot_visibility.setImageResource(R.drawable.ic_lock_open_toot);
+                    break;
+                case "private":
+                    toot_visibility.setImageResource(R.drawable.ic_lock_outline_toot);
+                    break;
+                case "direct":
+                    toot_visibility.setImageResource(R.drawable.ic_mail_outline_toot);
+                    break;
+            }
         }
         toot_sensitive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -1927,15 +1935,24 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
 
         //If toot is not restored
         if( restored == -1 ){
-
             switch (tootReply.getVisibility()){
                 case "public":
-                    visibility = "public";
-                    toot_visibility.setImageResource(R.drawable.ic_public_toot);
+                    if( !account.isLocked()) {
+                        visibility = "public";
+                        toot_visibility.setImageResource(R.drawable.ic_public_toot);
+                    }else {
+                        visibility = "private";
+                        toot_visibility.setImageResource(R.drawable.ic_lock_outline_toot);
+                    }
                     break;
                 case "unlisted":
-                    visibility = "unlisted";
-                    toot_visibility.setImageResource(R.drawable.ic_lock_open_toot);
+                    if( !account.isLocked()) {
+                        visibility = "unlisted";
+                        toot_visibility.setImageResource(R.drawable.ic_lock_open_toot);
+                    }else {
+                        visibility = "private";
+                        toot_visibility.setImageResource(R.drawable.ic_lock_outline_toot);
+                    }
                     break;
                 case "private":
                     visibility = "private";
