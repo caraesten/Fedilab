@@ -300,7 +300,7 @@
   <string name="note_no_space">160文字の制限に達しました！</string>
   <string name="username_no_space">30文字の制限に達しました。</string>
   <string name="settings_title_hour">通知のタイムスロット：</string>
-  <string name="settings_time_from">時間帯:</string>
+  <string name="settings_time_from">期間:</string>
   <string name="settings_time_to">から</string>
   <string name="settings_time_greater">時間は %1$s より後でなければなりません</string>
   <string name="settings_time_lower">時間は %1$s より前でなければなりません</string>
@@ -371,19 +371,19 @@
   <string name="v_public">Public</string>
   <string name="v_unlisted">Unlisted</string>
   <string name="v_private">Private</string>
-  <string name="v_direct">Direct</string>
+  <string name="v_direct">メンション</string>
   <string name="v_keywords">キーワード...</string>
   <string name="show_media">メディアを表示</string>
-  <string name="show_pinned">Show pinned</string>
+  <string name="show_pinned">ピン留めトゥートを表示</string>
   <string name="filter_no_result">一致するものは見つかりませんでした！</string>
   <string name="data_backup_toots">%1$s のトゥートをバックアップ</string>
   <string name="data_backup_success">%1$s new toots have been imported</string>
   <string-array name="filter_select">
-    <item>いいえ</item>
-    <item>Only</item>
-    <item>Both</item>
+    <item>しない</item>
+    <item>のみ</item>
+    <item>する</item>
   </string-array>
-  <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+  <string name="owner_cached_toots_empty">トゥートがデータベースに見つかりませんでした。取得するには、メニューから同期ボタンを使用してください。</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">記録されたデータ</string>
   <string name="privacy_data">
