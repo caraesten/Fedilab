@@ -377,7 +377,7 @@
   <string name="show_pinned">ピン留めトゥートを表示</string>
   <string name="filter_no_result">一致するものは見つかりませんでした！</string>
   <string name="data_backup_toots">%1$s のトゥートをバックアップ</string>
-  <string name="data_backup_success">%1$s new toots have been imported</string>
+  <string name="data_backup_success">%1$s 個の新しいトゥートがインポートされました</string>
   <string-array name="filter_select">
     <item>しない</item>
     <item>のみ</item>
