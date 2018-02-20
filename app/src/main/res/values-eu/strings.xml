@@ -369,13 +369,13 @@
   <string name="cache_units">Mb</string>
   <string name="toast_cache_clear">Cache-a garbitu da! %1$s askatu dira</string>
   <!-- ACTIVITY CACHE -->
-  <string name="action_sync">Synchronize</string>
-  <string name="action_filter">Filter</string>
-  <string name="owner_cached_toots">Your toots</string>
-  <string name="v_public">Public</string>
-  <string name="v_unlisted">Unlisted</string>
-  <string name="v_private">Private</string>
-  <string name="v_direct">Direct</string>
+  <string name="action_sync">Sinkronizatu</string>
+  <string name="action_filter">Iragazi</string>
+  <string name="owner_cached_toots">Zure toot-ak</string>
+  <string name="v_public">Publikoa</string>
+  <string name="v_unlisted">Zerrendatu gabea</string>
+  <string name="v_private">Pribatua</string>
+  <string name="v_direct">Zuzena</string>
   <string name="v_keywords">Some keywords…</string>
   <string name="show_media">Show media</string>
   <string name="show_pinned">Show pinned</string>
