@@ -376,18 +376,18 @@
   <string name="v_unlisted">Zerrendatu gabea</string>
   <string name="v_private">Pribatua</string>
   <string name="v_direct">Zuzena</string>
-  <string name="v_keywords">Some keywords…</string>
-  <string name="show_media">Show media</string>
-  <string name="show_pinned">Show pinned</string>
-  <string name="filter_no_result">No matching result found!</string>
-  <string name="data_backup_toots">Backup toots for %1$s</string>
-  <string name="data_backup_success">%1$s new toots have been imported</string>
+  <string name="v_keywords">Hitz gako batzuk…</string>
+  <string name="show_media">Erakutsi multimedia</string>
+  <string name="show_pinned">Erakutsi finkatuta</string>
+  <string name="filter_no_result">Ez da emaitzarik aurkitu!</string>
+  <string name="data_backup_toots">Egin %1$s kontuko toot-en babes-kopia</string>
+  <string name="data_backup_success">%1$s toot inportatu dira</string>
   <string-array name="filter_select">
-    <item>No</item>
-    <item>Only</item>
-    <item>Both</item>
+    <item>Ez</item>
+    <item>Bakarrik</item>
+    <item>Biak</item>
   </string-array>
-  <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+  <string name="owner_cached_toots_empty">Ez da toot-ik aurkitu datu-basean. Erabili menuko sinkronizatu botoia eskuratzeko.</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">Grabatutako datuak</string>
   <string name="privacy_data">
