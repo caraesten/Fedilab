@@ -343,16 +343,16 @@
   <string name="set_title_news">Notícies</string>
   <string name="set_notification_news">Notify for new toots on the home timeline</string>
   <string name="set_show_error_messages">Mostra els missatges d\'error</string>
-  <string name="action_follow">Follow</string>
-  <string name="action_unfollow">Unfollow</string>
-  <string name="action_block">Block</string>
-  <string name="action_unblock">Unblock</string>
-  <string name="action_mute">Mute</string>
-  <string name="action_no_action">No action</string>
-  <string name="action_unmute">Unmute</string>
-  <string name="request_sent">Request sent</string>
-  <string name="followed_by">Follows you</string>
-  <string name="action_search">Search</string>
+  <string name="action_follow">Segueix</string>
+  <string name="action_unfollow">Deixa de seguir</string>
+  <string name="action_block">Bloca</string>
+  <string name="action_unblock">Deixa de blocar</string>
+  <string name="action_mute">Silencia</string>
+  <string name="action_no_action">Cap acció</string>
+  <string name="action_unmute">Deixa de silenciar</string>
+  <string name="request_sent">S\'ha enviat la petició</string>
+  <string name="followed_by">Et segueix</string>
+  <string name="action_search">Cerca</string>
   <string name="set_capitalize">First letter in capital for replies</string>
   <string name="set_resize_picture">Resize pictures</string>
   <!-- Quick settings for notifications -->
@@ -396,7 +396,7 @@
         Deleting the application immediately removes these data.\n
         &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
     </string>
-  <string name="privacy_authorizations_title">Permissions:</string>
+  <string name="privacy_authorizations_title">Permisos:</string>
   <string name="privacy_authorizations">
         - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
         - <b>INTERNET</b>: Used for queries to an instance.\n
@@ -467,11 +467,11 @@
   <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
   <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
   <!-- Proxy -->
-  <string name="proxy_set">Proxy</string>
-  <string name="proxy_type">Type</string>
-  <string name="proxy_enable">Enable proxy?</string>
-  <string name="poxy_host">Host</string>
+  <string name="proxy_set">Servidor intermediari</string>
+  <string name="proxy_type">Tipus</string>
+  <string name="proxy_enable">Vols habilitar el servidor intermediari?</string>
+  <string name="poxy_host">Servidor</string>
   <string name="poxy_port">Port</string>
   <string name="poxy_login">Login</string>
-  <string name="poxy_password">Password</string>
+  <string name="poxy_password">Contrasenya</string>
 </resources>
