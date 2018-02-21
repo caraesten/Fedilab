@@ -172,20 +172,20 @@
   <!-- Instance -->
   <string name="instance_no_description">No description available!</string>
   <!-- About -->
-  <string name="about_vesrion">Release %1$s</string>
-  <string name="about_developer">Developer:</string>
-  <string name="about_license">License: </string>
+  <string name="about_vesrion">Versió %1$s</string>
+  <string name="about_developer">Desenvolupador:</string>
+  <string name="about_license">Llicència: </string>
   <string name="about_license_action">GNU GPL V3</string>
-  <string name="about_code">Source code: </string>
-  <string name="about_yandex">Translation of toots:</string>
+  <string name="about_code">Codi font: </string>
+  <string name="about_yandex">Traducció dels toots:</string>
   <string name="about_thekinrar">Search instances:</string>
   <string name="about_thekinrar_action">instances.social</string>
-  <string name="thanks_text_logo">Icon designer:</string>
+  <string name="thanks_text_logo">Disseny de la icona:</string>
   <!-- Conversation -->
-  <string name="conversation">Conversation</string>
+  <string name="conversation">Conversa</string>
   <!-- Accounts -->
-  <string name="no_accounts">No account to display</string>
-  <string name="no_follow_request">No follow request</string>
+  <string name="no_accounts">No hi ha cap compte per mostrar</string>
+  <string name="no_follow_request">No hi ha cap petició de seguiment</string>
   <string name="status_cnt">Toots \n %1$s</string>
   <string name="following_cnt">Following \n %1$s</string>
   <string name="followers_cnt">Followers \n %1$s</string>
@@ -205,7 +205,7 @@
   <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
   <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
   <!-- Notifications -->
-  <string name="no_notifications">No notification to display</string>
+  <string name="no_notifications">No hi ha cap notificació per mostrar</string>
   <string name="notif_mention">et menciona</string>
   <string name="notif_reblog">boosted your status</string>
   <string name="notif_favourite">favourited your status</string>
@@ -268,8 +268,8 @@
   <string name="set_attachment_ask">Ask</string>
   <string name="set_attachment_action">Load the media</string>
   <string name="load_attachment">Load the pictures</string>
-  <string name="load_attachment_spoiler">Show more…</string>
-  <string name="load_attachment_spoiler_less">Show less…</string>
+  <string name="load_attachment_spoiler">Mostra\'n més...</string>
+  <string name="load_attachment_spoiler_less">Mostra\'n menys...</string>
   <string name="load_sensitive_attachment">Sensitive content</string>
   <string name="set_display_reply">Display previous message in responses</string>
   <string name="set_display_local">Display local timeline</string>
@@ -429,7 +429,7 @@
         Thank you to Stéphane for the logo.
     </string>
   <string name="thanks_text_dev">
-        Thank you to:
+        Agraïments:
     </string>
   <string name="filter_regex">Filter out by regular expressions</string>
   <string name="search">Cerca</string>
