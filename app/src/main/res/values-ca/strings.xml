@@ -45,62 +45,62 @@
   <string name="speech_not_supported">El vostre aparell sembla que no permet la introducció de veu!</string>
   <string name="delete_all">Suprimeix-ho tot</string>
   <string name="translate_toot">Tradueix aquest toot.</string>
-  <string name="schedule">Schedule</string>
+  <string name="schedule">Planifica</string>
   <string name="text_size">Mides del text i la icona</string>
   <string name="text_size_change">Canvia la mida del text actual:</string>
   <string name="icon_size_change">Canvia la mida de la icona actual:</string>
   <string name="next">Endavant</string>
   <string name="previous">Enrere</string>
   <string name="open_with">Obre amb</string>
-  <string name="validate">Validate</string>
-  <string name="media">Media</string>
-  <string name="share_with">Share with</string>
-  <string name="shared_via">Shared via Mastalab</string>
-  <string name="replies">Replies</string>
-  <string name="username">User name</string>
-  <string name="drafts">Drafts</string>
+  <string name="validate">Valida</string>
+  <string name="media">Multimèdia</string>
+  <string name="share_with">Comparteix amb</string>
+  <string name="shared_via">Comparteix via Mastalab</string>
+  <string name="replies">Respostes</string>
+  <string name="username">Nom d\'usuari</string>
+  <string name="drafts">Esborranys</string>
   <string name="new_data">New data are available! Do you want to display them?</string>
-  <string name="favourite">Favourites</string>
-  <string name="follow">New followers</string>
-  <string name="mention">Mentions</string>
+  <string name="favourite">Preferits</string>
+  <string name="follow">Seguidors nous</string>
+  <string name="mention">Mencions</string>
   <string name="reblog">Boosts</string>
   <string name="show_boosts">Show boosts</string>
-  <string name="show_replies">Show replies</string>
-  <string name="action_open_in_web">Open in browser</string>
-  <string name="translate">Translate</string>
+  <string name="show_replies">Mostra les respostes</string>
+  <string name="action_open_in_web">Obre al navegador</string>
+  <string name="translate">Tradueix</string>
   <string name="please_wait">Please, wait few seconds before making this action.</string>
   <!--- Menu -->
-  <string name="home_menu">Home</string>
+  <string name="home_menu">Inici</string>
   <string name="local_menu">Local timeline</string>
   <string name="global_menu">Federated timeline</string>
-  <string name="neutral_menu_title">Options</string>
-  <string name="favorites_menu">Favourites</string>
-  <string name="communication_menu_title">Communication</string>
-  <string name="muted_menu">Muted users</string>
-  <string name="blocked_menu">Blocked users</string>
+  <string name="neutral_menu_title">Opcions</string>
+  <string name="favorites_menu">Preferits</string>
+  <string name="communication_menu_title">Comunicació</string>
+  <string name="muted_menu">Usuaris silenciats</string>
+  <string name="blocked_menu">Usuaris blocats</string>
   <string name="remote_follow_menu">Remote follow</string>
-  <string name="notifications">Notifications</string>
-  <string name="follow_request">Follow requests</string>
-  <string name="optimization">Optimization</string>
-  <string name="settings">Settings</string>
-  <string name="profile">Profile</string>
-  <string name="make_a_choice">What do you want to do?</string>
-  <string name="delete_account_title">Delete an account</string>
+  <string name="notifications">Notificacions</string>
+  <string name="follow_request">Peticions de seguiment</string>
+  <string name="optimization">Optimització</string>
+  <string name="settings">Configuració</string>
+  <string name="profile">Perfil</string>
+  <string name="make_a_choice">Què vols fer?</string>
+  <string name="delete_account_title">Suprimeix un compte</string>
   <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
-  <string name="send_email">Send an email</string>
-  <string name="choose_file">Please select a file</string>
+  <string name="send_email">Envia un correu electrònic</string>
+  <string name="choose_file">Selecciona un fitxer</string>
   <string name="choose_file_error">No file explorer found!</string>
   <string name="click_to_change">Click on the path to change it</string>
-  <string name="failed">Failed!</string>
-  <string name="scheduled_toots">Scheduled toots</string>
+  <string name="failed">Ha fallat!</string>
+  <string name="scheduled_toots">Toots planificats</string>
   <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
-  <string name="insert_emoji">Insert emoji</string>
+  <string name="insert_emoji">Insereix un emoji</string>
   <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-  <string name="live_notif">Live notifications</string>
+  <string name="live_notif">Notificacions en directe</string>
   <!-- Status -->
   <string name="no_status">No toot to display</string>
-  <string name="fav_added">The toot was added to favourites</string>
-  <string name="fav_removed">The toot was removed from favourites!</string>
+  <string name="fav_added">El toot s\'ha afegit als preferits</string>
+  <string name="fav_removed">El toot s\'ha suprimit dels preferits!</string>
   <string name="reblog_added">The toot was boosted!</string>
   <string name="reblog_removed">The toot is no longer boosted!</string>
   <string name="reblog_by">Boosted by %1$s</string>
@@ -190,8 +190,8 @@
   <string name="following_cnt">Following \n %1$s</string>
   <string name="followers_cnt">Followers \n %1$s</string>
   <string name="pins_cnt">Pinned \n %d</string>
-  <string name="authorize">Authorize</string>
-  <string name="reject">Reject</string>
+  <string name="authorize">Autoritza</string>
+  <string name="reject">Rebutja</string>
   <!-- Scheduled toots -->
   <string name="no_scheduled_toots">No scheduled toot to display!</string>
   <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
@@ -224,8 +224,8 @@
   <string name="delete_notification">S\'ha suprimit la notificació!</string>
   <string name="delete_notification_all">S\'han suprimit totes les notificacions!</string>
   <!-- HEADER -->
-  <string name="following">Following</string>
-  <string name="followers">Followers</string>
+  <string name="following">Seguits</string>
+  <string name="followers">Seguidors</string>
   <string name="pinned_toots">Fixat</string>
   <!-- TOAST -->
   <string name="client_error">No s\'ha pogut obtenir la id del client!</string>
@@ -254,7 +254,7 @@
   <string name="nothing_to_do">No action can be taken</string>
   <string name="toast_saved">The media has been saved!</string>
   <string name="toast_error_translate">An error occurred while translating!</string>
-  <string name="toast_toot_saved">Draft saved!</string>
+  <string name="toast_toot_saved">S\'ha desat l\'esborrany!</string>
   <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
   <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
   <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
@@ -263,8 +263,8 @@
   <string name="set_toots_page">Number of toots per load</string>
   <string name="set_accounts_page">Number of accounts per load</string>
   <string name="set_notifications_page">Number of notifications per load</string>
-  <string name="set_attachment_always">Always</string>
-  <string name="set_attachment_wifi">WIFI</string>
+  <string name="set_attachment_always">Sempre</string>
+  <string name="set_attachment_wifi">Wi-Fi</string>
   <string name="set_attachment_ask">Ask</string>
   <string name="set_attachment_action">Load the media</string>
   <string name="load_attachment">Load the pictures</string>
@@ -274,12 +274,12 @@
   <string name="set_display_reply">Display previous message in responses</string>
   <string name="set_display_local">Display local timeline</string>
   <string name="set_display_global">Display federated timeline</string>
-  <string name="set_disable_gif">Disable GIF avatars</string>
-  <string name="set_folder_title">Path: </string>
-  <string name="set_auto_store_toot">Save drafts automatically</string>
-  <string name="set_bubble_counter">Display counters</string>
+  <string name="set_disable_gif">Desactiva els avatars GIF</string>
+  <string name="set_folder_title">Camí: </string>
+  <string name="set_auto_store_toot">Desa els esborrany automàticament</string>
+  <string name="set_bubble_counter">Mostra els comptadors</string>
   <string name="set_auto_add_media_url">Add URL of media in toots</string>
-  <string name="settings_title_notifications">Manage notifications</string>
+  <string name="settings_title_notifications">Gestiona les notificacions</string>
   <string name="set_notif_follow">Notify when someone follows you</string>
   <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
   <string name="set_notif_follow_share">Notify when someone boosts your status</string>
@@ -330,19 +330,19 @@
     <item>1 Mb</item>
     <item>2 Mb</item>
   </string-array>
-  <string name="set_led_colour">Set LED colour:</string>
+  <string name="set_led_colour">Color del LED:</string>
   <string-array name="led_colours">
     <item>Blau</item>
     <item>Cian</item>
     <item>Magenta</item>
     <item>Verd</item>
     <item>Vermell</item>
-    <item>Yellow</item>
-    <item>White</item>
+    <item>Groc</item>
+    <item>Blanc</item>
   </string-array>
-  <string name="set_title_news">News</string>
+  <string name="set_title_news">Notícies</string>
   <string name="set_notification_news">Notify for new toots on the home timeline</string>
-  <string name="set_show_error_messages">Display error messages</string>
+  <string name="set_show_error_messages">Mostra els missatges d\'error</string>
   <string name="action_follow">Follow</string>
   <string name="action_unfollow">Unfollow</string>
   <string name="action_block">Block</string>
@@ -436,15 +436,15 @@
   <string name="delete">Suprimeix</string>
   <string name="fetch_more_toots">Fetch more toots…</string>
   <!-- About lists -->
-  <string name="action_lists">Lists</string>
+  <string name="action_lists">Llistes</string>
   <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
   <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-  <string name="action_lists_add_to">Add to list</string>
-  <string name="action_lists_remove_from">Remove from list</string>
-  <string name="action_lists_create">Add list</string>
-  <string name="action_lists_delete">Delete list</string>
-  <string name="action_lists_update">Edit list</string>
-  <string name="action_lists_title_placeholder">New list title</string>
+  <string name="action_lists_add_to">Afegeix a una llista</string>
+  <string name="action_lists_remove_from">Suprimeix de la llista</string>
+  <string name="action_lists_create">Afegeix una llista</string>
+  <string name="action_lists_delete">Suprimeix la llista</string>
+  <string name="action_lists_update">Edita la llista</string>
+  <string name="action_lists_title_placeholder">Títol de llista nou</string>
   <string name="action_lists_search_users">Search among people you follow</string>
   <string name="action_lists_owner">Your lists</string>
   <!-- Migration -->
