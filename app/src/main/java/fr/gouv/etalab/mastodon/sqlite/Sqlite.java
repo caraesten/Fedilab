@@ -153,7 +153,8 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_REBLOGGED + " INTEGER, " + COL_FAVOURITED + " INTEGER, " + COL_MUTED + " INTEGER, " + COL_SENSITIVE + " INTEGER, "
             + COL_SPOILER_TEXT + " TEXT, " + COL_VISIBILITY + " TEXT NOT NULL, " + COL_MEDIA_ATTACHMENTS + " TEXT,"
             + COL_MENTIONS + " TEXT, " + COL_TAGS + " TEXT, " + COL_APPLICATION + " TEXT,"
-            + COL_LANGUAGE + " TEXT," + COL_PINNED + " INTEGER)";
+            + COL_LANGUAGE + " TEXT," + COL_PINNED + " INTEGER,"
+            + "CONSTRAINT statusid_instance UNIQUE (" + COL_INSTANCE + "," + COL_STATUS_ID + "))";
 
 
     public Sqlite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
