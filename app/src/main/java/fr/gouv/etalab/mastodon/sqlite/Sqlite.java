@@ -153,8 +153,10 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_REBLOGGED + " INTEGER, " + COL_FAVOURITED + " INTEGER, " + COL_MUTED + " INTEGER, " + COL_SENSITIVE + " INTEGER, "
             + COL_SPOILER_TEXT + " TEXT, " + COL_VISIBILITY + " TEXT NOT NULL, " + COL_MEDIA_ATTACHMENTS + " TEXT,"
             + COL_MENTIONS + " TEXT, " + COL_TAGS + " TEXT, " + COL_APPLICATION + " TEXT,"
-            + COL_LANGUAGE + " TEXT," + COL_PINNED + " INTEGER,"
-            + "CONSTRAINT statusid_instance UNIQUE (" + COL_INSTANCE + "," + COL_STATUS_ID + "))";
+            + COL_LANGUAGE + " TEXT," + COL_PINNED + " INTEGER)";
+
+    private final String CREATE_UNIQUE_CACHE_INDEX = "CREATE UNIQUE INDEX instance_statusid on "
+            + TABLE_STATUSES_CACHE + "(" + COL_INSTANCE +"," + COL_STATUS_ID + ")";
 
 
     public Sqlite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -178,6 +180,7 @@ public class Sqlite extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_SEARCH);
         db.execSQL(CREATE_TABLE_TEMP_MUTE);
         db.execSQL(CREATE_TABLE_STATUSES_CACHE);
+        db.execSQL(CREATE_UNIQUE_CACHE_INDEX);
     }
 
     @Override
@@ -206,6 +209,8 @@ public class Sqlite extends SQLiteOpenHelper {
             case 9:
                 db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATUSES_CACHE);
                 db.execSQL(CREATE_TABLE_STATUSES_CACHE);
+            case 10:
+                db.execSQL(CREATE_UNIQUE_CACHE_INDEX);
             default:
                 break;
         }
