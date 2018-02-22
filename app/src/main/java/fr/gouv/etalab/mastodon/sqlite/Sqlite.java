@@ -26,7 +26,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 10;
+    public static final int DB_VERSION = 11;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -206,6 +206,8 @@ public class Sqlite extends SQLiteOpenHelper {
             case 9:
                 db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATUSES_CACHE);
                 db.execSQL(CREATE_TABLE_STATUSES_CACHE);
+            case 10:
+                db.execSQL("ALTER TABLE " + TABLE_STATUSES_CACHE + " ADD CONSTRAINT statusid_instance UNIQUE (" + COL_INSTANCE + "," + COL_STATUS_ID + ")");
             default:
                 break;
         }
