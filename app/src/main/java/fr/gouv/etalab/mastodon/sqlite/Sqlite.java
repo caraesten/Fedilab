@@ -210,6 +210,9 @@ public class Sqlite extends SQLiteOpenHelper {
                 db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATUSES_CACHE);
                 db.execSQL(CREATE_TABLE_STATUSES_CACHE);
             case 10:
+                //Table cache is deleted to avoid error during migration
+                db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATUSES_CACHE);
+                db.execSQL(CREATE_TABLE_STATUSES_CACHE);
                 db.execSQL(CREATE_UNIQUE_CACHE_INDEX);
             default:
                 break;
