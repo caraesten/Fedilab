@@ -202,10 +202,10 @@
   <string name="remove_scheduled">هل تود حذف التبويق المُبرمَج ؟</string>
   <string name="media_count">الوسائط : %d</string>
   <string name="toot_scheduled">تمت برمجة التبويق بنجاح !</string>
-  <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
+  <string name="toot_scheduled_date">يجب أن يكون تاريخ البرمجة أكبر من الساعة الحالية !</string>
   <string name="warning_battery">وضع توفير الطاقة على البطارية مشغَّل ! مِن المحتمل ألا يعمل كالمعتاد.</string>
   <!-- timed mute -->
-  <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
+  <string name="timed_mute_date_error">ينبغي أن يكون وقت الكتم أكبر من دقيقة واحدة.</string>
   <string name="timed_mute_date">%1$s مكتوم إلى غاية %2$s.\n بإمكانك إلغاء كتم حساب المستخدم على صفحة ملفه الشخصي.</string>
   <string name="timed_mute_profile">%1$s مكتوم إلى غاية %2$s.\n بإمكانك إلغاء كتم حساب المستخدم بالنقر هنا.</string>
   <!-- Notifications -->
@@ -370,8 +370,8 @@
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">الإخطارات المدفوعة</string>
   <string name="settings_popup_message">
-        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
+        الرجاء التأكّد مِن الإشعارات المدفوعة التي تودّ تلقيها.
+        بإمكانك تفعيل أو تعطيل هذه الإشعارات لاحقًا عبر الإعدادات (في تبويب الإخطارات).
     </string>
   <string name="settings_popup_timeline">للتبويقات غير المقروءة على الخط الزمني الرئيسي ؟</string>
   <string name="settings_popup_notification">للإشعارات غير المقروءة ؟</string>

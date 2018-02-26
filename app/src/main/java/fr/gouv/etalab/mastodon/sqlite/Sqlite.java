@@ -26,7 +26,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 10;
+    public static final int DB_VERSION = 11;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -155,6 +155,9 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_MENTIONS + " TEXT, " + COL_TAGS + " TEXT, " + COL_APPLICATION + " TEXT,"
             + COL_LANGUAGE + " TEXT," + COL_PINNED + " INTEGER)";
 
+    private final String CREATE_UNIQUE_CACHE_INDEX = "CREATE UNIQUE INDEX instance_statusid on "
+            + TABLE_STATUSES_CACHE + "(" + COL_INSTANCE +"," + COL_STATUS_ID + ")";
+
 
     public Sqlite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -177,6 +180,7 @@ public class Sqlite extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_SEARCH);
         db.execSQL(CREATE_TABLE_TEMP_MUTE);
         db.execSQL(CREATE_TABLE_STATUSES_CACHE);
+        db.execSQL(CREATE_UNIQUE_CACHE_INDEX);
     }
 
     @Override
@@ -205,6 +209,11 @@ public class Sqlite extends SQLiteOpenHelper {
             case 9:
                 db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATUSES_CACHE);
                 db.execSQL(CREATE_TABLE_STATUSES_CACHE);
+            case 10:
+                //Table cache is deleted to avoid error during migration
+                db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATUSES_CACHE);
+                db.execSQL(CREATE_TABLE_STATUSES_CACHE);
+                db.execSQL(CREATE_UNIQUE_CACHE_INDEX);
             default:
                 break;
         }

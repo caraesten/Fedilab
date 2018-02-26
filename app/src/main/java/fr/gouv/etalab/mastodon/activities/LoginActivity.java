@@ -309,7 +309,7 @@ public class LoginActivity extends BaseActivity {
                                       startActivity(i);
                                   }else{
                                       String url = redirectUserToAuthorizeAndLogin(client_id, instance);
-                                      Helper.openBrowser(getApplicationContext(), url);
+                                      Helper.openBrowser(LoginActivity.this, url);
                                   }
                               }
                           } catch (JSONException ignored) {ignored.printStackTrace();}

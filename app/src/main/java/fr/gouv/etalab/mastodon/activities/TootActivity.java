@@ -668,7 +668,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                     try {
                         File photoFiletmp = createImageFile(false);
                         InputStream inputStream = getContentResolver().openInputStream(fileUri);
-                        OutputStream output = new FileOutputStream(photoFile);
+                        OutputStream output = new FileOutputStream(photoFiletmp);
                         try {
                             byte[] buffer = new byte[4 * 1024]; // or other buffer size
                             int read;
@@ -684,6 +684,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                         new asyncPicture(TootActivity.this, photoFiletmp).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         count++;
                     } catch (Exception e) {
+                        e.printStackTrace();
                         Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
                         toot_picture.setEnabled(true);
                     }
