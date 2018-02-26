@@ -370,8 +370,8 @@
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">الإخطارات المدفوعة</string>
   <string name="settings_popup_message">
-        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
+        الرجاء التأكّد مِن الإشعارات المدفوعة التي تودّ تلقيها.
+        بإمكانك تفعيل أو تعطيل هذه الإشعارات لاحقًا عبر الإعدادات (في تبويب الإخطارات).
     </string>
   <string name="settings_popup_timeline">للتبويقات غير المقروءة على الخط الزمني الرئيسي ؟</string>
   <string name="settings_popup_notification">للإشعارات غير المقروءة ؟</string>
