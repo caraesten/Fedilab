@@ -130,10 +130,10 @@
     <item quantity="one">%d Antwort</item>
     <item quantity="other">%d Antworten</item>
   </plurals>
-  <string name="bookmarks">Bookmarks</string>
-  <string name="bookmarks_empty">No bookmarks to display</string>
-  <string name="status_bookmarked">Status has been added to bookmarks!</string>
-  <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+  <string name="bookmarks">Lesezeichen</string>
+  <string name="bookmarks_empty">Keine Lesezeichen vorhanden</string>
+  <string name="status_bookmarked">Status wurde den Lesezeichen hinzugefügt!</string>
+  <string name="status_unbookmarked">Status wurde aus Lesezeichen entfernt!</string>
   <!-- Date -->
   <string name="date_seconds">%d s</string>
   <string name="date_minutes">%d m</string>
@@ -314,7 +314,7 @@
   <string name="settings_hour_init">Anfangszeit</string>
   <string name="settings_hour_end">Ende</string>
   <string name="embedded_browser">Benutze internen Browser</string>
-  <string name="custom_tabs">Benutzerdefinierte Tabs</string>
+  <string name="custom_tabs">In-App öffnen mit externem Browser</string>
   <string name="use_javascript">Javascript aktivieren</string>
   <string name="expand_cw">Inhaltswarnungen (CWs) automatisch einblenden</string>
   <string name="use_cookies">Erlaube Cookies von Drittanbietern</string>
@@ -372,25 +372,25 @@
   <string name="cache_units">MB</string>
   <string name="toast_cache_clear">Speicher wurde geleert! %1$s wurden freigeben</string>
   <!-- ACTIVITY CACHE -->
-  <string name="action_sync">Synchronize</string>
+  <string name="action_sync">Synchronisieren</string>
   <string name="action_filter">Filter</string>
-  <string name="owner_cached_toots">Your toots</string>
-  <string name="v_public">Public</string>
-  <string name="v_unlisted">Unlisted</string>
-  <string name="v_private">Private</string>
-  <string name="v_direct">Direct</string>
-  <string name="v_keywords">Some keywords…</string>
-  <string name="show_media">Show media</string>
-  <string name="show_pinned">Show pinned</string>
-  <string name="filter_no_result">No matching result found!</string>
-  <string name="data_backup_toots">Backup toots for %1$s</string>
-  <string name="data_backup_success">%1$s new toots have been imported</string>
+  <string name="owner_cached_toots">Deine Toots</string>
+  <string name="v_public">Öffentlich</string>
+  <string name="v_unlisted">Nicht gelistet</string>
+  <string name="v_private">Privat</string>
+  <string name="v_direct">Direkt</string>
+  <string name="v_keywords">Ein paar Schlüsselwörter…</string>
+  <string name="show_media">Medien anzeigen</string>
+  <string name="show_pinned">Angeheftet anzeigen</string>
+  <string name="filter_no_result">Keine passenden Einträge gefunden!</string>
+  <string name="data_backup_toots">Toots sichern fürn %1$s</string>
+  <string name="data_backup_success">%1$s neue Toots wurden importiert</string>
   <string-array name="filter_select">
-    <item>No</item>
-    <item>Only</item>
-    <item>Both</item>
+    <item>Nein</item>
+    <item>Nur</item>
+    <item>Beide</item>
   </string-array>
-  <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+  <string name="owner_cached_toots_empty">Keine Toots in der Datenbank gefunden. Bitte Synchronisieren vom Menü wählen um sie abzurufen.</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">Aufgezeichnete Daten</string>
   <string name="privacy_data">Nur Grundinformationen der Konten werden auf dem Gerät gespeichert.         Die Daten sind streng vertraulich und können nur von der Anwendung genutzt werden.         Beim Löschen der Anwendung werden diese umgehend entfernt.\n
