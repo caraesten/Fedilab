@@ -131,10 +131,10 @@
     <item quantity="few">%d одговора</item>
     <item quantity="other">%d одговора</item>
   </plurals>
-  <string name="bookmarks">Bookmarks</string>
-  <string name="bookmarks_empty">No bookmarks to display</string>
-  <string name="status_bookmarked">Status has been added to bookmarks!</string>
-  <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+  <string name="bookmarks">Забелешке</string>
+  <string name="bookmarks_empty">Нема забелешки за приказ</string>
+  <string name="status_bookmarked">Статус је додат у забелешке!</string>
+  <string name="status_unbookmarked">Статус је уклоњен из забелешки!</string>
   <!-- Date -->
   <string name="date_seconds">%d s</string>
   <string name="date_minutes">%d m</string>
@@ -372,25 +372,25 @@
   <string name="cache_units">Mb</string>
   <string name="toast_cache_clear">Кеш очишћен! %1$s ослобођено</string>
   <!-- ACTIVITY CACHE -->
-  <string name="action_sync">Synchronize</string>
-  <string name="action_filter">Filter</string>
-  <string name="owner_cached_toots">Your toots</string>
-  <string name="v_public">Public</string>
-  <string name="v_unlisted">Unlisted</string>
-  <string name="v_private">Private</string>
-  <string name="v_direct">Direct</string>
-  <string name="v_keywords">Some keywords…</string>
-  <string name="show_media">Show media</string>
-  <string name="show_pinned">Show pinned</string>
-  <string name="filter_no_result">No matching result found!</string>
-  <string name="data_backup_toots">Backup toots for %1$s</string>
-  <string name="data_backup_success">%1$s new toots have been imported</string>
+  <string name="action_sync">Синхронизуј</string>
+  <string name="action_filter">Филтрирај</string>
+  <string name="owner_cached_toots">Ваши тутови</string>
+  <string name="v_public">Јавни</string>
+  <string name="v_unlisted">Неизлистани</string>
+  <string name="v_private">Приватни</string>
+  <string name="v_direct">Директни</string>
+  <string name="v_keywords">Неке кључне речи…</string>
+  <string name="show_media">Прикажи мултимедију</string>
+  <string name="show_pinned">Прикажи закачене</string>
+  <string name="filter_no_result">Нема пронађених резултата!</string>
+  <string name="data_backup_toots">Прављење резерве тутова за %1$s</string>
+  <string name="data_backup_success">%1$s нови тут је увежен</string>
   <string-array name="filter_select">
-    <item>No</item>
-    <item>Only</item>
-    <item>Both</item>
+    <item>Не</item>
+    <item>Само</item>
+    <item>Оба</item>
   </string-array>
-  <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+  <string name="owner_cached_toots_empty">Нема тутова у бази. Користите дугме за синхронизацију да их преузмете.</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">Снимљени подаци</string>
   <string name="privacy_data">
