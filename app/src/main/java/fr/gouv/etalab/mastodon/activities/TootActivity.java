@@ -1636,14 +1636,8 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             pp_progress.setVisibility(View.GONE);
             pp_actionBar.setVisibility(View.VISIBLE);
         }
-        if( apiResponse.getError() != null){
-            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+        if( apiResponse.getError() != null)
             return;
-        }
-
         final List<Account> accounts = apiResponse.getAccounts();
         if( accounts != null && accounts.size() > 0){
             AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, accounts);
@@ -1742,13 +1736,8 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             pp_progress.setVisibility(View.GONE);
             pp_actionBar.setVisibility(View.VISIBLE);
         }
-        if( results == null){
-            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(getApplicationContext(), R.string.toast_error, Toast.LENGTH_LONG).show();
+        if( results == null)
             return;
-        }
 
         final List<String> tags = results.getHashtags();
         if( tags != null && tags.size() > 0){
