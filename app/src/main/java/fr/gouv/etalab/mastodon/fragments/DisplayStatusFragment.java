@@ -80,6 +80,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     boolean firstTootsLoaded;
     private String userId, instance;
     private SharedPreferences sharedpreferences;
+    private int searchingBookMarkCalls;
+
 
     public DisplayStatusFragment(){
     }
@@ -101,6 +103,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             showMediaOnly = bundle.getBoolean("showMediaOnly",false);
             showPinned = bundle.getBoolean("showPinned",false);
         }
+        searchingBookMarkCalls = 0;
         max_id = null;
         flag_loading = true;
         firstLoad = true;
@@ -307,6 +310,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }
         if( statuses != null && statuses.size() > 0) {
             if (type == RetrieveFeedsAsyncTask.Type.HOME) {
+                searchingBookMarkCalls++;
                 String bookmark = null;
                 if( context instanceof BaseMainActivity){
                     bookmark = ((BaseMainActivity) context).getBookmark();
@@ -457,6 +461,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             Account account = new AccountDAO(context, db).getAccountByID(userId);
             List<String> mutedAccount = new TempMuteDAO(context, db).getAllTimeMuted(account);
             statusListAdapter.updateMuted(mutedAccount);
+            //Bookmarks needs two calls, so we want to be sure to not interfere during these calls
+            if( statuses != null && statuses.size() > 0 && searchingBookMarkCalls > 1)
+                retrieveMissingToots(statuses.get(0).getId());
         }
     }
 
