@@ -461,9 +461,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             Account account = new AccountDAO(context, db).getAccountByID(userId);
             List<String> mutedAccount = new TempMuteDAO(context, db).getAllTimeMuted(account);
             statusListAdapter.updateMuted(mutedAccount);
-            //Bookmarks needs two calls, so we want to be sure to not interfere during these calls
-            if( statuses != null && statuses.size() > 0 && searchingBookMarkCalls > 1)
-                retrieveMissingToots(statuses.get(0).getId());
+
         }
     }
 
