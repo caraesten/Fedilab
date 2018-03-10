@@ -172,7 +172,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                retrieveMissingToots(statuses.get(0).getId());
+                if( statuses.size() > 0)
+                    retrieveMissingToots(statuses.get(0).getId());
             }
         });
         swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
