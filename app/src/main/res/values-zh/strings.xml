@@ -27,7 +27,7 @@
   <string name="tags">标签</string>
   <string name="token">代币</string>
   <string name="save">保存</string>
-  <string name="restore">恢复</string>
+  <string name="restore">還原</string>
   <string name="two_factor_authentification">两步验证？</string>
   <string name="other_instance">其他实例比 mastodon.etalab.gouv.fr 更...？</string>
   <string name="no_result">没有结果!</string>
@@ -292,6 +292,7 @@
   <string name="set_nsfw_timeout">NSFW 查看超时 (秒, 0 表示关闭)</string>
   <string name="settings_title_profile">编辑个人资料</string>
   <string name="set_profile_description">简介…</string>
+  <string name="set_lock_account">Lock account</string>
   <string name="set_save_changes">保存修改</string>
   <string name="set_header_picture_overlay">选择页眉图片</string>
   <string name="set_preview_reply">显示家庭时间线中答复的数量</string>
