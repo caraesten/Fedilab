@@ -295,6 +295,7 @@
   <string name="set_nsfw_timeout">Tempo até visualização de NSFW expirar (segundos, 0 significa desligado)</string>
   <string name="settings_title_profile">Editar perfil</string>
   <string name="set_profile_description">Bio…</string>
+  <string name="set_lock_account">Lock account</string>
   <string name="set_save_changes">Salvar mudanças</string>
   <string name="set_header_picture_overlay">Escolher cabeçalho</string>
   <string name="set_preview_reply">Exibir número de respostas na página inicial</string>

@@ -298,6 +298,7 @@
   <string name="set_nsfw_timeout">NSFW Vezi timp expirare (secunde, 0 înseamnă oprit)</string>
   <string name="settings_title_profile">Editează profilul</string>
   <string name="set_profile_description">Bio…</string>
+  <string name="set_lock_account">Lock account</string>
   <string name="set_save_changes">Salvează modificările</string>
   <string name="set_header_picture_overlay">Alege poză de profil</string>
   <string name="set_preview_reply">Afişează numărul de răspunsuri în cronologie de acasă</string>

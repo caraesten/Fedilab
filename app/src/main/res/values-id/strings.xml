@@ -292,6 +292,7 @@
   <string name="set_nsfw_timeout">Lihat NSFW waktu habis (detik, 0 berarti mati)</string>
   <string name="settings_title_profile">Ubah profil</string>
   <string name="set_profile_description">Biodata…</string>
+  <string name="set_lock_account">Lock account</string>
   <string name="set_save_changes">Simpan perubahan</string>
   <string name="set_header_picture_overlay">Pilih gambar header</string>
   <string name="set_preview_reply">Tampilkan jumlah balasan di kronologi beranda</string>

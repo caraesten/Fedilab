@@ -295,6 +295,7 @@
   <string name="set_nsfw_timeout">NSFW ցուցադրման տևողությունը(վրկյ-ով, 0-ն անջատելն է)</string>
   <string name="settings_title_profile">Խմբագրել Էջը</string>
   <string name="set_profile_description">Կենսագրություն…</string>
+  <string name="set_lock_account">Lock account</string>
   <string name="set_save_changes">Պահել փոփոխությունները</string>
   <string name="set_header_picture_overlay">Ընտրել գլխավոր նկար</string>
   <string name="set_preview_reply">Ցուցադրել արձագանքների քանակը հարազատ հոսքում</string>
