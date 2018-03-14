@@ -32,22 +32,24 @@ import fr.gouv.etalab.mastodon.interfaces.OnUpdateCredentialInterface;
 public class UpdateCredentialAsyncTask extends AsyncTask<Void, Void, Void> {
 
     private String display_name, note, avatar, header;
+    private API.accountPrivacy privacy;
     private APIResponse apiResponse;
     private OnUpdateCredentialInterface listener;
     private WeakReference<Context> contextReference;
 
-    public UpdateCredentialAsyncTask(Context context, String display_name, String note, String avatar, String header, OnUpdateCredentialInterface onUpdateCredentialInterface){
+    public UpdateCredentialAsyncTask(Context context, String display_name, String note, String avatar, String header, API.accountPrivacy privacy, OnUpdateCredentialInterface onUpdateCredentialInterface){
         this.contextReference = new WeakReference<>(context);
         this.display_name = display_name;
         this.note = note;
         this.avatar = avatar;
         this.header = header;
         this.listener = onUpdateCredentialInterface;
+        this.privacy = privacy;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        apiResponse = new API(this.contextReference.get()).updateCredential(display_name, note, avatar, header);
+        apiResponse = new API(this.contextReference.get()).updateCredential(display_name, note, avatar, header, privacy);
         return null;
     }
 

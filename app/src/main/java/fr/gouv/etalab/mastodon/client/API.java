@@ -78,7 +78,10 @@ public class API {
         PIN,
         UNPIN
     }
-
+    public enum accountPrivacy {
+        PUBLIC,
+        LOCKED
+    }
     public API(Context context) {
         this.context = context;
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -137,7 +140,7 @@ public class API {
      * Update credential of the authenticated user *synchronously*
      * @return APIResponse
      */
-    public APIResponse updateCredential(String display_name, String note, String avatar, String header) {
+    public APIResponse updateCredential(String display_name, String note, String avatar, String header, accountPrivacy privacy) {
 
         HashMap<String, String> requestParams = new HashMap<>();
         if( display_name != null)
@@ -158,6 +161,8 @@ public class API {
             } catch (UnsupportedEncodingException e) {
                 requestParams.put("avatar",avatar);
             }
+        if( privacy != null)
+            requestParams.put("locked",privacy==accountPrivacy.LOCKED?"true":"false");
         if( header != null)
             try {
                 requestParams.put("header",URLEncoder.encode(header, "UTF-8"));

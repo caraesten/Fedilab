@@ -46,6 +46,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -64,6 +65,7 @@ import java.io.InputStream;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateCredentialAsyncTask;
+import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
@@ -90,9 +92,11 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
     private ImageView set_profile_picture, set_header_picture;
     private Button set_change_profile_picture, set_change_header_picture, set_profile_save;
     private TextView set_header_picture_overlay;
+    private CheckBox set_lock_account;
     private static final int PICK_IMAGE_HEADER = 4565;
     private static final int PICK_IMAGE_PROFILE = 6545;
     private String profile_picture, header_picture, profile_username, profile_note;
+    private API.accountPrivacy profile_privacy;
     private Bitmap profile_picture_bmp, profile_header_bmp;
     private ImageView pp_actionBar;
     private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_HEADER = 754;
@@ -147,7 +151,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                 .load(url)
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
-                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                    public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                         BitmapDrawable ppDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(25, getApplicationContext()), (int) Helper.convertDpToPixel(25, getApplicationContext()), true));
                         if( pp_actionBar != null){
                             pp_actionBar.setImageDrawable(ppDrawable);
@@ -168,12 +172,14 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
         set_change_header_picture = findViewById(R.id.set_change_header_picture);
         set_profile_save = findViewById(R.id.set_profile_save);
         set_header_picture_overlay = findViewById(R.id.set_header_picture_overlay);
+        set_lock_account = findViewById(R.id.set_lock_account);
 
         set_profile_save.setEnabled(false);
         set_change_header_picture.setEnabled(false);
         set_change_profile_picture.setEnabled(false);
         set_profile_name.setEnabled(false);
         set_profile_description.setEnabled(false);
+        set_lock_account.setEnabled(false);
 
         new RetrieveAccountInfoAsyncTask(getApplicationContext(), EditProfileActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         if( theme == Helper.THEME_LIGHT) {
@@ -215,7 +221,11 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
         set_change_profile_picture.setEnabled(true);
         set_profile_name.setEnabled(true);
         set_profile_description.setEnabled(true);
-
+        set_lock_account.setEnabled(true);
+        if( account.isLocked())
+            set_lock_account.setChecked(true);
+        else
+            set_lock_account.setChecked(false);
         set_profile_description.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -368,6 +378,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                         dialog_profile_picture.setBackground(set_profile_picture.getDrawable());
                     }
                 }
+                profile_privacy = set_lock_account.isChecked()?API.accountPrivacy.LOCKED:API.accountPrivacy.PUBLIC;
                 dialogBuilder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
@@ -379,7 +390,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                             }
                         }).start();
                         GlideApp.get(getApplicationContext()).clearMemory();
-                        new UpdateCredentialAsyncTask(getApplicationContext(), profile_username, profile_note, profile_picture, header_picture, EditProfileActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        new UpdateCredentialAsyncTask(getApplicationContext(), profile_username, profile_note, profile_picture, header_picture, profile_privacy, EditProfileActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                 });
                 dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

@@ -111,6 +111,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         </LinearLayout>
+        <!-- Lock the account -->
+        <CheckBox
+            android:layout_marginTop="10dp"
+            android:id="@+id/set_lock_account"
+            android:layout_width="wrap_content"
+            android:text="@string/set_lock_account"
+            android:layout_height="wrap_content" />
 
         <Button
             android:layout_marginTop="5dp"
