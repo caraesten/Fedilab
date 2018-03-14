@@ -69,6 +69,7 @@ import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.client.Glide.GlideApp;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountInterface;
@@ -174,6 +175,14 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
         set_header_picture_overlay = findViewById(R.id.set_header_picture_overlay);
         set_lock_account = findViewById(R.id.set_lock_account);
 
+        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
+        String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
+        Version currentVersion = new Version(instanceVersion);
+        Version minVersion = new Version("2.3");
+        if(currentVersion.compareTo(minVersion) == 1)
+            set_lock_account.setVisibility(View.VISIBLE);
+        else
+            set_lock_account.setVisibility(View.GONE);
         set_profile_save.setEnabled(false);
         set_change_header_picture.setEnabled(false);
         set_change_profile_picture.setEnabled(false);
