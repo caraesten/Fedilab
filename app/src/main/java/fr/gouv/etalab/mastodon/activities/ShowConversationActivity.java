@@ -23,6 +23,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DividerItemDecoration;
@@ -81,6 +82,8 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
     private ImageView pp_actionBar;
     private List<Status> statuses;
     private StatusListAdapter statusListAdapter;
+    private boolean expanded;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,10 +95,18 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         }else {
             setTheme(R.style.AppThemeDark_NoActionBar);
         }
+        expanded = false;
+
         setContentView(R.layout.activity_show_conversation);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Bundle b = getIntent().getExtras();
+        if(b != null)
+            statusId = b.getString("statusId", null);
+        if( statusId == null)
+            finish();
 
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -108,6 +119,7 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
             TextView title = getSupportActionBar().getCustomView().findViewById(R.id.toolbar_title);
             pp_actionBar = getSupportActionBar().getCustomView().findViewById(R.id.pp_actionBar);
             ImageView action_refresh = getSupportActionBar().getCustomView().findViewById(R.id.action_refresh);
+            final ImageView action_expand = getSupportActionBar().getCustomView().findViewById(R.id.action_expand);
             title.setText(R.string.conversation);
             ImageView close_conversation = getSupportActionBar().getCustomView().findViewById(R.id.close_conversation);
 
@@ -142,6 +154,19 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
                     }, 1000);
                 }
             });
+            action_expand.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    expanded = !expanded;
+                    if( expanded)
+                        action_expand.setImageResource(R.drawable.ic_expand_less);
+                    else
+                        action_expand.setImageResource(R.drawable.ic_expand_more);
+                    new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, false,false, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+                }
+            });
+
         }else{
             setTitle(R.string.conversation);
         }
@@ -158,7 +183,7 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
                 .load(url)
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
-                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                    public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                         BitmapDrawable ppDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(25, getApplicationContext()), (int) Helper.convertDpToPixel(25, getApplicationContext()), true));
                         if( pp_actionBar != null){
                             pp_actionBar.setImageDrawable(ppDrawable);
@@ -170,11 +195,7 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
                     }
                 });
 
-        Bundle b = getIntent().getExtras();
-        if(b != null)
-            statusId = b.getString("statusId", null);
-        if( statusId == null)
-            finish();
+
         isRefreshed = false;
 
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
@@ -222,7 +243,7 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         List<Status> statuses = apiResponse.getStatuses();
         if( statuses != null && statuses.size() > 0 ){
             initialStatus = statuses.get(0);
-            new RetrieveContextAsyncTask(getApplicationContext(), initialStatus.getId(), ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new RetrieveContextAsyncTask(getApplicationContext(), expanded, initialStatus.getId(), ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
@@ -244,29 +265,41 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         int position = 0;
         boolean positionFound = false;
         statuses = new ArrayList<>();
-        if( statusFirst != null)
-            statuses.add(0, statusFirst);
-        if( context.getAncestors() != null && context.getAncestors().size() > 0){
-            for(Status status: context.getAncestors()){
-                statuses.add(status);
-                if( !positionFound)
-                    position++;
-                if( status.getId().equals(initialStatus.getId()))
-                    positionFound = true;
+        if( expanded) {
+            if (statusFirst != null)
+                statuses.add(0, statusFirst);
+            if (context.getAncestors() != null && context.getAncestors().size() > 0) {
+                for (Status status : context.getAncestors()) {
+                    statuses.add(status);
+                    if (!positionFound)
+                        position++;
+                    if (status.getId().equals(initialStatus.getId()))
+                        positionFound = true;
 
+                }
+            } else if (statusFirst == null) {
+                statuses.add(0, initialStatus);
+                positionFound = true;
             }
-        }else if( statusFirst == null){
-            statuses.add(0, initialStatus);
-            positionFound = true;
-        }
-        if( context.getDescendants() != null && context.getDescendants().size() > 0){
-            for(Status status: context.getDescendants()){
-                statuses.add(status);
-                if( !positionFound)
-                    position++;
-                if( status.getId().equals(initialStatus.getId()))
-                    positionFound = true;
+            if (context.getDescendants() != null && context.getDescendants().size() > 0) {
+                for (Status status : context.getDescendants()) {
+                    statuses.add(status);
+                    if (!positionFound)
+                        position++;
+                    if (status.getId().equals(initialStatus.getId()))
+                        positionFound = true;
 
+                }
+            }
+        }else {
+            position = 0;
+            if (context.getAncestors() != null && context.getAncestors().size() > 0) {
+                statuses.addAll(context.getAncestors());
+                position = context.getAncestors().size();
+            }
+            statuses.add(initialStatus);
+            if (context.getDescendants() != null && context.getDescendants().size() > 0) {
+                statuses.addAll(context.getDescendants());
             }
         }
 
