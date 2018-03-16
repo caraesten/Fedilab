@@ -172,8 +172,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if( statuses.size() > 0)
-                    retrieveMissingToots(statuses.get(0).getId());
+                if( statuses.size() > 0) {
+                    MainActivity.countNewStatus = 0;
+                    retrieveMissingToots(null);
+                }
             }
         });
         swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
@@ -434,7 +436,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             Account account = new AccountDAO(context, db).getAccountByID(userId);
             List<String> mutedAccount = new TempMuteDAO(context, db).getAllTimeMuted(account);
             statusListAdapter.updateMuted(mutedAccount);
-
+            if( statuses != null && statuses.size() > 0)
+                retrieveMissingToots(statuses.get(0).getId());
         }
     }
 

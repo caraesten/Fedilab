@@ -7,8 +7,8 @@ android {
         applicationId "fr.gouv.etalab.mastodon"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 115
-        versionName "1.8.3"
+        versionCode 116
+        versionName "1.8.4"
     }
     flavorDimensions "default"
     buildTypes {
@@ -34,7 +34,7 @@ allprojects {
         maven { url "https://maven.google.com"}
     }
 }
-ext.supportLibraryVersion = '27.0.2'
+ext.supportLibraryVersion = '27.1.0'
 ext.glideLibraryVersion = '4.6.1'
 ext.conscryptLibraryVersion = '1.0.1'
 ext.evernoteLibraryVersion = '1.2.2'

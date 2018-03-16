@@ -43,9 +43,6 @@ import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.LightingColorFilter;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
@@ -234,7 +231,6 @@ public class Helper {
     public static final String SET_DISABLE_GIF = "set_disable_gif";
     public static final String SET_CAPITALIZE = "set_capitalize";
     public static final String SET_PICTURE_RESIZE = "set_picture_resize";
-    public static final int S_NONE = 0;
     public static final int S_512KO = 1;
     public static final int S_1MO = 2;
     public static final int S_2MO = 3;
@@ -870,7 +866,7 @@ public class Helper {
                     })
                     .into(new SimpleTarget<Bitmap>() {
                         @Override
-                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                             notify_user(context, intent, notificationIdTmp, resource, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
                             Toast.makeText(context, R.string.toast_saved,Toast.LENGTH_LONG).show();
                         }
@@ -1005,7 +1001,7 @@ public class Helper {
                             .load(url)
                             .into(new SimpleTarget<Bitmap>() {
                                 @Override
-                                public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                                public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                                     item.setIcon(new BitmapDrawable(activity.getResources(), resource));
                                     item.getIcon().setColorFilter(0xFFFFFFFF, PorterDuff.Mode.MULTIPLY);
                                 }
@@ -1141,7 +1137,7 @@ public class Helper {
                 .load(url)
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
-                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                    public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                         Resources res = activity.getResources();
                         BitmapDrawable icon = new BitmapDrawable(res, getRoundedCornerBitmap(resource, 20));
                         imageView.setImageDrawable(icon);
@@ -1948,7 +1944,7 @@ public class Helper {
                     })
                     .into(new SimpleTarget<Bitmap>() {
                         @Override
-                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                             if( resource != null)
                                 imageView.setImageBitmap(resource);
                         }
