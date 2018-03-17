@@ -142,16 +142,17 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
             action_refresh.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if( statuses != null)
-                    swipeRefreshLayout.setRefreshing(true);
-                    ( new Handler()).postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            isRefreshed = true;
-                            statusId = statuses.get(statuses.size()-1).getId();
-                            new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, false, false, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        }
-                    }, 1000);
+                    if( statuses != null) {
+                        swipeRefreshLayout.setRefreshing(true);
+                        (new Handler()).postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                isRefreshed = true;
+                                statusId = statuses.get(statuses.size() - 1).getId();
+                                new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId, null, false, false, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            }
+                        }, 1000);
+                    }
                 }
             });
             action_expand.setOnClickListener(new View.OnClickListener() {

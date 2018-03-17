@@ -807,6 +807,11 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         @Override
         protected Void doInBackground(Void... voids) {
 
+
+            if( this.fileWeakReference.get() == null) {
+                Toast.makeText(activityWeakReference.get(), R.string.toast_error, Toast.LENGTH_SHORT).show();
+                return null;
+            }
             Bitmap takenImage = BitmapFactory.decodeFile(String.valueOf(this.fileWeakReference.get()));
             int size = takenImage.getByteCount();
             SharedPreferences sharedpreferences = this.activityWeakReference.get().getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
@@ -836,6 +841,8 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
 
         @Override
         protected void onPostExecute(Void result) {
+            if( bs == null)
+                return;
             ImageButton toot_picture;
             LinearLayout toot_picture_container;
             toot_picture = this.activityWeakReference.get().findViewById(R.id.toot_picture);
