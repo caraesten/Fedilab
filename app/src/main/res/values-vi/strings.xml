@@ -294,6 +294,7 @@ và %d toots khác để khám phá</item>
   <string name="set_nsfw_timeout">Thời gian chờ của NSFW (giây, 0 có nghĩa là tắt)</string>
   <string name="settings_title_profile">Chỉnh sửa tiểu sử</string>
   <string name="set_profile_description">Tiểu sử…</string>
+  <string name="set_lock_account">Lock account</string>
   <string name="set_save_changes">Lưu thay đổi</string>
   <string name="set_header_picture_overlay">Chọn một hình ảnh tiêu đề</string>
   <string name="set_preview_reply">Hiển thị số lượng bài trả lời trong dòng thời gian</string>

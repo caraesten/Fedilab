@@ -807,6 +807,11 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         @Override
         protected Void doInBackground(Void... voids) {
 
+
+            if( this.fileWeakReference.get() == null) {
+                Toast.makeText(activityWeakReference.get(), R.string.toast_error, Toast.LENGTH_SHORT).show();
+                return null;
+            }
             Bitmap takenImage = BitmapFactory.decodeFile(String.valueOf(this.fileWeakReference.get()));
             int size = takenImage.getByteCount();
             SharedPreferences sharedpreferences = this.activityWeakReference.get().getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
@@ -836,6 +841,8 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
 
         @Override
         protected void onPostExecute(Void result) {
+            if( bs == null)
+                return;
             ImageButton toot_picture;
             LinearLayout toot_picture_container;
             toot_picture = this.activityWeakReference.get().findViewById(R.id.toot_picture);
@@ -1636,14 +1643,8 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             pp_progress.setVisibility(View.GONE);
             pp_actionBar.setVisibility(View.VISIBLE);
         }
-        if( apiResponse.getError() != null){
-            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+        if( apiResponse.getError() != null)
             return;
-        }
-
         final List<Account> accounts = apiResponse.getAccounts();
         if( accounts != null && accounts.size() > 0){
             AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, accounts);
@@ -1742,13 +1743,8 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             pp_progress.setVisibility(View.GONE);
             pp_actionBar.setVisibility(View.VISIBLE);
         }
-        if( results == null){
-            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(getApplicationContext(), R.string.toast_error, Toast.LENGTH_LONG).show();
+        if( results == null)
             return;
-        }
 
         final List<String> tags = results.getHashtags();
         if( tags != null && tags.size() > 0){
@@ -1936,30 +1932,63 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
 
         //If toot is not restored
         if( restored == -1 ){
+            //Gets the default visibility, will be used if not set in settings
+            String defaultVisibility = account.isLocked()?"private":"public";
+            String settingsVisibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), defaultVisibility);
+            int initialTootVisibility = 0;
+            int ownerTootVisibility = 0;
             switch (tootReply.getVisibility()){
                 case "public":
-                    if( !account.isLocked()) {
-                        visibility = "public";
-                        toot_visibility.setImageResource(R.drawable.ic_public_toot);
-                    }else {
-                        visibility = "private";
-                        toot_visibility.setImageResource(R.drawable.ic_lock_outline_toot);
-                    }
+                    initialTootVisibility = 4;
                     break;
                 case "unlisted":
-                    if( !account.isLocked()) {
-                        visibility = "unlisted";
-                        toot_visibility.setImageResource(R.drawable.ic_lock_open_toot);
-                    }else {
-                        visibility = "private";
-                        toot_visibility.setImageResource(R.drawable.ic_lock_outline_toot);
-                    }
+                    initialTootVisibility  = 3;
                     break;
                 case "private":
                     visibility = "private";
-                    toot_visibility.setImageResource(R.drawable.ic_lock_outline_toot);
+                    initialTootVisibility = 2;
                     break;
                 case "direct":
+                    visibility = "direct";
+                    initialTootVisibility = 1;
+                    break;
+            }
+            switch (settingsVisibility){
+                case "public":
+                    ownerTootVisibility = 4;
+                    break;
+                case "unlisted":
+                    ownerTootVisibility  = 3;
+                    break;
+                case "private":
+                    visibility = "private";
+                    ownerTootVisibility = 2;
+                    break;
+                case "direct":
+                    visibility = "direct";
+                    ownerTootVisibility = 1;
+                    break;
+            }
+            int tootVisibility;
+            if( ownerTootVisibility >= initialTootVisibility){
+                tootVisibility = initialTootVisibility;
+            }else {
+                tootVisibility = ownerTootVisibility;
+            }
+            switch (tootVisibility){
+                case 4:
+                    visibility = "public";
+                    toot_visibility.setImageResource(R.drawable.ic_public_toot);
+                    break;
+                case 3:
+                    visibility = "unlisted";
+                    toot_visibility.setImageResource(R.drawable.ic_lock_open_toot);
+                    break;
+                case 2:
+                    visibility = "private";
+                    toot_visibility.setImageResource(R.drawable.ic_lock_outline_toot);
+                    break;
+                case 1:
                     visibility = "direct";
                     toot_visibility.setImageResource(R.drawable.ic_mail_outline_toot);
                     break;

@@ -295,6 +295,7 @@
   <string name="set_nsfw_timeout">NSFW görünümü zaman aşımı (saniye, kapalı 0 anlamına gelir)</string>
   <string name="settings_title_profile">Profil düzenleme</string>
   <string name="set_profile_description">Özgeçmiş…</string>
+  <string name="set_lock_account">Lock account</string>
   <string name="set_save_changes">Değişiklikleri kaydet</string>
   <string name="set_header_picture_overlay">Profil fotoğrafı seçin</string>
   <string name="set_preview_reply">Cevaplanma sayısını zaman tünelinde göster</string>

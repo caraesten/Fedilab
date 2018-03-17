@@ -129,6 +129,7 @@
   <plurals name="preview_replies">
     <item quantity="one">%d reply</item>
     <item quantity="few">%d replies</item>
+    <item quantity="many">%d replies</item>
     <item quantity="other">%d replies</item>
   </plurals>
   <string name="bookmarks">Bookmarks</string>
@@ -215,11 +216,13 @@
   <plurals name="other_notifications">
     <item quantity="one">and another notification</item>
     <item quantity="few">and %d other notifications</item>
+    <item quantity="many">and %d other notifications</item>
     <item quantity="other">and %d other notifications</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
     <item quantity="one">and another toot to discover</item>
     <item quantity="few">and %d other toots to discover</item>
+    <item quantity="many">and %d other toots to discover</item>
     <item quantity="other">and %d other toots to discover</item>
   </plurals>
   <string name="delete_notification_ask">Delete a notification?</string>
@@ -298,6 +301,7 @@
   <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
   <string name="settings_title_profile">Edit profile</string>
   <string name="set_profile_description">Bio…</string>
+  <string name="set_lock_account">Lock account</string>
   <string name="set_save_changes">Save changes</string>
   <string name="set_header_picture_overlay">Choose a header picture</string>
   <string name="set_preview_reply">Display the number of replies in home timeline</string>

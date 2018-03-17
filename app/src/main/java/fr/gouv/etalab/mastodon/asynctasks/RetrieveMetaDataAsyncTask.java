@@ -17,6 +17,7 @@ package fr.gouv.etalab.mastodon.asynctasks;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.text.Html;
 import android.util.Patterns;
 
 import java.io.IOException;
@@ -77,13 +78,22 @@ public class RetrieveMetaDataAsyncTask extends AsyncTask<Void, Void, Void> {
                     Matcher matcherTitle = titlePattern.matcher(response);
                     Matcher matcherDescription = descriptionPattern.matcher(response);
                     Matcher matcherImage = imagePattern.matcher(response);
+                    String titleEncoded = null;
+                    String descriptionEncoded = null;
                     while (matcherTitle.find())
-                        title = matcherTitle.group(1);
+                        titleEncoded = matcherTitle.group(1);
                     while (matcherDescription.find())
-                        description = matcherDescription.group(1);
+                        descriptionEncoded = matcherDescription.group(1);
                     while (matcherImage.find())
                         image = matcherImage.group(1);
-
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        title = Html.fromHtml(titleEncoded, Html.FROM_HTML_MODE_LEGACY).toString();
+                        description = Html.fromHtml(descriptionEncoded, Html.FROM_HTML_MODE_LEGACY).toString();
+                    }else {
+                        //noinspection deprecation
+                        title = Html.fromHtml(titleEncoded).toString();
+                        description = Html.fromHtml(descriptionEncoded).toString();
+                    }
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
                 } catch (KeyManagementException e) {

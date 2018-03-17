@@ -36,11 +36,13 @@ public class RetrieveContextAsyncTask extends AsyncTask<Void, Void, Void> {
     private OnRetrieveContextInterface listener;
     private API api;
     private WeakReference<Context> contextReference;
+    private boolean expanded;
 
-    public RetrieveContextAsyncTask(Context context, String statusId, OnRetrieveContextInterface onRetrieveContextInterface){
+    public RetrieveContextAsyncTask(Context context, boolean expanded, String statusId, OnRetrieveContextInterface onRetrieveContextInterface){
         this.contextReference = new WeakReference<>(context);
         this.statusId = statusId;
         this.listener = onRetrieveContextInterface;
+        this.expanded = expanded;
     }
 
     @Override
@@ -48,7 +50,7 @@ public class RetrieveContextAsyncTask extends AsyncTask<Void, Void, Void> {
         api = new API(this.contextReference.get());
         statusContext = api.getStatusContext(statusId);
         //Retrieves the first toot
-        if( statusContext != null && statusContext.getAncestors() != null && statusContext.getAncestors().size() > 0 ) {
+        if( expanded && statusContext != null && statusContext.getAncestors() != null && statusContext.getAncestors().size() > 0 ) {
             statusFirst = statusContext.getAncestors().get(0);
             statusContext = api.getStatusContext(statusContext.getAncestors().get(0).getId());
         }

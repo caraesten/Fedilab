@@ -549,6 +549,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             });
         }else {
             holder.notification_status_container.setVisibility(View.GONE);
+            holder.status_spoiler_container.setVisibility(View.GONE);
+            holder.status_spoiler_mention_container.setVisibility(View.GONE);
             holder.card_status_container.setOnClickListener(null);
         }
 

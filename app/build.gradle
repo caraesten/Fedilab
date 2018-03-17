@@ -7,8 +7,8 @@ android {
         applicationId "fr.gouv.etalab.mastodon"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 115
-        versionName "1.8.3"
+        versionCode 116
+        versionName "1.8.4"
     }
     flavorDimensions "default"
     buildTypes {
@@ -19,6 +19,10 @@ android {
         debug {
             pseudoLocalesEnabled true
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     productFlavors {
@@ -37,9 +41,9 @@ allprojects {
 ext.supportLibraryVersion = '27.0.2'
 ext.glideLibraryVersion = '4.6.1'
 ext.conscryptLibraryVersion = '1.0.1'
-ext.evernoteLibraryVersion = '1.2.2'
+ext.evernoteLibraryVersion = '1.2.4'
 ext.gsonLibraryVersion = '2.8.2'
-ext.guavaLibraryVersion = '23.6-android'
+ext.guavaLibraryVersion = '24.1-android'
 ext.photoViewLibraryVersion = '2.0.0'
 ext.swipebackLibraryVersion = '1.0.2'
 ext.ratethisappLibraryVersion = '1.2.0'

@@ -72,7 +72,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private SwipeRefreshLayout swipeRefreshLayout;
     private String targetedId;
     private String tag;
-    private boolean swiped;
     private RecyclerView lv_status;
     private boolean showMediaOnly, showPinned;
     private Intent streamingFederatedIntent, streamingLocalIntent;
@@ -80,6 +79,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     boolean firstTootsLoaded;
     private String userId, instance;
     private SharedPreferences sharedpreferences;
+
 
     public DisplayStatusFragment(){
     }
@@ -104,7 +104,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         max_id = null;
         flag_loading = true;
         firstLoad = true;
-        swiped = false;
         assert context != null;
         sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean isOnWifi = Helper.isOnWIFI(context);
@@ -173,20 +172,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                max_id = null;
-                firstLoad = true;
-                flag_loading = true;
-                swiped = true;
-                MainActivity.countNewStatus = 0;
-                if( context instanceof BaseMainActivity){
-                    ((BaseMainActivity) context).setBookmark(null);
+                if( statuses.size() > 0) {
+                    MainActivity.countNewStatus = 0;
+                    retrieveMissingToots(null);
                 }
-                if( type == RetrieveFeedsAsyncTask.Type.USER)
-                    asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, null, showMediaOnly, showPinned, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                else if( type == RetrieveFeedsAsyncTask.Type.TAG)
-                    asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                else
-                    asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
         swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
@@ -273,7 +262,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             if( show_error_messages )
                 Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
-            swiped = false;
             flag_loading = false;
             return;
         }
@@ -286,20 +274,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             max_id = apiResponse.getMax_id();
         }
         flag_loading = (max_id == null );
-        if( !swiped && firstLoad && (statuses == null || statuses.size() == 0))
+        if( firstLoad && (statuses == null || statuses.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
             textviewNoAction.setVisibility(View.GONE);
 
-        if( swiped ){
-            if (previousPosition > 0) {
-                for (int i = 0; i < previousPosition; i++) {
-                    this.statuses.remove(0);
-                }
-                statusListAdapter.notifyItemRangeRemoved(0, previousPosition);
-            }
-            swiped = false;
-        }
         //First toot are loaded as soon as the bookmark has been retrieved
         if( type == RetrieveFeedsAsyncTask.Type.HOME && !firstTootsLoaded){
             asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -359,10 +338,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     updateStatusLastId(statuses.get(0).getId());
             }
             if( type == RetrieveFeedsAsyncTask.Type.HOME)
-            //Display new value in counter
-            try {
-                ((MainActivity) context).updateHomeCounter();
-            }catch (Exception ignored){}
+                //Display new value in counter
+                try {
+                    ((MainActivity) context).updateHomeCounter();
+                }catch (Exception ignored){}
         }
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
@@ -457,6 +436,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             Account account = new AccountDAO(context, db).getAccountByID(userId);
             List<String> mutedAccount = new TempMuteDAO(context, db).getAllTimeMuted(account);
             statusListAdapter.updateMuted(mutedAccount);
+            if( statuses != null && statuses.size() > 0)
+                retrieveMissingToots(statuses.get(0).getId());
         }
     }
 
@@ -550,6 +531,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
     @Override
     public void onRetrieveMissingFeeds(List<Status> statuses) {
+        swipeRefreshLayout.setRefreshing(false);
         if( statuses != null && statuses.size() > 0) {
             int inserted = 0;
             for (int i = statuses.size() - 1; i >= 0; i--) {

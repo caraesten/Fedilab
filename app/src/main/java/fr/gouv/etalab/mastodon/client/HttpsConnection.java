@@ -1022,7 +1022,13 @@ public class HttpsConnection {
             httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
             httpsURLConnection.setConnectTimeout(timeout * 1000);
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
-            httpsURLConnection.setRequestMethod("PATCH");
+            if( Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT ){
+                httpsURLConnection.setRequestMethod("PATCH");
+            }else {
+                httpsURLConnection.setRequestProperty("X-HTTP-Method-Override", "PATCH");
+                httpsURLConnection.setRequestMethod("POST");
+            }
+
             if (token != null)
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
             httpsURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
