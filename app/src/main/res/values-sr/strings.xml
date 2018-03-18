@@ -360,9 +360,9 @@
   <string name="set_capitalize">Прво слово велико у одговорима</string>
   <string name="set_resize_picture">Мењај величине слика</string>
   <!-- Quick settings for notifications -->
-  <string name="settings_popup_title">Гурни обавештења</string>
+  <string name="settings_popup_title">Брза обавештења</string>
   <string name="settings_popup_message">
-        Потврдите гурање којих обавештења желите да примате.
+        Потврдите која брза обавештења желите да примате.
         Можете укључити и искључити ова обавештења накнадно у подешавањима (језичак за Обавештења).
     </string>
   <string name="settings_popup_timeline">За непрочитане тутове у сопственој лајни?</string>
