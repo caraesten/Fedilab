@@ -391,7 +391,7 @@
     <item>Nur</item>
     <item>Beide</item>
   </string-array>
-  <string name="owner_cached_toots_empty">Keine Toots in der Datenbank gefunden. Bitte Synchronisieren vom Menü wählen um sie abzurufen.</string>
+  <string name="owner_cached_toots_empty">Keine Toots in der Datenbank gefunden. Drücke oben auf den Synchronisierungsknopf um sie abzurufen.</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">Aufgezeichnete Daten</string>
   <string name="privacy_data">Nur Grundinformationen der Konten werden auf dem Gerät gespeichert.         Die Daten sind streng vertraulich und können nur von der Anwendung genutzt werden.         Beim Löschen der Anwendung werden diese umgehend entfernt.\n
