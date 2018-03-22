@@ -299,7 +299,7 @@
   <string name="set_nsfw_timeout">NSFW Anzeige Dauer (Sekunden, 0 bedeutet aus)</string>
   <string name="settings_title_profile">Ändere Profil</string>
   <string name="set_profile_description">Über mich…</string>
-  <string name="set_lock_account">Lock account</string>
+  <string name="set_lock_account">Konto sperren</string>
   <string name="set_save_changes">Änderungen speichern</string>
   <string name="set_header_picture_overlay">Wähle ein Profilbild</string>
   <string name="set_preview_reply">Zeige die Anzahl der Antworten in der home Zeitlinie an</string>
@@ -391,7 +391,7 @@
     <item>Nur</item>
     <item>Beide</item>
   </string-array>
-  <string name="owner_cached_toots_empty">Keine Toots in der Datenbank gefunden. Bitte Synchronisieren vom Menü wählen um sie abzurufen.</string>
+  <string name="owner_cached_toots_empty">Keine Toots in der Datenbank gefunden. Drücke oben auf den Synchronisierungsknopf um sie abzurufen.</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">Aufgezeichnete Daten</string>
   <string name="privacy_data">Nur Grundinformationen der Konten werden auf dem Gerät gespeichert.         Die Daten sind streng vertraulich und können nur von der Anwendung genutzt werden.         Beim Löschen der Anwendung werden diese umgehend entfernt.\n
