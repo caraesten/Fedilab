@@ -40,7 +40,7 @@
   <string name="choose_picture">选择图片…</string>
   <string name="clear">清理</string>
   <string name="microphone">麦克风</string>
-  <string name="camera">Camera</string>
+  <string name="camera">相机</string>
   <string name="speech_prompt">请说点什么</string>
   <string name="speech_not_supported">抱歉! 您的设备不支持语音输入!</string>
   <string name="delete_all">删除全部</string>
