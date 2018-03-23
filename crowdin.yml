@@ -5,3 +5,4 @@ files:
     languages_mapping:
      two_letters_code:
        zh-TW: zh-rTW
+       zh-CN: zh-rCN
