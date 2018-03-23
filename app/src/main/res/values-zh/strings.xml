@@ -32,7 +32,7 @@
   <string name="other_instance">其他实例比 mastodon.etalab.gouv.fr 更...？</string>
   <string name="no_result">没有结果!</string>
   <string name="instance">实例</string>
-  <string name="instance_example">实例: mastodon.social</string>
+  <string name="instance_example">實例: mastodon.social</string>
   <string name="toast_account_changed" formatted="false">现在使用 %1$s 这个帐户</string>
   <string name="add_account">添加帐户</string>
   <string name="clipboard">已将toot 的内容复制到剪贴板</string>
