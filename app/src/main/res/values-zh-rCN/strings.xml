@@ -30,25 +30,25 @@
   <string name="restore">恢复</string>
   <string name="two_factor_authentification">两步验证？</string>
   <string name="other_instance">mastodon.etalab.gouv.fr 之外的其他实例...？</string>
-  <string name="no_result">没有结果!</string>
+  <string name="no_result">没有结果！</string>
   <string name="instance">实例</string>
   <string name="instance_example">实例: mastodon.social</string>
   <string name="toast_account_changed" formatted="false">现在使用 %1$s 这个帐户</string>
   <string name="add_account">添加帐户</string>
-  <string name="clipboard">已将toot 的内容复制到剪贴板</string>
+  <string name="clipboard">已将 toot 的内容复制到剪贴板</string>
   <string name="change">变更</string>
   <string name="choose_picture">选择图片…</string>
   <string name="clear">清理</string>
   <string name="microphone">麦克风</string>
   <string name="camera">相机</string>
   <string name="speech_prompt">请说点什么</string>
-  <string name="speech_not_supported">抱歉! 您的设备不支持语音输入!</string>
+  <string name="speech_not_supported">抱歉！您的设备不支持语音输入。</string>
   <string name="delete_all">删除全部</string>
-  <string name="translate_toot">翻译此条 toot。</string>
+  <string name="translate_toot">翻译这条 toot。</string>
   <string name="schedule">定时发布</string>
   <string name="text_size">文本和图标大小</string>
-  <string name="text_size_change">更改当前文本大小:</string>
-  <string name="icon_size_change">更改当前图标大小:</string>
+  <string name="text_size_change">更改当前文本大小：</string>
+  <string name="icon_size_change">更改当前图标大小：</string>
   <string name="next">下一个</string>
   <string name="previous">上一个</string>
   <string name="open_with">打开方式</string>
@@ -59,7 +59,7 @@
   <string name="replies">回复</string>
   <string name="username">用户名</string>
   <string name="drafts">草稿</string>
-  <string name="new_data">新的数据是可用的! 是否要显示它们？</string>
+  <string name="new_data">有新的数据可用！是否要显示它们？</string>
   <string name="favourite">收藏</string>
   <string name="follow">新关注者</string>
   <string name="mention">提及</string>
@@ -363,7 +363,7 @@
   <string name="settings_popup_notification">针对未读通知？</string>
   <!-- CACHE -->
   <string name="cache_title">清除缓存</string>
-  <string name="cache_message">缓存中有 %1$s 的数据. \n\n是否要删除它们吗？</string>
+  <string name="cache_message">缓存中有 %1$s 的数据。\n\n您想要删除它们吗？</string>
   <string name="cache_units">Mb</string>
   <string name="toast_cache_clear">缓存已清除! %1$s被释放</string>
   <!-- ACTIVITY CACHE -->
@@ -417,8 +417,9 @@
         - <b>PhotoView</b>: To manage images\n
     </string>
   <string name="privacy_API_yandex_title">Toots 的翻译</string>
-  <string name="privacy_API_yandex_authorizations">        该应用程序提供了使用设备的区域设置和 Yandex API 进行翻译的能力. \n
-        Yandex 有适当的隐私政策, 可以在这里找到: https://yandex.ru/legal/confidential/？lang=en
+  <string name="privacy_API_yandex_authorizations">
+本应用程序提供了使用设备的区域设置和 Yandex API 进行翻译的能力。\n
+Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/legal/confidential/?lang=en
     </string>
   <string name="thanks_text">
 谢谢 Stéphane 的商标设计。    </string>
@@ -430,7 +431,7 @@
   <string name="fetch_more_toots">Fetch more toots…</string>
   <!-- About lists -->
   <string name="action_lists">Lists</string>
-  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
+  <string name="action_lists_confirm_delete">您确实要永久删除此列表吗？</string>
   <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
   <string name="action_lists_add_to">Add to list</string>
   <string name="action_lists_remove_from">Remove from list</string>
@@ -443,7 +444,7 @@
   <!-- Migration -->
   <string name="account_moved_to">%1$s has moved to %2$s</string>
   <string name="show_boost_count">显示转发/收藏数目</string>
-  <string name="issue_login_title">Authentication does not work?</string>
+  <string name="issue_login_title">身份验证不起作用？</string>
   <string name="issue_login_message">
         <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
