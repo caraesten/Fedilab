@@ -7,7 +7,7 @@
   <string name="action_about_instance">About the instance</string>
   <string name="action_privacy">Privacy</string>
   <string name="action_cache">Cache</string>
-  <string name="action_logout">Logout</string>
+  <string name="action_logout">Esci</string>
   <string name="login">Login</string>
   <!-- common -->
   <string name="close">Close</string>
