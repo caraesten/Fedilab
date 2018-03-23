@@ -18,7 +18,7 @@
   <string name="download_file">下载 %1$s</string>
   <string name="download_over">下载完成</string>
   <string name="save_file">保存 %1$s</string>
-  <string name="save_over">媒体已保存</string>
+  <string name="save_over">媒體已儲存</string>
   <string name="download_from" formatted="false">文件: %1$s</string>
   <string name="password">密码</string>
   <string name="email">电子邮箱</string>
@@ -27,12 +27,12 @@
   <string name="tags">标签</string>
   <string name="token">代币</string>
   <string name="save">保存</string>
-  <string name="restore">恢复</string>
+  <string name="restore">還原</string>
   <string name="two_factor_authentification">两步验证？</string>
   <string name="other_instance">其他实例比 mastodon.etalab.gouv.fr 更...？</string>
   <string name="no_result">没有结果!</string>
   <string name="instance">实例</string>
-  <string name="instance_example">实例: mastodon.social</string>
+  <string name="instance_example">實例: mastodon.social</string>
   <string name="toast_account_changed" formatted="false">现在使用 %1$s 这个帐户</string>
   <string name="add_account">添加帐户</string>
   <string name="clipboard">已将toot 的内容复制到剪贴板</string>
@@ -40,6 +40,7 @@
   <string name="choose_picture">选择图片…</string>
   <string name="clear">清理</string>
   <string name="microphone">麦克风</string>
+  <string name="camera">Camera</string>
   <string name="speech_prompt">请说点什么</string>
   <string name="speech_not_supported">抱歉! 您的设备不支持语音输入!</string>
   <string name="delete_all">删除全部</string>
@@ -128,6 +129,10 @@
   <plurals name="preview_replies">
     <item quantity="other">%d 回复</item>
   </plurals>
+  <string name="bookmarks">Bookmarks</string>
+  <string name="bookmarks_empty">No bookmarks to display</string>
+  <string name="status_bookmarked">Status has been added to bookmarks!</string>
+  <string name="status_unbookmarked">Status was removed from bookmarks!</string>
   <!-- Date -->
   <string name="date_seconds">%d s</string>
   <string name="date_minutes">%d m</string>
@@ -287,6 +292,7 @@
   <string name="set_nsfw_timeout">NSFW 查看超时 (秒, 0 表示关闭)</string>
   <string name="settings_title_profile">编辑个人资料</string>
   <string name="set_profile_description">简介…</string>
+  <string name="set_lock_account">Lock account</string>
   <string name="set_save_changes">保存修改</string>
   <string name="set_header_picture_overlay">选择页眉图片</string>
   <string name="set_preview_reply">显示家庭时间线中答复的数量</string>
@@ -302,7 +308,9 @@
   <string name="settings_hour_init">起始时间</string>
   <string name="settings_hour_end">结束时间</string>
   <string name="embedded_browser">使用内置浏览器</string>
+  <string name="custom_tabs">Custom tabs</string>
   <string name="use_javascript">启用 Javascript</string>
+  <string name="expand_cw">Automatically expand cw</string>
   <string name="use_cookies">允许使用第三方cookies</string>
   <string name="settings_ui_layout">时间线布局: </string>
   <string-array name="settings_menu_tabs">
@@ -313,6 +321,12 @@
   <string-array name="settings_translation">
     <item>Yandex</item>
     <item>否　</item>
+  </string-array>
+  <string-array name="settings_resize_picture">
+    <item>No</item>
+    <item>512 Kb</item>
+    <item>1 Mb</item>
+    <item>2 Mb</item>
   </string-array>
   <string name="set_led_colour">设置 LED 颜色:</string>
   <string-array name="led_colours">
@@ -338,6 +352,7 @@
   <string name="followed_by">关注你</string>
   <string name="action_search">搜索</string>
   <string name="set_capitalize">First letter in capital for replies</string>
+  <string name="set_resize_picture">Resize pictures</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">推送通知</string>
   <string name="settings_popup_message">
@@ -351,6 +366,26 @@
   <string name="cache_message">缓存中有 %1$s 的数据. \n\n是否要删除它们吗？</string>
   <string name="cache_units">Mb</string>
   <string name="toast_cache_clear">缓存已清除! %1$s被释放</string>
+  <!-- ACTIVITY CACHE -->
+  <string name="action_sync">Synchronize</string>
+  <string name="action_filter">Filter</string>
+  <string name="owner_cached_toots">Your toots</string>
+  <string name="v_public">Public</string>
+  <string name="v_unlisted">Unlisted</string>
+  <string name="v_private">Private</string>
+  <string name="v_direct">Direct</string>
+  <string name="v_keywords">Some keywords…</string>
+  <string name="show_media">Show media</string>
+  <string name="show_pinned">Show pinned</string>
+  <string name="filter_no_result">No matching result found!</string>
+  <string name="data_backup_toots">Backup toots for %1$s</string>
+  <string name="data_backup_success">%1$s new toots have been imported</string>
+  <string-array name="filter_select">
+    <item>No</item>
+    <item>Only</item>
+    <item>Both</item>
+  </string-array>
+  <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">记录的数据</string>
   <string name="privacy_data">
@@ -424,4 +459,12 @@
   <string name="data_export_toots">Export statuses for %1$s</string>
   <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
   <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+  <!-- Proxy -->
+  <string name="proxy_set">Proxy</string>
+  <string name="proxy_type">Type</string>
+  <string name="proxy_enable">Enable proxy?</string>
+  <string name="poxy_host">Host</string>
+  <string name="poxy_port">Port</string>
+  <string name="poxy_login">Login</string>
+  <string name="poxy_password">Password</string>
 </resources>
