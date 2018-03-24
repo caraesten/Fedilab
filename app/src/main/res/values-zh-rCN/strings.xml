@@ -55,7 +55,7 @@
   <string name="validate">验证</string>
   <string name="media">媒体</string>
   <string name="share_with">分享给</string>
-  <string name="shared_via">通过Mastalab共享</string>
+  <string name="shared_via">通过 Mastalab 分享</string>
   <string name="replies">回复</string>
   <string name="username">用户名</string>
   <string name="drafts">草稿</string>
@@ -68,7 +68,7 @@
   <string name="show_replies">显示答复</string>
   <string name="action_open_in_web">在浏览器中打开</string>
   <string name="translate">翻译</string>
-  <string name="please_wait">请等待几秒钟, 再进行此操作。</string>
+  <string name="please_wait">请等待几秒钟，再进行此操作。</string>
   <!--- Menu -->
   <string name="home_menu">首页</string>
   <string name="local_menu">本地时间线</string>
@@ -84,30 +84,30 @@
   <string name="optimization">优化</string>
   <string name="settings">设置</string>
   <string name="profile">个人资料</string>
-  <string name="make_a_choice">你想做什么？</string>
+  <string name="make_a_choice">您想要做什么？</string>
   <string name="delete_account_title">删除帐户</string>
   <string name="delete_account_message" formatted="false">是否从应用程序中删除帐户 %1$s ？</string>
   <string name="send_email">发送电子邮件</string>
   <string name="choose_file">请选择一个文件</string>
-  <string name="choose_file_error">找不到文件资源管理器!</string>
-  <string name="click_to_change">点击路径更改</string>
-  <string name="failed">失败!</string>
+  <string name="choose_file_error">找不到文件资源管理器！</string>
+  <string name="click_to_change">点按路径以更改</string>
+  <string name="failed">失败！</string>
   <string name="scheduled_toots">定时 toots</string>
   <string name="disclaimer_full">下面的信息可能不完全反映该用户的资料。</string>
   <string name="insert_emoji">插入表情符号</string>
-  <string name="no_emoji">当前该应用程序没有收集自定义表情。</string>
+  <string name="no_emoji">该应用程序当前没有收集自定义表情。</string>
   <string name="live_notif">实时通知</string>
   <!-- Status -->
-  <string name="no_status">无toot显示</string>
-  <string name="fav_added">Toot被加入了收藏</string>
+  <string name="no_status">没有 toot 可以显示</string>
+  <string name="fav_added">已将 toot 加入收藏</string>
   <string name="fav_removed">已从收藏中移除该 toot！</string>
   <string name="reblog_added">已转发此条 toot！</string>
-  <string name="reblog_removed">已撤销转发此条 toot！</string>
+  <string name="reblog_removed">已不再转发此条 toot！</string>
   <string name="reblog_by">由 %1$s 转发</string>
-  <string name="favourite_add">将这个toot添加到你的收藏夹？</string>
-  <string name="favourite_remove">从你的收藏夹中去掉这个toot？</string>
-  <string name="reblog_add">转发此条 toot？</string>
-  <string name="reblog_remove">取消转发此条 toot？</string>
+  <string name="favourite_add">将这条 toot 添加到您的收藏中？</string>
+  <string name="favourite_remove">从您的收藏中移除这条 toot？</string>
+  <string name="reblog_add">转发这条 toot？</string>
+  <string name="reblog_remove">取消转发这条 toot？</string>
   <string name="pin_add">将这条 toot 置顶？</string>
   <string name="pin_remove">取消这条 toot 的置顶状态？</string>
   <string name="more_action_1">静音</string>
@@ -142,18 +142,18 @@
   <string name="toot_cw_placeholder">警告</string>
   <string name="toot_placeholder">你在想什么？</string>
   <string name="toot_it">TOOT!</string>
-  <string name="cw">顺时针</string>
-  <string name="toot_title">写一个toot</string>
-  <string name="toot_title_reply">回复一个toot</string>
+  <string name="cw">内容警告</string>
+  <string name="toot_title">写一条 toot</string>
+  <string name="toot_title_reply">回复一条 toot</string>
   <string name="toot_no_space">您已达到允许的 500 字符上限！</string>
   <string name="toot_select_image">选择媒体</string>
-  <string name="toot_select_image_error">选择介质时出错!</string>
+  <string name="toot_select_image_error">在选择媒体时出现了错误！</string>
   <string name="toot_delete_media">是否删除此媒体？</string>
   <string name="toot_error_no_content">您的 toot 是空的！</string>
-  <string name="toot_visibility_tilte">Toot可见性</string>
-  <string name="toots_visibility_tilte">默认情况下, toot的可见性: </string>
+  <string name="toot_visibility_tilte">Toot 的可见性</string>
+  <string name="toots_visibility_tilte">默认情况下，toot 的可见性： </string>
   <string name="toot_sent">Toot 已发送！</string>
-  <string name="toot_reply_content_title">您正在回复此toot:</string>
+  <string name="toot_reply_content_title">您正在回复此 toot：</string>
   <string name="toot_sensitive">敏感内容？</string>
   <string-array name="toot_visibility">
     <item>张贴到公共时间线</item>
