@@ -311,8 +311,8 @@
   <string name="custom_tabs">Custom tabs</string>
   <string name="use_javascript">启用 Javascript</string>
   <string name="expand_cw">Automatically expand cw</string>
-  <string name="use_cookies">允许使用第三方cookies</string>
-  <string name="settings_ui_layout">时间线布局: </string>
+  <string name="use_cookies">允许使用第三方 cookies</string>
+  <string name="settings_ui_layout">时间线布局：</string>
   <string-array name="settings_menu_tabs">
     <item>标签</item>
     <item>菜单</item>
@@ -328,7 +328,7 @@
     <item>1 Mb</item>
     <item>2 Mb</item>
   </string-array>
-  <string name="set_led_colour">设置 LED 颜色:</string>
+  <string name="set_led_colour">设置 LED 颜色：</string>
   <string-array name="led_colours">
     <item>蓝色</item>
     <item>蓝绿色</item>
@@ -339,7 +339,7 @@
     <item>白色</item>
   </string-array>
   <string name="set_title_news">新闻</string>
-  <string name="set_notification_news">当首页时间线上有新的新的 toots 时通知您</string>
+  <string name="set_notification_news">当首页时间线上有新的 toots 时通知您</string>
   <string name="set_show_error_messages">显示错误消息</string>
   <string name="action_follow">关注</string>
   <string name="action_unfollow">取消关注</string>
@@ -365,7 +365,7 @@
   <string name="cache_title">清除缓存</string>
   <string name="cache_message">缓存中有 %1$s 的数据。\n\n您想要删除它们吗？</string>
   <string name="cache_units">Mb</string>
-  <string name="toast_cache_clear">缓存已清除! %1$s被释放</string>
+  <string name="toast_cache_clear">缓存已清除！已释放 %1$s</string>
   <!-- ACTIVITY CACHE -->
   <string name="action_sync">Synchronize</string>
   <string name="action_filter">Filter</string>
@@ -394,7 +394,7 @@
         删除应用程序将立即删除这些数据.
         &#9888; 从不存储登录和密码。它们仅在具有实例的安全身份验证 (SSL) 期间使用。  
     </string>
-  <string name="privacy_authorizations_title">权限:</string>
+  <string name="privacy_authorizations_title">权限：</string>
   <string name="privacy_authorizations">
 - <b>ACCESS_NETWORK_STATE</b>: 用于检测设备是否连接到 WIFI 网络.\n
         - <b>INTERNET</b>: 用于查询实例..\n
@@ -422,7 +422,7 @@
 Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/legal/confidential/?lang=en
     </string>
   <string name="thanks_text">
-谢谢 Stéphane 的商标设计。    </string>
+感谢 Stéphane 的 logo 设计。    </string>
   <string name="thanks_text_dev">
 感谢致以:    </string>
   <string name="filter_regex">按正则表达式进行筛选</string>
