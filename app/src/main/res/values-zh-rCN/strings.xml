@@ -30,36 +30,36 @@
   <string name="restore">恢复</string>
   <string name="two_factor_authentification">两步验证？</string>
   <string name="other_instance">mastodon.etalab.gouv.fr 之外的其他实例...？</string>
-  <string name="no_result">没有结果!</string>
+  <string name="no_result">没有结果！</string>
   <string name="instance">实例</string>
   <string name="instance_example">实例: mastodon.social</string>
   <string name="toast_account_changed" formatted="false">现在使用 %1$s 这个帐户</string>
   <string name="add_account">添加帐户</string>
-  <string name="clipboard">已将toot 的内容复制到剪贴板</string>
+  <string name="clipboard">已将 toot 的内容复制到剪贴板</string>
   <string name="change">变更</string>
   <string name="choose_picture">选择图片…</string>
   <string name="clear">清理</string>
   <string name="microphone">麦克风</string>
-  <string name="camera">Camera</string>
+  <string name="camera">相机</string>
   <string name="speech_prompt">请说点什么</string>
-  <string name="speech_not_supported">抱歉! 您的设备不支持语音输入!</string>
+  <string name="speech_not_supported">抱歉！您的设备不支持语音输入。</string>
   <string name="delete_all">删除全部</string>
-  <string name="translate_toot">翻译此条 toot。</string>
+  <string name="translate_toot">翻译这条 toot。</string>
   <string name="schedule">定时发布</string>
   <string name="text_size">文本和图标大小</string>
-  <string name="text_size_change">更改当前文本大小:</string>
-  <string name="icon_size_change">更改当前图标大小:</string>
+  <string name="text_size_change">更改当前文本大小：</string>
+  <string name="icon_size_change">更改当前图标大小：</string>
   <string name="next">下一个</string>
   <string name="previous">上一个</string>
   <string name="open_with">打开方式</string>
   <string name="validate">验证</string>
   <string name="media">媒体</string>
   <string name="share_with">分享给</string>
-  <string name="shared_via">通过Mastalab共享</string>
+  <string name="shared_via">通过 Mastalab 分享</string>
   <string name="replies">回复</string>
   <string name="username">用户名</string>
   <string name="drafts">草稿</string>
-  <string name="new_data">新的数据是可用的! 是否要显示它们？</string>
+  <string name="new_data">有新的数据可用！是否要显示它们？</string>
   <string name="favourite">收藏</string>
   <string name="follow">新关注者</string>
   <string name="mention">提及</string>
@@ -68,7 +68,7 @@
   <string name="show_replies">显示答复</string>
   <string name="action_open_in_web">在浏览器中打开</string>
   <string name="translate">翻译</string>
-  <string name="please_wait">请等待几秒钟, 再进行此操作。</string>
+  <string name="please_wait">请等待几秒钟，再进行此操作。</string>
   <!--- Menu -->
   <string name="home_menu">首页</string>
   <string name="local_menu">本地时间线</string>
@@ -84,30 +84,30 @@
   <string name="optimization">优化</string>
   <string name="settings">设置</string>
   <string name="profile">个人资料</string>
-  <string name="make_a_choice">你想做什么？</string>
+  <string name="make_a_choice">您想要做什么？</string>
   <string name="delete_account_title">删除帐户</string>
   <string name="delete_account_message" formatted="false">是否从应用程序中删除帐户 %1$s ？</string>
   <string name="send_email">发送电子邮件</string>
   <string name="choose_file">请选择一个文件</string>
-  <string name="choose_file_error">找不到文件资源管理器!</string>
-  <string name="click_to_change">点击路径更改</string>
-  <string name="failed">失败!</string>
+  <string name="choose_file_error">找不到文件资源管理器！</string>
+  <string name="click_to_change">点按路径以更改</string>
+  <string name="failed">失败！</string>
   <string name="scheduled_toots">定时 toots</string>
   <string name="disclaimer_full">下面的信息可能不完全反映该用户的资料。</string>
   <string name="insert_emoji">插入表情符号</string>
-  <string name="no_emoji">当前该应用程序没有收集自定义表情。</string>
+  <string name="no_emoji">该应用程序当前没有收集自定义表情。</string>
   <string name="live_notif">实时通知</string>
   <!-- Status -->
-  <string name="no_status">无toot显示</string>
-  <string name="fav_added">Toot被加入了收藏</string>
+  <string name="no_status">没有 toot 可以显示</string>
+  <string name="fav_added">已将 toot 加入收藏</string>
   <string name="fav_removed">已从收藏中移除该 toot！</string>
   <string name="reblog_added">已转发此条 toot！</string>
-  <string name="reblog_removed">已撤销转发此条 toot！</string>
+  <string name="reblog_removed">已不再转发此条 toot！</string>
   <string name="reblog_by">由 %1$s 转发</string>
-  <string name="favourite_add">将这个toot添加到你的收藏夹？</string>
-  <string name="favourite_remove">从你的收藏夹中去掉这个toot？</string>
-  <string name="reblog_add">转发此条 toot？</string>
-  <string name="reblog_remove">取消转发此条 toot？</string>
+  <string name="favourite_add">将这条 toot 添加到您的收藏中？</string>
+  <string name="favourite_remove">从您的收藏中移除这条 toot？</string>
+  <string name="reblog_add">转发这条 toot？</string>
+  <string name="reblog_remove">取消转发这条 toot？</string>
   <string name="pin_add">将这条 toot 置顶？</string>
   <string name="pin_remove">取消这条 toot 的置顶状态？</string>
   <string name="more_action_1">静音</string>
@@ -142,18 +142,18 @@
   <string name="toot_cw_placeholder">警告</string>
   <string name="toot_placeholder">你在想什么？</string>
   <string name="toot_it">TOOT!</string>
-  <string name="cw">顺时针</string>
-  <string name="toot_title">写一个toot</string>
-  <string name="toot_title_reply">回复一个toot</string>
+  <string name="cw">内容警告</string>
+  <string name="toot_title">写一条 toot</string>
+  <string name="toot_title_reply">回复一条 toot</string>
   <string name="toot_no_space">您已达到允许的 500 字符上限！</string>
   <string name="toot_select_image">选择媒体</string>
-  <string name="toot_select_image_error">选择介质时出错!</string>
+  <string name="toot_select_image_error">在选择媒体时出现了错误！</string>
   <string name="toot_delete_media">是否删除此媒体？</string>
   <string name="toot_error_no_content">您的 toot 是空的！</string>
-  <string name="toot_visibility_tilte">Toot可见性</string>
-  <string name="toots_visibility_tilte">默认情况下, toot的可见性: </string>
+  <string name="toot_visibility_tilte">Toot 的可见性</string>
+  <string name="toots_visibility_tilte">默认情况下，toot 的可见性： </string>
   <string name="toot_sent">Toot 已发送！</string>
-  <string name="toot_reply_content_title">您正在回复此toot:</string>
+  <string name="toot_reply_content_title">您正在回复此 toot：</string>
   <string name="toot_sensitive">敏感内容？</string>
   <string-array name="toot_visibility">
     <item>张贴到公共时间线</item>
@@ -161,25 +161,25 @@
     <item>仅张贴给关注者</item>
     <item>仅张贴给所述用户</item>
   </string-array>
-  <string name="no_draft">没有草稿!</string>
+  <string name="no_draft">没有草稿！</string>
   <string name="choose_toot">选择一条 toot</string>
   <string name="choose_accounts">选择帐号</string>
   <string name="select_accounts">选择一些帐户</string>
   <string name="remove_draft">删除草稿？</string>
-  <string name="show_reply">点击按钮显示原始 toot</string>
+  <string name="show_reply">点击按钮以显示原始 toot</string>
   <string name="upload_form_description">为视觉障碍人士描述</string>
   <!-- Instance -->
-  <string name="instance_no_description">没有可用的描述!</string>
+  <string name="instance_no_description">没有可用的描述！</string>
   <!-- About -->
   <string name="about_vesrion">发布 %1$s</string>
-  <string name="about_developer">开发者:</string>
-  <string name="about_license">许可证: </string>
+  <string name="about_developer">开发者：</string>
+  <string name="about_license">许可协议：</string>
   <string name="about_license_action">GNU GPL V3</string>
-  <string name="about_code">源代码: </string>
+  <string name="about_code">源代码：</string>
   <string name="about_yandex">Toot 的翻译：</string>
-  <string name="about_thekinrar">搜索实例:</string>
+  <string name="about_thekinrar">搜索实例：</string>
   <string name="about_thekinrar_action">instances.social</string>
-  <string name="thanks_text_logo">图标设计者:</string>
+  <string name="thanks_text_logo">图标设计者：</string>
   <!-- Conversation -->
   <string name="conversation">会话</string>
   <!-- Accounts -->
@@ -193,7 +193,7 @@
   <string name="reject">拒绝</string>
   <!-- Scheduled toots -->
   <string name="no_scheduled_toots">没有定时的 toot 可以显示！</string>
-  <string name="no_scheduled_toots_indications">编写一条 toot, 然后从顶部菜单中选择 <b>定时发布</b>。</string>
+  <string name="no_scheduled_toots_indications">编写一条 toot，然后从顶部菜单中选择 <b>定时发布</b>。</string>
   <string name="remove_scheduled">删除该定时 toot？</string>
   <string name="media_count">媒体: %d</string>
   <string name="toot_scheduled">Toot 将在预定时间发送！</string>
@@ -216,35 +216,35 @@
   <plurals name="other_notif_hometimeline">
     <item quantity="other">和 %d 条其他的 toot 等待发现</item>
   </plurals>
-  <string name="delete_notification_ask">是否删除通知？</string>
+  <string name="delete_notification_ask">是否删除一条通知？</string>
   <string name="delete_notification_ask_all">是否删除所有通知？</string>
   <string name="delete_notification">已删除该通知！</string>
   <string name="delete_notification_all">已删除所有通知！</string>
   <!-- HEADER -->
-  <string name="following">关注中</string>
+  <string name="following">正在关注</string>
   <string name="followers">关注者</string>
   <string name="pinned_toots">已置顶</string>
   <!-- TOAST -->
-  <string name="client_error">无法获取客户端 id!</string>
-  <string name="no_internet">没有互联网连接!</string>
-  <string name="toast_block">帐户被阻止!</string>
-  <string name="toast_unblock">帐户不再被阻止!</string>
-  <string name="toast_mute">帐户被静音!</string>
-  <string name="toast_unmute">帐户不再静音!</string>
+  <string name="client_error">无法获取客户端 id！</string>
+  <string name="no_internet">没有互联网连接！</string>
+  <string name="toast_block">该帐户已被屏蔽！</string>
+  <string name="toast_unblock">该帐户不再被屏蔽！</string>
+  <string name="toast_mute">该帐户已被静音！</string>
+  <string name="toast_unmute">该帐户不再被静音！</string>
   <string name="toast_follow">已关注此账户！</string>
   <string name="toast_unfollow">已不再关注此账户！</string>
   <string name="toast_reblog">Toot 已被转发！</string>
   <string name="toast_unreblog">已撤销转发此条 toot！</string>
   <string name="toast_favourite">Toot被添加进了收藏夹!</string>
-  <string name="toast_unfavourite">Toot被从收藏中移除了!</string>
-  <string name="toast_report">Toot被报告了!</string>
-  <string name="toast_unstatus">Toot被删除了！</string>
-  <string name="toast_pin">Toot被置于前端了！</string>
-  <string name="toast_unpin">Toot被取消置于前端了！</string>
-  <string name="toast_error">哎呀! 发生错误!</string>
+  <string name="toast_unfavourite">已从您的收藏中移除该 toot！</string>
+  <string name="toast_report">已报告这条 toot！</string>
+  <string name="toast_unstatus">已删除这条 toot！</string>
+  <string name="toast_pin">已将这条 toot 置顶！</string>
+  <string name="toast_unpin">已将这条 toot 取消置顶！</string>
+  <string name="toast_error">哎呀！出现了一个错误！</string>
   <string name="toast_code_error">发生错误！该实例未返回认证代码！</string>
-  <string name="toast_error_instance">实例范围貌似非法！</string>
-  <string name="toast_error_loading_account">在帐户间切换时发生错误!</string>
+  <string name="toast_error_instance">该实例域名似乎是无效的！</string>
+  <string name="toast_error_loading_account">在帐户间切换时发生错误！</string>
   <string name="toast_error_search">搜索时出错!</string>
   <string name="toast_error_login">无法登录!</string>
   <string name="toast_update_credential_ok">配置文件数据已保存!</string>
@@ -257,7 +257,7 @@
   <string name="toast_empty_search">实例名称和屏幕名称不能为空!</string>
   <!-- Settings -->
   <string name="settings_title_optimisation">优化加载</string>
-  <string name="set_toots_page">每次加载的toot数量</string>
+  <string name="set_toots_page">每次加载的 toot 数量</string>
   <string name="set_accounts_page">每次加载的帐户数</string>
   <string name="set_notifications_page">每次加载的通知数</string>
   <string name="set_attachment_always">始终</string>
@@ -272,20 +272,20 @@
   <string name="set_display_local">显示本地时间线</string>
   <string name="set_display_global">显示联邦时间线</string>
   <string name="set_disable_gif">Disable GIF avatars</string>
-  <string name="set_folder_title">路径: </string>
+  <string name="set_folder_title">路径：</string>
   <string name="set_auto_store_toot">自动保存草稿</string>
   <string name="set_bubble_counter">显示计数器</string>
   <string name="set_auto_add_media_url">在 toots 里添加媒体的 URL</string>
   <string name="settings_title_notifications">管理通知</string>
   <string name="set_notif_follow">当有人关注您时通知</string>
-  <string name="set_notif_follow_ask">当某人请求您关注时通知</string>
+  <string name="set_notif_follow_ask">当有人请求关注您时通知您</string>
   <string name="set_notif_follow_share">当某人转发您的状态时通知您</string>
   <string name="set_notif_follow_add">当某人收藏您的状态时通知您</string>
   <string name="set_notif_follow_mention">当有人提到您时通知您</string>
   <string name="set_share_validation">转发前显示确认对话框</string>
   <string name="set_share_validation_fav">在添加到收藏夹之前显示确认对话框</string>
   <string name="settings_title_more_options">高级设置</string>
-  <string name="set_wifi_only">仅在 WIFI 中通知</string>
+  <string name="set_wifi_only">仅在 WiFi 中通知</string>
   <string name="set_notify">开启通知？</string>
   <string name="set_notif_silent">静音通知</string>
   <string name="set_night_mode">夜间模式</string>
@@ -299,20 +299,20 @@
   <string name="set_preview_reply_pp">是否显示配置文件图片？</string>
   <string name="set_multiaccount_actions">允许客户之间的交互？</string>
   <string name="note_no_space">您已达到允许的 160 字符上限！</string>
-  <string name="username_no_space">您已达到允许的30字符!</string>
-  <string name="settings_title_hour">通知的时间段:</string>
+  <string name="username_no_space">您已达到允许的 30 字符！</string>
+  <string name="settings_title_hour">通知的时间段：</string>
   <string name="settings_time_from">介于</string>
   <string name="settings_time_to">和</string>
-  <string name="settings_time_greater">时间必须大于%1$s</string>
-  <string name="settings_time_lower">时间必须低于%1$s</string>
+  <string name="settings_time_greater">时间必须大于 %1$s</string>
+  <string name="settings_time_lower">时间必须低于 %1$s</string>
   <string name="settings_hour_init">起始时间</string>
   <string name="settings_hour_end">结束时间</string>
   <string name="embedded_browser">使用内置浏览器</string>
   <string name="custom_tabs">Custom tabs</string>
   <string name="use_javascript">启用 Javascript</string>
   <string name="expand_cw">Automatically expand cw</string>
-  <string name="use_cookies">允许使用第三方cookies</string>
-  <string name="settings_ui_layout">时间线布局: </string>
+  <string name="use_cookies">允许使用第三方 cookies</string>
+  <string name="settings_ui_layout">时间线布局：</string>
   <string-array name="settings_menu_tabs">
     <item>标签</item>
     <item>菜单</item>
@@ -328,7 +328,7 @@
     <item>1 Mb</item>
     <item>2 Mb</item>
   </string-array>
-  <string name="set_led_colour">设置 LED 颜色:</string>
+  <string name="set_led_colour">设置 LED 颜色：</string>
   <string-array name="led_colours">
     <item>蓝色</item>
     <item>蓝绿色</item>
@@ -339,7 +339,7 @@
     <item>白色</item>
   </string-array>
   <string name="set_title_news">新闻</string>
-  <string name="set_notification_news">当首页时间线上有新的新的 toots 时通知您</string>
+  <string name="set_notification_news">当首页时间线上有新的 toots 时通知您</string>
   <string name="set_show_error_messages">显示错误消息</string>
   <string name="action_follow">关注</string>
   <string name="action_unfollow">取消关注</string>
@@ -363,9 +363,9 @@
   <string name="settings_popup_notification">针对未读通知？</string>
   <!-- CACHE -->
   <string name="cache_title">清除缓存</string>
-  <string name="cache_message">缓存中有 %1$s 的数据. \n\n是否要删除它们吗？</string>
+  <string name="cache_message">缓存中有 %1$s 的数据。\n\n您想要删除它们吗？</string>
   <string name="cache_units">Mb</string>
-  <string name="toast_cache_clear">缓存已清除! %1$s被释放</string>
+  <string name="toast_cache_clear">缓存已清除！已释放 %1$s</string>
   <!-- ACTIVITY CACHE -->
   <string name="action_sync">Synchronize</string>
   <string name="action_filter">Filter</string>
@@ -394,7 +394,7 @@
         删除应用程序将立即删除这些数据.
         &#9888; 从不存储登录和密码。它们仅在具有实例的安全身份验证 (SSL) 期间使用。  
     </string>
-  <string name="privacy_authorizations_title">权限:</string>
+  <string name="privacy_authorizations_title">权限：</string>
   <string name="privacy_authorizations">
 - <b>ACCESS_NETWORK_STATE</b>: 用于检测设备是否连接到 WIFI 网络.\n
         - <b>INTERNET</b>: 用于查询实例..\n
@@ -417,11 +417,12 @@
         - <b>PhotoView</b>: To manage images\n
     </string>
   <string name="privacy_API_yandex_title">Toots 的翻译</string>
-  <string name="privacy_API_yandex_authorizations">        该应用程序提供了使用设备的区域设置和 Yandex API 进行翻译的能力. \n
-        Yandex 有适当的隐私政策, 可以在这里找到: https://yandex.ru/legal/confidential/？lang=en
+  <string name="privacy_API_yandex_authorizations">
+本应用程序提供了使用设备的区域设置和 Yandex API 进行翻译的能力。\n
+Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/legal/confidential/?lang=en
     </string>
   <string name="thanks_text">
-谢谢 Stéphane 的商标设计。    </string>
+感谢 Stéphane 的 logo 设计。    </string>
   <string name="thanks_text_dev">
 感谢致以:    </string>
   <string name="filter_regex">按正则表达式进行筛选</string>
@@ -430,7 +431,7 @@
   <string name="fetch_more_toots">Fetch more toots…</string>
   <!-- About lists -->
   <string name="action_lists">Lists</string>
-  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
+  <string name="action_lists_confirm_delete">您确实要永久删除此列表吗？</string>
   <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
   <string name="action_lists_add_to">Add to list</string>
   <string name="action_lists_remove_from">Remove from list</string>
@@ -443,7 +444,7 @@
   <!-- Migration -->
   <string name="account_moved_to">%1$s has moved to %2$s</string>
   <string name="show_boost_count">显示转发/收藏数目</string>
-  <string name="issue_login_title">Authentication does not work?</string>
+  <string name="issue_login_title">身份验证不起作用？</string>
   <string name="issue_login_message">
         <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
