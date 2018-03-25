@@ -130,7 +130,10 @@
     <item quantity="one">%d reply</item>
     <item quantity="other">%d replies</item>
   </plurals>
+  <string name="set_display_bookmark_button">Display the bookmark button</string>
   <string name="bookmarks">Marcadors</string>
+  <string name="bookmark_add">Add to bookmarks</string>
+  <string name="bookmark_remove">Remove bookmark</string>
   <string name="bookmarks_empty">No hi ha cap marcador per a mostrar</string>
   <string name="status_bookmarked">L\'estat s\'ha afegit als marcadors!</string>
   <string name="status_unbookmarked">L\'estat s\'ha suprimit dels marcadors!</string>
