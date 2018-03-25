@@ -131,7 +131,10 @@
     <item quantity="few">%d одговора</item>
     <item quantity="other">%d одговора</item>
   </plurals>
+  <string name="set_display_bookmark_button">Display the bookmark button</string>
   <string name="bookmarks">Забелешке</string>
+  <string name="bookmark_add">Add to bookmarks</string>
+  <string name="bookmark_remove">Remove bookmark</string>
   <string name="bookmarks_empty">Нема забелешки за приказ</string>
   <string name="status_bookmarked">Статус је додат у забелешке!</string>
   <string name="status_unbookmarked">Статус је уклоњен из забелешки!</string>
