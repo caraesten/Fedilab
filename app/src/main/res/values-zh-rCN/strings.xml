@@ -129,7 +129,10 @@
   <plurals name="preview_replies">
     <item quantity="other">%d 个回复</item>
   </plurals>
+  <string name="set_display_bookmark_button">Display the bookmark button</string>
   <string name="bookmarks">Bookmarks</string>
+  <string name="bookmark_add">Add to bookmarks</string>
+  <string name="bookmark_remove">Remove bookmark</string>
   <string name="bookmarks_empty">No bookmarks to display</string>
   <string name="status_bookmarked">Status has been added to bookmarks!</string>
   <string name="status_unbookmarked">Status was removed from bookmarks!</string>

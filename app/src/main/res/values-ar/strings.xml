@@ -134,7 +134,10 @@
     <item quantity="many">%d replies</item>
     <item quantity="other">%d ردود</item>
   </plurals>
+  <string name="set_display_bookmark_button">Display the bookmark button</string>
   <string name="bookmarks">الفواصل المرجعية</string>
+  <string name="bookmark_add">Add to bookmarks</string>
+  <string name="bookmark_remove">Remove bookmark</string>
   <string name="bookmarks_empty">لا توجد أية فواصل مرجعية للعرض</string>
   <string name="status_bookmarked">تم إضافة المنشور إلى الفواصل المرجعية !</string>
   <string name="status_unbookmarked">تمت إزالة المنشور مِن الفواصل المرجعية !</string>

@@ -129,7 +129,10 @@
   <plurals name="preview_replies">
     <item quantity="other">%d が返信</item>
   </plurals>
+  <string name="set_display_bookmark_button">Display the bookmark button</string>
   <string name="bookmarks">ブックマーク</string>
+  <string name="bookmark_add">Add to bookmarks</string>
+  <string name="bookmark_remove">Remove bookmark</string>
   <string name="bookmarks_empty">ブックマークがありません</string>
   <string name="status_bookmarked">トゥートがブックマークに追加されました！</string>
   <string name="status_unbookmarked">トゥートがブックマークから削除されました！</string>
