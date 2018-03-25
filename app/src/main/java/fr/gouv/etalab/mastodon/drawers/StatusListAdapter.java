@@ -427,6 +427,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
             final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            boolean displayBookmarkButton = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, true);
+
+            if( displayBookmarkButton)
+                holder.status_bookmark.setVisibility(View.VISIBLE);
+            else
+                holder.status_bookmark.setVisibility(View.GONE);
 
             holder.status_reply.setText("");
             //Display a preview for accounts that have replied *if enabled and only for home timeline*
@@ -1166,6 +1172,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     if( status.getVisibility().equals("private") || status.getVisibility().equals("direct")){
                         popup.getMenu().findItem(R.id.action_mention).setVisible(false);
                     }
+                    if( status.isBookmarked())
+                        popup.getMenu().findItem(R.id.action_bookmark).setTitle(R.string.bookmark_remove);
+                    else
+                        popup.getMenu().findItem(R.id.action_bookmark).setTitle(R.string.bookmark_add);
                     final String[] stringArrayConf;
                     if( isOwner) {
                         popup.getMenu().findItem(R.id.action_block).setVisible(false);
@@ -1200,6 +1210,31 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     builderInner.setTitle(stringArrayConf[0]);
                                     doAction = API.StatusAction.MUTE;
                                     break;
+                                case R.id.action_bookmark:
+                                    if( type != RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS) {
+                                        status.setBookmarked(!status.isBookmarked());
+                                        if (status.isBookmarked()) {
+                                            new StatusCacheDAO(context, db).insertStatus(StatusCacheDAO.BOOKMARK_CACHE, status);
+                                            Toast.makeText(context, R.string.status_bookmarked, Toast.LENGTH_LONG).show();
+                                        } else {
+                                            new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, status);
+                                            Toast.makeText(context, R.string.status_unbookmarked, Toast.LENGTH_LONG).show();
+                                        }
+                                        notifyStatusChanged(status);
+                                    }else {
+                                        int position = 0;
+                                        for (Status statustmp : statuses) {
+                                            if (statustmp.getId().equals(status.getId())) {
+                                                statuses.remove(status);
+                                                statusListAdapter.notifyItemRemoved(position);
+                                                new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, statustmp);
+                                                Toast.makeText(context, R.string.status_unbookmarked, Toast.LENGTH_LONG).show();
+                                                break;
+                                            }
+                                            position++;
+                                        }
+                                    }
+                                    return true;
                                 case R.id.action_timed_mute:
                                     AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
                                     LayoutInflater inflater = ((Activity)context).getLayoutInflater();
@@ -1351,6 +1386,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                 file.delete ();
                                             try {
                                                 FileOutputStream out = new FileOutputStream(file);
+                                                assert bitmap != null;
                                                 bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
                                                 out.flush();
                                                 out.close();

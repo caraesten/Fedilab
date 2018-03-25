@@ -199,6 +199,19 @@ public class SettingsFragment extends Fragment {
         });
 
 
+        boolean display_bookmark = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, true);
+        final CheckBox set_display_bookmark = rootView.findViewById(R.id.set_display_bookmarks);
+        set_display_bookmark.setChecked(display_bookmark);
+
+        set_display_bookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_SHOW_BOOKMARK, set_display_bookmark.isChecked());
+                editor.apply();
+            }
+        });
+
         boolean multiaccount_actions = sharedpreferences.getBoolean(Helper.SET_ALLOW_CROSS_ACTIONS, true);
         final CheckBox set_multiaccount_actions = rootView.findViewById(R.id.set_multiaccount_actions);
         set_multiaccount_actions.setChecked(multiaccount_actions);
