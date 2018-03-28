@@ -3,8 +3,8 @@
 <resources>
   <string name="navigation_drawer_open">Ouvrir le menu</string>
   <string name="navigation_drawer_close">Fermer le menu</string>
-  <string name="action_about">A propos</string>
-  <string name="action_about_instance">A propos de l\'instance</string>
+  <string name="action_about">À propos</string>
+  <string name="action_about_instance">À propos de l\'instance</string>
   <string name="action_privacy">Confidentialité</string>
   <string name="action_cache">Cache</string>
   <string name="action_logout">Déconnexion</string>
@@ -258,7 +258,7 @@
   <string name="toast_saved">Le média a été enregistré !</string>
   <string name="toast_error_translate">Une erreur est survenue lors de la traduction !</string>
   <string name="toast_toot_saved">Brouillon enregistré !</string>
-  <string name="toast_error_char_limit">Etes-vous sûr que cette instance autorise ce nombre de caractères ? Habituellement, cette valeur est proche de 500 caractères.</string>
+  <string name="toast_error_char_limit">Êtes-vous sûr que cette instance autorise ce nombre de caractères ? Habituellement, cette valeur est proche de 500 caractères.</string>
   <string name="toast_visibility_changed">La visibilité des pouets a été changée pour le compte %1$s</string>
   <string name="toast_empty_search">Il faut renseigner une instance et un nom d\'utilisateur !</string>
   <!-- Settings -->
