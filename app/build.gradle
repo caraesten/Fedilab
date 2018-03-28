@@ -38,7 +38,7 @@ allprojects {
         maven { url "https://maven.google.com"}
     }
 }
-ext.supportLibraryVersion = '27.1.0'
+ext.supportLibraryVersion = '27.0.2'
 ext.glideLibraryVersion = '4.6.1'
 ext.conscryptLibraryVersion = '1.0.1'
 ext.evernoteLibraryVersion = '1.2.5'
