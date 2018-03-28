@@ -212,7 +212,7 @@
   <string name="notif_mention">vous a mentionné</string>
   <string name="notif_reblog">a partagé votre pouet</string>
   <string name="notif_favourite">a ajouté votre pouet à ses favoris</string>
-  <string name="notif_follow">vous a suivi</string>
+  <string name="notif_follow">vous suit</string>
   <string name="notif_pouet">Nouveau pouet de %1$s</string>
   <plurals name="other_notifications">
     <item quantity="one">et %d autre notification</item>
