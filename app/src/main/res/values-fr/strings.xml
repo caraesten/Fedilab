@@ -130,10 +130,10 @@
     <item quantity="one">%d réponse</item>
     <item quantity="other">%d réponses</item>
   </plurals>
-  <string name="set_display_bookmark_button">Display the bookmark button</string>
+  <string name="set_display_bookmark_button">Afficher le bouton des signets</string>
   <string name="bookmarks">Signets</string>
   <string name="bookmark_add">Ajouter aux signets</string>
-  <string name="bookmark_remove">Remove bookmark</string>
+  <string name="bookmark_remove">Supprimer le signet</string>
   <string name="bookmarks_empty">Aucun signet à afficher</string>
   <string name="status_bookmarked">Le pouet a été ajouté aux signets !</string>
   <string name="status_unbookmarked">Le pouet a été supprimé des signets !</string>
