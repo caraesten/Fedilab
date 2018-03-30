@@ -224,7 +224,7 @@
     <item quantity="two">and %d other notifications</item>
     <item quantity="few">and %d other notifications</item>
     <item quantity="many">and %d other notifications</item>
-    <item quantity="other">و %d إخطارات أخرى</item>
+    <item quantity="other">و %d إشعارات أخرى</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
     <item quantity="zero">and %d other toots to discover</item>
