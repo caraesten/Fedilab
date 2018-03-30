@@ -314,7 +314,7 @@
   <string name="settings_hour_init">Begintijd</string>
   <string name="settings_hour_end">Eindtijd</string>
   <string name="embedded_browser">Gebruik de ingebouwde webbrowser</string>
-  <string name="custom_tabs">Custom tabs</string>
+  <string name="custom_tabs">Aangepaste tabs</string>
   <string name="use_javascript">Javascript toegestaan</string>
   <string name="expand_cw">Automatisch tekstwaarschuwingen (cw) uitklappen</string>
   <string name="use_cookies">Cookies van derden accepteren</string>
