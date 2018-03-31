@@ -224,7 +224,7 @@
     <item quantity="two">and %d other notifications</item>
     <item quantity="few">and %d other notifications</item>
     <item quantity="many">and %d other notifications</item>
-    <item quantity="other">و %d إخطارات أخرى</item>
+    <item quantity="other">و %d إشعارات أخرى</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
     <item quantity="zero">and %d other toots to discover</item>
@@ -407,10 +407,10 @@
   <!-- PRIVACY -->
   <string name="privacy_data_title">البيانات المسجلة</string>
   <string name="privacy_data">
-        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
+        لا يقوم التطبيق إلا بحفظ معلومات عن الحسابات في الجهاز.
+        تبقى هذه البايانات سرية و لا تُستخدَم إلا لتشغيل التطبيق.
+        إنّ حذف التطبيق يؤدي إلى إزالة هذه البيانات.\n
+        &#9888; لا يقوم التطبيق بحفظ إسم المستخدم و الكلمات السرية. يقوم التطبيق باستخدمها و فقط عند الإتصال الآمن و المصادقة عبر (SSL) مع مثيل خادوم.
     </string>
   <string name="privacy_authorizations_title">التصريحات :</string>
   <string name="privacy_authorizations">
@@ -423,10 +423,10 @@
     </string>
   <string name="privacy_API_authorizations_title">تصريحات خدمة برمجة التطبيقات API :</string>
   <string name="privacy_API_authorizations">
-        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
+        - <b>القراءة</b>: قراءة البيانات.\n
+        - <b>الكتابة</b>:  نشر المنشورات و رفع الصور الخاصة بالمنسورات .\n
+        - <b>المتابعة</b>: المتابعة و إلغاء المتابعة و الحظر و إلغاء الحظر.\n\n
+        <b>&#9888; يقوم التطبيق بهذه الإجراءت عند طلب المُستخدِم لاستعمالها.</b>
     </string>
   <string name="privacy_API_title">التعقب و المكتبات</string>
   <string name="privacy_API">
