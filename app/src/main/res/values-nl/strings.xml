@@ -4,7 +4,7 @@
   <string name="navigation_drawer_open">Menu openen</string>
   <string name="navigation_drawer_close">Menu sluiten</string>
   <string name="action_about">Over</string>
-  <string name="action_about_instance">Over deze Mastodon-server</string>
+  <string name="action_about_instance">Over deze Mastodonserver</string>
   <string name="action_privacy">Privacy</string>
   <string name="action_cache">Buffer</string>
   <string name="action_logout">Uitloggen</string>
@@ -29,9 +29,9 @@
   <string name="save">Opslaan</string>
   <string name="restore">Herstellen</string>
   <string name="two_factor_authentification">Tweestapsverificatie?</string>
-  <string name="other_instance">Andere Mastodon-server dan mastodon.social?</string>
+  <string name="other_instance">Andere Mastodonserver dan mastodon.social?</string>
   <string name="no_result">Geen resultaten!</string>
-  <string name="instance">Mastodon-server</string>
+  <string name="instance">Mastodonserver</string>
   <string name="instance_example">Server: bv. mastodon.social</string>
   <string name="toast_account_changed" formatted="false">Werkt nu met account %1$s</string>
   <string name="add_account">Account toevoegen</string>
@@ -96,7 +96,7 @@
   <string name="disclaimer_full">De informatie hieronder kan mogelijk een incompleet beeld geven van dit gebruikersprofiel.</string>
   <string name="insert_emoji">Emoji toevoegen</string>
   <string name="no_emoji">De app heeft nog geen lokale emojis verzameld.</string>
-  <string name="live_notif">Live-meldingen</string>
+  <string name="live_notif">Livemeldingen</string>
   <!-- Status -->
   <string name="no_status">Geen toot om weer te geven</string>
   <string name="fav_added">De toot is aan jouw favorieten toegevoegd</string>
@@ -117,7 +117,7 @@
   <string name="more_action_5">Kopiëren</string>
   <string name="more_action_6">Delen</string>
   <string name="more_action_7">Vermelden</string>
-  <string name="more_action_8">Timed mute</string>
+  <string name="more_action_8">Tijdelijk negeren</string>
   <string-array name="more_action_confirm">
     <item>Account negeren?</item>
     <item>Account blokkeren?</item>
@@ -130,17 +130,17 @@
     <item quantity="one">%d reactie</item>
     <item quantity="other">%d reacties</item>
   </plurals>
-  <string name="set_display_bookmark_button">Display the bookmark button</string>
-  <string name="bookmarks">Bookmarks</string>
-  <string name="bookmark_add">Add to bookmarks</string>
-  <string name="bookmark_remove">Remove bookmark</string>
-  <string name="bookmarks_empty">No bookmarks to display</string>
-  <string name="status_bookmarked">Status has been added to bookmarks!</string>
-  <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+  <string name="set_display_bookmark_button">Bladwijzerpictogram tonen</string>
+  <string name="bookmarks">Bladwijzers</string>
+  <string name="bookmark_add">Aan bladwijzers toevoegen</string>
+  <string name="bookmark_remove">Bladwijzer verwijderen</string>
+  <string name="bookmarks_empty">Geen bladwijzers!</string>
+  <string name="status_bookmarked">Toot is aan jouw bladwijzers toegevoegd!</string>
+  <string name="status_unbookmarked">Toot is uit jouw bladwijzers verwijderd!</string>
   <!-- Date -->
   <string name="date_seconds">%d s</string>
   <string name="date_minutes">%d m</string>
-  <string name="date_hours">%d h</string>
+  <string name="date_hours">%d u</string>
   <string name="date_day">%d d</string>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">Waarschuwing</string>
@@ -198,15 +198,15 @@
   <!-- Scheduled toots -->
   <string name="no_scheduled_toots">Geen ingeplande toots!</string>
   <string name="no_scheduled_toots_indications">Schrijf een toot en kies dan <b>Inplannen</b> in het menu rechtsboven.</string>
-  <string name="remove_scheduled">Ingeplande toot verwijderent?</string>
+  <string name="remove_scheduled">Ingeplande toot verwijderen?</string>
   <string name="media_count">Media: %d</string>
   <string name="toot_scheduled">De toot is ingepland!</string>
   <string name="toot_scheduled_date">De toot moet wel in de toekomst ingepland worden!</string>
   <string name="warning_battery">Energiebesparing is ingeschakeld! Het inplannen werkt mogelijk niet zoals verwacht.</string>
   <!-- timed mute -->
-  <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-  <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
-  <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+  <string name="timed_mute_date_error">De tijd om te negeren moet langer duren dan een minuut.</string>
+  <string name="timed_mute_date">%1$s wordt tot %2$s genegeerd.\n Ga naar het profiel van dit account om het negeren op te heffen.</string>
+  <string name="timed_mute_profile">%1$s wordt tot %2$s genegeerd.\n Klik hier om dit account niet meer te negeren.</string>
   <!-- Notifications -->
   <string name="no_notifications">Je hebt nog geen meldingen</string>
   <string name="notif_mention">vermeldde jou</string>
@@ -248,8 +248,8 @@
   <string name="toast_pin">Toot is vastgezet!</string>
   <string name="toast_unpin">Toot is losgemaakt!</string>
   <string name="toast_error">Oeps! Er ging wat mis!</string>
-  <string name="toast_code_error">Er ging wat mis! De Mastodon-server gaf geen autorisatiecode terug!</string>
-  <string name="toast_error_instance">De domeinnaam van de Mastodon-server is onjuist!</string>
+  <string name="toast_code_error">Er ging wat mis! De Mastodonserver gaf geen autorisatiecode terug!</string>
+  <string name="toast_error_instance">De domeinnaam van de Mastodonserver is onjuist!</string>
   <string name="toast_error_loading_account">Er ging wat mis tijdens het omschakelen van accounts!</string>
   <string name="toast_error_search">Er ging wat mis tijdens het zoeken!</string>
   <string name="toast_error_login">Kan niet inloggen!</string>
@@ -258,7 +258,7 @@
   <string name="toast_saved">Media is opgeslagen!</string>
   <string name="toast_error_translate">Er ging wat mis tijdens het vertalen!</string>
   <string name="toast_toot_saved">Concept opgeslagen!</string>
-  <string name="toast_error_char_limit">Weet je zeker dat je op deze Mastodon-server zoveel karakters  mag gebruiken? Standaard is er een limiet van 500 karakters.</string>
+  <string name="toast_error_char_limit">Weet je zeker dat je op deze Mastodonserver zoveel karakters  mag gebruiken? Standaard is er een limiet van 500 karakters.</string>
   <string name="toast_visibility_changed">Zichtbaarheid toots van account %1$s is veranderd</string>
   <string name="toast_empty_search">Server- en gebruikersnaam kunnen niet leeg blijven!</string>
   <!-- Settings -->
@@ -272,7 +272,7 @@
   <string name="set_attachment_action">Media laden</string>
   <string name="load_attachment">Laad de afbeeldingen of video</string>
   <string name="load_attachment_spoiler">Meer tonen</string>
-  <string name="load_attachment_spoiler_less">Show less…</string>
+  <string name="load_attachment_spoiler_less">Minder tonen</string>
   <string name="load_sensitive_attachment">Gevoelige inhoud</string>
   <string name="set_display_reply">Vorig bericht in reacties tonen</string>
   <string name="set_display_local">Lokale tijdlijn tonen</string>
@@ -298,7 +298,7 @@
   <string name="set_nsfw_timeout">Hoe lang gevoelige inhoud blijven tonen (in seconden, 0 is onbeperkt)</string>
   <string name="settings_title_profile">Profiel bewerken</string>
   <string name="set_profile_description">Bio…</string>
-  <string name="set_lock_account">Lock account</string>
+  <string name="set_lock_account">Account vergrendelen</string>
   <string name="set_save_changes">Wijzigingen opslaan</string>
   <string name="set_header_picture_overlay">Omslagfoto kiezen</string>
   <string name="set_preview_reply">Aantal reacties per toot op jouw start-tijdlijn tonen</string>
@@ -314,9 +314,9 @@
   <string name="settings_hour_init">Begintijd</string>
   <string name="settings_hour_end">Eindtijd</string>
   <string name="embedded_browser">Gebruik de ingebouwde webbrowser</string>
-  <string name="custom_tabs">Custom tabs</string>
+  <string name="custom_tabs">Aangepaste tabs</string>
   <string name="use_javascript">Javascript toegestaan</string>
-  <string name="expand_cw">Automatically expand cw</string>
+  <string name="expand_cw">Automatisch tekstwaarschuwingen (cw) uitklappen</string>
   <string name="use_cookies">Cookies van derden accepteren</string>
   <string name="settings_ui_layout">Lay-out voor tijdlijnen: </string>
   <string-array name="settings_menu_tabs">
@@ -329,7 +329,7 @@
     <item>Nee</item>
   </string-array>
   <string-array name="settings_resize_picture">
-    <item>No</item>
+    <item>Niet</item>
     <item>512 Kb</item>
     <item>1 Mb</item>
     <item>2 Mb</item>
@@ -357,8 +357,8 @@
   <string name="request_sent">Verzoek verzonden</string>
   <string name="followed_by">Volgt jou</string>
   <string name="action_search">Zoeken</string>
-  <string name="set_capitalize">First letter in capital for replies</string>
-  <string name="set_resize_picture">Resize pictures</string>
+  <string name="set_capitalize">Eerste letter een hoofdletter in reacties</string>
+  <string name="set_resize_picture">Afbeeldingen schalen</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Pushmeldingen</string>
   <string name="settings_popup_message">
@@ -373,25 +373,25 @@
   <string name="cache_units">Mb</string>
   <string name="toast_cache_clear">De buffer is leeggemaakt! Er is %1$s vrijgekomen</string>
   <!-- ACTIVITY CACHE -->
-  <string name="action_sync">Synchronize</string>
+  <string name="action_sync">Synchroniseren</string>
   <string name="action_filter">Filter</string>
-  <string name="owner_cached_toots">Your toots</string>
-  <string name="v_public">Public</string>
-  <string name="v_unlisted">Unlisted</string>
-  <string name="v_private">Private</string>
+  <string name="owner_cached_toots">Jouw toots</string>
+  <string name="v_public">Openbaar</string>
+  <string name="v_unlisted">Minder openbaar</string>
+  <string name="v_private">Alleen volgers</string>
   <string name="v_direct">Direct</string>
-  <string name="v_keywords">Some keywords…</string>
-  <string name="show_media">Show media</string>
-  <string name="show_pinned">Show pinned</string>
-  <string name="filter_no_result">No matching result found!</string>
-  <string name="data_backup_toots">Backup toots for %1$s</string>
-  <string name="data_backup_success">%1$s new toots have been imported</string>
+  <string name="v_keywords">Enkele trefwoorden…</string>
+  <string name="show_media">Media tonen</string>
+  <string name="show_pinned">Vastgezette toots tonen</string>
+  <string name="filter_no_result">Geen resultaten!</string>
+  <string name="data_backup_toots">Toots back-uppen voor %1$s</string>
+  <string name="data_backup_success">Er zijn %1$s nieuwe toots geïmporteerd</string>
   <string-array name="filter_select">
-    <item>No</item>
-    <item>Only</item>
-    <item>Both</item>
+    <item>Nee</item>
+    <item>Alleen</item>
+    <item>Allebei</item>
   </string-array>
-  <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+  <string name="owner_cached_toots_empty">Er zijn geen toots in de database gevonden. Gebruik de synchronisatieknop om deze op te halen.</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">Recorded data:</string>
   <string name="privacy_data">
@@ -452,30 +452,30 @@
   <string name="action_lists_search_users">Zoek naar mensen die je volgt</string>
   <string name="action_lists_owner">Jouw lijsten</string>
   <!-- Migration -->
-  <string name="account_moved_to">%1$s has moved to %2$s</string>
-  <string name="show_boost_count">Show boosts/favourites count</string>
-  <string name="issue_login_title">Authentication does not work?</string>
+  <string name="account_moved_to">%1$s is naar %2$s verhuisd</string>
+  <string name="show_boost_count">Aantal boosts/favorieten tonen</string>
+  <string name="issue_login_title">Problemen met aanmelden?</string>
   <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
+        <b>Hier zijn enkele suggesties die wellicht helpen:</b>\n\n
+        - Controleer of er geen spelfout in de domeinnaam van de Mastodonserver zit\n\n
+        - Controleer of er de Mastodonserver niet offline is\n\n
+        - Wanneer je tweestapsverificatie gebruikt, gebruik dan (nadat je de domeinnaam van de server hebt ingevuld) de link daaronder.\n\n
+        - Je kan deze link ook gebruiken zonder dat je van tweestapsverificatie gebruikt maakt (wanneer het op dit aanmeldscherm niet lukt).\n\n
+        - Wanneer het nu nog steeds niet lukt, maak dan een nieuwe issue aan op Github via https://github.com/stom79/mastalab/issues
     </string>
-  <string name="media_ready">Media has been loaded. Click here to display it.</string>
-  <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-  <string name="data_export_running">Still running, please wait…</string>
-  <string name="data_export">Export statuses</string>
-  <string name="data_export_toots">Export statuses for %1$s</string>
-  <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-  <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+  <string name="media_ready">Media is geladen. Klik hier om het te tonen.</string>
+  <string name="data_export_start">Deze actie kan vrij lang duren. Je krijgt een melding wanneer het klaar is.</string>
+  <string name="data_export_running">Nog steeds bezig, nog even wachten…</string>
+  <string name="data_export">Toots exporteren</string>
+  <string name="data_export_toots">Toot van %1$s exporteren</string>
+  <string name="data_export_success">%1$s van de %2$s toots zijn geëxporteerd.</string>
+  <string name="data_export_error">Er is iets mis gegaan tijdens het exporteren van de gegevens van %1$s</string>
   <!-- Proxy -->
   <string name="proxy_set">Proxy</string>
   <string name="proxy_type">Type</string>
-  <string name="proxy_enable">Enable proxy?</string>
+  <string name="proxy_enable">Proxy inschakelen?</string>
   <string name="poxy_host">Host</string>
-  <string name="poxy_port">Port</string>
-  <string name="poxy_login">Login</string>
-  <string name="poxy_password">Password</string>
+  <string name="poxy_port">Poort</string>
+  <string name="poxy_login">Gebruikersnaam</string>
+  <string name="poxy_password">Wachtwoord</string>
 </resources>

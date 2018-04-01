@@ -41,7 +41,7 @@ allprojects {
 ext.supportLibraryVersion = '27.0.2'
 ext.glideLibraryVersion = '4.6.1'
 ext.conscryptLibraryVersion = '1.0.1'
-ext.evernoteLibraryVersion = '1.2.4'
+ext.evernoteLibraryVersion = '1.2.5'
 ext.gsonLibraryVersion = '2.8.2'
 ext.guavaLibraryVersion = '24.1-android'
 ext.photoViewLibraryVersion = '2.0.0'

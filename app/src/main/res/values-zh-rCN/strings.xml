@@ -174,7 +174,7 @@
   <!-- Instance -->
   <string name="instance_no_description">没有可用的描述！</string>
   <!-- About -->
-  <string name="about_vesrion">发布 %1$s</string>
+  <string name="about_vesrion">发布版 %1$s</string>
   <string name="about_developer">开发者：</string>
   <string name="about_license">许可协议：</string>
   <string name="about_license_action">GNU GPL V3</string>
@@ -265,7 +265,7 @@
   <string name="set_notifications_page">每次加载的通知数</string>
   <string name="set_attachment_always">始终</string>
   <string name="set_attachment_wifi">WIFI</string>
-  <string name="set_attachment_ask">提问</string>
+  <string name="set_attachment_ask">询问</string>
   <string name="set_attachment_action">加载媒体</string>
   <string name="load_attachment">加载图片</string>
   <string name="load_attachment_spoiler">显示更多…</string>
@@ -313,8 +313,8 @@
   <string name="embedded_browser">使用内置浏览器</string>
   <string name="custom_tabs">Custom tabs</string>
   <string name="use_javascript">启用 Javascript</string>
-  <string name="expand_cw">Automatically expand cw</string>
-  <string name="use_cookies">允许使用第三方 cookies</string>
+  <string name="expand_cw">自动展开带有警告的内容</string>
+  <string name="use_cookies">允许第三方 cookie</string>
   <string name="settings_ui_layout">时间线布局：</string>
   <string-array name="settings_menu_tabs">
     <item>标签</item>
@@ -433,19 +433,19 @@ Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/lega
   <string name="delete">Delete</string>
   <string name="fetch_more_toots">Fetch more toots…</string>
   <!-- About lists -->
-  <string name="action_lists">Lists</string>
+  <string name="action_lists">列表</string>
   <string name="action_lists_confirm_delete">您确实要永久删除此列表吗？</string>
   <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-  <string name="action_lists_add_to">Add to list</string>
-  <string name="action_lists_remove_from">Remove from list</string>
-  <string name="action_lists_create">Add list</string>
-  <string name="action_lists_delete">Delete list</string>
-  <string name="action_lists_update">Edit list</string>
-  <string name="action_lists_title_placeholder">New list title</string>
+  <string name="action_lists_add_to">添加到列表</string>
+  <string name="action_lists_remove_from">从列表中移除</string>
+  <string name="action_lists_create">新建列表</string>
+  <string name="action_lists_delete">删除列表</string>
+  <string name="action_lists_update">编辑列表</string>
+  <string name="action_lists_title_placeholder">新列表标题</string>
   <string name="action_lists_search_users">在您关注的人中搜索</string>
-  <string name="action_lists_owner">Your lists</string>
+  <string name="action_lists_owner">您的列表</string>
   <!-- Migration -->
-  <string name="account_moved_to">%1$s has moved to %2$s</string>
+  <string name="account_moved_to">%1$s 已被移动到 %2$s</string>
   <string name="show_boost_count">显示转发/收藏数目</string>
   <string name="issue_login_title">身份验证不起作用？</string>
   <string name="issue_login_message">
@@ -457,18 +457,18 @@ Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/lega
         - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
     </string>
   <string name="media_ready">Media has been loaded. Click here to display it.</string>
-  <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-  <string name="data_export_running">Still running, please wait…</string>
+  <string name="data_export_start">此操作可能会很长。当它完成时，您将会收到通知。</string>
+  <string name="data_export_running">仍在运行，请稍候.……</string>
   <string name="data_export">Export statuses</string>
   <string name="data_export_toots">Export statuses for %1$s</string>
-  <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
+  <string name="data_export_success">%2$s 条嘟文中的 %1$s 条已被导出。</string>
   <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
   <!-- Proxy -->
-  <string name="proxy_set">Proxy</string>
-  <string name="proxy_type">Type</string>
-  <string name="proxy_enable">Enable proxy?</string>
-  <string name="poxy_host">Host</string>
-  <string name="poxy_port">Port</string>
-  <string name="poxy_login">Login</string>
-  <string name="poxy_password">Password</string>
+  <string name="proxy_set">代理</string>
+  <string name="proxy_type">类型</string>
+  <string name="proxy_enable">是否启用代理服务器？</string>
+  <string name="poxy_host">主机</string>
+  <string name="poxy_port">端口</string>
+  <string name="poxy_login">登录</string>
+  <string name="poxy_password">密码</string>
 </resources>
