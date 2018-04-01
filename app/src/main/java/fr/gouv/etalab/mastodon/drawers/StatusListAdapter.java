@@ -281,6 +281,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         TextView status_cardview_title, status_cardview_content, status_cardview_url;
         FrameLayout status_cardview_video;
         WebView status_cardview_webview;
+        ImageView hide_preview;
+
         public View getView(){
             return itemView;
         }
@@ -338,6 +340,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_cardview_url = itemView.findViewById(R.id.status_cardview_url);
             status_cardview_video = itemView.findViewById(R.id.status_cardview_video);
             status_cardview_webview = itemView.findViewById(R.id.status_cardview_webview);
+            hide_preview = itemView.findViewById(R.id.hide_preview);
         }
     }
 
@@ -781,7 +784,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.status_content_container.setVisibility(View.VISIBLE);
                 }
             }
-
             if( status.getReblog() == null) {
                 if (status.getMedia_attachments().size() < 1) {
                     holder.status_document_container.setVisibility(View.GONE);
@@ -829,6 +831,21 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             }
 
+            holder.hide_preview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    status.setAttachmentShown(!status.isAttachmentShown());
+                    if( status.getReblog() != null)
+                        status.getReblog().setSensitive(true);
+                    else
+                        status.setSensitive(true);
+                    if( theme == Helper.THEME_DARK)
+                        changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
+                    else
+                        changeDrawableColor(context, R.drawable.ic_photo,R.color.mastodonC4);
+                    notifyStatusChanged(status);
+                }
+            });
 
             //Toot was translated and user asked to see it
 
