@@ -816,7 +816,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     if (!status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
                         loadAttachments(status.getReblog(), holder);
                         holder.status_show_more.setVisibility(View.GONE);
-                        status.getReblog().setAttachmentShown(true);
+                        status.setAttachmentShown(true);
                     } else {
                         //Text depending if toots is sensitive or not
                         String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
@@ -839,6 +839,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         status.getReblog().setSensitive(true);
                     else
                         status.setSensitive(true);
+
                     if( theme == Helper.THEME_DARK)
                         changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
                     else
