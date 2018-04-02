@@ -70,9 +70,9 @@ public class RetrieveMetaDataAsyncTask extends AsyncTask<Void, Void, Void> {
             }
             // If we actually have a URL then make use of it.
             if (potentialUrl.length() > 0) {
-                Pattern titlePattern = Pattern.compile("meta\\s+property=[\"']og:title[\"']\\s+content=[\"'](.*)[\"']");
-                Pattern descriptionPattern = Pattern.compile("meta\\s+property=[\"']og:description[\"']\\s+content=[\"'](.*)[\"']");
-                Pattern imagePattern = Pattern.compile("meta\\s+property=[\"']og:image[\"']\\s+content=[\"'](.*)[\"']");
+                Pattern titlePattern = Pattern.compile("meta[ a-zA-Z=\"'-]+property=[\"']og:title[\"']\\s+content=[\"']([^>]*)[\"']");
+                Pattern descriptionPattern = Pattern.compile("meta[ a-zA-Z=\"'-]+property=[\"']og:description[\"']\\s+content=[\"']([^>]*)[\"']");
+                Pattern imagePattern = Pattern.compile("meta[ a-zA-Z=\"'-]+property=[\"']og:image[\"']\\s+content=[\"']([^>]*)[\"']");
                 try {
                     String response = new HttpsConnection(this.contextWeakReference.get()).get(potentialUrl);
                     Matcher matcherTitle = titlePattern.matcher(response);
@@ -86,13 +86,18 @@ public class RetrieveMetaDataAsyncTask extends AsyncTask<Void, Void, Void> {
                         descriptionEncoded = matcherDescription.group(1);
                     while (matcherImage.find())
                         image = matcherImage.group(1);
+
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        title = Html.fromHtml(titleEncoded, Html.FROM_HTML_MODE_LEGACY).toString();
-                        description = Html.fromHtml(descriptionEncoded, Html.FROM_HTML_MODE_LEGACY).toString();
+                        if( titleEncoded != null)
+                            title = Html.fromHtml(titleEncoded, Html.FROM_HTML_MODE_LEGACY).toString();
+                        if( descriptionEncoded != null)
+                            description = Html.fromHtml(descriptionEncoded, Html.FROM_HTML_MODE_LEGACY).toString();
                     }else {
                         //noinspection deprecation
-                        title = Html.fromHtml(titleEncoded).toString();
-                        description = Html.fromHtml(descriptionEncoded).toString();
+                        if( titleEncoded != null)
+                            title = Html.fromHtml(titleEncoded).toString();
+                        if( descriptionEncoded != null)
+                            description = Html.fromHtml(descriptionEncoded).toString();
                     }
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();

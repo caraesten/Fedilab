@@ -231,6 +231,7 @@ public class Helper {
     public static final String SET_DISABLE_GIF = "set_disable_gif";
     public static final String SET_CAPITALIZE = "set_capitalize";
     public static final String SET_PICTURE_RESIZE = "set_picture_resize";
+    public static final String SET_SHOW_BOOKMARK = "set_show_bookmark";
     public static final int S_512KO = 1;
     public static final int S_1MO = 2;
     public static final int S_2MO = 3;
@@ -1840,6 +1841,10 @@ public class Helper {
      */
     public static Bitmap convertTootIntoBitmap(Context context, String name, View view) {
 
+        if( view.getWidth() == 0 || view.getHeight() == 0){
+            Toast.makeText(context, R.string.toast_error, Toast.LENGTH_SHORT).show();
+            return null;
+        }
         Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth()+10, view.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(returnedBitmap);
         canvas.drawBitmap(returnedBitmap, 10, 0, null); 

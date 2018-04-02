@@ -52,7 +52,7 @@
   <string name="next">Следећа</string>
   <string name="previous">Претходна</string>
   <string name="open_with">Отворите помоћу</string>
-  <string name="validate">Провери ваљаност</string>
+  <string name="validate">Потврди</string>
   <string name="media">Мултимедија</string>
   <string name="share_with">Поделите са</string>
   <string name="shared_via">Дељено преко Mastalab-а</string>
@@ -131,7 +131,10 @@
     <item quantity="few">%d одговора</item>
     <item quantity="other">%d одговора</item>
   </plurals>
+  <string name="set_display_bookmark_button">Display the bookmark button</string>
   <string name="bookmarks">Забелешке</string>
+  <string name="bookmark_add">Add to bookmarks</string>
+  <string name="bookmark_remove">Remove bookmark</string>
   <string name="bookmarks_empty">Нема забелешки за приказ</string>
   <string name="status_bookmarked">Статус је додат у забелешке!</string>
   <string name="status_unbookmarked">Статус је уклоњен из забелешки!</string>
@@ -360,9 +363,9 @@
   <string name="set_capitalize">Прво слово велико у одговорима</string>
   <string name="set_resize_picture">Мењај величине слика</string>
   <!-- Quick settings for notifications -->
-  <string name="settings_popup_title">Гурни обавештења</string>
+  <string name="settings_popup_title">Брза обавештења</string>
   <string name="settings_popup_message">
-        Потврдите гурање којих обавештења желите да примате.
+        Потврдите која брза обавештења желите да примате.
         Можете укључити и искључити ова обавештења накнадно у подешавањима (језичак за Обавештења).
     </string>
   <string name="settings_popup_timeline">За непрочитане тутове у сопственој лајни?</string>

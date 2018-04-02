@@ -130,7 +130,10 @@
     <item quantity="one">erantzun %d</item>
     <item quantity="other">%d erantzun</item>
   </plurals>
+  <string name="set_display_bookmark_button">Erakutsi gogokoak botoia</string>
   <string name="bookmarks">Gogokoak</string>
+  <string name="bookmark_add">Gehitu gogokoetara</string>
+  <string name="bookmark_remove">Kendu gogokoa</string>
   <string name="bookmarks_empty">Ez dago gogokorik bistaratzeko</string>
   <string name="status_bookmarked">Mezua gogokoetara gehitu da!</string>
   <string name="status_unbookmarked">Mezua gogokoetatik kendu da!</string>

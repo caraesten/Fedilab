@@ -33,4 +33,8 @@
         android:id="@+id/action_mention"
         android:title="@string/more_action_7"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_bookmark"
+        android:title="@string/bookmark_add"
+        app:showAsAction="never" />
 </menu>

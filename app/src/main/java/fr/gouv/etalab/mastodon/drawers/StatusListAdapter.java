@@ -281,6 +281,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         TextView status_cardview_title, status_cardview_content, status_cardview_url;
         FrameLayout status_cardview_video;
         WebView status_cardview_webview;
+        ImageView hide_preview;
+
         public View getView(){
             return itemView;
         }
@@ -338,6 +340,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_cardview_url = itemView.findViewById(R.id.status_cardview_url);
             status_cardview_video = itemView.findViewById(R.id.status_cardview_video);
             status_cardview_webview = itemView.findViewById(R.id.status_cardview_webview);
+            hide_preview = itemView.findViewById(R.id.hide_preview);
         }
     }
 
@@ -427,6 +430,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
             final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            boolean displayBookmarkButton = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, true);
+
+            if( displayBookmarkButton)
+                holder.status_bookmark.setVisibility(View.VISIBLE);
+            else
+                holder.status_bookmark.setVisibility(View.GONE);
 
             holder.status_reply.setText("");
             //Display a preview for accounts that have replied *if enabled and only for home timeline*
@@ -775,7 +784,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.status_content_container.setVisibility(View.VISIBLE);
                 }
             }
-
             if( status.getReblog() == null) {
                 if (status.getMedia_attachments().size() < 1) {
                     holder.status_document_container.setVisibility(View.GONE);
@@ -808,7 +816,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     if (!status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
                         loadAttachments(status.getReblog(), holder);
                         holder.status_show_more.setVisibility(View.GONE);
-                        status.getReblog().setAttachmentShown(true);
+                        status.setAttachmentShown(true);
                     } else {
                         //Text depending if toots is sensitive or not
                         String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
@@ -823,6 +831,22 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             }
 
+            holder.hide_preview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    status.setAttachmentShown(!status.isAttachmentShown());
+                    if( status.getReblog() != null)
+                        status.getReblog().setSensitive(true);
+                    else
+                        status.setSensitive(true);
+
+                    if( theme == Helper.THEME_DARK)
+                        changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
+                    else
+                        changeDrawableColor(context, R.drawable.ic_photo,R.color.mastodonC4);
+                    notifyStatusChanged(status);
+                }
+            });
 
             //Toot was translated and user asked to see it
 
@@ -1166,6 +1190,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     if( status.getVisibility().equals("private") || status.getVisibility().equals("direct")){
                         popup.getMenu().findItem(R.id.action_mention).setVisible(false);
                     }
+                    if( status.isBookmarked())
+                        popup.getMenu().findItem(R.id.action_bookmark).setTitle(R.string.bookmark_remove);
+                    else
+                        popup.getMenu().findItem(R.id.action_bookmark).setTitle(R.string.bookmark_add);
                     final String[] stringArrayConf;
                     if( isOwner) {
                         popup.getMenu().findItem(R.id.action_block).setVisible(false);
@@ -1200,6 +1228,31 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     builderInner.setTitle(stringArrayConf[0]);
                                     doAction = API.StatusAction.MUTE;
                                     break;
+                                case R.id.action_bookmark:
+                                    if( type != RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS) {
+                                        status.setBookmarked(!status.isBookmarked());
+                                        if (status.isBookmarked()) {
+                                            new StatusCacheDAO(context, db).insertStatus(StatusCacheDAO.BOOKMARK_CACHE, status);
+                                            Toast.makeText(context, R.string.status_bookmarked, Toast.LENGTH_LONG).show();
+                                        } else {
+                                            new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, status);
+                                            Toast.makeText(context, R.string.status_unbookmarked, Toast.LENGTH_LONG).show();
+                                        }
+                                        notifyStatusChanged(status);
+                                    }else {
+                                        int position = 0;
+                                        for (Status statustmp : statuses) {
+                                            if (statustmp.getId().equals(status.getId())) {
+                                                statuses.remove(status);
+                                                statusListAdapter.notifyItemRemoved(position);
+                                                new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, statustmp);
+                                                Toast.makeText(context, R.string.status_unbookmarked, Toast.LENGTH_LONG).show();
+                                                break;
+                                            }
+                                            position++;
+                                        }
+                                    }
+                                    return true;
                                 case R.id.action_timed_mute:
                                     AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
                                     LayoutInflater inflater = ((Activity)context).getLayoutInflater();
@@ -1351,6 +1404,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                 file.delete ();
                                             try {
                                                 FileOutputStream out = new FileOutputStream(file);
+                                                assert bitmap != null;
                                                 bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
                                                 out.flush();
                                                 out.close();

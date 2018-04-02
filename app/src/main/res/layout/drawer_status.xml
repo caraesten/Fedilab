@@ -289,6 +289,15 @@
                             android:src="@drawable/ic_play_arrow"
                             android:layout_height="20dp"
                             tools:ignore="ContentDescription" />
+                        <ImageView
+                            android:id="@+id/hide_preview"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_width="wrap_content"
+                            android:src="@drawable/ic_remove_red_eye"
+                            android:layout_height="wrap_content"
+                            tools:ignore="ContentDescription" />
                     </RelativeLayout>
                     <LinearLayout
                         android:orientation="vertical"
