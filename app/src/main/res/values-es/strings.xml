@@ -373,24 +373,24 @@ Tú puede activar o desactivar esas notificaciones después en configuración (p
   <string name="toast_cache_clear">¡Fue borrando el cache! %1$s liberados</string>
   <!-- ACTIVITY CACHE -->
   <string name="action_sync">Sincronizar</string>
-  <string name="action_filter">Filter</string>
+  <string name="action_filter">Filtrar</string>
   <string name="owner_cached_toots">Tus toots</string>
   <string name="v_public">Público</string>
-  <string name="v_unlisted">Unlisted</string>
+  <string name="v_unlisted">No listados</string>
   <string name="v_private">Privado</string>
   <string name="v_direct">Directo</string>
   <string name="v_keywords">Algunas palabras claves…</string>
-  <string name="show_media">Show media</string>
-  <string name="show_pinned">Show pinned</string>
+  <string name="show_media">Mostrar multimedia</string>
+  <string name="show_pinned">Mostrar fijados</string>
   <string name="filter_no_result">No matching result found!</string>
   <string name="data_backup_toots">Backup toots for %1$s</string>
-  <string name="data_backup_success">%1$s new toots have been imported</string>
+  <string name="data_backup_success">%1$s toots nuevos han sido importados</string>
   <string-array name="filter_select">
     <item>No</item>
-    <item>Only</item>
-    <item>Both</item>
+    <item>Solamente</item>
+    <item>Ambos</item>
   </string-array>
-  <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+  <string name="owner_cached_toots_empty">No toots fueron encontrados en la base de datos. Por favor, utilice el botón de sincronizar de el menú para recuperarlos.</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">Data grabada</string>
   <string name="privacy_data">
