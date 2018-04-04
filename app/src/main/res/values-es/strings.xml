@@ -19,7 +19,7 @@
   <string name="download_over">Descarga completada</string>
   <string name="save_file">Guardado %1$s</string>
   <string name="save_over">Ficheros multimedia guardados</string>
-  <string name="download_from" formatted="false">Fichero: %1$s</string>
+  <string name="download_from" formatted="false">Archivo: %1$s</string>
   <string name="password">Contraseña</string>
   <string name="email">Correo Electrónico</string>
   <string name="accounts">Cuentas</string>
@@ -28,7 +28,7 @@
   <string name="token">Ficha</string>
   <string name="save">Guardar</string>
   <string name="restore">Restaurar</string>
-  <string name="two_factor_authentification">¿Verificación en dos pasos?</string>
+  <string name="two_factor_authentification">¿Autenticación de dos pasos?</string>
   <string name="other_instance">¿Otra instancia que mastodon.etalab.gouv.fr?</string>
   <string name="no_result">¡No hay resultados!</string>
   <string name="instance">Instancia</string>
@@ -377,9 +377,9 @@ Tú puede activar o desactivar esas notificaciones después en configuración (p
   <string name="owner_cached_toots">Tus toots</string>
   <string name="v_public">Público</string>
   <string name="v_unlisted">Unlisted</string>
-  <string name="v_private">Private</string>
-  <string name="v_direct">Direct</string>
-  <string name="v_keywords">Some keywords…</string>
+  <string name="v_private">Privado</string>
+  <string name="v_direct">Directo</string>
+  <string name="v_keywords">Algunas palabras claves…</string>
   <string name="show_media">Show media</string>
   <string name="show_pinned">Show pinned</string>
   <string name="filter_no_result">No matching result found!</string>
