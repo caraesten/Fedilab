@@ -18,7 +18,7 @@
   <string name="download_file">Descargando %1$s</string>
   <string name="download_over">Descarga completada</string>
   <string name="save_file">Guardado %1$s</string>
-  <string name="save_over">Ficheros multimedia guardados</string>
+  <string name="save_over">Archivos multimedia guardados</string>
   <string name="download_from" formatted="false">Archivo: %1$s</string>
   <string name="password">Contraseña</string>
   <string name="email">Correo Electrónico</string>
@@ -382,7 +382,7 @@ Tú puede activar o desactivar esas notificaciones después en configuración (p
   <string name="v_keywords">Algunas palabras claves…</string>
   <string name="show_media">Mostrar multimedia</string>
   <string name="show_pinned">Mostrar fijados</string>
-  <string name="filter_no_result">No matching result found!</string>
+  <string name="filter_no_result">¡Ningún resultado encontrado!</string>
   <string name="data_backup_toots">Backup toots for %1$s</string>
   <string name="data_backup_success">%1$s toots nuevos han sido importados</string>
   <string-array name="filter_select">
