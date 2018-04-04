@@ -298,7 +298,7 @@
   <string name="set_nsfw_timeout">Tiempo de vista de contenido sensible (segundos, 0 significa terminado)</string>
   <string name="settings_title_profile">Editar perfil</string>
   <string name="set_profile_description">Bio…</string>
-  <string name="set_lock_account">Lock account</string>
+  <string name="set_lock_account">Bloquear cuenta</string>
   <string name="set_save_changes">Guardar cambios</string>
   <string name="set_header_picture_overlay">Elegir una imagen de encabezado</string>
   <string name="set_preview_reply">Mostrar el número de respuesta en la cronología del inicio</string>
