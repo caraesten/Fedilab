@@ -4,7 +4,7 @@
   <string name="navigation_drawer_open">Abrir el menú</string>
   <string name="navigation_drawer_close">Cerrar menú</string>
   <string name="action_about">Acerca de</string>
-  <string name="action_about_instance">Sobre el nodo</string>
+  <string name="action_about_instance">Sobre la instancia</string>
   <string name="action_privacy">Privacidad</string>
   <string name="action_cache">Caché</string>
   <string name="action_logout">Cerrar sesión</string>
@@ -131,12 +131,12 @@
     <item quantity="other">%d respuesta</item>
   </plurals>
   <string name="set_display_bookmark_button">Mostrar el botón de marcapágina</string>
-  <string name="bookmarks">Bookmarks</string>
-  <string name="bookmark_add">Add to bookmarks</string>
-  <string name="bookmark_remove">Remove bookmark</string>
-  <string name="bookmarks_empty">No bookmarks to display</string>
-  <string name="status_bookmarked">Status has been added to bookmarks!</string>
-  <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+  <string name="bookmarks">Marcapáginas</string>
+  <string name="bookmark_add">Añadir a marcapáginas</string>
+  <string name="bookmark_remove">Remover marcapágina</string>
+  <string name="bookmarks_empty">No hay marcapáginas para mostrar</string>
+  <string name="status_bookmarked">¡Estado ha sido añadido a marcapáginas!</string>
+  <string name="status_unbookmarked">¡Estado fue removido de marcapáginas!</string>
   <!-- Date -->
   <string name="date_seconds">%d s</string>
   <string name="date_minutes">%d m</string>
@@ -372,10 +372,10 @@ Tú puede activar o desactivar esas notificaciones después en configuración (p
   <string name="cache_units">Mb</string>
   <string name="toast_cache_clear">¡Fue borrando el cache! %1$s liberados</string>
   <!-- ACTIVITY CACHE -->
-  <string name="action_sync">Synchronize</string>
+  <string name="action_sync">Sincronizar</string>
   <string name="action_filter">Filter</string>
-  <string name="owner_cached_toots">Your toots</string>
-  <string name="v_public">Public</string>
+  <string name="owner_cached_toots">Tus toots</string>
+  <string name="v_public">Público</string>
   <string name="v_unlisted">Unlisted</string>
   <string name="v_private">Private</string>
   <string name="v_direct">Direct</string>
