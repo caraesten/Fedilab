@@ -383,7 +383,7 @@ Tú puede activar o desactivar esas notificaciones después en configuración (p
   <string name="show_media">Mostrar multimedia</string>
   <string name="show_pinned">Mostrar fijados</string>
   <string name="filter_no_result">¡Ningún resultado encontrado!</string>
-  <string name="data_backup_toots">Backup toots for %1$s</string>
+  <string name="data_backup_toots">Respaldar toots de %1$s</string>
   <string name="data_backup_success">%1$s toots nuevos han sido importados</string>
   <string-array name="filter_select">
     <item>No</item>
