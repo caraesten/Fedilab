@@ -132,11 +132,11 @@
   </plurals>
   <string name="set_display_bookmark_button">Lesezeichenbutton anzeigen</string>
   <string name="bookmarks">Lesezeichen</string>
-  <string name="bookmark_add">Lesezeichen hinzufügen</string>
+  <string name="bookmark_add">Zu Lesezeichen hinzufügen</string>
   <string name="bookmark_remove">Lesezeichen löschen</string>
   <string name="bookmarks_empty">Keine Lesezeichen vorhanden</string>
-  <string name="status_bookmarked">Status wurde den Lesezeichen hinzugefügt!</string>
-  <string name="status_unbookmarked">Status wurde aus Lesezeichen entfernt!</string>
+  <string name="status_bookmarked">Beitrag wurde den Lesezeichen hinzugefügt!</string>
+  <string name="status_unbookmarked">Beitrag wurde aus Lesezeichen entfernt!</string>
   <!-- Date -->
   <string name="date_seconds">%d s</string>
   <string name="date_minutes">%d m</string>
@@ -213,9 +213,9 @@
   <string name="timed_mute_profile">%1$s ist stumm geschaltet bis %2$s.\n Hier drücken um Stumm schalten zu entfernen.</string>
   <!-- Notifications -->
   <string name="no_notifications">Keine Benachrichtigungen</string>
-  <string name="notif_mention">hat deinen Status erwähnt</string>
-  <string name="notif_reblog">hat deinen Status geteilt</string>
-  <string name="notif_favourite">favorisierte deinen Status</string>
+  <string name="notif_mention">hat deinen Beitrag erwähnt</string>
+  <string name="notif_reblog">hat deinen Beitrag geteilt</string>
+  <string name="notif_favourite">favorisierte deinen Beitrag</string>
   <string name="notif_follow">folgt dir</string>
   <string name="notif_pouet">Neuer Toot von %1$s</string>
   <plurals name="other_notifications">
@@ -289,8 +289,8 @@
   <string name="settings_title_notifications">Benachrichtigen wenn ...</string>
   <string name="set_notif_follow">mir jemand folgt</string>
   <string name="set_notif_follow_ask">ich eine Folgen Anfrage erhalte</string>
-  <string name="set_notif_follow_share">jemand meinen Status teilt</string>
-  <string name="set_notif_follow_add">jemand meinen Status favorisiert</string>
+  <string name="set_notif_follow_share">jemand meinen Beitrag teilt</string>
+  <string name="set_notif_follow_add">jemand meinen Beitrag favorisiert</string>
   <string name="set_notif_follow_mention">ich erwähnt werde</string>
   <string name="set_share_validation">Zeige Bestätigungsdialog vor dem Teilen</string>
   <string name="set_share_validation_fav">Bestätigungsdialog vor dem Favorisieren</string>
@@ -408,7 +408,7 @@
              - <b>WAKE_LOCK</b>: Benachrichtigungsdienst.</string>
   <string name="privacy_API_authorizations_title">API Berechtigungen:</string>
   <string name="privacy_API_authorizations">- <b>Read</b>: Daten lesen.\n
-             - <b>Write</b>: Status veröffentlichen und Dateien hochladen.\n
+             - <b>Write</b>: Beiträge veröffentlichen und Dateien hochladen.\n
              - <b>Follow</b>: Folgen, nicht mehr folgen, blockieren, nicht mehr blockieren.\n
     \n
              <b>⚠ Diese Aktionen werden nur auf Verlangen des Benutzers durchgeführt.</b></string>
@@ -456,7 +456,7 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="data_export_start">Diese Aktion kann sehr lange dauern. Du wirst benachrichtigt wenn sie abgeschlossen wurde.</string>
   <string name="data_export_running">Läuft noch, bitte warten…</string>
   <string name="data_export">Status exportieren</string>
-  <string name="data_export_toots">Status exportieren für %1$s</string>
+  <string name="data_export_toots">Beiträge exportieren für %1$s</string>
   <string name="data_export_success">%1$s Toots von %2$s wurden exportiert.</string>
   <string name="data_export_error">Etwas ist schief gelaufen beim exportieren von%1$s</string>
   <!-- Proxy -->
