@@ -95,15 +95,15 @@
   <string name="scheduled_toots">Заплановані тути</string>
   <string name="disclaimer_full">Наведена нижче інформація може відображати профіль користувача не повністю.</string>
   <string name="insert_emoji">Вставити смайли</string>
-  <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-  <string name="live_notif">Live notifications</string>
+  <string name="no_emoji">Застосунок не збирає emojis на даний момент.</string>
+  <string name="live_notif">Живі сповіщення</string>
   <!-- Status -->
-  <string name="no_status">No toot to display</string>
-  <string name="fav_added">The toot was added to favourites</string>
-  <string name="fav_removed">The toot was removed from favourites!</string>
-  <string name="reblog_added">The toot was boosted!</string>
-  <string name="reblog_removed">The toot is no longer boosted!</string>
-  <string name="reblog_by">Boosted by %1$s</string>
+  <string name="no_status">Немає повідомлень для відображення</string>
+  <string name="fav_added">Тут додано до обраного</string>
+  <string name="fav_removed">Тут видалено з обраного!</string>
+  <string name="reblog_added">Тут підбустчений!</string>
+  <string name="reblog_removed">Тут більше не буститься!</string>
+  <string name="reblog_by">Забустчено %1$s</string>
   <string name="favourite_add">Додати цей тут до обраного?</string>
   <string name="favourite_remove">Видалити цей тут з обраного?</string>
   <string name="reblog_add">Забустити тут?</string>
@@ -167,12 +167,12 @@
     <item>Постити тільки тим, хто підписався</item>
     <item>Постити тільки до згаданих користувачів</item>
   </string-array>
-  <string name="no_draft">No draft!</string>
-  <string name="choose_toot">Choose a toot</string>
-  <string name="choose_accounts">Choose an account</string>
-  <string name="select_accounts">Select some accounts</string>
-  <string name="remove_draft">Remove draft?</string>
-  <string name="show_reply">Click on the button to display the original toot</string>
+  <string name="no_draft">Чернетки відсутні!</string>
+  <string name="choose_toot">Оберіть тут</string>
+  <string name="choose_accounts">Оберіть обліковий запис</string>
+  <string name="select_accounts">Оберіть деякі облікові записи</string>
+  <string name="remove_draft">Видалити чернетку?</string>
+  <string name="show_reply">Натисніть, щоб показати оригінальний тут</string>
   <string name="upload_form_description">Describe for the visually impaired</string>
   <!-- Instance -->
   <string name="instance_no_description">No description available!</string>
@@ -287,63 +287,63 @@
   <string name="set_folder_title">Шлях: </string>
   <string name="set_auto_store_toot">Зберігати чернетки автоматично</string>
   <string name="set_bubble_counter">Показати лічильники</string>
-  <string name="set_auto_add_media_url">Add URL of media in toots</string>
-  <string name="settings_title_notifications">Manage notifications</string>
-  <string name="set_notif_follow">Notify when someone follows you</string>
-  <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
-  <string name="set_notif_follow_share">Notify when someone boosts your status</string>
-  <string name="set_notif_follow_add">Notify when someone favourites your status</string>
-  <string name="set_notif_follow_mention">Notify when someone mentions you</string>
-  <string name="set_share_validation">Show confirmation dialog before boosting</string>
-  <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
-  <string name="settings_title_more_options">Advanced settings</string>
-  <string name="set_wifi_only">Notify in WIFI only</string>
-  <string name="set_notify">Notify?</string>
-  <string name="set_notif_silent">Silent Notifications</string>
-  <string name="set_night_mode">Night mode</string>
-  <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
-  <string name="settings_title_profile">Edit profile</string>
-  <string name="set_profile_description">Bio…</string>
-  <string name="set_lock_account">Lock account</string>
-  <string name="set_save_changes">Save changes</string>
-  <string name="set_header_picture_overlay">Choose a header picture</string>
-  <string name="set_preview_reply">Display the number of replies in home timeline</string>
-  <string name="set_preview_reply_pp">Display profile pictures?</string>
-  <string name="set_multiaccount_actions">Allow interactions between accounts?</string>
-  <string name="note_no_space">You have reached the 160 characters allowed!</string>
-  <string name="username_no_space">You have reached the 30 characters allowed!</string>
-  <string name="settings_title_hour">Time slot for notifications:</string>
-  <string name="settings_time_from">Between</string>
-  <string name="settings_time_to">and</string>
-  <string name="settings_time_greater">The time must be greater than %1$s</string>
-  <string name="settings_time_lower">The time must be lower than %1$s</string>
-  <string name="settings_hour_init">Start time</string>
-  <string name="settings_hour_end">End time</string>
-  <string name="embedded_browser">Use the built-in browser</string>
-  <string name="custom_tabs">Custom tabs</string>
-  <string name="use_javascript">Enable Javascript</string>
-  <string name="expand_cw">Automatically expand cw</string>
-  <string name="use_cookies">Allow third-party cookies</string>
-  <string name="settings_ui_layout">Layout for timelines: </string>
+  <string name="set_auto_add_media_url">Додати URL медіа-файлу до туту</string>
+  <string name="settings_title_notifications">Керування сповіщеннями</string>
+  <string name="set_notif_follow">Сповіщати, якщо хтось підписується</string>
+  <string name="set_notif_follow_ask">Сповіщати, якщо хтось робить запит підписки</string>
+  <string name="set_notif_follow_share">Сповіщати, якщо хтось бустить ваш статус</string>
+  <string name="set_notif_follow_add">Сповіщати, якщо хтось додав статус до обраного</string>
+  <string name="set_notif_follow_mention">Сповіщати, якщо хтось згадує вас</string>
+  <string name="set_share_validation">Показати діалогове вікно підтвердження перед тим, як бустити</string>
+  <string name="set_share_validation_fav">Показати діалогове вікно підтвердження перед тим, як додати до обраного</string>
+  <string name="settings_title_more_options">Розширені налаштування</string>
+  <string name="set_wifi_only">Повідомити тільки при Wi-Fi</string>
+  <string name="set_notify">Сповістити?</string>
+  <string name="set_notif_silent">Тихі сповіщення</string>
+  <string name="set_night_mode">Нічний режим</string>
+  <string name="set_nsfw_timeout">NSFW тимчасовий (секунди, 0 означає off)</string>
+  <string name="settings_title_profile">Редагувати обліковий запис</string>
+  <string name="set_profile_description">Біо…</string>
+  <string name="set_lock_account">Блокування облікового запису</string>
+  <string name="set_save_changes">Зберегти зміни</string>
+  <string name="set_header_picture_overlay">Вибрати малюнок обкладинки</string>
+  <string name="set_preview_reply">Відображати кількість відповідей у домашній стрічці</string>
+  <string name="set_preview_reply_pp">Показувати зображення профілів?</string>
+  <string name="set_multiaccount_actions">Дозволити взаємодію між обліковими записами?</string>
+  <string name="note_no_space">Ви досягли ліміту в 160 символів!</string>
+  <string name="username_no_space">Ви досягли ліміту в 30 символів!</string>
+  <string name="settings_title_hour">Інтервал часу для сповіщення:</string>
+  <string name="settings_time_from">Між</string>
+  <string name="settings_time_to">і</string>
+  <string name="settings_time_greater">Інтервал має бути більшим за %1$s</string>
+  <string name="settings_time_lower">Інтервал має бути меншим за %1$s</string>
+  <string name="settings_hour_init">Час початку</string>
+  <string name="settings_hour_end">Час закінчення</string>
+  <string name="embedded_browser">Через вбудований браузер</string>
+  <string name="custom_tabs">Кастомні вкладки</string>
+  <string name="use_javascript">Увімкнути JavaScript</string>
+  <string name="expand_cw">Автоматично розкривати Cw</string>
+  <string name="use_cookies">Приймати куки від сторонніх сайтів</string>
+  <string name="settings_ui_layout">Верстка для стрічок: </string>
   <string-array name="settings_menu_tabs">
-    <item>Tabs</item>
-    <item>Menu</item>
-    <item>Tabs and menu</item>
+    <item>Вкладки</item>
+    <item>Меню</item>
+    <item>Вкладки і меню</item>
   </string-array>
   <string-array name="settings_translation">
-    <item>Yandex</item>
-    <item>No</item>
+    <item>Яндекс</item>
+    <item>Ні</item>
   </string-array>
   <string-array name="settings_resize_picture">
-    <item>No</item>
-    <item>512 Kb</item>
-    <item>1 Mb</item>
-    <item>2 Mb</item>
+    <item>Ні</item>
+    <item>512 Кб</item>
+    <item>1 Мб</item>
+    <item>2 Мб</item>
   </string-array>
-  <string name="set_led_colour">Set LED colour:</string>
+  <string name="set_led_colour">Встановити колір LED:</string>
   <string-array name="led_colours">
-    <item>Blue</item>
-    <item>Cyan</item>
+    <item>Синій</item>
+    <item>Блакитний</item>
     <item>Маджента</item>
     <item>Зелений</item>
     <item>Червоний</item>
