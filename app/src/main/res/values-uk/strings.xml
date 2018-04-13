@@ -164,8 +164,8 @@
   <string-array name="toot_visibility">
     <item>Запостити в публічну стрічку</item>
     <item>Не постити в публічну стрічку</item>
-    <item>Post to followers only</item>
-    <item>Post to mentioned users only</item>
+    <item>Постити тільки тим, хто підписався</item>
+    <item>Постити тільки до згаданих користувачів</item>
   </string-array>
   <string name="no_draft">No draft!</string>
   <string name="choose_toot">Choose a toot</string>
@@ -235,41 +235,41 @@
   <!-- HEADER -->
   <string name="following">Following</string>
   <string name="followers">Followers</string>
-  <string name="pinned_toots">Pinned</string>
+  <string name="pinned_toots">Прикріплено</string>
   <!-- TOAST -->
-  <string name="client_error">Unable to get client id!</string>
-  <string name="no_internet">No Internet connection!</string>
-  <string name="toast_block">The account was blocked!</string>
-  <string name="toast_unblock">The account is no longer blocked!</string>
-  <string name="toast_mute">The account was muted!</string>
-  <string name="toast_unmute">The account is no longer muted!</string>
-  <string name="toast_follow">The account was followed!</string>
-  <string name="toast_unfollow">The account is no longer followed!</string>
-  <string name="toast_reblog">The toot was boosted!</string>
-  <string name="toast_unreblog">The toot is no longer boosted!</string>
-  <string name="toast_favourite">The toot was added to your favourites!</string>
-  <string name="toast_unfavourite">The toot was removed from your favourites!</string>
-  <string name="toast_report">The toot was reported!</string>
-  <string name="toast_unstatus">The toot was deleted!</string>
-  <string name="toast_pin">The toot was pinned!</string>
-  <string name="toast_unpin">The toot was unpinned!</string>
-  <string name="toast_error">Oops ! An error occurred!</string>
-  <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
-  <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
-  <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
-  <string name="toast_error_search">An error occurred while searching!</string>
-  <string name="toast_error_login">Can not log in!</string>
-  <string name="toast_update_credential_ok">The profile data have been saved!</string>
-  <string name="nothing_to_do">No action can be taken</string>
-  <string name="toast_saved">The media has been saved!</string>
-  <string name="toast_error_translate">An error occurred while translating!</string>
-  <string name="toast_toot_saved">Draft saved!</string>
-  <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
-  <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
-  <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
+  <string name="client_error">Не вдалося отримати ідентифікатор клієнта!</string>
+  <string name="no_internet">Немає з\'єднання з Інтернетом!</string>
+  <string name="toast_block">Обліковий запис заблокований!</string>
+  <string name="toast_unblock">Обліковий запис більше не заблоковано!</string>
+  <string name="toast_mute">Обліковий запис приглушено!</string>
+  <string name="toast_unmute">Обліковий запис більше не приглушено!</string>
+  <string name="toast_follow">На обліковий запис підписалися!</string>
+  <string name="toast_unfollow">Ви більше не підписані на обліковий запис!</string>
+  <string name="toast_reblog">Тут підбустчений!</string>
+  <string name="toast_unreblog">Тут більше не буститься!</string>
+  <string name="toast_favourite">Тут додано до обраного!</string>
+  <string name="toast_unfavourite">Тут видалено з обраного!</string>
+  <string name="toast_report">На тут поскаржилися!</string>
+  <string name="toast_unstatus">Тут видалено!</string>
+  <string name="toast_pin">Тут закріплено!</string>
+  <string name="toast_unpin">Тут відкріплено!</string>
+  <string name="toast_error">Вибачте, виникла помилка!</string>
+  <string name="toast_code_error">Сталася помилка! Екземпляр не повернув код авторизації!</string>
+  <string name="toast_error_instance">Домен екземпляру не валідний!</string>
+  <string name="toast_error_loading_account">Сталася помилка під час перемикання облікових записів!</string>
+  <string name="toast_error_search">Виникла помилка при пошуку!</string>
+  <string name="toast_error_login">Не можу увійти!</string>
+  <string name="toast_update_credential_ok">Дані профілю збережено!</string>
+  <string name="nothing_to_do">Ніяка дія не може відбутися</string>
+  <string name="toast_saved">Медіа-файл збережено!</string>
+  <string name="toast_error_translate">Виникла помилка під час перекладу!</string>
+  <string name="toast_toot_saved">Чернетку збережено!</string>
+  <string name="toast_error_char_limit">Ви впевнені, що цей екземпляр дозволяє таке число символів? Зазвичай, це 500 символів.</string>
+  <string name="toast_visibility_changed">Видимість тутів змінено для облікового запису %1$s</string>
+  <string name="toast_empty_search">Назва екземпляру та ім\'я не можуть бути пустими!</string>
   <!-- Settings -->
-  <string name="settings_title_optimisation">Optimisation of loading</string>
-  <string name="set_toots_page">Number of toots per load</string>
+  <string name="settings_title_optimisation">Оптимізація завантаження</string>
+  <string name="set_toots_page">Число тутів за одиницю завантаження</string>
   <string name="set_accounts_page">Number of accounts per load</string>
   <string name="set_notifications_page">Number of notifications per load</string>
   <string name="set_attachment_always">Always</string>
