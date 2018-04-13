@@ -173,68 +173,68 @@
   <string name="select_accounts">Оберіть деякі облікові записи</string>
   <string name="remove_draft">Видалити чернетку?</string>
   <string name="show_reply">Натисніть, щоб показати оригінальний тут</string>
-  <string name="upload_form_description">Describe for the visually impaired</string>
+  <string name="upload_form_description">Прочитати для людей з вадами зору</string>
   <!-- Instance -->
-  <string name="instance_no_description">No description available!</string>
+  <string name="instance_no_description">Опис відсутній!</string>
   <!-- About -->
-  <string name="about_vesrion">Release %1$s</string>
-  <string name="about_developer">Developer:</string>
-  <string name="about_license">License: </string>
-  <string name="about_license_action">GNU GPL V3</string>
-  <string name="about_code">Source code: </string>
-  <string name="about_yandex">Translation of toots:</string>
-  <string name="about_thekinrar">Search instances:</string>
+  <string name="about_vesrion">Реліз %1$s</string>
+  <string name="about_developer">Розробник:</string>
+  <string name="about_license">Ліцензія: </string>
+  <string name="about_license_action">GNU GPLv3</string>
+  <string name="about_code">Сирцевий код: </string>
+  <string name="about_yandex">Переклад тутів:</string>
+  <string name="about_thekinrar">Шукати екземпляри:</string>
   <string name="about_thekinrar_action">instances.social</string>
-  <string name="thanks_text_logo">Icon designer:</string>
+  <string name="thanks_text_logo">Дизайнер піктограм:</string>
   <!-- Conversation -->
-  <string name="conversation">Conversation</string>
+  <string name="conversation">Розмова</string>
   <!-- Accounts -->
-  <string name="no_accounts">No account to display</string>
-  <string name="no_follow_request">No follow request</string>
-  <string name="status_cnt">Toots \n %1$s</string>
-  <string name="following_cnt">Following \n %1$s</string>
-  <string name="followers_cnt">Followers \n %1$s</string>
-  <string name="pins_cnt">Pinned \n %d</string>
-  <string name="authorize">Authorize</string>
-  <string name="reject">Reject</string>
+  <string name="no_accounts">Немає облікових записів для відображення</string>
+  <string name="no_follow_request">Запит на відмову від підписки</string>
+  <string name="status_cnt">Тути \n %1$s</string>
+  <string name="following_cnt">Підписані на \n %1$s</string>
+  <string name="followers_cnt">Стежать за вами \n %1$s</string>
+  <string name="pins_cnt">Закріплені \n %d</string>
+  <string name="authorize">Авторизуватися</string>
+  <string name="reject">Відхилити</string>
   <!-- Scheduled toots -->
-  <string name="no_scheduled_toots">No scheduled toot to display!</string>
-  <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-  <string name="remove_scheduled">Delete scheduled toot?</string>
-  <string name="media_count">Media: %d</string>
-  <string name="toot_scheduled">The toot has been scheduled!</string>
-  <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
-  <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+  <string name="no_scheduled_toots">Немає запланованих тутів для показу!</string>
+  <string name="no_scheduled_toots_indications">Напишіть тут, а потім оберіть <b>Запланувати</b> з верхнього меню.</string>
+  <string name="remove_scheduled">Видалити запланований тут?</string>
+  <string name="media_count">Медіа: %d</string>
+  <string name="toot_scheduled">Тут було заплановано!</string>
+  <string name="toot_scheduled_date">Запланована дата має бути більшою за поточну годину!</string>
+  <string name="warning_battery">Економія батареї увімкнена. Може не працювати, як очікується.</string>
   <!-- timed mute -->
-  <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-  <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
-  <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+  <string name="timed_mute_date_error">Час для приглушення має бути більшим за одну хвилину.</string>
+  <string name="timed_mute_date">%1$s заглушено до %2$s.\n Можете розглушити зі сторінки профілю.</string>
+  <string name="timed_mute_profile">%1$s заглушено до %2$s.\n Натисніть, щоб розглушити.</string>
   <!-- Notifications -->
-  <string name="no_notifications">No notification to display</string>
-  <string name="notif_mention">mentioned you</string>
-  <string name="notif_reblog">boosted your status</string>
-  <string name="notif_favourite">favourited your status</string>
-  <string name="notif_follow">followed you</string>
-  <string name="notif_pouet">New toot from %1$s</string>
+  <string name="no_notifications">Немає сповіщень для показу</string>
+  <string name="notif_mention">згадав вас</string>
+  <string name="notif_reblog">забустив ваш статус</string>
+  <string name="notif_favourite">додав до обраного ваш статус</string>
+  <string name="notif_follow">підписаний на вас</string>
+  <string name="notif_pouet">Новий тут з %1$s</string>
   <plurals name="other_notifications">
-    <item quantity="one">and another notification</item>
-    <item quantity="few">and %d other notifications</item>
-    <item quantity="many">and %d other notifications</item>
-    <item quantity="other">and %d other notifications</item>
+    <item quantity="one">додати нове сповіщення</item>
+    <item quantity="few">додати нове сповіщення</item>
+    <item quantity="many">додати нове сповіщення</item>
+    <item quantity="other">додати нове сповіщення</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="one">and another toot to discover</item>
-    <item quantity="few">and %d other toots to discover</item>
-    <item quantity="many">and %d other toots to discover</item>
-    <item quantity="other">and %d other toots to discover</item>
+    <item quantity="one">додати інший тут до огляду</item>
+    <item quantity="few">додати інші тути до огляду</item>
+    <item quantity="many">додати інші тути до огляду</item>
+    <item quantity="other">додати інші тути до огляду</item>
   </plurals>
-  <string name="delete_notification_ask">Delete a notification?</string>
-  <string name="delete_notification_ask_all">Delete all notifications?</string>
-  <string name="delete_notification">The notification has been deleted!</string>
-  <string name="delete_notification_all">All notifications have been deleted!</string>
+  <string name="delete_notification_ask">Видалити це сповіщення?</string>
+  <string name="delete_notification_ask_all">Видалити усі сповіщення?</string>
+  <string name="delete_notification">Сповіщення було видалене!</string>
+  <string name="delete_notification_all">Усі сповіщення були видалені!</string>
   <!-- HEADER -->
-  <string name="following">Following</string>
-  <string name="followers">Followers</string>
+  <string name="following">Підписаний</string>
+  <string name="followers">Стежать за вами</string>
   <string name="pinned_toots">Прикріплено</string>
   <!-- TOAST -->
   <string name="client_error">Не вдалося отримати ідентифікатор клієнта!</string>
