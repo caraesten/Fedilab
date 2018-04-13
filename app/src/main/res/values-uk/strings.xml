@@ -104,66 +104,66 @@
   <string name="reblog_added">The toot was boosted!</string>
   <string name="reblog_removed">The toot is no longer boosted!</string>
   <string name="reblog_by">Boosted by %1$s</string>
-  <string name="favourite_add">Add this toot to your favourites?</string>
-  <string name="favourite_remove">Remove this toot from your favourites?</string>
-  <string name="reblog_add">Boost this toot?</string>
-  <string name="reblog_remove">Unboost this toot?</string>
-  <string name="pin_add">Pin this toot?</string>
-  <string name="pin_remove">Unpin this toot?</string>
-  <string name="more_action_1">Mute</string>
-  <string name="more_action_2">Block</string>
-  <string name="more_action_3">Report</string>
-  <string name="more_action_4">Remove</string>
-  <string name="more_action_5">Copy</string>
-  <string name="more_action_6">Share</string>
-  <string name="more_action_7">Mention</string>
-  <string name="more_action_8">Timed mute</string>
+  <string name="favourite_add">Додати цей тут до обраного?</string>
+  <string name="favourite_remove">Видалити цей тут з обраного?</string>
+  <string name="reblog_add">Забустити тут?</string>
+  <string name="reblog_remove">Відбустити тут?</string>
+  <string name="pin_add">Прикріпити цей тут?</string>
+  <string name="pin_remove">Відкріпити цей тут?</string>
+  <string name="more_action_1">Заглушити</string>
+  <string name="more_action_2">Заблокувати</string>
+  <string name="more_action_3">Повідомити про порушення</string>
+  <string name="more_action_4">Видалити</string>
+  <string name="more_action_5">Копіювати</string>
+  <string name="more_action_6">Поділитися</string>
+  <string name="more_action_7">Згадати</string>
+  <string name="more_action_8">Тимчасово заглушити</string>
   <string-array name="more_action_confirm">
-    <item>Mute this account?</item>
-    <item>Block this account?</item>
-    <item>Report this toot?</item>
+    <item>Заглушити цей обліковий запис?</item>
+    <item>Заблокувати цей обліковий запис?</item>
+    <item>Поскаржитися на цей тут?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>Remove this toot?</item>
+    <item>Видалити цей тут?</item>
   </string-array>
   <plurals name="preview_replies">
-    <item quantity="one">%d reply</item>
-    <item quantity="few">%d replies</item>
-    <item quantity="many">%d replies</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="one">%d відповідь</item>
+    <item quantity="few">%d відповідей</item>
+    <item quantity="many">%d відповідей</item>
+    <item quantity="other">%d відповідей</item>
   </plurals>
-  <string name="set_display_bookmark_button">Display the bookmark button</string>
-  <string name="bookmarks">Bookmarks</string>
-  <string name="bookmark_add">Add to bookmarks</string>
-  <string name="bookmark_remove">Remove bookmark</string>
-  <string name="bookmarks_empty">No bookmarks to display</string>
-  <string name="status_bookmarked">Status has been added to bookmarks!</string>
-  <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+  <string name="set_display_bookmark_button">Відображати кнопку закладок</string>
+  <string name="bookmarks">Закладки</string>
+  <string name="bookmark_add">Додати в закладки</string>
+  <string name="bookmark_remove">Видалити закладку</string>
+  <string name="bookmarks_empty">Немає закладок для відображення</string>
+  <string name="status_bookmarked">Статус був доданий до закладок!</string>
+  <string name="status_unbookmarked">Статус був видалений із закладок!</string>
   <!-- Date -->
-  <string name="date_seconds">%d s</string>
-  <string name="date_minutes">%d m</string>
-  <string name="date_hours">%d h</string>
-  <string name="date_day">%d d</string>
+  <string name="date_seconds">%d сек</string>
+  <string name="date_minutes">%d м</string>
+  <string name="date_hours">%d год</string>
+  <string name="date_day">%d д</string>
   <!-- TOOT -->
-  <string name="toot_cw_placeholder">Warning</string>
-  <string name="toot_placeholder">What is on your mind?</string>
-  <string name="toot_it">TOOT!</string>
-  <string name="cw">cw</string>
-  <string name="toot_title">Write a toot</string>
-  <string name="toot_title_reply">Reply to a toot</string>
-  <string name="toot_no_space">You have reached the 500 characters allowed!</string>
-  <string name="toot_select_image">Select a media</string>
-  <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-  <string name="toot_delete_media">Delete this media?</string>
-  <string name="toot_error_no_content">Your toot is empty!</string>
-  <string name="toot_visibility_tilte">Visibility of the toot</string>
-  <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-  <string name="toot_sent">The toot has been sent!</string>
-  <string name="toot_reply_content_title">You are replying to this toot:</string>
-  <string name="toot_sensitive">Sensitive content?</string>
+  <string name="toot_cw_placeholder">Попередження</string>
+  <string name="toot_placeholder">Що у Вас на думці?</string>
+  <string name="toot_it">ТУТ!</string>
+  <string name="cw">CW</string>
+  <string name="toot_title">Напишіть</string>
+  <string name="toot_title_reply">Відповісти на тут</string>
+  <string name="toot_no_space">Ви досягли ліміту в 500 символів!</string>
+  <string name="toot_select_image">Оберіть медіафайл</string>
+  <string name="toot_select_image_error">Сталася помилка під час вибору медіафайлу!</string>
+  <string name="toot_delete_media">Видалити цей медіа-файл?</string>
+  <string name="toot_error_no_content">Ваш тут пустий!</string>
+  <string name="toot_visibility_tilte">Видимість туту</string>
+  <string name="toots_visibility_tilte">Видимість тутів за замовченням: </string>
+  <string name="toot_sent">Повідомлення було відправлено!</string>
+  <string name="toot_reply_content_title">Ви відповідаєте на цей тут:</string>
+  <string name="toot_sensitive">Чутливий вміст?</string>
   <string-array name="toot_visibility">
-    <item>Post to public timelines</item>
-    <item>Do not post to public timelines</item>
+    <item>Запостити в публічну стрічку</item>
+    <item>Не постити в публічну стрічку</item>
     <item>Post to followers only</item>
     <item>Post to mentioned users only</item>
   </string-array>
