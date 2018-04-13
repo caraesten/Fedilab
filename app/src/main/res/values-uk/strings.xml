@@ -141,7 +141,7 @@
   <string name="status_unbookmarked">Статус був видалений із закладок!</string>
   <!-- Date -->
   <string name="date_seconds">%d сек</string>
-  <string name="date_minutes">%d м</string>
+  <string name="date_minutes">%d хв</string>
   <string name="date_hours">%d год</string>
   <string name="date_day">%d д</string>
   <!-- TOOT -->
@@ -413,7 +413,7 @@
         - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
         <b>&#9888; These actions are carried out only when user requests them.</b>
     </string>
-  <string name="privacy_API_title">Tracking and Libraries</string>
+  <string name="privacy_API_title">Бібліотеки</string>
   <string name="privacy_API">
         The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
         The use of libraries is minimized: \n
@@ -421,7 +421,7 @@
         - <b>Android-Job</b>: To manage services\n
         - <b>PhotoView</b>: To manage images\n
     </string>
-  <string name="privacy_API_yandex_title">Translation of toots</string>
+  <string name="privacy_API_yandex_title">Переклад тутів</string>
   <string name="privacy_API_yandex_authorizations">
         The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
@@ -432,26 +432,26 @@
   <string name="thanks_text_dev">
         Thank you to:
     </string>
-  <string name="filter_regex">Filter out by regular expressions</string>
-  <string name="search">Search</string>
-  <string name="delete">Delete</string>
-  <string name="fetch_more_toots">Fetch more toots…</string>
+  <string name="filter_regex">Відфільтруйте регулярним виразом</string>
+  <string name="search">Пошук</string>
+  <string name="delete">Видалити</string>
+  <string name="fetch_more_toots">Отримати більше тутів…</string>
   <!-- About lists -->
-  <string name="action_lists">Lists</string>
-  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
-  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-  <string name="action_lists_add_to">Add to list</string>
-  <string name="action_lists_remove_from">Remove from list</string>
-  <string name="action_lists_create">Add list</string>
-  <string name="action_lists_delete">Delete list</string>
-  <string name="action_lists_update">Edit list</string>
-  <string name="action_lists_title_placeholder">New list title</string>
-  <string name="action_lists_search_users">Search among people you follow</string>
-  <string name="action_lists_owner">Your lists</string>
+  <string name="action_lists">Списки</string>
+  <string name="action_lists_confirm_delete">Ви дійсно бажаєте остаточно видалити цей список?</string>
+  <string name="action_lists_empty_content">Список пустий. Коли додані до списку почнуть писати, їх статуси з\'являться у списку.</string>
+  <string name="action_lists_add_to">Додати до списку</string>
+  <string name="action_lists_remove_from">Видалити зі списку</string>
+  <string name="action_lists_create">Додати список</string>
+  <string name="action_lists_delete">Видалити список</string>
+  <string name="action_lists_update">Редагувати список</string>
+  <string name="action_lists_title_placeholder">Нова назва списку</string>
+  <string name="action_lists_search_users">Шукати серед людей, за якими ви слідкуєте</string>
+  <string name="action_lists_owner">Ваші списки</string>
   <!-- Migration -->
   <string name="account_moved_to">%1$s has moved to %2$s</string>
-  <string name="show_boost_count">Show boosts/favourites count</string>
-  <string name="issue_login_title">Authentication does not work?</string>
+  <string name="show_boost_count">Показати лічильники бустів/обраного</string>
+  <string name="issue_login_title">Автентифікація не працює?</string>
   <string name="issue_login_message">
         <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
@@ -460,19 +460,19 @@
         - You can also use this link without using the 2FA\n\n
         - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
     </string>
-  <string name="media_ready">Media has been loaded. Click here to display it.</string>
-  <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-  <string name="data_export_running">Still running, please wait…</string>
-  <string name="data_export">Export statuses</string>
+  <string name="media_ready">Медіа-файл завантажений. Натисніть щоб відобразити.</string>
+  <string name="data_export_start">Ця дія довготривала, ви отримаєте сповіщення після закінчення.</string>
+  <string name="data_export_running">Почекайте, будь ласка…</string>
+  <string name="data_export">Експорт статусів</string>
   <string name="data_export_toots">Export statuses for %1$s</string>
   <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
   <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
   <!-- Proxy -->
-  <string name="proxy_set">Proxy</string>
-  <string name="proxy_type">Type</string>
-  <string name="proxy_enable">Enable proxy?</string>
-  <string name="poxy_host">Host</string>
-  <string name="poxy_port">Port</string>
-  <string name="poxy_login">Login</string>
-  <string name="poxy_password">Password</string>
+  <string name="proxy_set">Проксі</string>
+  <string name="proxy_type">Тип</string>
+  <string name="proxy_enable">Увімкнути проксі?</string>
+  <string name="poxy_host">Вузол</string>
+  <string name="poxy_port">Порт</string>
+  <string name="poxy_login">Логін</string>
+  <string name="poxy_password">Пароль</string>
 </resources>
