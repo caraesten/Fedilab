@@ -52,49 +52,49 @@
   <string name="next">Далі</string>
   <string name="previous">Попередній</string>
   <string name="open_with">Відкрити за допомогою</string>
-  <string name="validate">Validate</string>
-  <string name="media">Media</string>
-  <string name="share_with">Share with</string>
-  <string name="shared_via">Shared via Mastalab</string>
-  <string name="replies">Replies</string>
-  <string name="username">User name</string>
-  <string name="drafts">Drafts</string>
-  <string name="new_data">New data are available! Do you want to display them?</string>
-  <string name="favourite">Favourites</string>
-  <string name="follow">New followers</string>
-  <string name="mention">Mentions</string>
-  <string name="reblog">Boosts</string>
-  <string name="show_boosts">Show boosts</string>
-  <string name="show_replies">Show replies</string>
-  <string name="action_open_in_web">Open in browser</string>
-  <string name="translate">Translate</string>
-  <string name="please_wait">Please, wait few seconds before making this action.</string>
+  <string name="validate">Перевірити</string>
+  <string name="media">Медіа-файли</string>
+  <string name="share_with">Поділитися через</string>
+  <string name="shared_via">Розміщено за допомогою Mastalab</string>
+  <string name="replies">Відповіді</string>
+  <string name="username">Ім\'я користувача</string>
+  <string name="drafts">Чернетки</string>
+  <string name="new_data">Нові дані доступні! Хочете їх переглянути?</string>
+  <string name="favourite">Обране</string>
+  <string name="follow">Нові підписники</string>
+  <string name="mention">Згадки</string>
+  <string name="reblog">Бусти</string>
+  <string name="show_boosts">Показати бусти</string>
+  <string name="show_replies">Показати відповіді</string>
+  <string name="action_open_in_web">Відкрити в браузері</string>
+  <string name="translate">Перекласти</string>
+  <string name="please_wait">Зачекайте кілька секунд, перш ніж розпочати цю дію.</string>
   <!--- Menu -->
-  <string name="home_menu">Home</string>
-  <string name="local_menu">Local timeline</string>
-  <string name="global_menu">Federated timeline</string>
-  <string name="neutral_menu_title">Options</string>
-  <string name="favorites_menu">Favourites</string>
-  <string name="communication_menu_title">Communication</string>
-  <string name="muted_menu">Muted users</string>
-  <string name="blocked_menu">Blocked users</string>
-  <string name="remote_follow_menu">Remote follow</string>
-  <string name="notifications">Notifications</string>
-  <string name="follow_request">Follow requests</string>
-  <string name="optimization">Optimization</string>
-  <string name="settings">Settings</string>
-  <string name="profile">Profile</string>
-  <string name="make_a_choice">What do you want to do?</string>
-  <string name="delete_account_title">Delete an account</string>
-  <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
-  <string name="send_email">Send an email</string>
-  <string name="choose_file">Please select a file</string>
-  <string name="choose_file_error">No file explorer found!</string>
-  <string name="click_to_change">Click on the path to change it</string>
-  <string name="failed">Failed!</string>
-  <string name="scheduled_toots">Scheduled toots</string>
-  <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
-  <string name="insert_emoji">Insert emoji</string>
+  <string name="home_menu">Домівка</string>
+  <string name="local_menu">Місцева стрічка</string>
+  <string name="global_menu">Федеративна стрічка</string>
+  <string name="neutral_menu_title">Параметри</string>
+  <string name="favorites_menu">Обране</string>
+  <string name="communication_menu_title">Зв\'язок</string>
+  <string name="muted_menu">Приглушені користувачі</string>
+  <string name="blocked_menu">Заблоковані користувачі</string>
+  <string name="remote_follow_menu">Віддалена підписка</string>
+  <string name="notifications">Сповіщення</string>
+  <string name="follow_request">Запити на підписку</string>
+  <string name="optimization">Оптимізація</string>
+  <string name="settings">Налаштування</string>
+  <string name="profile">Профіль</string>
+  <string name="make_a_choice">Що ви бажаєте зробити?</string>
+  <string name="delete_account_title">Видалити обліковий запис</string>
+  <string name="delete_account_message" formatted="false">Видалити обліковий запис %1$s з застосунку?</string>
+  <string name="send_email">Надіслати ел. лист</string>
+  <string name="choose_file">Будь ласка, оберіть файл</string>
+  <string name="choose_file_error">Не знайшли файловий провідник!</string>
+  <string name="click_to_change">Натисніть на шлях, щоб змінити його</string>
+  <string name="failed">Не вдалося!</string>
+  <string name="scheduled_toots">Заплановані тути</string>
+  <string name="disclaimer_full">Наведена нижче інформація може відображати профіль користувача не повністю.</string>
+  <string name="insert_emoji">Вставити смайли</string>
   <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
   <string name="live_notif">Live notifications</string>
   <!-- Status -->
@@ -383,37 +383,30 @@
   <string name="v_public">Загальнодоступне</string>
   <string name="v_unlisted">Поза списком</string>
   <string name="v_private">Приватнi</string>
-  <string name="v_direct">Direct</string>
-  <string name="v_keywords">Some keywords…</string>
-  <string name="show_media">Show media</string>
-  <string name="show_pinned">Show pinned</string>
-  <string name="filter_no_result">No matching result found!</string>
-  <string name="data_backup_toots">Backup toots for %1$s</string>
-  <string name="data_backup_success">%1$s new toots have been imported</string>
+  <string name="v_direct">Особисті</string>
+  <string name="v_keywords">Деякі ключові слова…</string>
+  <string name="show_media">Показати всі медіа</string>
+  <string name="show_pinned">Показати закріплені</string>
+  <string name="filter_no_result">Відповідних повідомлень не знайдено!</string>
+  <string name="data_backup_toots">Резервне копіювання тутів для %1$s</string>
+  <string name="data_backup_success">%1$s нових тутів імпортовано</string>
   <string-array name="filter_select">
-    <item>No</item>
-    <item>Only</item>
-    <item>Both</item>
+    <item>Ні</item>
+    <item>Тільки</item>
+    <item>Обидва</item>
   </string-array>
-  <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+  <string name="owner_cached_toots_empty">Ніяких тутів не знайдено в базі даних. Будь ласка, використовуйте кнопку синхронізації в меню, щоб отримати їх.</string>
   <!-- PRIVACY -->
-  <string name="privacy_data_title">Recorded data</string>
+  <string name="privacy_data_title">Записані дані</string>
   <string name="privacy_data">
-        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
+Тільки основна інформація з облікових записів зберігається на пристрої.         Ці дані залишаються суворо конфіденційними і можуть використовуватися лише додатком.         У разі видалення додаток одразу видаляє ці дані. \n
+        &#9888; Логіни та паролі не зберігаються. Вони використовуються тільки під час безпечної аутентифікації (SSL) на екземплярі.
     </string>
-  <string name="privacy_authorizations_title">Permissions:</string>
+  <string name="privacy_authorizations_title">Дозволи:</string>
   <string name="privacy_authorizations">
-        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
-        - <b>INTERNET</b>: Used for queries to an instance.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
-        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
-        - <b>WAKE_LOCK</b>: Used during the notification service.
+        - <b>ACCESS_NETWORK_STATE</b>: використовується для виявлення, чи пристрій підключено до Wi-Fi мережі. \n - <b>Інтернет</b>: використовується для запитів до до екземпляра. \n - <b>WRITE_EXTERNAL_STORAGE</b>: використовується для зберігання медіа або переміщення програми на карту SD \n - <b>READ_EXTERNAL_STORAGE</b>: використовується для додавання медіа до тутів. \n - <b>BOOT_COMPLETED</b>: використовується для запуску служби сповіщень. \n - <b>WAKE_LOCK</b>: Використовується під час роботи служби сповіщень.
     </string>
-  <string name="privacy_API_authorizations_title">API permissions:</string>
+  <string name="privacy_API_authorizations_title">API дозволи:</string>
   <string name="privacy_API_authorizations">
         - <b>Read</b>: Read data.\n
         - <b>Write</b>: Post statuses and upload media for statuses.\n
