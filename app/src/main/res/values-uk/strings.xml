@@ -23,7 +23,7 @@
   <string name="password">Пароль</string>
   <string name="email">Ел. пошта</string>
   <string name="accounts">Облікові записи</string>
-  <string name="toots">Тути</string>
+  <string name="toots">Передмухнуте</string>
   <string name="tags">Мітки</string>
   <string name="token">Токен</string>
   <string name="save">Зберегти</string>
@@ -44,7 +44,7 @@
   <string name="speech_prompt">Будь ласка, скажіть щось</string>
   <string name="speech_not_supported">Вибачте! Пристрій не підтримує введення голосом!</string>
   <string name="delete_all">Видалити все</string>
-  <string name="translate_toot">Перекласти цей тут.</string>
+  <string name="translate_toot">Перекласти цей дмух.</string>
   <string name="schedule">Запланувати</string>
   <string name="text_size">Розміри тексту та іконок</string>
   <string name="text_size_change">Змінити поточний розмір тексту:</string>
@@ -92,7 +92,7 @@
   <string name="choose_file_error">Не знайшли файловий провідник!</string>
   <string name="click_to_change">Натисніть на шлях, щоб змінити його</string>
   <string name="failed">Не вдалося!</string>
-  <string name="scheduled_toots">Заплановані тути</string>
+  <string name="scheduled_toots">Заплановані дмухи</string>
   <string name="disclaimer_full">Наведена нижче інформація може відображати профіль користувача не повністю.</string>
   <string name="insert_emoji">Вставити смайли</string>
   <string name="no_emoji">Застосунок не збирає emojis на даний момент.</string>
@@ -147,19 +147,19 @@
   <!-- TOOT -->
   <string name="toot_cw_placeholder">Попередження</string>
   <string name="toot_placeholder">Що у Вас на думці?</string>
-  <string name="toot_it">ТУТ!</string>
+  <string name="toot_it">ДМУХ!</string>
   <string name="cw">CW</string>
   <string name="toot_title">Напишіть</string>
-  <string name="toot_title_reply">Відповісти на тут</string>
+  <string name="toot_title_reply">Відповісти на дмух</string>
   <string name="toot_no_space">Ви досягли ліміту в 500 символів!</string>
   <string name="toot_select_image">Оберіть медіафайл</string>
   <string name="toot_select_image_error">Сталася помилка під час вибору медіафайлу!</string>
   <string name="toot_delete_media">Видалити цей медіа-файл?</string>
-  <string name="toot_error_no_content">Ваш тут пустий!</string>
-  <string name="toot_visibility_tilte">Видимість туту</string>
-  <string name="toots_visibility_tilte">Видимість тутів за замовченням: </string>
+  <string name="toot_error_no_content">Ваш дмух пустий!</string>
+  <string name="toot_visibility_tilte">Видимість дмуху</string>
+  <string name="toots_visibility_tilte">Видимість дмухів за замовченням: </string>
   <string name="toot_sent">Повідомлення було відправлено!</string>
-  <string name="toot_reply_content_title">Ви відповідаєте на цей тут:</string>
+  <string name="toot_reply_content_title">Ви відповідаєте на цей дмух:</string>
   <string name="toot_sensitive">Чутливий вміст?</string>
   <string-array name="toot_visibility">
     <item>Запостити в публічну стрічку</item>
@@ -168,7 +168,7 @@
     <item>Постити тільки до згаданих користувачів</item>
   </string-array>
   <string name="no_draft">Чернетки відсутні!</string>
-  <string name="choose_toot">Оберіть тут</string>
+  <string name="choose_toot">Оберіть дмух</string>
   <string name="choose_accounts">Оберіть обліковий запис</string>
   <string name="select_accounts">Оберіть деякі облікові записи</string>
   <string name="remove_draft">Видалити чернетку?</string>
