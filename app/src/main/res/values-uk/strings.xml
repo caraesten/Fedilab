@@ -408,30 +408,29 @@
     </string>
   <string name="privacy_API_authorizations_title">API дозволи:</string>
   <string name="privacy_API_authorizations">
-        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
+- <b>Читати</b>: Читати дані.\n
+        - <b>Писати</b>: Постити статуси і завантажувати медіа-файли.\n
+        - <b>Підписка</b>: Підписка, відписка, блок, розблок.\n\n
+        <b>&#9888; Ці дії відбуваються тільки за запитом користувача.</b>
     </string>
   <string name="privacy_API_title">Бібліотеки</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+Додаток <b>не відслідковує користувача</b> І не містить реклами.\n\n
+        Використання сторонніх бібліотек мінімізоване: \n
+        - <b>Glide</b>: для управління медіа-файлами\n
+        - <b>Android-Job</b>: Для управління сервісами\n
+        - <b>PhotoView</b>: Для управління зображеннями\n
     </string>
   <string name="privacy_API_yandex_title">Переклад дмухів</string>
   <string name="privacy_API_yandex_authorizations">
-        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
+Додаток перекладає дмухи через Yandex API.\n
+        Умови конфіденційності Yandex можна знайти за посиланням: https://yandex.ru/legal/confidential/?lang=en
     </string>
   <string name="thanks_text">
-        Thank you to Stéphane for the logo.
+Дякуємо Stéphane за лого.
     </string>
   <string name="thanks_text_dev">
-        Thank you to:
-    </string>
+Подяки:    </string>
   <string name="filter_regex">Відфільтруйте регулярним виразом</string>
   <string name="search">Пошук</string>
   <string name="delete">Видалити</string>
@@ -449,22 +448,22 @@
   <string name="action_lists_search_users">Шукати серед людей, за якими ви слідкуєте</string>
   <string name="action_lists_owner">Ваші списки</string>
   <!-- Migration -->
-  <string name="account_moved_to">%1$s has moved to %2$s</string>
+  <string name="account_moved_to">%1$s відправлено до %2$s</string>
   <string name="show_boost_count">Показати лічильники бустів/обраного</string>
   <string name="issue_login_title">Автентифікація не працює?</string>
   <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
+        <b>Деякі поради, що можуть допомогти:</b>\n\n
+        - Перевірте правильність написання назви екземпляру\n\n
+        - Перевірте, чи екземпляр працює\n\n
+        - Якщо використовуєте двофакторну авторизацію (2FA), будь ласка скористайтеся посиланням внизу, коли назву екземпляру заповнено\n\n
+        - Також можна використовувати посилання без 2FA\n\n
+        - Якщо все одно не працює, повідомте нам на GitHub: https://github.com/stom79/mastalab/issues
     </string>
   <string name="media_ready">Медіа-файл завантажений. Натисніть щоб відобразити.</string>
   <string name="data_export_start">Ця дія довготривала, ви отримаєте сповіщення після закінчення.</string>
   <string name="data_export_running">Почекайте, будь ласка…</string>
   <string name="data_export">Експорт статусів</string>
-  <string name="data_export_toots">Export statuses for %1$s</string>
+  <string name="data_export_toots">Експорт статусів для %1$s</string>
   <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
   <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
   <!-- Proxy -->
