@@ -37,21 +37,21 @@
   <string name="add_account">Добавить аккаунт</string>
   <string name="clipboard">Содержание тута было скопировано в буфер обмена</string>
   <string name="change">Изменить</string>
-  <string name="choose_picture">Select a picture…</string>
-  <string name="clear">Clean</string>
-  <string name="microphone">Microphone</string>
-  <string name="camera">Camera</string>
-  <string name="speech_prompt">Please, say something</string>
-  <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
-  <string name="delete_all">Delete all</string>
-  <string name="translate_toot">Translate this toot.</string>
-  <string name="schedule">Schedule</string>
-  <string name="text_size">Text and icon sizes</string>
-  <string name="text_size_change">Change the current text size:</string>
-  <string name="icon_size_change">Change the current icon size:</string>
-  <string name="next">Next</string>
-  <string name="previous">Previous</string>
-  <string name="open_with">Open with</string>
+  <string name="choose_picture">Выбрать изображение…</string>
+  <string name="clear">Очистить</string>
+  <string name="microphone">Микрофон</string>
+  <string name="camera">Камера</string>
+  <string name="speech_prompt">Пожалуйста, скажите что-то</string>
+  <string name="speech_not_supported">Извините! Ваше устройство не поддерживает голосовой ввод!</string>
+  <string name="delete_all">Удалить все</string>
+  <string name="translate_toot">Перевести этот тут.</string>
+  <string name="schedule">Запланировать</string>
+  <string name="text_size">Размеры текста и значков</string>
+  <string name="text_size_change">Изменить текущий размер текста:</string>
+  <string name="icon_size_change">Изменить текущий размер значка:</string>
+  <string name="next">Следующий</string>
+  <string name="previous">Предыдущий</string>
+  <string name="open_with">Открыть с помощью</string>
   <string name="validate">Validate</string>
   <string name="media">Media</string>
   <string name="share_with">Share with</string>
@@ -104,45 +104,45 @@
   <string name="reblog_added">The toot was boosted!</string>
   <string name="reblog_removed">The toot is no longer boosted!</string>
   <string name="reblog_by">Boosted by %1$s</string>
-  <string name="favourite_add">Add this toot to your favourites?</string>
-  <string name="favourite_remove">Remove this toot from your favourites?</string>
-  <string name="reblog_add">Boost this toot?</string>
-  <string name="reblog_remove">Unboost this toot?</string>
-  <string name="pin_add">Pin this toot?</string>
-  <string name="pin_remove">Unpin this toot?</string>
-  <string name="more_action_1">Mute</string>
-  <string name="more_action_2">Block</string>
-  <string name="more_action_3">Report</string>
-  <string name="more_action_4">Remove</string>
-  <string name="more_action_5">Copy</string>
-  <string name="more_action_6">Share</string>
-  <string name="more_action_7">Mention</string>
-  <string name="more_action_8">Timed mute</string>
+  <string name="favourite_add">Добавьте этот тут в избранное?</string>
+  <string name="favourite_remove">Удалить этот тут из избранного?</string>
+  <string name="reblog_add">Поднять этот тут?</string>
+  <string name="reblog_remove">Отменить поднятие этого тута?</string>
+  <string name="pin_add">Закрепить этот тут?</string>
+  <string name="pin_remove">Открепить этот тут?</string>
+  <string name="more_action_1">Заглушить</string>
+  <string name="more_action_2">Заблокировать</string>
+  <string name="more_action_3">Пожаловаться</string>
+  <string name="more_action_4">Удалить</string>
+  <string name="more_action_5">Копировать</string>
+  <string name="more_action_6">Поделиться</string>
+  <string name="more_action_7">Упомянуть</string>
+  <string name="more_action_8">Временно заглушить</string>
   <string-array name="more_action_confirm">
-    <item>Mute this account?</item>
-    <item>Block this account?</item>
-    <item>Report this toot?</item>
+    <item>Заглушить этот аккаунт?</item>
+    <item>Блокировать этот аккаунт?</item>
+    <item>Пожаловаться на этот тут?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>Remove this toot?</item>
+    <item>Удалить этот тут?</item>
   </string-array>
   <plurals name="preview_replies">
-    <item quantity="one">%d reply</item>
-    <item quantity="few">%d replies</item>
-    <item quantity="many">%d replies</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="one">%d ответ</item>
+    <item quantity="few">%d ответа</item>
+    <item quantity="many">%d ответов</item>
+    <item quantity="other">%d ответов</item>
   </plurals>
-  <string name="set_display_bookmark_button">Display the bookmark button</string>
-  <string name="bookmarks">Bookmarks</string>
-  <string name="bookmark_add">Add to bookmarks</string>
-  <string name="bookmark_remove">Remove bookmark</string>
-  <string name="bookmarks_empty">No bookmarks to display</string>
-  <string name="status_bookmarked">Status has been added to bookmarks!</string>
-  <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+  <string name="set_display_bookmark_button">Отобразить кнопку добавления в закладки</string>
+  <string name="bookmarks">Закладки</string>
+  <string name="bookmark_add">Добавить в закладки</string>
+  <string name="bookmark_remove">Удалить закладку</string>
+  <string name="bookmarks_empty">Нет закладок для отображения</string>
+  <string name="status_bookmarked">Тут был добавлен в закладки!</string>
+  <string name="status_unbookmarked">Тут был удалён из закладок!</string>
   <!-- Date -->
-  <string name="date_seconds">%d s</string>
-  <string name="date_minutes">%d m</string>
-  <string name="date_hours">%d h</string>
+  <string name="date_seconds">%d с</string>
+  <string name="date_minutes">%d м</string>
+  <string name="date_hours">%d ч</string>
   <string name="date_day">%d d</string>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">Warning</string>
