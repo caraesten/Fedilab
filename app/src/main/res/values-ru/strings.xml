@@ -143,29 +143,29 @@
   <string name="date_seconds">%d с</string>
   <string name="date_minutes">%d м</string>
   <string name="date_hours">%d ч</string>
-  <string name="date_day">%d d</string>
+  <string name="date_day">%d дней</string>
   <!-- TOOT -->
-  <string name="toot_cw_placeholder">Warning</string>
-  <string name="toot_placeholder">What is on your mind?</string>
-  <string name="toot_it">TOOT!</string>
-  <string name="cw">cw</string>
-  <string name="toot_title">Write a toot</string>
-  <string name="toot_title_reply">Reply to a toot</string>
-  <string name="toot_no_space">You have reached the 500 characters allowed!</string>
-  <string name="toot_select_image">Select a media</string>
-  <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-  <string name="toot_delete_media">Delete this media?</string>
-  <string name="toot_error_no_content">Your toot is empty!</string>
-  <string name="toot_visibility_tilte">Visibility of the toot</string>
-  <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-  <string name="toot_sent">The toot has been sent!</string>
-  <string name="toot_reply_content_title">You are replying to this toot:</string>
-  <string name="toot_sensitive">Sensitive content?</string>
+  <string name="toot_cw_placeholder">Предупреждение</string>
+  <string name="toot_placeholder">О чем вы думаете?</string>
+  <string name="toot_it">ТУТ!</string>
+  <string name="cw">предупреждение о контенте</string>
+  <string name="toot_title">Написать тут</string>
+  <string name="toot_title_reply">Ответить на тут</string>
+  <string name="toot_no_space">Вы достигли 500 разрешённых символов!</string>
+  <string name="toot_select_image">Выбрать медиафайл</string>
+  <string name="toot_select_image_error">Произошла ошибка при выборе медиафайла!</string>
+  <string name="toot_delete_media">Удалить этот медиафайл?</string>
+  <string name="toot_error_no_content">Ваш тут пуст!</string>
+  <string name="toot_visibility_tilte">Видимость тута</string>
+  <string name="toots_visibility_tilte">Видимость тутов по умолчанию: </string>
+  <string name="toot_sent">Тут был отправлен!</string>
+  <string name="toot_reply_content_title">Вы отвечаете на этот тут:</string>
+  <string name="toot_sensitive">Чувствительный контент?</string>
   <string-array name="toot_visibility">
-    <item>Post to public timelines</item>
-    <item>Do not post to public timelines</item>
-    <item>Post to followers only</item>
-    <item>Post to mentioned users only</item>
+    <item>Отправлять в публичные ленты</item>
+    <item>Не отправлять в публичные ленты</item>
+    <item>Отправить только читателям</item>
+    <item>Отправить только упомянутым пользователям</item>
   </string-array>
   <string name="no_draft">No draft!</string>
   <string name="choose_toot">Choose a toot</string>
@@ -235,30 +235,30 @@
   <!-- HEADER -->
   <string name="following">Following</string>
   <string name="followers">Followers</string>
-  <string name="pinned_toots">Pinned</string>
+  <string name="pinned_toots">Закреплён</string>
   <!-- TOAST -->
-  <string name="client_error">Unable to get client id!</string>
-  <string name="no_internet">No Internet connection!</string>
-  <string name="toast_block">The account was blocked!</string>
-  <string name="toast_unblock">The account is no longer blocked!</string>
-  <string name="toast_mute">The account was muted!</string>
-  <string name="toast_unmute">The account is no longer muted!</string>
-  <string name="toast_follow">The account was followed!</string>
-  <string name="toast_unfollow">The account is no longer followed!</string>
-  <string name="toast_reblog">The toot was boosted!</string>
-  <string name="toast_unreblog">The toot is no longer boosted!</string>
-  <string name="toast_favourite">The toot was added to your favourites!</string>
-  <string name="toast_unfavourite">The toot was removed from your favourites!</string>
-  <string name="toast_report">The toot was reported!</string>
-  <string name="toast_unstatus">The toot was deleted!</string>
-  <string name="toast_pin">The toot was pinned!</string>
-  <string name="toast_unpin">The toot was unpinned!</string>
-  <string name="toast_error">Oops ! An error occurred!</string>
-  <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
-  <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
-  <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
-  <string name="toast_error_search">An error occurred while searching!</string>
-  <string name="toast_error_login">Can not log in!</string>
+  <string name="client_error">Не удалось получить идентификатор клиента!</string>
+  <string name="no_internet">Нет подключения к Интернету!</string>
+  <string name="toast_block">Аккаунт был заблокирован!</string>
+  <string name="toast_unblock">Аккаунт больше не заблокирован!</string>
+  <string name="toast_mute">Аккаунт был заглушён!</string>
+  <string name="toast_unmute">Аккаунт более не заглушён!</string>
+  <string name="toast_follow">Аккаунт теперь читаемый!</string>
+  <string name="toast_unfollow">Аккаунт более не читаемый!</string>
+  <string name="toast_reblog">Тут был поднят!</string>
+  <string name="toast_unreblog">Тут более не поднят!</string>
+  <string name="toast_favourite">Тут был добавлен в избранные!</string>
+  <string name="toast_unfavourite">Тут был убран из избранных!</string>
+  <string name="toast_report">На тут была отправлена жалоба!</string>
+  <string name="toast_unstatus">Тут был удалён!</string>
+  <string name="toast_pin">Тут был закреплён!</string>
+  <string name="toast_unpin">Тут был откреплён!</string>
+  <string name="toast_error">Упс ! Произошла ошибка!</string>
+  <string name="toast_code_error">Произошла ошибка! Инстанс не вернул код авторизации!</string>
+  <string name="toast_error_instance">Домен инстанса не выглядит верным!</string>
+  <string name="toast_error_loading_account">Произошла ошибка при переключении между аккаунтами!</string>
+  <string name="toast_error_search">Произошла ошибка при поиске!</string>
+  <string name="toast_error_login">Не удалось войти!</string>
   <string name="toast_update_credential_ok">The profile data have been saved!</string>
   <string name="nothing_to_do">No action can be taken</string>
   <string name="toast_saved">The media has been saved!</string>
