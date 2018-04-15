@@ -833,7 +833,10 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 newBitmap = takenImage;
             }
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            newBitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+            if( this.fileWeakReference.get().getName().endsWith("png") || this.fileWeakReference.get().getName().endsWith(".PNG"))
+                newBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
+            else
+                newBitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
             byte[] bitmapdata = bos.toByteArray();
             bs = new ByteArrayInputStream(bitmapdata);
             return null;
