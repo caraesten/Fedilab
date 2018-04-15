@@ -259,34 +259,34 @@
   <string name="toast_error_loading_account">Произошла ошибка при переключении между аккаунтами!</string>
   <string name="toast_error_search">Произошла ошибка при поиске!</string>
   <string name="toast_error_login">Не удалось войти!</string>
-  <string name="toast_update_credential_ok">The profile data have been saved!</string>
-  <string name="nothing_to_do">No action can be taken</string>
-  <string name="toast_saved">The media has been saved!</string>
-  <string name="toast_error_translate">An error occurred while translating!</string>
-  <string name="toast_toot_saved">Draft saved!</string>
-  <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
-  <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
-  <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
+  <string name="toast_update_credential_ok">Данные профиля были сохранены!</string>
+  <string name="nothing_to_do">Нечего делать</string>
+  <string name="toast_saved">Медиафайл сохранён!</string>
+  <string name="toast_error_translate">Произошла ошибка при переводе!</string>
+  <string name="toast_toot_saved">Черновик сохранён!</string>
+  <string name="toast_error_char_limit">Вы уверены, что этот инстанс допускает это количество знаков? Обычно это значение близко к 500 знакам.</string>
+  <string name="toast_visibility_changed">Видимость тутов была изменена для аккаунта %1$s</string>
+  <string name="toast_empty_search">Имя инстанса и отображаемое имя не могут быть пустыми!</string>
   <!-- Settings -->
-  <string name="settings_title_optimisation">Optimisation of loading</string>
-  <string name="set_toots_page">Number of toots per load</string>
-  <string name="set_accounts_page">Number of accounts per load</string>
-  <string name="set_notifications_page">Number of notifications per load</string>
-  <string name="set_attachment_always">Always</string>
-  <string name="set_attachment_wifi">WIFI</string>
-  <string name="set_attachment_ask">Ask</string>
-  <string name="set_attachment_action">Load the media</string>
-  <string name="load_attachment">Load the pictures</string>
-  <string name="load_attachment_spoiler">Show more…</string>
-  <string name="load_attachment_spoiler_less">Show less…</string>
-  <string name="load_sensitive_attachment">Sensitive content</string>
-  <string name="set_display_reply">Display previous message in responses</string>
-  <string name="set_display_local">Display local timeline</string>
-  <string name="set_display_global">Display federated timeline</string>
-  <string name="set_disable_gif">Disable GIF avatars</string>
-  <string name="set_folder_title">Path: </string>
-  <string name="set_auto_store_toot">Save drafts automatically</string>
-  <string name="set_bubble_counter">Display counters</string>
+  <string name="settings_title_optimisation">Оптимизация загрузки</string>
+  <string name="set_toots_page">Число тутов за загрузку</string>
+  <string name="set_accounts_page">Число аккаунтов за загрузку</string>
+  <string name="set_notifications_page">Число уведомлений за загрузку</string>
+  <string name="set_attachment_always">Всегда</string>
+  <string name="set_attachment_wifi">WiFi</string>
+  <string name="set_attachment_ask">Спрашивать</string>
+  <string name="set_attachment_action">Загрузить медиафайл</string>
+  <string name="load_attachment">Загрузить изображения</string>
+  <string name="load_attachment_spoiler">Показать больше…</string>
+  <string name="load_attachment_spoiler_less">Показать меньше…</string>
+  <string name="load_sensitive_attachment">Чувствительный контент</string>
+  <string name="set_display_reply">Отображать предыдущее сообщение в ответах</string>
+  <string name="set_display_local">Отображать локальную ленту</string>
+  <string name="set_display_global">Отображать ленту федерации</string>
+  <string name="set_disable_gif">Отключить GIF-аватары</string>
+  <string name="set_folder_title">Путь: </string>
+  <string name="set_auto_store_toot">Сохранять черновики автоматически</string>
+  <string name="set_bubble_counter">Показывать счётчики</string>
   <string name="set_auto_add_media_url">Add URL of media in toots</string>
   <string name="settings_title_notifications">Manage notifications</string>
   <string name="set_notif_follow">Notify when someone follows you</string>
@@ -344,29 +344,29 @@
   <string-array name="led_colours">
     <item>Blue</item>
     <item>Cyan</item>
-    <item>Magenta</item>
-    <item>Green</item>
-    <item>Red</item>
-    <item>Yellow</item>
-    <item>White</item>
+    <item>Малиновый</item>
+    <item>Зелёный</item>
+    <item>Красный</item>
+    <item>Жёлтый</item>
+    <item>Белый</item>
   </string-array>
-  <string name="set_title_news">News</string>
-  <string name="set_notification_news">Notify for new toots on the home timeline</string>
-  <string name="set_show_error_messages">Display error messages</string>
-  <string name="action_follow">Follow</string>
-  <string name="action_unfollow">Unfollow</string>
-  <string name="action_block">Block</string>
-  <string name="action_unblock">Unblock</string>
-  <string name="action_mute">Mute</string>
-  <string name="action_no_action">No action</string>
-  <string name="action_unmute">Unmute</string>
-  <string name="request_sent">Request sent</string>
-  <string name="followed_by">Follows you</string>
-  <string name="action_search">Search</string>
-  <string name="set_capitalize">First letter in capital for replies</string>
-  <string name="set_resize_picture">Resize pictures</string>
+  <string name="set_title_news">Новости</string>
+  <string name="set_notification_news">Уведомлять о новых тутах в домашней ленте</string>
+  <string name="set_show_error_messages">Отображать сообщения об ошибках</string>
+  <string name="action_follow">Подписаться</string>
+  <string name="action_unfollow">Отписаться</string>
+  <string name="action_block">Заблокировать</string>
+  <string name="action_unblock">Разблокировать</string>
+  <string name="action_mute">Заглушить</string>
+  <string name="action_no_action">Нет действия</string>
+  <string name="action_unmute">Разглушить</string>
+  <string name="request_sent">Запрос отправлен</string>
+  <string name="followed_by">Подписан на вас</string>
+  <string name="action_search">Поиск</string>
+  <string name="set_capitalize">Заглавная первая буква в ответах</string>
+  <string name="set_resize_picture">Изменить размер изображений</string>
   <!-- Quick settings for notifications -->
-  <string name="settings_popup_title">Push notifications</string>
+  <string name="settings_popup_title">Пуш-уведомления</string>
   <string name="settings_popup_message">
         Please, confirm push notifications that you want to receive.
         You can enable or disable these notifications later in settings (Notifications tab).
