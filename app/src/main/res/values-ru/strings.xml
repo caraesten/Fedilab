@@ -368,8 +368,8 @@
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Пуш-уведомления</string>
   <string name="settings_popup_message">
-        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
+        Пожалуйста, подтвердите пуш-уведомления, которые хотите получать.
+        Вы можете включить или отключить их позже в настройках (вкладка \"Уведомления\").
     </string>
   <string name="settings_popup_timeline">For unread toots in home time-line?</string>
   <string name="settings_popup_notification">For unread notifications?</string>
