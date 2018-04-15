@@ -23,7 +23,7 @@
   <string name="password">Пароль</string>
   <string name="email">Ел. пошта</string>
   <string name="accounts">Облікові записи</string>
-  <string name="toots">Тути</string>
+  <string name="toots">Передмухнуте</string>
   <string name="tags">Мітки</string>
   <string name="token">Токен</string>
   <string name="save">Зберегти</string>
@@ -35,7 +35,7 @@
   <string name="instance_example">Екземпляр: mastodon.social</string>
   <string name="toast_account_changed" formatted="false">Тепер працює з обліковим записом %1$s</string>
   <string name="add_account">Додати обліковий запис</string>
-  <string name="clipboard">Вміст тута скопійований в буфер обміну</string>
+  <string name="clipboard">Вміст дмуху скопійований в буфер обміну</string>
   <string name="change">Змінити</string>
   <string name="choose_picture">Виберіть зображення…</string>
   <string name="clear">Очистити</string>
@@ -44,7 +44,7 @@
   <string name="speech_prompt">Будь ласка, скажіть щось</string>
   <string name="speech_not_supported">Вибачте! Пристрій не підтримує введення голосом!</string>
   <string name="delete_all">Видалити все</string>
-  <string name="translate_toot">Перекласти цей тут.</string>
+  <string name="translate_toot">Перекласти цей дмух.</string>
   <string name="schedule">Запланувати</string>
   <string name="text_size">Розміри тексту та іконок</string>
   <string name="text_size_change">Змінити поточний розмір тексту:</string>
@@ -92,24 +92,24 @@
   <string name="choose_file_error">Не знайшли файловий провідник!</string>
   <string name="click_to_change">Натисніть на шлях, щоб змінити його</string>
   <string name="failed">Не вдалося!</string>
-  <string name="scheduled_toots">Заплановані тути</string>
+  <string name="scheduled_toots">Заплановані дмухи</string>
   <string name="disclaimer_full">Наведена нижче інформація може відображати профіль користувача не повністю.</string>
   <string name="insert_emoji">Вставити смайли</string>
   <string name="no_emoji">Застосунок не збирає emojis на даний момент.</string>
   <string name="live_notif">Живі сповіщення</string>
   <!-- Status -->
   <string name="no_status">Немає повідомлень для відображення</string>
-  <string name="fav_added">Тут додано до обраного</string>
-  <string name="fav_removed">Тут видалено з обраного!</string>
-  <string name="reblog_added">Тут підбустчений!</string>
-  <string name="reblog_removed">Тут більше не буститься!</string>
+  <string name="fav_added">Дмух додано до обраного</string>
+  <string name="fav_removed">Дмух видалено з обраного!</string>
+  <string name="reblog_added">Передмухнуто!</string>
+  <string name="reblog_removed">Більше не передмухнуто!</string>
   <string name="reblog_by">Забустчено %1$s</string>
-  <string name="favourite_add">Додати цей тут до обраного?</string>
-  <string name="favourite_remove">Видалити цей тут з обраного?</string>
-  <string name="reblog_add">Забустити тут?</string>
-  <string name="reblog_remove">Відбустити тут?</string>
-  <string name="pin_add">Прикріпити цей тут?</string>
-  <string name="pin_remove">Відкріпити цей тут?</string>
+  <string name="favourite_add">Додати цей дмух до обраного?</string>
+  <string name="favourite_remove">Видалити цей дмух з обраного?</string>
+  <string name="reblog_add">Передмухнути?</string>
+  <string name="reblog_remove">Зняти передмух?</string>
+  <string name="pin_add">Прикріпити цей дмух?</string>
+  <string name="pin_remove">Відкріпити цей дмух?</string>
   <string name="more_action_1">Заглушити</string>
   <string name="more_action_2">Заблокувати</string>
   <string name="more_action_3">Повідомити про порушення</string>
@@ -121,10 +121,10 @@
   <string-array name="more_action_confirm">
     <item>Заглушити цей обліковий запис?</item>
     <item>Заблокувати цей обліковий запис?</item>
-    <item>Поскаржитися на цей тут?</item>
+    <item>Поскаржитися на цей дмух?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>Видалити цей тут?</item>
+    <item>Видалити цей дмух?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="one">%d відповідь</item>
@@ -147,19 +147,19 @@
   <!-- TOOT -->
   <string name="toot_cw_placeholder">Попередження</string>
   <string name="toot_placeholder">Що у Вас на думці?</string>
-  <string name="toot_it">ТУТ!</string>
+  <string name="toot_it">ДМУХ!</string>
   <string name="cw">CW</string>
   <string name="toot_title">Напишіть</string>
-  <string name="toot_title_reply">Відповісти на тут</string>
+  <string name="toot_title_reply">Відповісти на дмух</string>
   <string name="toot_no_space">Ви досягли ліміту в 500 символів!</string>
-  <string name="toot_select_image">Оберіть медіафайл</string>
-  <string name="toot_select_image_error">Сталася помилка під час вибору медіафайлу!</string>
+  <string name="toot_select_image">Оберіть медіа-файл</string>
+  <string name="toot_select_image_error">Сталася помилка під час вибору медіа-файлу!</string>
   <string name="toot_delete_media">Видалити цей медіа-файл?</string>
-  <string name="toot_error_no_content">Ваш тут пустий!</string>
-  <string name="toot_visibility_tilte">Видимість туту</string>
-  <string name="toots_visibility_tilte">Видимість тутів за замовченням: </string>
+  <string name="toot_error_no_content">Ваш дмух пустий!</string>
+  <string name="toot_visibility_tilte">Видимість дмуху</string>
+  <string name="toots_visibility_tilte">Видимість дмухів за замовченням: </string>
   <string name="toot_sent">Повідомлення було відправлено!</string>
-  <string name="toot_reply_content_title">Ви відповідаєте на цей тут:</string>
+  <string name="toot_reply_content_title">Ви відповідаєте на цей дмух:</string>
   <string name="toot_sensitive">Чутливий вміст?</string>
   <string-array name="toot_visibility">
     <item>Запостити в публічну стрічку</item>
@@ -168,11 +168,11 @@
     <item>Постити тільки до згаданих користувачів</item>
   </string-array>
   <string name="no_draft">Чернетки відсутні!</string>
-  <string name="choose_toot">Оберіть тут</string>
+  <string name="choose_toot">Оберіть дмух</string>
   <string name="choose_accounts">Оберіть обліковий запис</string>
   <string name="select_accounts">Оберіть деякі облікові записи</string>
   <string name="remove_draft">Видалити чернетку?</string>
-  <string name="show_reply">Натисніть, щоб показати оригінальний тут</string>
+  <string name="show_reply">Натисніть, щоб показати оригінальний дмух</string>
   <string name="upload_form_description">Прочитати для людей з вадами зору</string>
   <!-- Instance -->
   <string name="instance_no_description">Опис відсутній!</string>
@@ -182,7 +182,7 @@
   <string name="about_license">Ліцензія: </string>
   <string name="about_license_action">GNU GPLv3</string>
   <string name="about_code">Сирцевий код: </string>
-  <string name="about_yandex">Переклад тутів:</string>
+  <string name="about_yandex">Переклад дмухів:</string>
   <string name="about_thekinrar">Шукати екземпляри:</string>
   <string name="about_thekinrar_action">instances.social</string>
   <string name="thanks_text_logo">Дизайнер піктограм:</string>
@@ -191,18 +191,18 @@
   <!-- Accounts -->
   <string name="no_accounts">Немає облікових записів для відображення</string>
   <string name="no_follow_request">Запит на відмову від підписки</string>
-  <string name="status_cnt">Тути \n %1$s</string>
+  <string name="status_cnt">Дмухи \n %1$s</string>
   <string name="following_cnt">Підписані на \n %1$s</string>
   <string name="followers_cnt">Стежать за вами \n %1$s</string>
   <string name="pins_cnt">Закріплені \n %d</string>
   <string name="authorize">Авторизуватися</string>
   <string name="reject">Відхилити</string>
   <!-- Scheduled toots -->
-  <string name="no_scheduled_toots">Немає запланованих тутів для показу!</string>
-  <string name="no_scheduled_toots_indications">Напишіть тут, а потім оберіть <b>Запланувати</b> з верхнього меню.</string>
-  <string name="remove_scheduled">Видалити запланований тут?</string>
+  <string name="no_scheduled_toots">Немає запланованих дмухів для показу!</string>
+  <string name="no_scheduled_toots_indications">Дмухніть, а потім оберіть <b>Запланувати</b> з верхнього меню.</string>
+  <string name="remove_scheduled">Видалити запланований дмух?</string>
   <string name="media_count">Медіа: %d</string>
-  <string name="toot_scheduled">Тут було заплановано!</string>
+  <string name="toot_scheduled">Дмух було заплановано!</string>
   <string name="toot_scheduled_date">Запланована дата має бути більшою за поточну годину!</string>
   <string name="warning_battery">Економія батареї увімкнена. Може не працювати, як очікується.</string>
   <!-- timed mute -->
@@ -215,7 +215,7 @@
   <string name="notif_reblog">забустив ваш статус</string>
   <string name="notif_favourite">додав до обраного ваш статус</string>
   <string name="notif_follow">підписаний на вас</string>
-  <string name="notif_pouet">Новий тут з %1$s</string>
+  <string name="notif_pouet">Новий дмух з %1$s</string>
   <plurals name="other_notifications">
     <item quantity="one">додати нове сповіщення</item>
     <item quantity="few">додати нове сповіщення</item>
@@ -223,10 +223,10 @@
     <item quantity="other">додати нове сповіщення</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="one">додати інший тут до огляду</item>
-    <item quantity="few">додати інші тути до огляду</item>
-    <item quantity="many">додати інші тути до огляду</item>
-    <item quantity="other">додати інші тути до огляду</item>
+    <item quantity="one">додати інший дмух до огляду</item>
+    <item quantity="few">додати інші дмухи до огляду</item>
+    <item quantity="many">додати інші дмухи до огляду</item>
+    <item quantity="other">додати інші дмухи до огляду</item>
   </plurals>
   <string name="delete_notification_ask">Видалити це сповіщення?</string>
   <string name="delete_notification_ask_all">Видалити усі сповіщення?</string>
@@ -245,14 +245,14 @@
   <string name="toast_unmute">Обліковий запис більше не приглушено!</string>
   <string name="toast_follow">На обліковий запис підписалися!</string>
   <string name="toast_unfollow">Ви більше не підписані на обліковий запис!</string>
-  <string name="toast_reblog">Тут підбустчений!</string>
-  <string name="toast_unreblog">Тут більше не буститься!</string>
-  <string name="toast_favourite">Тут додано до обраного!</string>
-  <string name="toast_unfavourite">Тут видалено з обраного!</string>
-  <string name="toast_report">На тут поскаржилися!</string>
-  <string name="toast_unstatus">Тут видалено!</string>
-  <string name="toast_pin">Тут закріплено!</string>
-  <string name="toast_unpin">Тут відкріплено!</string>
+  <string name="toast_reblog">Передмухнуто!</string>
+  <string name="toast_unreblog">Більше не передмухнуто!</string>
+  <string name="toast_favourite">Дмух додано до обраного!</string>
+  <string name="toast_unfavourite">Дмух видалено з обраного!</string>
+  <string name="toast_report">На дмух поскаржилися!</string>
+  <string name="toast_unstatus">Дмух видалено!</string>
+  <string name="toast_pin">Дмух закріплено!</string>
+  <string name="toast_unpin">Дмух відкріплено!</string>
   <string name="toast_error">Вибачте, виникла помилка!</string>
   <string name="toast_code_error">Сталася помилка! Екземпляр не повернув код авторизації!</string>
   <string name="toast_error_instance">Домен екземпляру не валідний!</string>
@@ -265,11 +265,11 @@
   <string name="toast_error_translate">Виникла помилка під час перекладу!</string>
   <string name="toast_toot_saved">Чернетку збережено!</string>
   <string name="toast_error_char_limit">Ви впевнені, що цей екземпляр дозволяє таке число символів? Зазвичай, це 500 символів.</string>
-  <string name="toast_visibility_changed">Видимість тутів змінено для облікового запису %1$s</string>
+  <string name="toast_visibility_changed">Видимість дмухів змінена для облікового запису %1$s</string>
   <string name="toast_empty_search">Назва екземпляру та ім\'я не можуть бути пустими!</string>
   <!-- Settings -->
   <string name="settings_title_optimisation">Оптимізація завантаження</string>
-  <string name="set_toots_page">Число тутів за одиницю завантаження</string>
+  <string name="set_toots_page">Число дмухів за одиницю завантаження</string>
   <string name="set_accounts_page">Число облікових записів за одиницю завантаження</string>
   <string name="set_notifications_page">Число сповіщень за одиницю завантаження</string>
   <string name="set_attachment_always">Завжди</string>
@@ -287,7 +287,7 @@
   <string name="set_folder_title">Шлях: </string>
   <string name="set_auto_store_toot">Зберігати чернетки автоматично</string>
   <string name="set_bubble_counter">Показати лічильники</string>
-  <string name="set_auto_add_media_url">Додати URL медіа-файлу до туту</string>
+  <string name="set_auto_add_media_url">Додати URL медіа-файлу до дмуху</string>
   <string name="settings_title_notifications">Керування сповіщеннями</string>
   <string name="set_notif_follow">Сповіщати, якщо хтось підписується</string>
   <string name="set_notif_follow_ask">Сповіщати, якщо хтось робить запит підписки</string>
@@ -351,7 +351,7 @@
     <item>Білий</item>
   </string-array>
   <string name="set_title_news">Новини</string>
-  <string name="set_notification_news">Сповістити про нові тути на домашній стрічці</string>
+  <string name="set_notification_news">Сповістити про нові дмухи на домашній стрічці</string>
   <string name="set_show_error_messages">Показати повідомлення про помилки</string>
   <string name="action_follow">Підписатися</string>
   <string name="action_unfollow">Відписатися</string>
@@ -369,7 +369,7 @@
   <string name="settings_popup_title">Push-сповіщення</string>
   <string name="settings_popup_message">
 Будь ласка, потрібно підтвердити отримання push-сповіщень. Ви можете змінити налаштування пізніше (вкладка сповіщень).    </string>
-  <string name="settings_popup_timeline">Для непрочитаний тутів у домашній стрічці?</string>
+  <string name="settings_popup_timeline">Для непрочитаних дмухів у домашній стрічці?</string>
   <string name="settings_popup_notification">Для непрочитаних сповіщень?</string>
   <!-- CACHE -->
   <string name="cache_title">Очистити кеш</string>
@@ -379,7 +379,7 @@
   <!-- ACTIVITY CACHE -->
   <string name="action_sync">Синхронізувати</string>
   <string name="action_filter">Фільтрувати</string>
-  <string name="owner_cached_toots">Ваші тути</string>
+  <string name="owner_cached_toots">Ваші дмухи</string>
   <string name="v_public">Загальнодоступне</string>
   <string name="v_unlisted">Поза списком</string>
   <string name="v_private">Приватнi</string>
@@ -388,14 +388,14 @@
   <string name="show_media">Показати всі медіа</string>
   <string name="show_pinned">Показати закріплені</string>
   <string name="filter_no_result">Відповідних повідомлень не знайдено!</string>
-  <string name="data_backup_toots">Резервне копіювання тутів для %1$s</string>
-  <string name="data_backup_success">%1$s нових тутів імпортовано</string>
+  <string name="data_backup_toots">Резервне копіювання дмухів для %1$s</string>
+  <string name="data_backup_success">%1$s нових дмухів імпортовано</string>
   <string-array name="filter_select">
     <item>Ні</item>
     <item>Тільки</item>
     <item>Обидва</item>
   </string-array>
-  <string name="owner_cached_toots_empty">Ніяких тутів не знайдено в базі даних. Будь ласка, використовуйте кнопку синхронізації в меню, щоб отримати їх.</string>
+  <string name="owner_cached_toots_empty">Жодного дмуху не знайдено в базі даних. Будь ласка, використовуйте кнопку синхронізації в меню, щоб отримати їх.</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">Записані дані</string>
   <string name="privacy_data">
@@ -408,34 +408,33 @@
     </string>
   <string name="privacy_API_authorizations_title">API дозволи:</string>
   <string name="privacy_API_authorizations">
-        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
+- <b>Читати</b>: Читати дані.\n
+        - <b>Писати</b>: Постити статуси і завантажувати медіа-файли.\n
+        - <b>Підписка</b>: Підписка, відписка, блок, розблок.\n\n
+        <b>&#9888; Ці дії відбуваються тільки за запитом користувача.</b>
     </string>
   <string name="privacy_API_title">Бібліотеки</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+Додаток <b>не відслідковує користувача</b> І не містить реклами.\n\n
+        Використання сторонніх бібліотек мінімізоване: \n
+        - <b>Glide</b>: для управління медіа-файлами\n
+        - <b>Android-Job</b>: Для управління сервісами\n
+        - <b>PhotoView</b>: Для управління зображеннями\n
     </string>
-  <string name="privacy_API_yandex_title">Переклад тутів</string>
+  <string name="privacy_API_yandex_title">Переклад дмухів</string>
   <string name="privacy_API_yandex_authorizations">
-        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
+Додаток перекладає дмухи через Yandex API.\n
+        Умови конфіденційності Yandex можна знайти за посиланням: https://yandex.ru/legal/confidential/?lang=en
     </string>
   <string name="thanks_text">
-        Thank you to Stéphane for the logo.
+Дякуємо Stéphane за лого.
     </string>
   <string name="thanks_text_dev">
-        Thank you to:
-    </string>
+Подяки:    </string>
   <string name="filter_regex">Відфільтруйте регулярним виразом</string>
   <string name="search">Пошук</string>
   <string name="delete">Видалити</string>
-  <string name="fetch_more_toots">Отримати більше тутів…</string>
+  <string name="fetch_more_toots">Отримати більше дмухів…</string>
   <!-- About lists -->
   <string name="action_lists">Списки</string>
   <string name="action_lists_confirm_delete">Ви дійсно бажаєте остаточно видалити цей список?</string>
@@ -449,24 +448,24 @@
   <string name="action_lists_search_users">Шукати серед людей, за якими ви слідкуєте</string>
   <string name="action_lists_owner">Ваші списки</string>
   <!-- Migration -->
-  <string name="account_moved_to">%1$s has moved to %2$s</string>
+  <string name="account_moved_to">%1$s відправлено до %2$s</string>
   <string name="show_boost_count">Показати лічильники бустів/обраного</string>
   <string name="issue_login_title">Автентифікація не працює?</string>
   <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
+        <b>Деякі поради, що можуть допомогти:</b>\n\n
+        - Перевірте правильність написання назви екземпляру\n\n
+        - Перевірте, чи екземпляр працює\n\n
+        - Якщо використовуєте двофакторну авторизацію (2FA), будь ласка скористайтеся посиланням внизу, коли назву екземпляру заповнено\n\n
+        - Також можна використовувати посилання без 2FA\n\n
+        - Якщо все одно не працює, повідомте нам на GitHub: https://github.com/stom79/mastalab/issues
     </string>
   <string name="media_ready">Медіа-файл завантажений. Натисніть щоб відобразити.</string>
   <string name="data_export_start">Ця дія довготривала, ви отримаєте сповіщення після закінчення.</string>
   <string name="data_export_running">Почекайте, будь ласка…</string>
   <string name="data_export">Експорт статусів</string>
-  <string name="data_export_toots">Export statuses for %1$s</string>
-  <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-  <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+  <string name="data_export_toots">Експорт статусів для %1$s</string>
+  <string name="data_export_success">%1$s дмухів з %2$s були експортовані.</string>
+  <string name="data_export_error">Щось пройшло не так під час експорту даних з %1$s</string>
   <!-- Proxy -->
   <string name="proxy_set">Проксі</string>
   <string name="proxy_type">Тип</string>
