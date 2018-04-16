@@ -98,22 +98,22 @@
   <string name="no_emoji">该应用程序当前没有收集自定义表情。</string>
   <string name="live_notif">实时通知</string>
   <!-- Status -->
-  <string name="no_status">没有 toot 可以显示</string>
-  <string name="fav_added">已将 toot 加入收藏</string>
-  <string name="fav_removed">已从收藏中移除该 toot！</string>
-  <string name="reblog_added">已转发此条 toot！</string>
-  <string name="reblog_removed">已不再转发此条 toot！</string>
-  <string name="reblog_by">由 %1$s 转发</string>
-  <string name="favourite_add">将这条 toot 添加到您的收藏中？</string>
-  <string name="favourite_remove">从您的收藏中移除这条 toot？</string>
-  <string name="reblog_add">转发这条 toot？</string>
-  <string name="reblog_remove">取消转发这条 toot？</string>
-  <string name="pin_add">将这条 toot 置顶？</string>
-  <string name="pin_remove">取消这条 toot 的置顶状态？</string>
+  <string name="no_status">没有嘟文可以显示</string>
+  <string name="fav_added">已将 嘟文加入收藏</string>
+  <string name="fav_removed">已从收藏中移除该 嘟文！</string>
+  <string name="reblog_added">此嘟文已被转嘟！</string>
+  <string name="reblog_removed">此嘟文已不被转嘟！</string>
+  <string name="reblog_by">由 %1$s 转嘟</string>
+  <string name="favourite_add">将这条嘟文添加到您的收藏中吗？</string>
+  <string name="favourite_remove">从您的收藏中移除这条嘟文吗？</string>
+  <string name="reblog_add">转嘟这条嘟文吗？</string>
+  <string name="reblog_remove">取消转嘟这条嘟文吗？</string>
+  <string name="pin_add">将这条嘟文置顶吗？</string>
+  <string name="pin_remove">取消这条嘟文的置顶吗？</string>
   <string name="more_action_1">静音</string>
-  <string name="more_action_2">阻止</string>
-  <string name="more_action_3">报告</string>
-  <string name="more_action_4">移出</string>
+  <string name="more_action_2">屏蔽</string>
+  <string name="more_action_3">举报</string>
+  <string name="more_action_4">移除</string>
   <string name="more_action_5">复制</string>
   <string name="more_action_6">共享</string>
   <string name="more_action_7">提及</string>
@@ -121,10 +121,10 @@
   <string-array name="more_action_confirm">
     <item>是否将此帐户静音？</item>
     <item>是否将此帐户屏蔽？</item>
-    <item>举报这条 toot？</item>
+    <item>举报这条嘟文吗？</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>移除这条 toot？</item>
+    <item>移除这条嘟文吗？</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="other">%d 个回复</item>
@@ -144,19 +144,19 @@
   <!-- TOOT -->
   <string name="toot_cw_placeholder">警告</string>
   <string name="toot_placeholder">你在想什么？</string>
-  <string name="toot_it">TOOT!</string>
+  <string name="toot_it">嘟嘟！</string>
   <string name="cw">内容警告</string>
-  <string name="toot_title">写一条 toot</string>
-  <string name="toot_title_reply">回复一条 toot</string>
+  <string name="toot_title">写一条嘟文</string>
+  <string name="toot_title_reply">回复一条嘟文</string>
   <string name="toot_no_space">您已达到允许的 500 字符上限！</string>
-  <string name="toot_select_image">选择媒体</string>
+  <string name="toot_select_image">选择一个媒体</string>
   <string name="toot_select_image_error">在选择媒体时出现了错误！</string>
-  <string name="toot_delete_media">是否删除此媒体？</string>
-  <string name="toot_error_no_content">您的 toot 是空的！</string>
-  <string name="toot_visibility_tilte">Toot 的可见性</string>
-  <string name="toots_visibility_tilte">默认情况下，toot 的可见性： </string>
-  <string name="toot_sent">Toot 已发送！</string>
-  <string name="toot_reply_content_title">您正在回复此 toot：</string>
+  <string name="toot_delete_media">删除此媒体吗？</string>
+  <string name="toot_error_no_content">您的嘟文是空的！</string>
+  <string name="toot_visibility_tilte">嘟文的可见性</string>
+  <string name="toots_visibility_tilte">默认情况下，嘟文的可见性： </string>
+  <string name="toot_sent">嘟文已发送！</string>
+  <string name="toot_reply_content_title">您正在回复此嘟文：</string>
   <string name="toot_sensitive">敏感内容？</string>
   <string-array name="toot_visibility">
     <item>张贴到公共时间线</item>
