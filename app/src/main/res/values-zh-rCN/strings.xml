@@ -63,21 +63,21 @@
   <string name="favourite">收藏</string>
   <string name="follow">新关注者</string>
   <string name="mention">提及</string>
-  <string name="reblog">转发</string>
-  <string name="show_boosts">显示转发</string>
-  <string name="show_replies">显示答复</string>
+  <string name="reblog">转嘟</string>
+  <string name="show_boosts">显示转嘟</string>
+  <string name="show_replies">显示回复</string>
   <string name="action_open_in_web">在浏览器中打开</string>
   <string name="translate">翻译</string>
   <string name="please_wait">请等待几秒钟，再进行此操作。</string>
   <!--- Menu -->
   <string name="home_menu">首页</string>
   <string name="local_menu">本地时间线</string>
-  <string name="global_menu">联邦时间线</string>
+  <string name="global_menu">联合时间线</string>
   <string name="neutral_menu_title">选项</string>
   <string name="favorites_menu">收藏</string>
   <string name="communication_menu_title">交流</string>
   <string name="muted_menu">静音用户</string>
-  <string name="blocked_menu">被封用户</string>
+  <string name="blocked_menu">被屏蔽用户</string>
   <string name="remote_follow_menu">远程关注</string>
   <string name="notifications">通知</string>
   <string name="follow_request">关注请求</string>
@@ -92,9 +92,9 @@
   <string name="choose_file_error">找不到文件资源管理器！</string>
   <string name="click_to_change">点按路径以更改</string>
   <string name="failed">失败！</string>
-  <string name="scheduled_toots">定时 toots</string>
+  <string name="scheduled_toots">预定toots</string>
   <string name="disclaimer_full">下面的信息可能不完全反映该用户的资料。</string>
-  <string name="insert_emoji">插入表情符号</string>
+  <string name="insert_emoji">插入 emoji 表情</string>
   <string name="no_emoji">该应用程序当前没有收集自定义表情。</string>
   <string name="live_notif">实时通知</string>
   <!-- Status -->
@@ -435,7 +435,7 @@ Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/lega
   <!-- About lists -->
   <string name="action_lists">列表</string>
   <string name="action_lists_confirm_delete">您确实要永久删除此列表吗？</string>
-  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
+  <string name="action_lists_empty_content">这张列表上还没有内容，当此列表的成员发布新状态时, 它们将出现在此处。</string>
   <string name="action_lists_add_to">添加到列表</string>
   <string name="action_lists_remove_from">从列表中移除</string>
   <string name="action_lists_create">新建列表</string>
@@ -448,14 +448,13 @@ Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/lega
   <string name="account_moved_to">%1$s 已被移动到 %2$s</string>
   <string name="show_boost_count">显示转发/收藏数目</string>
   <string name="issue_login_title">身份验证不起作用？</string>
-  <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
-    </string>
+  <string name="issue_login_message"><b>有用的检查可能有助于解决问题:</b>\n\n 
+- 检查实例名是否拼写错误\n\n 
+- 检查您的实例确实存在\n\n 
+- 如果您使用双重认证 (2FA), 请使用底部的链接 (一旦实例名填好后)\n\n 
+- 您也可这个链接而不使用双重认证(2FA)\n\n 
+- 如果仍不工作，请向https://github.com/stom79/mastalab/issues提交问题。 
+</string>
   <string name="media_ready">Media has been loaded. Click here to display it.</string>
   <string name="data_export_start">此操作可能会很长。当它完成时，您将会收到通知。</string>
   <string name="data_export_running">仍在运行，请稍候.……</string>
