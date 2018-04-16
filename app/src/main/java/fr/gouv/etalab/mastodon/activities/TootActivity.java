@@ -343,6 +343,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 toot_picture_container.setVisibility(View.VISIBLE);
                 picture_scrollview.setVisibility(View.VISIBLE);
                 toot_picture.setEnabled(false);
+                toot_it.setEnabled(false);
                 new HttpsConnection(TootActivity.this).upload(bs, TootActivity.this);
             }
             toot_content.setText(String.format("\n\nvia @%s\n\n%s\n\n", tootMention, urlMention));
@@ -687,6 +688,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                         e.printStackTrace();
                         Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
                         toot_picture.setEnabled(true);
+                        toot_it.setEnabled(true);
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
@@ -780,6 +782,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             } catch (FileNotFoundException e) {
                 Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
                 toot_picture.setEnabled(true);
+                toot_it.setEnabled(true);
             }
         }else if(requestCode == Helper.REQ_CODE_SPEECH_INPUT && resultCode == Activity.RESULT_OK){
             if (null != data) {
@@ -847,12 +850,15 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             if( bs == null)
                 return;
             ImageButton toot_picture;
+            Button toot_it;
             LinearLayout toot_picture_container;
             toot_picture = this.activityWeakReference.get().findViewById(R.id.toot_picture);
+            toot_it = this.activityWeakReference.get().findViewById(R.id.toot_it);
             toot_picture_container = this.activityWeakReference.get().findViewById(R.id.toot_picture_container);
 
             toot_picture_container.setVisibility(View.VISIBLE);
             toot_picture.setEnabled(false);
+            toot_it.setEnabled(false);
             new HttpsConnection(this.activityWeakReference.get()).upload(bs, (TootActivity)this.activityWeakReference.get());
         }
     }
@@ -1319,6 +1325,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             if( attachments.size() == 0 )
                 toot_picture_container.setVisibility(View.GONE);
             toot_picture.setEnabled(true);
+            toot_it.setEnabled(true);
             return;
         }
         boolean alreadyAdded = false;
@@ -1387,6 +1394,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             attachments.add(attachment);
             if (attachments.size() < 4)
                 toot_picture.setEnabled(true);
+            toot_it.setEnabled(true);
             toot_sensitive.setVisibility(View.VISIBLE);
             picture_scrollview.setVisibility(View.VISIBLE);
         }else {
@@ -1407,6 +1415,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
             toot_picture_container.setVisibility(View.VISIBLE);
             toot_picture.setEnabled(false);
+            toot_it.setEnabled(false);
             new HttpsConnection(TootActivity.this).upload(bs, TootActivity.this);
         }
     }
@@ -1681,7 +1690,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                             toot_content.setText(newContent);
                             toot_space_left.setText(String.valueOf(toot_content.length()));
                             toot_content.setSelection(newPosition);
-                            AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, new ArrayList<Account>());
+                            AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, new ArrayList<>());
                             toot_content.setThreshold(1);
                             toot_content.setAdapter(accountsListAdapter);
                         }
@@ -1732,7 +1741,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                     toot_content.setText(newContent);
                     toot_space_left.setText(String.valueOf(toot_content.length()));
                     toot_content.setSelection(newPosition);
-                    EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(TootActivity.this, new ArrayList<Emojis>());
+                    EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(TootActivity.this, new ArrayList<>());
                     toot_content.setThreshold(1);
                     toot_content.setAdapter(emojisSearchAdapter);
                 }
@@ -1782,7 +1791,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                     toot_content.setText(newContent);
                     toot_space_left.setText(String.valueOf(toot_content.length()));
                     toot_content.setSelection(newPosition);
-                    TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(TootActivity.this, new ArrayList<String>());
+                    TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(TootActivity.this, new ArrayList<>());
                     toot_content.setThreshold(1);
                     toot_content.setAdapter(tagsSearchAdapter);
                 }
