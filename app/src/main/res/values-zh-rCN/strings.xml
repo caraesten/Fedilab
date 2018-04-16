@@ -135,7 +135,7 @@
   <string name="bookmark_remove">移除书签</string>
   <string name="bookmarks_empty">没有要显示的书签</string>
   <string name="status_bookmarked">状态已被加入到书签！</string>
-  <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+  <string name="status_unbookmarked">状态已被从书签移除！</string>
   <!-- Date -->
   <string name="date_seconds">%d s</string>
   <string name="date_minutes">%d m</string>
