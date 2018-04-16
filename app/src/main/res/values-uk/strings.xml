@@ -63,8 +63,8 @@
   <string name="favourite">Обране</string>
   <string name="follow">Нові підписники</string>
   <string name="mention">Згадки</string>
-  <string name="reblog">Бусти</string>
-  <string name="show_boosts">Показати бусти</string>
+  <string name="reblog">Передмухи</string>
+  <string name="show_boosts">Показати передмухнуте</string>
   <string name="show_replies">Показати відповіді</string>
   <string name="action_open_in_web">Відкрити в браузері</string>
   <string name="translate">Перекласти</string>
@@ -103,7 +103,7 @@
   <string name="fav_removed">Дмух видалено з обраного!</string>
   <string name="reblog_added">Передмухнуто!</string>
   <string name="reblog_removed">Більше не передмухнуто!</string>
-  <string name="reblog_by">Забустчено %1$s</string>
+  <string name="reblog_by">Передмухнув(-ла) %1$s</string>
   <string name="favourite_add">Додати цей дмух до обраного?</string>
   <string name="favourite_remove">Видалити цей дмух з обраного?</string>
   <string name="reblog_add">Передмухнути?</string>
@@ -212,9 +212,9 @@
   <!-- Notifications -->
   <string name="no_notifications">Немає сповіщень для показу</string>
   <string name="notif_mention">згадав вас</string>
-  <string name="notif_reblog">забустив ваш статус</string>
+  <string name="notif_reblog">передмухнув ваш статус</string>
   <string name="notif_favourite">додав до обраного ваш статус</string>
-  <string name="notif_follow">підписаний на вас</string>
+  <string name="notif_follow">підписався(-лась) на вас</string>
   <string name="notif_pouet">Новий дмух з %1$s</string>
   <plurals name="other_notifications">
     <item quantity="one">додати нове сповіщення</item>
@@ -291,10 +291,10 @@
   <string name="settings_title_notifications">Керування сповіщеннями</string>
   <string name="set_notif_follow">Сповіщати, якщо хтось підписується</string>
   <string name="set_notif_follow_ask">Сповіщати, якщо хтось робить запит підписки</string>
-  <string name="set_notif_follow_share">Сповіщати, якщо хтось бустить ваш статус</string>
+  <string name="set_notif_follow_share">Сповіщати, якщо хтось передмухнув ваш статус</string>
   <string name="set_notif_follow_add">Сповіщати, якщо хтось додав статус до обраного</string>
   <string name="set_notif_follow_mention">Сповіщати, якщо хтось згадує вас</string>
-  <string name="set_share_validation">Показати діалогове вікно підтвердження перед тим, як бустити</string>
+  <string name="set_share_validation">Показати діалогове вікно підтвердження перед тим, як передмухнути</string>
   <string name="set_share_validation_fav">Показати діалогове вікно підтвердження перед тим, як додати до обраного</string>
   <string name="settings_title_more_options">Розширені налаштування</string>
   <string name="set_wifi_only">Повідомити тільки при Wi-Fi</string>
@@ -361,7 +361,7 @@
   <string name="action_no_action">Ніяких дій</string>
   <string name="action_unmute">Скасувати \"ігнор\"</string>
   <string name="request_sent">Запит надіслано</string>
-  <string name="followed_by">Підписаний на вас</string>
+  <string name="followed_by">Підписався(-лась) на вас</string>
   <string name="action_search">Пошук</string>
   <string name="set_capitalize">Починати відповіді з великої букви</string>
   <string name="set_resize_picture">Змінити розмір зображень</string>
@@ -449,7 +449,7 @@
   <string name="action_lists_owner">Ваші списки</string>
   <!-- Migration -->
   <string name="account_moved_to">%1$s відправлено до %2$s</string>
-  <string name="show_boost_count">Показати лічильники бустів/обраного</string>
+  <string name="show_boost_count">Показати лічильники передмухнутого/обраного</string>
   <string name="issue_login_title">Автентифікація не працює?</string>
   <string name="issue_login_message">
         <b>Деякі поради, що можуть допомогти:</b>\n\n
