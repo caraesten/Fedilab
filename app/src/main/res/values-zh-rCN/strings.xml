@@ -380,15 +380,15 @@
   <string name="v_keywords">一些关键词...</string>
   <string name="show_media">显示媒体</string>
   <string name="show_pinned">显示被置顶</string>
-  <string name="filter_no_result">No matching result found!</string>
-  <string name="data_backup_toots">Backup toots for %1$s</string>
-  <string name="data_backup_success">%1$s new toots have been imported</string>
+  <string name="filter_no_result">没发现匹配的结果！</string>
+  <string name="data_backup_toots">备份嘟文约 %1$s</string>
+  <string name="data_backup_success">%1$s新的嘟文已被导入</string>
   <string-array name="filter_select">
-    <item>No</item>
-    <item>Only</item>
-    <item>Both</item>
+    <item>否</item>
+    <item>仅</item>
+    <item>二者</item>
   </string-array>
-  <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+  <string name="owner_cached_toots_empty">在数据库中未发现嘟文，请使用菜单中的同步按钮来检索它们。</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">记录的数据</string>
   <string name="privacy_data">
@@ -413,12 +413,12 @@
         <b>&#9888; 这些操作仅在用户请求时执行. </b>    </string>
   <string name="privacy_API_title">跟踪和库</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
-    </string>
+  本应用程序 <b>不使用跟踪工具</b>(类似观众测量、出错报告等等)， 并且不包含和植入任何广告。\n\n 
+  所使用的库也是最为精简的: \n 
+  -<b>Glide</b>: 用于管理媒体\n
+  -<b>Android-Job</b>: 用于管理服务\n
+  -<b>PhotoView</b>: 用于管理图片\n    
+      </string>
   <string name="privacy_API_yandex_title">Toots 的翻译</string>
   <string name="privacy_API_yandex_authorizations">
 本应用程序提供了使用设备的区域设置和 Yandex API 进行翻译的能力。\n
@@ -429,9 +429,9 @@ Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/lega
   <string name="thanks_text_dev">
 感谢致以:    </string>
   <string name="filter_regex">按正则表达式进行筛选</string>
-  <string name="search">Search</string>
-  <string name="delete">Delete</string>
-  <string name="fetch_more_toots">Fetch more toots…</string>
+  <string name="search">搜索​​​​</string>
+  <string name="delete">删除</string>
+  <string name="fetch_more_toots">获取更多嘟文...</string>
   <!-- About lists -->
   <string name="action_lists">列表</string>
   <string name="action_lists_confirm_delete">您确实要永久删除此列表吗？</string>
