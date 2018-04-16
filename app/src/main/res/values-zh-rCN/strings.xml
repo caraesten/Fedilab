@@ -168,9 +168,9 @@
   <string name="choose_toot">选择一条 toot</string>
   <string name="choose_accounts">选择帐号</string>
   <string name="select_accounts">选择一些帐户</string>
-  <string name="remove_draft">删除草稿？</string>
-  <string name="show_reply">点击按钮以显示原始 toot</string>
-  <string name="upload_form_description">为视觉障碍人士描述</string>
+  <string name="remove_draft">删除草稿吗？</string>
+  <string name="show_reply">点击按钮以显示原始嘟文</string>
+  <string name="upload_form_description">描述给视觉障碍人士</string>
   <!-- Instance -->
   <string name="instance_no_description">没有可用的描述！</string>
   <!-- About -->
@@ -179,7 +179,7 @@
   <string name="about_license">许可协议：</string>
   <string name="about_license_action">GNU GPL V3</string>
   <string name="about_code">源代码：</string>
-  <string name="about_yandex">Toot 的翻译：</string>
+  <string name="about_yandex">嘟文的翻译：</string>
   <string name="about_thekinrar">搜索实例：</string>
   <string name="about_thekinrar_action">instances.social</string>
   <string name="thanks_text_logo">图标设计者：</string>
@@ -190,34 +190,34 @@
   <string name="no_follow_request">无关注请求</string>
   <string name="status_cnt">嘟文 \n %1$s</string>
   <string name="following_cnt">关注 \n %1$s</string>
-  <string name="followers_cnt">粉丝\n %1$s</string>
-  <string name="pins_cnt">前端显示的 \n %d</string>
+  <string name="followers_cnt">关注者\n %1$s</string>
+  <string name="pins_cnt">置顶显示的 \n %d</string>
   <string name="authorize">授权</string>
   <string name="reject">拒绝</string>
   <!-- Scheduled toots -->
-  <string name="no_scheduled_toots">没有定时的 toot 可以显示！</string>
-  <string name="no_scheduled_toots_indications">编写一条 toot，然后从顶部菜单中选择 <b>定时发布</b>。</string>
-  <string name="remove_scheduled">删除该定时 toot？</string>
+  <string name="no_scheduled_toots">没有预定的嘟文可以显示！</string>
+  <string name="no_scheduled_toots_indications">编写一条嘟文，然后从顶部菜单中选择 <b>预定</b>。</string>
+  <string name="remove_scheduled">删除该预定嘟文吗？</string>
   <string name="media_count">媒体: %d</string>
-  <string name="toot_scheduled">Toot 将在预定时间发送！</string>
-  <string name="toot_scheduled_date">预定的时间必须晚于当前时间！</string>
-  <string name="warning_battery">已启用省电模式！它可能无法按预期方式工作。</string>
+  <string name="toot_scheduled">嘟文将在预定时间发送！</string>
+  <string name="toot_scheduled_date">预定的时间必须比现在晚一小时！</string>
+  <string name="warning_battery">已启用省电模式！它可能无法按预期工作。</string>
   <!-- timed mute -->
   <string name="timed_mute_date_error">静音时间应超过1分钟。</string>
   <string name="timed_mute_date">%1$s 已被静音直至 %2$s.\n 您可在他/她的档案页取消静音。</string>
   <string name="timed_mute_profile">%1$s 已被静音直至 %2$s.\n 点击这里取消该用户的静音。</string>
   <!-- Notifications -->
   <string name="no_notifications">没有要显示的通知</string>
-  <string name="notif_mention">提到你</string>
-  <string name="notif_reblog">转发了您的状态</string>
+  <string name="notif_mention">提及了您</string>
+  <string name="notif_reblog">转嘟了您的状态</string>
   <string name="notif_favourite">收藏您的状态</string>
   <string name="notif_follow">关注了您</string>
-  <string name="notif_pouet">来自 %1$s 的新 toot</string>
+  <string name="notif_pouet">新的嘟文来自 %1$s</string>
   <plurals name="other_notifications">
     <item quantity="other">和另外一个通知</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="other">和 %d 条其他的 toot 等待发现</item>
+    <item quantity="other">和 %d 条其它的嘟文等待发现</item>
   </plurals>
   <string name="delete_notification_ask">是否删除一条通知？</string>
   <string name="delete_notification_ask_all">是否删除所有通知？</string>
