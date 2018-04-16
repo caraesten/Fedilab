@@ -219,8 +219,8 @@
   <plurals name="other_notif_hometimeline">
     <item quantity="other">和 %d 条其它的嘟文等待发现</item>
   </plurals>
-  <string name="delete_notification_ask">是否删除一条通知？</string>
-  <string name="delete_notification_ask_all">是否删除所有通知？</string>
+  <string name="delete_notification_ask">删除一条通知吗？</string>
+  <string name="delete_notification_ask_all">删除所有通知吗？</string>
   <string name="delete_notification">已删除该通知！</string>
   <string name="delete_notification_all">已删除所有通知！</string>
   <!-- HEADER -->
@@ -228,7 +228,7 @@
   <string name="followers">关注者</string>
   <string name="pinned_toots">已置顶</string>
   <!-- TOAST -->
-  <string name="client_error">无法获取客户端 id！</string>
+  <string name="client_error">无法获取客户id！</string>
   <string name="no_internet">没有互联网连接！</string>
   <string name="toast_block">该帐户已被屏蔽！</string>
   <string name="toast_unblock">该帐户不再被屏蔽！</string>
@@ -236,33 +236,33 @@
   <string name="toast_unmute">该帐户不再被静音！</string>
   <string name="toast_follow">已关注此账户！</string>
   <string name="toast_unfollow">已不再关注此账户！</string>
-  <string name="toast_reblog">Toot 已被转发！</string>
-  <string name="toast_unreblog">已撤销转发此条 toot！</string>
-  <string name="toast_favourite">Toot被添加进了收藏夹!</string>
+  <string name="toast_reblog">嘟文已被转嘟！</string>
+  <string name="toast_unreblog">嘟文已不再被转嘟！</string>
+  <string name="toast_favourite">嘟文被添加进了您的收藏夹!</string>
   <string name="toast_unfavourite">已从您的收藏中移除该 toot！</string>
-  <string name="toast_report">已报告这条 toot！</string>
-  <string name="toast_unstatus">已删除这条 toot！</string>
-  <string name="toast_pin">已将这条 toot 置顶！</string>
-  <string name="toast_unpin">已将这条 toot 取消置顶！</string>
+  <string name="toast_report">嘟文已被举报！</string>
+  <string name="toast_unstatus">嘟文已被删除！</string>
+  <string name="toast_pin">嘟文已被置顶！</string>
+  <string name="toast_unpin">嘟文已被取消置顶！</string>
   <string name="toast_error">哎呀！出现了一个错误！</string>
   <string name="toast_code_error">发生错误！该实例未返回认证代码！</string>
   <string name="toast_error_instance">该实例域名似乎是无效的！</string>
   <string name="toast_error_loading_account">在帐户间切换时发生错误！</string>
-  <string name="toast_error_search">搜索时出错!</string>
-  <string name="toast_error_login">无法登录!</string>
-  <string name="toast_update_credential_ok">配置文件数据已保存!</string>
-  <string name="nothing_to_do">不能采取任何行动</string>
-  <string name="toast_saved">媒体已保存!</string>
-  <string name="toast_error_translate">翻译时出错!</string>
-  <string name="toast_toot_saved">草稿被保存!</string>
+  <string name="toast_error_search">搜索时出错！</string>
+  <string name="toast_error_login">无法登录！</string>
+  <string name="toast_update_credential_ok">个人资料数据已保存！</string>
+  <string name="nothing_to_do">无法采取任何行动</string>
+  <string name="toast_saved">媒体已保存！</string>
+  <string name="toast_error_translate">翻译时出错！</string>
+  <string name="toast_toot_saved">草稿已被保存！</string>
   <string name="toast_error_char_limit">您确定此实例是否允许此数量的字符？通常, 此值接近500个字符。</string>
-  <string name="toast_visibility_changed">已更改帐户 %1$s 的 toot 可见性</string>
+  <string name="toast_visibility_changed">已更改帐户 %1$s 的嘟文可见性</string>
   <string name="toast_empty_search">实例名称和屏幕名称不能为空!</string>
   <!-- Settings -->
   <string name="settings_title_optimisation">优化加载</string>
-  <string name="set_toots_page">每次加载的 toot 数量</string>
-  <string name="set_accounts_page">每次加载的帐户数</string>
-  <string name="set_notifications_page">每次加载的通知数</string>
+  <string name="set_toots_page">每次加载的嘟文数量</string>
+  <string name="set_accounts_page">每次加载的帐户数量</string>
+  <string name="set_notifications_page">每次加载的通知数量</string>
   <string name="set_attachment_always">始终</string>
   <string name="set_attachment_wifi">WIFI</string>
   <string name="set_attachment_ask">询问</string>
@@ -282,13 +282,13 @@
   <string name="settings_title_notifications">管理通知</string>
   <string name="set_notif_follow">当有人关注您时通知</string>
   <string name="set_notif_follow_ask">当有人请求关注您时通知您</string>
-  <string name="set_notif_follow_share">当某人转发您的状态时通知您</string>
+  <string name="set_notif_follow_share">当某人转嘟您的状态时通知您</string>
   <string name="set_notif_follow_add">当某人收藏您的状态时通知您</string>
   <string name="set_notif_follow_mention">当有人提到您时通知您</string>
-  <string name="set_share_validation">转发前显示确认对话框</string>
+  <string name="set_share_validation">转嘟前显示确认对话框</string>
   <string name="set_share_validation_fav">在添加到收藏夹之前显示确认对话框</string>
   <string name="settings_title_more_options">高级设置</string>
-  <string name="set_wifi_only">仅在 WiFi 中通知</string>
+  <string name="set_wifi_only">仅当使用WiFi时通知</string>
   <string name="set_notify">开启通知？</string>
   <string name="set_notif_silent">静音通知</string>
   <string name="set_night_mode">夜间模式</string>
@@ -299,7 +299,7 @@
   <string name="set_save_changes">保存修改</string>
   <string name="set_header_picture_overlay">选择页眉图片</string>
   <string name="set_preview_reply">在首页时间线中显示回复的数量</string>
-  <string name="set_preview_reply_pp">是否显示配置文件图片？</string>
+  <string name="set_preview_reply_pp">显示配置文件图片吗？</string>
   <string name="set_multiaccount_actions">允许客户之间的交互？</string>
   <string name="note_no_space">您已达到允许的 160 字符上限！</string>
   <string name="username_no_space">您已达到允许的 30 字符！</string>
