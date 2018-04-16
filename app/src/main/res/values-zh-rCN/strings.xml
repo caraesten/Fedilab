@@ -295,7 +295,7 @@
   <string name="set_nsfw_timeout">NSFW 查看超时 (秒, 0 表示关闭)</string>
   <string name="settings_title_profile">编辑个人资料</string>
   <string name="set_profile_description">简介…</string>
-  <string name="set_lock_account">Lock account</string>
+  <string name="set_lock_account">锁定账户</string>
   <string name="set_save_changes">保存修改</string>
   <string name="set_header_picture_overlay">选择页眉图片</string>
   <string name="set_preview_reply">在首页时间线中显示回复的数量</string>
@@ -311,7 +311,7 @@
   <string name="settings_hour_init">起始时间</string>
   <string name="settings_hour_end">结束时间</string>
   <string name="embedded_browser">使用内置浏览器</string>
-  <string name="custom_tabs">Custom tabs</string>
+  <string name="custom_tabs">定制选项卡</string>
   <string name="use_javascript">启用 Javascript</string>
   <string name="expand_cw">自动展开带有警告的内容</string>
   <string name="use_cookies">允许第三方 cookie</string>
@@ -326,7 +326,7 @@
     <item>否　</item>
   </string-array>
   <string-array name="settings_resize_picture">
-    <item>No</item>
+    <item>否</item>
     <item>512 Kb</item>
     <item>1 Mb</item>
     <item>2 Mb</item>
@@ -354,8 +354,8 @@
   <string name="request_sent">请求已发送</string>
   <string name="followed_by">关注你</string>
   <string name="action_search">搜索</string>
-  <string name="set_capitalize">First letter in capital for replies</string>
-  <string name="set_resize_picture">Resize pictures</string>
+  <string name="set_capitalize">回复时首字母大写</string>
+  <string name="set_resize_picture">调整图片大小</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">推送通知</string>
   <string name="settings_popup_message">
@@ -370,16 +370,16 @@
   <string name="cache_units">Mb</string>
   <string name="toast_cache_clear">缓存已清除！已释放 %1$s</string>
   <!-- ACTIVITY CACHE -->
-  <string name="action_sync">Synchronize</string>
-  <string name="action_filter">Filter</string>
-  <string name="owner_cached_toots">Your toots</string>
-  <string name="v_public">Public</string>
-  <string name="v_unlisted">Unlisted</string>
-  <string name="v_private">Private</string>
-  <string name="v_direct">Direct</string>
-  <string name="v_keywords">Some keywords…</string>
-  <string name="show_media">Show media</string>
-  <string name="show_pinned">Show pinned</string>
+  <string name="action_sync">同步</string>
+  <string name="action_filter">筛选</string>
+  <string name="owner_cached_toots">您的嘟文</string>
+  <string name="v_public">公开</string>
+  <string name="v_unlisted">未列出</string>
+  <string name="v_private">私密</string>
+  <string name="v_direct">直接</string>
+  <string name="v_keywords">一些关键词...</string>
+  <string name="show_media">显示媒体</string>
+  <string name="show_pinned">显示被置顶</string>
   <string name="filter_no_result">No matching result found!</string>
   <string name="data_backup_toots">Backup toots for %1$s</string>
   <string name="data_backup_success">%1$s new toots have been imported</string>
