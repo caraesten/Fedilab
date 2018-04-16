@@ -302,12 +302,12 @@
   <string name="set_preview_reply_pp">显示配置文件图片吗？</string>
   <string name="set_multiaccount_actions">允许客户之间的交互？</string>
   <string name="note_no_space">您已达到允许的 160 字符上限！</string>
-  <string name="username_no_space">您已达到允许的 30 字符！</string>
+  <string name="username_no_space">您已达到允许的 30 字符上限！</string>
   <string name="settings_title_hour">通知的时间段：</string>
   <string name="settings_time_from">介于</string>
   <string name="settings_time_to">和</string>
   <string name="settings_time_greater">时间必须大于 %1$s</string>
-  <string name="settings_time_lower">时间必须低于 %1$s</string>
+  <string name="settings_time_lower">时间必须小于 %1$s</string>
   <string name="settings_hour_init">起始时间</string>
   <string name="settings_hour_end">结束时间</string>
   <string name="embedded_browser">使用内置浏览器</string>
@@ -317,7 +317,7 @@
   <string name="use_cookies">允许第三方 cookie</string>
   <string name="settings_ui_layout">时间线布局：</string>
   <string-array name="settings_menu_tabs">
-    <item>标签</item>
+    <item>选项卡</item>
     <item>菜单</item>
     <item>选项卡和菜单</item>
   </string-array>
@@ -342,17 +342,17 @@
     <item>白色</item>
   </string-array>
   <string name="set_title_news">新闻</string>
-  <string name="set_notification_news">当首页时间线上有新的 toots 时通知您</string>
+  <string name="set_notification_news">当首页时间线上有新的嘟文时通知您</string>
   <string name="set_show_error_messages">显示错误消息</string>
   <string name="action_follow">关注</string>
   <string name="action_unfollow">取消关注</string>
-  <string name="action_block">阻止</string>
-  <string name="action_unblock">取消阻止</string>
+  <string name="action_block">屏蔽</string>
+  <string name="action_unblock">取消屏蔽</string>
   <string name="action_mute">静音</string>
   <string name="action_no_action">无动作</string>
   <string name="action_unmute">取消静音</string>
   <string name="request_sent">请求已发送</string>
-  <string name="followed_by">关注你</string>
+  <string name="followed_by">关注您</string>
   <string name="action_search">搜索</string>
   <string name="set_capitalize">回复时首字母大写</string>
   <string name="set_resize_picture">调整图片大小</string>
@@ -362,7 +362,7 @@
 请确认要接收的推送通知。
          您可以稍后在设置 (通知选项卡) 中启用或禁用这些通知。   
     </string>
-  <string name="settings_popup_timeline">为主页时间线的未读 toots？</string>
+  <string name="settings_popup_timeline">针对主页时间线的未读嘟文？</string>
   <string name="settings_popup_notification">针对未读通知？</string>
   <!-- CACHE -->
   <string name="cache_title">清除缓存</string>
@@ -402,7 +402,7 @@
 - <b>ACCESS_NETWORK_STATE</b>: 用于检测设备是否连接到 WIFI 网络.\n
         - <b>INTERNET</b>: 用于查询实例..\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: 用于存储媒体或将应用程序移动到 SD 卡上。\n
-        - <b>READ_EXTERNAL_STORAGE</b>:  用于将媒体添加到toots.\n
+        - <b>READ_EXTERNAL_STORAGE</b>:  用于将媒体添加到嘟文.\n
         - <b>BOOT_COMPLETED</b>: 用于启动通知服务.\n
         - <b>WAKE_LOCK</b>: 在通知服务期间使用。    </string>
   <string name="privacy_API_authorizations_title">API 权限:</string>
@@ -419,7 +419,7 @@
   -<b>Android-Job</b>: 用于管理服务\n
   -<b>PhotoView</b>: 用于管理图片\n    
       </string>
-  <string name="privacy_API_yandex_title">Toots 的翻译</string>
+  <string name="privacy_API_yandex_title">嘟文的翻译</string>
   <string name="privacy_API_yandex_authorizations">
 本应用程序提供了使用设备的区域设置和 Yandex API 进行翻译的能力。\n
 Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/legal/confidential/?lang=en
@@ -446,7 +446,7 @@ Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/lega
   <string name="action_lists_owner">您的列表</string>
   <!-- Migration -->
   <string name="account_moved_to">%1$s 已被移动到 %2$s</string>
-  <string name="show_boost_count">显示转发/收藏数目</string>
+  <string name="show_boost_count">显示转嘟/收藏数目</string>
   <string name="issue_login_title">身份验证不起作用？</string>
   <string name="issue_login_message"><b>有用的检查可能有助于解决问题:</b>\n\n 
 - 检查实例名是否拼写错误\n\n 
