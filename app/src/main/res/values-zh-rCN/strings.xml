@@ -455,13 +455,13 @@ Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/lega
 - 您也可这个链接而不使用双重认证(2FA)\n\n 
 - 如果仍不工作，请向https://github.com/stom79/mastalab/issues提交问题。 
 </string>
-  <string name="media_ready">Media has been loaded. Click here to display it.</string>
+  <string name="media_ready">媒体已加载。单击此处显示它。</string>
   <string name="data_export_start">此操作可能会很长。当它完成时，您将会收到通知。</string>
   <string name="data_export_running">仍在运行，请稍候.……</string>
-  <string name="data_export">Export statuses</string>
-  <string name="data_export_toots">Export statuses for %1$s</string>
+  <string name="data_export">导出状态</string>
+  <string name="data_export_toots">导出状态于%1$s</string>
   <string name="data_export_success">%2$s 条嘟文中的 %1$s 条已被导出。</string>
-  <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+  <string name="data_export_error">导出数据于%1$s 时出错</string>
   <!-- Proxy -->
   <string name="proxy_set">代理</string>
   <string name="proxy_type">类型</string>
