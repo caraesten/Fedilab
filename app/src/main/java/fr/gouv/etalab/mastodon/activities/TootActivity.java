@@ -667,22 +667,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                     }
                     picture_scrollview.setVisibility(View.VISIBLE);
                     try {
-                        File photoFiletmp = createImageFile(false);
-                        InputStream inputStream = getContentResolver().openInputStream(fileUri);
-                        OutputStream output = new FileOutputStream(photoFiletmp);
-                        try {
-                            byte[] buffer = new byte[4 * 1024]; // or other buffer size
-                            int read;
-
-                            assert inputStream != null;
-                            while ((read = inputStream.read(buffer)) != -1) {
-                                output.write(buffer, 0, read);
-                            }
-                            output.flush();
-                        } finally {
-                            output.close();
-                        }
-                        new asyncPicture(TootActivity.this, photoFiletmp).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        new asyncPicture(TootActivity.this, fileUri).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         count++;
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -740,6 +725,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
             picture_scrollview.setVisibility(View.VISIBLE);
             if (data == null || data.getData() == null) {
@@ -747,7 +733,6 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 return;
             }
             try {
-
                 ContentResolver cr = getContentResolver();
                 String mime = cr.getType(data.getData());
                 if(mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("gif")) ) {
@@ -761,7 +746,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                         photoFiletmp = createImageFile(false);
                         OutputStream output = new FileOutputStream(photoFiletmp);
                         try {
-                            byte[] buffer = new byte[4 * 1024]; // or other buffer size
+                            byte[] buffer = new byte[8 * 1024];
                             int read;
 
                             assert inputStream != null;
@@ -769,7 +754,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                                 output.write(buffer, 0, read);
                             }
                             output.flush();
-                            new asyncPicture(TootActivity.this, photoFiletmp).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new asyncPicture(TootActivity.this, data.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         } finally {
                             output.close();
                         }
@@ -792,7 +777,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 toot_content.setSelection(toot_content.getText().length());
             }
         }else if (requestCode == TAKE_PHOTO && resultCode == RESULT_OK) {
-            new asyncPicture(TootActivity.this, photoFile).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new asyncPicture(TootActivity.this, data.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
@@ -800,48 +785,90 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
 
         ByteArrayInputStream bs;
         WeakReference<Activity> activityWeakReference;
-        WeakReference<File> fileWeakReference;
+        android.net.Uri uriFile;
 
-        asyncPicture(Activity activity, File photoFile){
+        asyncPicture(Activity activity, android.net.Uri uri){
             this.activityWeakReference = new WeakReference<>(activity);
-            this.fileWeakReference = new WeakReference<>(photoFile);
+            this.uriFile = uri;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
 
 
-            if( this.fileWeakReference.get() == null) {
+            if( uriFile == null) {
                 Toast.makeText(activityWeakReference.get(), R.string.toast_error, Toast.LENGTH_SHORT).show();
                 return null;
             }
-            Bitmap takenImage = BitmapFactory.decodeFile(String.valueOf(this.fileWeakReference.get()));
-            int size = takenImage.getByteCount();
-            SharedPreferences sharedpreferences = this.activityWeakReference.get().getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-            int resizeSet = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_1MO);
-            double resizeby = size;
-            if( resizeSet == Helper.S_512KO){
-                resizeby = 4194304;
-            }else if(resizeSet == Helper.S_1MO){
-                resizeby = 8388608;
-            }else if(resizeSet == Helper.S_2MO){
-                resizeby = 16777216;
+            Bitmap takenImage;
+            try {
+                takenImage = MediaStore.Images.Media.getBitmap(activityWeakReference.get().getContentResolver(), uriFile);
+            } catch (IOException e) {
+                Toast.makeText(activityWeakReference.get(), R.string.toast_error, Toast.LENGTH_SHORT).show();
+                return null;
             }
-            double resize = ((double)size)/resizeby;
-            Bitmap newBitmap;
-            if( resize > 1 ){
-                newBitmap = Bitmap.createScaledBitmap(takenImage, (int)(takenImage.getWidth()/resize),
-                        (int)(takenImage.getHeight()/resize), false);
+            if( takenImage != null){
+                int size = takenImage.getByteCount();
+                SharedPreferences sharedpreferences = this.activityWeakReference.get().getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                int resizeSet = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_1MO);
+                double resizeby = size;
+                if( resizeSet == Helper.S_512KO){
+                    resizeby = 4194304;
+                }else if(resizeSet == Helper.S_1MO){
+                    resizeby = 8388608;
+                }else if(resizeSet == Helper.S_2MO){
+                    resizeby = 16777216;
+                }
+                double resize = ((double)size)/resizeby;
+                if( resize > 1 ){
+                    ContentResolver cr = this.activityWeakReference.get().getContentResolver();
+                    String mime = cr.getType(uriFile);
+                    Bitmap newBitmap = Bitmap.createScaledBitmap(takenImage, (int) (takenImage.getWidth() / resize),
+                            (int) (takenImage.getHeight() / resize), true);
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    if( mime !=null && (mime.contains("png") || mime.contains(".PNG")))
+                        newBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
+                    else
+                        newBitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+                    byte[] bitmapdata = bos.toByteArray();
+                    bs = new ByteArrayInputStream(bitmapdata);
+                }else {
+                    try {
+                        InputStream inputStream = this.activityWeakReference.get().getContentResolver().openInputStream(uriFile);
+                        byte[] buff = new byte[8 * 1024];
+                        int bytesRead;
+                        ByteArrayOutputStream bao = new ByteArrayOutputStream();
+                        assert inputStream != null;
+                        while((bytesRead = inputStream.read(buff)) != -1) {
+                            bao.write(buff, 0, bytesRead);
+                        }
+                        byte[] data = bao.toByteArray();
+                        bs  = new ByteArrayInputStream(data);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }else {
-                newBitmap = takenImage;
+                try {
+                    InputStream inputStream = this.activityWeakReference.get().getContentResolver().openInputStream(uriFile);
+                    byte[] buff = new byte[8 * 1024];
+                    int bytesRead;
+                    ByteArrayOutputStream bao = new ByteArrayOutputStream();
+                    assert inputStream != null;
+                    while((bytesRead = inputStream.read(buff)) != -1) {
+                        bao.write(buff, 0, bytesRead);
+                    }
+                    byte[] data = bao.toByteArray();
+                    bs  = new ByteArrayInputStream(data);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            if( this.fileWeakReference.get().getName().endsWith("png") || this.fileWeakReference.get().getName().endsWith(".PNG"))
-                newBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
-            else
-                newBitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
-            byte[] bitmapdata = bos.toByteArray();
-            bs = new ByteArrayInputStream(bitmapdata);
+
             return null;
         }
 
