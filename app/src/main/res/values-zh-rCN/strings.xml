@@ -459,9 +459,9 @@ Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/lega
   <string name="data_export_start">此操作可能会很长。当它完成时，您将会收到通知。</string>
   <string name="data_export_running">仍在运行，请稍候.……</string>
   <string name="data_export">导出状态</string>
-  <string name="data_export_toots">导出状态于%1$s</string>
+  <string name="data_export_toots">导出 %1$s 的状态</string>
   <string name="data_export_success">%2$s 条嘟文中的 %1$s 条已被导出。</string>
-  <string name="data_export_error">导出数据于%1$s 时出错</string>
+  <string name="data_export_error">为 %1$s 导出数据时出现了错误</string>
   <!-- Proxy -->
   <string name="proxy_set">代理</string>
   <string name="proxy_type">类型</string>
