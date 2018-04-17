@@ -8,7 +8,7 @@
   <string name="action_privacy">隐私</string>
   <string name="action_cache">缓存</string>
   <string name="action_logout">登出</string>
-  <string name="login">登录</string>
+  <string name="login">登入</string>
   <!-- common -->
   <string name="close">关闭</string>
   <string name="yes">是</string>
@@ -23,7 +23,7 @@
   <string name="password">密码</string>
   <string name="email">电子邮箱</string>
   <string name="accounts">帐户</string>
-  <string name="toots">Toots</string>
+  <string name="toots">嘟文</string>
   <string name="tags">标签</string>
   <string name="token">令牌</string>
   <string name="save">保存</string>
@@ -35,7 +35,7 @@
   <string name="instance_example">实例: mastodon.social</string>
   <string name="toast_account_changed" formatted="false">现在使用 %1$s 这个帐户</string>
   <string name="add_account">添加帐户</string>
-  <string name="clipboard">已将 toot 的内容复制到剪贴板</string>
+  <string name="clipboard">已将嘟文的内容复制到剪贴板</string>
   <string name="change">变更</string>
   <string name="choose_picture">选择图片…</string>
   <string name="clear">清理</string>
@@ -44,8 +44,8 @@
   <string name="speech_prompt">请说点什么</string>
   <string name="speech_not_supported">抱歉！您的设备不支持语音输入。</string>
   <string name="delete_all">删除全部</string>
-  <string name="translate_toot">翻译这条 toot。</string>
-  <string name="schedule">定时发布</string>
+  <string name="translate_toot">翻译这条嘟文。</string>
+  <string name="schedule">任务计划</string>
   <string name="text_size">文本和图标大小</string>
   <string name="text_size_change">更改当前文本大小：</string>
   <string name="icon_size_change">更改当前图标大小：</string>
@@ -455,13 +455,13 @@ Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/lega
 - 您也可这个链接而不使用双重认证(2FA)\n\n 
 - 如果仍不工作，请向https://github.com/stom79/mastalab/issues提交问题。 
 </string>
-  <string name="media_ready">Media has been loaded. Click here to display it.</string>
+  <string name="media_ready">媒体已加载。单击此处显示它。</string>
   <string name="data_export_start">此操作可能会很长。当它完成时，您将会收到通知。</string>
   <string name="data_export_running">仍在运行，请稍候.……</string>
-  <string name="data_export">Export statuses</string>
-  <string name="data_export_toots">Export statuses for %1$s</string>
+  <string name="data_export">导出状态</string>
+  <string name="data_export_toots">导出状态于%1$s</string>
   <string name="data_export_success">%2$s 条嘟文中的 %1$s 条已被导出。</string>
-  <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+  <string name="data_export_error">导出数据于%1$s 时出错</string>
   <!-- Proxy -->
   <string name="proxy_set">代理</string>
   <string name="proxy_type">类型</string>
