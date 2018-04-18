@@ -241,21 +241,21 @@
   <string name="no_internet">Нет подключения к Интернету!</string>
   <string name="toast_block">Аккаунт был заблокирован!</string>
   <string name="toast_unblock">Аккаунт больше не заблокирован!</string>
-  <string name="toast_mute">Аккаунт был заглушён!</string>
-  <string name="toast_unmute">Аккаунт более не заглушён!</string>
+  <string name="toast_mute">Аккаунт был приглушён!</string>
+  <string name="toast_unmute">Аккаунт более не пригушён!</string>
   <string name="toast_follow">Аккаунт теперь читаемый!</string>
   <string name="toast_unfollow">Аккаунт более не читаемый!</string>
-  <string name="toast_reblog">Тут был поднят!</string>
-  <string name="toast_unreblog">Тут более не поднят!</string>
-  <string name="toast_favourite">Тут был добавлен в избранные!</string>
-  <string name="toast_unfavourite">Тут был убран из избранных!</string>
-  <string name="toast_report">На тут была отправлена жалоба!</string>
-  <string name="toast_unstatus">Тут был удалён!</string>
-  <string name="toast_pin">Тут был закреплён!</string>
-  <string name="toast_unpin">Тут был откреплён!</string>
+  <string name="toast_reblog">Toot был поднят!</string>
+  <string name="toast_unreblog">Toot более не поднят!</string>
+  <string name="toast_favourite">Toot был добавлен в избранные!</string>
+  <string name="toast_unfavourite">Toot был убран из избранных!</string>
+  <string name="toast_report">На toot была отправлена жалоба!</string>
+  <string name="toast_unstatus">Toot был удалён!</string>
+  <string name="toast_pin">Toot был закреплён!</string>
+  <string name="toast_unpin">Toot был откреплён!</string>
   <string name="toast_error">Упс ! Произошла ошибка!</string>
-  <string name="toast_code_error">Произошла ошибка! Инстанс не вернул код авторизации!</string>
-  <string name="toast_error_instance">Домен инстанса не выглядит верным!</string>
+  <string name="toast_code_error">Произошла ошибка! Объект не вернул код авторизации!</string>
+  <string name="toast_error_instance">Домен объекта не выглядит недействительным!</string>
   <string name="toast_error_loading_account">Произошла ошибка при переключении между аккаунтами!</string>
   <string name="toast_error_search">Произошла ошибка при поиске!</string>
   <string name="toast_error_login">Не удалось войти!</string>
@@ -462,26 +462,26 @@
   <string name="show_boost_count">Показать количество повышенных/избранных</string>
   <string name="issue_login_title">Не работает аутентификация?</string>
   <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
+        <b>Вот некоторые подсказки, которые должны вам помочь:\n\n</b>
+        - Проверьте на предмет орфографических ошибок при заполнении уч.записи\n\n - 
+        - Проверьте, что ваша уч.запись является актуальной\n\n 
+        - Если вы используете двухфакторную проверку подлинности (2FA), пожалуйста, используйте ссылку внизу (после заполнения имени уч.записи)\n\n 
+         - Вы также можете использовать эту ссылку без использования 2FA\n\n
+         - Если всё перечисленное не помогает, пожалуйста задайте вопрос на Github https://github.com/stom79/mastalab/issues
     </string>
-  <string name="media_ready">Media has been loaded. Click here to display it.</string>
-  <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-  <string name="data_export_running">Still running, please wait…</string>
-  <string name="data_export">Export statuses</string>
-  <string name="data_export_toots">Export statuses for %1$s</string>
-  <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-  <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+  <string name="media_ready">Медиа контент был загружен. Нажмите здесь, для его отображения.</string>
+  <string name="data_export_start">Это действие может продолжаться довольно долго. Вы будете уведомлены, когда оно будет закончено.</string>
+  <string name="data_export_running">Все ещё работает, ожидайте…</string>
+  <string name="data_export">Экспорт статусов</string>
+  <string name="data_export_toots">Экспорт статусов для %1$s</string>
+  <string name="data_export_success">%1$s toots из %2$s были экспортированы.</string>
+  <string name="data_export_error">Что-то пошло не так, при экспорте данных для %1$s</string>
   <!-- Proxy -->
-  <string name="proxy_set">Proxy</string>
-  <string name="proxy_type">Type</string>
-  <string name="proxy_enable">Enable proxy?</string>
-  <string name="poxy_host">Host</string>
-  <string name="poxy_port">Port</string>
-  <string name="poxy_login">Login</string>
-  <string name="poxy_password">Password</string>
+  <string name="proxy_set">Прокси</string>
+  <string name="proxy_type">Тип</string>
+  <string name="proxy_enable">Включить прокси?</string>
+  <string name="poxy_host">Сервер</string>
+  <string name="poxy_port">Порт</string>
+  <string name="poxy_login">Логин</string>
+  <string name="poxy_password">Пароль</string>
 </resources>
