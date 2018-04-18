@@ -416,18 +416,18 @@
     </string>
   <string name="privacy_API_authorizations_title">API разрешения:</string>
   <string name="privacy_API_authorizations">
-        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
+        - <b>читать</b>: Читать данные.\n 
+        - <b>записи</b>: Публикация статусов и загрузки медиа для статусов.\n 
+        - <b>следовать</b>: Подписаться, отписаться, блокировать, раблокировка.\n\n
+        <b>&#9888; Эти действия выполняются только тогда, когда пользователь запрашивает их.</b>
     </string>
-  <string name="privacy_API_title">Tracking and Libraries</string>
+  <string name="privacy_API_title">Отслеживание и Библиотеки</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+        Приложение <b>не использует инструменты для отслеживания</b> (замеры аудитории, отчёты об ошибках, и т. д.) и не содержит какой-либо рекламы.\n\n
+       Использование библиотек минимизированно: \n 
+       - <b>Glide</b>: Для управления медиа\n 
+       -</b><b>Android-Job: Для управления сервисами\n 
+       - <b>PhotoView</b>: Для управления изображениями\n
     </string>
   <string name="privacy_API_yandex_title">Translation of toots</string>
   <string name="privacy_API_yandex_authorizations">
