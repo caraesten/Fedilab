@@ -52,7 +52,7 @@
   <string name="next">Следующий</string>
   <string name="previous">Предыдущий</string>
   <string name="open_with">Открыть с помощью</string>
-  <string name="validate">Validate</string>
+  <string name="validate">Подтверждение</string>
   <string name="media">Медиа</string>
   <string name="share_with">Поделиться с</string>
   <string name="shared_via">Поделился через Mastalab</string>
@@ -63,8 +63,8 @@
   <string name="favourite">Избранные</string>
   <string name="follow">Новые подписчики</string>
   <string name="mention">Упоминания</string>
-  <string name="reblog">Стимулы</string>
-  <string name="show_boosts">Показать стимулы</string>
+  <string name="reblog">Поднятые</string>
+  <string name="show_boosts">Показать поднятые</string>
   <string name="show_replies">Посмотреть ответы</string>
   <string name="action_open_in_web">Открыть в браузере</string>
   <string name="translate">Перевести</string>
@@ -95,13 +95,13 @@
   <string name="scheduled_toots">Запланированные toots</string>
   <string name="disclaimer_full">Информация, представленная ниже, не может отражать профиль пользователя полностью.</string>
   <string name="insert_emoji">Вставить эмодзи</string>
-  <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-  <string name="live_notif">Live notifications</string>
+  <string name="no_emoji">Приложение не собирает пользовательские эмодзи.</string>
+  <string name="live_notif">Пуш-уведомления</string>
   <!-- Status -->
-  <string name="no_status">No toot to display</string>
-  <string name="fav_added">The toot was added to favourites</string>
-  <string name="fav_removed">The toot was removed from favourites!</string>
-  <string name="reblog_added">The toot was boosted!</string>
+  <string name="no_status">Нет toot для отображения</string>
+  <string name="fav_added">Toot был добавлен в избранные</string>
+  <string name="fav_removed">Toot был удалён из избранных!</string>
+  <string name="reblog_added">Toot был поднят!</string>
   <string name="reblog_removed">The toot is no longer boosted!</string>
   <string name="reblog_by">Boosted by %1$s</string>
   <string name="favourite_add">Добавьте этот тут в избранное?</string>
