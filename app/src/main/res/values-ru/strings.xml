@@ -208,32 +208,32 @@
   <!-- timed mute -->
   <string name="timed_mute_date_error">Время для отключения звука, должно быть больше чем одна минута.</string>
   <string name="timed_mute_date">%1$s уведомления отключёны до %2$s.\n Вы можете включить уведомления через страницу своего профиля.</string>
-  <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+  <string name="timed_mute_profile">%1$s отключён до %2$s.\n Нажмите здесь, чтобы включить учетную запись.</string>
   <!-- Notifications -->
   <string name="no_notifications">Нет уведомлений для отображения</string>
   <string name="notif_mention">вас упомянули</string>
   <string name="notif_reblog">повышен ваш статус</string>
-  <string name="notif_favourite">favourited your status</string>
-  <string name="notif_follow">followed you</string>
-  <string name="notif_pouet">New toot from %1$s</string>
+  <string name="notif_favourite">ваш статус в избранных</string>
+  <string name="notif_follow">подписался на вас</string>
+  <string name="notif_pouet">Новый toot от %1$s</string>
   <plurals name="other_notifications">
-    <item quantity="one">and another notification</item>
-    <item quantity="few">and %d other notifications</item>
-    <item quantity="many">and %d other notifications</item>
+    <item quantity="one">и другое уведомление</item>
+    <item quantity="few">и другое уведомление</item>
+    <item quantity="many">и %d другие уведомления</item>
     <item quantity="other">and %d other notifications</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="one">and another toot to discover</item>
-    <item quantity="few">and %d other toots to discover</item>
+    <item quantity="one">и другой toot для просмотра</item>
+    <item quantity="few">и другой toot для просмотра</item>
     <item quantity="many">and %d other toots to discover</item>
     <item quantity="other">and %d other toots to discover</item>
   </plurals>
-  <string name="delete_notification_ask">Delete a notification?</string>
-  <string name="delete_notification_ask_all">Delete all notifications?</string>
-  <string name="delete_notification">The notification has been deleted!</string>
-  <string name="delete_notification_all">All notifications have been deleted!</string>
+  <string name="delete_notification_ask">Удалить уведомление?</string>
+  <string name="delete_notification_ask_all">Удалить все уведомления?</string>
+  <string name="delete_notification">Уведомление было удалено!</string>
+  <string name="delete_notification_all">Все уведомления были удалены!</string>
   <!-- HEADER -->
-  <string name="following">Following</string>
+  <string name="following">Подписки</string>
   <string name="followers">Подписчики</string>
   <string name="pinned_toots">Закреплён</string>
   <!-- TOAST -->
@@ -371,7 +371,7 @@
         Пожалуйста, подтвердите пуш-уведомления, которые хотите получать.
         Вы можете включить или отключить их позже в настройках (вкладка \"Уведомления\").
     </string>
-  <string name="settings_popup_timeline">For unread toots in home time-line?</string>
+  <string name="settings_popup_timeline">Для непрочитанных toots в домашнем графике?</string>
   <string name="settings_popup_notification">Для непрочитанные уведомлений?</string>
   <!-- CACHE -->
   <string name="cache_title">Очистить кэш</string>
