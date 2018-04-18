@@ -220,13 +220,13 @@
     <item quantity="one">и другое уведомление</item>
     <item quantity="few">и другое уведомление</item>
     <item quantity="many">и %d другие уведомления</item>
-    <item quantity="other">and %d other notifications</item>
+    <item quantity="other">и %d другие уведомления</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
     <item quantity="one">и другой toot для просмотра</item>
     <item quantity="few">и другой toot для просмотра</item>
     <item quantity="many">and %d other toots to discover</item>
-    <item quantity="other">and %d other toots to discover</item>
+    <item quantity="other">и %d другие toots для просмотра</item>
   </plurals>
   <string name="delete_notification_ask">Удалить уведомление?</string>
   <string name="delete_notification_ask_all">Удалить все уведомления?</string>
@@ -357,9 +357,9 @@
   <string name="action_unfollow">Отписаться</string>
   <string name="action_block">Заблокировать</string>
   <string name="action_unblock">Разблокировать</string>
-  <string name="action_mute">Заглушить</string>
+  <string name="action_mute">Отключить звук</string>
   <string name="action_no_action">Нет действия</string>
-  <string name="action_unmute">Разглушить</string>
+  <string name="action_unmute">Включить звук</string>
   <string name="request_sent">Запрос отправлен</string>
   <string name="followed_by">Подписан на вас</string>
   <string name="action_search">Поиск</string>
