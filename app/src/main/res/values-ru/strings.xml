@@ -397,9 +397,9 @@
     <item>Только</item>
     <item>Оба</item>
   </string-array>
-  <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+  <string name="owner_cached_toots_empty">Не были найдено ни одного toots в базе данных. Используйте кнопку меню cинхронизировать для их извлечения.</string>
   <!-- PRIVACY -->
-  <string name="privacy_data_title">Recorded data</string>
+  <string name="privacy_data_title">Записанные данные</string>
   <string name="privacy_data">
         Only basic information from accounts are stored on the device.
         These data are strictly confidential and can only be used by the application.
