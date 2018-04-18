@@ -33,7 +33,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
-import android.webkit.URLUtil;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
@@ -113,14 +112,14 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
         setContentView(R.layout.activity_media);
-        SwipeBackLayout mSwipeBackLayout = new SwipeBackLayout(this);
+        SwipeBackLayout mSwipeBackLayout = new SwipeBackLayout(MediaActivity.this);
         mSwipeBackLayout.setDirectionMode(SwipeBackLayout.FROM_BOTTOM);
         mSwipeBackLayout.setMaskAlpha(125);
         mSwipeBackLayout.setSwipeBackFactor(0.5f);
         mSwipeBackLayout.setSwipeBackListener(new SwipeBackLayout.OnSwipeBackListener() {
             @Override
             public void onViewPositionChanged(View mView, float swipeBackFraction, float SWIPE_BACK_FACTOR) {
-                canSwipe = swipeBackFraction<0.2;
+                canSwipe = swipeBackFraction<0.1;
             }
 
             @Override
@@ -409,11 +408,6 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 }
                 break;
         }
-        String filename = URLUtil.guessFileName(url, null, null);
-        if( filename == null)
-            filename = url;
-        if( attachments.size() > 1 )
-            filename = String.format("%s  (%s/%s)",filename, mediaPosition, attachments.size());
     }
 
     @Override
