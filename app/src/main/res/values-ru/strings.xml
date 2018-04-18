@@ -183,26 +183,26 @@
   <string name="about_license_action">Лицензия GNU GPL V3</string>
   <string name="about_code">Исходный код: </string>
   <string name="about_yandex">Перевод toots:</string>
-  <string name="about_thekinrar">Search instances:</string>
+  <string name="about_thekinrar">Поиск серверов:</string>
   <string name="about_thekinrar_action">instances.social</string>
-  <string name="thanks_text_logo">Icon designer:</string>
+  <string name="thanks_text_logo">Дизайн иконок:</string>
   <!-- Conversation -->
-  <string name="conversation">Conversation</string>
+  <string name="conversation">Беседа</string>
   <!-- Accounts -->
-  <string name="no_accounts">No account to display</string>
-  <string name="no_follow_request">No follow request</string>
+  <string name="no_accounts">Нет учетной записи для отображения</string>
+  <string name="no_follow_request">Не следовать запросу</string>
   <string name="status_cnt">Toots \n %1$s</string>
-  <string name="following_cnt">Following \n %1$s</string>
-  <string name="followers_cnt">Followers \n %1$s</string>
-  <string name="pins_cnt">Pinned \n %d</string>
-  <string name="authorize">Authorize</string>
-  <string name="reject">Reject</string>
+  <string name="following_cnt">Подписаны \n %1$s</string>
+  <string name="followers_cnt">Подписчиков \n %1$s</string>
+  <string name="pins_cnt">Закреплены \n %d</string>
+  <string name="authorize">Войти</string>
+  <string name="reject">Отклонить</string>
   <!-- Scheduled toots -->
-  <string name="no_scheduled_toots">No scheduled toot to display!</string>
-  <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-  <string name="remove_scheduled">Delete scheduled toot?</string>
-  <string name="media_count">Media: %d</string>
-  <string name="toot_scheduled">The toot has been scheduled!</string>
+  <string name="no_scheduled_toots">Нет запланированных toots для отображения!</string>
+  <string name="no_scheduled_toots_indications">Напишите toot, а затем выберите <b>график</b> из верхнего меню.</string>
+  <string name="remove_scheduled">Удалить запланированный toot?</string>
+  <string name="media_count">Медиа: %d</string>
+  <string name="toot_scheduled">Toot был запланирован!</string>
   <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
   <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
   <!-- timed mute -->
