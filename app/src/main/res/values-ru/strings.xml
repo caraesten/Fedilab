@@ -92,9 +92,9 @@
   <string name="choose_file_error">Файл не найден!</string>
   <string name="click_to_change">Нажмите на путь для изменения</string>
   <string name="failed">Ошибка!</string>
-  <string name="scheduled_toots">Scheduled toots</string>
-  <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
-  <string name="insert_emoji">Insert emoji</string>
+  <string name="scheduled_toots">Запланированные toots</string>
+  <string name="disclaimer_full">Информация, представленная ниже, не может отражать профиль пользователя полностью.</string>
+  <string name="insert_emoji">Вставить эмодзи</string>
   <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
   <string name="live_notif">Live notifications</string>
   <!-- Status -->
