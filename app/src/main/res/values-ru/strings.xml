@@ -53,7 +53,7 @@
   <string name="previous">Предыдущий</string>
   <string name="open_with">Открыть с помощью</string>
   <string name="validate">Подтверждение</string>
-  <string name="media">Медиа</string>
+  <string name="media">Файл</string>
   <string name="share_with">Поделиться с</string>
   <string name="shared_via">Поделился через Mastalab</string>
   <string name="replies">Ответы</string>
@@ -71,8 +71,8 @@
   <string name="please_wait">Пожалуйста подождите пару секунд, прежде чем совершить действие.</string>
   <!--- Menu -->
   <string name="home_menu">Главная</string>
-  <string name="local_menu">Местная хронология</string>
-  <string name="global_menu">Федеративная хронология</string>
+  <string name="local_menu">Местная лента</string>
+  <string name="global_menu">Федеративная лента</string>
   <string name="neutral_menu_title">Опции</string>
   <string name="favorites_menu">Избранное</string>
   <string name="communication_menu_title">Общение</string>
@@ -152,9 +152,9 @@
   <string name="toot_title">Написать toot</string>
   <string name="toot_title_reply">Ответить на toot</string>
   <string name="toot_no_space">Вы достигли 500 разрешённых символов!</string>
-  <string name="toot_select_image">Выбрать медиафайл</string>
-  <string name="toot_select_image_error">Произошла ошибка при выборе медиафайла!</string>
-  <string name="toot_delete_media">Удалить этот медиафайл?</string>
+  <string name="toot_select_image">Выбрать файл</string>
+  <string name="toot_select_image_error">Произошла ошибка при выборе файла!</string>
+  <string name="toot_delete_media">Удалить этот файл?</string>
   <string name="toot_error_no_content">Ваш toot пуст!</string>
   <string name="toot_visibility_tilte">Видимость toot</string>
   <string name="toots_visibility_tilte">Видимость toots по умолчанию: </string>
@@ -201,7 +201,7 @@
   <string name="no_scheduled_toots">Нет запланированных toots для отображения!</string>
   <string name="no_scheduled_toots_indications">Напишите toot, а затем выберите <b>график</b> из верхнего меню.</string>
   <string name="remove_scheduled">Удалить запланированный toot?</string>
-  <string name="media_count">Медиа: %d</string>
+  <string name="media_count">Файл: %d</string>
   <string name="toot_scheduled">Toot был запланирован!</string>
   <string name="toot_scheduled_date">Планируемая дата должна превышать текущий час!</string>
   <string name="warning_battery">Батарея в режиме энергосбережения! Возможна некорректная работа.</string>
@@ -261,7 +261,7 @@
   <string name="toast_error_login">Не удалось войти!</string>
   <string name="toast_update_credential_ok">Данные профиля были сохранены!</string>
   <string name="nothing_to_do">Ничего не происходило</string>
-  <string name="toast_saved">Медиафайл сохранён!</string>
+  <string name="toast_saved">Файл сохранён!</string>
   <string name="toast_error_translate">Произошла ошибка при переводе!</string>
   <string name="toast_toot_saved">Черновик сохранён!</string>
   <string name="toast_error_char_limit">Вы уверены, что этот сервер допускает это количество знаков? Обычно это значение близко к 500 знакам.</string>
@@ -275,7 +275,7 @@
   <string name="set_attachment_always">Всегда</string>
   <string name="set_attachment_wifi">WiFi</string>
   <string name="set_attachment_ask">Спрашивать</string>
-  <string name="set_attachment_action">Загрузить медиафайл</string>
+  <string name="set_attachment_action">Загрузить файл</string>
   <string name="load_attachment">Загрузить изображения</string>
   <string name="load_attachment_spoiler">Показать больше…</string>
   <string name="load_attachment_spoiler_less">Показать меньше…</string>
@@ -307,7 +307,7 @@
   <string name="set_lock_account">Заблокировать аккаунт</string>
   <string name="set_save_changes">Сохранить изменения</string>
   <string name="set_header_picture_overlay">Выбор изображения профиля</string>
-  <string name="set_preview_reply">Отображать количество ответов в закладке Главная</string>
+  <string name="set_preview_reply">Отображать количество ответов в домашней ленте</string>
   <string name="set_preview_reply_pp">Отображение изображения профиля?</string>
   <string name="set_multiaccount_actions">Разрешить взаимодействие между аккаунтами?</string>
   <string name="note_no_space">Вы достигли 160 символов!</string>
@@ -324,7 +324,7 @@
   <string name="use_javascript">Включить JavaScript</string>
   <string name="expand_cw">Автоматически расширять cw</string>
   <string name="use_cookies">Разрешить сторонние куки</string>
-  <string name="settings_ui_layout">Временные рамки: </string>
+  <string name="settings_ui_layout">Временные рамки для ленты: </string>
   <string-array name="settings_menu_tabs">
     <item>Вкладки</item>
     <item>Меню</item>
@@ -387,7 +387,7 @@
   <string name="v_private">Приватно</string>
   <string name="v_direct">Напрямую</string>
   <string name="v_keywords">Ключевые слова…</string>
-  <string name="show_media">Показать медиа</string>
+  <string name="show_media">Показать файл</string>
   <string name="show_pinned">Показать закреплённые</string>
   <string name="filter_no_result">Ничего не найдено!</string>
   <string name="data_backup_toots">Резервное копирование toots для %1$s</string>
@@ -409,15 +409,15 @@
   <string name="privacy_authorizations">
         - <b>ACCESS_NETWORK_STATE</b>: Используется для определения подключения устройства к сети WiFi.\n 
          - <b>Интернет</b>: Используется для запросов к серверу.\n 
-         - <b>WRITE_EXTERNAL_STORAGE</b>: Используется для хранения медиа или перемещения приложение на SD карту.\n 
-         - <b>READ_EXTERNAL_STORAGE</b>: Используется для добавления медиа в toots.\n 
+         - <b>WRITE_EXTERNAL_STORAGE</b>: Используется для хранения файлов или перемещения приложение на SD карту.\n 
+         - <b>READ_EXTERNAL_STORAGE</b>: Используется для добавления фалов в toots.\n 
          - <b>BOOT_COMPLETED</b>: Используется для запуска службы уведомления.\n 
          - <b>WAKE_LOCK</b>: Используется во время службы уведомлений.
     </string>
   <string name="privacy_API_authorizations_title">API разрешения:</string>
   <string name="privacy_API_authorizations">
         - <b>читать</b>: Читать данные.\n 
-        - <b>записи</b>: Публикация статусов и загрузки медиа для статусов.\n 
+        - <b>записи</b>: Публикация статусов и загрузки фалов для статусов.\n 
         - <b>следовать</b>: Подписаться, отписаться, блокировать, раблокировка.\n\n
         <b>&#9888; Эти действия выполняются только тогда, когда пользователь запрашивает их.</b>
     </string>
@@ -425,7 +425,7 @@
   <string name="privacy_API">
         Приложение <b>не использует инструменты для отслеживания</b> (замеры аудитории, отчёты об ошибках, и т. д.) и не содержит какой-либо рекламы.\n\n
        Использование библиотек минимизированно: \n 
-       - <b>Glide</b>: Для управления медиа\n 
+       - <b>Glide</b>: Для управления файлами\n 
        -</b><b>Android-Job: Для управления сервисами\n 
        - <b>PhotoView</b>: Для управления изображениями\n
     </string>
@@ -467,7 +467,7 @@
          - Вы также можете использовать эту ссылку без использования 2FA\n\n
          - Если всё перечисленное не помогает, пожалуйста задайте вопрос на Github https://github.com/stom79/mastalab/issues
     </string>
-  <string name="media_ready">Медиа контент был загружен. Нажмите здесь, для его отображения.</string>
+  <string name="media_ready">Файл был загружен. Нажмите здесь, для его отображения.</string>
   <string name="data_export_start">Это действие может продолжаться довольно долго. Вы будете уведомлены, когда оно будет закончено.</string>
   <string name="data_export_running">Все ещё работает, ожидайте…</string>
   <string name="data_export">Экспорт статусов</string>
