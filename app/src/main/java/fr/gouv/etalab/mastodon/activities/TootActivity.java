@@ -684,7 +684,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
 
     String mCurrentPhotoPath;
     File photoFile = null;
-
+    Uri photoFileUri = null;
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -696,10 +696,10 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             } catch (IOException ignored) {Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();}
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
+                photoFileUri = FileProvider.getUriForFile(this,
                         "fr.gouv.etalab.mastodon.fileProvider",
                         photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoFileUri);
                 startActivityForResult(takePictureIntent, TAKE_PHOTO);
             }
         }
@@ -755,7 +755,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 toot_content.setSelection(toot_content.getText().length());
             }
         }else if (requestCode == TAKE_PHOTO && resultCode == RESULT_OK) {
-            new asyncPicture(TootActivity.this, data.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new asyncPicture(TootActivity.this, photoFileUri).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
