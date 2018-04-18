@@ -312,37 +312,37 @@
   <string name="set_multiaccount_actions">Разрешить взаимодействие между аккаунтами?</string>
   <string name="note_no_space">Вы достигли 160 символов!</string>
   <string name="username_no_space">Вы достигли 30 символов!</string>
-  <string name="settings_title_hour">Time slot for notifications:</string>
-  <string name="settings_time_from">Between</string>
-  <string name="settings_time_to">and</string>
-  <string name="settings_time_greater">The time must be greater than %1$s</string>
-  <string name="settings_time_lower">The time must be lower than %1$s</string>
-  <string name="settings_hour_init">Start time</string>
-  <string name="settings_hour_end">End time</string>
-  <string name="embedded_browser">Use the built-in browser</string>
-  <string name="custom_tabs">Custom tabs</string>
-  <string name="use_javascript">Enable Javascript</string>
-  <string name="expand_cw">Automatically expand cw</string>
-  <string name="use_cookies">Allow third-party cookies</string>
-  <string name="settings_ui_layout">Layout for timelines: </string>
+  <string name="settings_title_hour">Промежутки времени для уведомлений:</string>
+  <string name="settings_time_from">Между</string>
+  <string name="settings_time_to">и</string>
+  <string name="settings_time_greater">Время должно быть больше чем %1$s</string>
+  <string name="settings_time_lower">Время должно быть меньше, чем %1$s</string>
+  <string name="settings_hour_init">Уведомлять с</string>
+  <string name="settings_hour_end">До</string>
+  <string name="embedded_browser">Использовать встроенный браузер</string>
+  <string name="custom_tabs">Пользовательские вкладки</string>
+  <string name="use_javascript">Включить JavaScript</string>
+  <string name="expand_cw">Автоматически расширять cw</string>
+  <string name="use_cookies">Разрешить сторонние куки</string>
+  <string name="settings_ui_layout">Временные рамки: </string>
   <string-array name="settings_menu_tabs">
-    <item>Tabs</item>
-    <item>Menu</item>
-    <item>Tabs and menu</item>
+    <item>Вкладки</item>
+    <item>Меню</item>
+    <item>Вкладки и меню</item>
   </string-array>
   <string-array name="settings_translation">
-    <item>Yandex</item>
-    <item>No</item>
+    <item>Яндекс</item>
+    <item>Нет</item>
   </string-array>
   <string-array name="settings_resize_picture">
-    <item>No</item>
-    <item>512 Kb</item>
-    <item>1 Mb</item>
-    <item>2 Mb</item>
+    <item>Нет</item>
+    <item>512 Кб</item>
+    <item>1 Мб</item>
+    <item>2 Мб</item>
   </string-array>
-  <string name="set_led_colour">Set LED colour:</string>
+  <string name="set_led_colour">Задать цвет LED:</string>
   <string-array name="led_colours">
-    <item>Blue</item>
+    <item>Синий</item>
     <item>Cyan</item>
     <item>Малиновый</item>
     <item>Зелёный</item>
