@@ -167,22 +167,22 @@
     <item>Отправить только читателям</item>
     <item>Отправить только упомянутым пользователям</item>
   </string-array>
-  <string name="no_draft">No draft!</string>
-  <string name="choose_toot">Choose a toot</string>
-  <string name="choose_accounts">Choose an account</string>
-  <string name="select_accounts">Select some accounts</string>
-  <string name="remove_draft">Remove draft?</string>
-  <string name="show_reply">Click on the button to display the original toot</string>
-  <string name="upload_form_description">Describe for the visually impaired</string>
+  <string name="no_draft">Нет черновиков!</string>
+  <string name="choose_toot">Выбрать toot</string>
+  <string name="choose_accounts">Выберите учётную запись</string>
+  <string name="select_accounts">Выберите аккаунт</string>
+  <string name="remove_draft">Удалить черновик?</string>
+  <string name="show_reply">Нажмите на кнопку для отображения оригинального toot</string>
+  <string name="upload_form_description">Описания для слабовидящих</string>
   <!-- Instance -->
-  <string name="instance_no_description">No description available!</string>
+  <string name="instance_no_description">Описание недоступно!</string>
   <!-- About -->
-  <string name="about_vesrion">Release %1$s</string>
-  <string name="about_developer">Developer:</string>
-  <string name="about_license">License: </string>
-  <string name="about_license_action">GNU GPL V3</string>
-  <string name="about_code">Source code: </string>
-  <string name="about_yandex">Translation of toots:</string>
+  <string name="about_vesrion">Освобождено %1$s</string>
+  <string name="about_developer">Разработчик:</string>
+  <string name="about_license">Лицензия: </string>
+  <string name="about_license_action">Лицензия GNU GPL V3</string>
+  <string name="about_code">Исходный код: </string>
+  <string name="about_yandex">Перевод toots:</string>
   <string name="about_thekinrar">Search instances:</string>
   <string name="about_thekinrar_action">instances.social</string>
   <string name="thanks_text_logo">Icon designer:</string>
@@ -445,16 +445,16 @@
   <string name="fetch_more_toots">Получить больше toots…</string>
   <!-- About lists -->
   <string name="action_lists">Списки</string>
-  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
-  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-  <string name="action_lists_add_to">Add to list</string>
-  <string name="action_lists_remove_from">Remove from list</string>
-  <string name="action_lists_create">Add list</string>
-  <string name="action_lists_delete">Delete list</string>
-  <string name="action_lists_update">Edit list</string>
-  <string name="action_lists_title_placeholder">New list title</string>
-  <string name="action_lists_search_users">Search among people you follow</string>
-  <string name="action_lists_owner">Your lists</string>
+  <string name="action_lists_confirm_delete">Вы уверены, что вы хотите окончательно удалить этот список?</string>
+  <string name="action_lists_empty_content">В этом списке пока ничего нет. Когда участники списка разместят новые статусы, они появятся здесь.</string>
+  <string name="action_lists_add_to">Добавить в список</string>
+  <string name="action_lists_remove_from">Удалить из списка</string>
+  <string name="action_lists_create">Добавить список</string>
+  <string name="action_lists_delete">Удалить список</string>
+  <string name="action_lists_update">Редактировать список</string>
+  <string name="action_lists_title_placeholder">Новый заголовок списка</string>
+  <string name="action_lists_search_users">Поиск среди людей, на которых вы подписаны</string>
+  <string name="action_lists_owner">Ваши списки</string>
   <!-- Migration -->
   <string name="account_moved_to">%1$s добавлен к %2$s</string>
   <string name="show_boost_count">Показать количество повышенных/избранных</string>
