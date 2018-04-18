@@ -70,7 +70,7 @@
   <string name="translate">Перевести</string>
   <string name="please_wait">Пожалуйста подождите пару секунд, прежде чем совершить действие.</string>
   <!--- Menu -->
-  <string name="home_menu">Главная</string>
+  <string name="home_menu">Домой</string>
   <string name="local_menu">Местная лента</string>
   <string name="global_menu">Федеративная лента</string>
   <string name="neutral_menu_title">Опции</string>
@@ -80,7 +80,7 @@
   <string name="blocked_menu">Блокированные пользователи</string>
   <string name="remote_follow_menu">Удалённая подписка</string>
   <string name="notifications">Уведомления</string>
-  <string name="follow_request">Запрос на подписку</string>
+  <string name="follow_request">Запросы на подписку</string>
   <string name="optimization">Оптимизация</string>
   <string name="settings">Настройки</string>
   <string name="profile">Профиль</string>
@@ -243,7 +243,7 @@
   <string name="toast_unblock">Аккаунт больше не заблокирован!</string>
   <string name="toast_mute">Аккаунт был приглушён!</string>
   <string name="toast_unmute">Аккаунт более не пригушён!</string>
-  <string name="toast_follow">Аккаунт теперь читаемый!</string>
+  <string name="toast_follow">За аккаунтом следуют подписчики!</string>
   <string name="toast_unfollow">Аккаунт более не читаемый!</string>
   <string name="toast_reblog">Toot был поднят!</string>
   <string name="toast_unreblog">Toot более не поднят!</string>
@@ -371,7 +371,7 @@
         Пожалуйста, подтвердите пуш-уведомления, которые хотите получать.
         Вы можете включить или отключить их позже в настройках (вкладка \"Уведомления\").
     </string>
-  <string name="settings_popup_timeline">Для непрочитанных toots в домашнем графике?</string>
+  <string name="settings_popup_timeline">Для непрочитанных toots в домашней ленте?</string>
   <string name="settings_popup_notification">Для непрочитанные уведомлений?</string>
   <!-- CACHE -->
   <string name="cache_title">Очистить кэш</string>
