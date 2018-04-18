@@ -343,7 +343,7 @@
   <string name="set_led_colour">Задать цвет LED:</string>
   <string-array name="led_colours">
     <item>Синий</item>
-    <item>Cyan</item>
+    <item>Бирюзовый</item>
     <item>Малиновый</item>
     <item>Зелёный</item>
     <item>Красный</item>
@@ -458,9 +458,9 @@
   <string name="action_lists_search_users">Search among people you follow</string>
   <string name="action_lists_owner">Your lists</string>
   <!-- Migration -->
-  <string name="account_moved_to">%1$s has moved to %2$s</string>
-  <string name="show_boost_count">Show boosts/favourites count</string>
-  <string name="issue_login_title">Authentication does not work?</string>
+  <string name="account_moved_to">%1$s добавлен к %2$s</string>
+  <string name="show_boost_count">Показать количество повышенных/избранных</string>
+  <string name="issue_login_title">Не работает аутентификация?</string>
   <string name="issue_login_message">
         <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
