@@ -375,27 +375,27 @@
   <string name="settings_popup_notification">Для непрочитанные уведомлений?</string>
   <!-- CACHE -->
   <string name="cache_title">Очистить кэш</string>
-  <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
-  <string name="cache_units">Mb</string>
-  <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+  <string name="cache_message">Существует %1$s данных кэша.\n\nВы хотите их удалить?</string>
+  <string name="cache_units">Мб</string>
+  <string name="toast_cache_clear">Кэш очишен! %1$s освобождено</string>
   <!-- ACTIVITY CACHE -->
-  <string name="action_sync">Synchronize</string>
-  <string name="action_filter">Filter</string>
-  <string name="owner_cached_toots">Your toots</string>
-  <string name="v_public">Public</string>
-  <string name="v_unlisted">Unlisted</string>
-  <string name="v_private">Private</string>
-  <string name="v_direct">Direct</string>
-  <string name="v_keywords">Some keywords…</string>
-  <string name="show_media">Show media</string>
-  <string name="show_pinned">Show pinned</string>
-  <string name="filter_no_result">No matching result found!</string>
-  <string name="data_backup_toots">Backup toots for %1$s</string>
-  <string name="data_backup_success">%1$s new toots have been imported</string>
+  <string name="action_sync">Синхронизация</string>
+  <string name="action_filter">Фильтр</string>
+  <string name="owner_cached_toots">Ваши toots</string>
+  <string name="v_public">Публичное</string>
+  <string name="v_unlisted">Не в списке</string>
+  <string name="v_private">Приватно</string>
+  <string name="v_direct">Напрямую</string>
+  <string name="v_keywords">Ключевые слова…</string>
+  <string name="show_media">Показать медиа</string>
+  <string name="show_pinned">Показать закреплённые</string>
+  <string name="filter_no_result">Ничего не найдено!</string>
+  <string name="data_backup_toots">Резервное копирование toots для %1$s</string>
+  <string name="data_backup_success">%1$s новых toots было импортировано</string>
   <string-array name="filter_select">
-    <item>No</item>
-    <item>Only</item>
-    <item>Both</item>
+    <item>Нет</item>
+    <item>Только</item>
+    <item>Оба</item>
   </string-array>
   <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
   <!-- PRIVACY -->
