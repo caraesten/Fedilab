@@ -22,6 +22,8 @@ import android.content.ContentResolver;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.support.media.ExifInterface;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -90,10 +92,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -692,7 +692,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             // Create the File where the photo should go
             try {
-                photoFile = createImageFile(true);
+                photoFile = createImageFile();
             } catch (IOException ignored) {Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();}
             // Continue only if the File was successfully created
             if (photoFile != null) {
@@ -706,17 +706,16 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     }
 
 
-    private File createImageFile(boolean external) throws IOException {
+    private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = external?getExternalFilesDir(Environment.DIRECTORY_PICTURES):getCacheDir();
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
-
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
@@ -739,28 +738,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                     InputStream inputStream = getContentResolver().openInputStream(data.getData());
                     new HttpsConnection(TootActivity.this).upload(inputStream, TootActivity.this);
                 } else if(mime != null && mime.toLowerCase().contains("image")) {
-                    //noinspection ConstantConditions
-                    InputStream inputStream = getContentResolver().openInputStream(data.getData());
-                    File photoFiletmp;
-                    try {
-                        photoFiletmp = createImageFile(false);
-                        OutputStream output = new FileOutputStream(photoFiletmp);
-                        try {
-                            byte[] buffer = new byte[8 * 1024];
-                            int read;
-
-                            assert inputStream != null;
-                            while ((read = inputStream.read(buffer)) != -1) {
-                                output.write(buffer, 0, read);
-                            }
-                            output.flush();
-                            new asyncPicture(TootActivity.this, data.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        } finally {
-                            output.close();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    new asyncPicture(TootActivity.this, data.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }else {
                     Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
                 }
@@ -807,8 +785,26 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 Toast.makeText(activityWeakReference.get(), R.string.toast_error, Toast.LENGTH_SHORT).show();
                 return null;
             }
-            if( takenImage != null){
+            ExifInterface exif = null;
+            try (InputStream inputStream = this.activityWeakReference.get().getContentResolver().openInputStream(uriFile)) {
+                assert inputStream != null;
+                exif = new ExifInterface(inputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Matrix matrix = null;
+            if( takenImage != null ){
                 int size = takenImage.getByteCount();
+                if( exif != null) {
+                    int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+                    int rotationDegree = 0;
+                    if (rotation == ExifInterface.ORIENTATION_ROTATE_90) { rotationDegree = 90; }
+                    else if (rotation == ExifInterface.ORIENTATION_ROTATE_180) {  rotationDegree = 180; }
+                    else if (rotation == ExifInterface.ORIENTATION_ROTATE_270) {  rotationDegree =  270; }
+                    matrix = new Matrix();
+                    if (rotation != 0f) {matrix.preRotate(rotationDegree);}
+                }
+
                 SharedPreferences sharedpreferences = this.activityWeakReference.get().getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
                 int resizeSet = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_1MO);
                 double resizeby = size;
@@ -825,11 +821,16 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                     String mime = cr.getType(uriFile);
                     Bitmap newBitmap = Bitmap.createScaledBitmap(takenImage, (int) (takenImage.getWidth() / resize),
                             (int) (takenImage.getHeight() / resize), true);
+                    Bitmap adjustedBitmap;
+                    if( matrix != null)
+                        adjustedBitmap = Bitmap.createBitmap(newBitmap, 0, 0, newBitmap.getWidth(), newBitmap.getHeight(), matrix, true);
+                    else
+                        adjustedBitmap = newBitmap;
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
                     if( mime !=null && (mime.contains("png") || mime.contains(".PNG")))
-                        newBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
+                        adjustedBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
                     else
-                        newBitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+                        adjustedBitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
                     byte[] bitmapdata = bos.toByteArray();
                     bs = new ByteArrayInputStream(bitmapdata);
                 }else {
