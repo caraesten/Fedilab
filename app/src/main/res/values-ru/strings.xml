@@ -71,10 +71,10 @@
   <string name="please_wait">Пожалуйста подождите пару секунд, прежде чем совершить действие.</string>
   <!--- Menu -->
   <string name="home_menu">Главная</string>
-  <string name="local_menu">Local timeline</string>
-  <string name="global_menu">Federated timeline</string>
-  <string name="neutral_menu_title">Options</string>
-  <string name="favorites_menu">Favourites</string>
+  <string name="local_menu">Местная хронология</string>
+  <string name="global_menu">Федеративная хронология</string>
+  <string name="neutral_menu_title">Опции</string>
+  <string name="favorites_menu">Избранное</string>
   <string name="communication_menu_title">Communication</string>
   <string name="muted_menu">Muted users</string>
   <string name="blocked_menu">Blocked users</string>
