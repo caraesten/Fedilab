@@ -1382,7 +1382,20 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         else
                                             url = status.getUrl();
                                     }
-                                    sendIntent.putExtra(Intent.EXTRA_TEXT, url);
+                                    String extra_text = (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct();
+                                    if( extra_text.split("@").length == 1)
+                                        extra_text = "@" + extra_text + "@" + Helper.getLiveInstance(context);
+                                    else
+                                        extra_text = "@" + extra_text;
+                                    extra_text += " " + Helper.shortnameToUnicode(":link:",true) + " " + url + "\r\n-\n";
+                                    final String contentToot;
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                                        contentToot = Html.fromHtml((status.getReblog() != null)?status.getReblog().getContent():status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
+                                    else
+                                        //noinspection deprecation
+                                        contentToot = Html.fromHtml((status.getReblog() != null)?status.getReblog().getContent():status.getContent()).toString();
+                                    extra_text += contentToot;
+                                    sendIntent.putExtra(Intent.EXTRA_TEXT, extra_text);
                                     sendIntent.setType("text/plain");
                                     context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
                                     return true;

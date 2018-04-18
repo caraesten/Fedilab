@@ -22,6 +22,8 @@ import android.content.ContentResolver;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.support.media.ExifInterface;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -90,10 +92,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -343,6 +343,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 toot_picture_container.setVisibility(View.VISIBLE);
                 picture_scrollview.setVisibility(View.VISIBLE);
                 toot_picture.setEnabled(false);
+                toot_it.setEnabled(false);
                 new HttpsConnection(TootActivity.this).upload(bs, TootActivity.this);
             }
             toot_content.setText(String.format("\n\nvia @%s\n\n%s\n\n", tootMention, urlMention));
@@ -666,27 +667,13 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                     }
                     picture_scrollview.setVisibility(View.VISIBLE);
                     try {
-                        File photoFiletmp = createImageFile(false);
-                        InputStream inputStream = getContentResolver().openInputStream(fileUri);
-                        OutputStream output = new FileOutputStream(photoFiletmp);
-                        try {
-                            byte[] buffer = new byte[4 * 1024]; // or other buffer size
-                            int read;
-
-                            assert inputStream != null;
-                            while ((read = inputStream.read(buffer)) != -1) {
-                                output.write(buffer, 0, read);
-                            }
-                            output.flush();
-                        } finally {
-                            output.close();
-                        }
-                        new asyncPicture(TootActivity.this, photoFiletmp).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        new asyncPicture(TootActivity.this, fileUri).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         count++;
                     } catch (Exception e) {
                         e.printStackTrace();
                         Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
                         toot_picture.setEnabled(true);
+                        toot_it.setEnabled(true);
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
@@ -697,7 +684,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
 
     String mCurrentPhotoPath;
     File photoFile = null;
-
+    Uri photoFileUri = null;
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -705,31 +692,30 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             // Create the File where the photo should go
             try {
-                photoFile = createImageFile(true);
+                photoFile = createImageFile();
             } catch (IOException ignored) {Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();}
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
+                photoFileUri = FileProvider.getUriForFile(this,
                         "fr.gouv.etalab.mastodon.fileProvider",
                         photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoFileUri);
                 startActivityForResult(takePictureIntent, TAKE_PHOTO);
             }
         }
     }
 
 
-    private File createImageFile(boolean external) throws IOException {
+    private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = external?getExternalFilesDir(Environment.DIRECTORY_PICTURES):getCacheDir();
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
-
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
@@ -738,6 +724,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
             picture_scrollview.setVisibility(View.VISIBLE);
             if (data == null || data.getData() == null) {
@@ -745,41 +732,20 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 return;
             }
             try {
-
                 ContentResolver cr = getContentResolver();
                 String mime = cr.getType(data.getData());
                 if(mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("gif")) ) {
                     InputStream inputStream = getContentResolver().openInputStream(data.getData());
                     new HttpsConnection(TootActivity.this).upload(inputStream, TootActivity.this);
                 } else if(mime != null && mime.toLowerCase().contains("image")) {
-                    //noinspection ConstantConditions
-                    InputStream inputStream = getContentResolver().openInputStream(data.getData());
-                    File photoFiletmp;
-                    try {
-                        photoFiletmp = createImageFile(false);
-                        OutputStream output = new FileOutputStream(photoFiletmp);
-                        try {
-                            byte[] buffer = new byte[4 * 1024]; // or other buffer size
-                            int read;
-
-                            assert inputStream != null;
-                            while ((read = inputStream.read(buffer)) != -1) {
-                                output.write(buffer, 0, read);
-                            }
-                            output.flush();
-                            new asyncPicture(TootActivity.this, photoFiletmp).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        } finally {
-                            output.close();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    new asyncPicture(TootActivity.this, data.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }else {
                     Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
                 }
             } catch (FileNotFoundException e) {
                 Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
                 toot_picture.setEnabled(true);
+                toot_it.setEnabled(true);
             }
         }else if(requestCode == Helper.REQ_CODE_SPEECH_INPUT && resultCode == Activity.RESULT_OK){
             if (null != data) {
@@ -789,7 +755,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 toot_content.setSelection(toot_content.getText().length());
             }
         }else if (requestCode == TAKE_PHOTO && resultCode == RESULT_OK) {
-            new asyncPicture(TootActivity.this, photoFile).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new asyncPicture(TootActivity.this, photoFileUri).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
@@ -797,45 +763,113 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
 
         ByteArrayInputStream bs;
         WeakReference<Activity> activityWeakReference;
-        WeakReference<File> fileWeakReference;
+        android.net.Uri uriFile;
 
-        asyncPicture(Activity activity, File photoFile){
+        asyncPicture(Activity activity, android.net.Uri uri){
             this.activityWeakReference = new WeakReference<>(activity);
-            this.fileWeakReference = new WeakReference<>(photoFile);
+            this.uriFile = uri;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
 
 
-            if( this.fileWeakReference.get() == null) {
+            if( uriFile == null) {
                 Toast.makeText(activityWeakReference.get(), R.string.toast_error, Toast.LENGTH_SHORT).show();
                 return null;
             }
-            Bitmap takenImage = BitmapFactory.decodeFile(String.valueOf(this.fileWeakReference.get()));
-            int size = takenImage.getByteCount();
-            SharedPreferences sharedpreferences = this.activityWeakReference.get().getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-            int resizeSet = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_1MO);
-            double resizeby = size;
-            if( resizeSet == Helper.S_512KO){
-                resizeby = 4194304;
-            }else if(resizeSet == Helper.S_1MO){
-                resizeby = 8388608;
-            }else if(resizeSet == Helper.S_2MO){
-                resizeby = 16777216;
+            Bitmap takenImage;
+            try {
+                takenImage = MediaStore.Images.Media.getBitmap(activityWeakReference.get().getContentResolver(), uriFile);
+            } catch (IOException e) {
+                Toast.makeText(activityWeakReference.get(), R.string.toast_error, Toast.LENGTH_SHORT).show();
+                return null;
             }
-            double resize = ((double)size)/resizeby;
-            Bitmap newBitmap;
-            if( resize > 1 ){
-                newBitmap = Bitmap.createScaledBitmap(takenImage, (int)(takenImage.getWidth()/resize),
-                        (int)(takenImage.getHeight()/resize), false);
+            ExifInterface exif = null;
+            try (InputStream inputStream = this.activityWeakReference.get().getContentResolver().openInputStream(uriFile)) {
+                assert inputStream != null;
+                exif = new ExifInterface(inputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Matrix matrix = null;
+            if( takenImage != null ){
+                int size = takenImage.getByteCount();
+                if( exif != null) {
+                    int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+                    int rotationDegree = 0;
+                    if (rotation == ExifInterface.ORIENTATION_ROTATE_90) { rotationDegree = 90; }
+                    else if (rotation == ExifInterface.ORIENTATION_ROTATE_180) {  rotationDegree = 180; }
+                    else if (rotation == ExifInterface.ORIENTATION_ROTATE_270) {  rotationDegree =  270; }
+                    matrix = new Matrix();
+                    if (rotation != 0f) {matrix.preRotate(rotationDegree);}
+                }
+
+                SharedPreferences sharedpreferences = this.activityWeakReference.get().getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                int resizeSet = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_1MO);
+                double resizeby = size;
+                if( resizeSet == Helper.S_512KO){
+                    resizeby = 4194304;
+                }else if(resizeSet == Helper.S_1MO){
+                    resizeby = 8388608;
+                }else if(resizeSet == Helper.S_2MO){
+                    resizeby = 16777216;
+                }
+                double resize = ((double)size)/resizeby;
+                if( resize > 1 ){
+                    ContentResolver cr = this.activityWeakReference.get().getContentResolver();
+                    String mime = cr.getType(uriFile);
+                    Bitmap newBitmap = Bitmap.createScaledBitmap(takenImage, (int) (takenImage.getWidth() / resize),
+                            (int) (takenImage.getHeight() / resize), true);
+                    Bitmap adjustedBitmap;
+                    if( matrix != null)
+                        adjustedBitmap = Bitmap.createBitmap(newBitmap, 0, 0, newBitmap.getWidth(), newBitmap.getHeight(), matrix, true);
+                    else
+                        adjustedBitmap = newBitmap;
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    if( mime !=null && (mime.contains("png") || mime.contains(".PNG")))
+                        adjustedBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
+                    else
+                        adjustedBitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+                    byte[] bitmapdata = bos.toByteArray();
+                    bs = new ByteArrayInputStream(bitmapdata);
+                }else {
+                    try {
+                        InputStream inputStream = this.activityWeakReference.get().getContentResolver().openInputStream(uriFile);
+                        byte[] buff = new byte[8 * 1024];
+                        int bytesRead;
+                        ByteArrayOutputStream bao = new ByteArrayOutputStream();
+                        assert inputStream != null;
+                        while((bytesRead = inputStream.read(buff)) != -1) {
+                            bao.write(buff, 0, bytesRead);
+                        }
+                        byte[] data = bao.toByteArray();
+                        bs  = new ByteArrayInputStream(data);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }else {
-                newBitmap = takenImage;
+                try {
+                    InputStream inputStream = this.activityWeakReference.get().getContentResolver().openInputStream(uriFile);
+                    byte[] buff = new byte[8 * 1024];
+                    int bytesRead;
+                    ByteArrayOutputStream bao = new ByteArrayOutputStream();
+                    assert inputStream != null;
+                    while((bytesRead = inputStream.read(buff)) != -1) {
+                        bao.write(buff, 0, bytesRead);
+                    }
+                    byte[] data = bao.toByteArray();
+                    bs  = new ByteArrayInputStream(data);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            newBitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
-            byte[] bitmapdata = bos.toByteArray();
-            bs = new ByteArrayInputStream(bitmapdata);
+
             return null;
         }
 
@@ -844,12 +878,15 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             if( bs == null)
                 return;
             ImageButton toot_picture;
+            Button toot_it;
             LinearLayout toot_picture_container;
             toot_picture = this.activityWeakReference.get().findViewById(R.id.toot_picture);
+            toot_it = this.activityWeakReference.get().findViewById(R.id.toot_it);
             toot_picture_container = this.activityWeakReference.get().findViewById(R.id.toot_picture_container);
 
             toot_picture_container.setVisibility(View.VISIBLE);
             toot_picture.setEnabled(false);
+            toot_it.setEnabled(false);
             new HttpsConnection(this.activityWeakReference.get()).upload(bs, (TootActivity)this.activityWeakReference.get());
         }
     }
@@ -1316,6 +1353,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             if( attachments.size() == 0 )
                 toot_picture_container.setVisibility(View.GONE);
             toot_picture.setEnabled(true);
+            toot_it.setEnabled(true);
             return;
         }
         boolean alreadyAdded = false;
@@ -1384,6 +1422,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             attachments.add(attachment);
             if (attachments.size() < 4)
                 toot_picture.setEnabled(true);
+            toot_it.setEnabled(true);
             toot_sensitive.setVisibility(View.VISIBLE);
             picture_scrollview.setVisibility(View.VISIBLE);
         }else {
@@ -1404,6 +1443,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
             toot_picture_container.setVisibility(View.VISIBLE);
             toot_picture.setEnabled(false);
+            toot_it.setEnabled(false);
             new HttpsConnection(TootActivity.this).upload(bs, TootActivity.this);
         }
     }
@@ -1678,7 +1718,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                             toot_content.setText(newContent);
                             toot_space_left.setText(String.valueOf(toot_content.length()));
                             toot_content.setSelection(newPosition);
-                            AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, new ArrayList<Account>());
+                            AccountsSearchAdapter accountsListAdapter = new AccountsSearchAdapter(TootActivity.this, new ArrayList<>());
                             toot_content.setThreshold(1);
                             toot_content.setAdapter(accountsListAdapter);
                         }
@@ -1729,7 +1769,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                     toot_content.setText(newContent);
                     toot_space_left.setText(String.valueOf(toot_content.length()));
                     toot_content.setSelection(newPosition);
-                    EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(TootActivity.this, new ArrayList<Emojis>());
+                    EmojisSearchAdapter emojisSearchAdapter = new EmojisSearchAdapter(TootActivity.this, new ArrayList<>());
                     toot_content.setThreshold(1);
                     toot_content.setAdapter(emojisSearchAdapter);
                 }
@@ -1779,7 +1819,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                     toot_content.setText(newContent);
                     toot_space_left.setText(String.valueOf(toot_content.length()));
                     toot_content.setSelection(newPosition);
-                    TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(TootActivity.this, new ArrayList<String>());
+                    TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(TootActivity.this, new ArrayList<>());
                     toot_content.setThreshold(1);
                     toot_content.setAdapter(tagsSearchAdapter);
                 }

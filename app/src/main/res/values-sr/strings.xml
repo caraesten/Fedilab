@@ -131,10 +131,10 @@
     <item quantity="few">%d одговора</item>
     <item quantity="other">%d одговора</item>
   </plurals>
-  <string name="set_display_bookmark_button">Display the bookmark button</string>
+  <string name="set_display_bookmark_button">Прикажи дугме забелешки</string>
   <string name="bookmarks">Забелешке</string>
-  <string name="bookmark_add">Add to bookmarks</string>
-  <string name="bookmark_remove">Remove bookmark</string>
+  <string name="bookmark_add">Додај у забелешке</string>
+  <string name="bookmark_remove">Уклони забелешку</string>
   <string name="bookmarks_empty">Нема забелешки за приказ</string>
   <string name="status_bookmarked">Статус је додат у забелешке!</string>
   <string name="status_unbookmarked">Статус је уклоњен из забелешки!</string>
@@ -301,7 +301,7 @@
   <string name="set_nsfw_timeout">NSFW временско ограничење приказа (у секундама, 0 значи искључено)</string>
   <string name="settings_title_profile">Измени профил</string>
   <string name="set_profile_description">Биографија…</string>
-  <string name="set_lock_account">Lock account</string>
+  <string name="set_lock_account">Закључај налог</string>
   <string name="set_save_changes">Сачувај промене</string>
   <string name="set_header_picture_overlay">Одаберите слику заглавља</string>
   <string name="set_preview_reply">Прикажи број одговора у сопственој лајни</string>

@@ -34,7 +34,6 @@ import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.URLSpan;
-import android.util.Patterns;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -53,7 +52,6 @@ import java.util.regex.Matcher;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
-import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 
@@ -203,7 +201,10 @@ public class Status implements Parcelable{
     }
 
     public void setContent(String content) {
-        this.content = content;
+        //Remove UTM by default
+        this.content = content.replaceAll("&amp;utm_\\w+=[0-9a-zA-Z]*", "");
+        this.content = this.content.replaceAll("&utm_\\w+=[0-9a-zA-Z]*", "");
+        this.content = this.content.replaceAll("\\?utm_\\w+=[0-9a-zA-Z]*", "?");
     }
 
     public Status getReblog() {
@@ -622,10 +623,11 @@ public class Status implements Parcelable{
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
         Matcher matcher;
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
+        /*if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
             matcher = Patterns.WEB_URL.matcher(spannableString);
         else
-            matcher = Helper.urlPattern.matcher(spannableString);
+            matcher = Helper.urlPattern.matcher(spannableString);*/
+        matcher = Helper.urlPattern.matcher(spannableString);
         while (matcher.find()){
             int matchStart = matcher.start(1);
             int matchEnd = matcher.end();
