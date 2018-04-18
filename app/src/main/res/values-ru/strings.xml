@@ -260,7 +260,7 @@
   <string name="toast_error_search">Произошла ошибка при поиске!</string>
   <string name="toast_error_login">Не удалось войти!</string>
   <string name="toast_update_credential_ok">Данные профиля были сохранены!</string>
-  <string name="nothing_to_do">Нечего делать</string>
+  <string name="nothing_to_do">Ничего не происходило</string>
   <string name="toast_saved">Медиафайл сохранён!</string>
   <string name="toast_error_translate">Произошла ошибка при переводе!</string>
   <string name="toast_toot_saved">Черновик сохранён!</string>
@@ -269,7 +269,7 @@
   <string name="toast_empty_search">Имя инстанса и отображаемое имя не могут быть пустыми!</string>
   <!-- Settings -->
   <string name="settings_title_optimisation">Оптимизация загрузки</string>
-  <string name="set_toots_page">Число тутов за загрузку</string>
+  <string name="set_toots_page">Число toots за загрузку</string>
   <string name="set_accounts_page">Число аккаунтов за загрузку</string>
   <string name="set_notifications_page">Число уведомлений за загрузку</string>
   <string name="set_attachment_always">Всегда</string>
