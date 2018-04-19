@@ -87,6 +87,26 @@
             android:layout_height="wrap_content"
             tools:ignore="HardcodedText" />
 
+        <!-- About banner designer -->
+        <TextView
+            android:padding="5dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/about_thanks_banner"
+            android:layout_width="match_parent"
+            android:textColor="@color/mastodonC4"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:text="@string/thanks_text_banner"/>
+
+        <fr.gouv.etalab.mastodon.helper.ExpandableHeightListView
+            android:id="@+id/lv_banners"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:divider="@null"/>
+
         <!-- About logo designer -->
         <TextView
             android:padding="5dp"
