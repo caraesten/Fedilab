@@ -16,12 +16,12 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.*;
 import java.net.URLEncoder;
@@ -137,11 +137,13 @@ public class API {
         return apiResponse;
     }
 
+
+
     /***
      * Update credential of the authenticated user *synchronously*
      * @return APIResponse
      */
-    public APIResponse updateCredential(String display_name, String note, String avatar, String header, accountPrivacy privacy) {
+    public APIResponse updateCredential(String display_name, String note, ByteArrayInputStream avatar, ByteArrayInputStream header, accountPrivacy privacy) {
 
         HashMap<String, String> requestParams = new HashMap<>();
         if( display_name != null)
@@ -156,24 +158,11 @@ public class API {
             } catch (UnsupportedEncodingException e) {
                 requestParams.put("note",note);
             }
-        if( avatar != null)
-            Log.v(Helper.TAG,"avatar" + avatar);
-            try {
-                requestParams.put("avatar",URLEncoder.encode(avatar, "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                requestParams.put("avatar",avatar);
-            }
-        if( header != null)
-            try {
-                requestParams.put("header",URLEncoder.encode(header, "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                requestParams.put("header",header);
-            }
         if( privacy != null)
             requestParams.put("locked",privacy==accountPrivacy.LOCKED?"true":"false");
 
         try {
-            new HttpsConnection(context).patch(getAbsoluteUrl("/accounts/update_credentials"), 60, requestParams, prefKeyOauthTokenT);
+            new HttpsConnection(context).patch(getAbsoluteUrl("/accounts/update_credentials"), 60, requestParams, avatar, header, prefKeyOauthTokenT);
         } catch (HttpsConnection.HttpsConnectionException e) {
             e.printStackTrace();
             setError(e.getStatusCode(), e);
@@ -183,7 +172,6 @@ public class API {
         }
         return apiResponse;
     }
-
 
     /***
      * Verifiy credential of the authenticated user *synchronously*
@@ -1686,7 +1674,7 @@ public class API {
                 }
                 status.setEmojis(emojiList);
             }catch (Exception e){
-                status.setEmojis(new ArrayList<Emojis>());
+                status.setEmojis(new ArrayList<>());
             }
 
             //Retrieve Application

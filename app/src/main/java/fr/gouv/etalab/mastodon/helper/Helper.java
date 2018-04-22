@@ -138,7 +138,6 @@ import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.LoginActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
-import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
@@ -164,10 +163,11 @@ import static android.content.Context.DOWNLOAD_SERVICE;
  * - Reusable methods are implemented in this section
  */
 
+@SuppressWarnings("WeakerAccess")
 public class Helper {
 
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "WeakerAccess"})
     public static  final String TAG = "mastodon_etalab";
     public static final String CLIENT_NAME_VALUE = "Mastalab";
     public static final String OAUTH_SCOPES = "read write follow";
@@ -2038,7 +2038,7 @@ public class Helper {
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
             int resizeSet = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_1MO);
             if( mediaType == MediaType.PROFILE)
-                resizeSet = Helper.S_2MO;
+                resizeSet = Helper.S_1MO;
             double resizeby = size;
             if( resizeSet == Helper.S_512KO){
                 resizeby = 4194304;
@@ -2047,10 +2047,7 @@ public class Helper {
             }else if(resizeSet == Helper.S_2MO){
                 resizeby = 16777216;
             }
-            Log.v(Helper.TAG,"resizeby: " + resizeby);
-
             double resize = ((double)size)/resizeby;
-            Log.v(Helper.TAG,"resize: " + resize);
             if( resize > 1 ){
                 ContentResolver cr = context.getContentResolver();
                 String mime = cr.getType(uriFile);
@@ -2062,7 +2059,6 @@ public class Helper {
                 else
                     adjustedBitmap = newBitmap;
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                Log.v(Helper.TAG,"mime: " + mime);
                 if( mime !=null && (mime.contains("png") || mime.contains(".PNG")))
                     adjustedBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
                 else
@@ -2106,5 +2102,15 @@ public class Helper {
             }
         }
         return bs;
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public static void largeLog(String content) {
+        if (content.length() > 4000) {
+            Log.v(Helper.TAG, content.substring(0, 4000));
+            largeLog(content.substring(4000));
+        } else {
+            Log.v(Helper.TAG, content);
+        }
     }
 }

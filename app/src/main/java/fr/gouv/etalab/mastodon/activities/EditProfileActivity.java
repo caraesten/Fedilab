@@ -20,7 +20,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,6 +29,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -41,7 +41,6 @@ import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -60,11 +59,8 @@ import com.bumptech.glide.request.transition.Transition;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountInfoAsyncTask;
@@ -100,7 +96,8 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
     private CheckBox set_lock_account;
     private static final int PICK_IMAGE_HEADER = 4565;
     private static final int PICK_IMAGE_PROFILE = 6545;
-    private String profile_picture, header_picture, profile_username, profile_note;
+    private String profile_username, profile_note;
+    private ByteArrayInputStream profile_picture, header_picture;
     private API.accountPrivacy profile_privacy;
     private Bitmap profile_picture_bmp, profile_header_bmp;
     private ImageView pp_actionBar;
@@ -454,8 +451,9 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                 Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
                 return;
             }
+            Uri fileUri = data.getData();
             try {
-                InputStream inputStream = getApplicationContext().getContentResolver().openInputStream(data.getData());
+                InputStream inputStream = getApplicationContext().getContentResolver().openInputStream(fileUri);
                 assert inputStream != null;
                 BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
                 Bitmap bmp = BitmapFactory.decodeStream(bufferedInputStream);
@@ -464,31 +462,15 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            ByteArrayInputStream bs = Helper.compressImage(EditProfileActivity.this, data.getData(), Helper.MediaType.MEDIA);
-            assert bs != null;
-            int n = bs.available();
-            byte[] bytes = new byte[n];
-            //noinspection ResultOfMethodCallIgnored
-            bs.read(bytes, 0, n);
-            String s;
-            ContentResolver cr = getContentResolver();
-            String mime = cr.getType(data.getData());
-            set_header_picture.setImageBitmap(profile_header_bmp);
-            try {
-                s = new String(bytes, "UTF-8");
-                header_picture = "data:"+mime+";base64, " + s;
-            } catch (UnsupportedEncodingException e) {
-                Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
-                e.printStackTrace();
-            }
+            header_picture = Helper.compressImage(EditProfileActivity.this, fileUri, Helper.MediaType.MEDIA);
         }else if(requestCode == PICK_IMAGE_PROFILE && resultCode == Activity.RESULT_OK) {
             if (data == null || data.getData() == null) {
                 Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
                 return;
             }
-
+            Uri fileUri = data.getData();
             try {
-                InputStream inputStream = getApplicationContext().getContentResolver().openInputStream(data.getData());
+                InputStream inputStream = getApplicationContext().getContentResolver().openInputStream(fileUri);
                 assert inputStream != null;
                 BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
                 Bitmap bmp = BitmapFactory.decodeStream(bufferedInputStream);
@@ -497,34 +479,19 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            ByteArrayInputStream bs = Helper.compressImage(EditProfileActivity.this, data.getData(), Helper.MediaType.MEDIA);
-            assert bs != null;
-            int n = bs.available();
-            byte[] bytes = new byte[n];
-            //noinspection ResultOfMethodCallIgnored
-            bs.read(bytes, 0, n);
-            String s;
-            ContentResolver cr = getContentResolver();
-            String mime = cr.getType(data.getData());
-
-            try {
-                s = new String(bytes, "UTF-8");
-                profile_picture = "data:"+mime+";base64, " + s;
-            } catch (UnsupportedEncodingException e) {
-                Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
-                e.printStackTrace();
-            }
+            profile_picture = Helper.compressImage(EditProfileActivity.this, fileUri, Helper.MediaType.PROFILE);
         }
     }
 
     @Override
     public void onUpdateCredential(APIResponse apiResponse) {
+        set_profile_save.setEnabled(true);
         if( apiResponse.getError() != null){
             Toast.makeText(getApplicationContext(), R.string.toast_error, Toast.LENGTH_LONG).show();
             return;
         }
         Toast.makeText(getApplicationContext(), R.string.toast_update_credential_ok, Toast.LENGTH_LONG).show();
-        set_profile_save.setEnabled(true);
+
         Intent mStartActivity = new Intent(EditProfileActivity.this, BaseMainActivity.class);
         int mPendingIntentId = 45641;
         PendingIntent mPendingIntent = PendingIntent.getActivity(EditProfileActivity.this, mPendingIntentId, mStartActivity,
