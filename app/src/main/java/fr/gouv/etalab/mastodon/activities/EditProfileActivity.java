@@ -20,6 +20,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -58,9 +59,12 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountInfoAsyncTask;
@@ -446,54 +450,48 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_HEADER && resultCode == Activity.RESULT_OK) {
-            if (data == null) {
+            if (data == null || data.getData() == null) {
                 Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
                 return;
             }
+            ByteArrayInputStream bs = Helper.compressImage(EditProfileActivity.this, data.getData(), Helper.MediaType.MEDIA);
+            assert bs != null;
+            int n = bs.available();
+            byte[] bytes = new byte[n];
+            //noinspection ResultOfMethodCallIgnored
+            bs.read(bytes, 0, n);
+            String s;
+            ContentResolver cr = getContentResolver();
+            String mime = cr.getType(data.getData());
+            set_header_picture.setImageBitmap(profile_header_bmp);
             try {
-                //noinspection ConstantConditions
-                InputStream inputStream = getApplicationContext().getContentResolver().openInputStream(data.getData());
-                BufferedInputStream bufferedInputStream;
-                if (inputStream != null) {
-                    bufferedInputStream = new BufferedInputStream(inputStream);
-                }else {
-                    Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
-                    return;
-                }
-                Bitmap bmp = BitmapFactory.decodeStream(bufferedInputStream);
-                profile_header_bmp = Bitmap.createScaledBitmap(bmp, 700, 335, true);
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                profile_header_bmp.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                set_header_picture.setImageBitmap(profile_header_bmp);
-                byte[] byteArray = byteArrayOutputStream .toByteArray();
-                header_picture = "data:image/png;base64, " + Base64.encodeToString(byteArray, Base64.DEFAULT);
-
-            } catch (FileNotFoundException e) {
+                s = new String(bytes, "UTF-8");
+                header_picture = "data:"+mime+";base64, " + s;
+            } catch (UnsupportedEncodingException e) {
                 Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
+                e.printStackTrace();
             }
         }else if(requestCode == PICK_IMAGE_PROFILE && resultCode == Activity.RESULT_OK) {
-            if (data == null) {
+            if (data == null || data.getData() == null) {
                 Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
                 return;
             }
+            ByteArrayInputStream bs = Helper.compressImage(EditProfileActivity.this, data.getData(), Helper.MediaType.MEDIA);
+            assert bs != null;
+            int n = bs.available();
+            byte[] bytes = new byte[n];
+            //noinspection ResultOfMethodCallIgnored
+            bs.read(bytes, 0, n);
+            String s;
+            ContentResolver cr = getContentResolver();
+            String mime = cr.getType(data.getData());
+            set_profile_picture.setImageBitmap(profile_picture_bmp);
             try {
-                @SuppressWarnings("ConstantConditions") InputStream inputStream = getApplicationContext().getContentResolver().openInputStream(data.getData());
-                BufferedInputStream bufferedInputStream;
-                if (inputStream != null) {
-                    bufferedInputStream = new BufferedInputStream(inputStream);
-                }else {
-                    Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
-                    return;
-                }
-                Bitmap bmp = BitmapFactory.decodeStream(bufferedInputStream);
-                profile_picture_bmp = Bitmap.createScaledBitmap(bmp, 120, 120, true);
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                profile_picture_bmp.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                set_profile_picture.setImageBitmap(profile_picture_bmp);
-                byte[] byteArray = byteArrayOutputStream .toByteArray();
-                profile_picture = "data:image/png;base64, " + Base64.encodeToString(byteArray, Base64.DEFAULT);
-            } catch (FileNotFoundException e) {
+                s = new String(bytes, "UTF-8");
+                profile_picture = "data:"+mime+";base64, " + s;
+            } catch (UnsupportedEncodingException e) {
                 Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
+                e.printStackTrace();
             }
         }
     }

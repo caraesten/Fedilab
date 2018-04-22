@@ -18,6 +18,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.text.Html;
 import android.text.SpannableString;
+import android.util.Log;
 
 import com.google.common.io.ByteStreams;
 
@@ -40,6 +41,7 @@ import java.net.Proxy;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -141,7 +143,11 @@ public class HttpsConnection {
             if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
                 response = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
             } else {
-                String error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                String error = null;
+                if( httpsURLConnection.getErrorStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                else if( httpsURLConnection.getInputStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                 int responseCode = httpsURLConnection.getResponseCode();
                 httpsURLConnection.getInputStream().close();
                 throw new HttpsConnectionException(responseCode, error);
@@ -181,7 +187,11 @@ public class HttpsConnection {
             if (httpURLConnection.getResponseCode() >= 200 && httpURLConnection.getResponseCode() < 400) {
                 response = new String(ByteStreams.toByteArray(httpURLConnection.getInputStream()));
             }else {
-                String error = new String(ByteStreams.toByteArray(httpURLConnection.getErrorStream()));
+                String error = null;
+                if( httpsURLConnection.getErrorStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                else if( httpsURLConnection.getInputStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                 int responseCode = httpURLConnection.getResponseCode();
                 httpURLConnection.getInputStream().close();
                 throw new HttpsConnectionException(responseCode, error);
@@ -211,7 +221,11 @@ public class HttpsConnection {
                 getSinceMaxId();
                 response = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
             }else {
-                String error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                String error = null;
+                if( httpsURLConnection.getErrorStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                else if( httpsURLConnection.getInputStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                 int responseCode = httpsURLConnection.getResponseCode();
                 httpsURLConnection.getInputStream().close();
                 throw new HttpsConnectionException(responseCode, error);
@@ -234,7 +248,11 @@ public class HttpsConnection {
                 getSinceMaxId();
                 response = new String(ByteStreams.toByteArray(httpURLConnection.getInputStream()));
             }else {
-                String error = new String(ByteStreams.toByteArray(httpURLConnection.getErrorStream()));
+                String error = null;
+                if( httpsURLConnection.getErrorStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                else if( httpsURLConnection.getInputStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                 int responseCode = httpURLConnection.getResponseCode();
                 httpURLConnection.getInputStream().close();
                 throw new HttpsConnectionException(responseCode, error);
@@ -288,7 +306,11 @@ public class HttpsConnection {
                 getSinceMaxId();
                 response = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
             } else {
-                String error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                String error = null;
+                if( httpsURLConnection.getErrorStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                else if( httpsURLConnection.getInputStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                 int responseCode = httpsURLConnection.getResponseCode();
                 httpsURLConnection.getInputStream().close();
                 throw new HttpsConnectionException(responseCode, error);
@@ -334,7 +356,11 @@ public class HttpsConnection {
                 getSinceMaxId();
                 response = new String(ByteStreams.toByteArray(httpURLConnection.getInputStream()));
             } else {
-                String error = new String(ByteStreams.toByteArray(httpURLConnection.getErrorStream()));
+                String error = null;
+                if( httpsURLConnection.getErrorStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                else if( httpsURLConnection.getInputStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                 int responseCode = httpURLConnection.getResponseCode();
                 httpURLConnection.getInputStream().close();
                 throw new HttpsConnectionException(responseCode, error);
@@ -699,7 +725,11 @@ public class HttpsConnection {
 
 
                         if (200 != httpsURLConnection.getResponseCode()) {
-                            String error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                            String error = null;
+                            if( httpsURLConnection.getErrorStream() != null)
+                                error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                            else if( httpsURLConnection.getInputStream() != null)
+                                error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                             int responseCode = httpsURLConnection.getResponseCode();
                             httpsURLConnection.getInputStream().close();
                             throw new HttpsConnectionException(responseCode, error);
@@ -840,7 +870,11 @@ public class HttpsConnection {
 
 
                         if (200 != httpURLConnection.getResponseCode()) {
-                            String error = new String(ByteStreams.toByteArray(httpURLConnection.getErrorStream()));
+                            String error = null;
+                            if( httpsURLConnection.getErrorStream() != null)
+                                error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                            else if( httpsURLConnection.getInputStream() != null)
+                                error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                             int responseCode = httpURLConnection.getResponseCode();
                             httpURLConnection.getInputStream().close();
                             throw new HttpsConnectionException(responseCode, error);
@@ -932,7 +966,11 @@ public class HttpsConnection {
                 getSinceMaxId();
                 response = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
             } else {
-                String error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                String error = null;
+                if( httpsURLConnection.getErrorStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                else if( httpsURLConnection.getInputStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                 int responseCode = httpsURLConnection.getResponseCode();
                 httpsURLConnection.getInputStream().close();
                 throw new HttpsConnectionException(responseCode, error);
@@ -980,7 +1018,11 @@ public class HttpsConnection {
                 getSinceMaxId();
                 response = new String(ByteStreams.toByteArray(httpURLConnection.getInputStream()));
             } else {
-                String error = new String(ByteStreams.toByteArray(httpURLConnection.getErrorStream()));
+                String error = null;
+                if( httpsURLConnection.getErrorStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                else if( httpsURLConnection.getInputStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                 int responseCode = httpURLConnection.getResponseCode();
                 httpURLConnection.getInputStream().close();
                 throw new HttpsConnectionException(responseCode, error);
@@ -994,7 +1036,8 @@ public class HttpsConnection {
 
 
 
-    public String patch(String urlConnection, int timeout, HashMap<String, String> paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
+    @SuppressWarnings("SameParameterValue")
+    void patch(String urlConnection, int timeout, HashMap<String, String> paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
         if( urlConnection.startsWith("https://")) {
             URL url = new URL(urlConnection);
             Map<String, Object> params = new LinkedHashMap<>();
@@ -1036,19 +1079,23 @@ public class HttpsConnection {
             httpsURLConnection.setDoOutput(true);
 
             httpsURLConnection.getOutputStream().write(postDataBytes);
-            String response;
+            Log.v(Helper.TAG,"postDataBytes: " + postData.toString());
             if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
-                getSinceMaxId();
-                response = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
+                new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
             } else {
-                String error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                String error = null;
+                if( httpsURLConnection.getErrorStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                else if( httpsURLConnection.getInputStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                 int responseCode = httpsURLConnection.getResponseCode();
-                httpsURLConnection.getInputStream().close();
+                try {
+                    httpsURLConnection.getInputStream().close();
+                }catch (Exception ignored){}
+
                 throw new HttpsConnectionException(responseCode, error);
             }
-            getSinceMaxId();
             httpsURLConnection.getInputStream().close();
-            return response;
         }else {
             URL url = new URL(urlConnection);
             Map<String, Object> params = new LinkedHashMap<>();
@@ -1083,19 +1130,19 @@ public class HttpsConnection {
             httpURLConnection.setDoOutput(true);
 
             httpURLConnection.getOutputStream().write(postDataBytes);
-            String response;
             if (httpURLConnection.getResponseCode() >= 200 && httpURLConnection.getResponseCode() < 400) {
-                getSinceMaxId();
-                response = new String(ByteStreams.toByteArray(httpURLConnection.getInputStream()));
+                new String(ByteStreams.toByteArray(httpURLConnection.getInputStream()));
             } else {
-                String error = new String(ByteStreams.toByteArray(httpURLConnection.getErrorStream()));
+                String error = null;
+                if( httpsURLConnection.getErrorStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                else if( httpsURLConnection.getInputStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                 int responseCode = httpURLConnection.getResponseCode();
                 httpURLConnection.getInputStream().close();
                 throw new HttpsConnectionException(responseCode, error);
             }
-            getSinceMaxId();
             httpURLConnection.getInputStream().close();
-            return response;
         }
 
     }
@@ -1143,7 +1190,11 @@ public class HttpsConnection {
                 httpsURLConnection.getInputStream().close();
                 return httpsURLConnection.getResponseCode();
             } else {
-                String error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                String error = null;
+                if( httpsURLConnection.getErrorStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                else if( httpsURLConnection.getInputStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                 int responseCode = httpsURLConnection.getResponseCode();
                 httpsURLConnection.getInputStream().close();
                 throw new HttpsConnectionException(responseCode, error);
@@ -1188,7 +1239,11 @@ public class HttpsConnection {
                 httpURLConnection.getInputStream().close();
                 return httpURLConnection.getResponseCode();
             }else {
-                String error = new String(ByteStreams.toByteArray(httpURLConnection.getErrorStream()));
+                String error = null;
+                if( httpsURLConnection.getErrorStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                else if( httpsURLConnection.getInputStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                 int responseCode = httpURLConnection.getResponseCode();
                 httpURLConnection.getInputStream().close();
                 throw new HttpsConnectionException(responseCode, error);

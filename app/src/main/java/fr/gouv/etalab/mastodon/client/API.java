@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -156,19 +157,21 @@ public class API {
                 requestParams.put("note",note);
             }
         if( avatar != null)
+            Log.v(Helper.TAG,"avatar" + avatar);
             try {
                 requestParams.put("avatar",URLEncoder.encode(avatar, "UTF-8"));
             } catch (UnsupportedEncodingException e) {
                 requestParams.put("avatar",avatar);
             }
-        if( privacy != null)
-            requestParams.put("locked",privacy==accountPrivacy.LOCKED?"true":"false");
         if( header != null)
             try {
                 requestParams.put("header",URLEncoder.encode(header, "UTF-8"));
             } catch (UnsupportedEncodingException e) {
                 requestParams.put("header",header);
             }
+        if( privacy != null)
+            requestParams.put("locked",privacy==accountPrivacy.LOCKED?"true":"false");
+
         try {
             new HttpsConnection(context).patch(getAbsoluteUrl("/accounts/update_credentials"), 60, requestParams, prefKeyOauthTokenT);
         } catch (HttpsConnection.HttpsConnectionException e) {
