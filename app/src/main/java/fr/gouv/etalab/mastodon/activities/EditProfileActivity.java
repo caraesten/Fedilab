@@ -454,6 +454,16 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                 Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
                 return;
             }
+            try {
+                InputStream inputStream = getApplicationContext().getContentResolver().openInputStream(data.getData());
+                assert inputStream != null;
+                BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+                Bitmap bmp = BitmapFactory.decodeStream(bufferedInputStream);
+                profile_header_bmp = Bitmap.createScaledBitmap(bmp, 700, 335, true);
+                set_header_picture.setImageBitmap(profile_header_bmp);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
             ByteArrayInputStream bs = Helper.compressImage(EditProfileActivity.this, data.getData(), Helper.MediaType.MEDIA);
             assert bs != null;
             int n = bs.available();
@@ -476,6 +486,17 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                 Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
                 return;
             }
+
+            try {
+                InputStream inputStream = getApplicationContext().getContentResolver().openInputStream(data.getData());
+                assert inputStream != null;
+                BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+                Bitmap bmp = BitmapFactory.decodeStream(bufferedInputStream);
+                profile_picture_bmp = Bitmap.createScaledBitmap(bmp, 400, 400, true);
+                set_profile_picture.setImageBitmap(profile_picture_bmp);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
             ByteArrayInputStream bs = Helper.compressImage(EditProfileActivity.this, data.getData(), Helper.MediaType.MEDIA);
             assert bs != null;
             int n = bs.available();
@@ -485,7 +506,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
             String s;
             ContentResolver cr = getContentResolver();
             String mime = cr.getType(data.getData());
-            set_profile_picture.setImageBitmap(profile_picture_bmp);
+
             try {
                 s = new String(bytes, "UTF-8");
                 profile_picture = "data:"+mime+";base64, " + s;
