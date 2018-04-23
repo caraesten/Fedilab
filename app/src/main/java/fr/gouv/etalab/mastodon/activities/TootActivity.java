@@ -22,8 +22,6 @@ import android.content.ContentResolver;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.support.media.ExifInterface;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -344,7 +342,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 picture_scrollview.setVisibility(View.VISIBLE);
                 toot_picture.setEnabled(false);
                 toot_it.setEnabled(false);
-                new HttpsConnection(TootActivity.this).upload(bs, TootActivity.this);
+                new HttpsConnection(TootActivity.this).upload(bs, fileMention, TootActivity.this);
             }
             toot_content.setText(String.format("\n\nvia @%s\n\n%s\n\n", tootMention, urlMention));
             toot_space_left.setText(String.valueOf(toot_content.length()));
@@ -732,11 +730,12 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 return;
             }
             try {
+                String filename =  Helper.getFileName(TootActivity.this, data.getData());
                 ContentResolver cr = getContentResolver();
                 String mime = cr.getType(data.getData());
                 if(mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("gif")) ) {
                     InputStream inputStream = getContentResolver().openInputStream(data.getData());
-                    new HttpsConnection(TootActivity.this).upload(inputStream, TootActivity.this);
+                    new HttpsConnection(TootActivity.this).upload(inputStream, filename, TootActivity.this);
                 } else if(mime != null && mime.toLowerCase().contains("image")) {
                     new asyncPicture(TootActivity.this, data.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }else {
@@ -796,7 +795,8 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             toot_picture_container.setVisibility(View.VISIBLE);
             toot_picture.setEnabled(false);
             toot_it.setEnabled(false);
-            new HttpsConnection(this.activityWeakReference.get()).upload(bs, (TootActivity)this.activityWeakReference.get());
+            String filename =  Helper.getFileName(this.activityWeakReference.get(), uriFile);
+            new HttpsConnection(this.activityWeakReference.get()).upload(bs, filename, (TootActivity)this.activityWeakReference.get());
         }
     }
 
@@ -1346,14 +1346,18 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         picture_scrollview.setVisibility(View.VISIBLE);
         Bitmap pictureMention = BitmapFactory.decodeFile(pathToFile);
         if( pictureMention != null) {
+            String filename = pathToFile.substring(pathToFile.lastIndexOf("/") + 1);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            pictureMention.compress(Bitmap.CompressFormat.PNG, 0, bos);
+            if( filename.contains(".png") || filename.contains(".PNG"))
+                pictureMention.compress(Bitmap.CompressFormat.PNG, 0, bos);
+            else
+                pictureMention.compress(Bitmap.CompressFormat.JPEG, 80, bos);
             byte[] bitmapdata = bos.toByteArray();
             ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
             toot_picture_container.setVisibility(View.VISIBLE);
             toot_picture.setEnabled(false);
             toot_it.setEnabled(false);
-            new HttpsConnection(TootActivity.this).upload(bs, TootActivity.this);
+            new HttpsConnection(TootActivity.this).upload(bs, filename, TootActivity.this);
         }
     }
 

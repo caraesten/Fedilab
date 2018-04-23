@@ -982,7 +982,7 @@ public class HttpsConnection {
      * @param inputStream InputStream of the file to upload
      * @param listener - OnRetrieveAttachmentInterface: listener to send information about attachment once uploaded.
      */
-    public void upload(final InputStream inputStream, final OnRetrieveAttachmentInterface listener) {
+    public void upload(final InputStream inputStream, String fileName, final OnRetrieveAttachmentInterface listener) {
         
         if( Helper.getLiveInstanceWithProtocol(context).startsWith("https://")) {
             new Thread(new Runnable() {
