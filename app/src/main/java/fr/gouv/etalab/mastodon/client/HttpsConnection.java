@@ -763,7 +763,6 @@ public class HttpsConnection {
                 request.writeBytes(lineEnd);
                 request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
                 request.flush();
-                request.close();
             }
 
             if(lengthSentHeader > 0){
@@ -786,7 +785,6 @@ public class HttpsConnection {
                 request.writeBytes(lineEnd);
                 request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
                 request.flush();
-                request.close();
             }
 
             if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {

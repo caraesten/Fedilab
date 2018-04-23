@@ -29,6 +29,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -460,7 +461,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                 assert inputStream != null;
                 BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
                 Bitmap bmp = BitmapFactory.decodeStream(bufferedInputStream);
-                profile_header_bmp = Bitmap.createScaledBitmap(bmp, 700, 335, true);
+                profile_header_bmp = ThumbnailUtils.extractThumbnail(bmp, 700, 335);
                 set_header_picture.setImageBitmap(profile_header_bmp);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -478,7 +479,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                 assert inputStream != null;
                 BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
                 Bitmap bmp = BitmapFactory.decodeStream(bufferedInputStream);
-                profile_picture_bmp = Bitmap.createScaledBitmap(bmp, 400, 400, true);
+                profile_picture_bmp = ThumbnailUtils.extractThumbnail(bmp, 400, 400);
                 set_profile_picture.setImageBitmap(profile_picture_bmp);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
