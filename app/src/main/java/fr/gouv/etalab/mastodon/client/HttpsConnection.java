@@ -708,7 +708,7 @@ public class HttpsConnection {
                 lengthSentHeader += 2 * (lineEnd).getBytes().length;
             }
 
-            int lengthSent = lengthSentHeader + lengthSentAvatar;
+            int lengthSent = lengthSentHeader + lengthSentAvatar + (twoHyphens + boundary + twoHyphens + lineEnd).getBytes().length;
             if (proxy != null)
                 httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
             else
@@ -742,7 +742,8 @@ public class HttpsConnection {
 
             OutputStream outputStream = httpsURLConnection.getOutputStream();
             outputStream.write(postDataBytes);
-
+            if( lengthSent > 0)
+                outputStream.write((twoHyphens + boundary + twoHyphens + lineEnd).getBytes("UTF-8"));
             if(lengthSentAvatar > 0){
                 DataOutputStream request = new DataOutputStream(outputStream);
                 int totalSize = pixelsAvatar.length;
