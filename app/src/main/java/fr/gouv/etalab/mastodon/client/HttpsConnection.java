@@ -41,7 +41,6 @@ import java.net.Proxy;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -823,30 +822,153 @@ public class HttpsConnection {
             }
             byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 
+            int lengthSentAvatar = 0;
+            byte[] pixelsAvatar = new byte[0];
+            if( avatar != null) {
+                ByteArrayOutputStream ous = null;
+                try {
+                    try {
+                        byte[] buffer = new byte[CHUNK_SIZE];
+                        ous = new ByteArrayOutputStream();
+                        int read;
+                        while ((read = avatar.read(buffer)) != -1) {
+                            ous.write(buffer, 0, read);
+                        }
+                        ous.flush();
+                    } finally {
+                        if (ous != null)
+                            ous.close();
+                    }
+                } catch (FileNotFoundException ignored) {
+                } catch (IOException ignored) {
+                }
+                pixelsAvatar = ous.toByteArray();
+
+                lengthSentAvatar = pixelsAvatar.length;
+                lengthSentAvatar += 2 * (twoHyphens + boundary + twoHyphens + lineEnd).getBytes().length;
+                lengthSentAvatar += ("Content-Disposition: form-data; name=\"avatar\";filename=\""+avatarName+"\"" + lineEnd).getBytes().length;
+                lengthSentAvatar += 2 * (lineEnd).getBytes().length;
+            }
+
+            int lengthSentHeader = 0;
+            byte[] pixelsHeader = new byte[0];
+            if( header != null) {
+                ByteArrayOutputStream ous = null;
+                try {
+                    try {
+                        byte[] buffer = new byte[CHUNK_SIZE];
+                        ous = new ByteArrayOutputStream();
+                        int read;
+                        while ((read = header.read(buffer)) != -1) {
+                            ous.write(buffer, 0, read);
+                        }
+                        ous.flush();
+                    } finally {
+                        if (ous != null)
+                            ous.close();
+                    }
+                } catch (FileNotFoundException ignored) {
+                } catch (IOException ignored) {
+                }
+                pixelsHeader = ous.toByteArray();
+
+                lengthSentHeader = pixelsHeader.length;
+                lengthSentHeader += 2 * (twoHyphens + boundary + twoHyphens + lineEnd).getBytes().length;
+                lengthSentHeader += ("Content-Disposition: form-data; name=\"header\";filename=\""+headerName+"\"" + lineEnd).getBytes().length;
+                lengthSentHeader += 2 * (lineEnd).getBytes().length;
+            }
+
+            int lengthSent = lengthSentHeader + lengthSentAvatar + (twoHyphens + boundary + twoHyphens + lineEnd).getBytes().length;
             if (proxy != null)
                 httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
             else
                 httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
             httpURLConnection.setConnectTimeout(timeout * 1000);
-            httpURLConnection.setRequestMethod("PATCH");
+            httpURLConnection.setDoInput(true);
+            httpURLConnection.setDoOutput(true);
+            httpURLConnection.setUseCaches(false);
+            if( Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT ){
+                httpURLConnection.setRequestMethod("PATCH");
+            }else {
+                httpURLConnection.setRequestProperty("X-HTTP-Method-Override", "PATCH");
+                httpURLConnection.setRequestMethod("POST");
+            }
+            if( lengthSent > 0) {
+                httpURLConnection.setRequestProperty("Connection", "Keep-Alive");
+                httpURLConnection.setRequestProperty("Cache-Control", "no-cache");
+            }
+            httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+            if( lengthSent > 0)
+                httpURLConnection.setRequestProperty("Content-Type", "multipart/form-data;boundary="+ boundary);
+
             if (token != null)
                 httpURLConnection.setRequestProperty("Authorization", "Bearer " + token);
-            httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            httpURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
-            httpURLConnection.setDoOutput(true);
 
-            httpURLConnection.getOutputStream().write(postDataBytes);
+            if( lengthSent > 0)
+                httpURLConnection.setFixedLengthStreamingMode(lengthSent+postDataBytes.length);
+
+            OutputStream outputStream = httpURLConnection.getOutputStream();
+            outputStream.write(postDataBytes);
+            if( lengthSent > 0)
+                outputStream.write((twoHyphens + boundary + twoHyphens + lineEnd).getBytes("UTF-8"));
+            if(lengthSentAvatar > 0){
+                DataOutputStream request = new DataOutputStream(outputStream);
+                int totalSize = pixelsAvatar.length;
+                int bytesTransferred = 0;
+                request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+                request.writeBytes("Content-Disposition: form-data; name=\"avatar\";filename=\""+avatarName+"\"" + lineEnd);
+                request.writeBytes(lineEnd);
+                while (bytesTransferred < totalSize) {
+                    int nextChunkSize = totalSize - bytesTransferred;
+                    if (nextChunkSize > CHUNK_SIZE) {
+                        nextChunkSize = CHUNK_SIZE;
+                    }
+                    request.write(pixelsAvatar, bytesTransferred, nextChunkSize);
+                    bytesTransferred += nextChunkSize;
+                    request.flush();
+                }
+                request.writeBytes(lineEnd);
+                request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+                request.flush();
+            }
+
+            if(lengthSentHeader > 0){
+                int totalSize = pixelsHeader.length;
+                int bytesTransferred = 0;
+                OutputStream outPutStream = httpURLConnection.getOutputStream();
+                DataOutputStream request = new DataOutputStream(outPutStream);
+                request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+                request.writeBytes("Content-Disposition: form-data; name=\"header\";filename=\""+headerName+"\"" + lineEnd);
+                request.writeBytes(lineEnd);
+                while (bytesTransferred < totalSize) {
+                    int nextChunkSize = totalSize - bytesTransferred;
+                    if (nextChunkSize > CHUNK_SIZE) {
+                        nextChunkSize = CHUNK_SIZE;
+                    }
+                    request.write(pixelsHeader, bytesTransferred, nextChunkSize);
+                    bytesTransferred += nextChunkSize;
+                    request.flush();
+                }
+                request.writeBytes(lineEnd);
+                request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+                request.flush();
+            }
+
             if (httpURLConnection.getResponseCode() >= 200 && httpURLConnection.getResponseCode() < 400) {
                 new String(ByteStreams.toByteArray(httpURLConnection.getInputStream()));
             } else {
                 String error = null;
-                if( httpsURLConnection.getErrorStream() != null)
-                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
-                else if( httpsURLConnection.getInputStream() != null)
-                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
+                if( httpURLConnection.getErrorStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpURLConnection.getErrorStream()));
+                else if( httpURLConnection.getInputStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpURLConnection.getInputStream()));
                 int responseCode = httpURLConnection.getResponseCode();
-                httpURLConnection.getInputStream().close();
+                try {
+                    httpURLConnection.getInputStream().close();
+                }catch (Exception ignored){}
+
                 throw new HttpsConnectionException(responseCode, error);
             }
             httpURLConnection.getInputStream().close();
