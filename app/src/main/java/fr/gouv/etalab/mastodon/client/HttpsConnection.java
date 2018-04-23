@@ -628,7 +628,7 @@ public class HttpsConnection {
 
 
     @SuppressWarnings("SameParameterValue")
-    void patch(String urlConnection, int timeout, HashMap<String, String> paramaters, InputStream avatar, InputStream header, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
+    void patch(String urlConnection, int timeout, HashMap<String, String> paramaters, InputStream avatar, String avatarName, InputStream header, String headerName, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
         String twoHyphens = "--";
         String boundary = "*****" + Long.toString(System.currentTimeMillis()) + "*****";
         String lineEnd = "\r\n";
@@ -676,7 +676,7 @@ public class HttpsConnection {
 
                 lengthSentAvatar = pixelsAvatar.length;
                 lengthSentAvatar += 2 * (twoHyphens + boundary + twoHyphens + lineEnd).getBytes().length;
-                lengthSentAvatar += ("Content-Disposition: form-data; name=\"avatar\";filename=\"avatar.png\"" + lineEnd).getBytes().length;
+                lengthSentAvatar += ("Content-Disposition: form-data; name=\"avatar\";filename=\""+avatarName+"\"" + lineEnd).getBytes().length;
                 lengthSentAvatar += 2 * (lineEnd).getBytes().length;
             }
 
@@ -704,7 +704,7 @@ public class HttpsConnection {
 
                 lengthSentHeader = pixelsHeader.length;
                 lengthSentHeader += 2 * (twoHyphens + boundary + twoHyphens + lineEnd).getBytes().length;
-                lengthSentHeader += ("Content-Disposition: form-data; name=\"header\";filename=\"header.png\"" + lineEnd).getBytes().length;
+                lengthSentHeader += ("Content-Disposition: form-data; name=\"header\";filename=\""+headerName+"\"" + lineEnd).getBytes().length;
                 lengthSentHeader += 2 * (lineEnd).getBytes().length;
             }
 
@@ -725,11 +725,14 @@ public class HttpsConnection {
                 httpsURLConnection.setRequestProperty("X-HTTP-Method-Override", "PATCH");
                 httpsURLConnection.setRequestMethod("POST");
             }
-
-            httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
-            httpsURLConnection.setRequestProperty("Cache-Control", "no-cache");
+            if( lengthSent > 0) {
+                httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
+                httpsURLConnection.setRequestProperty("Cache-Control", "no-cache");
+            }
             httpsURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            httpsURLConnection.setRequestProperty("Content-Type", "multipart/form-data;boundary="+ boundary);
+
+            if( lengthSent > 0)
+                httpsURLConnection.setRequestProperty("Content-Type", "multipart/form-data;boundary="+ boundary);
 
             if (token != null)
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
@@ -737,16 +740,15 @@ public class HttpsConnection {
             if( lengthSent > 0)
                 httpsURLConnection.setFixedLengthStreamingMode(lengthSent+postDataBytes.length);
 
-
-            httpsURLConnection.getOutputStream().write(postDataBytes);
+            OutputStream outputStream = httpsURLConnection.getOutputStream();
+            outputStream.write(postDataBytes);
 
             if(lengthSentAvatar > 0){
-                OutputStream outPutStream = httpsURLConnection.getOutputStream();
-                DataOutputStream request = new DataOutputStream(outPutStream);
+                DataOutputStream request = new DataOutputStream(outputStream);
                 int totalSize = pixelsAvatar.length;
                 int bytesTransferred = 0;
                 request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-                request.writeBytes("Content-Disposition: form-data; name=\"avatar\";filename=\"avatar.png\"" + lineEnd);
+                request.writeBytes("Content-Disposition: form-data; name=\"avatar\";filename=\""+avatarName+"\"" + lineEnd);
                 request.writeBytes(lineEnd);
                 while (bytesTransferred < totalSize) {
                     int nextChunkSize = totalSize - bytesTransferred;
@@ -755,6 +757,7 @@ public class HttpsConnection {
                     }
                     request.write(pixelsAvatar, bytesTransferred, nextChunkSize);
                     bytesTransferred += nextChunkSize;
+                    request.flush();
                 }
                 request.writeBytes(lineEnd);
                 request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
@@ -768,7 +771,7 @@ public class HttpsConnection {
                 OutputStream outPutStream = httpsURLConnection.getOutputStream();
                 DataOutputStream request = new DataOutputStream(outPutStream);
                 request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-                request.writeBytes("Content-Disposition: form-data; name=\"header\";filename=\"header.png\"" + lineEnd);
+                request.writeBytes("Content-Disposition: form-data; name=\"header\";filename=\""+headerName+"\"" + lineEnd);
                 request.writeBytes(lineEnd);
                 while (bytesTransferred < totalSize) {
                     int nextChunkSize = totalSize - bytesTransferred;
@@ -777,6 +780,7 @@ public class HttpsConnection {
                     }
                     request.write(pixelsHeader, bytesTransferred, nextChunkSize);
                     bytesTransferred += nextChunkSize;
+                    request.flush();
                 }
                 request.writeBytes(lineEnd);
                 request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);

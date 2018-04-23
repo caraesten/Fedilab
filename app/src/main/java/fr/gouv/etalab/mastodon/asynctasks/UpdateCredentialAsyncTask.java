@@ -32,14 +32,14 @@ import fr.gouv.etalab.mastodon.interfaces.OnUpdateCredentialInterface;
 
 public class UpdateCredentialAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private String display_name, note;
+    private String display_name, note, avatarName, headerName;
     private ByteArrayInputStream avatar, header;
     private API.accountPrivacy privacy;
     private APIResponse apiResponse;
     private OnUpdateCredentialInterface listener;
     private WeakReference<Context> contextReference;
 
-    public UpdateCredentialAsyncTask(Context context, String display_name, String note, ByteArrayInputStream avatar, ByteArrayInputStream header, API.accountPrivacy privacy, OnUpdateCredentialInterface onUpdateCredentialInterface){
+    public UpdateCredentialAsyncTask(Context context, String display_name, String note, ByteArrayInputStream avatar, String avatarName, ByteArrayInputStream header, String headerName, API.accountPrivacy privacy, OnUpdateCredentialInterface onUpdateCredentialInterface){
         this.contextReference = new WeakReference<>(context);
         this.display_name = display_name;
         this.note = note;
@@ -47,11 +47,13 @@ public class UpdateCredentialAsyncTask extends AsyncTask<Void, Void, Void> {
         this.header = header;
         this.listener = onUpdateCredentialInterface;
         this.privacy = privacy;
+        this.avatarName = avatarName;
+        this.headerName = headerName;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        apiResponse = new API(this.contextReference.get()).updateCredential(display_name, note, avatar, header, privacy);
+        apiResponse = new API(this.contextReference.get()).updateCredential(display_name, note, avatar, avatarName, header, headerName, privacy);
         return null;
     }
 

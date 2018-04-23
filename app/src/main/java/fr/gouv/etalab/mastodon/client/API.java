@@ -143,7 +143,7 @@ public class API {
      * Update credential of the authenticated user *synchronously*
      * @return APIResponse
      */
-    public APIResponse updateCredential(String display_name, String note, ByteArrayInputStream avatar, ByteArrayInputStream header, accountPrivacy privacy) {
+    public APIResponse updateCredential(String display_name, String note, ByteArrayInputStream avatar, String avatarName, ByteArrayInputStream header, String headerName, accountPrivacy privacy) {
 
         HashMap<String, String> requestParams = new HashMap<>();
         if( display_name != null)
@@ -162,7 +162,7 @@ public class API {
             requestParams.put("locked",privacy==accountPrivacy.LOCKED?"true":"false");
 
         try {
-            new HttpsConnection(context).patch(getAbsoluteUrl("/accounts/update_credentials"), 60, requestParams, avatar, header, prefKeyOauthTokenT);
+            new HttpsConnection(context).patch(getAbsoluteUrl("/accounts/update_credentials"), 60, requestParams, avatar, avatarName, header, headerName, prefKeyOauthTokenT);
         } catch (HttpsConnection.HttpsConnectionException e) {
             e.printStackTrace();
             setError(e.getStatusCode(), e);

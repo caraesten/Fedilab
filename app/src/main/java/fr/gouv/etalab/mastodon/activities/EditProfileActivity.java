@@ -103,6 +103,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
     private ImageView pp_actionBar;
     private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_HEADER = 754;
     private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_PICTURE = 755;
+    private String avatarName, headerName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -400,7 +401,8 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                             }
                         }).start();
                         GlideApp.get(getApplicationContext()).clearMemory();
-                        new UpdateCredentialAsyncTask(getApplicationContext(), profile_username, profile_note, profile_picture, header_picture, profile_privacy, EditProfileActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+                        new UpdateCredentialAsyncTask(getApplicationContext(), profile_username, profile_note, profile_picture, avatarName,  header_picture, headerName, profile_privacy, EditProfileActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                 });
                 dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -452,6 +454,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                 return;
             }
             Uri fileUri = data.getData();
+            headerName = Helper.getFileName(EditProfileActivity.this, fileUri);
             try {
                 InputStream inputStream = getApplicationContext().getContentResolver().openInputStream(fileUri);
                 assert inputStream != null;
@@ -469,6 +472,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                 return;
             }
             Uri fileUri = data.getData();
+            avatarName = Helper.getFileName(EditProfileActivity.this, fileUri);
             try {
                 InputStream inputStream = getApplicationContext().getContentResolver().openInputStream(fileUri);
                 assert inputStream != null;

@@ -21,6 +21,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -29,6 +30,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.CountDownTimer;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.media.ExifInterface;
@@ -2102,6 +2104,20 @@ public class Helper {
             }
         }
         return bs;
+    }
+
+    public static String getFileName(Context context, Uri uri) {
+        ContentResolver resolver = context.getContentResolver();
+        Cursor returnCursor =
+                resolver.query(uri, null, null, null, null);
+        assert returnCursor != null;
+        int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+        returnCursor.moveToFirst();
+        String name = returnCursor.getString(nameIndex);
+        returnCursor.close();
+        Random r = new Random();
+        int suf = r.nextInt(9999 - 1000) + 1000;
+        return String.valueOf(suf)+name;
     }
 
     @SuppressWarnings("WeakerAccess")
