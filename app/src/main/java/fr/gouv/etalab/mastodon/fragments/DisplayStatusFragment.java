@@ -532,6 +532,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     @Override
     public void onRetrieveMissingFeeds(List<Status> statuses) {
         swipeRefreshLayout.setRefreshing(false);
+        if( this.statuses != null && this.statuses.size() > 0) {
+            for (Status status : this.statuses) {
+                status.setNew(false);
+            }
+            statusListAdapter.notifyItemRangeChanged(0, this.statuses.size());
+        }
         if( statuses != null && statuses.size() > 0) {
             int inserted = 0;
             for (int i = statuses.size() - 1; i >= 0; i--) {
