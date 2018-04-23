@@ -1017,7 +1017,7 @@ public class HttpsConnection {
 
                         int lengthSent = pixels.length;
                         lengthSent += 2 * (twoHyphens + boundary + twoHyphens + lineEnd).getBytes().length;
-                        lengthSent += ("Content-Disposition: form-data; name=\"file\";filename=\"picture.png\"" + lineEnd).getBytes().length;
+                        lengthSent += ("Content-Disposition: form-data; name=\"file\";filename=\""+fileName+"\"" + lineEnd).getBytes().length;
                         lengthSent += 2 * (lineEnd).getBytes().length;
 
                         if (proxy != null)
@@ -1044,7 +1044,7 @@ public class HttpsConnection {
                         DataOutputStream request = new DataOutputStream(httpsURLConnection.getOutputStream());
 
                         request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-                        request.writeBytes("Content-Disposition: form-data; name=\"file\";filename=\"picture.png\"" + lineEnd);
+                        request.writeBytes("Content-Disposition: form-data; name=\"file\";filename=\""+fileName+"\"" + lineEnd);
                         request.writeBytes(lineEnd);
 
                         //request.write(pixels);
@@ -1164,7 +1164,7 @@ public class HttpsConnection {
 
                         int lengthSent = pixels.length;
                         lengthSent += 2 * (twoHyphens + boundary + twoHyphens + lineEnd).getBytes().length;
-                        lengthSent += ("Content-Disposition: form-data; name=\"file\";filename=\"picture.png\"" + lineEnd).getBytes().length;
+                        lengthSent += ("Content-Disposition: form-data; name=\"file\";filename=\""+fileName+"\"" + lineEnd).getBytes().length;
                         lengthSent += 2 * (lineEnd).getBytes().length;
 
                         if( proxy !=null )
@@ -1190,7 +1190,7 @@ public class HttpsConnection {
                         DataOutputStream request = new DataOutputStream(httpURLConnection.getOutputStream());
 
                         request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-                        request.writeBytes("Content-Disposition: form-data; name=\"file\";filename=\"picture.png\"" + lineEnd);
+                        request.writeBytes("Content-Disposition: form-data; name=\"file\";filename=\""+fileName+"\"" + lineEnd);
                         request.writeBytes(lineEnd);
 
                         //request.write(pixels);
