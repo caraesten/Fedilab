@@ -79,7 +79,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     boolean firstTootsLoaded;
     private String userId, instance;
     private SharedPreferences sharedpreferences;
-
+    private boolean isSwipped;
 
     public DisplayStatusFragment(){
     }
@@ -101,6 +101,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             showMediaOnly = bundle.getBoolean("showMediaOnly",false);
             showPinned = bundle.getBoolean("showPinned",false);
         }
+        isSwipped = false;
         max_id = null;
         flag_loading = true;
         firstLoad = true;
@@ -174,6 +175,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             public void onRefresh() {
                 if( statuses.size() > 0) {
                     MainActivity.countNewStatus = 0;
+                    isSwipped = true;
                     retrieveMissingToots(null);
                 }
             }
@@ -532,12 +534,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     @Override
     public void onRetrieveMissingFeeds(List<Status> statuses) {
         swipeRefreshLayout.setRefreshing(false);
-        if( this.statuses != null && this.statuses.size() > 0) {
+        if( isSwipped && this.statuses != null && this.statuses.size() > 0) {
             for (Status status : this.statuses) {
                 status.setNew(false);
             }
             statusListAdapter.notifyItemRangeChanged(0, this.statuses.size());
         }
+        isSwipped = false;
         if( statuses != null && statuses.size() > 0) {
             int inserted = 0;
             for (int i = statuses.size() - 1; i >= 0; i--) {
