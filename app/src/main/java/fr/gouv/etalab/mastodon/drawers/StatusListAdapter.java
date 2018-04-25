@@ -746,7 +746,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 else
                     holder.status_reblog_count.setText(String.valueOf(status.getReblog().getReblogs_count()));
             }
-            if( type == RetrieveFeedsAsyncTask.Type.CONTEXT) {
+            if( getItemViewType(position) == FOCUSED_STATUS) {
                 String fullDate_tmp = Helper.dateDiffFull(status.getCreated_at());
                 String fullDate = fullDate_tmp.substring(0,1).toUpperCase() + fullDate_tmp.substring(1);
                 holder.status_toot_date.setText(fullDate);

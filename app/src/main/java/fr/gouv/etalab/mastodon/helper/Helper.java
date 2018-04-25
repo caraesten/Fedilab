@@ -609,7 +609,7 @@ public class Helper {
 
 
     public static String dateDiffFull(Date dateToot){
-        SimpleDateFormat df = (SimpleDateFormat) DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.MEDIUM, Locale.getDefault());
+        SimpleDateFormat df = (SimpleDateFormat) DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.MEDIUM, Locale.getDefault());
         return df.format(dateToot);
     }
 
