@@ -43,6 +43,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -966,7 +967,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             });
             //Click on a conversation
-            if( type != RetrieveFeedsAsyncTask.Type.CONTEXT ){
+
                 holder.status_content.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -977,7 +978,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         else
                             b.putString("statusId", status.getReblog().getId());
                         intent.putExtras(b);
-                        context.startActivity(intent);
+                        if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ) {
+                            ((Activity) context).finish();
+                            ((Activity) context).overridePendingTransition( 0, 0);
+                            context.startActivity(intent);
+                            ((Activity) context).overridePendingTransition( 0, 0);
+                        }else
+                            context.startActivity(intent);
                     }
                 });
                 holder.main_container.setOnClickListener(new View.OnClickListener() {
@@ -990,7 +997,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         else
                             b.putString("statusId", status.getReblog().getId());
                         intent.putExtras(b);
-                        context.startActivity(intent);
+                        if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ) {
+                            ((Activity) context).finish();
+                            ((Activity) context).overridePendingTransition( 0, 0);
+                            context.startActivity(intent);
+                            ((Activity) context).overridePendingTransition( 0, 0);
+                        }else
+                            context.startActivity(intent);
                     }
                 });
                 if( theme == Helper.THEME_LIGHT){
@@ -998,24 +1011,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }else {
                     holder.main_container.setBackgroundResource(R.color.mastodonC1_);
                 }
-            }else {
+            if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
 
-                holder.status_content.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        oldPosition = conversationPosition;
-                        conversationPosition = holder.getAdapterPosition();
-                        new RetrieveCardAsyncTask(context, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    }
-                });
-                holder.main_container.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        oldPosition = conversationPosition;
-                        conversationPosition = holder.getAdapterPosition();
-                        new RetrieveCardAsyncTask(context, status.getId(), StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    }
-                });
                 if( position == conversationPosition){
                     if( theme == Helper.THEME_LIGHT)
                         holder.main_container.setBackgroundResource(R.color.mastodonC3_);
