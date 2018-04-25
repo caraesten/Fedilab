@@ -1001,13 +1001,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         else
                             b.putString("statusId", status.getReblog().getId());
                         intent.putExtras(b);
-                        if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ) {
+                        if( type == RetrieveFeedsAsyncTask.Type.CONTEXT )
                             ((Activity) context).finish();
-                            ((Activity) context).overridePendingTransition( 0, 0);
-                            context.startActivity(intent);
-                            ((Activity) context).overridePendingTransition( 0, 0);
-                        }else
-                            context.startActivity(intent);
+                        context.startActivity(intent);
                     }
                 });
                 holder.main_container.setOnClickListener(new View.OnClickListener() {
@@ -1020,13 +1016,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         else
                             b.putString("statusId", status.getReblog().getId());
                         intent.putExtras(b);
-                        if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ) {
+                        if( type == RetrieveFeedsAsyncTask.Type.CONTEXT )
                             ((Activity) context).finish();
-                            ((Activity) context).overridePendingTransition( 0, 0);
-                            context.startActivity(intent);
-                            ((Activity) context).overridePendingTransition( 0, 0);
-                        }else
-                            context.startActivity(intent);
+                        context.startActivity(intent);
                     }
                 });
                 if( theme == Helper.THEME_LIGHT){
