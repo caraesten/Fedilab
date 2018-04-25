@@ -608,6 +608,11 @@ public class Helper {
     }
 
 
+    public static String dateDiffFull(Date dateToot){
+        SimpleDateFormat df = (SimpleDateFormat) DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.MEDIUM, Locale.getDefault());
+        return df.format(dateToot);
+    }
+
     /***
      * Returns a String depending of the date
      * @param context Context

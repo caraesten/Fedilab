@@ -19,6 +19,7 @@ import android.app.Activity;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.content.ClipData;
@@ -43,7 +44,6 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -90,7 +90,6 @@ import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveCardAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRepliesAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
@@ -136,9 +135,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private RetrieveFeedsAsyncTask.Type type;
     private String targetedId;
     private final int DISPLAYED_STATUS = 1;
+    private final int FOCUSED_STATUS = 2;
     private int conversationPosition;
     private List<String> timedMute;
-    private int oldPosition;
 
 
 
@@ -354,6 +353,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         String filter;
         if( type == RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS)
             return DISPLAYED_STATUS;
+        else if( type == RetrieveFeedsAsyncTask.Type.CONTEXT && position == conversationPosition)
+            return FOCUSED_STATUS;
         else if( type == RetrieveFeedsAsyncTask.Type.HOME)
             filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_HOME, null);
         else if( type == RetrieveFeedsAsyncTask.Type.LOCAL)
@@ -402,10 +403,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         }
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if( viewType == DISPLAYED_STATUS)
             return new ViewHolder(layoutInflater.inflate(R.layout.drawer_status, parent, false));
+        else if(viewType == FOCUSED_STATUS)
+            return new ViewHolder(layoutInflater.inflate(R.layout.drawer_status_focused, parent, false));
         else
             return new ViewHolderEmpty(layoutInflater.inflate(R.layout.drawer_empty, parent, false));
     }
@@ -413,9 +417,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, int position) {
 
-        if( viewHolder.getItemViewType() == DISPLAYED_STATUS){
+        if( viewHolder.getItemViewType() == DISPLAYED_STATUS || viewHolder.getItemViewType() == FOCUSED_STATUS){
             final ViewHolder holder = (ViewHolder) viewHolder;
             final Status status = statuses.get(position);
 
@@ -504,12 +508,22 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_more.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
-            holder.status_content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
-            holder.status_account_displayname.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
-            holder.status_account_username.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12*textSizePercent/100);
-            holder.status_toot_date.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12*textSizePercent/100);
+
+            if( getItemViewType(position) == FOCUSED_STATUS ) {
+                holder.status_content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16*textSizePercent/100);
+                holder.status_account_displayname.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16 * textSizePercent / 100);
+                holder.status_account_username.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14 * textSizePercent / 100);
+                holder.status_toot_date.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
+                holder.status_content_translated.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16*textSizePercent/100);
+            }else {
+                holder.status_account_displayname.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14 * textSizePercent / 100);
+                holder.status_account_username.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12 * textSizePercent / 100);
+                holder.status_content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
+                holder.status_toot_date.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12*textSizePercent/100);
+                holder.status_content_translated.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
+            }
             holder.status_spoiler.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
-            holder.status_content_translated.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
+
             switch (translator) {
                 case Helper.TRANS_NONE:
                     holder.yandex_translate.setVisibility(View.GONE);
@@ -538,7 +552,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
-                holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                if( type != RetrieveFeedsAsyncTask.Type.CONTEXT)
+                    holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
             }else {
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
@@ -728,7 +743,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 else
                     holder.status_reblog_count.setText(String.valueOf(status.getReblog().getReblogs_count()));
             }
-            holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
+            if( type == RetrieveFeedsAsyncTask.Type.CONTEXT) {
+                String fullDate_tmp = Helper.dateDiffFull(status.getCreated_at());
+                String fullDate = fullDate_tmp.substring(0,1).toUpperCase() + fullDate_tmp.substring(1);
+                holder.status_toot_date.setText(fullDate);
+            }else
+                holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
 
             Helper.absoluteDateTimeReveal(context, holder.status_toot_date, status.getCreated_at());
 
@@ -1611,8 +1631,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     public void onRetrieveAccount(Card card) {
         if( conversationPosition < this.statuses.size() && card != null)
             this.statuses.get(conversationPosition).setCard(card);
-        if( oldPosition < this.statuses.size())
-            statusListAdapter.notifyItemChanged(oldPosition);
         if( conversationPosition < this.statuses.size())
             statusListAdapter.notifyItemChanged(conversationPosition);
     }
