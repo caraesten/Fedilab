@@ -95,6 +95,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveRepliesAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Application;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Card;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
@@ -1523,6 +1524,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
                 }
             });
+
+            if( status.getApplication() != null && getItemViewType(position) == FOCUSED_STATUS){
+                Application application = status.getApplication();
+                holder.status_toot_app.setText(application.getName());
+                if( application.getWebsite() != null && !application.getWebsite().trim().equals("null"))
+                holder.status_toot_app.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Helper.openBrowser(context, application.getWebsite());
+                    }
+                });
+            }
         }
     }
 

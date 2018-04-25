@@ -1680,12 +1680,13 @@ public class API {
             //Retrieve Application
             Application application = new Application();
             try {
-                JSONObject arrayApplication = resobj.getJSONObject("application");
-                if( arrayApplication != null){
-                    application.setName(arrayApplication.get("name").toString());
-                    application.setWebsite(arrayApplication.get("website").toString());
+                if(resobj.getJSONObject("application") != null){
+                    application.setName(resobj.getJSONObject("application").getString("name"));
+                    application.setWebsite(resobj.getJSONObject("application").getString("website"));
                 }
-            }catch (Exception ignored){}
+            }catch (Exception e){
+                application = new Application();
+            }
             status.setApplication(application);
 
 
