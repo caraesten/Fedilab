@@ -282,6 +282,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         FrameLayout status_cardview_video;
         WebView status_cardview_webview;
         ImageView hide_preview;
+        TextView status_toot_app;
 
         public View getView(){
             return itemView;
@@ -341,6 +342,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_cardview_video = itemView.findViewById(R.id.status_cardview_video);
             status_cardview_webview = itemView.findViewById(R.id.status_cardview_webview);
             hide_preview = itemView.findViewById(R.id.hide_preview);
+            status_toot_app = itemView.findViewById(R.id.status_toot_app);
         }
     }
 

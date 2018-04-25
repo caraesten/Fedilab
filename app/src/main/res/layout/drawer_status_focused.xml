@@ -112,30 +112,6 @@
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_marginRight="10dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginEnd="10dp">
-        <android.support.design.widget.FloatingActionButton
-            android:visibility="gone"
-            android:id="@+id/status_translate"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center_horizontal"
-            app:fabSize="mini"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/ic_translate" />
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/status_bookmark"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center_horizontal"
-            app:fabSize="mini"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/ic_bookmark_border" />
-    </LinearLayout>
-    <LinearLayout
         android:id="@+id/status_spoiler_container"
         android:layout_width="match_parent"
         android:orientation="vertical"
@@ -179,6 +155,31 @@
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <android.support.design.widget.FloatingActionButton
+                android:visibility="gone"
+                android:id="@+id/status_translate"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                app:fabSize="mini"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_translate" />
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/status_bookmark"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                app:fabSize="mini"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_bookmark_border" />
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/status_content_translated_container"
             android:visibility="gone"
@@ -419,6 +420,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="1"
+        android:layout_marginTop="10dp"
+        android:textStyle="italic"
+        />
+    <TextView
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/status_toot_app"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:layout_gravity="end"
+        android:gravity="end"
         android:layout_marginTop="10dp"
         android:textStyle="italic"
         />
