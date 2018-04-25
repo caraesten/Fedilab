@@ -22,8 +22,6 @@ import android.content.ContentResolver;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.support.media.ExifInterface;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -344,7 +342,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 picture_scrollview.setVisibility(View.VISIBLE);
                 toot_picture.setEnabled(false);
                 toot_it.setEnabled(false);
-                new HttpsConnection(TootActivity.this).upload(bs, TootActivity.this);
+                new HttpsConnection(TootActivity.this).upload(bs, fileMention, TootActivity.this);
             }
             toot_content.setText(String.format("\n\nvia @%s\n\n%s\n\n", tootMention, urlMention));
             toot_space_left.setText(String.valueOf(toot_content.length()));
@@ -732,11 +730,12 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 return;
             }
             try {
+                String filename =  Helper.getFileName(TootActivity.this, data.getData());
                 ContentResolver cr = getContentResolver();
                 String mime = cr.getType(data.getData());
                 if(mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("gif")) ) {
                     InputStream inputStream = getContentResolver().openInputStream(data.getData());
-                    new HttpsConnection(TootActivity.this).upload(inputStream, TootActivity.this);
+                    new HttpsConnection(TootActivity.this).upload(inputStream, filename, TootActivity.this);
                 } else if(mime != null && mime.toLowerCase().contains("image")) {
                     new asyncPicture(TootActivity.this, data.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }else {
@@ -778,98 +777,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 Toast.makeText(activityWeakReference.get(), R.string.toast_error, Toast.LENGTH_SHORT).show();
                 return null;
             }
-            Bitmap takenImage;
-            try {
-                takenImage = MediaStore.Images.Media.getBitmap(activityWeakReference.get().getContentResolver(), uriFile);
-            } catch (IOException e) {
-                Toast.makeText(activityWeakReference.get(), R.string.toast_error, Toast.LENGTH_SHORT).show();
-                return null;
-            }
-            ExifInterface exif = null;
-            try (InputStream inputStream = this.activityWeakReference.get().getContentResolver().openInputStream(uriFile)) {
-                assert inputStream != null;
-                exif = new ExifInterface(inputStream);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Matrix matrix = null;
-            if( takenImage != null ){
-                int size = takenImage.getByteCount();
-                if( exif != null) {
-                    int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-                    int rotationDegree = 0;
-                    if (rotation == ExifInterface.ORIENTATION_ROTATE_90) { rotationDegree = 90; }
-                    else if (rotation == ExifInterface.ORIENTATION_ROTATE_180) {  rotationDegree = 180; }
-                    else if (rotation == ExifInterface.ORIENTATION_ROTATE_270) {  rotationDegree =  270; }
-                    matrix = new Matrix();
-                    if (rotation != 0f) {matrix.preRotate(rotationDegree);}
-                }
-
-                SharedPreferences sharedpreferences = this.activityWeakReference.get().getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-                int resizeSet = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_1MO);
-                double resizeby = size;
-                if( resizeSet == Helper.S_512KO){
-                    resizeby = 4194304;
-                }else if(resizeSet == Helper.S_1MO){
-                    resizeby = 8388608;
-                }else if(resizeSet == Helper.S_2MO){
-                    resizeby = 16777216;
-                }
-                double resize = ((double)size)/resizeby;
-                if( resize > 1 ){
-                    ContentResolver cr = this.activityWeakReference.get().getContentResolver();
-                    String mime = cr.getType(uriFile);
-                    Bitmap newBitmap = Bitmap.createScaledBitmap(takenImage, (int) (takenImage.getWidth() / resize),
-                            (int) (takenImage.getHeight() / resize), true);
-                    Bitmap adjustedBitmap;
-                    if( matrix != null)
-                        adjustedBitmap = Bitmap.createBitmap(newBitmap, 0, 0, newBitmap.getWidth(), newBitmap.getHeight(), matrix, true);
-                    else
-                        adjustedBitmap = newBitmap;
-                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                    if( mime !=null && (mime.contains("png") || mime.contains(".PNG")))
-                        adjustedBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
-                    else
-                        adjustedBitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
-                    byte[] bitmapdata = bos.toByteArray();
-                    bs = new ByteArrayInputStream(bitmapdata);
-                }else {
-                    try {
-                        InputStream inputStream = this.activityWeakReference.get().getContentResolver().openInputStream(uriFile);
-                        byte[] buff = new byte[8 * 1024];
-                        int bytesRead;
-                        ByteArrayOutputStream bao = new ByteArrayOutputStream();
-                        assert inputStream != null;
-                        while((bytesRead = inputStream.read(buff)) != -1) {
-                            bao.write(buff, 0, bytesRead);
-                        }
-                        byte[] data = bao.toByteArray();
-                        bs  = new ByteArrayInputStream(data);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }else {
-                try {
-                    InputStream inputStream = this.activityWeakReference.get().getContentResolver().openInputStream(uriFile);
-                    byte[] buff = new byte[8 * 1024];
-                    int bytesRead;
-                    ByteArrayOutputStream bao = new ByteArrayOutputStream();
-                    assert inputStream != null;
-                    while((bytesRead = inputStream.read(buff)) != -1) {
-                        bao.write(buff, 0, bytesRead);
-                    }
-                    byte[] data = bao.toByteArray();
-                    bs  = new ByteArrayInputStream(data);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
+            bs = Helper.compressImage(activityWeakReference.get(), uriFile, Helper.MediaType.MEDIA);
             return null;
         }
 
@@ -887,7 +795,8 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             toot_picture_container.setVisibility(View.VISIBLE);
             toot_picture.setEnabled(false);
             toot_it.setEnabled(false);
-            new HttpsConnection(this.activityWeakReference.get()).upload(bs, (TootActivity)this.activityWeakReference.get());
+            String filename =  Helper.getFileName(this.activityWeakReference.get(), uriFile);
+            new HttpsConnection(this.activityWeakReference.get()).upload(bs, filename, (TootActivity)this.activityWeakReference.get());
         }
     }
 
@@ -1437,14 +1346,18 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         picture_scrollview.setVisibility(View.VISIBLE);
         Bitmap pictureMention = BitmapFactory.decodeFile(pathToFile);
         if( pictureMention != null) {
+            String filename = pathToFile.substring(pathToFile.lastIndexOf("/") + 1);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            pictureMention.compress(Bitmap.CompressFormat.PNG, 0, bos);
+            if( filename.contains(".png") || filename.contains(".PNG"))
+                pictureMention.compress(Bitmap.CompressFormat.PNG, 0, bos);
+            else
+                pictureMention.compress(Bitmap.CompressFormat.JPEG, 80, bos);
             byte[] bitmapdata = bos.toByteArray();
             ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
             toot_picture_container.setVisibility(View.VISIBLE);
             toot_picture.setEnabled(false);
             toot_it.setEnabled(false);
-            new HttpsConnection(TootActivity.this).upload(bs, TootActivity.this);
+            new HttpsConnection(TootActivity.this).upload(bs, filename, TootActivity.this);
         }
     }
 

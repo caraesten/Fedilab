@@ -19,6 +19,7 @@ import android.content.ClipboardManager;
 import android.graphics.Bitmap;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -107,13 +108,14 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
     
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(layoutInflater.inflate(R.layout.drawer_notification, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
 
         final NotificationsListAdapter.ViewHolder holder = (NotificationsListAdapter.ViewHolder) viewHolder;
         final Notification notification = notifications.get(position);
@@ -673,6 +675,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                             file.delete ();
                                         try {
                                             FileOutputStream out = new FileOutputStream(file);
+                                            assert bitmap != null;
+                                            assert bitmap != null;
                                             bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
                                             out.flush();
                                             out.close();
@@ -1011,7 +1015,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     }
 
     @Override
-    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+    public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
         final NotificationsListAdapter.ViewHolder viewHolder = (NotificationsListAdapter.ViewHolder) holder;
         // Bug workaround for losing text selection ability, see:

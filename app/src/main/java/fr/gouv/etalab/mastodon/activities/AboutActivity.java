@@ -57,10 +57,12 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
     private List<Account> developers = new ArrayList<>();
     private List<Account> contributors = new ArrayList<>();
     private List<Account> designers = new ArrayList<>();
+    private List<Account> banners = new ArrayList<>();
+
     private AccountSearchDevAdapter accountSearchWebAdapterDeveloper;
     private AccountSearchDevAdapter accountSearchWebAdapterDesigner;
     private AccountSearchDevAdapter accountSearchWebAdapterContributors;
-
+    private AccountSearchDevAdapter accountSearchWebAdapterBanners;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +87,7 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         ExpandableHeightListView lv_developers = findViewById(R.id.lv_developers);
         ExpandableHeightListView lv_designers = findViewById(R.id.lv_designers);
         ExpandableHeightListView lv_contributors = findViewById(R.id.lv_contributors);
-
+        ExpandableHeightListView lv_banners = findViewById(R.id.lv_banners);
         Button about_code = findViewById(R.id.about_code);
         Button about_license = findViewById(R.id.about_license);
         Button about_thekinrar = findViewById(R.id.about_thekinrar);
@@ -155,6 +157,7 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         lv_contributors.setExpanded(true);
         lv_developers.setExpanded(true);
         lv_designers.setExpanded(true);
+        lv_banners.setExpanded(true);
 
         accountSearchWebAdapterContributors = new AccountSearchDevAdapter(AboutActivity.this, contributors);
         lv_contributors.setAdapter(accountSearchWebAdapterContributors);
@@ -162,8 +165,12 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         lv_designers.setAdapter(accountSearchWebAdapterDesigner);
         accountSearchWebAdapterDeveloper = new AccountSearchDevAdapter(AboutActivity.this, developers);
         lv_developers.setAdapter(accountSearchWebAdapterDeveloper);
+        accountSearchWebAdapterBanners = new AccountSearchDevAdapter(AboutActivity.this, banners);
+        lv_banners.setAdapter(accountSearchWebAdapterBanners);
+
 
         new RetrieveRemoteDataAsyncTask(getApplicationContext(), "tom79", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new RetrieveRemoteDataAsyncTask(getApplicationContext(), "lambykun", "mastodon.art", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new RetrieveRemoteDataAsyncTask(getApplicationContext(), "daycode", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new RetrieveRemoteDataAsyncTask(getApplicationContext(), "PhotonQyv", "mastodon.xyz", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new RetrieveRemoteDataAsyncTask(getApplicationContext(), "angrytux", "social.tchncs.de", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -201,6 +208,10 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
                     developers.add(account);
                     accountSearchWebAdapterDeveloper.notifyDataSetChanged();
                     break;
+                case "lambykun":
+                    banners.add(account);
+                    accountSearchWebAdapterBanners.notifyDataSetChanged();
+                    break;
                 case "daycode":
                     designers.add(account);
                     accountSearchWebAdapterDesigner.notifyDataSetChanged();
@@ -225,6 +236,11 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         }
         if( designers != null){
             for(Account account: designers){
+                new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        }
+        if( banners != null){
+            for(Account account: banners){
                 new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
@@ -253,6 +269,13 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
             if( designers.get(i).getId() != null && designers.get(i).getId().equals(relationship.getId())){
                 designers.get(i).setFollowing(relationship.isFollowing() || userId.trim().equals(relationship.getId()));
                 accountSearchWebAdapterDesigner.notifyDataSetChanged();
+                break;
+            }
+        }
+        for( int i = 0 ; i < banners.size() ; i++){
+            if( banners.get(i).getId() != null && banners.get(i).getId().equals(relationship.getId())){
+                banners.get(i).setFollowing(relationship.isFollowing() || userId.trim().equals(relationship.getId()));
+                accountSearchWebAdapterBanners.notifyDataSetChanged();
                 break;
             }
         }

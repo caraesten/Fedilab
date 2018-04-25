@@ -428,6 +428,21 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             loader.setVisibility(View.GONE);
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        FullScreencall();
+    }
+    public void FullScreencall() {
+        if(Build.VERSION.SDK_INT < 19) {
+            View v = this.getWindow().getDecorView();
+            v.setSystemUiVisibility(View.GONE);
+        } else if(Build.VERSION.SDK_INT >= 19) {
+            View decorView = getWindow().getDecorView();
+            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+            decorView.setSystemUiVisibility(uiOptions);
+        }
+    }
 
     @Override
     public void onUpdateProgress(int progressPercentage) {

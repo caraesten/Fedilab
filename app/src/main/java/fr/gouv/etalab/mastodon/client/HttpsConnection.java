@@ -32,6 +32,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.Authenticator;
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
@@ -141,7 +142,11 @@ public class HttpsConnection {
             if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
                 response = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
             } else {
-                String error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                String error = null;
+                if( httpsURLConnection.getErrorStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                else if( httpsURLConnection.getInputStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                 int responseCode = httpsURLConnection.getResponseCode();
                 httpsURLConnection.getInputStream().close();
                 throw new HttpsConnectionException(responseCode, error);
@@ -181,7 +186,11 @@ public class HttpsConnection {
             if (httpURLConnection.getResponseCode() >= 200 && httpURLConnection.getResponseCode() < 400) {
                 response = new String(ByteStreams.toByteArray(httpURLConnection.getInputStream()));
             }else {
-                String error = new String(ByteStreams.toByteArray(httpURLConnection.getErrorStream()));
+                String error = null;
+                if( httpsURLConnection.getErrorStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                else if( httpsURLConnection.getInputStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                 int responseCode = httpURLConnection.getResponseCode();
                 httpURLConnection.getInputStream().close();
                 throw new HttpsConnectionException(responseCode, error);
@@ -211,7 +220,11 @@ public class HttpsConnection {
                 getSinceMaxId();
                 response = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
             }else {
-                String error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                String error = null;
+                if( httpsURLConnection.getErrorStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                else if( httpsURLConnection.getInputStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                 int responseCode = httpsURLConnection.getResponseCode();
                 httpsURLConnection.getInputStream().close();
                 throw new HttpsConnectionException(responseCode, error);
@@ -234,7 +247,11 @@ public class HttpsConnection {
                 getSinceMaxId();
                 response = new String(ByteStreams.toByteArray(httpURLConnection.getInputStream()));
             }else {
-                String error = new String(ByteStreams.toByteArray(httpURLConnection.getErrorStream()));
+                String error = null;
+                if( httpsURLConnection.getErrorStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                else if( httpsURLConnection.getInputStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                 int responseCode = httpURLConnection.getResponseCode();
                 httpURLConnection.getInputStream().close();
                 throw new HttpsConnectionException(responseCode, error);
@@ -288,7 +305,11 @@ public class HttpsConnection {
                 getSinceMaxId();
                 response = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
             } else {
-                String error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                String error = null;
+                if( httpsURLConnection.getErrorStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                else if( httpsURLConnection.getInputStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                 int responseCode = httpsURLConnection.getResponseCode();
                 httpsURLConnection.getInputStream().close();
                 throw new HttpsConnectionException(responseCode, error);
@@ -334,7 +355,11 @@ public class HttpsConnection {
                 getSinceMaxId();
                 response = new String(ByteStreams.toByteArray(httpURLConnection.getInputStream()));
             } else {
-                String error = new String(ByteStreams.toByteArray(httpURLConnection.getErrorStream()));
+                String error = null;
+                if( httpsURLConnection.getErrorStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                else if( httpsURLConnection.getInputStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                 int responseCode = httpURLConnection.getResponseCode();
                 httpURLConnection.getInputStream().close();
                 throw new HttpsConnectionException(responseCode, error);
@@ -599,12 +624,365 @@ public class HttpsConnection {
     }
 
 
+
+
+    @SuppressWarnings("SameParameterValue")
+    void patch(String urlConnection, int timeout, HashMap<String, String> paramaters, InputStream avatar, String avatarName, InputStream header, String headerName, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
+        String twoHyphens = "--";
+        String boundary = "*****" + Long.toString(System.currentTimeMillis()) + "*****";
+        String lineEnd = "\r\n";
+        if( urlConnection.startsWith("https://")) {
+            URL url = new URL(urlConnection);
+            Map<String, Object> params = new LinkedHashMap<>();
+            if (paramaters != null) {
+                Iterator it = paramaters.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry) it.next();
+                    params.put(pair.getKey().toString(), pair.getValue());
+                    it.remove();
+                }
+            }
+            StringBuilder postData = new StringBuilder();
+            for (Map.Entry<String, Object> param : params.entrySet()) {
+                if (postData.length() != 0) postData.append('&');
+                postData.append(param.getKey());
+                postData.append('=');
+                postData.append(String.valueOf(param.getValue()));
+            }
+            byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+
+            int lengthSentAvatar = 0;
+            byte[] pixelsAvatar = new byte[0];
+            if( avatar != null) {
+                ByteArrayOutputStream ous = null;
+                try {
+                    try {
+                        byte[] buffer = new byte[CHUNK_SIZE];
+                        ous = new ByteArrayOutputStream();
+                        int read;
+                        while ((read = avatar.read(buffer)) != -1) {
+                            ous.write(buffer, 0, read);
+                        }
+                        ous.flush();
+                    } finally {
+                        if (ous != null)
+                            ous.close();
+                    }
+                } catch (FileNotFoundException ignored) {
+                } catch (IOException ignored) {
+                }
+                pixelsAvatar = ous.toByteArray();
+
+                lengthSentAvatar = pixelsAvatar.length;
+                lengthSentAvatar += 2 * (twoHyphens + boundary + twoHyphens + lineEnd).getBytes().length;
+                lengthSentAvatar += ("Content-Disposition: form-data; name=\"avatar\";filename=\""+avatarName+"\"" + lineEnd).getBytes().length;
+                lengthSentAvatar += 2 * (lineEnd).getBytes().length;
+            }
+
+            int lengthSentHeader = 0;
+            byte[] pixelsHeader = new byte[0];
+            if( header != null) {
+                ByteArrayOutputStream ous = null;
+                try {
+                    try {
+                        byte[] buffer = new byte[CHUNK_SIZE];
+                        ous = new ByteArrayOutputStream();
+                        int read;
+                        while ((read = header.read(buffer)) != -1) {
+                            ous.write(buffer, 0, read);
+                        }
+                        ous.flush();
+                    } finally {
+                        if (ous != null)
+                            ous.close();
+                    }
+                } catch (FileNotFoundException ignored) {
+                } catch (IOException ignored) {
+                }
+                pixelsHeader = ous.toByteArray();
+
+                lengthSentHeader = pixelsHeader.length;
+                lengthSentHeader += 2 * (twoHyphens + boundary + twoHyphens + lineEnd).getBytes().length;
+                lengthSentHeader += ("Content-Disposition: form-data; name=\"header\";filename=\""+headerName+"\"" + lineEnd).getBytes().length;
+                lengthSentHeader += 2 * (lineEnd).getBytes().length;
+            }
+
+            int lengthSent = lengthSentHeader + lengthSentAvatar + (twoHyphens + boundary + twoHyphens + lineEnd).getBytes().length;
+            if (proxy != null)
+                httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
+            else
+                httpsURLConnection = (HttpsURLConnection) url.openConnection();
+            httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpsURLConnection.setConnectTimeout(timeout * 1000);
+            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+            httpsURLConnection.setDoInput(true);
+            httpsURLConnection.setDoOutput(true);
+            httpsURLConnection.setUseCaches(false);
+            if( Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT ){
+                httpsURLConnection.setRequestMethod("PATCH");
+            }else {
+                httpsURLConnection.setRequestProperty("X-HTTP-Method-Override", "PATCH");
+                httpsURLConnection.setRequestMethod("POST");
+            }
+            if( lengthSent > 0) {
+                httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
+                httpsURLConnection.setRequestProperty("Cache-Control", "no-cache");
+            }
+            httpsURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+            if( lengthSent > 0)
+                httpsURLConnection.setRequestProperty("Content-Type", "multipart/form-data;boundary="+ boundary);
+
+            if (token != null)
+                httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+
+            if( lengthSent > 0)
+                httpsURLConnection.setFixedLengthStreamingMode(lengthSent+postDataBytes.length);
+
+            OutputStream outputStream = httpsURLConnection.getOutputStream();
+            outputStream.write(postDataBytes);
+            if( lengthSent > 0)
+                outputStream.write((twoHyphens + boundary + twoHyphens + lineEnd).getBytes("UTF-8"));
+            if(lengthSentAvatar > 0){
+                DataOutputStream request = new DataOutputStream(outputStream);
+                int totalSize = pixelsAvatar.length;
+                int bytesTransferred = 0;
+                request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+                request.writeBytes("Content-Disposition: form-data; name=\"avatar\";filename=\""+avatarName+"\"" + lineEnd);
+                request.writeBytes(lineEnd);
+                while (bytesTransferred < totalSize) {
+                    int nextChunkSize = totalSize - bytesTransferred;
+                    if (nextChunkSize > CHUNK_SIZE) {
+                        nextChunkSize = CHUNK_SIZE;
+                    }
+                    request.write(pixelsAvatar, bytesTransferred, nextChunkSize);
+                    bytesTransferred += nextChunkSize;
+                    request.flush();
+                }
+                request.writeBytes(lineEnd);
+                request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+                request.flush();
+            }
+
+            if(lengthSentHeader > 0){
+                int totalSize = pixelsHeader.length;
+                int bytesTransferred = 0;
+                OutputStream outPutStream = httpsURLConnection.getOutputStream();
+                DataOutputStream request = new DataOutputStream(outPutStream);
+                request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+                request.writeBytes("Content-Disposition: form-data; name=\"header\";filename=\""+headerName+"\"" + lineEnd);
+                request.writeBytes(lineEnd);
+                while (bytesTransferred < totalSize) {
+                    int nextChunkSize = totalSize - bytesTransferred;
+                    if (nextChunkSize > CHUNK_SIZE) {
+                        nextChunkSize = CHUNK_SIZE;
+                    }
+                    request.write(pixelsHeader, bytesTransferred, nextChunkSize);
+                    bytesTransferred += nextChunkSize;
+                    request.flush();
+                }
+                request.writeBytes(lineEnd);
+                request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+                request.flush();
+            }
+
+            if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
+               new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
+            } else {
+                String error = null;
+                if( httpsURLConnection.getErrorStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                else if( httpsURLConnection.getInputStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
+                int responseCode = httpsURLConnection.getResponseCode();
+                try {
+                    httpsURLConnection.getInputStream().close();
+                }catch (Exception ignored){}
+
+                throw new HttpsConnectionException(responseCode, error);
+            }
+            httpsURLConnection.getInputStream().close();
+        }else {
+            URL url = new URL(urlConnection);
+            Map<String, Object> params = new LinkedHashMap<>();
+            if (paramaters != null) {
+                Iterator it = paramaters.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry) it.next();
+                    params.put(pair.getKey().toString(), pair.getValue());
+                    it.remove();
+                }
+            }
+            StringBuilder postData = new StringBuilder();
+            for (Map.Entry<String, Object> param : params.entrySet()) {
+                if (postData.length() != 0) postData.append('&');
+                postData.append(param.getKey());
+                postData.append('=');
+                postData.append(String.valueOf(param.getValue()));
+            }
+            byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+
+            int lengthSentAvatar = 0;
+            byte[] pixelsAvatar = new byte[0];
+            if( avatar != null) {
+                ByteArrayOutputStream ous = null;
+                try {
+                    try {
+                        byte[] buffer = new byte[CHUNK_SIZE];
+                        ous = new ByteArrayOutputStream();
+                        int read;
+                        while ((read = avatar.read(buffer)) != -1) {
+                            ous.write(buffer, 0, read);
+                        }
+                        ous.flush();
+                    } finally {
+                        if (ous != null)
+                            ous.close();
+                    }
+                } catch (FileNotFoundException ignored) {
+                } catch (IOException ignored) {
+                }
+                pixelsAvatar = ous.toByteArray();
+
+                lengthSentAvatar = pixelsAvatar.length;
+                lengthSentAvatar += 2 * (twoHyphens + boundary + twoHyphens + lineEnd).getBytes().length;
+                lengthSentAvatar += ("Content-Disposition: form-data; name=\"avatar\";filename=\""+avatarName+"\"" + lineEnd).getBytes().length;
+                lengthSentAvatar += 2 * (lineEnd).getBytes().length;
+            }
+
+            int lengthSentHeader = 0;
+            byte[] pixelsHeader = new byte[0];
+            if( header != null) {
+                ByteArrayOutputStream ous = null;
+                try {
+                    try {
+                        byte[] buffer = new byte[CHUNK_SIZE];
+                        ous = new ByteArrayOutputStream();
+                        int read;
+                        while ((read = header.read(buffer)) != -1) {
+                            ous.write(buffer, 0, read);
+                        }
+                        ous.flush();
+                    } finally {
+                        if (ous != null)
+                            ous.close();
+                    }
+                } catch (FileNotFoundException ignored) {
+                } catch (IOException ignored) {
+                }
+                pixelsHeader = ous.toByteArray();
+
+                lengthSentHeader = pixelsHeader.length;
+                lengthSentHeader += 2 * (twoHyphens + boundary + twoHyphens + lineEnd).getBytes().length;
+                lengthSentHeader += ("Content-Disposition: form-data; name=\"header\";filename=\""+headerName+"\"" + lineEnd).getBytes().length;
+                lengthSentHeader += 2 * (lineEnd).getBytes().length;
+            }
+
+            int lengthSent = lengthSentHeader + lengthSentAvatar + (twoHyphens + boundary + twoHyphens + lineEnd).getBytes().length;
+            if (proxy != null)
+                httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
+            else
+                httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpURLConnection.setConnectTimeout(timeout * 1000);
+            httpURLConnection.setDoInput(true);
+            httpURLConnection.setDoOutput(true);
+            httpURLConnection.setUseCaches(false);
+            if( Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT ){
+                httpURLConnection.setRequestMethod("PATCH");
+            }else {
+                httpURLConnection.setRequestProperty("X-HTTP-Method-Override", "PATCH");
+                httpURLConnection.setRequestMethod("POST");
+            }
+            if( lengthSent > 0) {
+                httpURLConnection.setRequestProperty("Connection", "Keep-Alive");
+                httpURLConnection.setRequestProperty("Cache-Control", "no-cache");
+            }
+            httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+            if( lengthSent > 0)
+                httpURLConnection.setRequestProperty("Content-Type", "multipart/form-data;boundary="+ boundary);
+
+            if (token != null)
+                httpURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+
+            if( lengthSent > 0)
+                httpURLConnection.setFixedLengthStreamingMode(lengthSent+postDataBytes.length);
+
+            OutputStream outputStream = httpURLConnection.getOutputStream();
+            outputStream.write(postDataBytes);
+            if( lengthSent > 0)
+                outputStream.write((twoHyphens + boundary + twoHyphens + lineEnd).getBytes("UTF-8"));
+            if(lengthSentAvatar > 0){
+                DataOutputStream request = new DataOutputStream(outputStream);
+                int totalSize = pixelsAvatar.length;
+                int bytesTransferred = 0;
+                request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+                request.writeBytes("Content-Disposition: form-data; name=\"avatar\";filename=\""+avatarName+"\"" + lineEnd);
+                request.writeBytes(lineEnd);
+                while (bytesTransferred < totalSize) {
+                    int nextChunkSize = totalSize - bytesTransferred;
+                    if (nextChunkSize > CHUNK_SIZE) {
+                        nextChunkSize = CHUNK_SIZE;
+                    }
+                    request.write(pixelsAvatar, bytesTransferred, nextChunkSize);
+                    bytesTransferred += nextChunkSize;
+                    request.flush();
+                }
+                request.writeBytes(lineEnd);
+                request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+                request.flush();
+            }
+
+            if(lengthSentHeader > 0){
+                int totalSize = pixelsHeader.length;
+                int bytesTransferred = 0;
+                OutputStream outPutStream = httpURLConnection.getOutputStream();
+                DataOutputStream request = new DataOutputStream(outPutStream);
+                request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+                request.writeBytes("Content-Disposition: form-data; name=\"header\";filename=\""+headerName+"\"" + lineEnd);
+                request.writeBytes(lineEnd);
+                while (bytesTransferred < totalSize) {
+                    int nextChunkSize = totalSize - bytesTransferred;
+                    if (nextChunkSize > CHUNK_SIZE) {
+                        nextChunkSize = CHUNK_SIZE;
+                    }
+                    request.write(pixelsHeader, bytesTransferred, nextChunkSize);
+                    bytesTransferred += nextChunkSize;
+                    request.flush();
+                }
+                request.writeBytes(lineEnd);
+                request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+                request.flush();
+            }
+
+            if (httpURLConnection.getResponseCode() >= 200 && httpURLConnection.getResponseCode() < 400) {
+                new String(ByteStreams.toByteArray(httpURLConnection.getInputStream()));
+            } else {
+                String error = null;
+                if( httpURLConnection.getErrorStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpURLConnection.getErrorStream()));
+                else if( httpURLConnection.getInputStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpURLConnection.getInputStream()));
+                int responseCode = httpURLConnection.getResponseCode();
+                try {
+                    httpURLConnection.getInputStream().close();
+                }catch (Exception ignored){}
+
+                throw new HttpsConnectionException(responseCode, error);
+            }
+            httpURLConnection.getInputStream().close();
+        }
+
+    }
+
+
     /**
      * Upload method - https only
      * @param inputStream InputStream of the file to upload
      * @param listener - OnRetrieveAttachmentInterface: listener to send information about attachment once uploaded.
      */
-    public void upload(final InputStream inputStream, final OnRetrieveAttachmentInterface listener) {
+    public void upload(final InputStream inputStream, String fileName, final OnRetrieveAttachmentInterface listener) {
         
         if( Helper.getLiveInstanceWithProtocol(context).startsWith("https://")) {
             new Thread(new Runnable() {
@@ -639,7 +1017,7 @@ public class HttpsConnection {
 
                         int lengthSent = pixels.length;
                         lengthSent += 2 * (twoHyphens + boundary + twoHyphens + lineEnd).getBytes().length;
-                        lengthSent += ("Content-Disposition: form-data; name=\"file\";filename=\"picture.png\"" + lineEnd).getBytes().length;
+                        lengthSent += ("Content-Disposition: form-data; name=\"file\";filename=\""+fileName+"\"" + lineEnd).getBytes().length;
                         lengthSent += 2 * (lineEnd).getBytes().length;
 
                         if (proxy != null)
@@ -666,7 +1044,7 @@ public class HttpsConnection {
                         DataOutputStream request = new DataOutputStream(httpsURLConnection.getOutputStream());
 
                         request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-                        request.writeBytes("Content-Disposition: form-data; name=\"file\";filename=\"picture.png\"" + lineEnd);
+                        request.writeBytes("Content-Disposition: form-data; name=\"file\";filename=\""+fileName+"\"" + lineEnd);
                         request.writeBytes(lineEnd);
 
                         //request.write(pixels);
@@ -699,7 +1077,11 @@ public class HttpsConnection {
 
 
                         if (200 != httpsURLConnection.getResponseCode()) {
-                            String error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                            String error = null;
+                            if( httpsURLConnection.getErrorStream() != null)
+                                error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                            else if( httpsURLConnection.getInputStream() != null)
+                                error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                             int responseCode = httpsURLConnection.getResponseCode();
                             httpsURLConnection.getInputStream().close();
                             throw new HttpsConnectionException(responseCode, error);
@@ -782,7 +1164,7 @@ public class HttpsConnection {
 
                         int lengthSent = pixels.length;
                         lengthSent += 2 * (twoHyphens + boundary + twoHyphens + lineEnd).getBytes().length;
-                        lengthSent += ("Content-Disposition: form-data; name=\"file\";filename=\"picture.png\"" + lineEnd).getBytes().length;
+                        lengthSent += ("Content-Disposition: form-data; name=\"file\";filename=\""+fileName+"\"" + lineEnd).getBytes().length;
                         lengthSent += 2 * (lineEnd).getBytes().length;
 
                         if( proxy !=null )
@@ -808,7 +1190,7 @@ public class HttpsConnection {
                         DataOutputStream request = new DataOutputStream(httpURLConnection.getOutputStream());
 
                         request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-                        request.writeBytes("Content-Disposition: form-data; name=\"file\";filename=\"picture.png\"" + lineEnd);
+                        request.writeBytes("Content-Disposition: form-data; name=\"file\";filename=\""+fileName+"\"" + lineEnd);
                         request.writeBytes(lineEnd);
 
                         //request.write(pixels);
@@ -840,7 +1222,11 @@ public class HttpsConnection {
 
 
                         if (200 != httpURLConnection.getResponseCode()) {
-                            String error = new String(ByteStreams.toByteArray(httpURLConnection.getErrorStream()));
+                            String error = null;
+                            if( httpsURLConnection.getErrorStream() != null)
+                                error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                            else if( httpsURLConnection.getInputStream() != null)
+                                error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                             int responseCode = httpURLConnection.getResponseCode();
                             httpURLConnection.getInputStream().close();
                             throw new HttpsConnectionException(responseCode, error);
@@ -932,7 +1318,11 @@ public class HttpsConnection {
                 getSinceMaxId();
                 response = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
             } else {
-                String error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                String error = null;
+                if( httpsURLConnection.getErrorStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                else if( httpsURLConnection.getInputStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                 int responseCode = httpsURLConnection.getResponseCode();
                 httpsURLConnection.getInputStream().close();
                 throw new HttpsConnectionException(responseCode, error);
@@ -980,7 +1370,11 @@ public class HttpsConnection {
                 getSinceMaxId();
                 response = new String(ByteStreams.toByteArray(httpURLConnection.getInputStream()));
             } else {
-                String error = new String(ByteStreams.toByteArray(httpURLConnection.getErrorStream()));
+                String error = null;
+                if( httpsURLConnection.getErrorStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                else if( httpsURLConnection.getInputStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                 int responseCode = httpURLConnection.getResponseCode();
                 httpURLConnection.getInputStream().close();
                 throw new HttpsConnectionException(responseCode, error);
@@ -994,111 +1388,7 @@ public class HttpsConnection {
 
 
 
-    public String patch(String urlConnection, int timeout, HashMap<String, String> paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
-        if( urlConnection.startsWith("https://")) {
-            URL url = new URL(urlConnection);
-            Map<String, Object> params = new LinkedHashMap<>();
-            if (paramaters != null) {
-                Iterator it = paramaters.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry) it.next();
-                    params.put(pair.getKey().toString(), pair.getValue());
-                    it.remove();
-                }
-            }
-            StringBuilder postData = new StringBuilder();
-            for (Map.Entry<String, Object> param : params.entrySet()) {
-                if (postData.length() != 0) postData.append('&');
-                postData.append(param.getKey());
-                postData.append('=');
-                postData.append(String.valueOf(param.getValue()));
-            }
-            byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 
-            if (proxy != null)
-                httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
-            else
-                httpsURLConnection = (HttpsURLConnection) url.openConnection();
-            httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
-            httpsURLConnection.setConnectTimeout(timeout * 1000);
-            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
-            if( Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT ){
-                httpsURLConnection.setRequestMethod("PATCH");
-            }else {
-                httpsURLConnection.setRequestProperty("X-HTTP-Method-Override", "PATCH");
-                httpsURLConnection.setRequestMethod("POST");
-            }
-
-            if (token != null)
-                httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
-            httpsURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            httpsURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
-            httpsURLConnection.setDoOutput(true);
-
-            httpsURLConnection.getOutputStream().write(postDataBytes);
-            String response;
-            if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
-                getSinceMaxId();
-                response = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
-            } else {
-                String error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
-                int responseCode = httpsURLConnection.getResponseCode();
-                httpsURLConnection.getInputStream().close();
-                throw new HttpsConnectionException(responseCode, error);
-            }
-            getSinceMaxId();
-            httpsURLConnection.getInputStream().close();
-            return response;
-        }else {
-            URL url = new URL(urlConnection);
-            Map<String, Object> params = new LinkedHashMap<>();
-            if (paramaters != null) {
-                Iterator it = paramaters.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry) it.next();
-                    params.put(pair.getKey().toString(), pair.getValue());
-                    it.remove();
-                }
-            }
-            StringBuilder postData = new StringBuilder();
-            for (Map.Entry<String, Object> param : params.entrySet()) {
-                if (postData.length() != 0) postData.append('&');
-                postData.append(param.getKey());
-                postData.append('=');
-                postData.append(String.valueOf(param.getValue()));
-            }
-            byte[] postDataBytes = postData.toString().getBytes("UTF-8");
-
-            if (proxy != null)
-                httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
-            else
-                httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
-            httpURLConnection.setConnectTimeout(timeout * 1000);
-            httpURLConnection.setRequestMethod("PATCH");
-            if (token != null)
-                httpURLConnection.setRequestProperty("Authorization", "Bearer " + token);
-            httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            httpURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
-            httpURLConnection.setDoOutput(true);
-
-            httpURLConnection.getOutputStream().write(postDataBytes);
-            String response;
-            if (httpURLConnection.getResponseCode() >= 200 && httpURLConnection.getResponseCode() < 400) {
-                getSinceMaxId();
-                response = new String(ByteStreams.toByteArray(httpURLConnection.getInputStream()));
-            } else {
-                String error = new String(ByteStreams.toByteArray(httpURLConnection.getErrorStream()));
-                int responseCode = httpURLConnection.getResponseCode();
-                httpURLConnection.getInputStream().close();
-                throw new HttpsConnectionException(responseCode, error);
-            }
-            getSinceMaxId();
-            httpURLConnection.getInputStream().close();
-            return response;
-        }
-
-    }
 
 
     public int delete(String urlConnection, int timeout, HashMap<String, String> paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
@@ -1143,7 +1433,11 @@ public class HttpsConnection {
                 httpsURLConnection.getInputStream().close();
                 return httpsURLConnection.getResponseCode();
             } else {
-                String error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                String error = null;
+                if( httpsURLConnection.getErrorStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                else if( httpsURLConnection.getInputStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                 int responseCode = httpsURLConnection.getResponseCode();
                 httpsURLConnection.getInputStream().close();
                 throw new HttpsConnectionException(responseCode, error);
@@ -1188,7 +1482,11 @@ public class HttpsConnection {
                 httpURLConnection.getInputStream().close();
                 return httpURLConnection.getResponseCode();
             }else {
-                String error = new String(ByteStreams.toByteArray(httpURLConnection.getErrorStream()));
+                String error = null;
+                if( httpsURLConnection.getErrorStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getErrorStream()));
+                else if( httpsURLConnection.getInputStream() != null)
+                    error = new String(ByteStreams.toByteArray(httpsURLConnection.getInputStream()));
                 int responseCode = httpURLConnection.getResponseCode();
                 httpURLConnection.getInputStream().close();
                 throw new HttpsConnectionException(responseCode, error);

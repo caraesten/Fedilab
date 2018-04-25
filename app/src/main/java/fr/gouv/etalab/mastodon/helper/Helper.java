@@ -21,14 +21,19 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.CountDownTimer;
+import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
+import android.support.media.ExifInterface;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AlertDialog;
@@ -66,6 +71,7 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -99,9 +105,11 @@ import com.google.gson.Gson;
 import org.conscrypt.Conscrypt;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -157,10 +165,11 @@ import static android.content.Context.DOWNLOAD_SERVICE;
  * - Reusable methods are implemented in this section
  */
 
+@SuppressWarnings("WeakerAccess")
 public class Helper {
 
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "WeakerAccess"})
     public static  final String TAG = "mastodon_etalab";
     public static final String CLIENT_NAME_VALUE = "Mastalab";
     public static final String OAUTH_SCOPES = "read write follow";
@@ -598,6 +607,11 @@ public class Helper {
         return (activeNetwork != null && activeNetwork.getType() == ConnectivityManager.TYPE_WIFI);
     }
 
+
+    public static String dateDiffFull(Date dateToot){
+        SimpleDateFormat df = (SimpleDateFormat) DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.MEDIUM, Locale.getDefault());
+        return df.format(dateToot);
+    }
 
     /***
      * Returns a String depending of the date
@@ -1994,4 +2008,130 @@ public class Helper {
     }
 
 
+    public enum MediaType{
+        MEDIA,
+        PROFILE
+    }
+
+    public static ByteArrayInputStream compressImage(Context context, android.net.Uri uriFile, MediaType mediaType){
+        Bitmap takenImage;
+        ByteArrayInputStream bs = null;
+        try {
+            takenImage = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uriFile);
+        } catch (IOException e) {
+            Toast.makeText(context, R.string.toast_error, Toast.LENGTH_SHORT).show();
+            return null;
+        }
+        ExifInterface exif = null;
+        try (InputStream inputStream = context.getContentResolver().openInputStream(uriFile)) {
+            assert inputStream != null;
+            exif = new ExifInterface(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Matrix matrix = null;
+        if( takenImage != null ){
+            int size = takenImage.getByteCount();
+            if( exif != null) {
+                int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+                int rotationDegree = 0;
+                if (rotation == ExifInterface.ORIENTATION_ROTATE_90) { rotationDegree = 90; }
+                else if (rotation == ExifInterface.ORIENTATION_ROTATE_180) {  rotationDegree = 180; }
+                else if (rotation == ExifInterface.ORIENTATION_ROTATE_270) {  rotationDegree =  270; }
+                matrix = new Matrix();
+                if (rotation != 0f) {matrix.preRotate(rotationDegree);}
+            }
+
+            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+            int resizeSet = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_1MO);
+            if( mediaType == MediaType.PROFILE)
+                resizeSet = Helper.S_1MO;
+            double resizeby = size;
+            if( resizeSet == Helper.S_512KO){
+                resizeby = 4194304;
+            }else if(resizeSet == Helper.S_1MO){
+                resizeby = 8388608;
+            }else if(resizeSet == Helper.S_2MO){
+                resizeby = 16777216;
+            }
+            double resize = ((double)size)/resizeby;
+            if( resize > 1 ){
+                ContentResolver cr = context.getContentResolver();
+                String mime = cr.getType(uriFile);
+                Bitmap newBitmap = Bitmap.createScaledBitmap(takenImage, (int) (takenImage.getWidth() / resize),
+                        (int) (takenImage.getHeight() / resize), true);
+                Bitmap adjustedBitmap;
+                if( matrix != null)
+                    adjustedBitmap = Bitmap.createBitmap(newBitmap, 0, 0, newBitmap.getWidth(), newBitmap.getHeight(), matrix, true);
+                else
+                    adjustedBitmap = newBitmap;
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                if( mime !=null && (mime.contains("png") || mime.contains(".PNG")))
+                    adjustedBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
+                else
+                    adjustedBitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+                byte[] bitmapdata = bos.toByteArray();
+                bs = new ByteArrayInputStream(bitmapdata);
+            }else {
+                try {
+                    InputStream inputStream = context.getContentResolver().openInputStream(uriFile);
+                    byte[] buff = new byte[8 * 1024];
+                    int bytesRead;
+                    ByteArrayOutputStream bao = new ByteArrayOutputStream();
+                    assert inputStream != null;
+                    while((bytesRead = inputStream.read(buff)) != -1) {
+                        bao.write(buff, 0, bytesRead);
+                    }
+                    byte[] data = bao.toByteArray();
+                    bs  = new ByteArrayInputStream(data);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }else {
+            try {
+                InputStream inputStream = context.getContentResolver().openInputStream(uriFile);
+                byte[] buff = new byte[8 * 1024];
+                int bytesRead;
+                ByteArrayOutputStream bao = new ByteArrayOutputStream();
+                assert inputStream != null;
+                while((bytesRead = inputStream.read(buff)) != -1) {
+                    bao.write(buff, 0, bytesRead);
+                }
+                byte[] data = bao.toByteArray();
+                bs  = new ByteArrayInputStream(data);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return bs;
+    }
+
+    public static String getFileName(Context context, Uri uri) {
+        ContentResolver resolver = context.getContentResolver();
+        Cursor returnCursor =
+                resolver.query(uri, null, null, null, null);
+        assert returnCursor != null;
+        int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+        returnCursor.moveToFirst();
+        String name = returnCursor.getString(nameIndex);
+        returnCursor.close();
+        Random r = new Random();
+        int suf = r.nextInt(9999 - 1000) + 1000;
+        return String.valueOf(suf)+name;
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public static void largeLog(String content) {
+        if (content.length() > 4000) {
+            Log.v(Helper.TAG, content.substring(0, 4000));
+            largeLog(content.substring(4000));
+        } else {
+            Log.v(Helper.TAG, content);
+        }
+    }
 }
