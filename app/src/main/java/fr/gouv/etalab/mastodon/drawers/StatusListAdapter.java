@@ -750,10 +750,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 String fullDate_tmp = Helper.dateDiffFull(status.getCreated_at());
                 String fullDate = fullDate_tmp.substring(0,1).toUpperCase() + fullDate_tmp.substring(1);
                 holder.status_toot_date.setText(fullDate);
-            }else
+            }else {
                 holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
-
-            Helper.absoluteDateTimeReveal(context, holder.status_toot_date, status.getCreated_at());
+                Helper.absoluteDateTimeReveal(context, holder.status_toot_date, status.getCreated_at());
+            }
 
             if( status.getReblog() != null) {
                 Helper.loadGiF(context, ppurl, holder.status_account_profile_boost);
