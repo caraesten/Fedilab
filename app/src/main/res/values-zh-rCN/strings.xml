@@ -302,6 +302,7 @@
   <string name="set_preview_reply">在首页时间线中显示回复的数量</string>
   <string name="set_preview_reply_pp">显示配置文件图片吗？</string>
   <string name="set_multiaccount_actions">允许客户之间的交互？</string>
+  <string name="set_fit_preview">Fit preview images</string>
   <string name="note_no_space">您已达到允许的 160 字符上限！</string>
   <string name="username_no_space">您已达到允许的 30 字符上限！</string>
   <string name="settings_title_hour">通知的时间段：</string>
