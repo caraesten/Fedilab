@@ -990,18 +990,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             });
             //Click on a conversation
-
+            if( getItemViewType(position) == DISPLAYED_STATUS) {
                 holder.status_content.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(context, ShowConversationActivity.class);
                         Bundle b = new Bundle();
-                        if( status.getReblog() == null)
+                        if (status.getReblog() == null)
                             b.putString("statusId", status.getId());
                         else
                             b.putString("statusId", status.getReblog().getId());
                         intent.putExtras(b);
-                        if( type == RetrieveFeedsAsyncTask.Type.CONTEXT )
+                        if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
                             ((Activity) context).finish();
                         context.startActivity(intent);
                     }
@@ -1011,21 +1011,22 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     public void onClick(View v) {
                         Intent intent = new Intent(context, ShowConversationActivity.class);
                         Bundle b = new Bundle();
-                        if( status.getReblog() == null)
+                        if (status.getReblog() == null)
                             b.putString("statusId", status.getId());
                         else
                             b.putString("statusId", status.getReblog().getId());
                         intent.putExtras(b);
-                        if( type == RetrieveFeedsAsyncTask.Type.CONTEXT )
+                        if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
                             ((Activity) context).finish();
                         context.startActivity(intent);
                     }
                 });
-                if( theme == Helper.THEME_LIGHT){
-                    holder.main_container.setBackgroundResource(R.color.mastodonC3__);
-                }else {
-                    holder.main_container.setBackgroundResource(R.color.mastodonC1_);
-                }
+            }
+            if( theme == Helper.THEME_LIGHT){
+                holder.main_container.setBackgroundResource(R.color.mastodonC3__);
+            }else {
+                holder.main_container.setBackgroundResource(R.color.mastodonC1_);
+            }
             if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
 
                 if( position == conversationPosition){
