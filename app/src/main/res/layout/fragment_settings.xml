@@ -155,6 +155,13 @@
             android:text="@string/set_display_bookmark_button"
             android:layout_height="wrap_content" />
 
+        <!-- FIT PREVIEWS  -->
+        <CheckBox
+            android:id="@+id/set_fit_preview"
+            android:layout_width="wrap_content"
+            android:text="@string/set_fit_preview"
+            android:layout_height="wrap_content" />
+
         <!-- Resize pictures -->
         <LinearLayout
             android:layout_marginTop="10dp"
