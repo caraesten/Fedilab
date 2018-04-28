@@ -311,6 +311,7 @@
   <string name="set_preview_reply">Wyświetl liczbę odpowiedzi na domowej osi czasu</string>
   <string name="set_preview_reply_pp">Wyświetlać zdjęcia profilowe?</string>
   <string name="set_multiaccount_actions">Zezwalać na interakcje między kontami?</string>
+  <string name="set_fit_preview">Fit preview images</string>
   <string name="note_no_space">Osiągnąłeś 160 dozwolonych znaków!</string>
   <string name="username_no_space">Osiągnąłeś 30 dozwolonych znaków!</string>
   <string name="settings_title_hour">Odstęp czasu dla powiadomień:</string>

@@ -305,6 +305,7 @@
   <string name="set_preview_reply">Cevaplanma sayısını zaman tünelinde göster</string>
   <string name="set_preview_reply_pp">Profil resimleri görüntülensin mi?</string>
   <string name="set_multiaccount_actions">Hesapları arasındaki etkileşimler izin verilsin mi?</string>
+  <string name="set_fit_preview">Fit preview images</string>
   <string name="note_no_space">160 karakter sınırına ulaştınız!</string>
   <string name="username_no_space">30 karakter sınırına ulaştınız!</string>
   <string name="settings_title_hour">Bildirimler için zaman aralığı:</string>

@@ -302,6 +302,7 @@
   <string name="set_preview_reply">Tampilkan jumlah balasan di kronologi beranda</string>
   <string name="set_preview_reply_pp">Tampilkan gambar profil?</string>
   <string name="set_multiaccount_actions">Izinkan interaksi antar akun?</string>
+  <string name="set_fit_preview">Fit preview images</string>
   <string name="note_no_space">Kamu telah mencapai 160 karakter yang diizinkan!</string>
   <string name="username_no_space">Kamu telah mencapai 30 karakter yang diizinkan!</string>
   <string name="settings_title_hour">Slot waktu untuk pemberitahuan:</string>
