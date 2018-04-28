@@ -1394,7 +1394,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                     timedMute = new ArrayList<>();
                                                     timedMute.add(targeted_id);
                                                 }
-                                                Toast.makeText(context,context.getString(R.string.timed_mute_date,status.getAccount().getAcct(),Helper.dateToString(context, date_mute)), Toast.LENGTH_LONG).show();
+                                                Toast.makeText(context,context.getString(R.string.timed_mute_date,status.getAccount().getAcct(),Helper.dateToString(date_mute)), Toast.LENGTH_LONG).show();
                                                 alertDialog.dismiss();
                                                 notifyDataSetChanged();
                                             }

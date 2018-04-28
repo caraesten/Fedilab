@@ -364,8 +364,8 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                                 filterToots.setV_private(filter_visibility_private.isChecked());
                                 filterToots.setV_direct(filter_visibility_direct.isChecked());
 
-                                filterToots.setDateIni(Helper.dateToString(OwnerStatusActivity.this,dateIni));
-                                filterToots.setDateEnd(Helper.dateToString(OwnerStatusActivity.this,dateEnd));
+                                filterToots.setDateIni(Helper.dateToString(dateIni));
+                                filterToots.setDateEnd(Helper.dateToString(dateEnd));
 
                                 if( filter_keywords.getText() != null && filter_keywords.getText().toString().trim().length() > 0)
                                     filterToots.setFilter(filter_keywords.getText().toString());

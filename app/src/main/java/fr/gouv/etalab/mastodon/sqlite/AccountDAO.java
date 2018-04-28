@@ -66,7 +66,7 @@ public class AccountDAO {
         values.put(Sqlite.COL_AVATAR_STATIC,account.getAvatar_static());
         values.put(Sqlite.COL_HEADER,account.getHeader());
         values.put(Sqlite.COL_HEADER_STATIC,account.getHeader_static());
-        values.put(Sqlite.COL_CREATED_AT, Helper.dateToString(context, account.getCreated_at()));
+        values.put(Sqlite.COL_CREATED_AT, Helper.dateToString(account.getCreated_at()));
         values.put(Sqlite.COL_INSTANCE, account.getInstance());
         if( account.getToken() != null)
             values.put(Sqlite.COL_OAUTHTOKEN, account.getToken());
@@ -102,7 +102,7 @@ public class AccountDAO {
         values.put(Sqlite.COL_AVATAR_STATIC,account.getAvatar_static());
         values.put(Sqlite.COL_HEADER,account.getHeader());
         values.put(Sqlite.COL_HEADER_STATIC,account.getHeader_static());
-        values.put(Sqlite.COL_CREATED_AT, Helper.dateToString(context, account.getCreated_at()));
+        values.put(Sqlite.COL_CREATED_AT, Helper.dateToString(account.getCreated_at()));
         values.put(Sqlite.COL_INSTANCE, account.getInstance());
         if( account.getToken() != null)
             values.put(Sqlite.COL_OAUTHTOKEN, account.getToken());

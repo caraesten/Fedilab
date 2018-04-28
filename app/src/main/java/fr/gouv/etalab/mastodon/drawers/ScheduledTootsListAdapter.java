@@ -155,7 +155,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage(status.getContent() + '\n' + Helper.dateToString(context, storedStatus.getCreation_date()));
+                builder.setMessage(status.getContent() + '\n' + Helper.dateToString(storedStatus.getCreation_date()));
                 builder.setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle(R.string.remove_scheduled)
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -190,8 +190,8 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
             holder.scheduled_toot_failed.setVisibility(View.VISIBLE);
         }
         holder.scheduled_toot_media_count.setText(context.getString(R.string.media_count, status.getMedia_attachments().size()));
-        holder.scheduled_toot_date_creation.setText(Helper.dateToString(context, storedStatus.getCreation_date()));
-        holder.scheduled_toot_date.setText(Helper.dateToString(context, storedStatus.getScheduled_date()));
+        holder.scheduled_toot_date_creation.setText(Helper.dateToString(storedStatus.getCreation_date()));
+        holder.scheduled_toot_date.setText(Helper.dateToString(storedStatus.getScheduled_date()));
         holder.scheduled_toot_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -866,7 +866,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                         popup_trans = getLayoutInflater().inflate( R.layout.popup_translate, null );
                         transAlert.setView(popup_trans);
                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putString(Helper.LAST_TRANSLATION_TIME, Helper.dateToString(getApplicationContext(), new Date( System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(Helper.SECONDES_BETWEEN_TRANSLATE))));
+                        editor.putString(Helper.LAST_TRANSLATION_TIME, Helper.dateToString(new Date( System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(Helper.SECONDES_BETWEEN_TRANSLATE))));
                         editor.apply();
                         TextView yandex_translate = popup_trans.findViewById(R.id.yandex_translate);
                         yandex_translate.setOnClickListener(new View.OnClickListener() {

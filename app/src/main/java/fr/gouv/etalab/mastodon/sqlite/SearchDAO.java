@@ -56,7 +56,7 @@ public class SearchDAO {
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_KEYWORDS, keyword);
         values.put(Sqlite.COL_USER_ID, userId);
-        values.put(Sqlite.COL_DATE_CREATION, Helper.dateToString(context, new Date()));
+        values.put(Sqlite.COL_DATE_CREATION, Helper.dateToString(new Date()));
         //Inserts search
         try{
             db.insert(Sqlite.TABLE_SEARCH, null, values);
