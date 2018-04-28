@@ -302,6 +302,7 @@
   <string name="set_preview_reply">显示家庭时间线中答复的数量</string>
   <string name="set_preview_reply_pp">是否显示配置文件图片？</string>
   <string name="set_multiaccount_actions">允许客户之间的交互？</string>
+  <string name="set_fit_preview">Fit preview images</string>
   <string name="note_no_space">您已达到允许的160字符!</string>
   <string name="username_no_space">您已达到允许的30字符!</string>
   <string name="settings_title_hour">通知的时间段:</string>

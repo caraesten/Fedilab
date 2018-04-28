@@ -309,6 +309,7 @@
   <string name="set_preview_reply">Zeige die Anzahl der Antworten in der home Zeitlinie an</string>
   <string name="set_preview_reply_pp">Profilbilder anzeigen?</string>
   <string name="set_multiaccount_actions">Interaktionen zwischen deinen Konten erlauben?</string>
+  <string name="set_fit_preview">Fit preview images</string>
   <string name="note_no_space">Du hast die Grenze von 160 Zeichen erreicht!</string>
   <string name="username_no_space">Du hast die Grenze von 30 Zeichen erreicht!</string>
   <string name="settings_title_hour">Zeitfenster für Benachrichtigungen:</string>
