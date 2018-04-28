@@ -67,6 +67,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.github.stom79.mytransl.MyTransL;
 import com.github.stom79.mytransl.client.HttpsConnectionException;
 import com.github.stom79.mytransl.client.Results;
@@ -1708,19 +1710,55 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             holder.status_prev4_play.setVisibility(View.VISIBLE);
                 }
                 String url = attachment.getPreview_url();
-                if( fullAttachement){
 
-                }
                 if( url == null || url.trim().equals("") )
                     url = attachment.getUrl();
                 else if( attachment.getType().equals("unknown"))
                     url = attachment.getRemote_url();
-                if( !url.trim().contains("missing.png") && !((Activity)context).isFinishing() )
-                    Glide.with(imageView.getContext())
-                            .load(url)
-                            .thumbnail(0.1f)
-                            .transition(DrawableTransitionOptions.withCrossFade())
-                            .into(imageView);
+
+                if( fullAttachement){
+                    imageView.setImageBitmap(null);
+                    if( !url.trim().contains("missing.png") && !((Activity)context).isFinishing() )
+                        Glide.with(imageView.getContext())
+                                .asBitmap()
+                                .load(url)
+                                .thumbnail(0.1f)
+                                .into(new SimpleTarget<Bitmap>() {
+                                    @Override
+                                    public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                        DrawableTransitionOptions.withCrossFade();
+                                        int width = resource.getWidth();
+                                        int height = resource.getHeight();
+
+                                        if( height < Helper.convertDpToPixel(200, context)){
+                                            double ratio = ((double)Helper.convertDpToPixel(200, context) / (double)height);
+                                            width = (int)(ratio * width);
+                                            height = (int) Helper.convertDpToPixel(200, context);
+                                            resource = Bitmap.createScaledBitmap(resource, width, height, false);
+                                        }
+                                        //Allow to put full width for preview for single attachment -> disabled for the moment
+                                        /*int tootWidth = holder.status_content_container.getWidth();
+
+                                        if( width < tootWidth && attachments.size() == 1){
+                                            double ratio = ((double)tootWidth/ (double)width);
+                                            height = (int)(ratio * (double)height);
+                                            width = tootWidth;
+                                            holder.status_horizontal_document_container.getLayoutParams().height = height;
+                                            resource = Bitmap.createScaledBitmap(resource, width, height, false);
+                                        }else{
+                                            holder.status_horizontal_document_container.getLayoutParams().height = (int)Helper.convertDpToPixel(200, context);
+                                        }*/
+                                        imageView.setImageBitmap(resource);
+                                    }
+                                });
+                }else {
+                    if (!url.trim().contains("missing.png") && !((Activity) context).isFinishing())
+                        Glide.with(imageView.getContext())
+                                .load(url)
+                                .thumbnail(0.1f)
+                                .transition(DrawableTransitionOptions.withCrossFade())
+                                .into(imageView);
+                }
                 final int finalPosition = position;
                 if( attachment.getDescription() != null && !attachment.getDescription().equals("null"))
                     imageView.setContentDescription(attachment.getDescription());
