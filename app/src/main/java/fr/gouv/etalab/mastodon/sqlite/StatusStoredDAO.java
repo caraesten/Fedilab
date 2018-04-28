@@ -66,7 +66,7 @@ public class StatusStoredDAO {
             values.put(Sqlite.COL_STATUS_REPLY_SERIALIZED, serializedStatusReply);
         }
         values.put(Sqlite.COL_STATUS_SERIALIZED, serializedStatus);
-        values.put(Sqlite.COL_DATE_CREATION, Helper.dateToString(context, new Date()));
+        values.put(Sqlite.COL_DATE_CREATION, Helper.dateToString(new Date()));
         values.put(Sqlite.COL_IS_SCHEDULED, 0);
         values.put(Sqlite.COL_INSTANCE, instance);
         values.put(Sqlite.COL_USER_ID, userId);
@@ -93,7 +93,7 @@ public class StatusStoredDAO {
 
         String serializedStatus = Helper.statusToStringStorage(status);
         values.put(Sqlite.COL_STATUS_SERIALIZED, serializedStatus);
-        values.put(Sqlite.COL_DATE_CREATION, Helper.dateToString(context, new Date()));
+        values.put(Sqlite.COL_DATE_CREATION, Helper.dateToString(new Date()));
         return db.update(Sqlite.TABLE_STATUSES_STORED,
                 values, Sqlite.COL_ID + " =  ? ",
                 new String[]{String.valueOf(id)});
@@ -123,7 +123,7 @@ public class StatusStoredDAO {
     public int scheduleStatus(long id, int jobId, Date date_scheduled ) {
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_IS_SCHEDULED, jobId);
-        values.put(Sqlite.COL_DATE_SCHEDULED, Helper.dateToString(context, date_scheduled));
+        values.put(Sqlite.COL_DATE_SCHEDULED, Helper.dateToString(date_scheduled));
         return db.update(Sqlite.TABLE_STATUSES_STORED,
                 values, Sqlite.COL_ID + " =  ? ",
                 new String[]{String.valueOf(id)});
@@ -136,7 +136,7 @@ public class StatusStoredDAO {
      */
     public int updateScheduledDate(int jobid, Date scheduled_date) {
         ContentValues values = new ContentValues();
-        values.put(Sqlite.COL_DATE_SCHEDULED, Helper.dateToString(context, scheduled_date));
+        values.put(Sqlite.COL_DATE_SCHEDULED, Helper.dateToString(scheduled_date));
         return db.update(Sqlite.TABLE_STATUSES_STORED,
                 values, Sqlite.COL_IS_SCHEDULED + " =  ? ",
                 new String[]{String.valueOf(jobid)});
@@ -150,7 +150,7 @@ public class StatusStoredDAO {
      */
     public int updateScheduledDone(int jobid, Date date_sent) {
         ContentValues values = new ContentValues();
-        values.put(Sqlite.COL_DATE_SENT, Helper.dateToString(context, date_sent));
+        values.put(Sqlite.COL_DATE_SENT, Helper.dateToString(date_sent));
         values.put(Sqlite.COL_SENT, 1);
         return db.update(Sqlite.TABLE_STATUSES_STORED,
                 values, Sqlite.COL_IS_SCHEDULED + " =  ? ",

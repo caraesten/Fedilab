@@ -212,6 +212,20 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean fit_preview = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
+        final CheckBox set_fit_preview = rootView.findViewById(R.id.set_fit_preview);
+        set_fit_preview.setChecked(fit_preview);
+
+        set_fit_preview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_FULL_PREVIEW, set_fit_preview.isChecked());
+                editor.apply();
+            }
+        });
+
+
         boolean multiaccount_actions = sharedpreferences.getBoolean(Helper.SET_ALLOW_CROSS_ACTIONS, true);
         final CheckBox set_multiaccount_actions = rootView.findViewById(R.id.set_multiaccount_actions);
         set_multiaccount_actions.setChecked(multiaccount_actions);

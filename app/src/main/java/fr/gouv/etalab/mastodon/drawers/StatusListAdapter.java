@@ -67,6 +67,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.github.stom79.mytransl.MyTransL;
 import com.github.stom79.mytransl.client.HttpsConnectionException;
 import com.github.stom79.mytransl.client.Results;
@@ -252,6 +254,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         Button status_show_more;
         ImageView status_more;
         LinearLayout status_document_container;
+        RelativeLayout status_horizontal_document_container;
         ImageView status_prev1;
         ImageView status_prev2;
         ImageView status_prev3;
@@ -260,6 +263,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ImageView status_prev2_play;
         ImageView status_prev3_play;
         ImageView status_prev4_play;
+        ImageView status_prev1_h;
+        ImageView status_prev2_h;
+        ImageView status_prev3_h;
+        ImageView status_prev4_h;
+        ImageView status_prev1_play_h;
+        ImageView status_prev2_play_h;
+        ImageView status_prev3_play_h;
+        ImageView status_prev4_play_h;
         RelativeLayout status_prev4_container;
         TextView status_reply;
         ImageView status_pin;
@@ -282,7 +293,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         TextView status_cardview_title, status_cardview_content, status_cardview_url;
         FrameLayout status_cardview_video;
         WebView status_cardview_webview;
-        ImageView hide_preview;
+        ImageView hide_preview, hide_preview_h;
         TextView status_toot_app;
 
         public View getView(){
@@ -294,6 +305,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             loader_replies = itemView.findViewById(R.id.loader_replies);
             fetch_more = itemView.findViewById(R.id.fetch_more);
             status_document_container = itemView.findViewById(R.id.status_document_container);
+            status_horizontal_document_container = itemView.findViewById(R.id.status_horizontal_document_container);
             status_content = itemView.findViewById(R.id.status_content);
             status_content_translated = itemView.findViewById(R.id.status_content_translated);
             status_account_username = itemView.findViewById(R.id.status_account_username);
@@ -315,6 +327,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_prev2_play = itemView.findViewById(R.id.status_prev2_play);
             status_prev3_play = itemView.findViewById(R.id.status_prev3_play);
             status_prev4_play = itemView.findViewById(R.id.status_prev4_play);
+            status_prev1_h = itemView.findViewById(R.id.status_prev1_h);
+            status_prev2_h = itemView.findViewById(R.id.status_prev2_h);
+            status_prev3_h = itemView.findViewById(R.id.status_prev3_h);
+            status_prev4_h = itemView.findViewById(R.id.status_prev4_h);
+            status_prev1_play_h = itemView.findViewById(R.id.status_prev1_play_h);
+            status_prev2_play_h = itemView.findViewById(R.id.status_prev2_play_h);
+            status_prev3_play_h = itemView.findViewById(R.id.status_prev3_play_h);
+            status_prev4_play_h = itemView.findViewById(R.id.status_prev4_play_h);
             status_container2 = itemView.findViewById(R.id.status_container2);
             status_container3 = itemView.findViewById(R.id.status_container3);
             status_prev4_container = itemView.findViewById(R.id.status_prev4_container);
@@ -343,6 +363,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_cardview_video = itemView.findViewById(R.id.status_cardview_video);
             status_cardview_webview = itemView.findViewById(R.id.status_cardview_webview);
             hide_preview = itemView.findViewById(R.id.hide_preview);
+            hide_preview_h = itemView.findViewById(R.id.hide_preview_h);
             status_toot_app = itemView.findViewById(R.id.status_toot_app);
         }
     }
@@ -439,6 +460,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             boolean displayBookmarkButton = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, true);
+            boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
 
             if( displayBookmarkButton)
                 holder.status_bookmark.setVisibility(View.VISIBLE);
@@ -750,10 +772,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 String fullDate_tmp = Helper.dateDiffFull(status.getCreated_at());
                 String fullDate = fullDate_tmp.substring(0,1).toUpperCase() + fullDate_tmp.substring(1);
                 holder.status_toot_date.setText(fullDate);
-            }else
+            }else {
                 holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
-
-            Helper.absoluteDateTimeReveal(context, holder.status_toot_date, status.getCreated_at());
+                Helper.absoluteDateTimeReveal(context, holder.status_toot_date, status.getCreated_at());
+            }
 
             if( status.getReblog() != null) {
                 Helper.loadGiF(context, ppurl, holder.status_account_profile_boost);
@@ -810,7 +832,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
             if( status.getReblog() == null) {
                 if (status.getMedia_attachments().size() < 1) {
-                    holder.status_document_container.setVisibility(View.GONE);
+                    if( fullAttachement )
+                        holder.status_horizontal_document_container.setVisibility(View.GONE);
+                    else
+                        holder.status_document_container.setVisibility(View.GONE);
                     holder.status_show_more.setVisibility(View.GONE);
                 } else {
                     //If medias are loaded without any conditions or if device is on wifi
@@ -824,7 +849,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         holder.status_show_more.setText(textShowMore);
                         if (!status.isAttachmentShown()) {
                             holder.status_show_more.setVisibility(View.VISIBLE);
-                            holder.status_document_container.setVisibility(View.GONE);
+                            if( fullAttachement )
+                                holder.status_horizontal_document_container.setVisibility(View.GONE);
+                            else
+                                holder.status_document_container.setVisibility(View.GONE);
                         } else {
                             loadAttachments(status, holder);
                         }
@@ -833,7 +861,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }else { //Attachments for reblogs
 
                 if (status.getReblog().getMedia_attachments().size() < 1) {
-                    holder.status_document_container.setVisibility(View.GONE);
+                    if( fullAttachement )
+                        holder.status_horizontal_document_container.setVisibility(View.GONE);
+                    else
+                        holder.status_document_container.setVisibility(View.GONE);
                     holder.status_show_more.setVisibility(View.GONE);
                 } else {
                     //If medias are loaded without any conditions or if device is on wifi
@@ -847,7 +878,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         holder.status_show_more.setText(textShowMore);
                         if (!status.isAttachmentShown()) {
                             holder.status_show_more.setVisibility(View.VISIBLE);
-                            holder.status_document_container.setVisibility(View.GONE);
+                            if( fullAttachement )
+                                holder.status_horizontal_document_container.setVisibility(View.GONE);
+                            else
+                                holder.status_document_container.setVisibility(View.GONE);
                         } else {
                             loadAttachments(status.getReblog(), holder);
                         }
@@ -855,22 +889,40 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             }
 
-            holder.hide_preview.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    status.setAttachmentShown(!status.isAttachmentShown());
-                    if( status.getReblog() != null)
-                        status.getReblog().setSensitive(true);
-                    else
-                        status.setSensitive(true);
+            if(!fullAttachement)
+                holder.hide_preview.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        status.setAttachmentShown(!status.isAttachmentShown());
+                        if( status.getReblog() != null)
+                            status.getReblog().setSensitive(true);
+                        else
+                            status.setSensitive(true);
 
-                    if( theme == Helper.THEME_DARK)
-                        changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
-                    else
-                        changeDrawableColor(context, R.drawable.ic_photo,R.color.mastodonC4);
-                    notifyStatusChanged(status);
-                }
-            });
+                        if( theme == Helper.THEME_DARK)
+                            changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
+                        else
+                            changeDrawableColor(context, R.drawable.ic_photo,R.color.mastodonC4);
+                        notifyStatusChanged(status);
+                    }
+                });
+            else
+                holder.hide_preview_h.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        status.setAttachmentShown(!status.isAttachmentShown());
+                        if( status.getReblog() != null)
+                            status.getReblog().setSensitive(true);
+                        else
+                            status.setSensitive(true);
+
+                        if( theme == Helper.THEME_DARK)
+                            changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
+                        else
+                            changeDrawableColor(context, R.drawable.ic_photo,R.color.mastodonC4);
+                        notifyStatusChanged(status);
+                    }
+                });
 
             //Toot was translated and user asked to see it
 
@@ -990,18 +1042,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             });
             //Click on a conversation
-
+            if( getItemViewType(position) == DISPLAYED_STATUS) {
                 holder.status_content.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(context, ShowConversationActivity.class);
                         Bundle b = new Bundle();
-                        if( status.getReblog() == null)
+                        if (status.getReblog() == null)
                             b.putString("statusId", status.getId());
                         else
                             b.putString("statusId", status.getReblog().getId());
                         intent.putExtras(b);
-                        if( type == RetrieveFeedsAsyncTask.Type.CONTEXT )
+                        if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
                             ((Activity) context).finish();
                         context.startActivity(intent);
                     }
@@ -1011,21 +1063,22 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     public void onClick(View v) {
                         Intent intent = new Intent(context, ShowConversationActivity.class);
                         Bundle b = new Bundle();
-                        if( status.getReblog() == null)
+                        if (status.getReblog() == null)
                             b.putString("statusId", status.getId());
                         else
                             b.putString("statusId", status.getReblog().getId());
                         intent.putExtras(b);
-                        if( type == RetrieveFeedsAsyncTask.Type.CONTEXT )
+                        if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
                             ((Activity) context).finish();
                         context.startActivity(intent);
                     }
                 });
-                if( theme == Helper.THEME_LIGHT){
-                    holder.main_container.setBackgroundResource(R.color.mastodonC3__);
-                }else {
-                    holder.main_container.setBackgroundResource(R.color.mastodonC1_);
-                }
+            }
+            if( theme == Helper.THEME_LIGHT){
+                holder.main_container.setBackgroundResource(R.color.mastodonC3__);
+            }else {
+                holder.main_container.setBackgroundResource(R.color.mastodonC1_);
+            }
             if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
 
                 if( position == conversationPosition){
@@ -1341,7 +1394,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                     timedMute = new ArrayList<>();
                                                     timedMute.add(targeted_id);
                                                 }
-                                                Toast.makeText(context,context.getString(R.string.timed_mute_date,status.getAccount().getAcct(),Helper.dateToString(context, date_mute)), Toast.LENGTH_LONG).show();
+                                                Toast.makeText(context,context.getString(R.string.timed_mute_date,status.getAccount().getAcct(),Helper.dateToString(date_mute)), Toast.LENGTH_LONG).show();
                                                 alertDialog.dismiss();
                                                 notifyDataSetChanged();
                                             }
@@ -1534,72 +1587,178 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
     private void loadAttachments(final Status status, final ViewHolder holder){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
         List<Attachment> attachments = status.getMedia_attachments();
+
         if( attachments != null && attachments.size() > 0){
             int i = 0;
-            holder.status_document_container.setVisibility(View.VISIBLE);
-            if( attachments.size() == 1){
-                holder.status_container2.setVisibility(View.GONE);
-                if( attachments.get(0).getUrl().trim().contains("missing.png"))
-                    holder.status_document_container.setVisibility(View.GONE);
-            }else if(attachments.size() == 2){
-                holder.status_container2.setVisibility(View.VISIBLE);
-                holder.status_container3.setVisibility(View.GONE);
-                holder.status_prev4_container.setVisibility(View.GONE);
-                if( attachments.get(1).getUrl().trim().contains("missing.png"))
+            if(fullAttachement)
+                holder.status_horizontal_document_container.setVisibility(View.VISIBLE);
+            else
+                holder.status_document_container.setVisibility(View.VISIBLE);
+            if( attachments.size() == 1 ){
+                if( !fullAttachement)
                     holder.status_container2.setVisibility(View.GONE);
-            }else if( attachments.size() == 3){
-                holder.status_container2.setVisibility(View.VISIBLE);
-                holder.status_container3.setVisibility(View.VISIBLE);
-                holder.status_prev4_container.setVisibility(View.GONE);
-                if( attachments.get(2).getUrl().trim().contains("missing.png"))
+                else {
+                    holder.status_prev1_h.setVisibility(View.VISIBLE);
+                    holder.status_prev2_h.setVisibility(View.GONE);
+                    holder.status_prev3_h.setVisibility(View.GONE);
+                    holder.status_prev4_h.setVisibility(View.GONE);
+                }
+                if( attachments.get(0).getUrl().trim().contains("missing.png"))
+                    if(fullAttachement)
+                        holder.status_horizontal_document_container.setVisibility(View.GONE);
+                    else
+                        holder.status_document_container.setVisibility(View.GONE);
+            }else if(attachments.size() == 2){
+                if( !fullAttachement) {
+                    holder.status_container2.setVisibility(View.VISIBLE);
                     holder.status_container3.setVisibility(View.GONE);
-            }else {
-                holder.status_container2.setVisibility(View.VISIBLE);
-                holder.status_container3.setVisibility(View.VISIBLE);
-                holder.status_prev4_container.setVisibility(View.VISIBLE);
-                if( attachments.get(2).getUrl().trim().contains("missing.png"))
                     holder.status_prev4_container.setVisibility(View.GONE);
+                    if (attachments.get(1).getUrl().trim().contains("missing.png"))
+                        holder.status_container2.setVisibility(View.GONE);
+                }else {
+                    holder.status_prev1_h.setVisibility(View.VISIBLE);
+                    holder.status_prev2_h.setVisibility(View.VISIBLE);
+                    holder.status_prev3_h.setVisibility(View.GONE);
+                    holder.status_prev4_h.setVisibility(View.GONE);
+                    if (attachments.get(1).getUrl().trim().contains("missing.png"))
+                        holder.status_prev2_h.setVisibility(View.GONE);
+                }
+            }else if( attachments.size() == 3 ){
+                if( !fullAttachement) {
+                    holder.status_container2.setVisibility(View.VISIBLE);
+                    holder.status_container3.setVisibility(View.VISIBLE);
+                    holder.status_prev4_container.setVisibility(View.GONE);
+                    if (attachments.get(2).getUrl().trim().contains("missing.png"))
+                        holder.status_container3.setVisibility(View.GONE);
+                }else {
+                    holder.status_prev1_h.setVisibility(View.VISIBLE);
+                    holder.status_prev2_h.setVisibility(View.VISIBLE);
+                    holder.status_prev3_h.setVisibility(View.VISIBLE);
+                    holder.status_prev4_h.setVisibility(View.GONE);
+                    if (attachments.get(2).getUrl().trim().contains("missing.png"))
+                        holder.status_prev3_h.setVisibility(View.GONE);
+                }
+            }else {
+                if(!fullAttachement) {
+                    holder.status_container2.setVisibility(View.VISIBLE);
+                    holder.status_container3.setVisibility(View.VISIBLE);
+                    holder.status_prev4_container.setVisibility(View.VISIBLE);
+                    if (attachments.get(2).getUrl().trim().contains("missing.png"))
+                        holder.status_prev4_container.setVisibility(View.GONE);
+                }else {
+                    holder.status_prev1_h.setVisibility(View.VISIBLE);
+                    holder.status_prev2_h.setVisibility(View.VISIBLE);
+                    holder.status_prev3_h.setVisibility(View.VISIBLE);
+                    holder.status_prev4_h.setVisibility(View.VISIBLE);
+                    if (attachments.get(2).getUrl().trim().contains("missing.png"))
+                        holder.status_prev3_h.setVisibility(View.GONE);
+                }
             }
             int position = 1;
             for(final Attachment attachment: attachments){
                 ImageView imageView;
                 if( i == 0) {
-                    imageView = holder.status_prev1;
+                    imageView = fullAttachement?holder.status_prev1_h:holder.status_prev1;
                     if( attachment.getType().equals("image") || attachment.getType().equals("unknown"))
-                        holder.status_prev1_play.setVisibility(View.GONE);
+                        if( fullAttachement)
+                            holder.status_prev1_play_h.setVisibility(View.GONE);
+                        else
+                            holder.status_prev1_play.setVisibility(View.GONE);
                     else
-                        holder.status_prev1_play.setVisibility(View.VISIBLE);
+                        if( fullAttachement)
+                            holder.status_prev1_play_h.setVisibility(View.VISIBLE);
+                        else
+                            holder.status_prev1_play.setVisibility(View.VISIBLE);
                 }else if( i == 1) {
-                    imageView = holder.status_prev2;
+                    imageView = fullAttachement?holder.status_prev2_h:holder.status_prev2;
                     if( attachment.getType().equals("image") || attachment.getType().equals("unknown"))
-                        holder.status_prev2_play.setVisibility(View.GONE);
+                        if( fullAttachement)
+                            holder.status_prev2_play_h.setVisibility(View.GONE);
+                        else
+                            holder.status_prev2_play.setVisibility(View.GONE);
                     else
-                        holder.status_prev2_play.setVisibility(View.VISIBLE);
+                        if( fullAttachement)
+                            holder.status_prev2_play_h.setVisibility(View.VISIBLE);
+                        else
+                            holder.status_prev2_play.setVisibility(View.VISIBLE);
                 }else if(i == 2) {
-                    imageView = holder.status_prev3;
+                    imageView = fullAttachement?holder.status_prev3_h:holder.status_prev3;
                     if( attachment.getType().equals("image") || attachment.getType().equals("unknown"))
-                        holder.status_prev3_play.setVisibility(View.GONE);
+                        if( fullAttachement)
+                            holder.status_prev3_play_h.setVisibility(View.GONE);
+                        else
+                            holder.status_prev3_play.setVisibility(View.GONE);
                     else
-                        holder.status_prev3_play.setVisibility(View.VISIBLE);
+                        if( fullAttachement)
+                            holder.status_prev3_play_h.setVisibility(View.VISIBLE);
+                        else
+                            holder.status_prev3_play.setVisibility(View.VISIBLE);
                 }else {
-                    imageView = holder.status_prev4;
+                    imageView = fullAttachement?holder.status_prev4_h:holder.status_prev4;
                     if( attachment.getType().equals("image") || attachment.getType().equals("unknown"))
-                        holder.status_prev4_play.setVisibility(View.GONE);
+                        if( fullAttachement)
+                            holder.status_prev4_play_h.setVisibility(View.GONE);
+                        else
+                            holder.status_prev4_play.setVisibility(View.GONE);
                     else
-                        holder.status_prev4_play.setVisibility(View.VISIBLE);
+                        if( fullAttachement)
+                            holder.status_prev4_play_h.setVisibility(View.VISIBLE);
+                        else
+                            holder.status_prev4_play.setVisibility(View.VISIBLE);
                 }
                 String url = attachment.getPreview_url();
+
                 if( url == null || url.trim().equals("") )
                     url = attachment.getUrl();
                 else if( attachment.getType().equals("unknown"))
                     url = attachment.getRemote_url();
-                if( !url.trim().contains("missing.png") && !((Activity)context).isFinishing() )
-                    Glide.with(imageView.getContext())
-                            .load(url)
-                            .thumbnail(0.1f)
-                            .transition(DrawableTransitionOptions.withCrossFade())
-                            .into(imageView);
+
+                if( fullAttachement){
+                    imageView.setImageBitmap(null);
+                    if( !url.trim().contains("missing.png") && !((Activity)context).isFinishing() )
+                        Glide.with(imageView.getContext())
+                                .asBitmap()
+                                .load(url)
+                                .thumbnail(0.1f)
+                                .into(new SimpleTarget<Bitmap>() {
+                                    @Override
+                                    public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                        DrawableTransitionOptions.withCrossFade();
+                                        int width = resource.getWidth();
+                                        int height = resource.getHeight();
+
+                                        if( height < Helper.convertDpToPixel(200, context)){
+                                            double ratio = ((double)Helper.convertDpToPixel(200, context) / (double)height);
+                                            width = (int)(ratio * width);
+                                            height = (int) Helper.convertDpToPixel(200, context);
+                                            resource = Bitmap.createScaledBitmap(resource, width, height, false);
+                                        }
+                                        //Allow to put full width for preview for single attachment -> disabled for the moment
+                                        /*int tootWidth = holder.status_content_container.getWidth();
+
+                                        if( width < tootWidth && attachments.size() == 1){
+                                            double ratio = ((double)tootWidth/ (double)width);
+                                            height = (int)(ratio * (double)height);
+                                            width = tootWidth;
+                                            holder.status_horizontal_document_container.getLayoutParams().height = height;
+                                            resource = Bitmap.createScaledBitmap(resource, width, height, false);
+                                        }else{
+                                            holder.status_horizontal_document_container.getLayoutParams().height = (int)Helper.convertDpToPixel(200, context);
+                                        }*/
+                                        imageView.setImageBitmap(resource);
+                                    }
+                                });
+                }else {
+                    if (!url.trim().contains("missing.png") && !((Activity) context).isFinishing())
+                        Glide.with(imageView.getContext())
+                                .load(url)
+                                .thumbnail(0.1f)
+                                .transition(DrawableTransitionOptions.withCrossFade())
+                                .into(imageView);
+                }
                 final int finalPosition = position;
                 if( attachment.getDescription() != null && !attachment.getDescription().equals("null"))
                     imageView.setContentDescription(attachment.getDescription());
@@ -1618,7 +1777,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 position++;
             }
         }else{
-            holder.status_document_container.setVisibility(View.GONE);
+            if(fullAttachement)
+                holder.status_horizontal_document_container.setVisibility(View.GONE);
+            else
+                holder.status_document_container.setVisibility(View.GONE);
         }
         holder.status_show_more.setVisibility(View.GONE);
 

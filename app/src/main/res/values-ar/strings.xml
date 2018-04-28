@@ -317,6 +317,7 @@
   <string name="set_preview_reply">إظهار عدد الردود على الخيط الرئيسي</string>
   <string name="set_preview_reply_pp">هل تود عرض الصور الرمزية للحسابات ؟</string>
   <string name="set_multiaccount_actions">السماح للتفاعلات بين الحسابات ؟</string>
+  <string name="set_fit_preview">Fit preview images</string>
   <string name="note_no_space">لقد بلغت حد الـ 160 حرف المسموح به !</string>
   <string name="username_no_space">لقد بلغت حد الـ 30 حرف المسموح به !</string>
   <string name="settings_title_hour">الفترة المتاحة للإخطارات :</string>

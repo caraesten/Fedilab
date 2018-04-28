@@ -305,6 +305,7 @@
   <string name="set_preview_reply">Ցուցադրել արձագանքների քանակը հարազատ հոսքում</string>
   <string name="set_preview_reply_pp">Ցուցադրե՞լ անձնանկարները</string>
   <string name="set_multiaccount_actions">Թույլատրե՞լ հաշիվների միջև փոխհարաբերությունները</string>
+  <string name="set_fit_preview">Fit preview images</string>
   <string name="note_no_space">Դու հատե՛լ ես թույլատրված 160 նիշերի սահմանը</string>
   <string name="username_no_space">Դու հատե՛լ ես թույլատրված 30 նիշերի սահմանը</string>
   <string name="settings_title_hour">Ծանուցվելու ժամանակահատվածը՝</string>

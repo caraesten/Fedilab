@@ -241,6 +241,7 @@ public class Helper {
     public static final String SET_CAPITALIZE = "set_capitalize";
     public static final String SET_PICTURE_RESIZE = "set_picture_resize";
     public static final String SET_SHOW_BOOKMARK = "set_show_bookmark";
+    public static final String SET_FULL_PREVIEW = "set_full_preview";
     public static final int S_512KO = 1;
     public static final int S_1MO = 2;
     public static final int S_2MO = 3;
@@ -476,19 +477,11 @@ public class Helper {
 
     /**
      * Convert a date in String -> format yyyy-MM-dd HH:mm:ss
-     * @param context Context
      * @param date Date
      * @return String
      */
-    public static String dateToString(Context context, Date date) {
-        Locale userLocale;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            userLocale = context.getResources().getConfiguration().getLocales().get(0);
-        } else {
-            //noinspection deprecation
-            userLocale = context.getResources().getConfiguration().locale;
-        }
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",userLocale);
+    public static String dateToString(Date date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault());
         return dateFormat.format(date);
     }
 
@@ -1964,8 +1957,7 @@ public class Helper {
                     .into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                            if( resource != null)
-                                imageView.setImageBitmap(resource);
+                            imageView.setImageBitmap(resource);
                         }
                     });
     }
@@ -2116,16 +2108,27 @@ public class Helper {
         Cursor returnCursor =
                 resolver.query(uri, null, null, null, null);
         assert returnCursor != null;
-        int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-        returnCursor.moveToFirst();
-        String name = returnCursor.getString(nameIndex);
-        returnCursor.close();
-        Random r = new Random();
-        int suf = r.nextInt(9999 - 1000) + 1000;
-        return String.valueOf(suf)+name;
+        try {
+            int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+            returnCursor.moveToFirst();
+            String name = returnCursor.getString(nameIndex);
+            returnCursor.close();
+            Random r = new Random();
+            int suf = r.nextInt(9999 - 1000) + 1000;
+            return String.valueOf(suf)+name;
+        }catch (Exception e){
+            Random r = new Random();
+            int suf = r.nextInt(9999 - 1000) + 1000;
+            ContentResolver cr = context.getContentResolver();
+            String mime = cr.getType(uri);
+            if( mime != null && mime.split("/").length > 1)
+                return "__" + String.valueOf(suf)+"."+mime.split("/")[1];
+            else
+                return "__" + String.valueOf(suf)+".jpg";
+        }
     }
 
-    @SuppressWarnings("WeakerAccess")
+    @SuppressWarnings({"WeakerAccess", "unused"})
     public static void largeLog(String content) {
         if (content.length() > 4000) {
             Log.v(Helper.TAG, content.substring(0, 4000));

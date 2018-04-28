@@ -78,7 +78,7 @@
   <string name="communication_menu_title">交流</string>
   <string name="muted_menu">静音用户</string>
   <string name="blocked_menu">被屏蔽用户</string>
-  <string name="remote_follow_menu">远程关注</string>
+  <string name="remote_follow_menu">跨站关注</string>
   <string name="notifications">通知</string>
   <string name="follow_request">关注请求</string>
   <string name="optimization">优化</string>
@@ -100,7 +100,7 @@
   <!-- Status -->
   <string name="no_status">没有嘟文可以显示</string>
   <string name="fav_added">已将 嘟文加入收藏</string>
-  <string name="fav_removed">已从收藏中移除该 嘟文！</string>
+  <string name="fav_removed">已从收藏中移除该嘟文！</string>
   <string name="reblog_added">此嘟文已被转嘟！</string>
   <string name="reblog_removed">此嘟文已不被转嘟！</string>
   <string name="reblog_by">由 %1$s 转嘟</string>
@@ -137,10 +137,10 @@
   <string name="status_bookmarked">状态已被加入到书签！</string>
   <string name="status_unbookmarked">状态已被从书签移除！</string>
   <!-- Date -->
-  <string name="date_seconds">%d秒</string>
-  <string name="date_minutes">%d分</string>
-  <string name="date_hours">%d时</string>
-  <string name="date_day">%d日</string>
+  <string name="date_seconds">%d 秒</string>
+  <string name="date_minutes">%d 分</string>
+  <string name="date_hours">%d 小时</string>
+  <string name="date_day">%d 天</string>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">警告</string>
   <string name="toot_placeholder">你在想什么？</string>
@@ -302,6 +302,7 @@
   <string name="set_preview_reply">在首页时间线中显示回复的数量</string>
   <string name="set_preview_reply_pp">显示配置文件图片吗？</string>
   <string name="set_multiaccount_actions">允许客户之间的交互？</string>
+  <string name="set_fit_preview">Fit preview images</string>
   <string name="note_no_space">您已达到允许的 160 字符上限！</string>
   <string name="username_no_space">您已达到允许的 30 字符上限！</string>
   <string name="settings_title_hour">通知的时间段：</string>

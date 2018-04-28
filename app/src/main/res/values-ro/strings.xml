@@ -308,6 +308,7 @@
   <string name="set_preview_reply">Afişează numărul de răspunsuri în cronologie de acasă</string>
   <string name="set_preview_reply_pp">Afișează poze de profil?</string>
   <string name="set_multiaccount_actions">Permite interacțiuni între conturi?</string>
+  <string name="set_fit_preview">Fit preview images</string>
   <string name="note_no_space">Ai atins 160 de caractere permise!</string>
   <string name="username_no_space">Ai atins 30 de caractere permise!</string>
   <string name="settings_title_hour">Fus orar pentru notificări:</string>

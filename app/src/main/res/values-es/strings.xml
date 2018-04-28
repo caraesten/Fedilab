@@ -305,6 +305,7 @@
   <string name="set_preview_reply">Mostrar el número de respuesta en la cronología del inicio</string>
   <string name="set_preview_reply_pp">¿Mostrar imágenes de perfil?</string>
   <string name="set_multiaccount_actions">¿Permitir interacciones entre cuentas?</string>
+  <string name="set_fit_preview">Fit preview images</string>
   <string name="note_no_space">¡Has alcanzado los 160 caracteres permitidos!</string>
   <string name="username_no_space">¡Has alcanzado los 30 caracteres permitidos!</string>
   <string name="settings_title_hour">Espacio de tiempo para notificaciones:</string>

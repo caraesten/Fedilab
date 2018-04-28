@@ -79,8 +79,8 @@ public class StatusCacheDAO {
         values.put(Sqlite.COL_REBLOGGED, status.isReblogged());
         values.put(Sqlite.COL_FAVOURITED, status.isFavourited());
         values.put(Sqlite.COL_MUTED, status.isMuted());
-        values.put(Sqlite.COL_CREATED_AT, Helper.dateToString(context, status.getCreated_at()));
-        values.put(Sqlite.COL_DATE_BACKUP, Helper.dateToString(context, new Date()));
+        values.put(Sqlite.COL_CREATED_AT, Helper.dateToString(status.getCreated_at()));
+        values.put(Sqlite.COL_DATE_BACKUP, Helper.dateToString(new Date()));
         values.put(Sqlite.COL_SENSITIVE, status.isSensitive());
         values.put(Sqlite.COL_SPOILER_TEXT, status.getSpoiler_text());
         values.put(Sqlite.COL_VISIBILITY, status.getVisibility());
