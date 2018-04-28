@@ -311,6 +311,7 @@
   <string name="set_preview_reply">Display the number of replies in home timeline</string>
   <string name="set_preview_reply_pp">Display profile pictures?</string>
   <string name="set_multiaccount_actions">Allow interactions between accounts?</string>
+  <string name="set_fit_preview">Fit preview images</string>
   <string name="note_no_space">You have reached the 160 characters allowed!</string>
   <string name="username_no_space">You have reached the 30 characters allowed!</string>
   <string name="settings_title_hour">Time slot for notifications:</string>
