@@ -302,6 +302,7 @@
   <string name="set_preview_reply">ホームタイムラインに返信件数を表示する</string>
   <string name="set_preview_reply_pp">プロフィール画像を表示しますか？</string>
   <string name="set_multiaccount_actions">アカウント間のやりとりを許可しますか？</string>
+  <string name="set_fit_preview">Fit preview images</string>
   <string name="note_no_space">160文字の制限に達しました！</string>
   <string name="username_no_space">30文字の制限に達しました。</string>
   <string name="settings_title_hour">通知のタイムスロット：</string>
