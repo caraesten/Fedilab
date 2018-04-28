@@ -305,6 +305,7 @@
   <string name="set_preview_reply">Vis antall svar på hjemmelinjen</string>
   <string name="set_preview_reply_pp">Vis profilbilder?</string>
   <string name="set_multiaccount_actions">Tillat samhandling mellom kontoer?</string>
+  <string name="set_fit_preview">Fit preview images</string>
   <string name="note_no_space">Du har nådd de 160 tegnene som er tillatt!</string>
   <string name="username_no_space">Du har nådd de 30 tegnene som er tillatt!</string>
   <string name="settings_title_hour">Tidsspor for varsler:</string>
