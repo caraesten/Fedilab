@@ -175,27 +175,27 @@
   <!-- Instance -->
   <string name="instance_no_description">Nessuna descrizione disponibile!</string>
   <!-- About -->
-  <string name="about_vesrion">Release %1$s</string>
-  <string name="about_developer">Developer:</string>
-  <string name="about_license">License: </string>
+  <string name="about_vesrion">Rilascio %1$s</string>
+  <string name="about_developer">Sviluppatore:</string>
+  <string name="about_license">Licenza: </string>
   <string name="about_license_action">GNU GPL V3</string>
-  <string name="about_code">Source code: </string>
+  <string name="about_code">Codice sorgente: </string>
   <string name="about_yandex">Translation of toots:</string>
-  <string name="about_thekinrar">Search instances:</string>
+  <string name="about_thekinrar">Cerca istanze:</string>
   <string name="about_thekinrar_action">instances.social</string>
-  <string name="thanks_text_logo">Icon designer:</string>
-  <string name="thanks_text_banner">Banner designer:</string>
+  <string name="thanks_text_logo">Designer icona:</string>
+  <string name="thanks_text_banner">Designer banner:</string>
   <!-- Conversation -->
-  <string name="conversation">Conversation</string>
+  <string name="conversation">Conversazione</string>
   <!-- Accounts -->
-  <string name="no_accounts">No account to display</string>
-  <string name="no_follow_request">No follow request</string>
-  <string name="status_cnt">Toots \n %1$s</string>
-  <string name="following_cnt">Following \n %1$s</string>
-  <string name="followers_cnt">Followers \n %1$s</string>
+  <string name="no_accounts">Nessun account da visualizzare</string>
+  <string name="no_follow_request">Nessuna richiesta di follow</string>
+  <string name="status_cnt">Toot \n %1$s</string>
+  <string name="following_cnt">Seguendo \n %1$s</string>
+  <string name="followers_cnt">Follower \n %1$s</string>
   <string name="pins_cnt">Pinned \n %d</string>
-  <string name="authorize">Authorize</string>
-  <string name="reject">Reject</string>
+  <string name="authorize">Autorizza</string>
+  <string name="reject">Rifiuta</string>
   <!-- Scheduled toots -->
   <string name="no_scheduled_toots">No scheduled toot to display!</string>
   <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
@@ -248,15 +248,15 @@
   <string name="toast_unstatus">The toot was deleted!</string>
   <string name="toast_pin">The toot was pinned!</string>
   <string name="toast_unpin">The toot was unpinned!</string>
-  <string name="toast_error">Oops ! An error occurred!</string>
-  <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
-  <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
+  <string name="toast_error">Oops! Si è verificato un errore!</string>
+  <string name="toast_code_error">Si è verificato un errore! L\'istanza non ha restituito un codice di autorizzazione!</string>
+  <string name="toast_error_instance">Il dominio dell\'istanza non sembra essere valido!</string>
   <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
   <string name="toast_error_search">An error occurred while searching!</string>
   <string name="toast_error_login">Can not log in!</string>
-  <string name="toast_update_credential_ok">The profile data have been saved!</string>
-  <string name="nothing_to_do">No action can be taken</string>
-  <string name="toast_saved">The media has been saved!</string>
+  <string name="toast_update_credential_ok">I dati del profilo sono stati salvati!</string>
+  <string name="nothing_to_do">Nessuna azione può essere intrapresa</string>
+  <string name="toast_saved">Il media è stato salvato!</string>
   <string name="toast_error_translate">An error occurred while translating!</string>
   <string name="toast_toot_saved">Draft saved!</string>
   <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
@@ -267,35 +267,35 @@
   <string name="set_toots_page">Number of toots per load</string>
   <string name="set_accounts_page">Number of accounts per load</string>
   <string name="set_notifications_page">Number of notifications per load</string>
-  <string name="set_attachment_always">Always</string>
+  <string name="set_attachment_always">Sempre</string>
   <string name="set_attachment_wifi">WIFI</string>
-  <string name="set_attachment_ask">Ask</string>
-  <string name="set_attachment_action">Load the media</string>
-  <string name="load_attachment">Load the pictures</string>
-  <string name="load_attachment_spoiler">Show more…</string>
-  <string name="load_attachment_spoiler_less">Show less…</string>
-  <string name="load_sensitive_attachment">Sensitive content</string>
+  <string name="set_attachment_ask">Chiedi</string>
+  <string name="set_attachment_action">Carica i media</string>
+  <string name="load_attachment">Carica le foto</string>
+  <string name="load_attachment_spoiler">Mostra di più…</string>
+  <string name="load_attachment_spoiler_less">Mostra meno…</string>
+  <string name="load_sensitive_attachment">Contenuto sensibile</string>
   <string name="set_display_reply">Display previous message in responses</string>
   <string name="set_display_local">Display local timeline</string>
   <string name="set_display_global">Display federated timeline</string>
-  <string name="set_disable_gif">Disable GIF avatars</string>
-  <string name="set_folder_title">Path: </string>
-  <string name="set_auto_store_toot">Save drafts automatically</string>
-  <string name="set_bubble_counter">Display counters</string>
+  <string name="set_disable_gif">Disabilita avatar GIF</string>
+  <string name="set_folder_title">Percorso: </string>
+  <string name="set_auto_store_toot">Salva bozze automaticamente</string>
+  <string name="set_bubble_counter">Visualizza contatori</string>
   <string name="set_auto_add_media_url">Add URL of media in toots</string>
-  <string name="settings_title_notifications">Manage notifications</string>
-  <string name="set_notif_follow">Notify when someone follows you</string>
-  <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
-  <string name="set_notif_follow_share">Notify when someone boosts your status</string>
-  <string name="set_notif_follow_add">Notify when someone favourites your status</string>
-  <string name="set_notif_follow_mention">Notify when someone mentions you</string>
-  <string name="set_share_validation">Show confirmation dialog before boosting</string>
-  <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
-  <string name="settings_title_more_options">Advanced settings</string>
-  <string name="set_wifi_only">Notify in WIFI only</string>
-  <string name="set_notify">Notify?</string>
-  <string name="set_notif_silent">Silent Notifications</string>
-  <string name="set_night_mode">Night mode</string>
+  <string name="settings_title_notifications">Gestisci notifiche</string>
+  <string name="set_notif_follow">Notifica quando qualcuno ti segue</string>
+  <string name="set_notif_follow_ask">Notifica quando qualcuno richiede di seguirti</string>
+  <string name="set_notif_follow_share">Notifica quando qualcuno da un boost al tuo stato</string>
+  <string name="set_notif_follow_add">Notifica quando qualcuno mette tra i preferiti il tuo stato</string>
+  <string name="set_notif_follow_mention">Notifica quando qualcuno ti menziona</string>
+  <string name="set_share_validation">Mostra finestra di dialogo prima del boost</string>
+  <string name="set_share_validation_fav">Mostra finestra di dialogo prima di aggiungere ai preferiti</string>
+  <string name="settings_title_more_options">Impostazioni Avanzate</string>
+  <string name="set_wifi_only">Notifica solo in WIFI</string>
+  <string name="set_notify">Notifica?</string>
+  <string name="set_notif_silent">Notifiche silenziose</string>
+  <string name="set_night_mode">Modalità notturna</string>
   <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
   <string name="settings_title_profile">Edit profile</string>
   <string name="set_profile_description">Bio…</string>
@@ -338,15 +338,15 @@
   </string-array>
   <string name="set_led_colour">Set LED colour:</string>
   <string-array name="led_colours">
-    <item>Blue</item>
-    <item>Cyan</item>
+    <item>Blu</item>
+    <item>Ciano</item>
     <item>Magenta</item>
-    <item>Green</item>
-    <item>Red</item>
-    <item>Yellow</item>
-    <item>White</item>
+    <item>Verde</item>
+    <item>Rosso</item>
+    <item>Giallo</item>
+    <item>Bianco</item>
   </string-array>
-  <string name="set_title_news">News</string>
+  <string name="set_title_news">Notizie</string>
   <string name="set_notification_news">Notify for new toots on the home timeline</string>
   <string name="set_show_error_messages">Display error messages</string>
   <string name="action_follow">Follow</string>
