@@ -420,43 +420,43 @@ Per favore, conferma le notifiche push che vuoi ricevere.
     </string>
   <string name="privacy_API_title">Tracciamento e librerie</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+        L\'applicazione <b>non utilizza tool di tracciamento</b> (audience measurement, error reporting, ecc.) e non contiene pubblicità.\n\n
+        L\'utilizzo di librerie è minimizzato: \n
+        - <b>Glide</b>: Per gestire i media\n
+        - <b>Android-Job</b>: Per gestire i servizi\n
+        - <b>PhotoView</b>: Per gestire le immagini\n
     </string>
-  <string name="privacy_API_yandex_title">Translation of toots</string>
+  <string name="privacy_API_yandex_title">Traduzione del toot</string>
   <string name="privacy_API_yandex_authorizations">
-        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
+        L\'applicazione offre la possibilità di tradurre i toot utilizzando il dispositivo locale e le API di Yandex.\n
+        Yandex  ha la propria privacy policy che può essere trovata qui: https://yandex.ru/legal/confidential/?lang=en
     </string>
   <string name="thanks_text">
-        Thank you to Stéphane for the logo.
+        Grazie a Stéphane per il logo.
     </string>
   <string name="thanks_text_dev">
-        Thank you to:
+        Grazie anche a:
     </string>
-  <string name="filter_regex">Filter out by regular expressions</string>
-  <string name="search">Search</string>
-  <string name="delete">Delete</string>
-  <string name="fetch_more_toots">Fetch more toots…</string>
+  <string name="filter_regex">Filtrati tramite espressioni regolari</string>
+  <string name="search">Cerca</string>
+  <string name="delete">Elimina</string>
+  <string name="fetch_more_toots">Recupera altri toot…</string>
   <!-- About lists -->
-  <string name="action_lists">Lists</string>
-  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
-  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-  <string name="action_lists_add_to">Add to list</string>
-  <string name="action_lists_remove_from">Remove from list</string>
-  <string name="action_lists_create">Add list</string>
-  <string name="action_lists_delete">Delete list</string>
-  <string name="action_lists_update">Edit list</string>
-  <string name="action_lists_title_placeholder">New list title</string>
-  <string name="action_lists_search_users">Search among people you follow</string>
-  <string name="action_lists_owner">Your lists</string>
+  <string name="action_lists">Elenchi</string>
+  <string name="action_lists_confirm_delete">Sei sicuro di voler eliminare definitivamente questo elenco?</string>
+  <string name="action_lists_empty_content">Non c\'è niente in questo elenco. Quando i membri di questo elenco postano nuovi stati, questi appariranno qui.</string>
+  <string name="action_lists_add_to">Aggiungi all\'elenco</string>
+  <string name="action_lists_remove_from">Rimuovi dall\'elenco</string>
+  <string name="action_lists_create">Aggiungi elenco</string>
+  <string name="action_lists_delete">Elimina elenco</string>
+  <string name="action_lists_update">Modifica elenco</string>
+  <string name="action_lists_title_placeholder">Titolo nuovo elenco</string>
+  <string name="action_lists_search_users">Cerca tra le persone che segui</string>
+  <string name="action_lists_owner">I tuoi elenchi</string>
   <!-- Migration -->
-  <string name="account_moved_to">%1$s has moved to %2$s</string>
+  <string name="account_moved_to">%1$s è stato spostato su %2$s</string>
   <string name="show_boost_count">Mostra conteggio ricondivisi/favoriti</string>
-  <string name="issue_login_title">Authentication does not work?</string>
+  <string name="issue_login_title">L\'autenticazione non funziona?</string>
   <string name="issue_login_message">
         <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
