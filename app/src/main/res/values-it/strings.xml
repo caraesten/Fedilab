@@ -63,8 +63,8 @@
   <string name="favourite">Preferiti</string>
   <string name="follow">Nuovi follower</string>
   <string name="mention">Menzioni</string>
-  <string name="reblog">Boost</string>
-  <string name="show_boosts">Mostra boost</string>
+  <string name="reblog">Ricondivisi</string>
+  <string name="show_boosts">Visualizza ricondivisi</string>
   <string name="show_replies">Mostra risposte</string>
   <string name="action_open_in_web">Apri nel browser</string>
   <string name="translate">Traduci</string>
@@ -101,13 +101,13 @@
   <string name="no_status">Nessun toot da mostrare</string>
   <string name="fav_added">Il toot è stato aggiunto ai preferiti</string>
   <string name="fav_removed">Il toot è stato rimosso dai preferiti!</string>
-  <string name="reblog_added">Il toot è stato potenziato!</string>
-  <string name="reblog_removed">Il toot non più è potenziato!</string>
-  <string name="reblog_by">Potenziato da %1$s</string>
+  <string name="reblog_added">Il toot è stato ricondiviso!</string>
+  <string name="reblog_removed">Il toot non più ricondiviso!</string>
+  <string name="reblog_by">Ricondiviso da %1$s</string>
   <string name="favourite_add">Aggiungere questo toot ai tuoi preferiti?</string>
   <string name="favourite_remove">Rimuovere questo toot dai tuoi preferiti?</string>
-  <string name="reblog_add">Potenziare questo toot?</string>
-  <string name="reblog_remove">Depotenziare questo toot?</string>
+  <string name="reblog_add">Ricondividere questo toot?</string>
+  <string name="reblog_remove">Non ricondividere questo toot?</string>
   <string name="pin_add">Mettere in evidenza questo toot?</string>
   <string name="pin_remove">Rimuovere da evidenziati questo toot?</string>
   <string name="more_action_1">Silenzia</string>
@@ -155,23 +155,23 @@
   <string name="toot_delete_media">Delete this media?</string>
   <string name="toot_error_no_content">Your toot is empty!</string>
   <string name="toot_visibility_tilte">Visibilità del toot</string>
-  <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
+  <string name="toots_visibility_tilte">Visibilità predefinita dei toot: </string>
   <string name="toot_sent">Il toot è stato inviato!</string>
   <string name="toot_reply_content_title">Stai rispondendo a questo toot:</string>
   <string name="toot_sensitive">Contenuto sensibile?</string>
   <string-array name="toot_visibility">
-    <item>Post to public timelines</item>
-    <item>Do not post to public timelines</item>
-    <item>Post to followers only</item>
-    <item>Post to mentioned users only</item>
+    <item>Posta nella timeline pubblica</item>
+    <item>Non postare nella timeline pubblica</item>
+    <item>Posta solo nei follower</item>
+    <item>Posta solo agli utenti menzionati</item>
   </string-array>
   <string name="no_draft">Nessuna bozza!</string>
   <string name="choose_toot">Seleziona un toot</string>
   <string name="choose_accounts">Seleziona un account</string>
   <string name="select_accounts">Seleziona alcuni account</string>
   <string name="remove_draft">Rimuovere bozza?</string>
-  <string name="show_reply">Click on the button to display the original toot</string>
-  <string name="upload_form_description">Describe for the visually impaired</string>
+  <string name="show_reply">Fai clic sul pulsante per visualizzare il toot originale</string>
+  <string name="upload_form_description">Descrivi per gli utenti con problemi visivi</string>
   <!-- Instance -->
   <string name="instance_no_description">Nessuna descrizione disponibile!</string>
   <!-- About -->
@@ -180,7 +180,7 @@
   <string name="about_license">Licenza: </string>
   <string name="about_license_action">GNU GPL V3</string>
   <string name="about_code">Codice sorgente: </string>
-  <string name="about_yandex">Translation of toots:</string>
+  <string name="about_yandex">Traduzione del toot:</string>
   <string name="about_thekinrar">Cerca istanze:</string>
   <string name="about_thekinrar_action">instances.social</string>
   <string name="thanks_text_logo">Designer icona:</string>
@@ -193,16 +193,16 @@
   <string name="status_cnt">Toot \n %1$s</string>
   <string name="following_cnt">Seguendo \n %1$s</string>
   <string name="followers_cnt">Follower \n %1$s</string>
-  <string name="pins_cnt">Pinned \n %d</string>
+  <string name="pins_cnt">Evidenziato \n %d</string>
   <string name="authorize">Autorizza</string>
   <string name="reject">Rifiuta</string>
   <!-- Scheduled toots -->
-  <string name="no_scheduled_toots">No scheduled toot to display!</string>
-  <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-  <string name="remove_scheduled">Delete scheduled toot?</string>
+  <string name="no_scheduled_toots">Nessun toot programmato da visualizzare!</string>
+  <string name="no_scheduled_toots_indications">Scrivi un toot e seleziona <b>Programma</b> dal menu in alto.</string>
+  <string name="remove_scheduled">Eliminare toot programmato?</string>
   <string name="media_count">Media: %d</string>
-  <string name="toot_scheduled">The toot has been scheduled!</string>
-  <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
+  <string name="toot_scheduled">Il toot è stato programmato!</string>
+  <string name="toot_scheduled_date">La data di programmazione deve essere maggiore dell\'ora corrente!</string>
   <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
   <!-- timed mute -->
   <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
@@ -211,7 +211,7 @@
   <!-- Notifications -->
   <string name="no_notifications">No notification to display</string>
   <string name="notif_mention">mentioned you</string>
-  <string name="notif_reblog">boosted your status</string>
+  <string name="notif_reblog">ha ricondiviso il tuo stato</string>
   <string name="notif_favourite">favourited your status</string>
   <string name="notif_follow">followed you</string>
   <string name="notif_pouet">New toot from %1$s</string>
@@ -240,8 +240,8 @@
   <string name="toast_unmute">The account is no longer muted!</string>
   <string name="toast_follow">The account was followed!</string>
   <string name="toast_unfollow">The account is no longer followed!</string>
-  <string name="toast_reblog">The toot was boosted!</string>
-  <string name="toast_unreblog">The toot is no longer boosted!</string>
+  <string name="toast_reblog">Il toot è stato ricondiviso!</string>
+  <string name="toast_unreblog">Il toot non è più ricondiviso!</string>
   <string name="toast_favourite">The toot was added to your favourites!</string>
   <string name="toast_unfavourite">The toot was removed from your favourites!</string>
   <string name="toast_report">The toot was reported!</string>
@@ -275,56 +275,56 @@
   <string name="load_attachment_spoiler">Mostra di più…</string>
   <string name="load_attachment_spoiler_less">Mostra meno…</string>
   <string name="load_sensitive_attachment">Contenuto sensibile</string>
-  <string name="set_display_reply">Display previous message in responses</string>
-  <string name="set_display_local">Display local timeline</string>
-  <string name="set_display_global">Display federated timeline</string>
+  <string name="set_display_reply">Visualizza messaggi precedenti in risposta</string>
+  <string name="set_display_local">Visualizza timeline locale</string>
+  <string name="set_display_global">Visualizza timeline federata</string>
   <string name="set_disable_gif">Disabilita avatar GIF</string>
   <string name="set_folder_title">Percorso: </string>
   <string name="set_auto_store_toot">Salva bozze automaticamente</string>
   <string name="set_bubble_counter">Visualizza contatori</string>
-  <string name="set_auto_add_media_url">Add URL of media in toots</string>
+  <string name="set_auto_add_media_url">Aggiungi URL dei media nei toot</string>
   <string name="settings_title_notifications">Gestisci notifiche</string>
   <string name="set_notif_follow">Notifica quando qualcuno ti segue</string>
   <string name="set_notif_follow_ask">Notifica quando qualcuno richiede di seguirti</string>
-  <string name="set_notif_follow_share">Notifica quando qualcuno da un boost al tuo stato</string>
+  <string name="set_notif_follow_share">Notifica quando qualcuno ricondivide al tuo stato</string>
   <string name="set_notif_follow_add">Notifica quando qualcuno mette tra i preferiti il tuo stato</string>
   <string name="set_notif_follow_mention">Notifica quando qualcuno ti menziona</string>
-  <string name="set_share_validation">Mostra finestra di dialogo prima del boost</string>
+  <string name="set_share_validation">Mostra finestra di dialogo prima della ricondivisione</string>
   <string name="set_share_validation_fav">Mostra finestra di dialogo prima di aggiungere ai preferiti</string>
   <string name="settings_title_more_options">Impostazioni Avanzate</string>
   <string name="set_wifi_only">Notifica solo in WIFI</string>
   <string name="set_notify">Notifica?</string>
   <string name="set_notif_silent">Notifiche silenziose</string>
   <string name="set_night_mode">Modalità notturna</string>
-  <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
-  <string name="settings_title_profile">Edit profile</string>
-  <string name="set_profile_description">Bio…</string>
-  <string name="set_lock_account">Lock account</string>
-  <string name="set_save_changes">Save changes</string>
-  <string name="set_header_picture_overlay">Choose a header picture</string>
-  <string name="set_preview_reply">Display the number of replies in home timeline</string>
-  <string name="set_preview_reply_pp">Display profile pictures?</string>
-  <string name="set_multiaccount_actions">Allow interactions between accounts?</string>
-  <string name="set_fit_preview">Fit preview images</string>
-  <string name="note_no_space">You have reached the 160 characters allowed!</string>
-  <string name="username_no_space">You have reached the 30 characters allowed!</string>
-  <string name="settings_title_hour">Time slot for notifications:</string>
-  <string name="settings_time_from">Between</string>
-  <string name="settings_time_to">and</string>
-  <string name="settings_time_greater">The time must be greater than %1$s</string>
-  <string name="settings_time_lower">The time must be lower than %1$s</string>
-  <string name="settings_hour_init">Start time</string>
-  <string name="settings_hour_end">End time</string>
-  <string name="embedded_browser">Use the built-in browser</string>
-  <string name="custom_tabs">Custom tabs</string>
-  <string name="use_javascript">Enable Javascript</string>
-  <string name="expand_cw">Automatically expand cw</string>
-  <string name="use_cookies">Allow third-party cookies</string>
-  <string name="settings_ui_layout">Layout for timelines: </string>
+  <string name="set_nsfw_timeout">Timeout visualizzazione NSFW (secondi, 0 significa spento)</string>
+  <string name="settings_title_profile">Modifica profilo</string>
+  <string name="set_profile_description">Biografia…</string>
+  <string name="set_lock_account">Blocca account</string>
+  <string name="set_save_changes">Salva modifiche</string>
+  <string name="set_header_picture_overlay">Seleziona una foto per l\'header</string>
+  <string name="set_preview_reply">Visualizza il numero di risposte nella timeline home</string>
+  <string name="set_preview_reply_pp">Visualizzare la foto del profilo?</string>
+  <string name="set_multiaccount_actions">Permetti interazioni tra gli account?</string>
+  <string name="set_fit_preview">Adatta anteprima immagini</string>
+  <string name="note_no_space">Hai raggiunto i 160 caratteri permessi!</string>
+  <string name="username_no_space">Hai raggiunto i 30 caratteri permessi!</string>
+  <string name="settings_title_hour">Slot di tempo per le notifiche:</string>
+  <string name="settings_time_from">Tra</string>
+  <string name="settings_time_to">e</string>
+  <string name="settings_time_greater">Il tempo deve essere maggiore di %1$s</string>
+  <string name="settings_time_lower">Il tempo deve essere minore di %1$s</string>
+  <string name="settings_hour_init">Tempo di inizio</string>
+  <string name="settings_hour_end">Tempo di fine</string>
+  <string name="embedded_browser">Usa il browser incluso</string>
+  <string name="custom_tabs">Schede personalizzate</string>
+  <string name="use_javascript">Abilita JavaScript</string>
+  <string name="expand_cw">Espandi automaticamente cw</string>
+  <string name="use_cookies">Permetti cookie di terze-parti</string>
+  <string name="settings_ui_layout">Layout per le timeline: </string>
   <string-array name="settings_menu_tabs">
-    <item>Tabs</item>
+    <item>Schede</item>
     <item>Menu</item>
-    <item>Tabs and menu</item>
+    <item>Schede e menu</item>
   </string-array>
   <string-array name="settings_translation">
     <item>Yandex</item>
@@ -455,7 +455,7 @@
   <string name="action_lists_owner">Your lists</string>
   <!-- Migration -->
   <string name="account_moved_to">%1$s has moved to %2$s</string>
-  <string name="show_boost_count">Show boosts/favourites count</string>
+  <string name="show_boost_count">Mostra conteggio ricondivisi/favoriti</string>
   <string name="issue_login_title">Authentication does not work?</string>
   <string name="issue_login_message">
         <b>Here are some checks that might help:</b>\n\n
@@ -468,10 +468,10 @@
   <string name="media_ready">Media has been loaded. Click here to display it.</string>
   <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
   <string name="data_export_running">Still running, please wait…</string>
-  <string name="data_export">Export statuses</string>
-  <string name="data_export_toots">Export statuses for %1$s</string>
-  <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-  <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+  <string name="data_export">Esporta stati</string>
+  <string name="data_export_toots">Stati esportati per %1$s</string>
+  <string name="data_export_success">%1$s toot di %2$s sono stati esportati.</string>
+  <string name="data_export_error">Qualcosa è andato storto esportando i dati per %1$s</string>
   <!-- Proxy -->
   <string name="proxy_set">Proxy</string>
   <string name="proxy_type">Tipo</string>
