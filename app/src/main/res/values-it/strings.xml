@@ -259,14 +259,14 @@
   <string name="toast_saved">Il media è stato salvato!</string>
   <string name="toast_error_translate">Si è verificato un errore durante la traduzione!</string>
   <string name="toast_toot_saved">Bozza salvata!</string>
-  <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
-  <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
-  <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
+  <string name="toast_error_char_limit">Sei sicuro che questa istanza permetta questo numero di caratteri? Normalmente, questo valore è più vicino ai 500 caratteri.</string>
+  <string name="toast_visibility_changed">La visibilità dei toot è stata cambiata per l\'account %1$s</string>
+  <string name="toast_empty_search">Il nome dell\'istanza e lo il nome visualizzato non possono essere vuoti!</string>
   <!-- Settings -->
-  <string name="settings_title_optimisation">Optimisation of loading</string>
-  <string name="set_toots_page">Number of toots per load</string>
-  <string name="set_accounts_page">Number of accounts per load</string>
-  <string name="set_notifications_page">Number of notifications per load</string>
+  <string name="settings_title_optimisation">Ottimizzazioni del caricamento</string>
+  <string name="set_toots_page">Numero di toot per caricamento</string>
+  <string name="set_accounts_page">Numero di account per caricamento</string>
+  <string name="set_notifications_page">Numero di notifiche per caricamento</string>
   <string name="set_attachment_always">Sempre</string>
   <string name="set_attachment_wifi">WIFI</string>
   <string name="set_attachment_ask">Chiedi</string>
