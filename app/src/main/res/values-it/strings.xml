@@ -216,12 +216,12 @@
   <string name="notif_follow">ti segue</string>
   <string name="notif_pouet">Nuovo toot da %1$s</string>
   <plurals name="other_notifications">
-    <item quantity="one">and another notification</item>
+    <item quantity="one">e un\'altra notifica</item>
     <item quantity="other">e %d altre notifiche</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="one">and another toot to discover</item>
-    <item quantity="other">e %d altri toot da scoprire</item>
+    <item quantity="one">e un altro toot per scoprire</item>
+    <item quantity="other">e un altro toot per scoprire</item>
   </plurals>
   <string name="delete_notification_ask">Eliminare una notifica?</string>
   <string name="delete_notification_ask_all">Eliminare tutte le notifiche?</string>
@@ -458,16 +458,16 @@ Per favore, conferma le notifiche push che vuoi ricevere.
   <string name="show_boost_count">Mostra conteggio ricondivisi/favoriti</string>
   <string name="issue_login_title">L\'autenticazione non funziona?</string>
   <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
+        <b>Qui ci sono alcuni controlli che possono aiutare:</b>\n\n
+        - Controlla che non ci siano errori di trascrizione nel nome dell\'istanza\n\n
+        - Controlla che la tua istanza sia raggiungibile\n\n
+        - Se usi l\'autenticazione a due fattori (2FA), usa il link in basso (una volta che il nome dell\'istanza è stato inserito)\n\n
+        - Puoi anche usare questo link senza usare la 2FA\n\n
+        - Se ancora continua a non funzionare, apri un issue su Github all\'indirizzo https://github.com/stom79/mastalab/issues
     </string>
-  <string name="media_ready">Media has been loaded. Click here to display it.</string>
-  <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-  <string name="data_export_running">Still running, please wait…</string>
+  <string name="media_ready">Il media è stato caricato. Fai clic qui per visualizzarlo.</string>
+  <string name="data_export_start">Questa azione richiede molto tempo. Verrai avvisato quando sarà finita.</string>
+  <string name="data_export_running">Ancora in corso, attendere prego…</string>
   <string name="data_export">Esporta stati</string>
   <string name="data_export_toots">Stati esportati per %1$s</string>
   <string name="data_export_success">%1$s toot di %2$s sono stati esportati.</string>
