@@ -54,49 +54,49 @@
   <string name="open_with">Apri con</string>
   <string name="validate">Conferma</string>
   <string name="media">Media</string>
-  <string name="share_with">Share with</string>
-  <string name="shared_via">Shared via Mastalab</string>
-  <string name="replies">Replies</string>
-  <string name="username">User name</string>
-  <string name="drafts">Drafts</string>
+  <string name="share_with">Condividi con</string>
+  <string name="shared_via">Condiviso via Mastalab</string>
+  <string name="replies">Risposte</string>
+  <string name="username">Nome utente</string>
+  <string name="drafts">Bozze</string>
   <string name="new_data">New data are available! Do you want to display them?</string>
-  <string name="favourite">Favourites</string>
-  <string name="follow">New followers</string>
-  <string name="mention">Mentions</string>
-  <string name="reblog">Boosts</string>
-  <string name="show_boosts">Show boosts</string>
-  <string name="show_replies">Show replies</string>
-  <string name="action_open_in_web">Open in browser</string>
-  <string name="translate">Translate</string>
+  <string name="favourite">Preferiti</string>
+  <string name="follow">Nuovi follower</string>
+  <string name="mention">Menzioni</string>
+  <string name="reblog">Boost</string>
+  <string name="show_boosts">Mostra boost</string>
+  <string name="show_replies">Mostra risposte</string>
+  <string name="action_open_in_web">Apri nel browser</string>
+  <string name="translate">Traduci</string>
   <string name="please_wait">Please, wait few seconds before making this action.</string>
   <!--- Menu -->
   <string name="home_menu">Home</string>
   <string name="local_menu">Local timeline</string>
   <string name="global_menu">Federated timeline</string>
-  <string name="neutral_menu_title">Options</string>
-  <string name="favorites_menu">Favourites</string>
-  <string name="communication_menu_title">Communication</string>
-  <string name="muted_menu">Muted users</string>
-  <string name="blocked_menu">Blocked users</string>
-  <string name="remote_follow_menu">Remote follow</string>
-  <string name="notifications">Notifications</string>
-  <string name="follow_request">Follow requests</string>
-  <string name="optimization">Optimization</string>
-  <string name="settings">Settings</string>
-  <string name="profile">Profile</string>
-  <string name="make_a_choice">What do you want to do?</string>
-  <string name="delete_account_title">Delete an account</string>
+  <string name="neutral_menu_title">Opzioni</string>
+  <string name="favorites_menu">Preferiti</string>
+  <string name="communication_menu_title">Comunicazione</string>
+  <string name="muted_menu">Utenti silenziati</string>
+  <string name="blocked_menu">Utenti bloccati</string>
+  <string name="remote_follow_menu">Segui da remoto</string>
+  <string name="notifications">Notifiche</string>
+  <string name="follow_request">Richiesta di follow</string>
+  <string name="optimization">Ottimizzazione</string>
+  <string name="settings">Impostazioni</string>
+  <string name="profile">Profilo</string>
+  <string name="make_a_choice">Cosa vuoi fare?</string>
+  <string name="delete_account_title">Elimina un account</string>
   <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
-  <string name="send_email">Send an email</string>
-  <string name="choose_file">Please select a file</string>
+  <string name="send_email">Invia una email</string>
+  <string name="choose_file">Seleziona un file</string>
   <string name="choose_file_error">No file explorer found!</string>
   <string name="click_to_change">Click on the path to change it</string>
-  <string name="failed">Failed!</string>
-  <string name="scheduled_toots">Scheduled toots</string>
+  <string name="failed">Fallito!</string>
+  <string name="scheduled_toots">Toot programmati</string>
   <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
-  <string name="insert_emoji">Insert emoji</string>
+  <string name="insert_emoji">Inserisci emoji</string>
   <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-  <string name="live_notif">Live notifications</string>
+  <string name="live_notif">Notifiche live</string>
   <!-- Status -->
   <string name="no_status">Nessun toot da mostrare</string>
   <string name="fav_added">Il toot è stato aggiunto ai preferiti</string>
@@ -144,36 +144,36 @@
   <string name="date_day">%d d</string>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">Warning</string>
-  <string name="toot_placeholder">What is on your mind?</string>
+  <string name="toot_placeholder">Cosa ti passa per la mente?</string>
   <string name="toot_it">TOOT!</string>
   <string name="cw">cw</string>
-  <string name="toot_title">Write a toot</string>
-  <string name="toot_title_reply">Reply to a toot</string>
-  <string name="toot_no_space">You have reached the 500 characters allowed!</string>
-  <string name="toot_select_image">Select a media</string>
+  <string name="toot_title">Scrivi un toot</string>
+  <string name="toot_title_reply">Rispondi ad un toot</string>
+  <string name="toot_no_space">Hai raggiunto i 500 caratteri permessi!</string>
+  <string name="toot_select_image">Seleziona un media</string>
   <string name="toot_select_image_error">An error occurred while selecting the media!</string>
   <string name="toot_delete_media">Delete this media?</string>
   <string name="toot_error_no_content">Your toot is empty!</string>
-  <string name="toot_visibility_tilte">Visibility of the toot</string>
+  <string name="toot_visibility_tilte">Visibilità del toot</string>
   <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-  <string name="toot_sent">The toot has been sent!</string>
-  <string name="toot_reply_content_title">You are replying to this toot:</string>
-  <string name="toot_sensitive">Sensitive content?</string>
+  <string name="toot_sent">Il toot è stato inviato!</string>
+  <string name="toot_reply_content_title">Stai rispondendo a questo toot:</string>
+  <string name="toot_sensitive">Contenuto sensibile?</string>
   <string-array name="toot_visibility">
     <item>Post to public timelines</item>
     <item>Do not post to public timelines</item>
     <item>Post to followers only</item>
     <item>Post to mentioned users only</item>
   </string-array>
-  <string name="no_draft">No draft!</string>
-  <string name="choose_toot">Choose a toot</string>
-  <string name="choose_accounts">Choose an account</string>
-  <string name="select_accounts">Select some accounts</string>
-  <string name="remove_draft">Remove draft?</string>
+  <string name="no_draft">Nessuna bozza!</string>
+  <string name="choose_toot">Seleziona un toot</string>
+  <string name="choose_accounts">Seleziona un account</string>
+  <string name="select_accounts">Seleziona alcuni account</string>
+  <string name="remove_draft">Rimuovere bozza?</string>
   <string name="show_reply">Click on the button to display the original toot</string>
   <string name="upload_form_description">Describe for the visually impaired</string>
   <!-- Instance -->
-  <string name="instance_no_description">No description available!</string>
+  <string name="instance_no_description">Nessuna descrizione disponibile!</string>
   <!-- About -->
   <string name="about_vesrion">Release %1$s</string>
   <string name="about_developer">Developer:</string>
