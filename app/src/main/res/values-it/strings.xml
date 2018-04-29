@@ -397,28 +397,28 @@ Per favore, conferma le notifiche push che vuoi ricevere.
   <!-- PRIVACY -->
   <string name="privacy_data_title">Dati registrati</string>
   <string name="privacy_data">
-        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
+        Sul dispositivo sono salvati sono le informazioni basilari degli account.
+        TQuesti sono strettamente confidenziali e possono essere utilizzati sono dall\'applicazione.
+        Eliminando l\'applicazione rimuoverà immediatamente questi dati.\n
+        &#9888; Login e password non vengono mai salvati. Vengono solo usati durante una autenticazione sicura (SSL) con un istanza.
     </string>
-  <string name="privacy_authorizations_title">Permissions:</string>
+  <string name="privacy_authorizations_title">Permessi:</string>
   <string name="privacy_authorizations">
-        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
-        - <b>INTERNET</b>: Used for queries to an instance.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
-        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
-        - <b>WAKE_LOCK</b>: Used during the notification service.
+        - <b>ACCESS_NETWORK_STATE</b>: Usato per determinare se il dispositivo è connesso ad una rete WIFI.\n
+        - <b>INTERNET</b>: Usato per le ricerche di un isatnza.\n
+        - <b>WRITE_EXTERNAL_STORAGE</b>: Usato per salvare i media o per spostare l\'app su una scheda SD.\n
+        - <b>READ_EXTERNAL_STORAGE</b>: Usato per aggiungere media ai toot.\n
+        - <b>BOOT_COMPLETED</b>: Usato per avviare il servizio di notifica.\n
+        - <b>WAKE_LOCK</b>: Usato durante il servizio di notifica.
     </string>
-  <string name="privacy_API_authorizations_title">API permissions:</string>
+  <string name="privacy_API_authorizations_title">Permessi API:</string>
   <string name="privacy_API_authorizations">
-        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
+        - <b>Read</b>: Legge dati.\n
+        - <b>Write</b>: Posta gli stati e carica i media per gli stati.\n
+        - <b>Follow</b>: Seguire, non seguire, bloccare, sbloccare.\n\n
+        <b>&#9888; Queste azioni sono utilizzare solo quando l\'utente le richiede.</b>
     </string>
-  <string name="privacy_API_title">Tracking and Libraries</string>
+  <string name="privacy_API_title">Tracciamento e librerie</string>
   <string name="privacy_API">
         The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
         The use of libraries is minimized: \n
