@@ -151,9 +151,9 @@
   <string name="toot_title_reply">Rispondi ad un toot</string>
   <string name="toot_no_space">Hai raggiunto i 500 caratteri permessi!</string>
   <string name="toot_select_image">Seleziona un media</string>
-  <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-  <string name="toot_delete_media">Delete this media?</string>
-  <string name="toot_error_no_content">Your toot is empty!</string>
+  <string name="toot_select_image_error">Si è verificato un errore durante la selezione del media!</string>
+  <string name="toot_delete_media">Eliminare questo media?</string>
+  <string name="toot_error_no_content">Il tuo toot è vuoto!</string>
   <string name="toot_visibility_tilte">Visibilità del toot</string>
   <string name="toots_visibility_tilte">Visibilità predefinita dei toot: </string>
   <string name="toot_sent">Il toot è stato inviato!</string>
@@ -203,49 +203,49 @@
   <string name="media_count">Media: %d</string>
   <string name="toot_scheduled">Il toot è stato programmato!</string>
   <string name="toot_scheduled_date">La data di programmazione deve essere maggiore dell\'ora corrente!</string>
-  <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+  <string name="warning_battery">Il risparmio batteria è attivato! Potrebbe non funzionare correttamente.</string>
   <!-- timed mute -->
-  <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-  <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
-  <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+  <string name="timed_mute_date_error">Il tempo per il silenziamento deve essere maggiore di un minuto.</string>
+  <string name="timed_mute_date">%1$s è stato silenziato fino al %2$s.\n Puoi smettere di silenziare questo account dalla sua pagina di profilo.</string>
+  <string name="timed_mute_profile">%1$s è silenziato fino al%2$s.\n Fai clic qui per non silenziare l\'account.</string>
   <!-- Notifications -->
-  <string name="no_notifications">No notification to display</string>
-  <string name="notif_mention">mentioned you</string>
+  <string name="no_notifications">Nessuna notifica da visualizzare</string>
+  <string name="notif_mention">ti ha menzionato</string>
   <string name="notif_reblog">ha ricondiviso il tuo stato</string>
-  <string name="notif_favourite">favourited your status</string>
-  <string name="notif_follow">followed you</string>
-  <string name="notif_pouet">New toot from %1$s</string>
+  <string name="notif_favourite">ha messo tra i preferiti il tuo stato</string>
+  <string name="notif_follow">ti segue</string>
+  <string name="notif_pouet">Nuovo toot da %1$s</string>
   <plurals name="other_notifications">
     <item quantity="one">and another notification</item>
-    <item quantity="other">and %d other notifications</item>
+    <item quantity="other">e %d altre notifiche</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
     <item quantity="one">and another toot to discover</item>
-    <item quantity="other">and %d other toots to discover</item>
+    <item quantity="other">e %d altri toot da scoprire</item>
   </plurals>
-  <string name="delete_notification_ask">Delete a notification?</string>
-  <string name="delete_notification_ask_all">Delete all notifications?</string>
-  <string name="delete_notification">The notification has been deleted!</string>
-  <string name="delete_notification_all">All notifications have been deleted!</string>
+  <string name="delete_notification_ask">Eliminare una notifica?</string>
+  <string name="delete_notification_ask_all">Eliminare tutte le notifiche?</string>
+  <string name="delete_notification">La notifica è stata eliminata!</string>
+  <string name="delete_notification_all">Tutte le notifiche sono state eliminate!</string>
   <!-- HEADER -->
-  <string name="following">Following</string>
-  <string name="followers">Followers</string>
-  <string name="pinned_toots">Pinned</string>
+  <string name="following">Seguendo</string>
+  <string name="followers">Follower</string>
+  <string name="pinned_toots">Evidenziato</string>
   <!-- TOAST -->
-  <string name="client_error">Unable to get client id!</string>
-  <string name="no_internet">No Internet connection!</string>
-  <string name="toast_block">The account was blocked!</string>
-  <string name="toast_unblock">The account is no longer blocked!</string>
-  <string name="toast_mute">The account was muted!</string>
-  <string name="toast_unmute">The account is no longer muted!</string>
-  <string name="toast_follow">The account was followed!</string>
-  <string name="toast_unfollow">The account is no longer followed!</string>
+  <string name="client_error">Impossibile ottenere il client id!</string>
+  <string name="no_internet">Nessuna connessione ad internet!</string>
+  <string name="toast_block">L\'account è stato bloccato!</string>
+  <string name="toast_unblock">Questo account non è più bloccato!</string>
+  <string name="toast_mute">L\'account è stato silenziato!</string>
+  <string name="toast_unmute">Questo account non è più silenziato!</string>
+  <string name="toast_follow">L\'account è seguito!</string>
+  <string name="toast_unfollow">L\'account non è più seguito!</string>
   <string name="toast_reblog">Il toot è stato ricondiviso!</string>
   <string name="toast_unreblog">Il toot non è più ricondiviso!</string>
-  <string name="toast_favourite">The toot was added to your favourites!</string>
-  <string name="toast_unfavourite">The toot was removed from your favourites!</string>
-  <string name="toast_report">The toot was reported!</string>
-  <string name="toast_unstatus">The toot was deleted!</string>
+  <string name="toast_favourite">Il toot è stato aggiunto ai tuoi preferiti!</string>
+  <string name="toast_unfavourite">Il toot è stato rimosso dai tuoi preferiti!</string>
+  <string name="toast_report">Il toot è stato segnalato!</string>
+  <string name="toast_unstatus">Il toot è stato eliminato!</string>
   <string name="toast_pin">Il toot è stato evidenziato!</string>
   <string name="toast_unpin">Il toot non è più evidenziato!</string>
   <string name="toast_error">Oops! Si è verificato un errore!</string>
@@ -336,7 +336,7 @@
     <item>1 Mb</item>
     <item>2 Mb</item>
   </string-array>
-  <string name="set_led_colour">Set LED colour:</string>
+  <string name="set_led_colour">Imposta colore LED:</string>
   <string-array name="led_colours">
     <item>Blu</item>
     <item>Ciano</item>
@@ -347,8 +347,8 @@
     <item>Bianco</item>
   </string-array>
   <string name="set_title_news">Notizie</string>
-  <string name="set_notification_news">Notify for new toots on the home timeline</string>
-  <string name="set_show_error_messages">Display error messages</string>
+  <string name="set_notification_news">Notifica nuovi toot nella timeline home</string>
+  <string name="set_show_error_messages">Visualizza messaggi di errore</string>
   <string name="action_follow">Segui</string>
   <string name="action_unfollow">Smetti di seguire</string>
   <string name="action_block">Blocca</string>
@@ -359,21 +359,21 @@
   <string name="request_sent">Richiesta inviata</string>
   <string name="followed_by">Ti segue</string>
   <string name="action_search">Cerca</string>
-  <string name="set_capitalize">First letter in capital for replies</string>
+  <string name="set_capitalize">Prima lettera in maiuscolo per le risposte</string>
   <string name="set_resize_picture">Ridimensiona foto</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Notifiche push</string>
   <string name="settings_popup_message">
-        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
+Per favore, conferma le notifiche push che vuoi ricevere.
+   Puoi abilitare o disabilitar queste notifiche dopo nelle impostazioni (Scheda notifiche).
     </string>
-  <string name="settings_popup_timeline">For unread toots in home time-line?</string>
-  <string name="settings_popup_notification">For unread notifications?</string>
+  <string name="settings_popup_timeline">Per i toot non letti nella timeline home?</string>
+  <string name="settings_popup_notification">Per le notifiche non lette?</string>
   <!-- CACHE -->
   <string name="cache_title">Pulisci cache</string>
-  <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+  <string name="cache_message">Ci sono %1$s di dati nella cache.\n\n Li vuoi eliminare?</string>
   <string name="cache_units">Mb</string>
-  <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+  <string name="toast_cache_clear">La cache è stata pulita! %1$s sono stati liberati</string>
   <!-- ACTIVITY CACHE -->
   <string name="action_sync">Sincronizza</string>
   <string name="action_filter">Filtro</string>
@@ -382,20 +382,20 @@
   <string name="v_unlisted">Non elencato</string>
   <string name="v_private">Privato</string>
   <string name="v_direct">Diretto</string>
-  <string name="v_keywords">Some keywords…</string>
-  <string name="show_media">Show media</string>
-  <string name="show_pinned">Show pinned</string>
-  <string name="filter_no_result">No matching result found!</string>
-  <string name="data_backup_toots">Backup toots for %1$s</string>
-  <string name="data_backup_success">%1$s new toots have been imported</string>
+  <string name="v_keywords">Alcune parole chiave…</string>
+  <string name="show_media">Visualizza media</string>
+  <string name="show_pinned">Visualizza evidenziati</string>
+  <string name="filter_no_result">Nessuna corrispondenza trovata!</string>
+  <string name="data_backup_toots">Backup dei toot per %1$s</string>
+  <string name="data_backup_success">%1$s nuovi toot sono stati importati</string>
   <string-array name="filter_select">
     <item>No</item>
     <item>Solo</item>
     <item>Entrambi</item>
   </string-array>
-  <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+  <string name="owner_cached_toots_empty">Nessun toot è stato trovato nel database. Per favore, utilizza il pulsante di sincronizzazione dal menu per recuperarli.</string>
   <!-- PRIVACY -->
-  <string name="privacy_data_title">Recorded data</string>
+  <string name="privacy_data_title">Dati registrati</string>
   <string name="privacy_data">
         Only basic information from accounts are stored on the device.
         These data are strictly confidential and can only be used by the application.
