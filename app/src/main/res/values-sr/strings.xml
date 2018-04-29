@@ -308,7 +308,7 @@
   <string name="set_preview_reply">Прикажи број одговора у сопственој лајни</string>
   <string name="set_preview_reply_pp">Прикажи профилну слику?</string>
   <string name="set_multiaccount_actions">Дозволи интеракције између налога?</string>
-  <string name="set_fit_preview">Fit preview images</string>
+  <string name="set_fit_preview">Прилагоди преглед слике да стане</string>
   <string name="note_no_space">Достигли сте дозвољених 160 карактера!</string>
   <string name="username_no_space">Достигли сте дозвољених 30 карактера!</string>
   <string name="settings_title_hour">Термин за обавештења:</string>
