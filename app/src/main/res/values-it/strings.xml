@@ -29,26 +29,26 @@
   <string name="save">Salva</string>
   <string name="restore">Ripristina</string>
   <string name="two_factor_authentification">Autenticazione di due fattori?</string>
-  <string name="other_instance">Other instance than mastodon.etalab.gouv.fr?</string>
+  <string name="other_instance">Altra istanza a parte mastodon.etalab.gouv.fr?</string>
   <string name="no_result">Nessun risultato!</string>
   <string name="instance">Istanza</string>
   <string name="instance_example">Istanza: mastodon.social</string>
   <string name="toast_account_changed" formatted="false">Ora funziona con l\'account %1$s</string>
   <string name="add_account">Aggiungi un account</string>
-  <string name="clipboard">The content of the toot has been copied to the clipboard</string>
+  <string name="clipboard">Il contenuto del toot è stato copiato negli appunti</string>
   <string name="change">Cambia</string>
   <string name="choose_picture">Seleziona una foto…</string>
   <string name="clear">Pulisci</string>
   <string name="microphone">Microfono</string>
   <string name="camera">Fotocamera</string>
-  <string name="speech_prompt">Please, say something</string>
-  <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
+  <string name="speech_prompt">Dici qualche cosa</string>
+  <string name="speech_not_supported">Spiacente! Il tuo dispositivo non supporta l\'input vocale!</string>
   <string name="delete_all">Elimina tutto</string>
   <string name="translate_toot">Traduci questo toot.</string>
-  <string name="schedule">Schedule</string>
+  <string name="schedule">Programma</string>
   <string name="text_size">Dimensioni testo e icona</string>
-  <string name="text_size_change">Change the current text size:</string>
-  <string name="icon_size_change">Change the current icon size:</string>
+  <string name="text_size_change">Cambia la dimensione attuale del testo:</string>
+  <string name="icon_size_change">Cambia la dimensione attuale dell\'icona:</string>
   <string name="next">Successivo</string>
   <string name="previous">Precedente</string>
   <string name="open_with">Apri con</string>
@@ -59,7 +59,7 @@
   <string name="replies">Risposte</string>
   <string name="username">Nome utente</string>
   <string name="drafts">Bozze</string>
-  <string name="new_data">New data are available! Do you want to display them?</string>
+  <string name="new_data">Sono disponibili nuovi dati! Li vuoi visualizzare?</string>
   <string name="favourite">Preferiti</string>
   <string name="follow">Nuovi follower</string>
   <string name="mention">Menzioni</string>
@@ -68,11 +68,11 @@
   <string name="show_replies">Mostra risposte</string>
   <string name="action_open_in_web">Apri nel browser</string>
   <string name="translate">Traduci</string>
-  <string name="please_wait">Please, wait few seconds before making this action.</string>
+  <string name="please_wait">Per favore, attendi alcuni secondi prima di effettuare questa azione.</string>
   <!--- Menu -->
   <string name="home_menu">Home</string>
-  <string name="local_menu">Local timeline</string>
-  <string name="global_menu">Federated timeline</string>
+  <string name="local_menu">Timeline locale</string>
+  <string name="global_menu">Timeline federata</string>
   <string name="neutral_menu_title">Opzioni</string>
   <string name="favorites_menu">Preferiti</string>
   <string name="communication_menu_title">Comunicazione</string>
@@ -86,64 +86,64 @@
   <string name="profile">Profilo</string>
   <string name="make_a_choice">Cosa vuoi fare?</string>
   <string name="delete_account_title">Elimina un account</string>
-  <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
+  <string name="delete_account_message" formatted="false">Eliminare l\'account %1$s dall\'applicazione?</string>
   <string name="send_email">Invia una email</string>
   <string name="choose_file">Seleziona un file</string>
-  <string name="choose_file_error">No file explorer found!</string>
-  <string name="click_to_change">Click on the path to change it</string>
+  <string name="choose_file_error">Nessun gestore file trovato!</string>
+  <string name="click_to_change">Fai clic sul percorso per cambiarlo</string>
   <string name="failed">Fallito!</string>
   <string name="scheduled_toots">Toot programmati</string>
-  <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
+  <string name="disclaimer_full">Le informazioni qui sotto potrebbero riflettere in modo incompleto il profilo dell\'utente.</string>
   <string name="insert_emoji">Inserisci emoji</string>
-  <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
+  <string name="no_emoji">L\'app non raccoglie emoji personalizzate per il momento.</string>
   <string name="live_notif">Notifiche live</string>
   <!-- Status -->
   <string name="no_status">Nessun toot da mostrare</string>
   <string name="fav_added">Il toot è stato aggiunto ai preferiti</string>
   <string name="fav_removed">Il toot è stato rimosso dai preferiti!</string>
-  <string name="reblog_added">The toot was boosted!</string>
-  <string name="reblog_removed">The toot is no longer boosted!</string>
-  <string name="reblog_by">Boosted by %1$s</string>
-  <string name="favourite_add">Add this toot to your favourites?</string>
-  <string name="favourite_remove">Remove this toot from your favourites?</string>
-  <string name="reblog_add">Boost this toot?</string>
-  <string name="reblog_remove">Unboost this toot?</string>
-  <string name="pin_add">Pin this toot?</string>
-  <string name="pin_remove">Unpin this toot?</string>
-  <string name="more_action_1">Mute</string>
-  <string name="more_action_2">Block</string>
-  <string name="more_action_3">Report</string>
-  <string name="more_action_4">Remove</string>
-  <string name="more_action_5">Copy</string>
-  <string name="more_action_6">Share</string>
-  <string name="more_action_7">Mention</string>
-  <string name="more_action_8">Timed mute</string>
+  <string name="reblog_added">Il toot è stato potenziato!</string>
+  <string name="reblog_removed">Il toot non più è potenziato!</string>
+  <string name="reblog_by">Potenziato da %1$s</string>
+  <string name="favourite_add">Aggiungere questo toot ai tuoi preferiti?</string>
+  <string name="favourite_remove">Rimuovere questo toot dai tuoi preferiti?</string>
+  <string name="reblog_add">Potenziare questo toot?</string>
+  <string name="reblog_remove">Depotenziare questo toot?</string>
+  <string name="pin_add">Mettere in evidenza questo toot?</string>
+  <string name="pin_remove">Rimuovere da evidenziati questo toot?</string>
+  <string name="more_action_1">Silenzia</string>
+  <string name="more_action_2">Blocca</string>
+  <string name="more_action_3">Segnala</string>
+  <string name="more_action_4">Rimuovi</string>
+  <string name="more_action_5">Copia</string>
+  <string name="more_action_6">Condividi</string>
+  <string name="more_action_7">Menziona</string>
+  <string name="more_action_8">Silenzio temporizzato</string>
   <string-array name="more_action_confirm">
-    <item>Mute this account?</item>
-    <item>Block this account?</item>
-    <item>Report this toot?</item>
+    <item>Silenziare questo account?</item>
+    <item>Bloccare questo account?</item>
+    <item>Segnala questo toot?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>Remove this toot?</item>
+    <item>Rimuovere questo toot?</item>
   </string-array>
   <plurals name="preview_replies">
-    <item quantity="one">%d reply</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="one">%d risposta</item>
+    <item quantity="other">%d risposte</item>
   </plurals>
-  <string name="set_display_bookmark_button">Display the bookmark button</string>
-  <string name="bookmarks">Bookmarks</string>
-  <string name="bookmark_add">Add to bookmarks</string>
-  <string name="bookmark_remove">Remove bookmark</string>
-  <string name="bookmarks_empty">No bookmarks to display</string>
-  <string name="status_bookmarked">Status has been added to bookmarks!</string>
-  <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+  <string name="set_display_bookmark_button">Visualizza il pulsante segnalibri</string>
+  <string name="bookmarks">Segnalibri</string>
+  <string name="bookmark_add">Aggiungi ai segnalibri</string>
+  <string name="bookmark_remove">Rimuovi segnalibro</string>
+  <string name="bookmarks_empty">Nessun segnalibro da visualizzare</string>
+  <string name="status_bookmarked">Lo stato è stato aggiunto al segnalibro!</string>
+  <string name="status_unbookmarked">Lo stato è stato rimosso dal segnalibro!</string>
   <!-- Date -->
   <string name="date_seconds">%d s</string>
   <string name="date_minutes">%d m</string>
-  <string name="date_hours">%d h</string>
-  <string name="date_day">%d d</string>
+  <string name="date_hours">%d o</string>
+  <string name="date_day">%d g</string>
   <!-- TOOT -->
-  <string name="toot_cw_placeholder">Warning</string>
+  <string name="toot_cw_placeholder">Attenzione</string>
   <string name="toot_placeholder">Cosa ti passa per la mente?</string>
   <string name="toot_it">TOOT!</string>
   <string name="cw">cw</string>
@@ -246,19 +246,19 @@
   <string name="toast_unfavourite">The toot was removed from your favourites!</string>
   <string name="toast_report">The toot was reported!</string>
   <string name="toast_unstatus">The toot was deleted!</string>
-  <string name="toast_pin">The toot was pinned!</string>
-  <string name="toast_unpin">The toot was unpinned!</string>
+  <string name="toast_pin">Il toot è stato evidenziato!</string>
+  <string name="toast_unpin">Il toot non è più evidenziato!</string>
   <string name="toast_error">Oops! Si è verificato un errore!</string>
   <string name="toast_code_error">Si è verificato un errore! L\'istanza non ha restituito un codice di autorizzazione!</string>
   <string name="toast_error_instance">Il dominio dell\'istanza non sembra essere valido!</string>
-  <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
-  <string name="toast_error_search">An error occurred while searching!</string>
-  <string name="toast_error_login">Can not log in!</string>
+  <string name="toast_error_loading_account">Si è verificato un errore durante il passaggio tra gli account!</string>
+  <string name="toast_error_search">Si è verificato un errore durante la ricerca!</string>
+  <string name="toast_error_login">Impossibile accedere!</string>
   <string name="toast_update_credential_ok">I dati del profilo sono stati salvati!</string>
   <string name="nothing_to_do">Nessuna azione può essere intrapresa</string>
   <string name="toast_saved">Il media è stato salvato!</string>
-  <string name="toast_error_translate">An error occurred while translating!</string>
-  <string name="toast_toot_saved">Draft saved!</string>
+  <string name="toast_error_translate">Si è verificato un errore durante la traduzione!</string>
+  <string name="toast_toot_saved">Bozza salvata!</string>
   <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
   <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
   <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
@@ -349,20 +349,20 @@
   <string name="set_title_news">Notizie</string>
   <string name="set_notification_news">Notify for new toots on the home timeline</string>
   <string name="set_show_error_messages">Display error messages</string>
-  <string name="action_follow">Follow</string>
-  <string name="action_unfollow">Unfollow</string>
-  <string name="action_block">Block</string>
-  <string name="action_unblock">Unblock</string>
-  <string name="action_mute">Mute</string>
-  <string name="action_no_action">No action</string>
-  <string name="action_unmute">Unmute</string>
-  <string name="request_sent">Request sent</string>
-  <string name="followed_by">Follows you</string>
-  <string name="action_search">Search</string>
+  <string name="action_follow">Segui</string>
+  <string name="action_unfollow">Smetti di seguire</string>
+  <string name="action_block">Blocca</string>
+  <string name="action_unblock">Sblocca</string>
+  <string name="action_mute">Silenzia</string>
+  <string name="action_no_action">Nessuna azione</string>
+  <string name="action_unmute">Non silenziare</string>
+  <string name="request_sent">Richiesta inviata</string>
+  <string name="followed_by">Ti segue</string>
+  <string name="action_search">Cerca</string>
   <string name="set_capitalize">First letter in capital for replies</string>
-  <string name="set_resize_picture">Resize pictures</string>
+  <string name="set_resize_picture">Ridimensiona foto</string>
   <!-- Quick settings for notifications -->
-  <string name="settings_popup_title">Push notifications</string>
+  <string name="settings_popup_title">Notifiche push</string>
   <string name="settings_popup_message">
         Please, confirm push notifications that you want to receive.
         You can enable or disable these notifications later in settings (Notifications tab).
@@ -370,18 +370,18 @@
   <string name="settings_popup_timeline">For unread toots in home time-line?</string>
   <string name="settings_popup_notification">For unread notifications?</string>
   <!-- CACHE -->
-  <string name="cache_title">Clear cache</string>
+  <string name="cache_title">Pulisci cache</string>
   <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
   <string name="cache_units">Mb</string>
   <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
   <!-- ACTIVITY CACHE -->
-  <string name="action_sync">Synchronize</string>
-  <string name="action_filter">Filter</string>
-  <string name="owner_cached_toots">Your toots</string>
-  <string name="v_public">Public</string>
-  <string name="v_unlisted">Unlisted</string>
-  <string name="v_private">Private</string>
-  <string name="v_direct">Direct</string>
+  <string name="action_sync">Sincronizza</string>
+  <string name="action_filter">Filtro</string>
+  <string name="owner_cached_toots">I tuoi toot</string>
+  <string name="v_public">Pubblico</string>
+  <string name="v_unlisted">Non elencato</string>
+  <string name="v_private">Privato</string>
+  <string name="v_direct">Diretto</string>
   <string name="v_keywords">Some keywords…</string>
   <string name="show_media">Show media</string>
   <string name="show_pinned">Show pinned</string>
@@ -390,8 +390,8 @@
   <string name="data_backup_success">%1$s new toots have been imported</string>
   <string-array name="filter_select">
     <item>No</item>
-    <item>Only</item>
-    <item>Both</item>
+    <item>Solo</item>
+    <item>Entrambi</item>
   </string-array>
   <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
   <!-- PRIVACY -->
@@ -474,10 +474,10 @@
   <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
   <!-- Proxy -->
   <string name="proxy_set">Proxy</string>
-  <string name="proxy_type">Type</string>
-  <string name="proxy_enable">Enable proxy?</string>
+  <string name="proxy_type">Tipo</string>
+  <string name="proxy_enable">Abilitare il proxy?</string>
   <string name="poxy_host">Host</string>
-  <string name="poxy_port">Port</string>
+  <string name="poxy_port">Porta</string>
   <string name="poxy_login">Login</string>
   <string name="poxy_password">Password</string>
 </resources>
