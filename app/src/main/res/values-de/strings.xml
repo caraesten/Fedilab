@@ -184,7 +184,7 @@
   <string name="about_thekinrar">Instanzensuche:</string>
   <string name="about_thekinrar_action">instances.social</string>
   <string name="thanks_text_logo">Icondesigner:</string>
-  <string name="thanks_text_banner">Banner designer:</string>
+  <string name="thanks_text_banner">Banner Designer:</string>
   <!-- Conversation -->
   <string name="conversation">Unterhaltung</string>
   <!-- Accounts -->
@@ -309,7 +309,7 @@
   <string name="set_preview_reply">Zeige die Anzahl der Antworten in der home Zeitlinie an</string>
   <string name="set_preview_reply_pp">Profilbilder anzeigen?</string>
   <string name="set_multiaccount_actions">Interaktionen zwischen deinen Konten erlauben?</string>
-  <string name="set_fit_preview">Fit preview images</string>
+  <string name="set_fit_preview">Vorschaubilder anpassen</string>
   <string name="note_no_space">Du hast die Grenze von 160 Zeichen erreicht!</string>
   <string name="username_no_space">Du hast die Grenze von 30 Zeichen erreicht!</string>
   <string name="settings_title_hour">Zeitfenster für Benachrichtigungen:</string>
@@ -364,7 +364,7 @@
   <string name="followed_by">folgt dir</string>
   <string name="action_search">Suche</string>
   <string name="set_capitalize">Ersten Buchstaben bei Antworten groß schreiben</string>
-  <string name="set_resize_picture">Bildergröße ändern</string>
+  <string name="set_resize_picture">Bildgröße verändern</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Push Benachrichtigungen</string>
   <string name="settings_popup_message">Bitte bestätige welche Push Benachrichtigungen du erhalten möchtest.         Diese können später im Benachrichtungsreiter aktiviert oder deaktiviert werden.</string>
@@ -457,7 +457,7 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="media_ready">Media wurde geladen. Hier klicken zum anzeigen.</string>
   <string name="data_export_start">Diese Aktion kann sehr lange dauern. Du wirst benachrichtigt wenn sie abgeschlossen wurde.</string>
   <string name="data_export_running">Läuft noch, bitte warten…</string>
-  <string name="data_export">Status exportieren</string>
+  <string name="data_export">Beiträge exportieren</string>
   <string name="data_export_toots">Beiträge exportieren für %1$s</string>
   <string name="data_export_success">%1$s Toots von %2$s wurden exportiert.</string>
   <string name="data_export_error">Etwas ist schief gelaufen beim exportieren von%1$s</string>
