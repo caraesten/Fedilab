@@ -3,7 +3,7 @@
 <resources>
   <string name="navigation_drawer_open">Otwórz menu</string>
   <string name="navigation_drawer_close">Zamknij menu</string>
-  <string name="action_about">O</string>
+  <string name="action_about">O Mastalab</string>
   <string name="action_about_instance">O instancji</string>
   <string name="action_privacy">Prywatność</string>
   <string name="action_cache">Pamięć podręczna</string>
@@ -23,64 +23,64 @@
   <string name="password">Hasło</string>
   <string name="email">Email</string>
   <string name="accounts">Konta</string>
-  <string name="toots">Toots</string>
+  <string name="toots">Wpisy</string>
   <string name="tags">Tagi</string>
   <string name="token">Token</string>
   <string name="save">Zapisz</string>
   <string name="restore">Przywracanie</string>
   <string name="two_factor_authentification">Dwustopniowe uwierzytelnianie?</string>
-  <string name="other_instance">Inne wystąpienie, niż mastodon.etalab.gouv.fr?</string>
+  <string name="other_instance">Inna instancja, niż mastodon.etalab.gouv.fr?</string>
   <string name="no_result">Brak wyników!</string>
-  <string name="instance">Wystąpienie</string>
-  <string name="instance_example">Wystąpienie: mastodon.social</string>
+  <string name="instance">Instancja</string>
+  <string name="instance_example">Instancja: mastodon.social</string>
   <string name="toast_account_changed" formatted="false">Teraz pracuje z kontem %1$s</string>
   <string name="add_account">Dodaj konto</string>
-  <string name="clipboard">Zawartość toot została skopiowana do schowka</string>
+  <string name="clipboard">Zawartość wpisu została skopiowana do schowka</string>
   <string name="change">Zmień</string>
   <string name="choose_picture">Wybierz zdjęcie…</string>
   <string name="clear">Czyste</string>
-  <string name="microphone">Mikrofon</string>
-  <string name="camera">Camera</string>
+  <string name="microphone">Wprowadzanie głosowe</string>
+  <string name="camera">Kamera</string>
   <string name="speech_prompt">Proszę, powiedz coś</string>
   <string name="speech_not_supported">Przepraszamy! Twoje urządzenie nie obsługuje wprowadzenia głosowego!</string>
   <string name="delete_all">Usuń wszystko</string>
-  <string name="translate_toot">Przetłumacz ten toot.</string>
+  <string name="translate_toot">Przetłumacz ten wpis.</string>
   <string name="schedule">Harmonogram</string>
   <string name="text_size">Rozmiary tekstu i ikon</string>
-  <string name="text_size_change">Zmień obecny rozmiar tekstu:</string>
-  <string name="icon_size_change">Zmień obecny rozmiar ikon:</string>
+  <string name="text_size_change">Zmień rozmiar tekstu:</string>
+  <string name="icon_size_change">Zmień rozmiar ikon:</string>
   <string name="next">Następne</string>
   <string name="previous">Poprzednie</string>
   <string name="open_with">Otwórz za pomocą</string>
   <string name="validate">Zatwierdź</string>
   <string name="media">Media</string>
   <string name="share_with">Udostępnij</string>
-  <string name="shared_via">Udostępniony via Mastalab</string>
+  <string name="shared_via">Udostępniony przez Mastalab</string>
   <string name="replies">Odpowiedzi</string>
   <string name="username">Nazwa użytkownika</string>
-  <string name="drafts">Kopie robocze</string>
-  <string name="new_data">Nowe dane dostępne! Czy chcesz je wyświetlić?</string>
+  <string name="drafts">Szkice</string>
+  <string name="new_data">Znaleziono aktualizacje! Czy chcesz je wyświetlić?</string>
   <string name="favourite">Ulubione</string>
-  <string name="follow">Nowi obserwujący</string>
-  <string name="mention">Wzmianki</string>
-  <string name="reblog">Wzmocnienia</string>
-  <string name="show_boosts">Pokaż wzmocnienia</string>
+  <string name="follow">Nowi śledzący</string>
+  <string name="mention">Wspomnienia</string>
+  <string name="reblog">Podbicia</string>
+  <string name="show_boosts">Pokaż podbicia</string>
   <string name="show_replies">Pokaż odpowiedzi</string>
   <string name="action_open_in_web">Otwórz w przeglądarce</string>
   <string name="translate">Przetłumacz</string>
-  <string name="please_wait">Proszę, poczekaj kilka sekund przed wykonaniem tej akcji.</string>
+  <string name="please_wait">Proszę poczekać kilka sekund przed wykonaniem tej akcji.</string>
   <!--- Menu -->
-  <string name="home_menu">Dom</string>
+  <string name="home_menu">Strona główna</string>
   <string name="local_menu">Lokalna oś czasu</string>
-  <string name="global_menu">Federacyjna oś czasu</string>
+  <string name="global_menu">Globalna oś czasu</string>
   <string name="neutral_menu_title">Opcje</string>
   <string name="favorites_menu">Ulubione</string>
   <string name="communication_menu_title">Komunikacja</string>
   <string name="muted_menu">Wyciszeni użytkownicy</string>
   <string name="blocked_menu">Zablokowani użytkownicy</string>
-  <string name="remote_follow_menu">Zdalne obserwowanie</string>
+  <string name="remote_follow_menu">Zdalne śledzenie</string>
   <string name="notifications">Powiadomienia</string>
-  <string name="follow_request">Żądania obserwacji</string>
+  <string name="follow_request">Prośby o śledzenie</string>
   <string name="optimization">Optymalizacja</string>
   <string name="settings">Ustawienia</string>
   <string name="profile">Profil</string>
@@ -89,243 +89,243 @@
   <string name="delete_account_message" formatted="false">Usunąć konto %1$s z aplikacji?</string>
   <string name="send_email">Wyślij email</string>
   <string name="choose_file">Proszę wybrać plik</string>
-  <string name="choose_file_error">Nie znaleziono exploratora plików!</string>
+  <string name="choose_file_error">Nie znaleziono przeglądarki plików!</string>
   <string name="click_to_change">Kliknij na ścieżkę, aby ją zmienić</string>
   <string name="failed">Niepowodzenie!</string>
-  <string name="scheduled_toots">Zaplanowane toot</string>
+  <string name="scheduled_toots">Zaplanowane wpisy</string>
   <string name="disclaimer_full">Poniższe informacje mogą nie odzwierciedlać w pełni profilu użytkownika.</string>
-  <string name="insert_emoji">Wstaw emotikonę</string>
-  <string name="no_emoji">Aplikacja nie zebrała niestandardowych emotikonów na ten moment.</string>
+  <string name="insert_emoji">Wstaw emoji</string>
+  <string name="no_emoji">Brak niestandardowych emoji.</string>
   <string name="live_notif">Powiadomienia na żywo</string>
   <!-- Status -->
-  <string name="no_status">Brak toot do wyświetlenia</string>
-  <string name="fav_added">Toot został dodany do ulubionych</string>
-  <string name="fav_removed">Toot został usunięty z ulubionych!</string>
-  <string name="reblog_added">Toot został ulepszony!</string>
-  <string name="reblog_removed">Toot już nie jest wzmacniany!</string>
-  <string name="reblog_by">Wzmocniony przez %1$s</string>
-  <string name="favourite_add">Dodać ten toot do ulubionych?</string>
-  <string name="favourite_remove">Usunąć ten toot z ulubionych?</string>
-  <string name="reblog_add">Ulepszyć ten toot?</string>
-  <string name="reblog_remove">Spowolnić ten toot?</string>
-  <string name="pin_add">Przypiąć ten toot?</string>
-  <string name="pin_remove">Odpiąć ten toot?</string>
+  <string name="no_status">Brak wpisów do wyświetlenia</string>
+  <string name="fav_added">Wpis został dodany do ulubionych</string>
+  <string name="fav_removed">Wpis został usunięty z ulubionych!</string>
+  <string name="reblog_added">Wpis został podbity!</string>
+  <string name="reblog_removed">Wpis już nie jest podbity!</string>
+  <string name="reblog_by">Podbity przez %1$s</string>
+  <string name="favourite_add">Dodać ten wpis do ulubionych?</string>
+  <string name="favourite_remove">Usunąć ten wpis z ulubionych?</string>
+  <string name="reblog_add">Podbić ten wpis?</string>
+  <string name="reblog_remove">Anulować podbicie?</string>
+  <string name="pin_add">Przypiąć ten wpis?</string>
+  <string name="pin_remove">Odpiąć ten wpis?</string>
   <string name="more_action_1">Wycisz</string>
   <string name="more_action_2">Zablokuj</string>
-  <string name="more_action_3">Raport</string>
+  <string name="more_action_3">Zgłoś</string>
   <string name="more_action_4">Usuń</string>
   <string name="more_action_5">Kopiuj</string>
   <string name="more_action_6">Udostępnij</string>
   <string name="more_action_7">Wspomnij</string>
-  <string name="more_action_8">Timed mute</string>
+  <string name="more_action_8">Czasowe wyciszenie</string>
   <string-array name="more_action_confirm">
-    <item>Wyciszyć tę ilość?</item>
-    <item>Zablokuj tę ilość?</item>
-    <item>Raportować ten toot?</item>
+    <item>Wyciszyć?</item>
+    <item>Zablokować?</item>
+    <item>Zgłosić ten wpis?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>Usunąć ren toot?</item>
+    <item>Usunąć ten wpis?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="one">%d odpowiedzi</item>
     <item quantity="few">%d odpowiedzi</item>
-    <item quantity="many">%d replies</item>
+    <item quantity="many">%d odpowiedzi</item>
     <item quantity="other">%d odpowiedzi</item>
   </plurals>
-  <string name="set_display_bookmark_button">Display the bookmark button</string>
-  <string name="bookmarks">Bookmarks</string>
-  <string name="bookmark_add">Add to bookmarks</string>
-  <string name="bookmark_remove">Remove bookmark</string>
-  <string name="bookmarks_empty">No bookmarks to display</string>
-  <string name="status_bookmarked">Status has been added to bookmarks!</string>
-  <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+  <string name="set_display_bookmark_button">Wyświetl przycisk zakładek</string>
+  <string name="bookmarks">Zakładki</string>
+  <string name="bookmark_add">Dodaj do zakładek</string>
+  <string name="bookmark_remove">Usuń zakładkę</string>
+  <string name="bookmarks_empty">Brak zakładek</string>
+  <string name="status_bookmarked">Dodano wpis do zakładek!</string>
+  <string name="status_unbookmarked">Usunięto wpis z zakładek!</string>
   <!-- Date -->
   <string name="date_seconds">%d s</string>
-  <string name="date_minutes">%d m</string>
-  <string name="date_hours">%d h</string>
-  <string name="date_day">%d d</string>
+  <string name="date_minutes">%d min</string>
+  <string name="date_hours">%d godz.</string>
+  <string name="date_day">%d dni</string>
   <!-- TOOT -->
-  <string name="toot_cw_placeholder">Uwaga</string>
-  <string name="toot_placeholder">Co masz na myśli?</string>
-  <string name="toot_it">TOOT!</string>
-  <string name="cw">cw</string>
-  <string name="toot_title">Napisz toot</string>
-  <string name="toot_title_reply">Odpowiedz na toot</string>
+  <string name="toot_cw_placeholder">CW</string>
+  <string name="toot_placeholder">Co Ci chodzi po głowie?</string>
+  <string name="toot_it">Wyślij!</string>
+  <string name="cw">Ostrzeżenie o zawartości</string>
+  <string name="toot_title">Nowy wpis</string>
+  <string name="toot_title_reply">Odpowiedz na wpis</string>
   <string name="toot_no_space">Osiągnąłeś limit 500 znaków!</string>
-  <string name="toot_select_image">Wybierz media</string>
-  <string name="toot_select_image_error">Podczas wybotu mediów wystąpił błąd!</string>
-  <string name="toot_delete_media">Usunąć te media?</string>
-  <string name="toot_error_no_content">Twój toot jest pusty!</string>
-  <string name="toot_visibility_tilte">Widoczność toot</string>
-  <string name="toots_visibility_tilte">Widoczność toot domyślnie: </string>
-  <string name="toot_sent">Toot został wysłany!</string>
-  <string name="toot_reply_content_title">Odpowiadasz na ten toot:</string>
-  <string name="toot_sensitive">Poufne treści?</string>
+  <string name="toot_select_image">Wybierz zawartość</string>
+  <string name="toot_select_image_error">Podczas wyboru zawartości wystąpił błąd!</string>
+  <string name="toot_delete_media">Usunąć tą zawartość?</string>
+  <string name="toot_error_no_content">Twój wpis jest pusty!</string>
+  <string name="toot_visibility_tilte">Widoczność wpisu</string>
+  <string name="toots_visibility_tilte">Domyślna widoczność wpisu: </string>
+  <string name="toot_sent">Wpis został wysłany!</string>
+  <string name="toot_reply_content_title">Odpowiadasz na ten wpis:</string>
+  <string name="toot_sensitive">Wrażliwe treści?</string>
   <string-array name="toot_visibility">
-    <item>Zapostuj na publicznej osi czasu</item>
-    <item>Nie postuj do publicznych osi czasu</item>
-    <item>Zapostuj tylko do obserwujących</item>
-    <item>Zapostuj tylko do wymienionych użytkowników</item>
+    <item>Wyświetlaj na publicznej osi czasu</item>
+    <item>Nie wyświetlaj na publicznych osiach czasu</item>
+    <item>Wyślij tylko do śledzących</item>
+    <item>Wyślij tylko do wspomnianych użytkowników</item>
   </string-array>
-  <string name="no_draft">Brak projektu!</string>
-  <string name="choose_toot">Wybierz toot</string>
+  <string name="no_draft">Nie znaleziono szkiców!</string>
+  <string name="choose_toot">Wybierz wpis</string>
   <string name="choose_accounts">Wybierz konto</string>
   <string name="select_accounts">Wybierz wiele kont</string>
-  <string name="remove_draft">Usunąć projekt?</string>
-  <string name="show_reply">Kliknij przycisk, aby wyświetlić oryginalny toot</string>
-  <string name="upload_form_description">Opisać dla niedowidzących</string>
+  <string name="remove_draft">Usunąć szkic?</string>
+  <string name="show_reply">Kliknij przycisk, aby wyświetlić oryginalny wpis</string>
+  <string name="upload_form_description">Opis dla niedowidzących</string>
   <!-- Instance -->
   <string name="instance_no_description">Brak dostępnego opisu!</string>
   <!-- About -->
-  <string name="about_vesrion">Wypuść %1$s</string>
-  <string name="about_developer">Deweloper:</string>
+  <string name="about_vesrion">Wersja %1$s</string>
+  <string name="about_developer">Twórca:</string>
   <string name="about_license">Licencja: </string>
   <string name="about_license_action">GNU GPL V3</string>
   <string name="about_code">Kod źródłowy: </string>
-  <string name="about_yandex">Tłumaczenie toot:</string>
-  <string name="about_thekinrar">Wyszukiwaj wystąpienia:</string>
+  <string name="about_yandex">Tłumaczenie wpisów:</string>
+  <string name="about_thekinrar">Więcej o instancjach:</string>
   <string name="about_thekinrar_action">instances.social</string>
   <string name="thanks_text_logo">Projektant ikon:</string>
-  <string name="thanks_text_banner">Banner designer:</string>
+  <string name="thanks_text_banner">Projektant banera:</string>
   <!-- Conversation -->
   <string name="conversation">Rozmowa</string>
   <!-- Accounts -->
-  <string name="no_accounts">Brak konta do wyświetlenia</string>
-  <string name="no_follow_request">Brak żądania obserwacji</string>
-  <string name="status_cnt">Toot \n %1$s</string>
-  <string name="following_cnt">Obserwowanie \n %1$s</string>
-  <string name="followers_cnt">Obserwujący \n %1$s</string>
+  <string name="no_accounts">Brak kont do wyświetlenia</string>
+  <string name="no_follow_request">Brak próśb o śledzenie</string>
+  <string name="status_cnt">Wpis \n %1$s</string>
+  <string name="following_cnt">Śledzeni \n %1$s</string>
+  <string name="followers_cnt">Śledzący \n %1$s</string>
   <string name="pins_cnt">Przypięte \n %d</string>
   <string name="authorize">Autoryzuj</string>
-  <string name="reject">Odrzucić</string>
+  <string name="reject">Odrzuć</string>
   <!-- Scheduled toots -->
-  <string name="no_scheduled_toots">Brak zaplanowanych toot do wyświetlenia!</string>
-  <string name="no_scheduled_toots_indications">Napisz toot i wybierz <b>harmonogram</b> z górnego menu.</string>
-  <string name="remove_scheduled">Usunąć zaplanowany toot?</string>
-  <string name="media_count">Media: %d</string>
-  <string name="toot_scheduled">Toot został zaplanowany!</string>
+  <string name="no_scheduled_toots">Brak zaplanowanych wpisów!</string>
+  <string name="no_scheduled_toots_indications">Utwórz wpis i wybierz <b>harmonogram</b> z górnego menu.</string>
+  <string name="remove_scheduled">Usunąć zaplanowany wpis?</string>
+  <string name="media_count">Zawartość w liczbie %d</string>
+  <string name="toot_scheduled">Wpis został zaplanowany!</string>
   <string name="toot_scheduled_date">Zaplanowana data musi być większa niż bieżąca godzina!</string>
   <string name="warning_battery">Włączony jest tryb oszczędzania baterii! To może nie działać zgodnie z oczekiwaniami.</string>
   <!-- timed mute -->
-  <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-  <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
-  <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+  <string name="timed_mute_date_error">Czas wyciszenia musi być większy niż jedna minuta.</string>
+  <string name="timed_mute_date">%1$s został wyciszony do %2$s.\n Możesz to anulować na ekranie podglądu konta.</string>
+  <string name="timed_mute_profile">%1$s został wyciszony do %2$s.\n Kliknij tutaj, aby anulować.</string>
   <!-- Notifications -->
   <string name="no_notifications">Brak powiadomień do wyświetlenia</string>
   <string name="notif_mention">wspomniał o tobie</string>
-  <string name="notif_reblog">wzmocnił twój status</string>
-  <string name="notif_favourite">polubił twój status</string>
-  <string name="notif_follow">zaobserwował Cię</string>
-  <string name="notif_pouet">Niwy toot od %1$s</string>
+  <string name="notif_reblog">podbił twój wpis</string>
+  <string name="notif_favourite">polubił twój wpis</string>
+  <string name="notif_follow">zaczął Cię śledzić</string>
+  <string name="notif_pouet">Nowy wpis od %1$s</string>
   <plurals name="other_notifications">
     <item quantity="one">dodaj %d innych powiadomień</item>
     <item quantity="few">dodaj %d innych powiadomień</item>
-    <item quantity="many">and %d other notifications</item>
+    <item quantity="many">dodaj %d innych powiadomień</item>
     <item quantity="other">dodaj %d innych powiadomień</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="one">i kolejne %d toot do odkrycia</item>
-    <item quantity="few">i kolejne %d toot do odkrycia</item>
-    <item quantity="many">and %d other toots to discover</item>
-    <item quantity="other">i kolejne %d toot do odkrycia</item>
+    <item quantity="one">i kolejny %d wpis do odkrycia</item>
+    <item quantity="few">i kolejne %d wpisy do odkrycia</item>
+    <item quantity="many">i kolejnych %d wpisów do odkrycia</item>
+    <item quantity="other">i kolejne %d wpisów do odkrycia</item>
   </plurals>
-  <string name="delete_notification_ask">Usunąć powiadomienie?</string>
-  <string name="delete_notification_ask_all">Usunąć wszystkie powiadomienia?</string>
-  <string name="delete_notification">Powiadomienie zostało usunięte!</string>
-  <string name="delete_notification_all">Wszystkie powiadomienia zostały usunięte!</string>
+  <string name="delete_notification_ask">Czy na pewno chcesz usunąć to powiadomienie?</string>
+  <string name="delete_notification_ask_all">Wyczyścić wszytstkie powiadomienia?</string>
+  <string name="delete_notification">Usunięto powiadomienie!</string>
+  <string name="delete_notification_all">Wyczyszczono powiadomienia!</string>
   <!-- HEADER -->
-  <string name="following">Obserwowanie</string>
-  <string name="followers">Obserwujący</string>
+  <string name="following">Śledzenie</string>
+  <string name="followers">Śledzący</string>
   <string name="pinned_toots">Przypięte</string>
   <!-- TOAST -->
   <string name="client_error">Nie można pobrać identyfikatora klienta!</string>
-  <string name="no_internet">Brak połączenia z internetem!</string>
+  <string name="no_internet">Brak połączenia z Internetem!</string>
   <string name="toast_block">Konto zostało zablokowane!</string>
   <string name="toast_unblock">Konto nie jest już zablokowane!</string>
   <string name="toast_mute">Konto zostało wyciszone!</string>
   <string name="toast_unmute">Konto nie jest już wyciszone!</string>
-  <string name="toast_follow">Konto zostało zaobserwowane!</string>
-  <string name="toast_unfollow">Konto nie jest już obserwowane!</string>
-  <string name="toast_reblog">Toot został wzmocniony!</string>
-  <string name="toast_unreblog">Toot już nie jest wzmacniany!</string>
-  <string name="toast_favourite">Toot został dodany do ulubionych!</string>
-  <string name="toast_unfavourite">Toot został usunięty z ulubionych!</string>
-  <string name="toast_report">Toot został zraportowany!</string>
-  <string name="toast_unstatus">Toot został usunięty!</string>
-  <string name="toast_pin">Toot był przypięty!</string>
-  <string name="toast_unpin">Toot był odpięty!</string>
-  <string name="toast_error">Ups ! Wystąpił błąd!</string>
-  <string name="toast_code_error">Wystąpił błąd! Wystąpienie nie zwróciło kodu autoryzacji!</string>
-  <string name="toast_error_instance">Domena wystąpienia wydaje się być niepoprawna!</string>
+  <string name="toast_follow">Zaczęto śledzić konto!</string>
+  <string name="toast_unfollow">Konto nie jest już śledzone!</string>
+  <string name="toast_reblog">Podbito wpis!</string>
+  <string name="toast_unreblog">Cofnięto podbicie wpisu!</string>
+  <string name="toast_favourite">Wpis został dodany do ulubionych!</string>
+  <string name="toast_unfavourite">Wpis został usunięty z ulubionych!</string>
+  <string name="toast_report">Zgłoszono wpis!</string>
+  <string name="toast_unstatus">Usunięto wpis!</string>
+  <string name="toast_pin">Przypięto wpis!</string>
+  <string name="toast_unpin">Odpięto wpis!</string>
+  <string name="toast_error">Ups! Wystąpił błąd!</string>
+  <string name="toast_code_error">Wystąpił błąd! Instancja nie zwróciła kodu autoryzacji!</string>
+  <string name="toast_error_instance">Domena instancji jest niepoprawna!</string>
   <string name="toast_error_loading_account">Podczas zmiany kont wystąpił błąd!</string>
   <string name="toast_error_search">Podczas wyszukiwania wystąpił błąd!</string>
-  <string name="toast_error_login">Nie można zalogować!</string>
+  <string name="toast_error_login">Logowanie nieudane!</string>
   <string name="toast_update_credential_ok">Dane profilu zostały zapisane!</string>
   <string name="nothing_to_do">Żadna akcja nie może zostać podjęta</string>
-  <string name="toast_saved">Media zostały zapisane!</string>
-  <string name="toast_error_translate">Podczas tłumaczenia wystąpił błąd!</string>
-  <string name="toast_toot_saved">Wesja robocza została zapisana!</string>
-  <string name="toast_error_char_limit">Czy na pewno to wystąpienie zezwala na tę liczbę znaków? Zazwyczaj liczba ta jest zbliżona do 500 znaków.</string>
-  <string name="toast_visibility_changed">Widoczność toot została zmieniona na %1$s</string>
-  <string name="toast_empty_search">Nazwa wystąpienia i nazwa ekranu nie mogą być puste!</string>
+  <string name="toast_saved">Zapisano zawartość multimedialną!</string>
+  <string name="toast_error_translate">Tłumaczenie nieudane!</string>
+  <string name="toast_toot_saved">Zapisano szkic!</string>
+  <string name="toast_error_char_limit">Czy na pewno ta instancja zezwala na więcej, niż domyślne 500 znaków?</string>
+  <string name="toast_visibility_changed">Widoczność wpisu została zmieniona na %1$s</string>
+  <string name="toast_empty_search">Nazwa instancji i nazwa ekranu nie mogą być puste!</string>
   <!-- Settings -->
   <string name="settings_title_optimisation">Optymalizacja ładowania</string>
-  <string name="set_toots_page">Liczba toot na ładowanie</string>
-  <string name="set_accounts_page">Numer kont na ładowanie</string>
-  <string name="set_notifications_page">Numer zgłoszeń na ładowanie</string>
+  <string name="set_toots_page">Liczba wpisów do załadowania</string>
+  <string name="set_accounts_page">Ilość kont do załadowania</string>
+  <string name="set_notifications_page">Ilość powiadomień do załadowania</string>
   <string name="set_attachment_always">Zawsze</string>
-  <string name="set_attachment_wifi">WIFI</string>
+  <string name="set_attachment_wifi">WiFi</string>
   <string name="set_attachment_ask">Zapytaj</string>
-  <string name="set_attachment_action">Załaduj media</string>
-  <string name="load_attachment">Załaduj zdjęcia</string>
+  <string name="set_attachment_action">Załaduj zawartość</string>
+  <string name="load_attachment">Załaduj zawartość</string>
   <string name="load_attachment_spoiler">Pokaż więcej…</string>
-  <string name="load_attachment_spoiler_less">Show less…</string>
-  <string name="load_sensitive_attachment">Poufne treści</string>
+  <string name="load_attachment_spoiler_less">Pokaż mniej…</string>
+  <string name="load_sensitive_attachment">Treść wrażliwa</string>
   <string name="set_display_reply">Wyświetl poprzednią wiadomość w odpowiedziach</string>
   <string name="set_display_local">Wyświetl lokalną oś czasu</string>
-  <string name="set_display_global">Wyświetl federacyjną oś czasu</string>
-  <string name="set_disable_gif">Wyłącz avatary GIF</string>
+  <string name="set_display_global">Wyświetl globalną oś czasu</string>
+  <string name="set_disable_gif">Wyłącz animowane obrazy profilowe</string>
   <string name="set_folder_title">Ścieżka: </string>
-  <string name="set_auto_store_toot">Zapisuj wersję roboczą automatycznie</string>
+  <string name="set_auto_store_toot">Automatyczny zapis szkicu</string>
   <string name="set_bubble_counter">Wyświetl kraje</string>
-  <string name="set_auto_add_media_url">Dodaj adres URL mediów w toots</string>
+  <string name="set_auto_add_media_url">Dodaj adres URL zawartości we wpisach</string>
   <string name="settings_title_notifications">Zarządzaj powiadomieniami</string>
-  <string name="set_notif_follow">Powiadom mnie gdy ktoś mnie zsobserwuje</string>
-  <string name="set_notif_follow_ask">Powiadom mnie, gdy ktoś zażąda obserwowania mnie</string>
-  <string name="set_notif_follow_share">Powiadom mnie, gdy ktoś zwiększy mój status</string>
-  <string name="set_notif_follow_add">Powiadom mnie, gdy ktoś polubi mój status</string>
-  <string name="set_notif_follow_mention">Powiadom mnie, gdy ktoś wspomni o mnie</string>
-  <string name="set_share_validation">Pokaż potwierdzenie dialogu przed zwiększeniem</string>
-  <string name="set_share_validation_fav">Pokaż dialog informacyjny przed dodaniem do ulubionych</string>
+  <string name="set_notif_follow">Powiadom mnie, gdy ktoś zaczyna mnie śledzić</string>
+  <string name="set_notif_follow_ask">Powiadom mnie, gdy ktoś wysyła prośbę o śledzenie</string>
+  <string name="set_notif_follow_share">Powiadom mnie, gdy ktoś podbije mój wpis</string>
+  <string name="set_notif_follow_add">Powiadom mnie, gdy ktoś polubi mój wpis</string>
+  <string name="set_notif_follow_mention">Powiadom mnie, gdy ktoś mnie wspomni</string>
+  <string name="set_share_validation">Proś o potwierdzenie przed podbiciem</string>
+  <string name="set_share_validation_fav">Proś o potwierdzenie przed dodaniem wpisu do ulubionych</string>
   <string name="settings_title_more_options">Zaawansowane opcje</string>
-  <string name="set_wifi_only">Powiadamiaj tylko w WIFI</string>
+  <string name="set_wifi_only">Powiadamiaj tylko w sieci WiFi</string>
   <string name="set_notify">Powiadamiać?</string>
   <string name="set_notif_silent">Ciche powiadomienia</string>
   <string name="set_night_mode">Tryb nocny</string>
-  <string name="set_nsfw_timeout">Timeout widoku NSFW (sekundy, 0 oznacza wyłącznie)</string>
+  <string name="set_nsfw_timeout">Czas do automatycznego ukrycia treści wrażliwej w sekundach. 0 oznacza dezaktywację.</string>
   <string name="settings_title_profile">Edytuj profil</string>
-  <string name="set_profile_description">Bio…</string>
-  <string name="set_lock_account">Lock account</string>
+  <string name="set_profile_description">Biografia…</string>
+  <string name="set_lock_account">Zablokuj konto</string>
   <string name="set_save_changes">Zapisz zmiany</string>
   <string name="set_header_picture_overlay">Wybierz zdjęcie nagłówka</string>
-  <string name="set_preview_reply">Wyświetl liczbę odpowiedzi na domowej osi czasu</string>
-  <string name="set_preview_reply_pp">Wyświetlać zdjęcia profilowe?</string>
+  <string name="set_preview_reply">Wyświetl liczbę odpowiedzi na lokalnej osi czasu</string>
+  <string name="set_preview_reply_pp">Wyświetlać obrazy profilowe?</string>
   <string name="set_multiaccount_actions">Zezwalać na interakcje między kontami?</string>
-  <string name="set_fit_preview">Fit preview images</string>
-  <string name="note_no_space">Osiągnąłeś 160 dozwolonych znaków!</string>
-  <string name="username_no_space">Osiągnąłeś 30 dozwolonych znaków!</string>
+  <string name="set_fit_preview">Pokaż całość</string>
+  <string name="note_no_space">Przekroczono limit 160 dozwolonych znaków!</string>
+  <string name="username_no_space">Przekroczono limit 30 dozwolonych znaków!</string>
   <string name="settings_title_hour">Odstęp czasu dla powiadomień:</string>
   <string name="settings_time_from">Między</string>
   <string name="settings_time_to">i</string>
-  <string name="settings_time_greater">Czas musi być większy niż %1$s</string>
-  <string name="settings_time_lower">Czas musi być niższy niż %1$s</string>
+  <string name="settings_time_greater">Należy ustawić wcześniejszy, niż %1$s</string>
+  <string name="settings_time_lower">Należy ustawić późniejszy, niż %1$s</string>
   <string name="settings_hour_init">Godzina rozpoczęcia</string>
   <string name="settings_hour_end">Czas zakończenia</string>
   <string name="embedded_browser">Korzystaj z wbudowanej przeglądarki</string>
-  <string name="custom_tabs">Custom tabs</string>
+  <string name="custom_tabs">Własne zakładki</string>
   <string name="use_javascript">Włącz Javascript</string>
-  <string name="expand_cw">Automatically expand cw</string>
-  <string name="use_cookies">Zezwalaj na pliki cookie innych firm</string>
+  <string name="expand_cw">Zawsze rozwijaj ostrzeżenia o zawartości</string>
+  <string name="use_cookies">Zezwalaj na pliki cookie firm trzecich</string>
   <string name="settings_ui_layout">Układ osi czasu: </string>
   <string-array name="settings_menu_tabs">
     <item>Zakładki</item>
@@ -334,7 +334,7 @@
   </string-array>
   <string-array name="settings_translation">
     <item>Yandex</item>
-    <item>Nie</item>
+    <item>Brak</item>
   </string-array>
   <string-array name="settings_resize_picture">
     <item>No</item>
@@ -353,134 +353,134 @@
     <item>Biały</item>
   </string-array>
   <string name="set_title_news">Aktualności</string>
-  <string name="set_notification_news">Powiadom mnie o nowych toot na domowej osi czasu</string>
+  <string name="set_notification_news">Powiadom mnie o nowych wpisach na lokalnej osi czasu</string>
   <string name="set_show_error_messages">Wyświetlaj komunikaty o błędach</string>
-  <string name="action_follow">Obserwuj</string>
-  <string name="action_unfollow">Przestań obserwować</string>
+  <string name="action_follow">Śledź</string>
+  <string name="action_unfollow">Przestań śledzić</string>
   <string name="action_block">Zablokuj</string>
   <string name="action_unblock">Odblokuj</string>
   <string name="action_mute">Wycisz</string>
   <string name="action_no_action">Brak czynności</string>
   <string name="action_unmute">Wycisz</string>
-  <string name="request_sent">Żądanie wysłane</string>
-  <string name="followed_by">Obserwuje Cię</string>
-  <string name="action_search">Wyszykaj</string>
-  <string name="set_capitalize">First letter in capital for replies</string>
-  <string name="set_resize_picture">Resize pictures</string>
+  <string name="request_sent">Wysłano prośbę.</string>
+  <string name="followed_by">Śledzi Cię</string>
+  <string name="action_search">Wyszukaj</string>
+  <string name="set_capitalize">Zaczynaj wpisy z wielkiej litery</string>
+  <string name="set_resize_picture">Zmniejszanie zdjęć</string>
   <!-- Quick settings for notifications -->
-  <string name="settings_popup_title">Powiadomienia push</string>
+  <string name="settings_popup_title">Powiadomienia</string>
   <string name="settings_popup_message">
-Proszę potwierdzić powiadomienia push, które chcesz otrzymywać.
-        Możesz włączyć i wyłączyć te powiadomienia w ustawieniach (karta powiadomień).    </string>
-  <string name="settings_popup_timeline">Dla nie przeczytanych toots w domowej osi czasu?</string>
-  <string name="settings_popup_notification">Dla nie przeczytanych powiadomień?</string>
+Wskaż, jakie powiadomienia chcesz otrzymywać.
+        Możesz włączyć i wyłączyć te powiadomienia w ustawieniach powiadomień.    </string>
+  <string name="settings_popup_timeline">Dla nieprzeczytanych wpisów w lokalnej osi czasu?</string>
+  <string name="settings_popup_notification">Dla nieprzeczytanych powiadomień?</string>
   <!-- CACHE -->
   <string name="cache_title">Wyczyść pamięć podręczną</string>
-  <string name="cache_message">Istniejąe %1$s danych w pamięci podręcznej.\n\nCzy chciałbyś je usunąć?</string>
+  <string name="cache_message">Znaleziono %1$s danych w pamięci podręcznej.\n\nCzy chcesz je usunąć?</string>
   <string name="cache_units">Mb</string>
-  <string name="toast_cache_clear">Pamięć podręczna została wyczyszczona! %1$s zostały uwolnione</string>
+  <string name="toast_cache_clear">Pamięć podręczna została wyczyszczona! Zwolniono %1$s</string>
   <!-- ACTIVITY CACHE -->
-  <string name="action_sync">Synchronize</string>
-  <string name="action_filter">Filter</string>
-  <string name="owner_cached_toots">Your toots</string>
-  <string name="v_public">Public</string>
-  <string name="v_unlisted">Unlisted</string>
-  <string name="v_private">Private</string>
-  <string name="v_direct">Direct</string>
-  <string name="v_keywords">Some keywords…</string>
-  <string name="show_media">Show media</string>
-  <string name="show_pinned">Show pinned</string>
-  <string name="filter_no_result">No matching result found!</string>
-  <string name="data_backup_toots">Backup toots for %1$s</string>
-  <string name="data_backup_success">%1$s new toots have been imported</string>
+  <string name="action_sync">Synchronizacja</string>
+  <string name="action_filter">Filtrowanie</string>
+  <string name="owner_cached_toots">Twoje wpisy</string>
+  <string name="v_public">Publiczne</string>
+  <string name="v_unlisted">Niepubliczne</string>
+  <string name="v_private">Tylko śledzeni</string>
+  <string name="v_direct">Bezpośrednio</string>
+  <string name="v_keywords">Słowa kluczowe…</string>
+  <string name="show_media">Pokaż zawartość</string>
+  <string name="show_pinned">Pokaż przypięte</string>
+  <string name="filter_no_result">Nie znaleziono pasujących wpisów!</string>
+  <string name="data_backup_toots">Kopia zapasowa dla %1$s</string>
+  <string name="data_backup_success">Zaimportowano %1$s nowych wpisów</string>
   <string-array name="filter_select">
-    <item>No</item>
-    <item>Only</item>
-    <item>Both</item>
+    <item>Żaden</item>
+    <item>Jeden</item>
+    <item>Oba</item>
   </string-array>
-  <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+  <string name="owner_cached_toots_empty">Nie znaleziono wpisów. Proszę użyć funkcji synchronizacji w celu pobrania nowych wpisów.</string>
   <!-- PRIVACY -->
-  <string name="privacy_data_title">Zapisane dane</string>
+  <string name="privacy_data_title">Przechowywane dane</string>
   <string name="privacy_data">
-        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
+        Tylko podstawowe informacje o koncie są przechowywane na urządzeniu.
+        Te dane nie są dostępne dla innych aplikacji.
+        Dezinstalacja aplikacji natychmiastowo usuwa wszystkie dane.\n
+        &#9888; Dane logowania nie są przechowywane na urządzeniu. Są użyte tylko podczas pierwszego logowania i przekazywane do instancji szyfrowanym kanałem SSL.
     </string>
   <string name="privacy_authorizations_title">Uprawnienia:</string>
   <string name="privacy_authorizations">
-        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
-        - <b>INTERNET</b>: Used for queries to an instance.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
-        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
-        - <b>WAKE_LOCK</b>: Used during the notification service.
+        - <b>ACCESS_NETWORK_STATE</b>: Pozwala sprawdzić, czy urządzenie jest połączone z siecią WiFi.\n
+        - <b>INTERNET</b>: Pozwala na połączenie z instancją.\n
+        - <b>WRITE_EXTERNAL_STORAGE</b>: Pozwala na zachowywanie multimediów i przeniesienie aplikacji na kartę SD.\n
+        - <b>READ_EXTERNAL_STORAGE</b>: Pozwala dodać zawartość do wpisów.\n
+        - <b>BOOT_COMPLETED</b>: Pozwala wyświetlać powiadomienia po włączeniu urządzenia.\n
+        - <b>WAKE_LOCK</b>: Pozwala wyświetlać powiadomienia w tle.
     </string>
   <string name="privacy_API_authorizations_title">Uprawnienia API:</string>
   <string name="privacy_API_authorizations">
-        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
+        - <b>Odczyt</b>: Możliwość odczytu danych.\n
+        - <b>Zapis</b>: Wysyłanie wpisów i załączanie multimediów.\n
+        - <b>Śledzenie</b>: Śledzenie i blokowanie.\n\n
+        <b>&#9888; Te uprawnienia są wykorzystywane wyłącznie na Twoje żądanie.</b>
     </string>
   <string name="privacy_API_title">Śledzenie i biblioteki</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+        Mastalab <b>nie śledzi Twojej aktywności</b> (zbieranie wrażliwych danych, zgłaszanie błędów) i nie zawiera reklam.\n\n
+        Używane biblioteki: \n
+        - <b>Glide</b>: zarządzanie zawartością multimedialną\n
+        - <b>Android-Job</b>: zarządzanie usługami\n
+        - <b>PhotoView</b>: zarządzanie obrazami\n
     </string>
-  <string name="privacy_API_yandex_title">Tłumaczenie toot</string>
+  <string name="privacy_API_yandex_title">Automatyczne tłumaczenie wpisów:</string>
   <string name="privacy_API_yandex_authorizations">
-        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
+        Mastalab oferuje automatyczne tłumaczenie wpisów na wybrany język przy pomocy API Yandex.\n
+        Polityka prywatności usługi Yandex jest dostępna w języku angielskim tutaj: https://yandex.ru/legal/confidential/?lang=en
     </string>
   <string name="thanks_text">
-Dzięki Stéphane za logo.    </string>
+Podziękowania dla Stéphane za logo.    </string>
   <string name="thanks_text_dev">
-Dzięki:    </string>
-  <string name="filter_regex">Filtruj przez regularne wyrażenia</string>
+Podziękowania dla:    </string>
+  <string name="filter_regex">Filtruj przez wyrażenia regularne</string>
   <string name="search">Szukaj</string>
   <string name="delete">Usuń</string>
-  <string name="fetch_more_toots">Pobierz więcej toot…</string>
+  <string name="fetch_more_toots">Pobierz więcej wpisów…</string>
   <!-- About lists -->
   <string name="action_lists">Listy</string>
-  <string name="action_lists_confirm_delete">Czy na pewno chcesz permamentnie usunąć tę listę?</string>
-  <string name="action_lists_empty_content">Nie ma jeszcze nic na tej liście. Kiedy członkowie z tej listy postują nowe statusy wyświetlą się one tutaj.</string>
+  <string name="action_lists_confirm_delete">Czy na pewno chcesz usunąć tę listę? Nie będzie można cofnąć tej akcji!</string>
+  <string name="action_lists_empty_content">Nie ma jeszcze nic na tej liście. Kiedy użytkownicy z tej listy dodadzą nowe statusy, wyświetlą się one tutaj.</string>
   <string name="action_lists_add_to">Dodaj do listy</string>
   <string name="action_lists_remove_from">Usuń z listy</string>
   <string name="action_lists_create">Dodaj listę</string>
   <string name="action_lists_delete">Usuń listę</string>
   <string name="action_lists_update">Edytuj listę</string>
   <string name="action_lists_title_placeholder">Nowy tytuł listy</string>
-  <string name="action_lists_search_users">Szukaj wśród osób, które obserwujesz</string>
+  <string name="action_lists_search_users">Szukaj wśród osób, które śledzisz</string>
   <string name="action_lists_owner">Twoje listy</string>
   <!-- Migration -->
   <string name="account_moved_to">%1$s przeniósł się do %2$s</string>
-  <string name="show_boost_count">Show boosts/favourites count</string>
-  <string name="issue_login_title">Authentication does not work?</string>
+  <string name="show_boost_count">Pokaż liczbę podbić i polubień</string>
+  <string name="issue_login_title">Problem z uwierzytelnieniem?</string>
   <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
+        <b>Spróbuj zastosować się do poniższych rad:</b>\n\n
+        - Sprawdź, czy nazwa instancji została poprawnie przepisana\n\n
+        - Sprawdź, czy instancja jest dostępna\n\n
+        - Jeśli używasz dwustopniowego uwierzytelniania (2FA), kliknij w link poniżej (po wpisaniu nazwy instancji)\n\n
+        - Możesz użyć tego linku nawet gdy nie używasz 2FA\n\n
+        - Jeśli wciąż nie możesz się zalogować, proszę zgłoś problem tutaj: https://github.com/stom79/mastalab/issues
     </string>
-  <string name="media_ready">Media has been loaded. Click here to display it.</string>
-  <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-  <string name="data_export_running">Still running, please wait…</string>
-  <string name="data_export">Export statuses</string>
-  <string name="data_export_toots">Export statuses for %1$s</string>
-  <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-  <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+  <string name="media_ready">Załadowano zawartość multimedialną. Naciśnij tutaj, aby ją wyświetlić.</string>
+  <string name="data_export_start">To działanie może trochę potrwać. Powiadomimy cię o jego zakończeniu.</string>
+  <string name="data_export_running">Wciąż pracuję, proszę czekać…</string>
+  <string name="data_export">Eksportuj wpisy</string>
+  <string name="data_export_toots">Eksportuj wpisy dla %1$s</string>
+  <string name="data_export_success">Wyeksportowano %1$s wpisów z dostępnych %2$s.</string>
+  <string name="data_export_error">Coś poszło nie tak podczas próby eksportu danych %1$s</string>
   <!-- Proxy -->
   <string name="proxy_set">Proxy</string>
-  <string name="proxy_type">Type</string>
-  <string name="proxy_enable">Enable proxy?</string>
+  <string name="proxy_type">Typ</string>
+  <string name="proxy_enable">Włączyć proxy?</string>
   <string name="poxy_host">Host</string>
   <string name="poxy_port">Port</string>
   <string name="poxy_login">Login</string>
-  <string name="poxy_password">Password</string>
+  <string name="poxy_password">Hasło</string>
 </resources>
